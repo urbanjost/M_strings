@@ -1,0 +1,422 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator" content="HTML Tidy for Cygwin (vers 25 March 2009), see www.w3.org" />
+
+  <title></title>
+  <style type="text/css">
+/*<![CDATA[*/
+
+  px {font-family: "Lucida Console", Monaco, monospace}
+  p { font-size:100%; line-height:1.1em; }
+  body {xfont-style: sans-serif}
+  body {
+  color:#333; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:1em; line-height:1.3em; }
+  a:visited { color:#666; }
+  h1,h2,h3,h4,h5,h6 { color:#333; font-family:georgia, verdana, sans-serif; }
+  h1 { font-size:150%; page-break-before:auto;background-color: #aaaaff}
+  h2 { font-size:143%;color:teal; }
+  h3 { font-size:134%;color:blue; }
+  h4 { font-size:120%;color:gray; }
+  img { max-width: 55em}
+  p{ padding: 0;margin:0; }
+  p{ padding-right:1.4em; }
+  p{ padding-bottom:1em; }
+  p{ padding-top:1em; }
+  p{ whitespace: pre-wrap; }
+  h5,h6 { font-size:100% }
+  a.nav,a:link.nav, a:visited.nav { background-color:#FFF; color:#000; }
+  XXtable { border:double #000; border-collapse:collapse; }
+  XXtable { border-collapse:collapse; }
+  XXtd { border:thin solid #888; }
+  XXtd { border:none; }
+  li { margin-bottom:0.5em; }
+  blockquote { display:block; font-size:100%; line-height:1.1em; margin:0 0 1.5em; padding:0 2.5em; }
+  pre { background-color:#DDD; font-size:100%; overflow:auto; padding:1em; }
+  a,li span { color:#000; }
+  a:hover, a.nav:hover, a:hover math { background-color:#000; color:#FFF; }
+  #Container { margin:0 10px; text-align:center; background-color: #BBB}
+  #Content { border-top:none; margin:auto; padding:0.3em; text-align:left; width:100%; max-width:55em; background:#FFF}
+  span.webName { font-size:.5em; }
+  textarea#content { font-size: 1em; line-height: 1.125; }
+  h1#pageName { line-height:1em; margin:0.2em 0 0.2em 0; padding:0; }
+  .property { color:#666; font-size:100%; }
+  a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
+  .byline { color:#666; font-size:1.0em; font-style:italic; margin-bottom:1em; padding-top:1px; } 
+  /*]]>*/
+  </style>
+  <style type="text/css">
+/*<![CDATA[*/
+  body {
+  background-color: #F0F0F0;
+  color: #000000;
+  }
+  :link { color: #0000FF }
+  :visited { color: #C000C0 }
+  :active { color: #FF0000 }
+  span.c163 {font-size: 80%}
+  td.c162 {font-style: italic}
+  td.c161 {font-weight: bold}
+  div.c160 {text-align: center}
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <a name="top"></a>
+
+  <h5><a href="download.html">[UP]</a></h5>
+
+  <div id="Container">
+    <div id="Content">
+      <div class="c160">
+        <hr />
+
+        <h1><i>Manual Reference Pages  - </i>strtok&nbsp;(3)</h1>
+        <hr />
+      </div><a name="0"></a>
+
+      <h3><a name="0">NAME</a></h3>
+
+      <blockquote>
+        <b>strtok(3f)</b> - [M_strings:TOKENS] Tokenize a string <b>(LICENSE:PD)</b>
+      </blockquote><a name="contents"></a>
+
+      <h3>CONTENTS</h3>
+
+      <blockquote>
+        <a href="#1">Synopsis</a><br />
+        <a href="#2">Description</a><br />
+        <a href="#3">Options</a><br />
+        <a href="#4">Return</a><br />
+        <a href="#5">Examples</a><br />
+        <a href="#6">Author</a><br />
+        <a href="#7">License</a><br />
+      </blockquote><a name="8"></a>
+
+      <h3><a name="8">SYNOPSIS</a></h3>
+
+      <blockquote>
+        <pre>
+function <b>strtok</b>(source_string,itoken,token_start,token_end,delimiters)
+<b>result</b>(<i>strtok_status</i>)
+</pre>
+
+        <blockquote>
+          <table cellpadding="3">
+            <!-- tsb: function <B>strtok</B>(source_string,itoken,token_start,token_end,delimiters)
+ -->
+
+            <tr>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td></td>
+            </tr>
+
+            <tr valign="top">
+              <td class="c161" colspan="2">logical</td>
+            </tr>
+
+            <tr valign="top">
+              <td width="6%"> </td>
+
+              <td>:: <i>strtok_status</i> ! returned value</td>
+            </tr>
+
+            <tr valign="top">
+              <td colspan="2"><b>character</b>(len=*),intent(<i>in</i>)</td>
+            </tr>
+
+            <tr valign="top">
+              <td width="6%"> </td>
+
+              <td>:: source_string ! string to tokenize</td>
+            </tr>
+
+            <tr valign="top">
+              <td colspan="2"><b>integer,intent</b>(<i>inout</i>)</td>
+            </tr>
+
+            <tr valign="top">
+              <td width="6%"> </td>
+
+              <td>:: itoken ! token count since started</td>
+            </tr>
+
+            <tr valign="top">
+              <td colspan="2"><b>integer,intent</b>(<i>out</i>)</td>
+            </tr>
+
+            <tr valign="top">
+              <td width="6%"> </td>
+
+              <td>:: token_start ! beginning of token</td>
+            </tr>
+
+            <tr valign="top">
+              <td colspan="2"><b>integer,intent</b>(<i>inout</i>)</td>
+            </tr>
+
+            <tr valign="top">
+              <td width="6%"> </td>
+
+              <td>:: token_end ! end of token</td>
+            </tr>
+
+            <tr valign="top">
+              <td colspan="2"><b>character</b>(len=*),intent(<i>in</i>)</td>
+            </tr>
+
+            <tr valign="top">
+              <td width="6%"> </td>
+
+              <td>:: delimiters ! list of separator characters</td>
+            </tr>
+
+            <tr>
+              <td></td>
+            </tr>
+          </table>
+        </blockquote>
+        <pre>
+
+</pre>
+      </blockquote><a name="2"></a>
+
+      <h3><a name="2">DESCRIPTION</a></h3>
+
+      <blockquote>
+        The <b>STRTOK</b>(3f) function is used to isolate sequential tokens <i>in</i> a string, SOURCE_STRING. These tokens are delimited <i>in</i> the
+        string by at least one of the characters <i>in</i> DELIMITERS. The first time that <b>STRTOK</b>(3f) is called, ITOKEN should be specified as zero.
+        Subsequent calls, wishing to obtain
+
+        <table cellpadding="3">
+          <!-- tsb: The <B>STRTOK</B>(3f) function is used to isolate sequential tokens <I>in</I> a string,
+ -->
+
+          <tr>
+            <td></td>
+          </tr>
+
+          <tr>
+            <td></td>
+          </tr>
+
+          <tr valign="top">
+            <td colspan="2"><b>further tokens from the same string, should pass back</b> <i>in</i> TOKEN_END</td>
+          </tr>
+
+          <tr valign="top">
+            <td width="6%"> </td>
+
+            <td>and ITOKEN until the function result returns .false.</td>
+          </tr>
+
+          <tr>
+            <td></td>
+          </tr>
+        </table>This routine assumes no other calls are made to it using any other input string while it is processing an input line.
+      </blockquote><a name="3"></a>
+
+      <h3><a name="3">OPTIONS</a></h3>
+
+      <blockquote>
+        <table cellpadding="3">
+          <tr valign="top">
+            <td class="c161" colspan="2">source_string</td>
+          </tr>
+
+          <tr valign="top">
+            <td width="6%"> </td>
+
+            <td>input string to parse</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c161" width="6%" nowrap="nowrap">itoken</td>
+
+            <td valign="bottom">token count should be set to zero for a new string</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c161" colspan="2">delimiters</td>
+          </tr>
+
+          <tr valign="top">
+            <td width="6%"> </td>
+
+            <td>characters used to determine the end of tokens</td>
+          </tr>
+
+          <tr>
+            <td></td>
+          </tr>
+        </table>
+      </blockquote><a name="4"></a>
+
+      <h3><a name="4">RETURN</a></h3>
+
+      <blockquote>
+        <table cellpadding="3">
+          <tr valign="top">
+            <td class="c161" colspan="2">token_start</td>
+          </tr>
+
+          <tr valign="top">
+            <td width="6%"> </td>
+
+            <td>beginning position <i>in</i> SOURCE_STRING where token was found</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c161" colspan="2">token_end</td>
+          </tr>
+
+          <tr valign="top">
+            <td width="6%"> </td>
+
+            <td>ending position <i>in</i> SOURCE_STRING where token was found <i>strtok_status</i></td>
+          </tr>
+
+          <tr>
+            <td></td>
+          </tr>
+        </table>
+      </blockquote><a name="5"></a>
+
+      <h3><a name="5">EXAMPLES</a></h3>
+
+      <blockquote>
+        Sample program:
+        <pre>
+    !===============================================================================
+    program demo_strtok
+    use M_strings, only : strtok
+    character(len=264)          :: inline
+    character(len=*),parameter  :: delimiters=' ;,'
+    integer                     :: ios
+    !-------------------------------------------------------------------------------
+       do                        ! read lines from stdin until end-of-file or error
+          read (unit=*,fmt="(a)",iostat=ios) inline
+          if(ios.ne.0)stop
+          itoken=0 ! must set ITOKEN=0 before looping on strtok(3f) on a new string.
+          do while ( strtok(inline,itoken,istart,iend,delimiters) )
+             print *, itoken,'TOKEN=['//(inline(istart:iend))//']',istart,iend
+          enddo
+       enddo
+    end program demo_strtok
+    !===============================================================================
+<br />
+    sample input file
+<br />
+     this is a test of strtok; A:B :;,C;;
+<br />
+</pre>
+
+        <blockquote>
+          sample output file
+
+          <table cellpadding="3">
+            <!-- tsb: sample output file
+ -->
+
+            <tr>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td></td>
+            </tr>
+
+            <tr valign="top">
+              <td class="c161" width="6%" nowrap="nowrap">1</td>
+
+              <td valign="bottom">TOKEN=[this] 2 5</td>
+            </tr>
+
+            <tr valign="top">
+              <td class="c161" width="6%" nowrap="nowrap">2</td>
+
+              <td valign="bottom">TOKEN=[is] 7 8</td>
+            </tr>
+
+            <tr valign="top">
+              <td class="c161" width="6%" nowrap="nowrap">3</td>
+
+              <td valign="bottom">TOKEN=[a] 10 10</td>
+            </tr>
+
+            <tr valign="top">
+              <td class="c161" width="6%" nowrap="nowrap">4</td>
+
+              <td valign="bottom">TOKEN=[test] 12 15</td>
+            </tr>
+
+            <tr valign="top">
+              <td class="c161" width="6%" nowrap="nowrap">5</td>
+
+              <td valign="bottom">TOKEN=[of] 17 18</td>
+            </tr>
+
+            <tr valign="top">
+              <td class="c161" width="6%" nowrap="nowrap">6</td>
+
+              <td valign="bottom">TOKEN=[strtok] 20 25</td>
+            </tr>
+
+            <tr valign="top">
+              <td class="c161" width="6%" nowrap="nowrap">7</td>
+
+              <td valign="bottom">TOKEN=[A:B] 28 30</td>
+            </tr>
+
+            <tr valign="top">
+              <td class="c161" width="6%" nowrap="nowrap">8</td>
+
+              <td valign="bottom">TOKEN=[:] 32 32</td>
+            </tr>
+
+            <tr valign="top">
+              <td class="c161" width="6%" nowrap="nowrap">9</td>
+
+              <td valign="bottom">TOKEN=[C] 35 35</td>
+            </tr>
+
+            <tr>
+              <td></td>
+            </tr>
+          </table>
+        </blockquote>
+      </blockquote><a name="6"></a>
+
+      <h3><a name="6">AUTHOR</a></h3>
+
+      <blockquote>
+        John S. Urban
+      </blockquote><a name="7"></a>
+
+      <h3><a name="7">LICENSE</a></h3>
+
+      <blockquote>
+        Public Domain
+      </blockquote>
+      <hr />
+
+      <table width="100%">
+        <tr>
+          <td width="33%"></td>
+
+          <td width="33%" align="center">strtok (3)</td>
+
+          <td class="c162" align="right" width="33%">December 15, 2019</td>
+        </tr>
+      </table><span class="c163">Generated by <a href="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</a> from
+      68744dce-e77b-4c2f-9197-642cb733e751 using man macros.</span><br />
+      <br />
+
+      <div class="c160"><img src="images/strtok.3.gif" /></div>
+    </div>
+  </div>
+</body>
+</html>

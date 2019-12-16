@@ -1,0 +1,242 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator" content="HTML Tidy for Cygwin (vers 25 March 2009), see www.w3.org" />
+
+  <title></title>
+  <style type="text/css">
+/*<![CDATA[*/
+
+  px {font-family: "Lucida Console", Monaco, monospace}
+  p { font-size:100%; line-height:1.1em; }
+  body {xfont-style: sans-serif}
+  body {
+  color:#333; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:1em; line-height:1.3em; }
+  a:visited { color:#666; }
+  h1,h2,h3,h4,h5,h6 { color:#333; font-family:georgia, verdana, sans-serif; }
+  h1 { font-size:150%; page-break-before:auto;background-color: #aaaaff}
+  h2 { font-size:143%;color:teal; }
+  h3 { font-size:134%;color:blue; }
+  h4 { font-size:120%;color:gray; }
+  img { max-width: 55em}
+  p{ padding: 0;margin:0; }
+  p{ padding-right:1.4em; }
+  p{ padding-bottom:1em; }
+  p{ padding-top:1em; }
+  p{ whitespace: pre-wrap; }
+  h5,h6 { font-size:100% }
+  a.nav,a:link.nav, a:visited.nav { background-color:#FFF; color:#000; }
+  XXtable { border:double #000; border-collapse:collapse; }
+  XXtable { border-collapse:collapse; }
+  XXtd { border:thin solid #888; }
+  XXtd { border:none; }
+  li { margin-bottom:0.5em; }
+  blockquote { display:block; font-size:100%; line-height:1.1em; margin:0 0 1.5em; padding:0 2.5em; }
+  pre { background-color:#DDD; font-size:100%; overflow:auto; padding:1em; }
+  a,li span { color:#000; }
+  a:hover, a.nav:hover, a:hover math { background-color:#000; color:#FFF; }
+  #Container { margin:0 10px; text-align:center; background-color: #BBB}
+  #Content { border-top:none; margin:auto; padding:0.3em; text-align:left; width:100%; max-width:55em; background:#FFF}
+  span.webName { font-size:.5em; }
+  textarea#content { font-size: 1em; line-height: 1.125; }
+  h1#pageName { line-height:1em; margin:0.2em 0 0.2em 0; padding:0; }
+  .property { color:#666; font-size:100%; }
+  a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
+  .byline { color:#666; font-size:1.0em; font-style:italic; margin-bottom:1em; padding-top:1px; } 
+  /*]]>*/
+  </style>
+  <style type="text/css">
+/*<![CDATA[*/
+  body {
+  background-color: #F0F0F0;
+  color: #000000;
+  }
+  :link { color: #0000FF }
+  :visited { color: #C000C0 }
+  :active { color: #FF0000 }
+  span.c111 {font-size: 80%}
+  td.c110 {font-style: italic}
+  td.c109 {font-weight: bold}
+  div.c108 {text-align: center}
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <a name="top"></a>
+
+  <h5><a href="download.html">[UP]</a></h5>
+
+  <div id="Container">
+    <div id="Content">
+      <div class="c108">
+        <hr />
+
+        <h1><i>Manual Reference Pages  - </i>noesc&nbsp;(3)</h1>
+        <hr />
+      </div><a name="0"></a>
+
+      <h3><a name="0">NAME</a></h3>
+
+      <blockquote>
+        <b>noesc(3f)</b> - [M_strings:NONALPHA] convert non-printable characters to a space. <b>(LICENSE:PD)</b>
+      </blockquote><a name="contents"></a>
+
+      <h3>CONTENTS</h3>
+
+      <blockquote>
+        <a href="#1">Synopsis</a><br />
+        <a href="#2">Description</a><br />
+        <a href="#3">Examples</a><br />
+        <a href="#4">Author</a><br />
+        <a href="#5">License</a><br />
+      </blockquote><a name="6"></a>
+
+      <h3><a name="6">SYNOPSIS</a></h3>
+
+      <blockquote>
+        <pre>
+elemental function <b>noesc</b>(<i>INSTR</i>)
+<br />
+    character(len=*),intent(in) :: INSTR
+    character(len=len(instr))   :: noesc
+</pre>
+      </blockquote><a name="2"></a>
+
+      <h3><a name="2">DESCRIPTION</a></h3>
+
+      <blockquote>
+        Convert non-printable characters to a space.
+      </blockquote><a name="3"></a>
+
+      <h3><a name="3">EXAMPLES</a></h3>
+
+      <blockquote>
+        Sample Program:
+        <pre>
+   program demo_noesc
+<br />
+    use M_strings, only : noesc
+    character(len=128) :: ascii
+    character(len=128) :: cleared
+    ! fill variable with base ASCII character set
+    do i=1,128
+       ascii(i:i)=char(i-1)
+    enddo
+    cleared=noesc(ascii)
+    write(*,*)'characters and their ADE (ASCII Decimal Equivalent)'
+    call ade(ascii)
+    write(*,*)'Cleared of non-printable characters'
+    call ade(cleared)
+    write(*,*)'Cleared string:'
+    write(*,*)cleared
+    contains
+      subroutine ade(string)
+      implicit none
+      ! the string to print
+      character(len=*),intent(in) :: string
+      ! number of characters in string to print
+      integer :: ilen
+      ! counter used to step thru string
+      integer :: i
+         ! get trimmed length of input string
+         ilen=len_trim(string(:len(string)))
+<br />
+         ! replace lower unprintable characters with spaces
+         write(*,101)(merge(string(i:i),' ',&amp;
+         &amp; ichar(string(i:i)).ge.32         &amp;
+         &amp; .and.                            &amp;
+         &amp; ichar(string(i:i)).le.126)       &amp;
+         &amp; ,i=1,ilen)
+<br />
+         ! print ADE value of character underneath it
+         write(*,202)     (ichar(string(i:i))/100,    i=1,ilen)
+         write(*,202)(mod( ichar(string(i:i)),100)/10,i=1,ilen)
+         write(*,202)(mod((ichar(string(i:i))),10),   i=1,ilen)
+      ! format for printing string characters
+      101   format(*(a1:))
+      ! format for printing ADE values
+      202   format(*(i1:))
+      end subroutine ade
+    end program demo_noesc
+<br />
+</pre>
+
+        <blockquote>
+          Expected output
+
+          <p>The string is printed with the ADE value vertically beneath. The original string has all the ADEs from 000 to 127. After <b>NOESC</b>(3f) is
+          called on the string all the "non-printable" characters are replaced with a space (ADE of 032).</p>
+        </blockquote>
+
+        <p>characters and their ADE (ASCII Decimal Equivalent)</p>
+        <pre>
+   &gt;                                 !"#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_'abcdefghijklmnopqrstuvwxyz{|}~
+   &gt;00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001111111111111111111111111111
+   &gt;00000000001111111111222222222233333333334444444444555555555566666666667777777777888888888899999999990000000000111111111122222222
+   &gt;01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567
+<br />
+</pre>Cleared of non-printable characters
+        <pre>
+   &gt;                                 !"#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_'abcdefghijklmnopqrstuvwxyz{|}~
+   &gt;0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000111111111111111111111111111
+   &gt;3333333333333333333333333333333333333333444444444455555555556666666666777777777788888888889999999999000000000011111111112222222
+   &gt;2222222222222222222222222222222223456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456
+<br />
+</pre>Cleared string:
+
+        <blockquote>
+          <table cellpadding="3">
+            <!-- tsb: Cleared string:
+ -->
+
+            <tr>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td></td>
+            </tr>
+
+            <tr valign="top">
+              <td class="c109" width="6%" nowrap="nowrap">&gt;</td>
+
+              <td valign="bottom">!"#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_'abcdefghijklmnopqrstuvwxyz{|}~</td>
+            </tr>
+
+            <tr>
+              <td></td>
+            </tr>
+          </table>
+        </blockquote>
+      </blockquote><a name="4"></a>
+
+      <h3><a name="4">AUTHOR</a></h3>
+
+      <blockquote>
+        John S. Urban
+      </blockquote><a name="5"></a>
+
+      <h3><a name="5">LICENSE</a></h3>
+
+      <blockquote>
+        Public Domain
+      </blockquote>
+      <hr />
+
+      <table width="100%">
+        <tr>
+          <td width="33%"></td>
+
+          <td width="33%" align="center">noesc (3)</td>
+
+          <td class="c110" align="right" width="33%">December 15, 2019</td>
+        </tr>
+      </table><span class="c111">Generated by <a href="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</a> from
+      588e1f5e-1bfc-42dd-86dc-be483360cfdc using man macros.</span><br />
+      <br />
+
+      <div class="c108"><img src="images/noesc.3.gif" /></div>
+    </div>
+  </div>
+</body>
+</html>

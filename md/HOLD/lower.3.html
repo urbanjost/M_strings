@@ -1,0 +1,219 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator" content="HTML Tidy for Cygwin (vers 25 March 2009), see www.w3.org" />
+
+  <title></title>
+  <style type="text/css">
+/*<![CDATA[*/
+
+  px {font-family: "Lucida Console", Monaco, monospace}
+  p { font-size:100%; line-height:1.1em; }
+  body {xfont-style: sans-serif}
+  body {
+  color:#333; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:1em; line-height:1.3em; }
+  a:visited { color:#666; }
+  h1,h2,h3,h4,h5,h6 { color:#333; font-family:georgia, verdana, sans-serif; }
+  h1 { font-size:150%; page-break-before:auto;background-color: #aaaaff}
+  h2 { font-size:143%;color:teal; }
+  h3 { font-size:134%;color:blue; }
+  h4 { font-size:120%;color:gray; }
+  img { max-width: 55em}
+  p{ padding: 0;margin:0; }
+  p{ padding-right:1.4em; }
+  p{ padding-bottom:1em; }
+  p{ padding-top:1em; }
+  p{ whitespace: pre-wrap; }
+  h5,h6 { font-size:100% }
+  a.nav,a:link.nav, a:visited.nav { background-color:#FFF; color:#000; }
+  XXtable { border:double #000; border-collapse:collapse; }
+  XXtable { border-collapse:collapse; }
+  XXtd { border:thin solid #888; }
+  XXtd { border:none; }
+  li { margin-bottom:0.5em; }
+  blockquote { display:block; font-size:100%; line-height:1.1em; margin:0 0 1.5em; padding:0 2.5em; }
+  pre { background-color:#DDD; font-size:100%; overflow:auto; padding:1em; }
+  a,li span { color:#000; }
+  a:hover, a.nav:hover, a:hover math { background-color:#000; color:#FFF; }
+  #Container { margin:0 10px; text-align:center; background-color: #BBB}
+  #Content { border-top:none; margin:auto; padding:0.3em; text-align:left; width:100%; max-width:55em; background:#FFF}
+  span.webName { font-size:.5em; }
+  textarea#content { font-size: 1em; line-height: 1.125; }
+  h1#pageName { line-height:1em; margin:0.2em 0 0.2em 0; padding:0; }
+  .property { color:#666; font-size:100%; }
+  a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
+  .byline { color:#666; font-size:1.0em; font-style:italic; margin-bottom:1em; padding-top:1px; } 
+  /*]]>*/
+  </style>
+  <style type="text/css">
+/*<![CDATA[*/
+  body {
+  background-color: #F0F0F0;
+  color: #000000;
+  }
+  :link { color: #0000FF }
+  :visited { color: #C000C0 }
+  :active { color: #FF0000 }
+  span.c92 {font-size: 80%}
+  td.c91 {font-style: italic}
+  td.c90 {font-weight: bold}
+  div.c89 {text-align: center}
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <a name="top"></a>
+
+  <h5><a href="download.html">[UP]</a></h5>
+
+  <div id="Container">
+    <div id="Content">
+      <div class="c89">
+        <hr />
+
+        <h1><i>Manual Reference Pages  - </i>lower&nbsp;(3)</h1>
+        <hr />
+      </div><a name="0"></a>
+
+      <h3><a name="0">NAME</a></h3>
+
+      <blockquote>
+        <b>lower(3f)</b> - [M_strings:CASE] changes a string to lowercase over specified range <b>(LICENSE:PD)</b>
+      </blockquote><a name="contents"></a>
+
+      <h3>CONTENTS</h3>
+
+      <blockquote>
+        <a href="#1">Synopsis</a><br />
+        <a href="#2">Description</a><br />
+        <a href="#3">Options</a><br />
+        <a href="#4">Results</a><br />
+        <a href="#5">Trivia</a><br />
+        <a href="#6">Example</a><br />
+        <a href="#7">Author</a><br />
+        <a href="#8">License</a><br />
+      </blockquote><a name="9"></a>
+
+      <h3><a name="9">SYNOPSIS</a></h3>
+
+      <blockquote>
+        <pre>
+elemental pure function <b>lower</b>(str,begin,end) result (<i>string</i>)
+<br />
+    character(*), intent(in) :: str
+    integer,optional         :: begin, end
+    character(len(str))      :: string  ! output string
+</pre>
+      </blockquote><a name="2"></a>
+
+      <h3><a name="2">DESCRIPTION</a></h3>
+
+      <blockquote>
+        <b>lower</b>(<i>string</i>) returns a copy of the input <i>string</i> with all characters converted to miniscule over the specified range, assuming
+        ASCII character sets are being used. If no range is specified the entire <i>string</i> is converted to miniscule.
+      </blockquote><a name="3"></a>
+
+      <h3><a name="3">OPTIONS</a></h3>
+
+      <blockquote>
+        <table cellpadding="3">
+          <tr valign="top">
+            <td class="c90" width="6%" nowrap="nowrap">str</td>
+
+            <td valign="bottom"><i>string</i> to convert to miniscule</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c90" width="6%" nowrap="nowrap">begin</td>
+
+            <td valign="bottom">optional starting position in "str" to begin converting to miniscule</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c90" width="6%" nowrap="nowrap">end</td>
+
+            <td valign="bottom">optional ending position in "str" to stop converting to miniscule</td>
+          </tr>
+
+          <tr>
+            <td></td>
+          </tr>
+        </table>
+      </blockquote><a name="4"></a>
+
+      <h3><a name="4">RESULTS</a></h3>
+
+      <blockquote>
+        <table cellpadding="3">
+          <tr valign="top">
+            <td class="c90" width="6%" nowrap="nowrap">lower</td>
+
+            <td valign="bottom">copy of the input <i>string</i> with all characters converted to miniscule over optionally specified range.</td>
+          </tr>
+
+          <tr>
+            <td></td>
+          </tr>
+        </table>
+      </blockquote><a name="5"></a>
+
+      <h3><a name="5">TRIVIA</a></h3>
+
+      <blockquote>
+        The terms "uppercase" and "lowercase" date back to the early days of the mechanical printing press. Individual metal alloy casts of each needed
+        letter, or punctuation symbol, were meticulously added to a press block, by hand, before rolling out copies of a page. These metal casts were stored
+        and organized in wooden cases. The more often needed miniscule letters were placed closer to hand, in the lower cases of the work bench. The less
+        often needed, capitalized, majuscule letters, ended up in the harder to reach upper cases.
+      </blockquote><a name="6"></a>
+
+      <h3><a name="6">EXAMPLE</a></h3>
+
+      <blockquote>
+        Sample program:
+        <pre>
+      program demo_lower
+      use M_strings, only: lower
+      implicit none
+      character(len=:),allocatable  :: s
+         s=' ABCDEFG abcdefg '
+         write(*,*) 'mixed-case input string is ....',s
+         write(*,*) 'lower-case output string is ...',lower(s)
+      end program demo_lower
+<br />
+</pre>Expected output
+        <pre>
+      mixed-case input string is .... ABCDEFG abcdefg
+      lower-case output string is ... abcdefg abcdefg
+</pre>
+      </blockquote><a name="7"></a>
+
+      <h3><a name="7">AUTHOR</a></h3>
+
+      <blockquote>
+        John S. Urban
+      </blockquote><a name="8"></a>
+
+      <h3><a name="8">LICENSE</a></h3>
+
+      <blockquote>
+        Public Domain
+      </blockquote>
+      <hr />
+
+      <table width="100%">
+        <tr>
+          <td width="33%"></td>
+
+          <td width="33%" align="center">lower (3)</td>
+
+          <td class="c91" align="right" width="33%">December 15, 2019</td>
+        </tr>
+      </table><span class="c92">Generated by <a href="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</a> from
+      ddb4852f-8089-4392-8936-9afe7fb11dbb using man macros.</span><br />
+      <br />
+
+      <div class="c89"><img src="images/lower.3.gif" /></div>
+    </div>
+  </div>
+</body>
+</html>
