@@ -1,0 +1,264 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator" content="HTML Tidy for Cygwin (vers 25 March 2009), see www.w3.org" />
+
+  <title></title>
+  <style type="text/css">
+/*<![CDATA[*/
+
+  px {font-family: "Lucida Console", Monaco, monospace}
+  p { font-size:100%; line-height:1.1em; }
+  body {xfont-style: sans-serif}
+  body {
+  color:#333; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:1em; line-height:1.3em; }
+  a:visited { color:#666; }
+  h1,h2,h3,h4,h5,h6 { color:#333; font-family:georgia, verdana, sans-serif; }
+  h1 { font-size:150%; page-break-before:auto;background-color: #aaaaff}
+  h2 { font-size:143%;color:teal; }
+  h3 { font-size:134%;color:blue; }
+  h4 { font-size:120%;color:gray; }
+  img { max-width: 55em}
+  p{ padding: 0;margin:0; }
+  p{ padding-right:1.4em; }
+  p{ padding-bottom:1em; }
+  p{ padding-top:1em; }
+  p{ whitespace: pre-wrap; }
+  h5,h6 { font-size:100% }
+  a.nav,a:link.nav, a:visited.nav { background-color:#FFF; color:#000; }
+  XXtable { border:double #000; border-collapse:collapse; }
+  XXtable { border-collapse:collapse; }
+  XXtd { border:thin solid #888; }
+  XXtd { border:none; }
+  li { margin-bottom:0.5em; }
+  blockquote { display:block; font-size:100%; line-height:1.1em; margin:0 0 1.5em; padding:0 2.5em; }
+  pre { background-color:#DDD; font-size:100%; overflow:auto; padding:1em; }
+  a,li span { color:#000; }
+  a:hover, a.nav:hover, a:hover math { background-color:#000; color:#FFF; }
+  #Container { margin:0 10px; text-align:center; background-color: #BBB}
+  #Content { border-top:none; margin:auto; padding:0.3em; text-align:left; width:100%; max-width:55em; background:#FFF}
+  span.webName { font-size:.5em; }
+  textarea#content { font-size: 1em; line-height: 1.125; }
+  h1#pageName { line-height:1em; margin:0.2em 0 0.2em 0; padding:0; }
+  .property { color:#666; font-size:100%; }
+  a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
+  .byline { color:#666; font-size:1.0em; font-style:italic; margin-bottom:1em; padding-top:1px; } 
+  /*]]>*/
+  </style>
+  <style type="text/css">
+/*<![CDATA[*/
+  body {
+  background-color: #F0F0F0;
+  color: #000000;
+  }
+  :link { color: #0000FF }
+  :visited { color: #C000C0 }
+  :active { color: #FF0000 }
+  span.c49 {font-size: 80%}
+  td.c48 {font-style: italic}
+  td.c47 {font-weight: bold}
+  div.c46 {text-align: center}
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <a name="top"></a>
+
+  <h5><a href="download.html">[UP]</a></h5>
+
+  <div id="Container">
+    <div id="Content">
+      <div class="c46">
+        <hr />
+
+        <h1><i>Manual Reference Pages  - </i>getvals&nbsp;(3)</h1>
+        <hr />
+      </div><a name="0"></a>
+
+      <h3><a name="0">NAME</a></h3>
+
+      <blockquote>
+        <b>getvals(3f)</b> - [M_strings:NUMERIC] read arbitrary number of REAL values from a character variable up to size of <b>VALUES</b>() array
+        <b>(LICENSE:PD)</b>
+      </blockquote><a name="contents"></a>
+
+      <h3>CONTENTS</h3>
+
+      <blockquote>
+        <a href="#1">Synopsis</a><br />
+        <a href="#2">Description</a><br />
+        <a href="#3">Options</a><br />
+        <a href="#4">Returns</a><br />
+        <a href="#5">Examples</a><br />
+        <a href="#6">Author</a><br />
+        <a href="#7">License</a><br />
+      </blockquote><a name="8"></a>
+
+      <h3><a name="8">SYNOPSIS</a></h3>
+
+      <blockquote>
+        <pre>
+subroutine <b>getvals</b>(line,values,icount,ierr)
+<br />
+    character(len=*),intent(in)  :: line
+    class(*),intent(out)         :: values(:)
+    integer,intent(out)          :: icount
+    integer,intent(out),optional :: ierr
+</pre>
+      </blockquote><a name="2"></a>
+
+      <h3><a name="2">DESCRIPTION</a></h3>
+
+      <blockquote>
+        <p><b>GETVALS</b>(3f) reads a relatively arbitrary number of numeric values from a character variable into a REAL array using list-directed
+        input.</p>
+
+        <p>NOTE: In this version null values are skipped instead of meaning to leave that value unchanged</p>
+
+        <blockquote>
+          <p>1,,,,,,,2 / reads VALUES=[1.0,2.0]</p>
+        </blockquote>
+
+        <p>Per list-directed rules when reading values, allowed delimiters are comma, semi-colon and space.</p>
+
+        <p>the slash separator can be used to add inline comments.</p>
+        <pre>
+       10.1, 20.43e-1 ; 11 / THIS IS TREATED AS A COMMENT
+<br />
+</pre>Repeat syntax can be used up to the size of the output array. These are equivalent input lines:
+        <pre>
+       4*10.0
+       10.0, 10.0, 10.0, 10.0
+<br />
+</pre>
+      </blockquote><a name="3"></a>
+
+      <h3><a name="3">OPTIONS</a></h3>
+
+      <blockquote>
+        <table cellpadding="3">
+          <tr valign="top">
+            <td class="c47" width="6%" nowrap="nowrap">LINE</td>
+
+            <td valign="bottom">A character variable containing the characters representing a list of numbers</td>
+          </tr>
+
+          <tr>
+            <td></td>
+          </tr>
+        </table>
+      </blockquote><a name="4"></a>
+
+      <h3><a name="4">RETURNS</a></h3>
+
+      <blockquote>
+        <table cellpadding="3">
+          <tr valign="top">
+            <td colspan="2"><b>VALUES</b>()</td>
+          </tr>
+
+          <tr valign="top">
+            <td width="6%"> </td>
+
+            <td>array holding numbers read from string. May be of type INTEGER, REAL, DOUBLEPRECISION, or CHARACTER. If CHARACTER the strings are returned
+            as simple words instead of numeric values.</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c47" width="6%" nowrap="nowrap">ICOUNT</td>
+
+            <td valign="bottom">number of defined numbers in <b>VALUES</b>(). If ICOUNT reaches the size of the <b>VALUES</b>() array parsing stops.</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c47" width="6%" nowrap="nowrap">IERR</td>
+
+            <td valign="bottom">zero if no error occurred in reading numbers. Optional. If not present and an error occurs the program is terminated.</td>
+          </tr>
+
+          <tr>
+            <td></td>
+          </tr>
+        </table>
+      </blockquote><a name="5"></a>
+
+      <h3><a name="5">EXAMPLES</a></h3>
+
+      <blockquote>
+        Sample program:
+        <pre>
+      program demo_getvals
+      use M_strings, only: getvals
+      implicit none
+      integer,parameter  :: longest_line=256
+      character(len=longest_line) :: line
+      real               :: values(longest_line/2+1)
+      integer            :: ios,icount,ierr
+      INFINITE: do
+         read(*,'(a)',iostat=ios) line
+         if(ios.ne.0)exit INFINITE
+         call getvals(line,values,icount,ierr)
+         write(*,*)'VALUES=',values(:icount)
+      enddo INFINITE
+      end program demo_getvals
+<br />
+</pre>Sample input lines
+        <pre>
+       10,20 30.4
+       1 2 3
+       1
+<br />
+       3 4*2.5 8
+       32.3333 / comment 1
+       30e3;300,    30.0, 3
+       even 1 like this! 10
+       11,,,,22,,,,33
+<br />
+</pre>Expected output:
+        <pre>
+      VALUES=   10.0000000       20.0000000       30.3999996
+      VALUES=   1.00000000       2.00000000       3.00000000
+      VALUES=   1.00000000
+      VALUES=
+      VALUES=   3.00000000       2.50000000       2.50000000       2.50000000       2.50000000       8.00000000
+      VALUES=   32.3333015
+      VALUES=   30000.0000       300.000000       30.0000000       3.00000000
+      *getvals* WARNING:[even] is not a number
+      *getvals* WARNING:[like] is not a number
+      *getvals* WARNING:[this!] is not a number
+      VALUES=   1.00000000       10.0000000
+      VALUES=   11.0000000       22.0000000       33.0000000
+<br />
+</pre>
+      </blockquote><a name="6"></a>
+
+      <h3><a name="6">AUTHOR</a></h3>
+
+      <blockquote>
+        John S. Urban
+      </blockquote><a name="7"></a>
+
+      <h3><a name="7">LICENSE</a></h3>
+
+      <blockquote>
+        Public Domain
+      </blockquote>
+      <hr />
+
+      <table width="100%">
+        <tr>
+          <td width="33%"></td>
+
+          <td width="33%" align="center">getvals (3)</td>
+
+          <td class="c48" align="right" width="33%">December 15, 2019</td>
+        </tr>
+      </table><span class="c49">Generated by <a href="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</a> from
+      8fb8a0a3-45e9-4314-8423-4a658cffbc02 using man macros.</span><br />
+      <br />
+
+      <div class="c46"><img src="images/getvals.3.gif" /></div>
+    </div>
+  </div>
+</body>
+</html>

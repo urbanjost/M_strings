@@ -1,0 +1,234 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator" content="HTML Tidy for Cygwin (vers 25 March 2009), see www.w3.org" />
+
+  <title></title>
+  <style type="text/css">
+/*<![CDATA[*/
+
+  px {font-family: "Lucida Console", Monaco, monospace}
+  p { font-size:100%; line-height:1.1em; }
+  body {xfont-style: sans-serif}
+  body {
+  color:#333; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:1em; line-height:1.3em; }
+  a:visited { color:#666; }
+  h1,h2,h3,h4,h5,h6 { color:#333; font-family:georgia, verdana, sans-serif; }
+  h1 { font-size:150%; page-break-before:auto;background-color: #aaaaff}
+  h2 { font-size:143%;color:teal; }
+  h3 { font-size:134%;color:blue; }
+  h4 { font-size:120%;color:gray; }
+  img { max-width: 55em}
+  p{ padding: 0;margin:0; }
+  p{ padding-right:1.4em; }
+  p{ padding-bottom:1em; }
+  p{ padding-top:1em; }
+  p{ whitespace: pre-wrap; }
+  h5,h6 { font-size:100% }
+  a.nav,a:link.nav, a:visited.nav { background-color:#FFF; color:#000; }
+  XXtable { border:double #000; border-collapse:collapse; }
+  XXtable { border-collapse:collapse; }
+  XXtd { border:thin solid #888; }
+  XXtd { border:none; }
+  li { margin-bottom:0.5em; }
+  blockquote { display:block; font-size:100%; line-height:1.1em; margin:0 0 1.5em; padding:0 2.5em; }
+  pre { background-color:#DDD; font-size:100%; overflow:auto; padding:1em; }
+  a,li span { color:#000; }
+  a:hover, a.nav:hover, a:hover math { background-color:#000; color:#FFF; }
+  #Container { margin:0 10px; text-align:center; background-color: #BBB}
+  #Content { border-top:none; margin:auto; padding:0.3em; text-align:left; width:100%; max-width:55em; background:#FFF}
+  span.webName { font-size:.5em; }
+  textarea#content { font-size: 1em; line-height: 1.125; }
+  h1#pageName { line-height:1em; margin:0.2em 0 0.2em 0; padding:0; }
+  .property { color:#666; font-size:100%; }
+  a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
+  .byline { color:#666; font-size:1.0em; font-style:italic; margin-bottom:1em; padding-top:1px; } 
+  /*]]>*/
+  </style>
+  <style type="text/css">
+/*<![CDATA[*/
+  body {
+  background-color: #F0F0F0;
+  color: #000000;
+  }
+  :link { color: #0000FF }
+  :visited { color: #C000C0 }
+  :active { color: #FF0000 }
+  span.c167 {font-size: 80%}
+  td.c166 {font-style: italic}
+  td.c165 {font-weight: bold}
+  div.c164 {text-align: center}
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <a name="top"></a>
+
+  <h5><a href="download.html">[UP]</a></h5>
+
+  <div id="Container">
+    <div id="Content">
+      <div class="c164">
+        <hr />
+
+        <h1><i>Manual Reference Pages  - </i>substitute&nbsp;(3)</h1>
+        <hr />
+      </div><a name="0"></a>
+
+      <h3><a name="0">NAME</a></h3>
+
+      <blockquote>
+        <b>substitute(3f)</b> - [M_strings:EDITING] subroutine globally substitutes one substring for another in string <b>(LICENSE:PD)</b>
+      </blockquote><a name="contents"></a>
+
+      <h3>CONTENTS</h3>
+
+      <blockquote>
+        <a href="#1">Synopsis</a><br />
+        <a href="#2">Description</a><br />
+        <a href="#3">Options</a><br />
+        <a href="#4">Examples</a><br />
+        <a href="#5">Author</a><br />
+        <a href="#6">License</a><br />
+      </blockquote><a name="7"></a>
+
+      <h3><a name="7">SYNOPSIS</a></h3>
+
+      <blockquote>
+        <pre>
+subroutine <b>substitute</b>(targetline,old,new,ierr,start,end)
+<br />
+    character(len=*)              :: targetline
+    character(len=*),intent(in)   :: old
+    character(len=*),intent(in)   :: new
+    integer,intent(out),optional  :: ierr
+    integer,intent(in),optional   :: start
+    integer,intent(in),optional   :: end
+</pre>
+      </blockquote><a name="2"></a>
+
+      <h3><a name="2">DESCRIPTION</a></h3>
+
+      <blockquote>
+        Globally substitute one substring for another in string.
+      </blockquote><a name="3"></a>
+
+      <h3><a name="3">OPTIONS</a></h3>
+
+      <blockquote>
+        <table cellpadding="3">
+          <tr valign="top">
+            <td class="c165" colspan="2">TARGETLINE</td>
+          </tr>
+
+          <tr valign="top">
+            <td width="6%"> </td>
+
+            <td>input line to be changed. Must be long enough to hold altered output.</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c165" width="6%" nowrap="nowrap">OLD</td>
+
+            <td valign="bottom">substring to find and replace</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c165" width="6%" nowrap="nowrap">NEW</td>
+
+            <td valign="bottom">replacement for OLD substring</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c165" width="6%" nowrap="nowrap">IERR</td>
+
+            <td valign="bottom">error code. If IER = <b>-1</b> bad directive, &gt;= 0 then count of changes made.</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c165" width="6%" nowrap="nowrap">START</td>
+
+            <td valign="bottom">sets the left margin to be scanned for OLD in TARGETLINE.</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c165" width="6%" nowrap="nowrap">END</td>
+
+            <td valign="bottom">sets the right margin to be scanned for OLD in TARGETLINE.</td>
+          </tr>
+
+          <tr>
+            <td></td>
+          </tr>
+        </table>
+      </blockquote><a name="4"></a>
+
+      <h3><a name="4">EXAMPLES</a></h3>
+
+      <blockquote>
+        Sample Program:
+        <pre>
+   program demo_substitute
+   use M_strings, only : substitute
+   implicit none
+   ! must be long enough to hold changed line
+   character(len=80) :: targetline
+<br />
+   targetline='this is the input string'
+   write(*,*)'ORIGINAL    : '//trim(targetline)
+<br />
+   ! changes the input to 'THis is THe input string'
+   call substitute(targetline,'th','TH')
+   write(*,*)'th =&gt; TH    : '//trim(targetline)
+<br />
+   ! a null old substring means "at beginning of line"
+   ! changes the input to 'BEFORE:this is the input string'
+   call substitute(targetline,'','BEFORE:')
+   write(*,*)'"" =&gt; BEFORE: '//trim(targetline)
+<br />
+   ! a null new string deletes occurrences of the old substring
+   ! changes the input to 'ths s the nput strng'
+   call substitute(targetline,'i','')
+   write(*,*)'i =&gt; ""     : '//trim(targetline)
+<br />
+   end program demo_substitute
+<br />
+</pre>Expected output
+        <pre>
+    ORIGINAL    : this is the input string
+    th =&gt; TH    : THis is THe input string
+    "" =&gt; BEFORE: BEFORE:THis is THe input string
+    i =&gt; ""     : BEFORE:THs s THe nput strng
+</pre>
+      </blockquote><a name="5"></a>
+
+      <h3><a name="5">AUTHOR</a></h3>
+
+      <blockquote>
+        John S. Urban
+      </blockquote><a name="6"></a>
+
+      <h3><a name="6">LICENSE</a></h3>
+
+      <blockquote>
+        Public Domain
+      </blockquote>
+      <hr />
+
+      <table width="100%">
+        <tr>
+          <td width="33%"></td>
+
+          <td width="33%" align="center">substitute (3)</td>
+
+          <td class="c166" align="right" width="33%">December 15, 2019</td>
+        </tr>
+      </table><span class="c167">Generated by <a href="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</a> from
+      107b3f95-3699-40ef-b712-9d7ad4e591c7 using man macros.</span><br />
+      <br />
+
+      <div class="c164"><img src="images/substitute.3.gif" /></div>
+    </div>
+  </div>
+</body>
+</html>

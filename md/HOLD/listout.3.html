@@ -1,0 +1,220 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator" content="HTML Tidy for Cygwin (vers 25 March 2009), see www.w3.org" />
+
+  <title></title>
+  <style type="text/css">
+/*<![CDATA[*/
+
+  px {font-family: "Lucida Console", Monaco, monospace}
+  p { font-size:100%; line-height:1.1em; }
+  body {xfont-style: sans-serif}
+  body {
+  color:#333; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:1em; line-height:1.3em; }
+  a:visited { color:#666; }
+  h1,h2,h3,h4,h5,h6 { color:#333; font-family:georgia, verdana, sans-serif; }
+  h1 { font-size:150%; page-break-before:auto;background-color: #aaaaff}
+  h2 { font-size:143%;color:teal; }
+  h3 { font-size:134%;color:blue; }
+  h4 { font-size:120%;color:gray; }
+  img { max-width: 55em}
+  p{ padding: 0;margin:0; }
+  p{ padding-right:1.4em; }
+  p{ padding-bottom:1em; }
+  p{ padding-top:1em; }
+  p{ whitespace: pre-wrap; }
+  h5,h6 { font-size:100% }
+  a.nav,a:link.nav, a:visited.nav { background-color:#FFF; color:#000; }
+  XXtable { border:double #000; border-collapse:collapse; }
+  XXtable { border-collapse:collapse; }
+  XXtd { border:thin solid #888; }
+  XXtd { border:none; }
+  li { margin-bottom:0.5em; }
+  blockquote { display:block; font-size:100%; line-height:1.1em; margin:0 0 1.5em; padding:0 2.5em; }
+  pre { background-color:#DDD; font-size:100%; overflow:auto; padding:1em; }
+  a,li span { color:#000; }
+  a:hover, a.nav:hover, a:hover math { background-color:#000; color:#FFF; }
+  #Container { margin:0 10px; text-align:center; background-color: #BBB}
+  #Content { border-top:none; margin:auto; padding:0.3em; text-align:left; width:100%; max-width:55em; background:#FFF}
+  span.webName { font-size:.5em; }
+  textarea#content { font-size: 1em; line-height: 1.125; }
+  h1#pageName { line-height:1em; margin:0.2em 0 0.2em 0; padding:0; }
+  .property { color:#666; font-size:100%; }
+  a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
+  .byline { color:#666; font-size:1.0em; font-style:italic; margin-bottom:1em; padding-top:1px; } 
+  /*]]>*/
+  </style>
+  <style type="text/css">
+/*<![CDATA[*/
+  body {
+  background-color: #F0F0F0;
+  color: #000000;
+  }
+  :link { color: #0000FF }
+  :visited { color: #C000C0 }
+  :active { color: #FF0000 }
+  span.c88 {font-size: 80%}
+  td.c87 {font-style: italic}
+  td.c86 {font-weight: bold}
+  div.c85 {text-align: center}
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <a name="top"></a>
+
+  <h5><a href="download.html">[UP]</a></h5>
+
+  <div id="Container">
+    <div id="Content">
+      <div class="c85">
+        <hr />
+
+        <h1><i>Manual Reference Pages  - </i>listout&nbsp;(3)</h1>
+        <hr />
+      </div><a name="0"></a>
+
+      <h3><a name="0">NAME</a></h3>
+
+      <blockquote>
+        <b>listout(3f)</b> - [M_strings:NUMERIC] expand a list of numbers where negative numbers denote range ends (1 <b>-10</b> means 1 thru 10)
+        <b>(LICENSE:PD)</b>
+      </blockquote><a name="contents"></a>
+
+      <h3>CONTENTS</h3>
+
+      <blockquote>
+        <a href="#1">Synopsis</a><br />
+        <a href="#2">Description</a><br />
+        <a href="#3">Options</a><br />
+        <a href="#4">Returns</a><br />
+        <a href="#5">Example</a><br />
+        <a href="#6">Author</a><br />
+        <a href="#7">License</a><br />
+      </blockquote><a name="8"></a>
+
+      <h3><a name="8">SYNOPSIS</a></h3>
+
+      <blockquote>
+        <pre>
+subroutine <b>listout</b>(icurve_lists,icurve_expanded,inums,ierr)
+<br />
+   integer,intent(in)    :: icurve_lists(:)
+   integer,intent(out)   :: icurve_expanded(:)
+   integer,intent(out)   :: inums
+   integer,intent(out)   :: ierr
+</pre>
+      </blockquote><a name="2"></a>
+
+      <h3><a name="2">DESCRIPTION</a></h3><a name="3"></a>
+
+      <h3><a name="3">OPTIONS</a></h3>
+
+      <blockquote>
+        <table cellpadding="3">
+          <tr valign="top">
+            <td colspan="2"><b>icurve_lists</b>(:)</td>
+          </tr>
+
+          <tr valign="top">
+            <td width="6%"> </td>
+
+            <td>input array</td>
+          </tr>
+
+          <tr>
+            <td></td>
+          </tr>
+        </table>
+      </blockquote><a name="4"></a>
+
+      <h3><a name="4">RETURNS</a></h3>
+
+      <blockquote>
+        <table cellpadding="3">
+          <tr valign="top">
+            <td colspan="2"><b>icurve_expanded</b>(:)</td>
+          </tr>
+
+          <tr valign="top">
+            <td width="6%"> </td>
+
+            <td>output array; assumed large enough to hold returned list</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c86" width="6%" nowrap="nowrap">inums</td>
+
+            <td valign="bottom">number of icurve_expanded numbers on output</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c86" width="6%" nowrap="nowrap">ierr</td>
+
+            <td valign="bottom">zero if no error occurred</td>
+          </tr>
+
+          <tr>
+            <td></td>
+          </tr>
+        </table>
+      </blockquote><a name="5"></a>
+
+      <h3><a name="5">EXAMPLE</a></h3>
+
+      <blockquote>
+        Sample program:
+        <pre>
+    program demo_listout
+    use M_strings, only : listout
+    implicit none
+    integer,allocatable :: icurve_lists(:)        ! icurve_lists is input array
+    integer :: icurve_expanded(1000)  ! icurve_expanded is output array
+    integer :: inums                  ! number of icurve_lists values on input, number of icurve_expanded numbers on output
+    integer :: i
+    integer :: ierr
+       icurve_lists=[1, 20, -30, 101, 100, 99, 100, -120, 222, -200]
+       inums=size(icurve_lists)
+       call listout(icurve_lists,icurve_expanded,inums,ierr)
+       if(ierr.eq.0)then
+          write(*,'(i0)')(icurve_expanded(i),i=1,inums)
+       else
+          write(*,'(a,i0)')'error occurred in *listout* ',ierr
+          write(*,'(i0)')(icurve_expanded(i),i=1,inums)
+       endif
+    end program demo_listout
+<br />
+</pre>
+      </blockquote><a name="6"></a>
+
+      <h3><a name="6">AUTHOR</a></h3>
+
+      <blockquote>
+        John S. Urban
+      </blockquote><a name="7"></a>
+
+      <h3><a name="7">LICENSE</a></h3>
+
+      <blockquote>
+        Public Domain
+      </blockquote>
+      <hr />
+
+      <table width="100%">
+        <tr>
+          <td width="33%"></td>
+
+          <td width="33%" align="center">listout (3)</td>
+
+          <td class="c87" align="right" width="33%">December 15, 2019</td>
+        </tr>
+      </table><span class="c88">Generated by <a href="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</a> from
+      15d1b6e8-aaf2-469c-9d38-3a4663d3ec31 using man macros.</span><br />
+      <br />
+
+      <div class="c85"><img src="images/listout.3.gif" /></div>
+    </div>
+  </div>
+</body>
+</html>

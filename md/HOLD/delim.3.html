@@ -1,0 +1,274 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator" content="HTML Tidy for Cygwin (vers 25 March 2009), see www.w3.org" />
+
+  <title></title>
+  <style type="text/css">
+/*<![CDATA[*/
+
+  px {font-family: "Lucida Console", Monaco, monospace}
+  p { font-size:100%; line-height:1.1em; }
+  body {xfont-style: sans-serif}
+  body {
+  color:#333; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:1em; line-height:1.3em; }
+  a:visited { color:#666; }
+  h1,h2,h3,h4,h5,h6 { color:#333; font-family:georgia, verdana, sans-serif; }
+  h1 { font-size:150%; page-break-before:auto;background-color: #aaaaff}
+  h2 { font-size:143%;color:teal; }
+  h3 { font-size:134%;color:blue; }
+  h4 { font-size:120%;color:gray; }
+  img { max-width: 55em}
+  p{ padding: 0;margin:0; }
+  p{ padding-right:1.4em; }
+  p{ padding-bottom:1em; }
+  p{ padding-top:1em; }
+  p{ whitespace: pre-wrap; }
+  h5,h6 { font-size:100% }
+  a.nav,a:link.nav, a:visited.nav { background-color:#FFF; color:#000; }
+  XXtable { border:double #000; border-collapse:collapse; }
+  XXtable { border-collapse:collapse; }
+  XXtd { border:thin solid #888; }
+  XXtd { border:none; }
+  li { margin-bottom:0.5em; }
+  blockquote { display:block; font-size:100%; line-height:1.1em; margin:0 0 1.5em; padding:0 2.5em; }
+  pre { background-color:#DDD; font-size:100%; overflow:auto; padding:1em; }
+  a,li span { color:#000; }
+  a:hover, a.nav:hover, a:hover math { background-color:#000; color:#FFF; }
+  #Container { margin:0 10px; text-align:center; background-color: #BBB}
+  #Content { border-top:none; margin:auto; padding:0.3em; text-align:left; width:100%; max-width:55em; background:#FFF}
+  span.webName { font-size:.5em; }
+  textarea#content { font-size: 1em; line-height: 1.125; }
+  h1#pageName { line-height:1em; margin:0.2em 0 0.2em 0; padding:0; }
+  .property { color:#666; font-size:100%; }
+  a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
+  .byline { color:#666; font-size:1.0em; font-style:italic; margin-bottom:1em; padding-top:1px; } 
+  /*]]>*/
+  </style>
+  <style type="text/css">
+/*<![CDATA[*/
+  body {
+  background-color: #F0F0F0;
+  color: #000000;
+  }
+  :link { color: #0000FF }
+  :visited { color: #C000C0 }
+  :active { color: #FF0000 }
+  span.c34 {font-size: 80%}
+  td.c33 {font-style: italic}
+  td.c32 {font-weight: bold}
+  div.c31 {text-align: center}
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <a name="top"></a>
+
+  <h5><a href="download.html">[UP]</a></h5>
+
+  <div id="Container">
+    <div id="Content">
+      <div class="c31">
+        <hr />
+
+        <h1><i>Manual Reference Pages  - </i>delim&nbsp;(3)</h1>
+        <hr />
+      </div><a name="0"></a>
+
+      <h3><a name="0">NAME</a></h3>
+
+      <blockquote>
+        <b>delim(3f)</b> - [M_strings:TOKENS] parse a string and store tokens into an array <b>(LICENSE:PD)</b>
+      </blockquote><a name="contents"></a>
+
+      <h3>CONTENTS</h3>
+
+      <blockquote>
+        <a href="#1">Synopsis</a><br />
+        <a href="#2">Description</a><br />
+        <a href="#3">Options</a><br />
+        <a href="#4">Examples</a><br />
+        <a href="#5">Author</a><br />
+        <a href="#6">License</a><br />
+      </blockquote><a name="7"></a>
+
+      <h3><a name="7">SYNOPSIS</a></h3>
+
+      <blockquote>
+        <pre>
+subroutine <b>delim</b>(line,array,n,icount,ibegin,iterm,ilen,dlim)
+<br />
+    character(len=*),intent(in)  :: line
+    integer,integer(in)          :: n
+    integer,intent(out)          :: icount
+    character(len=*)             :: array(n)
+    integer,intent(out)          :: ibegin(n)
+    integer,intent(out)          :: iterm(n)
+    integer,intent(out)          :: ilen
+    character(len=*)             :: dlim
+</pre>
+      </blockquote><a name="2"></a>
+
+      <h3><a name="2">DESCRIPTION</a></h3>
+
+      <blockquote>
+        <p>Given a LINE of structure " par1 par2 par3 ... parn " store each <b>par</b>(n) into a separate variable in ARRAY (UNLESS
+        <b>ARRAY</b>(1).eq.'#N#')</p>
+
+        <p>Also set ICOUNT to number of elements of array initialized, and return beginning and ending positions for each element in <b>IBEGIN</b>(N) and
+        <b>ITERM</b>(N).</p>
+
+        <p>Return position of last non-blank character (even if more than N elements were found) in ILEN</p>
+
+        <p>No quoting or escaping of delimiter is allowed, so the delimiter character can not be placed in a token.</p>
+
+        <p>No checking for more than N parameters; If any more they are ignored.</p>
+      </blockquote><a name="3"></a>
+
+      <h3><a name="3">OPTIONS</a></h3>
+
+      <blockquote>
+        <table cellpadding="3">
+          <tr valign="top">
+            <td class="c32" width="6%" nowrap="nowrap">LINE</td>
+
+            <td valign="bottom">input string to parse into tokens</td>
+          </tr>
+
+          <tr valign="top">
+            <td colspan="2"><b>ARRAY</b>(N)</td>
+          </tr>
+
+          <tr valign="top">
+            <td width="6%"> </td>
+
+            <td>array that receives tokens</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c32" width="6%" nowrap="nowrap">N</td>
+
+            <td valign="bottom">size of arrays ARRAY, IBEGIN, ITERM</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c32" width="6%" nowrap="nowrap">ICOUNT</td>
+
+            <td valign="bottom">number of tokens found <b>IBEGIN</b>(N) starting columns of tokens found</td>
+          </tr>
+
+          <tr valign="top">
+            <td colspan="2"><b>ITERM</b>(N)</td>
+          </tr>
+
+          <tr valign="top">
+            <td width="6%"> </td>
+
+            <td>ending columns of tokens found</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c32" width="6%" nowrap="nowrap">ILEN</td>
+
+            <td valign="bottom">position of last non-blank character in input string LINE</td>
+          </tr>
+
+          <tr valign="top">
+            <td class="c32" width="6%" nowrap="nowrap">DLIM</td>
+
+            <td valign="bottom">delimiter characters</td>
+          </tr>
+
+          <tr>
+            <td></td>
+          </tr>
+        </table>
+      </blockquote><a name="4"></a>
+
+      <h3><a name="4">EXAMPLES</a></h3>
+
+      <blockquote>
+        Sample program:
+        <pre>
+    program demo_delim
+<br />
+    use M_strings, only: delim
+    character(len=80) :: line
+    character(len=80) :: dlm
+    integer,parameter :: n=10
+    character(len=20) :: array(n)=' '
+    integer           :: ibegin(n),iterm(n)
+    line=' first  second 10.3 words_of_stuff  '
+    do i20=1,4
+       ! change delimiter list and what is calculated or parsed
+       if(i20.eq.1)dlm=' '
+       if(i20.eq.2)dlm='o'
+       if(i20.eq.3)dlm=' aeiou'    ! NOTE SPACE IS FIRST
+       if(i20.eq.3)ARRAY(1)='#N#'  ! QUIT RETURNING STRING ARRAY
+       if(i20.eq.4)line='AAAaBBBBBBbIIIIIi  J K L'
+<br />
+       ! write out a break line composed of =========== ..
+       write(*,'(57("="))')
+       ! show line being parsed
+       write(*,'(a)')'PARSING=['//trim(line)//'] on '//trim(dlm)
+       ! call parsing procedure
+       call delim(line,array,n,icount,ibegin,iterm,ilen,dlm)
+       write(*,*)'number of tokens found=',icount
+       write(*,*)'last character in column ',ilen
+       if(icount.gt.0)then
+          if(ilen.ne.iterm(icount))then
+             write(*,*)'ignored from column ',iterm(icount)+1,' to ',ilen
+          endif
+          do i10=1,icount
+             ! check flag to see if ARRAY() was set
+             if(array(1).ne.'#N#')then
+                ! from returned array
+                write(*,'(a,a,a)',advance='no')&amp;
+                &amp;'[',array(i10)(:iterm(i10)-ibegin(i10)+1),']'
+             endif
+          enddo
+          ! using start and end positions in IBEGIN() and ITERM()
+          write(*,*)
+          do i10=1,icount
+             ! from positions in original line
+             write(*,'(a,a,a)',advance='no')&amp;
+             &amp;'[',line(ibegin(i10):iterm(i10)),']'
+          enddo
+          write(*,*)
+       endif
+    enddo
+    end program demo_delim
+<br />
+</pre>Expected output
+      </blockquote><a name="5"></a>
+
+      <h3><a name="5">AUTHOR</a></h3>
+
+      <blockquote>
+        John S. Urban
+      </blockquote><a name="6"></a>
+
+      <h3><a name="6">LICENSE</a></h3>
+
+      <blockquote>
+        Public Domain
+      </blockquote>
+      <hr />
+
+      <table width="100%">
+        <tr>
+          <td width="33%"></td>
+
+          <td width="33%" align="center">delim (3)</td>
+
+          <td class="c33" align="right" width="33%">December 15, 2019</td>
+        </tr>
+      </table><span class="c34">Generated by <a href="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</a> from
+      280880e7-efb4-4140-996a-e63308309bad using man macros.</span><br />
+      <br />
+
+      <div class="c31"><img src="images/delim.3.gif" /></div>
+    </div>
+  </div>
+</body>
+</html>
