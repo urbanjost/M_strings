@@ -2,8 +2,6 @@
 <body>
   <a name="top" id="top"></a>
 
-  <h5><a href="download.html">[UP]</a></h5>
-
   <div id="Container">
     <div id="Content">
       <div class="c5">
