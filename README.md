@@ -23,15 +23,6 @@ the document pages in the PROGRAMS/ sub-directory.
 <blockquote>
 <table cellpadding="3">
 
-<tr><td colspan="3"><b>ARRAY</b></td></tr>
-<tr><td><a href="md/c2s.3.md">     c2s         </a></td><td></td><td> convert C string pointer to Fortran character string</td></tr>
-<tr><td><a href="md/s2c.3.md">     s2c         </a></td><td></td><td> convert character variable to array of characters with last element set to null</td></tr>
-<tr><td><a href="md/switch.3.md">  switch      </a></td><td></td><td> converts between CHARACTER scalar and array of single characters</td></tr>
-
-<tr><td colspan="3"><b>BASE</b></td></tr>
-<tr><td><a href="md/base.3.md">         base        </a></td><td></td><td> convert whole number string in base [2-36] to string in alternate base [2-36]</td></tr>
-<tr><td><a href="md/codebase.3.md">     codebase    </a></td><td></td><td> convert whole number in base 10 to string in base [2-36]</td></tr>
-<tr><td><a href="md/decodebase.3.md">   decodebase  </a></td><td></td><td> convert whole number string in base [2-36] to base 10 number</td></tr>
 
 <tr><td colspan="3"><b>CASE</b></td></tr>
 <tr><td><a href="md/lower.3.md">        lower        </a></td><td></td><td> changes a string to lowercase over specified range</td></tr>
@@ -75,6 +66,11 @@ the document pages in the PROGRAMS/ sub-directory.
 <tr><td><a href="md/value_to_string.3.md"> value_to_string  </a></td><td></td><td> return numeric string from a numeric value</td></tr>
 <tr><td><a href="md/string_to_value.3.md"> string_to_value  </a></td><td></td><td> subroutine returns numeric value from string</td></tr>
 
+<tr><td colspan="3"><b>BASE</b></td></tr>
+<tr><td><a href="md/base.3.md">         base        </a></td><td></td><td> convert whole number string in base [2-36] to string in alternate base [2-36]</td></tr>
+<tr><td><a href="md/codebase.3.md">     codebase    </a></td><td></td><td> convert whole number in base 10 to string in base [2-36]</td></tr>
+<tr><td><a href="md/decodebase.3.md">   decodebase  </a></td><td></td><td> convert whole number string in base [2-36] to base 10 number</td></tr>
+
 <tr><td colspan="3"><b>QUOTES</b></td></tr>
 <tr><td><a href="md/quote.3.md">           quote            </a></td><td></td><td> add quotes to string as if written with list-directed input</td></tr>
 <tr><td><a href="md/unquote.3.md">         unquote          </a></td><td></td><td> remove quotes from string as if read with list-directed input</td></tr>
@@ -92,6 +88,11 @@ the document pages in the PROGRAMS/ sub-directory.
 <tr><td><a href="md/indent.3.md">          indent           </a></td><td></td><td> count number of leading spaces in a string</td></tr>
 <tr><td><a href="md/nospace.3.md">         nospace          </a></td><td></td><td> remove all whitespace from input string</td></tr>
 <tr><td><a href="md/crop.3.md">    crop             </a></td><td></td><td> trim leading blanks and trailing blanks from a string</td></tr>
+
+<tr><td colspan="3"><b>ARRAY and C</b></td></tr>
+<tr><td><a href="md/c2s.3.md">     c2s         </a></td><td></td><td> convert C string pointer to Fortran character string</td></tr>
+<tr><td><a href="md/s2c.3.md">     s2c         </a></td><td></td><td> convert character variable to array of characters with last element set to null</td></tr>
+<tr><td><a href="md/switch.3.md">  switch      </a></td><td></td><td> converts between CHARACTER scalar and array of single characters</td></tr>
 
 <tr><td colspan="3"><b>MISCELLANEOUS</b></td></tr>
 <tr><td><a href="md/rotate13.3.md">        rotate13         </a></td><td></td><td> apply trivial ROT13 encryption to a string</td></tr>
