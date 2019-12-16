@@ -27,7 +27,7 @@ the document pages in the PROGRAMS/ sub-directory.
 <tr><td colspan="3"><b>CASE</b></td></tr>
 <tr><td><a href="md/lower.3.md">        lower        </a></td><td></td><td> changes a string to lowercase over specified range</td></tr>
 <tr><td><a href="md/upper.3.md">        upper        </a></td><td></td><td> changes a string to uppercase</td></tr>
-<tr><td><a href="md/upper_quoted.3.md"> upper_quoted </a></td><td></td><td> converts string to miniscule skipping strings quoted per Fortran syntax rules</td></tr>
+<tr><td><a href="md/upper_quoted.3.md"> upper_quoted </a></td><td></td><td> converts string to majuscule skipping strings quoted per Fortran syntax rules</td></tr>
 
 <tr><td colspan="3"><b>COMPARE</b></td></tr>
 <tr><td><a href="md/matchw.3.md">          matchw    </a></td><td></td><td> compare given string for match to pattern which may contain wildcard characters</td></tr>
