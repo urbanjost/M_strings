@@ -986,7 +986,9 @@ EOF
 for NAME in \
    M_strings.3.md \
    adjustc.3.md \
+   atleast.3.md \
    base.3.md \
+   c2s.3.md \
    change.3.md \
    chomp.3.md \
    codebase.3.md \
