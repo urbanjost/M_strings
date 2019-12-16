@@ -32,7 +32,7 @@ the document pages in the PROGRAMS/ sub-directory.
 <tr><td><a href="md/upper.3.md">	   upper            </a></td><td>CASE</td><td> changes a string to uppercase</td></tr>
 <tr><td><a href="md/upper_quoted.3.md"> upper_quoted     </a></td><td>CASE</td><td> elemental function converts string to miniscule skipping strings quoted per Fortran syntax rules</td></tr>
 <tr><td><a href="md/matchw.3.md">	   matchw           </a></td><td>COMPARE</td><td> compare given string for match to pattern which may contain wildcard characters</td></tr>
-<tr><td><a href="md/isalnum.3.md">	   isalnum ,isalpha,isascii,isblank,iscntrl,isdigit,isgraph,islower,isprint,ispunct,isspace,isupper,isxdigit</a></td><td>COMPARE</td><td> test membership in subsets of ASCII set</td></tr>
+<tr><td><a href="md/isalnum.3.md">	   isalnum , isalpha, isascii, isblank, iscntrl, isdigit, isgraph, islower, isprint, ispunct, isspace, isupper, isxdigit</a></td><td>COMPARE</td><td> test membership in subsets of ASCII set</td></tr>
 <tr><td><a href="md/join.3.md">	   join             </a></td><td>EDITING</td><td> append CHARACTER variable array into a single CHARACTER variable with specified separator</td></tr>
 <tr><td><a href="md/change.3.md">	   change           </a></td><td>EDITING</td><td> change old string to new string with a directive like a line editor</td></tr>
 <tr><td><a href="md/modif.3.md">	   modif            </a></td><td>EDITING</td><td> emulate the MODIFY command from the line editor XEDIT</td></tr>
