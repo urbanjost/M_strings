@@ -7,7 +7,8 @@
       </div><a name="0"></a>
       <h3><a name="0">NAME</a></h3>
       <blockquote>
-        <b>upper_quoted(3f)</b> - [M_strings:CASE] elemental function converts string to miniscule skipping strings quoted per Fortran syntax rules
+        <b>upper_quoted(3f)</b> - [M_strings:CASE] elemental function converts string to majuscule skipping strings quoted per Fortran syntax rules
+
         <b>(LICENSE:PD)</b>
       </blockquote><a name="contents"></a>
       <h3><a name="8">SYNOPSIS</a></h3>
