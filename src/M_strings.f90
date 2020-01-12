@@ -2874,9 +2874,9 @@ character(len=:),allocatable         :: right_local
    string=''
    do i = 1,size(str)
       if(trm_local)then
-         string=string//left_local//trim(str_local(i))//right_local//sep_local
+         string=string//left_local//trim(str(i))//right_local//sep_local
       else
-         string=string//left_local//str_local(i)//right_local//sep_local
+         string=string//left_local//str(i)//right_local//sep_local
       endif
    enddo
 end function join
