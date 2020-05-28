@@ -27,6 +27,12 @@
           targetline=replace('a b ab baaa aaaa aa aa a a a aa aaaaaa','aa','CCCC',range=[3,5])
           write(*,*)'replace aa with CCCC instances 3 to 5 ['//targetline//']'
 
+	  write(*,*) replace('11-9','-',' -').eq.'11 -9'
+	  write(*,*) replace('11-9','-','- ').eq.'11- 9'
+	  write(*,*) replace('-','-','- ').eq.'-'
+	  write(*,*) replace('--','-','- ').eq.'- -'
+	  write(*,*) replace('---','-','- ').eq.'- - -'
+
           contains
           subroutine testit(old,new,expected)
           character(len=*),intent(in) :: old,new,expected

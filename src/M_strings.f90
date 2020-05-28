@@ -14,8 +14,8 @@
 !!
 !!    As newer Fortran features become more widely available a significant
 !!    amount of the code (much of which originated as pre-Fortran90 routines)
-!!    is subject to updating so new versions of this module are not expected
-!!    to be compatible with older versions.
+   !!    is subject to updating so new versions of this module are not expected
+   !!    to be compatible with older versions.
 !!##SYNOPSIS
 !!
 !!  public entities:
@@ -1758,7 +1758,7 @@ integer                       :: range_local(2)
    case (0)                                            ! there were no changes made to the window
       newline=targetline                               ! if no changes made output should be input
    case default
-      if(ic.lt.len(targetline))then                    ! if there is more after last change on original line add it
+      if(ic.le.len(targetline))then                    ! if there is more after last change on original line add it
          newline=newline(:ichar-1)//targetline(ic:max(ic,original_input_length))
       endif
    end select
