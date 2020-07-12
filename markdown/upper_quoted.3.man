@@ -1,0 +1,51 @@
+NAME
+ upper_quoted(3f) - [M_strings:CASE] elemental function converts string to miniscule skipping strings quoted per Fortran syntax rules
+
+SYNOPSIS
+
+    elemental pure function upper_quoted(str) result (string)
+
+     character(*), intent(in)    :: str
+     character(len(str))         :: string  ! output string
+DESCRIPTION
+    upper_quoted(string) returns a copy of the input string with all not-quoted
+    characters converted to uppercase, assuming ASCII character sets
+    are being used. The quoting rules are the same as for Fortran source.
+    Either a single or double quote starts a quoted string, and a quote
+    character of the same type is doubled when it appears internally in
+    the quoted string. If a double quote quotes the string single quotes
+    may appear in the quoted string as single characters, and vice-versa
+    for single quotes.
+
+OPTIONS
+    str    string to convert to uppercase
+
+RESULTS
+    upper  copy of the input string with all unquoted characters converted
+           to uppercase
+
+EXAMPLE
+
+    Sample program:
+
+     program demo_upper_quoted
+     use M_strings, only: upper_quoted
+     implicit none
+     character(len=:),allocatable  :: s
+     s=' ABCDEFG abcdefg "Double-Quoted" ''Single-Quoted'' "with "" Quote" everything else'
+        write(*,*) 'mixed-case input string is ....',s
+        write(*,*) 'upper-case output string is ...',upper_quoted(s)
+        write(*,*) 'make first character uppercase  ... ',upper_quoted('this is a sentence.')
+        write(*,'(1x,a,*(a:,"+"))') 'upper_quoted(3f) is elemental ==>',upper_quoted(["abc","def","ghi"])
+     end program demo_upper_quoted
+
+    Expected output:
+
+     mixed-case input string is .... ABCDEFG abcdefg "Double-Quoted" 'Single-Quoted' "with "" Quote" everything else
+     upper-case output string is ... ABCDEFG ABCDEFG "Double-Quoted" 'Single-Quoted' "with "" Quote" EVERYTHING ELSE
+     make first character uppercase  ... THIS IS A SENTENCE.
+     upper_quoted(3f) is elemental ==>ABC+DEF+GHI
+AUTHOR
+    John S. Urban
+LICENSE
+    Public Domain

@@ -1,0 +1,51 @@
+NAME
+ listout(3f) - [M_strings:NUMERIC] expand a list of numbers where negative numbers denote range ends (1 -10 means 1 thru 10)
+
+SYNOPSIS
+
+   subroutine listout(icurve_lists,icurve_expanded,inums,ierr)
+
+    integer,intent(in)    :: icurve_lists(:)
+    integer,intent(out)   :: icurve_expanded(:)
+    integer,intent(out)   :: inums
+    integer,intent(out)   :: ierr
+DESCRIPTION
+
+OPTIONS
+    icurve_lists(:)      input array
+
+RETURNS
+    icurve_expanded(:)   output array; assumed large enough to hold returned list
+    inums                number of icurve_expanded numbers on output
+    ierr                 zero if no error occurred
+
+EXAMPLE
+
+   Sample program:
+
+     program demo_listout
+     use M_strings, only : listout
+     implicit none
+     integer,allocatable :: icurve_lists(:)
+     integer :: icurve_expanded(1000)
+     ! icurve_lists is input array
+     integer :: inums
+     ! icurve_expanded is output array
+     integer :: i
+     ! number of icurve_lists values on input, number of icurve_expanded numbers on output
+     integer :: ierr
+        icurve_lists=[1, 20, -30, 101, 100, 99, 100, -120, 222, -200]
+        inums=size(icurve_lists)
+        call listout(icurve_lists,icurve_expanded,inums,ierr)
+        if(ierr.eq.0)then
+           write(*,'(i0)')(icurve_expanded(i),i=1,inums)
+        else
+           write(*,'(a,i0)')'error occurred in *listout* ',ierr
+           write(*,'(i0)')(icurve_expanded(i),i=1,inums)
+        endif
+     end program demo_listout
+
+AUTHOR
+    John S. Urban
+LICENSE
+    Public Domain

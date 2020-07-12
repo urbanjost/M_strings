@@ -1,0 +1,110 @@
+NAME
+    replace(3f) - [M_strings:EDITING] function globally replaces one substring for another in string
+
+SYNOPSIS
+
+    function replace(targetline[,old,new|cmd],range,ierr) result (newline)
+
+     character(len=*)                       :: targetline
+     character(len=*),intent(in),optional   :: old
+     character(len=*),intent(in),optional   :: new
+     character(len=*),intent(in),optional   :: cmd
+     integer,intent(in),optional            :: range(2)
+     integer,intent(out),optional           :: ierr
+     logical,intent(in),optional            :: clip
+     character(len=:),allocatable           :: newline
+DESCRIPTION
+    Globally replace one substring for another in string.
+    Either CMD or OLD and NEW must be specified.
+
+OPTIONS
+     targetline  input line to be changed
+     old         old substring to replace
+     new         new substring
+     cmd         alternate way to specify old and new string, in
+                 the form c/old/new/; where "/" can be any character
+                 not in "old" or "new"
+     range       if present, only change range(1) to range(2) of occurrences of old string
+     ierr        error code. iF ier = -1 bad directive, >= 0 then
+                 count of changes made
+     clip        whether to return trailing spaces or not. Defaults to .false.
+RETURNS
+     newline     allocatable string returned
+
+EXAMPLES
+
+   Sample Program:
+
+    program demo_replace
+    use M_strings, only : replace
+    implicit none
+    character(len=:),allocatable :: targetline
+
+    targetline='this is the input string'
+
+    call testit('th','TH','THis is THe input string')
+
+    ! a null old substring means "at beginning of line"
+    call testit('','BEFORE:', 'BEFORE:THis is THe input string')
+
+    ! a null new string deletes occurrences of the old substring
+    call testit('i','', 'BEFORE:THs s THe nput strng')
+
+    write(*,*)'Examples of the use of RANGE='
+
+    targetline=replace('a b ab baaa aaaa','a','A')
+    write(*,*)'replace a with A ['//targetline//']'
+
+    targetline=replace('a b ab baaa aaaa','a','A',range=[3,5])
+    write(*,*)'replace a with A instances 3 to 5 ['//targetline//']'
+
+    targetline=replace('a b ab baaa aaaa','a','',range=[3,5])
+    write(*,*)'replace a with null instances 3 to 5 ['//targetline//']'
+
+    targetline=replace('a b ab baaa aaaa aa aa a a a aa aaaaaa','aa','CCCC',range=[3,5])
+    write(*,*)'replace aa with CCCC instances 3 to 5 ['//targetline//']'
+
+    contains
+    subroutine testit(old,new,expected)
+    character(len=*),intent(in) :: old,new,expected
+    write(*,*)repeat('=',79)
+    write(*,*)'STARTED ['//targetline//']'
+    write(*,*)'OLD['//old//']', ' NEW['//new//']'
+    targetline=replace(targetline,old,new)
+    write(*,*)'GOT     ['//targetline//']'
+    write(*,*)'EXPECTED['//expected//']'
+    write(*,*)'TEST    [',targetline.eq.expected,']'
+    end subroutine testit
+
+    end program demo_replace
+
+   Expected output
+
+     ===============================================================================
+     STARTED [this is the input string]
+     OLD[th] NEW[TH]
+     GOT     [THis is THe input string]
+     EXPECTED[THis is THe input string]
+     TEST    [ T ]
+     ===============================================================================
+     STARTED [THis is THe input string]
+     OLD[] NEW[BEFORE:]
+     GOT     [BEFORE:THis is THe input string]
+     EXPECTED[BEFORE:THis is THe input string]
+     TEST    [ T ]
+     ===============================================================================
+     STARTED [BEFORE:THis is THe input string]
+     OLD[i] NEW[]
+     GOT     [BEFORE:THs s THe nput strng]
+     EXPECTED[BEFORE:THs s THe nput strng]
+     TEST    [ T ]
+     Examples of the use of RANGE=
+     replace a with A [A b Ab bAAA AAAA]
+     replace a with A instances 3 to 5 [a b ab bAAA aaaa]
+     replace a with null instances 3 to 5 [a b ab b aaaa]
+     replace aa with CCCC instances 3 to 5 [a b ab baaa aaCCCC CCCC CCCC a a a aa aaaaaa]
+
+AUTHOR
+    John S. Urban
+LICENSE
+    Public Domain

@@ -1,0 +1,67 @@
+\hypertarget{M__journal_8f90}{}\section{/home/urbanjs/venus/\+V600/github/\+M\+\_\+strings/src/\+M\+\_\+journal.f90 File Reference}
+\label{M__journal_8f90}\index{/home/urbanjs/venus/\+V600/github/\+M\+\_\+strings/src/\+M\+\_\+journal.\+f90@{/home/urbanjs/venus/\+V600/github/\+M\+\_\+strings/src/\+M\+\_\+journal.\+f90}}
+\subsection*{Data Types}
+\begin{DoxyCompactItemize}
+\item 
+interface \mbox{\hyperlink{interfacem__journal_1_1str}{m\+\_\+journal\+::str}}
+\item 
+interface \mbox{\hyperlink{interfacem__journal_1_1journal}{m\+\_\+journal\+::journal}}
+\end{DoxyCompactItemize}
+\subsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+module \mbox{\hyperlink{namespacem__journal}{m\+\_\+journal}}
+\end{DoxyCompactItemize}
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+character(len=\+:) function, allocatable \mbox{\hyperlink{namespacem__journal_a7906bba242b412d6941f4b32233b7eca}{m\+\_\+journal\+::msg\+\_\+scalar}} (generic0, generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9, generica, genericb, genericc, genericd, generice, genericf, genericg, generich, generici, genericj, nospace)
+\item 
+subroutine \mbox{\hyperlink{M__journal_8f90_aaa8ee15f943d8e1543ae35ab732c3cd2}{print\+\_\+generic}} (generic)
+\item 
+character(len=\+:) function, allocatable \mbox{\hyperlink{namespacem__journal_a1b516ae6ba2da17e10847cf68d6833b1}{m\+\_\+journal\+::msg\+\_\+one}} (generic0, generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9, nospace)
+\item 
+subroutine \mbox{\hyperlink{M__journal_8f90_a9d5e1620d474ac03a74eeb9b0f7d6ae1}{print\+\_\+generic}} (generic)
+\item 
+subroutine \mbox{\hyperlink{namespacem__journal_a21238c3fc7731703c75eb39233ab529e}{m\+\_\+journal\+::where\+\_\+write\+\_\+message}} (where, msg)
+\item 
+subroutine \mbox{\hyperlink{namespacem__journal_a24b891eded8ca585a6a72ab0eef7016c}{m\+\_\+journal\+::flush\+\_\+trail}} ()
+\item 
+subroutine \mbox{\hyperlink{namespacem__journal_a8388800481a5e7ca022b52cfc56b9daf}{m\+\_\+journal\+::set\+\_\+stdout\+\_\+lun}} (iounit)
+\item 
+subroutine \mbox{\hyperlink{namespacem__journal_a25d0f5da7f7e84e22ab0a583447412b1}{m\+\_\+journal\+::where\+\_\+write\+\_\+message\+\_\+all}} (where, g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, nospace)
+\item 
+subroutine \mbox{\hyperlink{namespacem__journal_aa86511a7c388f9286c282f6fa933ab58}{m\+\_\+journal\+::write\+\_\+message\+\_\+only}} (message)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+integer, save, private \mbox{\hyperlink{namespacem__journal_a664cf3fd85385b776d30ea589606ad1c}{m\+\_\+journal\+::stdout}} =O\+U\+T\+P\+U\+T\+\_\+\+U\+N\+IT
+\item 
+logical, save \mbox{\hyperlink{namespacem__journal_a6184fbcebdfa06f0a45ce4c699189b53}{m\+\_\+journal\+::debug}} =.false.
+\item 
+integer, save \mbox{\hyperlink{namespacem__journal_a47e8e34dc4072b04101027394d688519}{m\+\_\+journal\+::last\+\_\+int}} =0
+\end{DoxyCompactItemize}
+
+
+\subsection{Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{M__journal_8f90_aaa8ee15f943d8e1543ae35ab732c3cd2}\label{M__journal_8f90_aaa8ee15f943d8e1543ae35ab732c3cd2}} 
+\index{M\+\_\+journal.\+f90@{M\+\_\+journal.\+f90}!print\+\_\+generic@{print\+\_\+generic}}
+\index{print\+\_\+generic@{print\+\_\+generic}!M\+\_\+journal.\+f90@{M\+\_\+journal.\+f90}}
+\subsubsection{\texorpdfstring{print\+\_\+generic()}{print\_generic()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily subroutine msg\+\_\+scalar\+::print\+\_\+generic (\begin{DoxyParamCaption}\item[{class($\ast$), intent(in)}]{generic }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=323pt]{M__journal_8f90_aaa8ee15f943d8e1543ae35ab732c3cd2_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{M__journal_8f90_a9d5e1620d474ac03a74eeb9b0f7d6ae1}\label{M__journal_8f90_a9d5e1620d474ac03a74eeb9b0f7d6ae1}} 
+\index{M\+\_\+journal.\+f90@{M\+\_\+journal.\+f90}!print\+\_\+generic@{print\+\_\+generic}}
+\index{print\+\_\+generic@{print\+\_\+generic}!M\+\_\+journal.\+f90@{M\+\_\+journal.\+f90}}
+\subsubsection{\texorpdfstring{print\+\_\+generic()}{print\_generic()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily subroutine msg\+\_\+one\+::print\+\_\+generic (\begin{DoxyParamCaption}\item[{class($\ast$), dimension(\+:), intent(in), optional}]{generic }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+

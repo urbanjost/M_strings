@@ -1,0 +1,171 @@
+\hypertarget{namespacem__journal}{}\section{m\+\_\+journal Module Reference}
+\label{namespacem__journal}\index{m\+\_\+journal@{m\+\_\+journal}}
+\subsection*{Data Types}
+\begin{DoxyCompactItemize}
+\item 
+interface \mbox{\hyperlink{interfacem__journal_1_1journal}{journal}}
+\item 
+interface \mbox{\hyperlink{interfacem__journal_1_1str}{str}}
+\end{DoxyCompactItemize}
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+character(len=\+:) function, allocatable \mbox{\hyperlink{namespacem__journal_a7906bba242b412d6941f4b32233b7eca}{msg\+\_\+scalar}} (generic0, generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9, generica, genericb, genericc, genericd, generice, genericf, genericg, generich, generici, genericj, nospace)
+\item 
+character(len=\+:) function, allocatable \mbox{\hyperlink{namespacem__journal_a1b516ae6ba2da17e10847cf68d6833b1}{msg\+\_\+one}} (generic0, generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9, nospace)
+\item 
+subroutine \mbox{\hyperlink{namespacem__journal_a21238c3fc7731703c75eb39233ab529e}{where\+\_\+write\+\_\+message}} (where, msg)
+\item 
+subroutine \mbox{\hyperlink{namespacem__journal_a24b891eded8ca585a6a72ab0eef7016c}{flush\+\_\+trail}} ()
+\item 
+subroutine \mbox{\hyperlink{namespacem__journal_a8388800481a5e7ca022b52cfc56b9daf}{set\+\_\+stdout\+\_\+lun}} (iounit)
+\item 
+subroutine \mbox{\hyperlink{namespacem__journal_a25d0f5da7f7e84e22ab0a583447412b1}{where\+\_\+write\+\_\+message\+\_\+all}} (where, g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, nospace)
+\item 
+subroutine \mbox{\hyperlink{namespacem__journal_aa86511a7c388f9286c282f6fa933ab58}{write\+\_\+message\+\_\+only}} (message)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+integer, save, private \mbox{\hyperlink{namespacem__journal_a664cf3fd85385b776d30ea589606ad1c}{stdout}} =O\+U\+T\+P\+U\+T\+\_\+\+U\+N\+IT
+\item 
+logical, save \mbox{\hyperlink{namespacem__journal_a6184fbcebdfa06f0a45ce4c699189b53}{debug}} =.false.
+\item 
+integer, save \mbox{\hyperlink{namespacem__journal_a47e8e34dc4072b04101027394d688519}{last\+\_\+int}} =0
+\end{DoxyCompactItemize}
+
+
+\subsection{Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{namespacem__journal_a24b891eded8ca585a6a72ab0eef7016c}\label{namespacem__journal_a24b891eded8ca585a6a72ab0eef7016c}} 
+\index{m\+\_\+journal@{m\+\_\+journal}!flush\+\_\+trail@{flush\+\_\+trail}}
+\index{flush\+\_\+trail@{flush\+\_\+trail}!m\+\_\+journal@{m\+\_\+journal}}
+\subsubsection{\texorpdfstring{flush\+\_\+trail()}{flush\_trail()}}
+{\footnotesize\ttfamily subroutine m\+\_\+journal\+::flush\+\_\+trail (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+References where\+\_\+write\+\_\+message().
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacem__journal_a24b891eded8ca585a6a72ab0eef7016c_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespacem__journal_a1b516ae6ba2da17e10847cf68d6833b1}\label{namespacem__journal_a1b516ae6ba2da17e10847cf68d6833b1}} 
+\index{m\+\_\+journal@{m\+\_\+journal}!msg\+\_\+one@{msg\+\_\+one}}
+\index{msg\+\_\+one@{msg\+\_\+one}!m\+\_\+journal@{m\+\_\+journal}}
+\subsubsection{\texorpdfstring{msg\+\_\+one()}{msg\_one()}}
+{\footnotesize\ttfamily character(len=\+:) function, allocatable m\+\_\+journal\+::msg\+\_\+one (\begin{DoxyParamCaption}\item[{class($\ast$), dimension(\+:), intent(in)}]{generic0,  }\item[{class($\ast$), dimension(\+:), intent(in), optional}]{generic1,  }\item[{class($\ast$), dimension(\+:), intent(in), optional}]{generic2,  }\item[{class($\ast$), dimension(\+:), intent(in), optional}]{generic3,  }\item[{class($\ast$), dimension(\+:), intent(in), optional}]{generic4,  }\item[{class($\ast$), dimension(\+:), intent(in), optional}]{generic5,  }\item[{class($\ast$), dimension(\+:), intent(in), optional}]{generic6,  }\item[{class($\ast$), dimension(\+:), intent(in), optional}]{generic7,  }\item[{class($\ast$), dimension(\+:), intent(in), optional}]{generic8,  }\item[{class($\ast$), dimension(\+:), intent(in), optional}]{generic9,  }\item[{logical, intent(in), optional}]{nospace }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+References print\+\_\+generic().
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{namespacem__journal_a1b516ae6ba2da17e10847cf68d6833b1_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespacem__journal_a7906bba242b412d6941f4b32233b7eca}\label{namespacem__journal_a7906bba242b412d6941f4b32233b7eca}} 
+\index{m\+\_\+journal@{m\+\_\+journal}!msg\+\_\+scalar@{msg\+\_\+scalar}}
+\index{msg\+\_\+scalar@{msg\+\_\+scalar}!m\+\_\+journal@{m\+\_\+journal}}
+\subsubsection{\texorpdfstring{msg\+\_\+scalar()}{msg\_scalar()}}
+{\footnotesize\ttfamily character(len=\+:) function, allocatable m\+\_\+journal\+::msg\+\_\+scalar (\begin{DoxyParamCaption}\item[{class($\ast$), intent(in), optional}]{generic0,  }\item[{class($\ast$), intent(in), optional}]{generic1,  }\item[{class($\ast$), intent(in), optional}]{generic2,  }\item[{class($\ast$), intent(in), optional}]{generic3,  }\item[{class($\ast$), intent(in), optional}]{generic4,  }\item[{class($\ast$), intent(in), optional}]{generic5,  }\item[{class($\ast$), intent(in), optional}]{generic6,  }\item[{class($\ast$), intent(in), optional}]{generic7,  }\item[{class($\ast$), intent(in), optional}]{generic8,  }\item[{class($\ast$), intent(in), optional}]{generic9,  }\item[{class($\ast$), intent(in), optional}]{generica,  }\item[{class($\ast$), intent(in), optional}]{genericb,  }\item[{class($\ast$), intent(in), optional}]{genericc,  }\item[{class($\ast$), intent(in), optional}]{genericd,  }\item[{class($\ast$), intent(in), optional}]{generice,  }\item[{class($\ast$), intent(in), optional}]{genericf,  }\item[{class($\ast$), intent(in), optional}]{genericg,  }\item[{class($\ast$), intent(in), optional}]{generich,  }\item[{class($\ast$), intent(in), optional}]{generici,  }\item[{class($\ast$), intent(in), optional}]{genericj,  }\item[{logical, intent(in), optional}]{nospace }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+References print\+\_\+generic().
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=323pt]{namespacem__journal_a7906bba242b412d6941f4b32233b7eca_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespacem__journal_a8388800481a5e7ca022b52cfc56b9daf}\label{namespacem__journal_a8388800481a5e7ca022b52cfc56b9daf}} 
+\index{m\+\_\+journal@{m\+\_\+journal}!set\+\_\+stdout\+\_\+lun@{set\+\_\+stdout\+\_\+lun}}
+\index{set\+\_\+stdout\+\_\+lun@{set\+\_\+stdout\+\_\+lun}!m\+\_\+journal@{m\+\_\+journal}}
+\subsubsection{\texorpdfstring{set\+\_\+stdout\+\_\+lun()}{set\_stdout\_lun()}}
+{\footnotesize\ttfamily subroutine m\+\_\+journal\+::set\+\_\+stdout\+\_\+lun (\begin{DoxyParamCaption}\item[{integer, intent(in)}]{iounit }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+References stdout.
+
+\mbox{\Hypertarget{namespacem__journal_a21238c3fc7731703c75eb39233ab529e}\label{namespacem__journal_a21238c3fc7731703c75eb39233ab529e}} 
+\index{m\+\_\+journal@{m\+\_\+journal}!where\+\_\+write\+\_\+message@{where\+\_\+write\+\_\+message}}
+\index{where\+\_\+write\+\_\+message@{where\+\_\+write\+\_\+message}!m\+\_\+journal@{m\+\_\+journal}}
+\subsubsection{\texorpdfstring{where\+\_\+write\+\_\+message()}{where\_write\_message()}}
+{\footnotesize\ttfamily subroutine m\+\_\+journal\+::where\+\_\+write\+\_\+message (\begin{DoxyParamCaption}\item[{character(len=$\ast$), intent(in)}]{where,  }\item[{character(len=$\ast$), intent(in)}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+References debug, last\+\_\+int, and stdout.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacem__journal_a21238c3fc7731703c75eb39233ab529e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespacem__journal_a25d0f5da7f7e84e22ab0a583447412b1}\label{namespacem__journal_a25d0f5da7f7e84e22ab0a583447412b1}} 
+\index{m\+\_\+journal@{m\+\_\+journal}!where\+\_\+write\+\_\+message\+\_\+all@{where\+\_\+write\+\_\+message\+\_\+all}}
+\index{where\+\_\+write\+\_\+message\+\_\+all@{where\+\_\+write\+\_\+message\+\_\+all}!m\+\_\+journal@{m\+\_\+journal}}
+\subsubsection{\texorpdfstring{where\+\_\+write\+\_\+message\+\_\+all()}{where\_write\_message\_all()}}
+{\footnotesize\ttfamily subroutine m\+\_\+journal\+::where\+\_\+write\+\_\+message\+\_\+all (\begin{DoxyParamCaption}\item[{character(len=$\ast$), intent(in)}]{where,  }\item[{class($\ast$), intent(in)}]{g0,  }\item[{class($\ast$), intent(in), optional}]{g1,  }\item[{class($\ast$), intent(in), optional}]{g2,  }\item[{class($\ast$), intent(in), optional}]{g3,  }\item[{class($\ast$), intent(in), optional}]{g4,  }\item[{class($\ast$), intent(in), optional}]{g5,  }\item[{class($\ast$), intent(in), optional}]{g6,  }\item[{class($\ast$), intent(in), optional}]{g7,  }\item[{class($\ast$), intent(in), optional}]{g8,  }\item[{class($\ast$), intent(in), optional}]{g9,  }\item[{logical, intent(in), optional}]{nospace }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+References where\+\_\+write\+\_\+message().
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacem__journal_a25d0f5da7f7e84e22ab0a583447412b1_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespacem__journal_aa86511a7c388f9286c282f6fa933ab58}\label{namespacem__journal_aa86511a7c388f9286c282f6fa933ab58}} 
+\index{m\+\_\+journal@{m\+\_\+journal}!write\+\_\+message\+\_\+only@{write\+\_\+message\+\_\+only}}
+\index{write\+\_\+message\+\_\+only@{write\+\_\+message\+\_\+only}!m\+\_\+journal@{m\+\_\+journal}}
+\subsubsection{\texorpdfstring{write\+\_\+message\+\_\+only()}{write\_message\_only()}}
+{\footnotesize\ttfamily subroutine m\+\_\+journal\+::write\+\_\+message\+\_\+only (\begin{DoxyParamCaption}\item[{character(len=$\ast$), intent(in)}]{message }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+References where\+\_\+write\+\_\+message().
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacem__journal_aa86511a7c388f9286c282f6fa933ab58_cgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{namespacem__journal_a6184fbcebdfa06f0a45ce4c699189b53}\label{namespacem__journal_a6184fbcebdfa06f0a45ce4c699189b53}} 
+\index{m\+\_\+journal@{m\+\_\+journal}!debug@{debug}}
+\index{debug@{debug}!m\+\_\+journal@{m\+\_\+journal}}
+\subsubsection{\texorpdfstring{debug}{debug}}
+{\footnotesize\ttfamily logical, save m\+\_\+journal\+::debug =.false.\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{namespacem__journal_a47e8e34dc4072b04101027394d688519}\label{namespacem__journal_a47e8e34dc4072b04101027394d688519}} 
+\index{m\+\_\+journal@{m\+\_\+journal}!last\+\_\+int@{last\+\_\+int}}
+\index{last\+\_\+int@{last\+\_\+int}!m\+\_\+journal@{m\+\_\+journal}}
+\subsubsection{\texorpdfstring{last\+\_\+int}{last\_int}}
+{\footnotesize\ttfamily integer, save m\+\_\+journal\+::last\+\_\+int =0\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{namespacem__journal_a664cf3fd85385b776d30ea589606ad1c}\label{namespacem__journal_a664cf3fd85385b776d30ea589606ad1c}} 
+\index{m\+\_\+journal@{m\+\_\+journal}!stdout@{stdout}}
+\index{stdout@{stdout}!m\+\_\+journal@{m\+\_\+journal}}
+\subsubsection{\texorpdfstring{stdout}{stdout}}
+{\footnotesize\ttfamily integer, save, private m\+\_\+journal\+::stdout =O\+U\+T\+P\+U\+T\+\_\+\+U\+N\+IT\hspace{0.3cm}{\ttfamily [private]}}
+

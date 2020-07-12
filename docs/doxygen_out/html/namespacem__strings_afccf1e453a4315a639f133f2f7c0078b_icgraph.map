@@ -1,0 +1,16 @@
+<map id="m_strings::fmt" name="m_strings::fmt">
+<area shape="rect" id="node2" href="$namespacem__strings.html#a8a18024e04cc697243355de3d61e171c" title="m_strings::a2d" alt="" coords="187,80,305,107"/>
+<area shape="rect" id="node10" href="$namespacem__strings.html#a5dcd73626c8909c12f8ea29028927a88" title="NAMEvalue_to_string(3f) &#45; [M_strings:NUMERIC] return numeric string from a numeric value (LICENSE:PD)..." alt="" coords="171,250,321,291"/>
+<area shape="rect" id="node12" href="$namespacem__strings.html#a14715e071aea9030b4c68c22fa5a455d" title="m_strings::d2s" alt="" coords="385,157,502,184"/>
+<area shape="rect" id="node13" href="$namespacem__strings.html#ab67ea90007b3f2eb308a5fe8d1cf0df1" title="m_strings::r2s" alt="" coords="386,208,501,235"/>
+<area shape="rect" id="node14" href="$namespacem__strings.html#a76d3a650fbfec1f65d8fd81042347408" title="m_strings::i2s" alt="" coords="387,311,500,337"/>
+<area shape="rect" id="node15" href="$namespacem__strings.html#a75aa4dfd0a231e2bcad03d26231a7c29" title="m_strings::l2s" alt="" coords="387,363,500,389"/>
+<area shape="rect" id="node3" href="$namespacem__strings.html#a6b4babf586dc3586426b13e4bb0fb979" title="NAMEstring_to_value(3f) &#45; [M_strings:NUMERIC] subroutine returns numeric value from string (LICENSE:P..." alt="" coords="386,5,501,32"/>
+<area shape="rect" id="node4" href="$namespacem__strings.html#aca902af295ede82fb0c45174bbfe6eef" title="m_strings::a2i" alt="" coords="386,56,501,83"/>
+<area shape="rect" id="node5" href="$namespacem__strings.html#ae0e2fe7c93e581402a74a7b59e5bb07f" title="NAMEs2v(3f) &#45; [M_strings:NUMERIC] function returns doubleprecision numeric value from a string (LICEN..." alt="" coords="385,107,502,133"/>
+<area shape="rect" id="node6" href="$namespacem__strings.html#a970d99e3a2ab426bb90d6ea90bcc588a" title="m_strings::dble_s2v" alt="" coords="569,31,721,57"/>
+<area shape="rect" id="node7" href="$namespacem__strings.html#aa94164439fc7659e175cf639e7315c0d" title="m_strings::int_s2v" alt="" coords="574,81,715,108"/>
+<area shape="rect" id="node8" href="$namespacem__strings.html#a4e54d205168cab37d25119d74a9ead63" title="m_strings::ints_s2v" alt="" coords="571,132,719,159"/>
+<area shape="rect" id="node9" href="$namespacem__strings.html#ab463f9b431dd817b7b509608ec823b0f" title="m_strings::dbles_s2v" alt="" coords="565,183,724,209"/>
+<area shape="rect" id="node11" href="$namespacem__strings.html#a76a00e3ca7fb7c9b9cadcd484c6e3946" title="NAMEv2s(3f) &#45; [M_strings:NUMERIC] return numeric string from a numeric value (LICENSE:PD) ..." alt="" coords="369,259,517,285"/>
+</map>

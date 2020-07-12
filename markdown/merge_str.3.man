@@ -1,0 +1,55 @@
+NAME
+    merge_str(3f) - [M_strings:LENGTH] pads strings to same length and then calls MERGE(3f)
+
+SYNOPSIS
+
+    function merge_str(str1,str2,expr) result(strout)
+
+     character(len=*),intent(in),optional :: str1
+     character(len=*),intent(in),optional :: str2
+     logical,intent(in)              :: expr
+     character(len=:),allocatable    :: strout
+DESCRIPTION
+    merge_str(3f) pads the shorter of str1 and str2 to the longest length
+    of str1 and str2 and then calls MERGE(padded_str1,padded_str2,expr).
+    It trims trailing spaces off the result and returns the trimmed
+    string. This makes it easier to call MERGE(3f) with strings, as
+    MERGE(3f) requires the strings to be the same length.
+
+    NOTE: STR1 and STR2 are always required even though declared optional.
+          this is so the call "STR_MERGE(A,B,present(A))" is a valid call.
+          The parameters STR1 and STR2 when they are optional parameters
+          can be passed to a procedure if the options are optional on the
+          called procedure.
+
+OPTIONS
+    STR1    string to return if the logical expression EXPR is true
+    STR2    string to return if the logical expression EXPR is false
+    EXPR    logical expression to evaluate to determine whether to return
+            STR1 when true, and STR2 when false.
+RESULT
+     MERGE_STR  a trimmed string is returned that is otherwise the value
+                of STR1 or STR2, depending on the logical expression EXPR.
+
+EXAMPLES
+
+   Sample Program:
+
+     program demo_merge_str
+     use M_strings, only : merge_str
+     implicit none
+     character(len=:), allocatable :: answer
+        answer=merge_str('first string', 'second string is longer',10.eq.10)
+        write(*,'("[",a,"]")') answer
+        answer=merge_str('first string', 'second string is longer',10.ne.10)
+        write(*,'("[",a,"]")') answer
+     end program demo_merge_str
+
+   Expected output
+
+     [first string]
+     [second string is longer]
+AUTHOR
+    John S. Urban
+LICENSE
+    Public Domain

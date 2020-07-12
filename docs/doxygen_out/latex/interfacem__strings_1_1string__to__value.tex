@@ -1,0 +1,76 @@
+\hypertarget{interfacem__strings_1_1string__to__value}{}\section{m\+\_\+strings\+:\+:string\+\_\+to\+\_\+value Interface Reference}
+\label{interfacem__strings_1_1string__to__value}\index{m\+\_\+strings\+::string\+\_\+to\+\_\+value@{m\+\_\+strings\+::string\+\_\+to\+\_\+value}}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \mbox{\hyperlink{interfacem__strings_1_1string__to__value_afca39f47317f33e65a7bd2cb0f8ddf58}{a2d}} (chars, valu, ierr, onerr)
+\item 
+subroutine \mbox{\hyperlink{interfacem__strings_1_1string__to__value_aec779c978fa7bcc812c6cb029321b5f0}{a2r}} (chars, valu, ierr)
+\begin{DoxyCompactList}\small\item\em \subsubsection*{N\+A\+ME}
+
+string\+\_\+to\+\_\+value(3f) -\/ \mbox{[}M\+\_\+strings\+:N\+U\+M\+E\+R\+IC\mbox{]} subroutine returns numeric value from string (L\+I\+C\+E\+N\+SE\+:PD) \end{DoxyCompactList}\item 
+subroutine \mbox{\hyperlink{interfacem__strings_1_1string__to__value_a2089572a0b06d524be83d9089589c959}{a2i}} (chars, valu, ierr)
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{interfacem__strings_1_1string__to__value_afca39f47317f33e65a7bd2cb0f8ddf58}\label{interfacem__strings_1_1string__to__value_afca39f47317f33e65a7bd2cb0f8ddf58}} 
+\index{m\+\_\+strings\+::string\+\_\+to\+\_\+value@{m\+\_\+strings\+::string\+\_\+to\+\_\+value}!a2d@{a2d}}
+\index{a2d@{a2d}!m\+\_\+strings\+::string\+\_\+to\+\_\+value@{m\+\_\+strings\+::string\+\_\+to\+\_\+value}}
+\subsubsection{\texorpdfstring{a2d()}{a2d()}}
+{\footnotesize\ttfamily subroutine m\+\_\+strings\+::string\+\_\+to\+\_\+value\+::a2d (\begin{DoxyParamCaption}\item[{character(len=$\ast$), intent(in)}]{chars,  }\item[{doubleprecision, intent(out)}]{valu,  }\item[{integer, intent(out)}]{ierr,  }\item[{class($\ast$), intent(in), optional}]{onerr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{interfacem__strings_1_1string__to__value_a2089572a0b06d524be83d9089589c959}\label{interfacem__strings_1_1string__to__value_a2089572a0b06d524be83d9089589c959}} 
+\index{m\+\_\+strings\+::string\+\_\+to\+\_\+value@{m\+\_\+strings\+::string\+\_\+to\+\_\+value}!a2i@{a2i}}
+\index{a2i@{a2i}!m\+\_\+strings\+::string\+\_\+to\+\_\+value@{m\+\_\+strings\+::string\+\_\+to\+\_\+value}}
+\subsubsection{\texorpdfstring{a2i()}{a2i()}}
+{\footnotesize\ttfamily subroutine m\+\_\+strings\+::string\+\_\+to\+\_\+value\+::a2i (\begin{DoxyParamCaption}\item[{character(len=$\ast$), intent(in)}]{chars,  }\item[{integer, intent(out)}]{valu,  }\item[{integer, intent(out)}]{ierr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{interfacem__strings_1_1string__to__value_aec779c978fa7bcc812c6cb029321b5f0}\label{interfacem__strings_1_1string__to__value_aec779c978fa7bcc812c6cb029321b5f0}} 
+\index{m\+\_\+strings\+::string\+\_\+to\+\_\+value@{m\+\_\+strings\+::string\+\_\+to\+\_\+value}!a2r@{a2r}}
+\index{a2r@{a2r}!m\+\_\+strings\+::string\+\_\+to\+\_\+value@{m\+\_\+strings\+::string\+\_\+to\+\_\+value}}
+\subsubsection{\texorpdfstring{a2r()}{a2r()}}
+{\footnotesize\ttfamily subroutine m\+\_\+strings\+::string\+\_\+to\+\_\+value\+::a2r (\begin{DoxyParamCaption}\item[{character(len=$\ast$), intent(in)}]{chars,  }\item[{\mbox{\hyperlink{interfacem__strings_1_1real}{real}}, intent(out)}]{valu,  }\item[{integer, intent(out)}]{ierr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\subsubsection*{N\+A\+ME}
+
+string\+\_\+to\+\_\+value(3f) -\/ \mbox{[}M\+\_\+strings\+:N\+U\+M\+E\+R\+IC\mbox{]} subroutine returns numeric value from string (L\+I\+C\+E\+N\+SE\+:PD) 
+
+\subsubsection*{S\+Y\+N\+O\+P\+S\+IS}
+
+\begin{DoxyVerb}subroutine string_to_value(chars,valu,ierr)
+
+ character(len=*),intent(in)              :: chars   ! input string
+ integer|real|doubleprecision,intent(out) :: valu
+ integer,intent(out)                      :: ierr
+\end{DoxyVerb}
+ \subsubsection*{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}
+
+returns a numeric value from a numeric character string.
+
+works with any g-\/format input, including integer, real, and exponential. If the input string begins with \char`\"{}\+B\char`\"{}, \char`\"{}\+Z\char`\"{}, or \char`\"{}\+O\char`\"{} and otherwise represents a positive whole number it is assumed to be a binary, hexadecimal, or octal value. If the string contains commas they are removed. If the string is of the form NN\+:M\+MM... or N\+N\+::\+M\+MM then NN is assumed to be the base of the whole number.
+
+if an error occurs in the R\+E\+AD, I\+O\+S\+T\+AT is returned in I\+E\+RR and value is set to zero. if no error occurs, I\+E\+RR=0. \subsubsection*{O\+P\+T\+I\+O\+NS}
+
+C\+H\+A\+RS input string to read numeric value from \subsubsection*{R\+E\+T\+U\+R\+NS}
+
+V\+A\+LU numeric value returned. May be I\+N\+T\+E\+G\+ER, R\+E\+AL, or D\+O\+U\+B\+L\+E\+P\+R\+E\+C\+I\+S\+I\+ON. I\+E\+RR error flag (0 == no error) \subsubsection*{E\+X\+A\+M\+P\+LE}
+
+Sample Program\+: \begin{DoxyVerb}program demo_string_to_value
+use M_strings, only: string_to_value
+character(len=80) :: string
+   string=' -40.5e-2 '
+   call string_to_value(string,value,ierr)
+   write(*,*) 'value of string ['//trim(string)//'] is ',value
+\end{DoxyVerb}
+ end program demo\+\_\+string\+\_\+to\+\_\+value \subsubsection*{A\+U\+T\+H\+OR}
+
+John S. Urban \subsubsection*{L\+I\+C\+E\+N\+SE}
+
+Public Domain 
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/urbanjs/venus/\+V600/github/\+M\+\_\+strings/src/\mbox{\hyperlink{M__strings_8f90}{M\+\_\+strings.\+f90}}\end{DoxyCompactItemize}

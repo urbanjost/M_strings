@@ -1,0 +1,76 @@
+NAME
+     strtok(3f) - [M_strings:TOKENS] Tokenize a string
+SYNOPSIS
+
+       function strtok(source_string,itoken,token_start,token_end,delimiters)
+       result(strtok_status)
+
+        logical                      :: strtok_status    ! returned value
+        character(len=*),intent(in)  :: source_string    ! string to tokenize
+        integer,intent(inout)        :: itoken           ! token count since started
+        integer,intent(out)          :: token_start      ! beginning of token
+        integer,intent(inout)        :: token_end        ! end of token
+        character(len=*),intent(in)  :: delimiters       ! list of separator characters
+
+DESCRIPTION
+     The STRTOK(3f) function is used to isolate sequential tokens in a string,
+     SOURCE_STRING. These tokens are delimited in the string by at least one of
+     the characters in DELIMITERS. The first time that STRTOK(3f) is called,
+     ITOKEN should be specified as zero. Subsequent calls, wishing to obtain
+     further tokens from the same string, should pass back in TOKEN_END  and
+     ITOKEN until the function result returns .false.
+
+     This routine assumes no other calls are made to it using any other input
+     string while it is processing an input line.
+
+OPTIONS
+     source_string   input string to parse
+     itoken          token count should be set to zero for a new string
+     delimiters      characters used to determine the end of tokens
+RETURN
+     token_start     beginning position in SOURCE_STRING where token was found
+     token_end       ending position in SOURCE_STRING where token was found
+     strtok_status
+
+EXAMPLES
+
+   Sample program:
+
+     !===============================================================================
+     program demo_strtok
+     use M_strings, only : strtok
+     character(len=264)          :: inline
+     character(len=*),parameter  :: delimiters=' ;,'
+     integer                     :: ios
+     !-------------------------------------------------------------------------------
+        do                        ! read lines from stdin until end-of-file or error
+           read (unit=*,fmt="(a)",iostat=ios) inline
+           if(ios.ne.0)stop
+           itoken=0 ! must set ITOKEN=0 before looping on strtok(3f) on a new string.
+           do while ( strtok(inline,itoken,istart,iend,delimiters) )
+              print *, itoken,'TOKEN=['//(inline(istart:iend))//']',istart,iend
+           enddo
+        enddo
+     end program demo_strtok
+     !===============================================================================
+
+     sample input file
+
+      this is a test of strtok; A:B :;,C;;
+
+     sample output file
+
+     1  TOKEN=[this]    2   5
+     2  TOKEN=[is]      7   8
+     3  TOKEN=[a]       10  10
+     4  TOKEN=[test]    12  15
+     5  TOKEN=[of]      17  18
+     6  TOKEN=[strtok]  20  25
+     7  TOKEN=[A:B]     28  30
+     8  TOKEN=[:]       32  32
+     9  TOKEN=[C]       35  35
+
+AUTHOR
+    John S. Urban
+LICENSE
+    Public Domain

@@ -1,0 +1,6 @@
+<map id="m_strings::r2s" name="m_strings::r2s">
+<area shape="rect" id="node2" href="$namespacem__strings.html#afccf1e453a4315a639f133f2f7c0078b" title="NAMEfmt(3f) &#45; [M_strings:TOKENS] Tokenize a string, consuming it one token per call (LICENSE:PD) ..." alt="" coords="389,5,507,32"/>
+<area shape="rect" id="node4" href="$namespacem__strings.html#a5dcd73626c8909c12f8ea29028927a88" title="NAMEvalue_to_string(3f) &#45; [M_strings:NUMERIC] return numeric string from a numeric value (LICENSE:PD)..." alt="" coords="168,53,319,94"/>
+<area shape="rect" id="node3" href="$namespacem__strings.html#aa53af9135873e241c487a75a7073bda1" title="NAMEstrtok(3f) &#45; [M_strings:TOKENS] Tokenize a string (LICENSE:PD) SYNOPSIS" alt="" coords="577,5,709,32"/>
+<area shape="rect" id="node5" href="$namespacem__strings.html#aedbeefa963a63edc16b10e2a833eb609" title="NAMEtrimzeros_(3fp) &#45; [M_strings:NUMERIC] Delete trailing zeros from numeric decimal string (LICENSE:..." alt="" coords="367,60,529,87"/>
+</map>

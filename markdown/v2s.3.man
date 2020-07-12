@@ -1,0 +1,52 @@
+NAME
+      v2s(3f) - [M_strings:NUMERIC] return numeric string from a numeric value
+
+SYNOPSIS
+
+       function v2s(value) result(outstr)
+
+        integer|real|doubleprecision|logical,intent(in ) :: value
+        character(len=:),allocatable :: outstr
+        character(len=*),optional,intent(in) :: fmt
+
+DESCRIPTION
+
+    v2s(3f) returns a representation of a numeric value as a
+    string when given a numeric value of type REAL, DOUBLEPRECISION,
+    INTEGER or LOGICAL. It creates the strings using internal WRITE()
+    statements. Trailing zeros are removed from non-zero values, and the
+    string is left-justified.
+
+OPTIONS
+    VALUE   input value to be converted to a string
+    FMT     format can be explicitly given, but is limited to
+            generating a string of eighty or less characters.
+
+RETURNS
+    OUTSTR  returned string representing input value,
+
+EXAMPLE
+
+   Sample Program:
+
+    program demo_v2s
+    use M_strings, only: v2s
+    write(*,*) 'The value of 3.0/4.0 is ['//v2s(3.0/4.0)//']'
+    write(*,*) 'The value of 1234    is ['//v2s(1234)//']'
+    write(*,*) 'The value of 0d0     is ['//v2s(0d0)//']'
+    write(*,*) 'The value of .false. is ['//v2s(.false.)//']'
+    write(*,*) 'The value of .true. is  ['//v2s(.true.)//']'
+    end program demo_v2s
+
+   Expected output
+
+     The value of 3.0/4.0 is [0.75]
+     The value of 1234    is [1234]
+     The value of 0d0     is [0]
+     The value of .false. is [F]
+     The value of .true. is  [T]
+
+AUTHOR
+    John S. Urban
+LICENSE
+    Public Domain

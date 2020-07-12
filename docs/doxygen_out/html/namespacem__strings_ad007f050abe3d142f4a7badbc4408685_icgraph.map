@@ -1,0 +1,6 @@
+<map id="m_strings::nospace" name="m_strings::nospace">
+<area shape="rect" id="node2" href="$namespacem__strings.html#a929c032267cb990ad4991fab4aed1d57" title="NAMEcompact(3f) &#45; [M_strings:WHITESPACE] converts contiguous whitespace to a single character (or not..." alt="" coords="210,5,361,32"/>
+<area shape="rect" id="node3" href="$namespacem__strings.html#a2b6c57cbc52fc86d2f02d0936d3484af" title="NAMEisnumber(3f) &#45; [M_strings:NUMERIC] determine if a string represents a number (LICENSE:PD) SYNOPSI..." alt="" coords="208,56,363,83"/>
+<area shape="rect" id="node4" href="$namespacem__strings.html#a926d1d9f529487149f4e0a1de8294122" title="NAMEmsg(3f) &#45; [M_strings] converts any standard scalar type to a string (LICENSE:PD) SYNOPSIS..." alt="" coords="201,107,369,133"/>
+<area shape="rect" id="node5" href="$namespacem__strings.html#a52d27df9dcea52039c6feccb782ec4fd" title="m_strings::msg_one" alt="" coords="209,157,362,184"/>
+</map>

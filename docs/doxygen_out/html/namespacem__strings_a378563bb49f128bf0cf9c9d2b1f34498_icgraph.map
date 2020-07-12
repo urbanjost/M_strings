@@ -1,0 +1,5 @@
+<map id="m_strings::lenset" name="m_strings::lenset">
+<area shape="rect" id="node2" href="$namespacem__strings.html#aba5a8d7fc092b38d1939f37a13247c1e" title="NAMEmerge_str(3f) &#45; [M_strings:LENGTH] pads strings to same length and then calls MERGE(3f) (LICENSE:..." alt="" coords="188,5,348,32"/>
+<area shape="rect" id="node3" href="$namespacem__strings.html#a3596a4ec755ac897a1dbc0b225d5266a" title="NAMEquote(3f) &#45; [M_strings:QUOTES] add quotes to string as if written with list&#45;directed input (LICEN..." alt="" coords="396,5,527,32"/>
+<area shape="rect" id="node4" href="$namespacem__strings.html#acb88c65d5df2d5b3e55df2d2dab57390" title="NAMEunquote(3f) &#45; [M_strings:QUOTES] remove quotes from string as if read with list&#45;directed input (L..." alt="" coords="575,5,721,32"/>
+</map>

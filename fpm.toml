@@ -1,0 +1,11 @@
+name = "M_strings"
+version = "0.1.0"
+license = "Public Domain"
+author = "John S. Urban"
+maintainer = "urbanjost@comcast.net"
+copyright = "2020 John S. Urban"
+
+[[test]]
+name="test_suite"
+source-dir="test"
+main="test_suite.f90"

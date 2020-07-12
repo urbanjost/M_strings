@@ -1,0 +1,103 @@
+\hypertarget{interfacem__strings_1_1switch}{}\section{m\+\_\+strings\+:\+:switch Interface Reference}
+\label{interfacem__strings_1_1switch}\index{m\+\_\+strings\+::switch@{m\+\_\+strings\+::switch}}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+pure character(len=size(array)) function \mbox{\hyperlink{interfacem__strings_1_1switch_a9e8d2a8effdbed2a822cfe14bbb9983c}{a2s}} (array)
+\begin{DoxyCompactList}\small\item\em \subsubsection*{N\+A\+ME}\end{DoxyCompactList}\item 
+pure character(len=1) function, dimension(len(string)) \mbox{\hyperlink{interfacem__strings_1_1switch_a60d3e2ead0b3cfd08eaf61f93d3caf57}{s2a}} (string)
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{interfacem__strings_1_1switch_a9e8d2a8effdbed2a822cfe14bbb9983c}\label{interfacem__strings_1_1switch_a9e8d2a8effdbed2a822cfe14bbb9983c}} 
+\index{m\+\_\+strings\+::switch@{m\+\_\+strings\+::switch}!a2s@{a2s}}
+\index{a2s@{a2s}!m\+\_\+strings\+::switch@{m\+\_\+strings\+::switch}}
+\subsubsection{\texorpdfstring{a2s()}{a2s()}}
+{\footnotesize\ttfamily pure character(len=size(array)) function m\+\_\+strings\+::switch\+::a2s (\begin{DoxyParamCaption}\item[{character(len=1), dimension(\+:), intent(in)}]{array }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\subsubsection*{N\+A\+ME}
+
+switch(3f) -\/ \mbox{[}M\+\_\+strings\+:A\+R\+R\+AY\mbox{]} converts between C\+H\+A\+R\+A\+C\+T\+ER scalar and array of single characters (L\+I\+C\+E\+N\+SE\+:PD)
+
+\subsubsection*{S\+Y\+N\+O\+P\+S\+IS}
+
+\begin{DoxyVerb}pure function switch(array) result (string)
+
+ character(len=1),intent(in) :: array(:)
+ character(len=SIZE(array))  :: string
+
+  or
+
+pure function switch(string) result (array)
+
+ character(len=1),intent(in) :: array(:)
+ character(len=SIZE(array))  :: string
+\end{DoxyVerb}
+ \subsubsection*{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}
+
+\begin{DoxyVerb}SWITCH(3f): generic function that switches CHARACTER string to an array
+of single characters or an array of single characters to a CHARACTER
+string. Useful in passing strings to C. New Fortran features may
+supersede these routines.
+\end{DoxyVerb}
+
+
+\subsubsection*{E\+X\+A\+M\+P\+L\+ES}
+
+Sample program\+: \begin{DoxyVerb}program demo_switch
+use M_strings, only : switch, isalpha, islower, nospace
+character(len=*),parameter :: dashes='-----------------------------------'
+character(len=*),parameter :: string='This is a string of letters'
+character(len=1024)        :: line
+
+! First, examples of standard Fortran features
+write(*,*)['A','=','=','=','=','='].eq.'='      ! returns array [F,T,T,T,T,T]
+write(*,*)all(['=','=','=','=','=','='].eq.'=') ! this would return T
+write(*,*)all(['A','=','=','=','=','='].eq.'=') ! this would return F
+
+! so to test if the string DASHES is all dashes using SWITCH(3f) is
+if(all(switch(dashes).eq.'-'))then
+   write(*,*)'DASHES is all dashes'
+endif
+
+! so to test is a string is all letters
+! isalpha(3f) returns .true. only if character is a letter
+write(*,*) all(isalpha(switch(dashes)))  ! false because dashes are not a letter
+write(*,*) all(isalpha(switch(string)))  ! false because of spaces
+write(*,*) all(isalpha(switch(nospace(string))))  ! true because removed whitespace
+
+! to see if a string is all uppercase
+write(*,*) string                           ! show the string
+write(*,'(1x,*("[",a,"]":))') switch(string)   ! converted to character array
+write(*,'(*(l3))') islower(switch(string))
+
+line=nospace(string)                        ! we need a string that is all letters
+write(*,*)'LINE=',trim(line)
+write(*,*) islower(switch(nospace(string))) ! all true except first character
+write(*,*) all(islower(switch(nospace(string))))      ! should be false
+write(*,*) all(islower(switch(nospace(string(2:)))))  ! should be true
+
+end program demo_switch
+\end{DoxyVerb}
+
+
+Expected output
+
+$>$ F T T T T T $>$ T $>$ F $>$ D\+A\+S\+H\+ES is all dashes $>$ F $>$ F $>$ T $>$ This is a string of letters $>$ \mbox{[}T\mbox{]}\mbox{[}h\mbox{]}\mbox{[}i\mbox{]}\mbox{[}s\mbox{]}\mbox{[} \mbox{]}\mbox{[}i\mbox{]}\mbox{[}s\mbox{]}\mbox{[} \mbox{]}\mbox{[}a\mbox{]}\mbox{[} \mbox{]}\mbox{[}s\mbox{]}\mbox{[}t\mbox{]}\mbox{[}r\mbox{]}\mbox{[}i\mbox{]}\mbox{[}n\mbox{]}\mbox{[}g\mbox{]}\mbox{[} \mbox{]}\mbox{[}o\mbox{]}\mbox{[}f\mbox{]}\mbox{[} \mbox{]}\mbox{[}l\mbox{]}\mbox{[}e\mbox{]}\mbox{[}t\mbox{]}\mbox{[}t\mbox{]}\mbox{[}e\mbox{]}\mbox{[}r\mbox{]}\mbox{[}s\mbox{]} $>$ F T T T F T T F T F T T T T T T F T T F T T T T T T T $>$ L\+I\+NE=Thisisastringofletters $>$ F T T T T T T T T T T T T T T T T T T T T T $>$ F $>$ T \subsubsection*{A\+U\+T\+H\+OR}
+
+John S. Urban \subsubsection*{L\+I\+C\+E\+N\+SE}
+
+Public Domain \mbox{\Hypertarget{interfacem__strings_1_1switch_a60d3e2ead0b3cfd08eaf61f93d3caf57}\label{interfacem__strings_1_1switch_a60d3e2ead0b3cfd08eaf61f93d3caf57}} 
+\index{m\+\_\+strings\+::switch@{m\+\_\+strings\+::switch}!s2a@{s2a}}
+\index{s2a@{s2a}!m\+\_\+strings\+::switch@{m\+\_\+strings\+::switch}}
+\subsubsection{\texorpdfstring{s2a()}{s2a()}}
+{\footnotesize\ttfamily pure character(len=1) function, dimension(len(string)) m\+\_\+strings\+::switch\+::s2a (\begin{DoxyParamCaption}\item[{character(len=$\ast$), intent(in)}]{string }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/urbanjs/venus/\+V600/github/\+M\+\_\+strings/src/\mbox{\hyperlink{M__strings_8f90}{M\+\_\+strings.\+f90}}\end{DoxyCompactItemize}

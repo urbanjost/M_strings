@@ -1,0 +1,36 @@
+NAME
+    crop(3f) - [M_strings:WHITESPACE] trim leading blanks and trailing blanks from a string
+
+SYNOPSIS
+
+    function crop(strin) result (strout)
+
+     character(len=*),intent(in)  :: strin
+     character(len=:),allocatable :: strout
+DESCRIPTION
+    trim leading blanks from a string and return position of last
+    non-blank character in the string.
+OPTIONS
+    strin   input string to trim leading and trailing space from
+RETURNS
+    strout  cropped version of input string
+EXAMPLE
+
+   Sample program:
+
+    program demo_crop
+    use M_strings, only: crop
+    implicit none
+    character(len=20) ::  untrimmed = '   ABCDEFG abcdefg  '
+       write(*,*) 'untrimmed string=[',untrimmed,']'
+       write(*,*) 'cropped string=[',crop(untrimmed),']'
+    end program demo_crop
+
+   Expected output
+
+      untrimmed string=[   ABCDEFG abcdefg                      ]
+      cropped string=[ABCDEFG abcdefg]
+AUTHOR
+    John S. Urban
+LICENSE
+    Public Domain
