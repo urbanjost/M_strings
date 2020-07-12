@@ -83,17 +83,24 @@ fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/
      fpm build
      fpm test
 
-or just list it as a dependency in your fpm.toml project file.
+or just list it as a dependency in your fpm.toml project file and it will 
+automatically be downloaded and built on demand:
 
+     [dependencies]
+     M_strings      = { git = "https://github.com/urbanjost/M_strings.git" }
 
 ## DEMO PROGRAMS
 
 There are demo programs extracted from the man pages in the demos/ directory
 
 ## UNIT TESTS
-To run the unit tests enter the tests/ directory and enter
-    cd M_strings/src
-    make test
+To run the unit tests enter the src/ directory 
+ 
+     cd M_strings/src
+
+and enter
+
+     make test
 
 # RESPONSES
 
@@ -104,19 +111,22 @@ Discussion is welcome here as well as at
 
 ## USER DOCUMENTATION
 
-   - The routines are described in the following section
+   - The routines are described in the following section below.
+
 in addition there is
+
    - manpages in the man/man3 directory
    - An [index](https://urbanjost.github.io/M_strings/) to HTML versions of the manpages is in the docs/ directory.
    - A single page that uses javascript to combine all the HTML descriptions of the manpages is at
      [BOOK_FORTRAN](https://urbanjost.github.io/M_strings/BOOK_M_strings.html).
+
 working on ...
+
    + [doxygen(1) output](https://urbanjost.github.io/M_strings/doxygen_out/html/index.html).
 
 <?
 <blockquote>
 <table cellpadding="3">
-
 
 <tr><td colspan="3"><b>CASE</b></td></tr>
 <tr><td><a href="docs/lower.3.html">        lower        </a></td><td></td><td> changes a string to lowercase over specified range</td></tr>
