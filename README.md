@@ -6,19 +6,58 @@
    ( A fortran-lang.org [package](https://fortran-lang.org/packages/) )
 
 ## DESCRIPTION
+The M_strings(3fm) module is a collection of Fortran procedures that supplement the built-in intrinsic string routines.
+Routines for parsing, tokenizing, changing case, substituting new strings for substrings, locating strings with simple
+wildcard expressions, removing tabs and line terminators and other string manipulations are included.
 
-This package consists of two modules that supplement the Fortran string
-intrinsics. M_strings.f90 is procedural, and M_strings_oops.f90 is an
-OOP interface to most commonly used functions in M_strings.f90.
+M_strings_oop(3fm) is a companion module that provides an OOP interface to the M_strings module.
 
-for M_strings_ except for the unit tests and manpages (which already
-existed in another form in the GPF (General Purpose Fortran)
-development site) . This is primarily being set up as a test
-for developing a repository that can become an fpm(1) package at
-[https://fortran-lang.org](https://fortran-lang.org). The original
-M_strings.f90 repository will be left in place as-is as this one is
-rather likely to be reorganized to accomodate fpm(1) without really
-adding any new functionality.
+## SYNOPSIS
+public entities:
+
+     use M_strings, only : split,delim,chomp
+     use M_strings, only : substitute,change,modif,transliterate,reverse,replace,join
+     use M_strings, only : upper,lower,upper_quoted
+     use M_strings, only : rotate13
+     use M_strings, only : adjustc,compact,nospace,indent,crop,unquote,quote
+     use M_strings, only : len_white,atleast,stretch,lenset,merge_str
+     use M_strings, only : switch,s2c,c2s
+     use M_strings, only : noesc,notabs,expand,uc,visible
+     use M_strings, only : string_to_value,string_to_values,s2v,s2vs,value_to_string,v2s,msg
+     use M_strings, only : listout,getvals
+     use M_strings, only : matchw
+     use M_strings, only : fmt
+     use M_strings, only : base, decodebase, codebase
+     use M_strings, only : isalnum, isalpha, iscntrl, isdigit, isgraph, islower,
+                           isprint, ispunct, isspace, isupper, isascii, isblank, isxdigit
+
+## INTRINSICS
+
+The M_strings(3fm) module supplements and works in combination
+with the Fortran built-in intrinsics. Standard Stand-alone
+Fortran lets you access the characters in a string using ranges
+much like they are character arrays, assignment, comparisons with
+standard operators, supports dynamically allocatable strings and
+supports concatenation using the // operator, as well as a number
+of intrinsic string routines:
+
+     adjustl             Left adjust a string
+     adjustr             Right adjust a string
+     index               Position of a substring within a string
+     repeat              Repeated string concatenation
+     scan                Scan a string for the presence of a set of characters
+     trim                Remove trailing blank characters of a string
+     verify              Scan a string for the absence of a set of characters
+     len                 It returns the length of a character string
+     achar               converts an integer into a character
+     iachar              converts a character into an integer
+     len_trim            finds length of string with trailing spaces ignored
+     new_line            Newline character
+     selected_char_kind  Choose character kind
+     lge                 Lexical greater than or equal
+     lgt                 Lexical greater than
+     lle                 Lexical less than or equal
+     llt                 Lexical less than
 
 ## DOWNLOAD AND BUILD
 Just download the github repository, enter the src/ directory and run make:
