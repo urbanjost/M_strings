@@ -67,7 +67,7 @@ PROGFILES = \
 ../PROGRAMS/demo_M_strings_oops.f90 \
 $(NULL)
 
-TESTFILES = ../test/test_suite.f90
+TESTFILES = ../test/test_suite_M_strings.f90
 TEST = ${TESTFILES:.f90=}
 
 CPROGFILES = 

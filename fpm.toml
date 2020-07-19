@@ -8,4 +8,4 @@ copyright = "2020 John S. Urban"
 [[test]]
 name="test_suite"
 source-dir="test"
-main="test_suite.f90"
+main="test_suite_M_strings.f90"

@@ -91,7 +91,7 @@ automatically be downloaded and built on demand:
 
 ## DEMO PROGRAMS
 
-There are demo programs extracted from the man pages in the demos/ directory
+There are demo programs extracted from the man pages in the PROGRAMS/ directory
 
 ## UNIT TESTS
 To run the unit tests enter the src/ directory 
