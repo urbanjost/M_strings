@@ -1,7 +1,6 @@
 # M_strings.f90 and associated files
 
 ## NAME
-
    M_strings and M_strings_oops - Fortran modules for processing strings
    ( A fortran-lang.org [package](https://fortran-lang.org/packages/) )
 
@@ -89,7 +88,7 @@ fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/
 or just list it as a dependency in your fpm.toml project file.
 
      [dependencies]
-     M_strings        = { git = "https://github.com/urbanjost/M_strings.git" }
+     M_strings        = { git = "https://github.com/urbanjost/M_strings.git" ,tag="v1.0.1"}
 
 ## DEMO PROGRAMS
 
