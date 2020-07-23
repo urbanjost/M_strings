@@ -32,13 +32,12 @@ public entities:
 
 ## INTRINSICS
 
-The M_strings(3fm) module supplements and works in combination
-with the Fortran built-in intrinsics. Standard Stand-alone
-Fortran lets you access the characters in a string using ranges
-much like they are character arrays, assignment, comparisons with
-standard operators, supports dynamically allocatable strings and
-supports concatenation using the // operator, as well as a number
-of intrinsic string routines:
+The M_strings(3fm) module supplements and works in combination with
+the Fortran built-in intrinsics. Standard Stand-alone Fortran lets
+you access the characters in a string using ranges much like they are
+character arrays, assignment, comparisons with standard operators,
+supports dynamically allocatable strings and supports concatenation
+using the // operator, as well as a number of intrinsic string routines:
 
      adjustl             Left adjust a string
      adjustr             Right adjust a string
