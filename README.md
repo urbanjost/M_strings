@@ -1,3 +1,4 @@
+![string](docs/images/yarnball.gif)
 # M_strings.f90 and associated files
 
 ## NAME

@@ -11,5 +11,5 @@
      M_strings_oops.f90 is an OOP interface to most of the commonly used
      functions in M_strings.f90.
 
-         @image html html/images/swirl.gif
+         @image html html/images/yarnball.gif
 */'
