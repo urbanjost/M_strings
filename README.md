@@ -99,12 +99,6 @@ or just list it as a dependency in your fpm.toml project file.
 
 There are demo programs extracted from the man pages in the test/demos/ directory
 
-# RESPONSES
-
-Discussion is welcome here as well as at
- - [Fortran Discourse](https://fortran-lang.discourse.group)
- - [Fortran Wiki](http://fortranwiki.org)
- - [Google Fortran newsgroup](https://groups.google.com/forum/#!forum/comp.lang.fortran)
 
 ## USER DOCUMENTATION
 
@@ -123,6 +117,12 @@ in addition in the docs/ directory there is
    of the manpages is at
    [BOOK_FORTRAN](https://urbanjost.github.io/M_strings/BOOK_M_strings.html).
 
+## RESPONSES
+
+Discussion is welcome here as well as at
+ - [Fortran Discourse](https://fortran-lang.discourse.group)
+ - [Fortran Wiki](http://fortranwiki.org)
+ - [Google Fortran newsgroup](https://groups.google.com/forum/#!forum/comp.lang.fortran)
 <?
 <blockquote>
 <table cellpadding="3">
