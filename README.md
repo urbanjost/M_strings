@@ -2,14 +2,16 @@
 
 ## NAME
    M_strings and M_strings_oops - Fortran modules for processing strings
-   ( A fortran-lang.org [package](https://fortran-lang.org/packages/) )
 
 ## DESCRIPTION
-The M_strings(3fm) module is a collection of Fortran procedures that supplement the built-in intrinsic string routines.
-Routines for parsing, tokenizing, changing case, substituting new strings for substrings, locating strings with simple
-wildcard expressions, removing tabs and line terminators and other string manipulations are included.
+The `M_strings`(3fm) module is a collection of Fortran procedures that
+supplement the built-in intrinsic string routines.  Routines for parsing,
+tokenizing, changing case, substituting new strings for substrings,
+locating strings with simple wildcard expressions, removing tabs and
+line terminators and other string manipulations are included.
 
-M_strings_oop(3fm) is a companion module that provides an OOP interface to the M_strings module.
+`M_strings_oop`(3fm) is a companion module that provides an OOP interface
+to the `M_strings` module.
 
 ## SYNOPSIS
 public entities:
@@ -31,7 +33,6 @@ public entities:
                            isprint, ispunct, isspace, isupper, isascii, isblank, isxdigit
 
 ## INTRINSICS
-
 The M_strings(3fm) module supplements and works in combination with
 the Fortran built-in intrinsics. Standard Stand-alone Fortran lets
 you access the characters in a string using ranges much like they are
@@ -69,8 +70,9 @@ Just download the github repository, enter the src/ directory and run make:
      make run  # run all the demo programs from the manpages
      make help # see other developer options
 
-This will compile the M_strings(3f) module and optionally build all the example programs from
-the document pages in the PROGRAMS/ sub-directory and run the unit tests.
+This will compile the M_strings(3f) module and optionally build all the
+example programs from the document pages in the PROGRAMS/ sub-directory
+and run the unit tests.
 
 ## SUPPORTS FPM 
 #### (registered at the [fpm(1) registry](https://github.com/fortran-lang/fpm-registry) )
@@ -82,26 +84,19 @@ fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/
      git clone https://github.com/urbanjost/M_strings.git
      cd M_strings
      fpm build
-     fpm test
+     fpm test  # run unit tests
 ```
 
 or just list it as a dependency in your fpm.toml project file.
 
+```toml
      [dependencies]
      M_strings        = { git = "https://github.com/urbanjost/M_strings.git" ,tag="v1.0.1"}
+```
 
 ## DEMO PROGRAMS
 
-There are demo programs extracted from the man pages in the PROGRAMS/ directory
-
-## UNIT TESTS
-To run the unit tests enter the src/ directory 
- 
-     cd M_strings/src
-
-and enter
-
-     make test
+There are demo programs extracted from the man pages in the test/demos/ directory
 
 # RESPONSES
 
@@ -112,18 +107,20 @@ Discussion is welcome here as well as at
 
 ## USER DOCUMENTATION
 
-   - The routines are described in the following section below.
+ - The routines are summarized in the following section below.
 
-in addition there is
+in addition in the docs/ directory there is
 
-   - manpages in the man/man3 directory
-   - An [index](https://urbanjost.github.io/M_strings/) to HTML versions of the manpages is in the docs/ directory.
-   - A single page that uses javascript to combine all the HTML descriptions of the manpages is at
-     [BOOK_FORTRAN](https://urbanjost.github.io/M_strings/BOOK_M_strings.html).
+ - manpages in 
+    + [manpages.zip](https://urbanjost.github.io/M_strings/manpages.zip) 
+    + [manpages.tgz](https://urbanjost.github.io/M_strings/manpages.tgz) 
 
-working on ...
+ - An [index](https://urbanjost.github.io/M_strings/man3.html) to HTML versions
+   of the manpages 
 
-   + [doxygen(1) output](https://urbanjost.github.io/M_strings/doxygen_out/html/index.html).
+ - A single page that uses javascript to combine all the HTML descriptions
+   of the manpages is at
+   [BOOK_FORTRAN](https://urbanjost.github.io/M_strings/BOOK_M_strings.html).
 
 <?
 <blockquote>

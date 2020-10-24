@@ -1,8 +1,8 @@
 'mainpage.txt
 /**
-     @mainpage M_strings Fortran Library
+         @mainpage M_strings Fortran Library
 
-     @section Introduction
+         @section Introduction
 
      M_strings and M_strings_oops - Fortran modules for processing strings
 
@@ -11,5 +11,5 @@
      M_strings_oops.f90 is an OOP interface to most of the commonly used
      functions in M_strings.f90.
 
-     @image html html/images/swirl.gif
+         @image html html/images/swirl.gif
 */'

@@ -1,7 +1,0 @@
-<map id="m_strings::a2d" name="m_strings::a2d">
-<area shape="rect" id="node2" href="$namespacem__strings.html#a3883dae1b85c2d4a09d2d7e46ff422ab" title="NAME" alt="" coords="172,5,344,32"/>
-<area shape="rect" id="node4" href="$namespacem__strings.html#afccf1e453a4315a639f133f2f7c0078b" title="NAMEfmt(3f) &#45; [M_strings:TOKENS] Tokenize a string, consuming it one token per call (LICENSE:PD) ..." alt="" coords="199,56,317,83"/>
-<area shape="rect" id="node6" href="$namespacem__strings.html#ab84a4b7c2be211433c2d1b435a87fa32" title="NAMEsubstitute(3f) &#45; [M_strings:EDITING] subroutine globally substitutes one substring for another in..." alt="" coords="179,107,337,133"/>
-<area shape="rect" id="node3" href="$namespacem__strings.html#a0953ac5c4d31339fdd8ec3acc9c3c915" title="NAMEupper(3f) &#45; [M_strings:CASE] changes a string to uppercase (LICENSE:PD) " alt="" coords="393,5,523,32"/>
-<area shape="rect" id="node5" href="$namespacem__strings.html#aa53af9135873e241c487a75a7073bda1" title="NAMEstrtok(3f) &#45; [M_strings:TOKENS] Tokenize a string (LICENSE:PD) SYNOPSIS" alt="" coords="392,56,524,83"/>
-</map>

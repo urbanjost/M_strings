@@ -2,7 +2,7 @@
 <head> 
 <title> </title>
 <style> 
-px {font-family: "Lucida Console", Monaco, monospace}
+px {font-family: "Lucida Console", Monaco }
 p { font-size:100%; line-height:1.1em; }
 body {xfont-style: sans-serif}
 body {
@@ -41,11 +41,11 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 </style> 
 </head>
 <BODY bgcolor=#F0F0F0 text=#000000 link=#0000ff vlink=#C000C0 alink=#ff0000><A NAME=top></A>
-<h5><a href="download.html">[UP]</a></h5>
+<h5><a href="https://github.com/urbanjost/M_strings">[UP]</a></h5>
 <div id="Container">
 <div id="Content">
 <CENTER>
-<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>join (3)</NOBR><HR></H1>
+<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>join (3m_strings)</NOBR><HR></H1>
 </CENTER>
 <A name=0>
 
@@ -53,10 +53,11 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<B>join(3f) </B>- [M_strings:EDITING] append CHARACTER variable array into a single CHARACTER variable with specified separator
-<B>(LICENSE:PD)
-</B><B>
-</B></BLOCKQUOTE>
+<B>join</B>(3f) - [M_strings:EDITING] append CHARACTER variable array into
+a single CHARACTER variable with specified separator
+(LICENSE:PD)
+<P>
+</BLOCKQUOTE>
 <A name=contents></A><H3>CONTENTS</H3></A>
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
@@ -73,9 +74,9 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<PRE>
 pure function <B>join</B>(str,sep,trm,left,right) result (<I>string</I>)
 <P>
+<PRE>
     character(len=*),intent(in)          :: str(:)
     character(len=*),intent(in),optional :: sep
     logical,intent(in),optional          :: trm
@@ -90,10 +91,10 @@ pure function <B>join</B>(str,sep,trm,left,right) result (<I>string</I>)
 
 </A>
 <BLOCKQUOTE>
-<B>JOIN</B>(3f) appends the elements of a CHARACTER array into a single CHARACTER variable,
-with elements 1 to N joined from left to right.
-By default each element is trimmed of trailing spaces and the default separator is
-a null <I>string</I>.
+<B>JOIN</B>(3f) appends the elements of a CHARACTER array into a single
+CHARACTER variable, with elements 1 to N joined from left to right.
+By default each element is trimmed of trailing spaces and the
+default separator is a null <I>string</I>.
 </BLOCKQUOTE>
 <A name=3>
 
@@ -108,7 +109,8 @@ array of CHARACTER variables to be joined
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>SEP</B> </TD><TD valign=bottom>
-separator <I>string</I> to place between each variable. defaults to a null <I>string</I>.
+separator <I>string</I> to place between each variable. defaults
+to a null <I>string</I>.
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>LEFT</B> </TD><TD valign=bottom>
@@ -120,7 +122,8 @@ separator <I>string</I> to place between each variable. defaults to a null <I>st
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>TRM</B> </TD><TD valign=bottom>
-option to trim each element of STR of trailing spaces. Defaults to .TRUE.
+option to trim each element of STR of trailing
+spaces. Defaults to .TRUE.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
@@ -132,8 +135,9 @@ option to trim each element of STR of trailing spaces. Defaults to .TRUE.
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
 <B>STRING</B> </TD><TD valign=bottom>
-CHARACTER variable composed of all of the elements of <B>STR</B>() appended together
-with the optional separator SEP placed between the elements.
+CHARACTER variable composed of all of the elements of <B>STR</B>()
+appended together with the optional separator SEP placed
+between the elements.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=5>
@@ -145,36 +149,37 @@ with the optional separator SEP placed between the elements.
 Sample program:
 <P>
 <PRE>
-      program demo_join
-      use M_strings, only: join
-      implicit none
-      character(len=:),allocatable  :: s(:)
-      character(len=:),allocatable  :: out
-      integer                       :: i
-         s=[character(len=10) :: &#146;United&#146;,&#146; we&#146;,&#146; stand,&#146;,&#146; divided&#146;,&#146; we fall.&#146;]
-         out=join(s)
-         write(*,&#146;(a)&#146;) out
-         write(*,&#146;(a)&#146;) join(s,trm=.false.)
-         write(*,&#146;(a)&#146;) (join(s,trm=.false.,sep=&#146;|&#146;),i=1,3)
-         write(*,&#146;(a)&#146;) join(s,sep=&#146;&lt;&gt;&#146;)
-         write(*,&#146;(a)&#146;) join(s,sep=&#146;;&#146;,left=&#146;[&#146;,right=&#146;]&#146;)
-         write(*,&#146;(a)&#146;) join(s,left=&#146;[&#146;,right=&#146;]&#146;)
-         write(*,&#146;(a)&#146;) join(s,left=&#146;&gt;&gt;&#146;)
-      end program demo_join
+  program demo_join
+  use M_strings, only: join
+  implicit none
+  character(len=:),allocatable  :: s(:)
+  character(len=:),allocatable  :: out
+  integer                       :: i
+    s=[character(len=10) :: &#146;United&#146;,&#146; we&#146;,&#146; stand,&#146;, &
+    & &#146; divided&#146;,&#146; we fall.&#146;]
+    out=join(s)
+    write(*,&#146;(a)&#146;) out
+    write(*,&#146;(a)&#146;) join(s,trm=.false.)
+    write(*,&#146;(a)&#146;) (join(s,trm=.false.,sep=&#146;|&#146;),i=1,3)
+    write(*,&#146;(a)&#146;) join(s,sep=&#146;&lt;&gt;&#146;)
+    write(*,&#146;(a)&#146;) join(s,sep=&#146;;&#146;,left=&#146;[&#146;,right=&#146;]&#146;)
+    write(*,&#146;(a)&#146;) join(s,left=&#146;[&#146;,right=&#146;]&#146;)
+    write(*,&#146;(a)&#146;) join(s,left=&#146;&gt;&gt;&#146;)
+  end program demo_join
 <P>
 </PRE>
 Expected output:
 <P>
 <PRE>
-      United we stand, divided we fall.
-      United     we        stand,    divided   we fall.
-      United    | we       | stand,   | divided  | we fall. |
-      United    | we       | stand,   | divided  | we fall. |
-      United    | we       | stand,   | divided  | we fall. |
-      United&lt;&gt; we&lt;&gt; stand,&lt;&gt; divided&lt;&gt; we fall.&lt;&gt;
-      [United];[ we];[ stand,];[ divided];[ we fall.];
-      [United][ we][ stand,][ divided][ we fall.]
-      &gt;&gt;United&gt;&gt; we&gt;&gt; stand,&gt;&gt; divided&gt;&gt; we fall.
+  United we stand, divided we fall.
+  United     we        stand,    divided   we fall.
+  United    | we       | stand,   | divided  | we fall. |
+  United    | we       | stand,   | divided  | we fall. |
+  United    | we       | stand,   | divided  | we fall. |
+  United&lt;&gt; we&lt;&gt; stand,&lt;&gt; divided&lt;&gt; we fall.&lt;&gt;
+  [United];[ we];[ stand,];[ divided];[ we fall.];
+  [United][ we][ stand,][ divided][ we fall.]
+  &gt;&gt;United&gt;&gt; we&gt;&gt; stand,&gt;&gt; divided&gt;&gt; we fall.
 <P>
 </PRE>
 </BLOCKQUOTE>
@@ -195,8 +200,8 @@ John S. Urban
 Public Domain
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I></I></TD> <TD width=33% align=center>join (3)</TD> <TD align=right width=33%><I>July 12, 2020</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 6ab939e0-1c8d-4cd4-8c30-601813e14e98 using man macros.</FONT>
-<br><br><center><img src="images/join.3m_strings.gif"></center>
+<TABLE width=100%><TR> <TD width=33%><I></I></TD> <TD width=33% align=center>join (3m_strings)</TD> <TD align=right width=33%><I>October 23, 2020</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 3c836212-4f60-419c-a236-3825d2dad47f using man macros.</FONT>
+<br><br><center><img src="images/join.gif"></center>
 </div>
 </div>
 </body>

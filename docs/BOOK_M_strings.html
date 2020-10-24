@@ -4,7 +4,7 @@
 <meta name="generator" content="vi(1)/vim(1)" />
 <meta name="description" content="@(#)M_strings::BOOK_M_strings: BOOK composed of pages for man(1) topic M_strings"/>
 <meta name="author"      content="urbanjs" />
-<meta name="date"        content="2020-07-05" />
+<meta name="date"        content="2020-10-23" />
 <meta name="keywords"    content="Fortran, Fortran code, source code repository, Fortran library, Fortran archive, source code" />
 <!--
    Pick your favorite style sheet from among the eight offerings:
@@ -27,6 +27,86 @@
 <link  rel="alternate stylesheet"  href="StyleSheets/Traditional.css"  type="text/css"  title="Traditional"  />
 <link  rel="alternate stylesheet"  href="StyleSheets/Ultramarine.css"  type="text/css"  title="Ultramarine"  />
 <link  rel="alternate stylesheet"  href="StyleSheets/fortran.css"      type="text/css"  title="fortran"      />
+<style type="text/css">
+/*<![CDATA[*/
+/* ======================================================== */
+iframe {
+   width=0;
+   height=0;
+}
+/* ======================================================== */
+/* Start new page on printing */
+BR.newpage{
+   page-break-before:always
+}
+/* ======================================================== */
+pX {
+   font-family: "Lucida Console", Monaco, monospace
+}
+/* ======================================================== */
+divX {
+   background-color: #ffffff;
+   border-style: solid;
+   border-color: blue;
+}
+/* ======================================================== */
+bodyX{
+   margin-top:     1.58em;
+   margin-left:    8%;
+   margin-right:   4%;
+   margin-bottom:  1.58em;
+   padding-top:    0;
+   padding-left:   0;
+   padding-right:  0;
+   padding-bottom: 0;
+   border-top:     0;
+   border-left:    0;
+   border-bottom:  0;
+   border-right:   0;
+   width:  auto;
+} /* end body box */
+img{max-width: 55em}
+/* ======================================================== */
+/*]]>*/
+</style>
+<style> 
+px {font-family: "Lucida Console", Monaco, monospace}
+p { font-size:100%; line-height:1.1em; }
+body {xfont-style: sans-serif}
+body {
+color:#333; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:1em; line-height:1.3em; }
+a:visited { color:#666; }
+h1,h2,h3,h4,h5,h6 { color:#333; font-family:georgia, verdana, sans-serif; }
+h1 { font-size:150%; page-break-before:auto;background-color: #aaaaff}
+h2 { font-size:143%;color:teal; }
+h3 { font-size:134%;color:blue; }
+h4 { font-size:120%;color:gray; }
+img { max-width: 55em}
+p{ padding: 0;margin:0; }
+p{ padding-right:1.4em; }
+p{ padding-bottom:1em; }
+p{ padding-top:1em; }
+p{ whitespace: pre-wrap; }
+h5,h6 { font-size:100% }
+a.nav,a:link.nav, a:visited.nav { background-color:#FFF; color:#000; }
+XXtable { border:double #000; border-collapse:collapse; }
+XXtable { border-collapse:collapse; }
+XXtd { border:thin solid #888; }
+XXtd { border:none; }
+li { margin-bottom:0.5em; }
+blockquote { display:block; font-size:100%; line-height:1.1em; margin:0 0 1.5em; padding:0 2.5em; }
+pre { background-color:#DDD; font-size:100%; overflow:auto; padding:1em; }
+a,li span { color:#000; }
+a:hover, a.nav:hover, a:hover math { background-color:#000; color:#FFF; }
+#Container { margin:0 10px; text-align:center; background-color: #BBB}
+#Content { border-top:none; margin:auto; padding:0.3em; text-align:left; width:100%; max-width:55em; background:#FFF}
+span.webName { font-size:.5em; }
+textarea#content { font-size: 1em; line-height: 1.125; }
+h1#pageName { line-height:1em; margin:0.2em 0 0.2em 0; padding:0; }
+.property { color:#666; font-size:100%; }
+a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
+.byline { color:#666; font-size:1.0em; font-style:italic; margin-bottom:1em; padding-top:1px; } 
+</style> 
 
 <script language="JavaScript1.1"  type="text/javascript">
 // *** TO BE CUSTOMISED ***
@@ -134,7 +214,7 @@ function append_index(target){
    if( COLUMNS == 1 ){
 	   document.write('<tr>\n');
    }
-   document.write('<td><a href="#DOCUMENT'+ FRAMECOUNT  + '">' + baseName(baseName(target)) + '</a></td>\n');
+   document.write('<td><a href="#DOCUMENT'+ FRAMECOUNT  + '">' + baseName(target) + '</a></td>\n');
 }
 /* ============================================================================================================================== */
 //alert('START');

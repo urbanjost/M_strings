@@ -1,6 +1,0 @@
-<map id="print_generic" name="print_generic">
-<area shape="rect" id="node2" href="$namespacem__journal.html#a7906bba242b412d6941f4b32233b7eca" title="m_journal::msg_scalar" alt="" coords="160,5,329,32"/>
-<area shape="rect" id="node3" href="$namespacem__journal.html#a1b516ae6ba2da17e10847cf68d6833b1" title="m_journal::msg_one" alt="" coords="167,56,322,83"/>
-<area shape="rect" id="node4" href="$namespacem__strings.html#a926d1d9f529487149f4e0a1de8294122" title="NAMEmsg(3f) &#45; [M_strings] converts any standard scalar type to a string (LICENSE:PD) SYNOPSIS..." alt="" coords="161,107,329,133"/>
-<area shape="rect" id="node5" href="$namespacem__strings.html#a52d27df9dcea52039c6feccb782ec4fd" title="m_strings::msg_one" alt="" coords="168,157,321,184"/>
-</map>

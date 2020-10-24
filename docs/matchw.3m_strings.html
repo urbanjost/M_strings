@@ -2,7 +2,7 @@
 <head> 
 <title> </title>
 <style> 
-px {font-family: "Lucida Console", Monaco, monospace}
+px {font-family: "Lucida Console", Monaco }
 p { font-size:100%; line-height:1.1em; }
 body {xfont-style: sans-serif}
 body {
@@ -41,11 +41,11 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 </style> 
 </head>
 <BODY bgcolor=#F0F0F0 text=#000000 link=#0000ff vlink=#C000C0 alink=#ff0000><A NAME=top></A>
-<h5><a href="download.html">[UP]</a></h5>
+<h5><a href="https://github.com/urbanjost/M_strings">[UP]</a></h5>
 <div id="Container">
 <div id="Content">
 <CENTER>
-<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>matchw (3)</NOBR><HR></H1>
+<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>matchw (3m_strings)</NOBR><HR></H1>
 </CENTER>
 <A name=0>
 
@@ -53,10 +53,11 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<B>matchw(3f) </B>- [M_strings:COMPARE] compare given string for match to pattern which may contain wildcard characters
-<B>(LICENSE:PD)
-</B><B>
-</B></BLOCKQUOTE>
+<B>matchw</B>(3f) - [M_strings:COMPARE] compare given string for match to
+pattern which may contain wildcard characters
+(LICENSE:PD)
+<P>
+</BLOCKQUOTE>
 <A name=contents></A><H3>CONTENTS</H3></A>
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
@@ -73,9 +74,9 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<PRE>
 logical function <B>matchw</B>(<I>string</I>, pattern )
 <P>
+<PRE>
     character(len=*),intent(in) :: string
     character(len=*),intent(in) :: pattern
 </PRE>
@@ -119,18 +120,20 @@ o
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-"*" matching zero or more characters. Do NOT use adjacent asterisks.
+"*" matching zero or more characters.
+Do NOT use adjacent asterisks.
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-Both strings may have trailing spaces which are ignored.
+Both strings may have trailing spaces which
+are ignored.
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-There is no escape character, so matching strings with literal
-question mark and asterisk is problematic.
+There is no escape character, so matching strings with
+literal question mark and asterisk is problematic.
 </TD></TR>
 <TR></TR></TABLE></TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
@@ -145,9 +148,10 @@ Example program
 <PRE>
    program demo_matchw
    implicit none
-   ! This main() routine passes a bunch of test strings into the above code.
-   ! In performance comparison mode, it does that over and over. Otherwise,
-   ! it does it just once. Either way, it outputs a passed/failed result.
+   ! This main() routine passes a bunch of test strings
+   ! into the above code.  In performance comparison mode,
+   ! it does that over and over. Otherwise, it does it just
+   ! once. Either way, it outputs a passed/failed result.
    !
    integer :: nReps
    logical :: allpassed
@@ -155,7 +159,9 @@ Example program
     allpassed = .true.
 <P>
     nReps = 10000
-    nReps = 1     ! Can choose as many repetitions as you&#146;re expecting in the real world.
+    ! Can choose as many repetitions as you&#146;re expecting
+    ! in the real world.
+    nReps = 1
 <P>
     do i=1,nReps
      ! Cases with repeating character sequences.
@@ -166,11 +172,16 @@ Example program
      allpassed=allpassed .and. test("abcccd", "*ccd", .true.)
      allpassed=allpassed .and. test("bLah", "bLaH", .false.)
      allpassed=allpassed .and. test("mississippi", "*sip*", .true.)
-     allpassed=allpassed .and. test("xxxx*zzzzzzzzy*f", "xxx*zzy*f", .true.)
-     allpassed=allpassed .and. test("xxxx*zzzzzzzzy*f", "xxxx*zzy*fffff", .false.)
-     allpassed=allpassed .and. test("mississipissippi", "*issip*ss*", .true.)
-     allpassed=allpassed .and. test("xxxxzzzzzzzzyf", "xxxx*zzy*fffff", .false.)
-     allpassed=allpassed .and. test("xxxxzzzzzzzzyf", "xxxx*zzy*f", .true.)
+     allpassed=allpassed .and. &
+      & test("xxxx*zzzzzzzzy*f", "xxx*zzy*f", .true.)
+     allpassed=allpassed .and. &
+      & test("xxxx*zzzzzzzzy*f", "xxxx*zzy*fffff", .false.)
+     allpassed=allpassed .and. &
+      & test("mississipissippi", "*issip*ss*", .true.)
+     allpassed=allpassed .and. &
+      & test("xxxxzzzzzzzzyf", "xxxx*zzy*fffff", .false.)
+     allpassed=allpassed .and. &
+      & test("xxxxzzzzzzzzyf", "xxxx*zzy*f", .true.)
      allpassed=allpassed .and. test("xyxyxyzyxyz", "xy*z*xyz", .true.)
      allpassed=allpassed .and. test("xyxyxyxyz", "xy*xyz", .true.)
      allpassed=allpassed .and. test("mississippi", "mi*sip*", .true.)
@@ -225,44 +236,61 @@ Example program
 <P>
      ! Many-wildcard scenarios.
      allpassed=allpassed .and. test(&
-     &"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",&
+     &"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&
+     &aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",&
      &"a*a*a*a*a*a*aa*aaa*a*a*b",&
      &.true.)
      allpassed=allpassed .and. test(&
-     &"abababababababababababababababababababaacacacacacacacadaeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
+     &"abababababababababababababababababababaacacacacacacac&
+     &adaeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
      &"*a*b*ba*ca*a*aa*aaa*fa*ga*b*",&
      &.true.)
      allpassed=allpassed .and. test(&
-     &"abababababababababababababababababababaacacacacacacacadaeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
+     &"abababababababababababababababababababaacacacacacaca&
+     &cadaeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
      &"*a*b*ba*ca*a*x*aaa*fa*ga*b*",&
      &.false.)
      allpassed=allpassed .and. test(&
-     &"abababababababababababababababababababaacacacacacacacadaeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
+     &"abababababababababababababababababababaacacacacacacacad&
+     &aeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
      &"*a*b*ba*ca*aaaa*fa*ga*gggg*b*",&
      &.false.)
      allpassed=allpassed .and. test(&
-     &"abababababababababababababababababababaacacacacacacacadaeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
+     &"abababababababababababababababababababaacacacacacacacad&
+     &aeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
      &"*a*b*ba*ca*aaaa*fa*ga*ggg*b*",&
      &.true.)
      allpassed=allpassed .and. test("aaabbaabbaab", "*aabbaa*a*", .true.)
-     allpassed=allpassed .and. test("a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*", "a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*", .true.)
-     allpassed=allpassed .and. test("aaaaaaaaaaaaaaaaa", "*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*", .true.)
-     allpassed=allpassed .and. test("aaaaaaaaaaaaaaaa", "*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*", .false.)
+     allpassed=allpassed .and. &
+     test("a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*",&
+     &"a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*", .true.)
+     allpassed=allpassed .and. test("aaaaaaaaaaaaaaaaa",&
+     &"*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*", .true.)
+     allpassed=allpassed .and. test("aaaaaaaaaaaaaaaa",&
+     &"*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*", .false.)
      allpassed=allpassed .and. test(&
-     &"abc*abcd*abcde*abcdef*abcdefg*abcdefgh*abcdefghi*abcdefghij*abcdefghijk*abcdefghijkl*abcdefghijklm*abcdefghijklmn",&
-     & "abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*",&
+     &"abc*abcd*abcde*abcdef*abcdefg*abcdefgh*abcdefghi*abcdefghij&
+     &*abcdefghijk*abcdefghijkl*abcdefghijklm*abcdefghijklmn",&
+     & "abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc&
+     &*abc*abc*abc*",&
      &.false.)
      allpassed=allpassed .and. test(&
-     &"abc*abcd*abcde*abcdef*abcdefg*abcdefgh*abcdefghi*abcdefghij*abcdefghijk*abcdefghijkl*abcdefghijklm*abcdefghijklmn",&
+     &"abc*abcd*abcde*abcdef*abcdefg*abcdefgh*abcdefghi*abcdefghij&
+     &*abcdefghijk*abcdefghijkl*abcdefghijklm*abcdefghijklmn",&
      &"abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*",&
      &.true.)
-     allpassed=allpassed .and. test("abc*abcd*abcd*abc*abcd", "abc*abc*abc*abc*abc", .false.)
-     allpassed=allpassed .and. test( "abc*abcd*abcd*abc*abcd*abcd*abc*abcd*abc*abc*abcd", &
+     allpassed=allpassed .and. test("abc*abcd*abcd*abc*abcd",&
+     &"abc*abc*abc*abc*abc", .false.)
+     allpassed=allpassed .and. test( "abc*abcd*abcd*abc*abcd*abcd&
+     &*abc*abcd*abc*abc*abcd", &
      &"abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abcd",&
      &.true.)
-     allpassed=allpassed .and. test("abc", "********a********b********c********", .true.)
-     allpassed=allpassed .and. test("********a********b********c********", "abc", .false.)
-     allpassed=allpassed .and. test("abc", "********a********b********b********", .false.)
+     allpassed=allpassed .and. test("abc",&
+     &"********a********b********c********", .true.)
+     allpassed=allpassed .and.&
+     &test("********a********b********c********", "abc", .false.)
+     allpassed=allpassed .and. &
+     &test("abc", "********a********b********b********", .false.)
      allpassed=allpassed .and. test("*abc*", "***a*b*c***", .true.)
 <P>
      ! A case-insensitive algorithm test.
@@ -275,9 +303,10 @@ Example program
        write(*,&#146;(a)&#146;)"Failed"
     endif
    contains
-   ! This is a test program for wildcard matching routines. It can be used
-   ! either to test a single routine for correctness, or to compare the timings
-   ! of two (or more) different wildcard matching routines.
+   ! This is a test program for wildcard matching routines.
+   ! It can be used either to test a single routine for correctness,
+   ! or to compare the timings of two (or more) different wildcard
+   ! matching routines.
    !
    function test(tame, wild, bExpectedResult) result(bpassed)
    use M_strings, only : matchw
@@ -291,7 +320,8 @@ Example program
       write(*,*)repeat(&#146;=&#146;,79)
       bResult = matchw(tame, wild) ! Call a wildcard matching routine.
 <P>
-      ! To assist correctness checking, output the two strings in any failing scenarios.
+      ! To assist correctness checking, output the two strings in any
+      ! failing scenarios.
       if (bExpectedResult .eqv. bResult) then
          bPassed = .true.
          if(nReps == 1) write(*,*)"Passed match on ",tame," vs. ", wild
@@ -331,8 +361,8 @@ in Dr Dobb&#146;s Journal, By Kirk J. Krauss, October 07, 2014
 Public Domain
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I></I></TD> <TD width=33% align=center>matchw (3)</TD> <TD align=right width=33%><I>July 12, 2020</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from bc9bf57a-5021-4bf6-9356-22428abe9777 using man macros.</FONT>
-<br><br><center><img src="images/matchw.3m_strings.gif"></center>
+<TABLE width=100%><TR> <TD width=33%><I></I></TD> <TD width=33% align=center>matchw (3m_strings)</TD> <TD align=right width=33%><I>October 23, 2020</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 3819caa6-6367-42dd-a503-acdda361abd0 using man macros.</FONT>
+<br><br><center><img src="images/matchw.gif"></center>
 </div>
 </div>
 </body>

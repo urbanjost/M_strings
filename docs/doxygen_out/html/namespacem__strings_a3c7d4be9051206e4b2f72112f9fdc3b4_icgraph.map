@@ -1,7 +1,0 @@
-<map id="m_strings::lower" name="m_strings::lower">
-<area shape="rect" id="node2" href="$namespacem__strings.html#a3f0119fab962146c7656cad592dd9acd" title="NAMEsplit(3f) &#45; [M_strings:TOKENS] parse string into an array using specified delimiters (LICENSE:PD)..." alt="" coords="202,5,325,32"/>
-<area shape="rect" id="node4" href="$namespacem__strings.html#a3596a4ec755ac897a1dbc0b225d5266a" title="NAMEquote(3f) &#45; [M_strings:QUOTES] add quotes to string as if written with list&#45;directed input (LICEN..." alt="" coords="198,56,329,83"/>
-<area shape="rect" id="node6" href="$namespacem__strings.html#aded6e43ae13ff21d76c1739f01a40a63" title="m_strings::todecimal" alt="" coords="184,107,343,133"/>
-<area shape="rect" id="node3" href="$namespacem__strings.html#ad7fffe79559a666aa28e1ed598b8670f" title="NAMEs2vs(3f) &#45; [M_strings:NUMERIC] given a string representing numbers return a numeric array (LICENS..." alt="" coords="402,5,526,32"/>
-<area shape="rect" id="node5" href="$namespacem__strings.html#acb88c65d5df2d5b3e55df2d2dab57390" title="NAMEunquote(3f) &#45; [M_strings:QUOTES] remove quotes from string as if read with list&#45;directed input (L..." alt="" coords="391,56,537,83"/>
-</map>

@@ -2,7 +2,7 @@
 <head> 
 <title> </title>
 <style> 
-px {font-family: "Lucida Console", Monaco, monospace}
+px {font-family: "Lucida Console", Monaco }
 p { font-size:100%; line-height:1.1em; }
 body {xfont-style: sans-serif}
 body {
@@ -41,11 +41,11 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 </style> 
 </head>
 <BODY bgcolor=#F0F0F0 text=#000000 link=#0000ff vlink=#C000C0 alink=#ff0000><A NAME=top></A>
-<h5><a href="download.html">[UP]</a></h5>
+<h5><a href="https://github.com/urbanjost/M_strings">[UP]</a></h5>
 <div id="Container">
 <div id="Content">
 <CENTER>
-<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>M_strings (3)</NOBR><HR></H1>
+<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>M_strings (3m_strings)</NOBR><HR></H1>
 </CENTER>
 <A name=0>
 
@@ -53,7 +53,8 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<B>M_strings(3f) </B>- [M_strings:INTRO] Fortran string module
+<B>M_strings</B>(3f) - [M_strings:INTRO] Fortran string module
+<P>
 </BLOCKQUOTE>
 <A name=contents></A><H3>CONTENTS</H3></A>
 <BLOCKQUOTE>
@@ -61,14 +62,15 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 <A HREF=#2>Synopsis</A><BR>
 <A HREF=#3>See Also</A><BR>
 <A HREF=#4>Examples</A><BR>
+<A HREF=#5>Author</A><BR>
+<A HREF=#6>License</A><BR>
 </BLOCKQUOTE>
-<A name=5>
+<A name=7>
 
      <H3>DESCRIPTION</H3>
 
 </A>
 <BLOCKQUOTE>
-<P>
 The <B>M_strings</B>(3fm) module is a collection of Fortran procedures
 that supplement the built-in intrinsic string routines. Routines
 for parsing, tokenizing, changing case, substituting new strings for
@@ -84,24 +86,30 @@ to the M_strings module.
 
 </A>
 <BLOCKQUOTE>
-<PRE>
 <B>public</B> entities:
 <P>
-   use M_strings, only : split,delim,chomp
-   use M_strings, only : substitute,change,modif,transliterate,reverse,replace,join
-   use M_strings, only : upper,lower,upper_quoted
-   use M_strings, only : rotate13
-   use M_strings, only : adjustc,compact,nospace,indent,crop,unquote,quote
-   use M_strings, only : len_white,atleast,stretch,lenset,merge_str
-   use M_strings, only : switch,s2c,c2s
-   use M_strings, only : noesc,notabs,expand,uc,visible
-   use M_strings, only : string_to_value,string_to_values,s2v,s2vs,value_to_string,v2s,msg
-   use M_strings, only : listout,getvals
-   use M_strings, only : matchw
-   use M_strings, only : fmt
-   use M_strings, only : base, decodebase, codebase
-   use M_strings, only : isalnum, isalpha, iscntrl, isdigit, isgraph, islower,
-                         isprint, ispunct, isspace, isupper, isascii, isblank, isxdigit
+<PRE>
+     use M_strings, only : split,delim,chomp
+     use M_strings, only : substitute,change,modif,transliterate,reverse
+     use M_strings, only : replace,join
+     use M_strings, only : upper,lower,upper_quoted
+     use M_strings, only : rotate13
+     use M_strings, only : adjustc,compact,nospace,indent
+     use M_strings, only : crop,unquote,quote
+     use M_strings, only : len_white,atleast,stretch,lenset,merge_str
+     use M_strings, only : switch,s2c,c2s
+     use M_strings, only : noesc,notabs,expand,visible
+     !!use M_strings, only : uc
+     use M_strings, only : string_to_value,string_to_values,s2v,s2vs
+     use M_strings, only : value_to_string,v2s,msg
+     use M_strings, only : listout,getvals
+     use M_strings, only : matchw
+     use M_strings, only : fmt
+     use M_strings, only : base, decodebase, codebase
+     use M_strings, only : isalnum, isalpha, iscntrl, isdigit
+     use M_strings, only : isgraph, islower, isprint, ispunct
+     use M_strings, only : isspace, isupper, isascii, isblank, isxdigit
+     use M_strings, only : fortran_name
 <P>
 </PRE>
 </BLOCKQUOTE>
@@ -110,19 +118,21 @@ to the M_strings module.
     <H4>&nbsp; &nbsp; TOKENS</H4>
 </A>
 <BLOCKQUOTE>
-<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
 <B>split</B> </TD><TD valign=bottom>
-subroutine parses string using specified delimiter characters and stores tokens into an array
+subroutine parses string using specified delimiter characters
+and stores tokens into an array
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>delim</B> </TD><TD valign=bottom>
-subroutine parses string using specified delimiter characters and store tokens into an array
+subroutine parses string using specified delimiter characters
+and store tokens into an array
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>chomp</B> </TD><TD valign=bottom>
-function consumes input line as it returns next token in a string using specified delimiters
+function consumes input line as it returns next token in a
+string using specified delimiters
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>fmt</B> </TD><TD valign=bottom>
@@ -134,32 +144,34 @@ convert a string into a paragraph
     <H4>&nbsp; &nbsp; EDITING</H4>
 </A>
 <BLOCKQUOTE>
-<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD colspan=2>
 <B>substitute</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-subroutine non-recursively globally replaces old substring
-with new substring
+subroutine non-recursively globally replaces old
+substring with new substring
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>replace</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-function non-recursively globally replaces old substring
-with new substring using allocatable string (version of
-<B>substitute</B>(3f) without limitation on length of output string)
+function non-recursively globally replaces old
+substring with new substring using allocatable string
+(version of <B>substitute</B>(3f) without limitation on
+length of output string)
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>change</B> </TD><TD valign=bottom>
-subroutine non-recursively globally replaces old substring
+subroutine non-recursively globally replaces old
+substring
 with new substring with a directive like line editor
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>modif</B> </TD><TD valign=bottom>
-subroutine modifies a string with a directive like the XEDIT
-line editor MODIFY command
+subroutine modifies a string with a directive like the
+XEDIT line editor MODIFY command
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>transliterate</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-replace characters found in set one with characters from set two
+replace characters found in set one with characters
+from set two
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>reverse</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
@@ -167,7 +179,8 @@ reverse character order in a string
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>join</B> </TD><TD valign=bottom>
-join an array of CHARACTER variables with specified separator
+join an array of CHARACTER variables with specified
+separator
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>rotate13</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
@@ -179,7 +192,6 @@ apply trivial encryption algorithm ROT13 to a string
     <H4>&nbsp; &nbsp; CASE</H4>
 </A>
 <BLOCKQUOTE>
-<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
 <B>upper</B> </TD><TD valign=bottom>
@@ -191,7 +203,8 @@ function converts string to miniscule
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>upper</B> </TD><TD valign=bottom>
-function converts string to uppercase skipping strings quoted per Fortran rules
+function converts string to uppercase skipping strings
+quoted per Fortran rules
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=>
@@ -199,15 +212,16 @@ function converts string to uppercase skipping strings quoted per Fortran rules
     <H4>&nbsp; &nbsp; WHITE SPACE</H4>
 </A>
 <BLOCKQUOTE>
-<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD colspan=2>
 <B>adjustc</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-elemental function centers text within the length of the input string
+elemental function centers text within the length of the
+input string
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>compact</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-left justify string and replace duplicate whitespace with single characters or nothing
+left justify string and replace duplicate whitespace with
+single characters or nothing
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>nospace</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
@@ -227,7 +241,6 @@ function trims leading and trailing spaces
     <H4>&nbsp; &nbsp; QUOTES</H4>
 </A>
 <BLOCKQUOTE>
-<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD colspan=2>
 <B>unquote</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
@@ -243,7 +256,6 @@ add quotes to string as if written with list-directed input
     <H4>&nbsp; &nbsp; STRING LENGTH</H4>
 </A>
 <BLOCKQUOTE>
-<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD colspan=2>
 <B>len_white</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
@@ -263,7 +275,8 @@ return a string of at least specified length with suffix
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>merge_str</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-make strings of equal length and then call <B>MERGE</B>(3f) intrinsic
+make strings of equal length and then call <B>MERGE</B>(3f)
+intrinsic
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=>
@@ -271,7 +284,6 @@ make strings of equal length and then call <B>MERGE</B>(3f) intrinsic
     <H4>&nbsp; &nbsp; CHARACTER ARRAY VERSUS STRING</H4>
 </A>
 <BLOCKQUOTE>
-<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
 <B>switch</B> </TD><TD valign=bottom>
@@ -279,11 +291,13 @@ switch between a string and an array of single characters
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>s2c</B> </TD><TD valign=bottom>
-convert string to array of single characters and add null terminator for passing to C
+convert string to array of single characters and add null
+terminator for passing to C
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>c2s</B> </TD><TD valign=bottom>
-convert null-terminated array of single characters to string for converting strings returned from C
+convert null-terminated array of single characters to
+string for converting strings returned from C
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=>
@@ -291,7 +305,6 @@ convert null-terminated array of single characters to string for converting stri
     <H4>&nbsp; &nbsp; NONALPHA</H4>
 </A>
 <BLOCKQUOTE>
-<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
 <B>noesc</B> </TD><TD valign=bottom>
@@ -299,7 +312,8 @@ convert non-printable ASCII8 characters to a space
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>notabs</B> </TD><TD valign=bottom>
-convert tabs to spaces while maintaining columns, assuming tabs are set every 8 characters
+convert tabs to spaces while maintaining columns,
+assuming tabs are set every 8 characters
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>expand</B> </TD><TD valign=bottom>
@@ -307,7 +321,8 @@ expand escape sequences in a string
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>visible</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-expand escape sequences in a string to control and meta-control representations
+expand escape sequences in a string to control and
+meta-control representations
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=>
@@ -315,11 +330,11 @@ expand escape sequences in a string to control and meta-control representations
     <H4>&nbsp; &nbsp; NUMERIC STRINGS</H4>
 </A>
 <BLOCKQUOTE>
-<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD colspan=2>
 <B>string_to_value</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-generic subroutine returns numeric value (REAL, DOUBLEPRECISION, INTEGER)  from string
+generic subroutine returns numeric value (REAL,
+DOUBLEPRECISION, INTEGER) from string
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>string_to_values</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
@@ -327,15 +342,18 @@ subroutine reads an array of numbers from a string
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>getvals</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-subroutine reads a relatively arbitrary number of values from a string using list-directed read
+subroutine reads a relatively arbitrary number
+of values from a string using list-directed read
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>s2v</B> </TD><TD valign=bottom>
-function returns DOUBLEPRECISION numeric value from string
+function returns DOUBLEPRECISION numeric value
+from string
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>s2vs</B> </TD><TD valign=bottom>
-function returns a DOUBLEPRECISION array of numbers from a string
+function returns a DOUBLEPRECISION array of numbers
+from a string
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>msg</B> </TD><TD valign=bottom>
@@ -343,15 +361,18 @@ append the values of up to nine values into a string
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>value_to_string</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-generic subroutine returns string given numeric value (REAL, DOUBLEPRECISION, INTEGER, LOGICAL )
+generic subroutine returns string given numeric value
+(REAL, DOUBLEPRECISION, INTEGER, LOGICAL )
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>v2s</B> </TD><TD valign=bottom>
-generic function returns string from numeric value (REAL, DOUBLEPRECISION, INTEGER )
+generic function returns string from numeric value
+(REAL, DOUBLEPRECISION, INTEGER )
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>listout</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-expand a list of numbers where  negative numbers denote range ends (1 <B>-10</B> means 1 thru 10)
+expand a list of numbers where negative numbers
+denote range ends (1 <B>-10</B> means 1 thru 10)
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>isnumber</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
@@ -363,11 +384,11 @@ determine if string represents a number
     <H4>&nbsp; &nbsp; CHARACTER TESTS</H4>
 </A>
 <BLOCKQUOTE>
-<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
 <B>matchw</B> </TD><TD valign=bottom>
-compares given string for match to pattern which may contain wildcard characters
+compares given string for match to pattern which may
+contain wildcard characters
 </TD></TR>
 <TR></TR></TABLE><TABLE cellpadding=3>
 <TR valign=top><TD width=3%>
@@ -378,22 +399,25 @@ isalnum returns .true. if character is a letter or digit
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-isalpha returns .true. if character is a letter and .false. otherwise
+isalpha returns .true. if character is a letter and
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-iscntrl returns .true. if character is a delete character or ordinary control character
+iscntrl returns .true. if character is a delete character or
+ordinary control character
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-isdigit returns .true. if character is a digit (0,1,&#46;&#46;&#46;,9) and .false. otherwise
+isdigit returns .true. if character is a digit (0,1,&#46;&#46;&#46;,9)
+and .false. otherwise
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-isgraph returns .true. if character is a printable character except a space is considered non-printable
+isgraph returns .true. if character is a printable character
+except a space is considered non-printable
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
@@ -403,17 +427,20 @@ islower returns .true. if character is a miniscule letter (a-z)
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-isprint returns .true. if character is an ASCII printable character
+isprint returns .true. if character is an ASCII printable
+character
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-ispunct returns .true. if character is a printable punctuation character
+ispunct returns .true. if character is a printable punctuation
+character
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-isspace returns .true. if character is a null, space, tab, carriage return, new line, vertical tab, or formfeed
+isspace returns .true. if character is a null, space, tab,
+carriage return, new line, vertical tab, or formfeed
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
@@ -423,17 +450,24 @@ isupper returns .true. if character is an uppercase letter (A-Z)
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-isascii returns .true. if the character is in the range <B>char</B>(0) to <B>char</B>(127)
+isascii returns .true. if the character is in the range <B>char</B>(0)
+to <B>char</B>(127)
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-isblank returns .true. if character is a blank character (space or horizontal tab.
+isblank returns .true. if character is a blank character
+(space or horizontal tab.
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-isxdigit returns .true. if character is a hexadecimal digit (0-9, a-f, or A-F).
+isxdigit returns .true. if character is a hexadecimal digit
+(0-9, a-f, or A-F).
+</TD></TR>
+<TR valign=top><TD colspan=2>
+<B>fortran_name</B> </TD></TR><TR valign=top><TD width=3%>&nbsp;</TD><TD>
+returns .true. if input string is a valid Fortran name
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=>
@@ -441,15 +475,16 @@ isxdigit returns .true. if character is a hexadecimal digit (0-9, a-f, or A-F).
     <H4>&nbsp; &nbsp; BASE CONVERSION</H4>
 </A>
 <BLOCKQUOTE>
-<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD colspan=2>
 <B>base</B> </TD></TR><TR valign=top><TD width=3%>&nbsp;</TD><TD>
-convert whole number string in base [2-36] to string in alternate base [2-36]
+convert whole number string in base [2-36] to string
+in alternate base [2-36]
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>codebase</B> </TD></TR><TR valign=top><TD width=3%>&nbsp;</TD><TD>
-convert whole number string in base [2-36] to base 10 number
+convert whole number string in base [2-36] to base
+10 number
 decodebase convert whole number in base 10 to string in base [2-36]
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
@@ -458,41 +493,39 @@ decodebase convert whole number in base 10 to string in base [2-36]
     <H4>&nbsp; &nbsp; MISCELLANEOUS</H4>
 </A>
 <BLOCKQUOTE>
-<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD colspan=2>
 <B>describe</B> </TD></TR><TR valign=top><TD width=3%>&nbsp;</TD><TD>
 returns a string describing the name of a single character
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
-<P>
-<P>
 <A name=>
 
     <H4>&nbsp; &nbsp; INTRINSICS</H4>
 </A>
 <BLOCKQUOTE>
-<P>
 The <B>M_strings</B>(3fm) module supplements and works in combination with
-the Fortran built-in intrinsics. Stand-alone
-Fortran lets you access the characters in a string using ranges
-much like they are character arrays, assignment, comparisons with
-standard operators, supports dynamically allocatable strings and
-supports concatenation using the // operator, as well as a number
-of intrinsic string routines:
+the Fortran built-in intrinsics. Stand-alone Fortran lets you access
+the characters in a string using ranges much like they are character
+arrays, assignment, comparisons with standard operators, supports
+dynamically allocatable strings and supports concatenation using the //
+operator, as well as a number of intrinsic string routines:
 <P>
 <PRE>
        adjustl             Left adjust a string
        adjustr             Right adjust a string
        index               Position of a substring within a string
        repeat              Repeated string concatenation
-       scan                Scan a string for the presence of a set of characters
+       scan                Scan a string for the presence of a set
+                           of characters
        trim                Remove trailing blank characters of a string
-       verify              Scan a string for the absence of a set of characters
+       verify              Scan a string for the absence of a set of
+                           characters
        len                 It returns the length of a character string
        achar               converts an integer into a character
        iachar              converts a character into an integer
-       len_trim            finds length of string with trailing spaces ignored
+       len_trim            finds length of string with trailing spaces
+                           ignored
        new_line            Newline character
        selected_char_kind  Choose character kind
        lge                 Lexical greater than or equal
@@ -507,11 +540,9 @@ of intrinsic string routines:
     <H4>&nbsp; &nbsp; OOPS INTERFACE</H4>
 </A>
 <BLOCKQUOTE>
-<P>
 The <B>M_strings_oop</B>(3fm) module (included with the <B>M_strings</B>(3fm)
-module) provides an OOP (Object-Oriented Programming) interface
-to the <B>M_strings</B>(3fm) module; as described in the example program
-OBJECT_ORIENTED shown below&#46;&#46;&#46;
+module) provides an OOP (Object-Oriented Programming) interface to
+the <B>M_strings</B>(3fm) module.
 </BLOCKQUOTE>
 <A name=3>
 
@@ -519,7 +550,6 @@ OBJECT_ORIENTED shown below&#46;&#46;&#46;
 
 </A>
 <BLOCKQUOTE>
-<P>
 There are additional routines in other GPF modules for working with
 expressions (M_calculator), time strings (M_time), random strings
 (M_random, M_uuid), lists (M_list), and interfacing with the C regular
@@ -531,251 +561,62 @@ expression library (M_regex).
 
 </A>
 <BLOCKQUOTE>
+Each of the procedural functions includes an example program in the
+corresponding <B>man</B>(1) page for the function. The object-oriented
+interface does not have individual <B>man</B>(1) pages, but is instead
+demonstrated using the following example program:
+</BLOCKQUOTE>
 <P>
-Each of the procedural functions includes an example program in the corresponding <B>man</B>(1) page for the function.
-The object-oriented interface does not have individual <B>man</B>(1) pages, but is instead demonstrated using the following
-example program:
 <P>
 <PRE>
- program demo_M_strings
- !
- ! This is an example using the object-oriented class/type model
- ! defined in M_strings_oop
- ! This is essentially the same functionality as the procedures
- ! combined with several Fortran intrinsics and overloaded operators
- !
- use M_strings_oop,only : string, p
- implicit none
- TYPE(string) :: str1
- TYPE(string) :: str2
- TYPE(string) :: str3
- TYPE(string) :: str4
- !==============================================================================
-   write(*,*)&#146;exercise the M_STRING_OOP module interface&#146;
-   ! draw a break line in the output
-   write(*,*)repeat(&#146;=&#146;,78)
-   write(*,*)&#146;Call methods of type(STRING)&#146;
-   ! define TYPE(STRING) with constructor
-   str2=string(&#146;   This  is  a  String!       &#146;)
-   str4=string(&#146; a  String &#146;)
-   write(*,*)repeat(&#146;=&#146;,78)
-   ! print members of type
-   write(*,101)&#146;str2%str is &#46;&#46;&#46;............. &#146;,str2%str
-   ! same as intrinsic LEN()
-   write(*,202)&#146;len &#46;&#46;&#46;..................... &#146;,str2%len()
-   ! same as intrinsic INDEX()
-   write(*,202)&#146;len_trim &#46;&#46;&#46;................ &#146;,str2%len_trim()
-   ! same as intrinsic INDEX()
-   write(*,202)&#146;index("is")&#46;&#46;&#46;.............. &#146;,str2%index("is")
-   ! same as intrinsic INDEX()
-   write(*,202)&#146;index("is",back=.T.) &#46;&#46;&#46;.... &#146;,str2%index("is",back=.TRUE.)
-   ! output TYPE(STRING) with %str all uppercase
-   write(*,101)&#146;upper &#46;&#46;&#46;................... &#146;,p(str2%upper())
-   ! output TYPE(STRING) with %str all miniscule
-   write(*,101)&#146;lower &#46;&#46;&#46;................... &#146;,p(str2%lower())
-   ! output TYPE(STRING) with %str reversed
-   write(*,101)&#146;reverse &#46;&#46;&#46;................. &#146;,p(str2%reverse())
-   ! same as intrinsic ADJUSTL()
-   write(*,101)&#146;adjustl &#46;&#46;&#46;................. &#146;,p(str2%adjustl())
-   ! same as intrinsic ADJUSTR()
-   write(*,101)&#146;adjustr &#46;&#46;&#46;................. &#146;,p(str2%adjustr())
-   ! center string in current string length
-   write(*,101)&#146;adjustc &#46;&#46;&#46;................. &#146;,p(str2%adjustc())
-   ! center string in string length of NN
-   write(*,101)&#146;adjustc(49) &#46;&#46;&#46;............. &#146;,p(str2%adjustc(49))
-   ! force %str to be NN characters long
-   write(*,101)&#146;lenset(49) &#46;&#46;&#46;.............. &#146;,p(str2%lenset(49))
-   ! same as intrinsic TRIM()
-   write(*,101)&#146;trim &#46;&#46;&#46;.................... &#146;,p(str2%trim())
-   ! trim leading and trailing spaces
-   write(*,101)&#146;crop &#46;&#46;&#46;.................... &#146;,p(str2%crop())
-   ! calls M_strings procedure SUBSTITUTE()
-   write(*,101)&#146;substitute("This","Here") .. &#146;,p(str2%substitute("This","Here"))
-   ! calls M_strings procedure COMPACT()
-   write(*,101)&#146;compact &#46;&#46;&#46;................. &#146;,p(str2%compact())
-   write(*,101)&#146;compact("") &#46;&#46;&#46;............. &#146;,p(str2%compact(""))
-   write(*,101)&#146;compact(":") &#46;&#46;&#46;............ &#146;,p(str2%compact(":"))
-   ! calls M_strings procedure TRANSLITERATE()
-   write(*,101)&#146;transliterate("aei","VWX") . &#146;,p(str2%transliterate("aei","VWX"))
-   write(*,101)&#146;transliterate("aeiou"," ") . &#146;,p(str2%transliterate("aeiou"," "))
-   write(*,101)&#146;transliterate("aeiou","") .. &#146;,p(str2%transliterate("aeiou",""))
-   write(*,101)&#146;transliterate(" aeiou","") . &#146;,p(str2%transliterate(" aeiou",""))
-   ! calls M_strings procedure SWITCH()
-   write(*,404)&#146;chars &#46;&#46;&#46;................. . &#146;,str4%chars()
+    program demo_M_strings
+    use M_strings, only : split, delim, chomp
+    use M_strings, only : substitute, change, modif
+    use M_strings, only : transliterate, reverse
+    use M_strings, only : replace, join
+    use M_strings, only : upper, lower, upper_quoted
+    use M_strings, only : rotate13
+    use M_strings, only : adjustc, compact, nospace, indent, crop
+    use M_strings, only : unquote, quote
+    use M_strings, only : len_white, atleast, stretch, lenset, merge_str
+    use M_strings, only : switch, s2c, c2s
+    use M_strings, only : noesc, notabs, expand, visible
+    !!use M_strings, only : uc
+    use M_strings, only : string_to_value, string_to_values, s2v, s2vs
+    use M_strings, only : value_to_string, v2s, msg
+    use M_strings, only : listout, getvals
+    use M_strings, only : matchw
+    use M_strings, only : fmt
+    use M_strings, only : base, decodebase, codebase
+    use M_strings, only : isalnum, isalpha, iscntrl, isdigit, isgraph
+    use M_strings, only : islower, isprint, ispunct, isspace, isupper
+    use M_strings, only : isascii, isblank, isxdigit
+    use M_strings, only : fortran_name
+    end program demo_M_strings
 <P>
-   write(*,*)repeat(&#146;=&#146;,78)
-   str2%str=&#146;\t\tSome tabs\t   x\bX &#146;
-   write(*,101)&#146;str2%str &#46;&#46;&#46;................ &#146;,str2%str
-   write(*,101)&#146;expand &#46;&#46;&#46;.................. &#146;,p(str2%expand())
-   str2=str2%expand()
-   ! calls M_strings procedure NOTABS()
-   write(*,101)&#146;notabs &#46;&#46;&#46;.................. &#146;,p(str2%notabs())
-   ! calls M_strings procedure NOESC()
-   write(*,101)&#146;noesc &#46;&#46;&#46;................... &#146;,p(str2%noesc())
-<P>
-   write(*,*)repeat(&#146;=&#146;,78)
-   write(*,*)&#146;Casting to numeric variables&#146;
-   str3=string(&#146;   12.345678901234567e1        &#146;)
-   write(*,101)&#146;str3%str &#46;&#46;&#46;................ &#146;,str3%str
-   ! calls M_strings procedure STRING_TO_VALUE()
-   write(*,*)&#146;int  &#46;&#46;&#46;.................... &#146;, str3%int()
-   ! calls M_strings procedure STRING_TO_VALUE()
-   write(*,*)&#146;real &#46;&#46;&#46;.................... &#146;, str3%real()
-   ! calls M_strings procedure STRING_TO_VALUE()
-   write(*,*)&#146;dble &#46;&#46;&#46;.................... &#146;, str3%dble()
-<P>
-   write(*,*)repeat(&#146;=&#146;,78)
-   write(*,*)&#146;Matching simple globbing patterns&#146;
-   str3=string(&#146;   12.345678901234567e1        &#146;)
-   str3=string(&#146;Four score and seven years ago&#146;)
-   write(*,101)&#146;str3%str &#46;&#46;&#46;................ &#146;,str3%str
-   ! calls M_strings procedure MATCHW
-   write(*,*)&#146;match("Fo*") &#46;&#46;&#46;............ &#146;, str3%match("Fo*")
-   ! calls M_strings procedure MATCHW
-   write(*,*)&#146;match("and") &#46;&#46;&#46;............ &#146;, str3%match("and")
-   ! calls M_strings procedure MATCHW
-   write(*,*)&#146;match("*and*") &#46;&#46;&#46;.......... &#146;, str3%match("*and*")
-<P>
-   101 format(1x,a,"[",a,"]")
-   202 format(1x,a,i0)
-   303 format(1x,*(l3))
-   404 format(1x,a,*("[",a1,"]":))
-<P>
-   write(*,*)repeat(&#146;=&#146;,78)
-   write(*,*)&#146;OVERLOADED OPERATORS (add and subtract,return TYPE(STRING))&#146;
-   str1%str=&#146;123.456&#146;
-   str2%str=&#146;AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj&#146;
-   write(*,101)&#146;str1%str &#46;&#46;&#46;................ &#146;,str1%str
-   write(*,101)&#146;str2%str &#46;&#46;&#46;................ &#146;,str2%str
-   write(*,*)&#146;str1 + str2 &#46;&#46;&#46;............. &#146;,p(str1 + str2)
-   ! a string that looks like a numeric value can have a value added
-   write(*,*)&#146;str1 + 20000 &#46;&#46;&#46;............ &#146;,p(str1 +20000)
-   write(*,*)&#146;str1 - 20.0 &#46;&#46;&#46;............. &#146;,p(str1 -20.0)
-   write(*,*)&#146;str2 - "Aa" (removes ALL) .. &#146;,p(str2 - &#146;Aa&#146;)
-<P>
-   write(*,*)repeat(&#146;=&#146;,78)
-   write(*,*)&#146;OVERLOADED OPERATORS (multiply,return TYPE(STRING))&#146;
-   str1%str=&#146;AaBbCcDdEeFfGgHhIiJj&#146;
-   write(*,101)&#146;str1%str &#46;&#46;&#46;................ &#146;,str1%str
-   write(*,*)&#146;str1 * 3 &#46;&#46;&#46;................ &#146;,p(str1 * 3)
-<P>
-   write(*,*)repeat(&#146;=&#146;,78)
-   write(*,*)&#146;OVERLOADED OPERATORS (//,return TYPE(STRING))&#146;
-   str1%str=&#146;String one:&#146;
-   str2%str=&#146;String two:&#146;
-   write(*,101)&#146;str1%str &#46;&#46;&#46;................ &#146;,str1%str
-   write(*,101)&#146;str2%str &#46;&#46;&#46;................ &#146;,str2%str
-   write(*,*)&#146;str1 // str2 &#46;&#46;&#46;............. &#146;,p(str1 // str2)
-   ! numeric values are converted to strings
-   write(*,*)&#146;str1 // 20000 &#46;&#46;&#46;............ &#146;,p(str1 // 20000)
-   write(*,*)&#146;str1 // 20.0 &#46;&#46;&#46;............. &#146;,p(str1 // 20.0)
-<P>
-   write(*,*)repeat(&#146;=&#146;,78)
-   write(*,*)&#146;OVERLOADED OPERATORS (logical comparisons,return logical)&#146;
-   ! NOTE: comparisons are performed on the character variable members
-   !       of the type(string)
-   str1%str=&#146;abcdefghij&#146;
-   str2%str=&#146;klmnopqrst&#146;
-   write(*,101)&#146;str1%str &#46;&#46;&#46;................ &#146;,str1%str
-   write(*,101)&#146;str2%str &#46;&#46;&#46;................ &#146;,str2%str
-   write(*,*)&#146;: EQ LT GT LE GE NE&#146;
-   write(*,*)&#146;compare str1 to str1&#146;
-   write(*,303)str1.eq.str1  ,str1.lt.str1  ,str1.gt.str1  ,str1.le.str1 &
-              & ,str1.ge.str1  ,str1.ne.str1
-   write(*,*)&#146;compare str1 to str2&#146;
-   write(*,303)str1.eq.str2  ,str1.lt.str2  ,str1.gt.str2  ,str1.le.str2 &
-              & ,str1.ge.str2  ,str1.ne.str2
-   write(*,*)&#146;compare str2 to str1&#146;
-   write(*,303)str2.eq.str1  ,str2.lt.str1  ,str2.gt.str1  ,str2.le.str1 &
-              & ,str2.ge.str1  ,str2.ne.str1
-<P>
-   write(*,*)repeat(&#146;=&#146;,78)
-<P>
- end program demo_M_strings
-<P>
- Expected output
-<P>
-  exercise the M_STRING_OOP module interface
-  =============================================================================
-  Call methods of type(STRING)
-  =============================================================================
-  str2%str is &#46;&#46;&#46;............. [   This  is  a  String!             ]
-  len &#46;&#46;&#46;..................... 36
-  len_trim &#46;&#46;&#46;................ 23
-  index("is")&#46;&#46;&#46;.............. 6
-  index("is",back=.T.) &#46;&#46;&#46;.... 10
-  upper &#46;&#46;&#46;................... [   THIS  IS  A  STRING!             ]
-  lower &#46;&#46;&#46;................... [   this  is  a  string!             ]
-  reverse &#46;&#46;&#46;................. [             !gnirtS  a  si  sihT   ]
-  adjustl &#46;&#46;&#46;................. [This  is  a  String!                ]
-  adjustr &#46;&#46;&#46;................. [                This  is  a  String!]
-  adjustc &#46;&#46;&#46;................. [        This  is  a  String!        ]
-  adjustc(49) &#46;&#46;&#46;............. [              This  is  a  String!               ]
-  lenset(49) &#46;&#46;&#46;.............. [   This  is  a  String!                          ]
-  trim &#46;&#46;&#46;.................... [   This  is  a  String!]
-  crop &#46;&#46;&#46;.................... [This  is  a  String!]
-  substitute("This","Here") .. [   Here  is  a  String!             ]
-  compact &#46;&#46;&#46;................. [This is a String!]
-  compact("") &#46;&#46;&#46;............. [ThisisaString!]
-  compact(":") &#46;&#46;&#46;............ [This:is:a:String!]
-  transliterate("aei","VWX") . [   ThXs  Xs  V  StrXng!             ]
-  transliterate("aeiou"," ") . [   Th s   s     Str ng!             ]
-  transliterate("aeiou","") .. [   Ths  s    Strng!                 ]
-  transliterate(" aeiou","") . [ThssStrng!                          ]
-  chars &#46;&#46;&#46;................. . [ ][a][ ][s][t][r][i][n][g][ ]
-  =============================================================================
-  str2%str &#46;&#46;&#46;................ [\t\tSome tabs\t   x\bX ]
-  expand &#46;&#46;&#46;.................. [         Some tabs          x   X]
-  notabs &#46;&#46;&#46;.................. [                Some tabs          x    X]
-  noesc &#46;&#46;&#46;................... [  Some tabs    x X]
-  =============================================================================
-  Casting to numeric variables
-  str3%str &#46;&#46;&#46;................ [   12.345678901234567e1        ]
-  int  &#46;&#46;&#46;....................          123
-  real &#46;&#46;&#46;....................    123.456787
-  dble &#46;&#46;&#46;....................    123.45678901234567
-  =============================================================================
-  Matching simple globbing patterns
-  str3%str &#46;&#46;&#46;................ [Four score and seven years ago]
-  match("Fo*") &#46;&#46;&#46;............  T
-  match("and") &#46;&#46;&#46;............  F
-  match("*and*") &#46;&#46;&#46;..........  T
-  ==============================================================================
-  OVERLOADED OPERATORS (add and subtract, return TYPE(STRING))
-  str1%str &#46;&#46;&#46;................ [123.456]
-  str2%str &#46;&#46;&#46;................ [AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj]
-  str1 + str2 &#46;&#46;&#46;............. 123.456 AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj
-  str1 + 20000 &#46;&#46;&#46;............ 20123.455999999998
-  str1 - 20.0 &#46;&#46;&#46;............. -103.456
-  str2 - "Aa" (removes ALL) .. BbCcDdEeFfGgHhIiJj BbCcDdEeFfGgHhIiJj
-  =============================================================================
-  OVERLOADED OPERATORS (multiply, return TYPE(STRING))
-  str1%str &#46;&#46;&#46;................ [AaBbCcDdEeFfGgHhIiJj]
-  str1 * 3 &#46;&#46;&#46;................ AaBbCcDdEeFfGgHhIiJjAaBbCcDdEeFfGgHhIiJjAaBbCcDdEeFfGgHhIiJj
-  =============================================================================
-  OVERLOADED OPERATORS (//, return TYPE(STRING))
-  str1%str &#46;&#46;&#46;................ [String one:]
-  str2%str &#46;&#46;&#46;................ [String two:]
-  str1 // str2 &#46;&#46;&#46;............. String one:String two:
-  str1 // 20000 &#46;&#46;&#46;............ String one:20000
-  str1 // 20.0 &#46;&#46;&#46;............. String one:20.0
-  =============================================================================
-  OVERLOADED OPERATORS (logical comparisons, return logical)
-  str1%str &#46;&#46;&#46;................ [abcdefghij]
-  str2%str &#46;&#46;&#46;................ [klmnopqrst]
-  : EQ LT GT LE GE NE
-  compare str1 to str1
-  :  T  F  F  T  T  F
-  compare str1 to str2
-  :  F  T  F  T  F  T
-  compare str2 to str1
-  :  F  F  T  F  T  T
-  =============================================================================
 </PRE>
+<BLOCKQUOTE>
+Expected output
+</BLOCKQUOTE>
+<A name=5>
+
+     <H3>AUTHOR</H3>
+
+</A>
+<BLOCKQUOTE>
+John S. Urban
+</BLOCKQUOTE>
+<A name=6>
+
+     <H3>LICENSE</H3>
+
+</A>
+<BLOCKQUOTE>
+Public Domain
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I></I></TD> <TD width=33% align=center>M_strings (3)</TD> <TD align=right width=33%><I>July 12, 2020</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 956f4ccb-f653-4a9b-8e71-724adef62648 using man macros.</FONT>
-<br><br><center><img src="images/M_strings.3m_strings.gif"></center>
+<TABLE width=100%><TR> <TD width=33%><I></I></TD> <TD width=33% align=center>M_strings (3m_strings)</TD> <TD align=right width=33%><I>October 23, 2020</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from effe9e8b-9509-42be-91aa-491d3d1b4727 using man macros.</FONT>
+<br><br><center><img src="images/M_strings.gif"></center>
 </div>
 </div>
 </body>

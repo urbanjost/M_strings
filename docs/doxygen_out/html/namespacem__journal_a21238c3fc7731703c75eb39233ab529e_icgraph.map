@@ -1,5 +1,0 @@
-<map id="m_journal::where_write_message" name="m_journal::where_write_message">
-<area shape="rect" id="node2" href="$namespacem__journal.html#a24b891eded8ca585a6a72ab0eef7016c" title="m_journal::flush_trail" alt="" coords="263,5,422,32"/>
-<area shape="rect" id="node3" href="$namespacem__journal.html#a25d0f5da7f7e84e22ab0a583447412b1" title="m_journal::where_write\l_message_all" alt="" coords="255,57,430,98"/>
-<area shape="rect" id="node4" href="$namespacem__journal.html#aa86511a7c388f9286c282f6fa933ab58" title="m_journal::write_message_only" alt="" coords="228,123,457,149"/>
-</map>

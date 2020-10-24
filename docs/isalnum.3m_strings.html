@@ -2,7 +2,7 @@
 <head> 
 <title> </title>
 <style> 
-px {font-family: "Lucida Console", Monaco, monospace}
+px {font-family: "Lucida Console", Monaco }
 p { font-size:100%; line-height:1.1em; }
 body {xfont-style: sans-serif}
 body {
@@ -41,11 +41,11 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 </style> 
 </head>
 <BODY bgcolor=#F0F0F0 text=#000000 link=#0000ff vlink=#C000C0 alink=#ff0000><A NAME=top></A>
-<h5><a href="download.html">[UP]</a></h5>
+<h5><a href="https://github.com/urbanjost/M_strings">[UP]</a></h5>
 <div id="Container">
 <div id="Content">
 <CENTER>
-<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>isalnum (3)</NOBR><HR></H1>
+<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>isalnum (3m_strings)</NOBR><HR></H1>
 </CENTER>
 <A name=0>
 
@@ -53,11 +53,13 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<B>isalnum,isalpha,iscntrl,isdigit,isgraph,islower,
-</B><B>isprint,ispunct,isspace,isupper,isascii,isblank,isxdigit(3f) </B>- [M_strings:COMPARE] test membership in subsets of ASCII set
-<B>(LICENSE:PD)
-</B><B>
-</B></BLOCKQUOTE>
+isalnum,isalpha,iscntrl,isdigit,isgraph,islower,
+isprint,ispunct,isspace,isupper,
+<B>isascii,isblank,isxdigit</B>(3f) - [M_strings:COMPARE] test membership in
+subsets of ASCII set
+(LICENSE:PD)
+<P>
+</BLOCKQUOTE>
 <A name=contents></A><H3>CONTENTS</H3></A>
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
@@ -72,9 +74,10 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<PRE>
-Where "FUNCNAME" is one of the function names in the <I>group</I>, the functions are defined by
+Where "FUNCNAME" is one of the function names in the <I>group</I>, the
+functions are defined by
 <P>
+<PRE>
     elemental function FUNCNAME(onechar)
     character,intent(in) :: onechar
     logical              :: FUNC_NAME
@@ -87,37 +90,44 @@ Where "FUNCNAME" is one of the function names in the <I>group</I>, the functions
 </A>
 <BLOCKQUOTE>
 <P>
-These elemental functions test if a character belongs to various subsets of the ASCII character set.
-<TABLE cellpadding=3><!-- tsb: These elemental functions test if a character belongs to various subsets of the ASCII character set.
+These elemental functions test if a character belongs to various
+subsets of the ASCII character set.
+<TABLE cellpadding=3><!-- tsb: These elemental functions test if a character belongs to various
  -->
 <TR></TR><TR></TR>
 <TR valign=top><TD colspan=2>
 <B>isalnum</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-returns .true. if character is a letter (a-z,A-Z) or digit (0-9)
+returns .true. if character is a letter (a-z,A-Z)
+or digit (0-9)
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>isalpha</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-returns .true. if character is a letter and .false. otherwise
+returns .true. if character is a letter and
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>isascii</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-returns .true. if character is in the range <B>char</B>(0) to <B>char</B>(127)
+returns .true. if character is in the range <B>char</B>(0)
+to <B>char</B>(127)
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>isblank</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-returns .true. if character is a blank (space or horizontal tab).
+returns .true. if character is a blank (space or
+horizontal tab).
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>iscntrl</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-returns .true. if character is a delete character or ordinary control character (0x7F or 0x00-0x1F).
+returns .true. if character is a delete character or
+ordinary control character (0x7F or 0x00-0x1F).
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>isdigit</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-returns .true. if character is a digit (0,1,&#46;&#46;&#46;,9) and .false. otherwise
+returns .true. if character is a digit (0,1,&#46;&#46;&#46;,9)
+and .false. otherwise
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>isgraph</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-returns .true. if character is a printable ASCII character excluding space
+returns .true. if character is a printable ASCII
+character excluding space
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>islower</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
@@ -129,11 +139,13 @@ returns .true. if character is a printable ASCII character
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>ispunct</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-returns .true. if character is a printable punctuation character (isgraph(c) && !isalnum(c)).
+returns .true. if character is a printable punctuation
+character (isgraph(c) && !isalnum(c)).
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>isspace</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-returns .true. if character is a null, space, tab, carriage return, new line, vertical tab, or formfeed
+returns .true. if character is a null, space, tab,
+carriage return, new line, vertical tab, or formfeed
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>isupper</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
@@ -141,7 +153,8 @@ returns .true. if character is an uppercase letter (A-Z)
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>isxdigit</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-returns .true. if character is a hexadecimal digit (0-9, a-f, or A-F).
+returns .true. if character is a hexadecimal digit
+(0-9, a-f, or A-F).
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=3>
@@ -168,7 +181,8 @@ Sample Program:
        do i=1,size(string)
           write(*,&#146;(a)&#146;,advance=&#146;no&#146;)&#146;For string[&#146;//string(i)//&#146;]&#146;
           write(*,*) &
-          all(isdigit(switch(string(i))).or.isspace(switch(string(i))))
+          all(isdigit(switch(string(i))) .or. &
+          & isspace(switch(string(i))))
        enddo
 <P>
     end program demo_isdigit
@@ -201,8 +215,8 @@ John S. Urban
 Public Domain
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I></I></TD> <TD width=33% align=center>isalnum (3)</TD> <TD align=right width=33%><I>July 12, 2020</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 61335e92-9634-468a-82bf-e69c0c963b5f using man macros.</FONT>
-<br><br><center><img src="images/isalnum.3m_strings.gif"></center>
+<TABLE width=100%><TR> <TD width=33%><I></I></TD> <TD width=33% align=center>isalnum (3m_strings)</TD> <TD align=right width=33%><I>October 23, 2020</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 62bd7dd5-6f98-41d0-bddf-acebc3c448c9 using man macros.</FONT>
+<br><br><center><img src="images/isalnum.gif"></center>
 </div>
 </div>
 </body>

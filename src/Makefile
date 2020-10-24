@@ -3,71 +3,72 @@
 
 NULL=
 PROGFILES = \
-../PROGRAMS/demo_adjustc.f90 \
-../PROGRAMS/demo_base.f90 \
-../PROGRAMS/demo_change.f90 \
-../PROGRAMS/demo_chomp.f90 \
-../PROGRAMS/demo_codebase.f90 \
-../PROGRAMS/demo_compact.f90 \
-../PROGRAMS/demo_crop.f90 \
-../PROGRAMS/demo_decodebase.f90 \
-../PROGRAMS/demo_delim.f90 \
-../PROGRAMS/demo_describe.f90 \
-../PROGRAMS/demo_expand.f90 \
-../PROGRAMS/demo_fmt.f90 \
-../PROGRAMS/demo_getvals.f90 \
-../PROGRAMS/demo_indent.f90 \
-../PROGRAMS/demo_isalnum.f90 \
-../PROGRAMS/demo_isalpha.f90 \
-../PROGRAMS/demo_isascii.f90 \
-../PROGRAMS/demo_isblank.f90 \
-../PROGRAMS/demo_iscntrl.f90 \
-../PROGRAMS/demo_isdigit.f90 \
-../PROGRAMS/demo_isgraph.f90 \
-../PROGRAMS/demo_islower.f90 \
-../PROGRAMS/demo_isnumber.f90 \
-../PROGRAMS/demo_isprint.f90 \
-../PROGRAMS/demo_ispunct.f90 \
-../PROGRAMS/demo_isspace.f90 \
-../PROGRAMS/demo_isupper.f90 \
-../PROGRAMS/demo_isxdigit.f90 \
-../PROGRAMS/demo_join.f90 \
-../PROGRAMS/demo_len_white.f90 \
-../PROGRAMS/demo_lenset.f90 \
-../PROGRAMS/demo_listout.f90 \
-../PROGRAMS/demo_lower.f90 \
-../PROGRAMS/demo_matchw.f90 \
-../PROGRAMS/demo_merge_str.f90 \
-../PROGRAMS/demo_modif.f90 \
-../PROGRAMS/demo_msg.f90 \
-../PROGRAMS/demo_noesc.f90 \
-../PROGRAMS/demo_nospace.f90 \
-../PROGRAMS/demo_notabs.f90 \
-../PROGRAMS/demo_quote.f90 \
-../PROGRAMS/demo_replace.f90 \
-../PROGRAMS/demo_reverse.f90 \
-../PROGRAMS/demo_rotate13.f90 \
-../PROGRAMS/demo_s2c.f90 \
-../PROGRAMS/demo_s2v.f90 \
-../PROGRAMS/demo_s2vs.f90 \
-../PROGRAMS/demo_split.f90 \
-../PROGRAMS/demo_stretch.f90 \
-../PROGRAMS/demo_string_to_value.f90 \
-../PROGRAMS/demo_string_to_values.f90 \
-../PROGRAMS/demo_strtok.f90 \
-../PROGRAMS/demo_substitute.f90 \
-../PROGRAMS/demo_switch.f90 \
-../PROGRAMS/demo_transliterate.f90 \
-../PROGRAMS/demo_unquote.f90 \
-../PROGRAMS/demo_upper.f90 \
-../PROGRAMS/demo_upper_quoted.f90 \
-../PROGRAMS/demo_v2s.f90 \
-../PROGRAMS/demo_value_to_string.f90 \
-../PROGRAMS/demo_visible.f90 \
-../PROGRAMS/demo_M_strings_oops.f90 \
+ ../test/demos/adjustc/adjustc.f90  \
+ ../test/demos/base/base.f90  \
+ ../test/demos/change/change.f90  \
+ ../test/demos/chomp/chomp.f90  \
+ ../test/demos/codebase/codebase.f90  \
+ ../test/demos/compact/compact.f90  \
+ ../test/demos/crop/crop.f90  \
+ ../test/demos/decodebase/decodebase.f90  \
+ ../test/demos/delim/delim.f90  \
+ ../test/demos/describe/describe.f90  \
+ ../test/demos/expand/expand.f90  \
+ ../test/demos/fmt/fmt.f90  \
+ ../test/demos/getvals/getvals.f90  \
+ ../test/demos/indent/indent.f90  \
+ ../test/demos/isalnum/isalnum.f90  \
+ ../test/demos/isalpha/isalpha.f90  \
+ ../test/demos/isascii/isascii.f90  \
+ ../test/demos/isblank/isblank.f90  \
+ ../test/demos/iscntrl/iscntrl.f90  \
+ ../test/demos/isdigit/isdigit.f90  \
+ ../test/demos/isgraph/isgraph.f90  \
+ ../test/demos/islower/islower.f90  \
+ ../test/demos/isnumber/isnumber.f90  \
+ ../test/demos/isprint/isprint.f90  \
+ ../test/demos/ispunct/ispunct.f90  \
+ ../test/demos/isspace/isspace.f90  \
+ ../test/demos/isupper/isupper.f90  \
+ ../test/demos/isxdigit/isxdigit.f90  \
+ ../test/demos/join/join.f90  \
+ ../test/demos/len_white/len_white.f90  \
+ ../test/demos/lenset/lenset.f90  \
+ ../test/demos/listout/listout.f90  \
+ ../test/demos/lower/lower.f90  \
+ ../test/demos/matchw/matchw.f90  \
+ ../test/demos/merge_str/merge_str.f90  \
+ ../test/demos/modif/modif.f90  \
+ ../test/demos/msg/msg.f90  \
+ ../test/demos/noesc/noesc.f90  \
+ ../test/demos/nospace/nospace.f90  \
+ ../test/demos/notabs/notabs.f90  \
+ ../test/demos/quote/quote.f90  \
+ ../test/demos/replace/replace.f90  \
+ ../test/demos/reverse/reverse.f90  \
+ ../test/demos/rotate13/rotate13.f90  \
+ ../test/demos/s2c/s2c.f90  \
+ ../test/demos/s2v/s2v.f90  \
+ ../test/demos/s2vs/s2vs.f90  \
+ ../test/demos/split/split.f90  \
+ ../test/demos/stretch/stretch.f90  \
+ ../test/demos/string_to_value/string_to_value.f90  \
+ ../test/demos/string_to_values/string_to_values.f90  \
+ ../test/demos/strtok/strtok.f90  \
+ ../test/demos/substitute/substitute.f90  \
+ ../test/demos/switch/switch.f90  \
+ ../test/demos/transliterate/transliterate.f90  \
+ ../test/demos/unquote/unquote.f90  \
+ ../test/demos/upper/upper.f90  \
+ ../test/demos/upper_quoted/upper_quoted.f90  \
+ ../test/demos/v2s/v2s.f90  \
+ ../test/demos/value_to_string/value_to_string.f90  \
+ ../test/demos/visible/visible.f90  \
+ ../test/demos/M_strings/M_strings.f90  \
 $(NULL)
+# ../test/demos/M_strings_oops/M_strings_oops.f90  \
 
-TESTFILES = ../test/test_suite_M_strings.f90
+TESTFILES = ../test/test_suite/test_suite_M_strings.f90
 TEST = ${TESTFILES:.f90=}
 
 CPROGFILES = 
@@ -108,14 +109,26 @@ help:
 	: run     '-- run manpage demo programs and test program'
 	: test    '-- run test program'
 	: man     '-- show all manpages as text'
+	: ship    '-- rebuild archive files of manpages'
 	: clean   '-- clean directory of object files and executables'
 	: doxygen '-- run doxygen(1) if you have it'
 	: help    '-- display this text'
 
+.PHONY: ship
+ship:
+	: make easily distributed archive files of manpages
+	mkdir -p ../docs
+	cd ../man/man3;\
+	   gzip *.3m_strings;\
+	   zip -r ../../docs/manpages.zip *gz;\
+	   tar cvfz ../../docs/manpages.tgz *gz;\
+	   gunzip *.3m_strings.gz
+
 .PHONY: run
 run: $(PROG)
 	# run everything
-	echo $? |xargs -n 1|xargs -iXX 'time XX </dev/null'
+	echo $? | xargs -n 1  
+	echo $? | xargs -n 1  |xargs -iXX /bin/time XX  \</dev/null
 
 .PHONY: test
 test: $(OBJS)

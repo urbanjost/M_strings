@@ -1,9 +1,0 @@
-<map id="m_strings::int_s2v" name="m_strings::int_s2v">
-<area shape="rect" id="node2" href="$namespacem__strings.html#ae0e2fe7c93e581402a74a7b59e5bb07f" title="NAMEs2v(3f) &#45; [M_strings:NUMERIC] function returns doubleprecision numeric value from a string (LICEN..." alt="" coords="195,56,312,83"/>
-<area shape="rect" id="node3" href="$namespacem__strings.html#a8a18024e04cc697243355de3d61e171c" title="m_strings::a2d" alt="" coords="360,56,479,83"/>
-<area shape="rect" id="node4" href="$namespacem__strings.html#a3883dae1b85c2d4a09d2d7e46ff422ab" title="NAME" alt="" coords="527,5,699,32"/>
-<area shape="rect" id="node6" href="$namespacem__strings.html#afccf1e453a4315a639f133f2f7c0078b" title="NAMEfmt(3f) &#45; [M_strings:TOKENS] Tokenize a string, consuming it one token per call (LICENSE:PD) ..." alt="" coords="554,56,671,83"/>
-<area shape="rect" id="node8" href="$namespacem__strings.html#ab84a4b7c2be211433c2d1b435a87fa32" title="NAMEsubstitute(3f) &#45; [M_strings:EDITING] subroutine globally substitutes one substring for another in..." alt="" coords="533,107,692,133"/>
-<area shape="rect" id="node5" href="$namespacem__strings.html#a0953ac5c4d31339fdd8ec3acc9c3c915" title="NAMEupper(3f) &#45; [M_strings:CASE] changes a string to uppercase (LICENSE:PD) " alt="" coords="747,5,878,32"/>
-<area shape="rect" id="node7" href="$namespacem__strings.html#aa53af9135873e241c487a75a7073bda1" title="NAMEstrtok(3f) &#45; [M_strings:TOKENS] Tokenize a string (LICENSE:PD) SYNOPSIS" alt="" coords="747,56,879,83"/>
-</map>

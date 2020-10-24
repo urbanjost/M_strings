@@ -8,5 +8,5 @@ description = "string manipulation (STD:2008)"
 
 [[test]]
 name="test_suite"
-source-dir="test"
+source-dir="test/test_suite"
 main="test_suite_M_strings.f90"
