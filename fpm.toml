@@ -1,3 +1,4 @@
+# TOML file for fpm as described at https://github.com/fortran-lang/fpm/blob/master/manifest-reference.md
 name = "M_strings"
 version = "0.1.0"
 license = "Public Domain"
@@ -5,8 +6,12 @@ author = "John S. Urban"
 maintainer = "urbanjost@comcast.net"
 copyright = "2020 John S. Urban"
 description = "string manipulation (STD:2008)"
+[dev-dependencies]
+M_msg          = { git = "https://github.com/urbanjost/M_msg.git" }
 
 [[test]]
 name="test_suite"
-source-dir="test/test_suite"
+source-dir="test"
 main="test_suite_M_strings.f90"
+[test.dependencies]
+M_msg          = { git = "https://github.com/urbanjost/M_msg.git" }

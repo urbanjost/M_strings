@@ -3,72 +3,74 @@
 
 NULL=
 PROGFILES = \
- ../test/demos/adjustc/adjustc.f90  \
- ../test/demos/base/base.f90  \
- ../test/demos/change/change.f90  \
- ../test/demos/chomp/chomp.f90  \
- ../test/demos/codebase/codebase.f90  \
- ../test/demos/compact/compact.f90  \
- ../test/demos/crop/crop.f90  \
- ../test/demos/decodebase/decodebase.f90  \
- ../test/demos/delim/delim.f90  \
- ../test/demos/describe/describe.f90  \
- ../test/demos/expand/expand.f90  \
- ../test/demos/fmt/fmt.f90  \
- ../test/demos/getvals/getvals.f90  \
- ../test/demos/indent/indent.f90  \
- ../test/demos/isalnum/isalnum.f90  \
- ../test/demos/isalpha/isalpha.f90  \
- ../test/demos/isascii/isascii.f90  \
- ../test/demos/isblank/isblank.f90  \
- ../test/demos/iscntrl/iscntrl.f90  \
- ../test/demos/isdigit/isdigit.f90  \
- ../test/demos/isgraph/isgraph.f90  \
- ../test/demos/islower/islower.f90  \
- ../test/demos/isnumber/isnumber.f90  \
- ../test/demos/isprint/isprint.f90  \
- ../test/demos/ispunct/ispunct.f90  \
- ../test/demos/isspace/isspace.f90  \
- ../test/demos/isupper/isupper.f90  \
- ../test/demos/isxdigit/isxdigit.f90  \
- ../test/demos/join/join.f90  \
- ../test/demos/len_white/len_white.f90  \
- ../test/demos/lenset/lenset.f90  \
- ../test/demos/listout/listout.f90  \
- ../test/demos/lower/lower.f90  \
- ../test/demos/matchw/matchw.f90  \
- ../test/demos/merge_str/merge_str.f90  \
- ../test/demos/modif/modif.f90  \
- ../test/demos/msg/msg.f90  \
- ../test/demos/noesc/noesc.f90  \
- ../test/demos/nospace/nospace.f90  \
- ../test/demos/notabs/notabs.f90  \
- ../test/demos/quote/quote.f90  \
- ../test/demos/replace/replace.f90  \
- ../test/demos/reverse/reverse.f90  \
- ../test/demos/rotate13/rotate13.f90  \
- ../test/demos/s2c/s2c.f90  \
- ../test/demos/s2v/s2v.f90  \
- ../test/demos/s2vs/s2vs.f90  \
- ../test/demos/split/split.f90  \
- ../test/demos/stretch/stretch.f90  \
- ../test/demos/string_to_value/string_to_value.f90  \
- ../test/demos/string_to_values/string_to_values.f90  \
- ../test/demos/strtok/strtok.f90  \
- ../test/demos/substitute/substitute.f90  \
- ../test/demos/switch/switch.f90  \
- ../test/demos/transliterate/transliterate.f90  \
- ../test/demos/unquote/unquote.f90  \
- ../test/demos/upper/upper.f90  \
- ../test/demos/upper_quoted/upper_quoted.f90  \
- ../test/demos/v2s/v2s.f90  \
- ../test/demos/value_to_string/value_to_string.f90  \
- ../test/demos/visible/visible.f90  \
- ../test/demos/M_strings/M_strings.f90  \
+ ../app/demo/adjustc.f90  \
+ ../app/demo/base.f90  \
+ ../app/demo/change.f90  \
+ ../app/demo/chomp.f90  \
+ ../app/demo/codebase.f90  \
+ ../app/demo/compact.f90  \
+ ../app/demo/crop.f90  \
+ ../app/demo/decodebase.f90  \
+ ../app/demo/delim.f90  \
+ ../app/demo/describe.f90  \
+ ../app/demo/expand.f90  \
+ ../app/demo/fmt.f90  \
+ ../app/demo/getvals.f90  \
+ ../app/demo/indent.f90  \
+ ../app/demo/isalnum.f90  \
+ ../app/demo/isalpha.f90  \
+ ../app/demo/isascii.f90  \
+ ../app/demo/isblank.f90  \
+ ../app/demo/iscntrl.f90  \
+ ../app/demo/isdigit.f90  \
+ ../app/demo/isgraph.f90  \
+ ../app/demo/islower.f90  \
+ ../app/demo/isnumber.f90  \
+ ../app/demo/isprint.f90  \
+ ../app/demo/ispunct.f90  \
+ ../app/demo/isspace.f90  \
+ ../app/demo/isupper.f90  \
+ ../app/demo/isxdigit.f90  \
+ ../app/demo/join.f90  \
+ ../app/demo/len_white.f90  \
+ ../app/demo/lenset.f90  \
+ ../app/demo/listout.f90  \
+ ../app/demo/lower.f90  \
+ ../app/demo/matchw.f90  \
+ ../app/demo/merge_str.f90  \
+ ../app/demo/modif.f90  \
+ ../app/demo/msg.f90  \
+ ../app/demo/noesc.f90  \
+ ../app/demo/nospace.f90  \
+ ../app/demo/notabs.f90  \
+ ../app/demo/quote.f90  \
+ ../app/demo/replace.f90  \
+ ../app/demo/reverse.f90  \
+ ../app/demo/rotate13.f90  \
+ ../app/demo/s2c.f90  \
+ ../app/demo/s2v.f90  \
+ ../app/demo/s2vs.f90  \
+ ../app/demo/split.f90  \
+ ../app/demo/stretch.f90  \
+ ../app/demo/string_to_value.f90  \
+ ../app/demo/string_to_values.f90  \
+ ../app/demo/strtok.f90  \
+ ../app/demo/substitute.f90  \
+ ../app/demo/switch.f90  \
+ ../app/demo/transliterate.f90  \
+ ../app/demo/unquote.f90  \
+ ../app/demo/upper.f90  \
+ ../app/demo/upper_quoted.f90  \
+ ../app/demo/v2s.f90  \
+ ../app/demo/value_to_string.f90  \
+ ../app/demo/visible.f90  \
+ ../app/demo/M_strings.f90  \
 $(NULL)
-# ../test/demos/M_strings_oops/M_strings_oops.f90  \
 
-TESTFILES = ../test/test_suite/test_suite_M_strings.f90
+TESTFILES = \
+ ../test/test_suite_M_strings.f90 \
+ ../test/M_strings_oops.f90 \
+$(NULL)
 TEST = ${TESTFILES:.f90=}
 
 CPROGFILES = 
@@ -107,7 +109,7 @@ clean:
 help:
 	: make    '-- build M_strings M_strings_oop module'
 	: run     '-- run manpage demo programs and test program'
-	: test    '-- run test program'
+	: test    '-- run test program (requires additional modules)'
 	: man     '-- show all manpages as text'
 	: ship    '-- rebuild archive files of manpages'
 	: clean   '-- clean directory of object files and executables'
@@ -128,7 +130,8 @@ ship:
 run: $(PROG)
 	# run everything
 	echo $? | xargs -n 1  
-	echo $? | xargs -n 1  |xargs -iXX /bin/time XX  \</dev/null
+#	echo $? | xargs -n 1  |xargs -iXX /bin/time XX  \</dev/null
+	echo $? | xargs -n 1  |(set +x;xargs -iXX env XX 2>&1)
 
 .PHONY: test
 test: $(OBJS)

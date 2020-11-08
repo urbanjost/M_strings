@@ -45,7 +45,7 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 <div id="Container">
 <div id="Content">
 <CENTER>
-<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>chomp (3m_strings)</NOBR><HR></H1>
+<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>sep (3m_strings)</NOBR><HR></H1>
 </CENTER>
 <A name=0>
 
@@ -53,8 +53,8 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<B>chomp</B>(3f) - [M_strings:TOKENS] Tokenize a string, consuming it one
-token per call
+<B>sep</B>(3f) - [M_strings:TOKENS] parse string into an array using
+specified delimiters
 (LICENSE:PD)
 <P>
 </BLOCKQUOTE>
@@ -74,13 +74,13 @@ token per call
 
 </A>
 <BLOCKQUOTE>
-function <B>chomp</B>(source_string,token[,delimiters])
+function <B>sep</B>(input_line,array,delimiters,nulls)
 <P>
 <PRE>
-    character(len=*)                     :: source_string
-    character(len=:),intent(out),token   :: token
-    character(len=:),intent(in),optional :: delimiters
-    integer                              :: chomp
+    character(len=*),intent(in)              :: input_line
+    character(len=*),optional,intent(in)     :: delimiters
+    character(len=*),optional,intent(in)     :: nulls
+    character(len=:),allocatable             :: sep(:)
 <P>
 </PRE>
 </BLOCKQUOTE>
@@ -90,11 +90,8 @@ function <B>chomp</B>(source_string,token[,delimiters])
 
 </A>
 <BLOCKQUOTE>
-The <B>CHOMP</B>(3f) function is used to isolate sequential tokens in a
-string, SOURCE_STRING. These tokens are delimited in the string by at
-least one of the characters in DELIMITERS. This routine consumes the
-source_string one token per call. It returns <B>-1</B> when complete. The
-default delimiter list is "space,tab,carriage return,newline".
+<B>sep</B>(3f) parses a string using specified delimiter characters and
+store tokens into an allocatable array
 </BLOCKQUOTE>
 <A name=3>
 
@@ -104,12 +101,31 @@ default delimiter list is "space,tab,carriage return,newline".
 <BLOCKQUOTE>
 <TABLE cellpadding=3>
 <TR valign=top><TD colspan=2>
-<B>SOURCE_STRING</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-string to tokenize
+<B>INPUT_LINE</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+Input string to tokenize
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>DELIMITERS</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-list of separator characters
+List of delimiter characters.
+The default delimiters are the "whitespace" characters
+(space, tab,new line, vertical tab, formfeed, carriage
+return, and null). You may specify an alternate set of
+delimiter characters.
+<P>
+Multi-character delimiters are not supported (Each
+character in the DELIMITERS list is considered to be
+a delimiter).
+<P>
+Quoting of delimiter characters is not supported.
+</TD></TR>
+<TR valign=top><TD colspan=2>
+<B>NULLS=IGNORE|RETURN|IGNOREEND</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+Treatment of null fields.
+By default adjacent delimiters in the input string
+do not create an empty string in the output array. if
+NULLS=&#146;return&#146; adjacent delimiters create an empty element
+in the output ARRAY. If NULLS=&#146;ignoreend&#146; then only
+trailing delimiters at the right of the string are ignored.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
@@ -120,12 +136,8 @@ list of separator characters
 <BLOCKQUOTE>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B>TOKEN</B> </TD><TD valign=bottom>
-returned token
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>CHOMP</B> </TD><TD valign=bottom>
-status flag. 0 = success, <B>-1</B> = no tokens remain
+<B>SEP</B> </TD><TD valign=bottom>
+Output array of tokens
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=5>
@@ -137,55 +149,46 @@ status flag. 0 = success, <B>-1</B> = no tokens remain
 Sample program:
 <P>
 <PRE>
-   program demo_chomp
-<P>
-   use M_strings, only : chomp
-   implicit none
-   character(len=100)            :: inline
-   character(len=:),allocatable  :: token
-   character(len=*),parameter    :: delimiters=&#146; ;,&#146;
-   integer                       :: ios
-   integer                       :: icount
-   integer                       :: itoken
-      icount=0
-      do        ! read lines from stdin until end-of-file or error
-         read (unit=*,fmt="(a)",iostat=ios) inline
-         if(ios.ne.0)stop
-         icount=icount+1
-         itoken=0
-         write(*,*)&#146;INLINE &#146;,trim(inline)
-         do while ( chomp(inline,token,delimiters).ge. 0)
-            itoken=itoken+1
-            print *, itoken,&#146;TOKEN=[&#146;//trim(token)//&#146;]&#146;
-         enddo
-      enddo
-<P>
-   end program demo_chomp
+   program demo_sep
+   use M_strings, only: sep
+   character(len=*),parameter :: fo=&#146;(/,a,*(/,"[",g0,"]":,","))&#146;
+   character(len=*),parameter :: line=&
+   &#146;  aBcdef   ghijklmnop qrstuvwxyz  1:|:2     333|333 a B cc    &#146;
+      write(*,&#146;(a)&#146;) &#146;INPUT LINE:[&#146;//LINE//&#146;]&#146;
+      write(*,fo) &#146;typical call:&#146;,sep(line)
+      write(*,fo) &#146;delimiters ":|":&#146;,sep(line,&#146;:|&#146;)
+      write(*,fo) &#146;count null fields ":|":&#146;,sep(line,&#146;:|&#146;,&#146;return&#146;)
+   end program demo_sep
 <P>
 </PRE>
-<BLOCKQUOTE>
-sample input file
+Output
 <P>
 <PRE>
-    this is a test of chomp; A:B :;,C;;
+   INPUT LINE:[  aBcdef   ghijklmnop qrstuvwxyz  1:|:2     333|333 a B cc    ]
+<P>
+   typical call:
+   [cc        ],
+   [B         ],
+   [a         ],
+   [333|333   ],
+   [1:|:2     ],
+   [qrstuvwxyz],
+   [ghijklmnop],
+   [aBcdef    ]
+<P>
+   delimiters ":|":
+   [333 a B cc                         ],
+   [2     333                          ],
+   [  aBcdef   ghijklmnop qrstuvwxyz  1]
+<P>
+   count null fields ":|":
+   [333 a B cc                         ],
+   [2     333                          ],
+   [                                   ],
+   [                                   ],
+   [  aBcdef   ghijklmnop qrstuvwxyz  1]
 <P>
 </PRE>
-sample output file
-<P>
-<PRE>
-    &gt; INLINE     this is a test of chomp; A:B :;,C;;
-    &gt;           1 TOKEN=[this]
-    &gt;           2 TOKEN=[is]
-    &gt;           3 TOKEN=[a]
-    &gt;           4 TOKEN=[test]
-    &gt;           5 TOKEN=[of]
-    &gt;           6 TOKEN=[chomp]
-    &gt;           7 TOKEN=[A:B]
-    &gt;           8 TOKEN=[:]
-    &gt;           9 TOKEN=[C]
-<P>
-</PRE>
-</BLOCKQUOTE>
 </BLOCKQUOTE>
 <A name=6>
 
@@ -204,8 +207,8 @@ John S. Urban
 Public Domain
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I></I></TD> <TD width=33% align=center>chomp (3m_strings)</TD> <TD align=right width=33%><I>November 08, 2020</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 38c4acc8-1203-438b-857c-a81fae6a6ad7 using man macros.</FONT>
-<br><br><center><img src="images/chomp.gif"></center>
+<TABLE width=100%><TR> <TD width=33%><I></I></TD> <TD width=33% align=center>sep (3m_strings)</TD> <TD align=right width=33%><I>November 08, 2020</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from eb6cd3aa-c6bf-43a6-8b51-2d955939a5e5 using man macros.</FONT>
+<br><br><center><img src="images/sep.gif"></center>
 </div>
 </div>
 </body>

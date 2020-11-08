@@ -16,6 +16,8 @@
                  read(line,*,iostat=ios,iomsg=message) value
                  if(ios.eq.0)then
                     write(*,*)'VALUE=',value
+                 elseif( is_iostat_end(ios) ) then
+                    stop 'end of file'
                  else
                     write(*,*)'ERROR:',ios,trim(message)
                  endif

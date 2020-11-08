@@ -1,5 +1,6 @@
 function loadthem(){
 append("M_strings.3m_strings.html");
+append("M_strings_oop.3m_strings.html");
 append("adjustc.3m_strings.html");
 append("atleast.3m_strings.html");
 append("base.3m_strings.html");
@@ -50,6 +51,7 @@ append("rotate13.3m_strings.html");
 append("s2c.3m_strings.html");
 append("s2v.3m_strings.html");
 append("s2vs.3m_strings.html");
+append("sep.3m_strings.html");
 append("split.3m_strings.html");
 append("stretch.3m_strings.html");
 append("string_to_value.3m_strings.html");

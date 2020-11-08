@@ -1,7 +1,5 @@
-INCLUDE "M_msg.inc"
-INCLUDE "M_debug.inc"
 module M_testsuite
-use M_debug
+use M_verify
 use M_strings
 contains
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
@@ -2553,9 +2551,9 @@ end subroutine test_setbits
 end module M_testsuite
 program runtest
 use M_msg
-use M_debug
-use M_debug, only : unit_check, unit_check_start, unit_check_good, unit_check_bad, unit_check_done
-use M_debug, only : unit_check_level
+use M_verify
+use M_verify, only : unit_check, unit_check_start, unit_check_good, unit_check_bad, unit_check_done
+use M_verify, only : unit_check_level
 use M_testsuite
    unit_check_command=''
    unit_check_keep_going=.true.

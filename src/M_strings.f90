@@ -16,7 +16,7 @@
 !!
 !!  public entities:
 !!
-!!      use M_strings, only : split,delim,chomp
+!!      use M_strings, only : split,sep,delim,chomp
 !!      use M_strings, only : substitute,change,modif,transliterate,reverse
 !!      use M_strings, only : replace,join
 !!      use M_strings, only : upper,lower,upper_quoted
@@ -41,6 +41,7 @@
 !!   TOKENS
 !!       split  subroutine parses string using specified delimiter characters
 !!              and stores tokens into an array
+!!       sep    function interface to split(3f)
 !!       delim  subroutine parses string using specified delimiter characters
 !!              and store tokens into an array
 !!       chomp  function consumes input line as it returns next token in a
@@ -217,7 +218,7 @@
 !!
 !!
 !!     program demo_M_strings
-!!     use M_strings, only : split, delim, chomp
+!!     use M_strings, only : split, delim, chomp, sep
 !!     use M_strings, only : substitute, change, modif
 !!     use M_strings, only : transliterate, reverse
 !!     use M_strings, only : replace, join
@@ -263,6 +264,7 @@ PRIVATE
 
 !----------------------# TOKENS
 PUBLIC split           !  subroutine parses a string using specified delimiter characters and store tokens into an allocatable array
+PUBLIC sep             !  function interface to split
 PUBLIC chomp           !  function consumes input line as it returns next token in a string using specified delimiters
 PUBLIC delim           !  subroutine parses a string using specified delimiter characters and store tokens into an array
 PUBLIC strtok          !  gets next token. Used by change(3f)
@@ -432,8 +434,8 @@ CONTAINS
 !!
 !!     character(len=*),intent(in) :: string
 !!     character(len=*),intent(in) :: pattern
-!!##DESCRIPTION
 !!
+!!##DESCRIPTION
 !!    matchw(3f) compares given STRING for match to PATTERN which may
 !!    contain wildcard characters.
 !!
@@ -756,6 +758,117 @@ end function matchw
 !===================================================================================================================================
 !>
 !!##NAME
+!!    sep(3f) - [M_strings:TOKENS] parse string into an array using
+!!    specified delimiters
+!!    (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!    function sep(input_line,array,delimiters,nulls)
+!!
+!!     character(len=*),intent(in)              :: input_line
+!!     character(len=*),optional,intent(in)     :: delimiters
+!!     character(len=*),optional,intent(in)     :: nulls
+!!     character(len=:),allocatable             :: sep(:)
+!!
+!!##DESCRIPTION
+!!     sep(3f) parses a string using specified delimiter characters and
+!!     store tokens into an allocatable array
+!!
+!!##OPTIONS
+!!    INPUT_LINE  Input string to tokenize
+!!
+!!    DELIMITERS  List of delimiter characters.
+!!                The default delimiters are the "whitespace" characters
+!!                (space, tab,new line, vertical tab, formfeed, carriage
+!!                return, and null). You may specify an alternate set of
+!!                delimiter characters.
+!!
+!!                Multi-character delimiters are not supported (Each
+!!                character in the DELIMITERS list is considered to be
+!!                a delimiter).
+!!
+!!                Quoting of delimiter characters is not supported.
+!!
+!!    NULLS=IGNORE|RETURN|IGNOREEND  Treatment of null fields.
+!!                By default adjacent delimiters in the input string
+!!                do not create an empty string in the output array. if
+!!                NULLS='return' adjacent delimiters create an empty element
+!!                in the output ARRAY. If NULLS='ignoreend' then only
+!!                trailing delimiters at the right of the string are ignored.
+!!##RETURNS
+!!    SEP       Output array of tokens
+!!
+!!##EXAMPLES
+!!
+!!  Sample program:
+!!
+!!    program demo_sep
+!!    use M_strings, only: sep
+!!    character(len=*),parameter :: fo='(/,a,*(/,"[",g0,"]":,","))'
+!!    character(len=*),parameter :: line=&
+!!    '  aBcdef   ghijklmnop qrstuvwxyz  1:|:2     333|333 a B cc    '
+!!       write(*,'(a)') 'INPUT LINE:['//LINE//']'
+!!       write(*,fo) 'typical call:',sep(line)
+!!       write(*,fo) 'delimiters ":|":',sep(line,':|')
+!!       write(*,fo) 'count null fields ":|":',sep(line,':|','return')
+!!    end program demo_sep
+!!
+!!  Output
+!!
+!!    INPUT LINE:[  aBcdef   ghijklmnop qrstuvwxyz  1:|:2     333|333 a B cc    ]
+!!
+!!    typical call:
+!!    [cc        ],
+!!    [B         ],
+!!    [a         ],
+!!    [333|333   ],
+!!    [1:|:2     ],
+!!    [qrstuvwxyz],
+!!    [ghijklmnop],
+!!    [aBcdef    ]
+!!
+!!    delimiters ":|":
+!!    [333 a B cc                         ],
+!!    [2     333                          ],
+!!    [  aBcdef   ghijklmnop qrstuvwxyz  1]
+!!
+!!    count null fields ":|":
+!!    [333 a B cc                         ],
+!!    [2     333                          ],
+!!    [                                   ],
+!!    [                                   ],
+!!    [  aBcdef   ghijklmnop qrstuvwxyz  1]
+!!
+!!##AUTHOR
+!!    John S. Urban
+!!
+!!##LICENSE
+!!    Public Domain
+function sep(input_line,delimiters,nulls)
+!-----------------------------------------------------------------------------------------------------------------------------------
+
+! ident_7="@(#)M_strings::sep(3f): parse string on delimiter characters and store tokens into an allocatable array"
+
+!  John S. Urban
+!-----------------------------------------------------------------------------------------------------------------------------------
+intrinsic index, min, present, len
+!-----------------------------------------------------------------------------------------------------------------------------------
+!  given a line of structure " par1 par2 par3 ... parn " store each par(n) into a separate variable in array.
+!    o by default adjacent delimiters in the input string do not create an empty string in the output array
+!    o no quoting of delimiters is supported
+character(len=*),intent(in)              :: input_line  ! input string to tokenize
+character(len=*),optional,intent(in)     :: delimiters  ! list of delimiter characters
+character(len=*),optional,intent(in)     :: nulls       ! return strings composed of delimiters or not ignore|return|ignoreend
+character(len=:),allocatable             :: sep(:)      ! output array of tokens
+   call split(input_line,sep,delimiters,'right',nulls)
+!-----------------------------------------------------------------------------------------------------------------------------------
+end function sep
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
 !!    split(3f) - [M_strings:TOKENS] parse string into an array using
 !!    specified delimiters
 !!    (LICENSE:PD)
@@ -769,12 +882,12 @@ end function matchw
 !!     character(len=*),optional,intent(in)     :: delimiters
 !!     character(len=*),optional,intent(in)     :: order
 !!     character(len=*),optional,intent(in)     :: nulls
+!!
 !!##DESCRIPTION
 !!     SPLIT(3f) parses a string using specified delimiter characters and
 !!     store tokens into an allocatable array
 !!
 !!##OPTIONS
-!!
 !!    INPUT_LINE  Input string to tokenize
 !!
 !!    ARRAY       Output array of tokens
@@ -795,8 +908,10 @@ end function matchw
 !!                By default ARRAY contains the tokens having parsed
 !!                the INPUT_LINE from left to right. If ORDER='RIGHT'
 !!                or ORDER='REVERSE' the parsing goes from right to left.
+!!                (This can be accomplished with array syntax in modern
+!!                Fortran, but was more useful pre-fortran90).
 !!
-!!    NULLS IGNORE|RETURN|IGNOREEND  Treatment of null fields.
+!!    NULLS=IGNORE|RETURN|IGNOREEND  Treatment of null fields.
 !!                By default adjacent delimiters in the input string
 !!                do not create an empty string in the output array. if
 !!                NULLS='return' adjacent delimiters create an empty element
@@ -904,7 +1019,7 @@ end function matchw
 subroutine split(input_line,array,delimiters,order,nulls)
 !-----------------------------------------------------------------------------------------------------------------------------------
 
-! ident_7="@(#)M_strings::split(3f): parse string on delimiter characters and store tokens into an allocatable array"
+! ident_8="@(#)M_strings::split(3f): parse string on delimiter characters and store tokens into an allocatable array"
 
 !  John S. Urban
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -1039,6 +1154,7 @@ integer                       :: imax                   ! length of longest toke
 !!     character(len=:),intent(out),token   :: token
 !!     character(len=:),intent(in),optional :: delimiters
 !!     integer                              :: chomp
+!!
 !!##DESCRIPTION
 !!    The CHOMP(3f) function is used to isolate sequential tokens in a
 !!    string, SOURCE_STRING. These tokens are delimited in the string by at
@@ -1102,11 +1218,12 @@ integer                       :: imax                   ! length of longest toke
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 FUNCTION chomp(source_string,token,delimiters)
 
-! ident_8="@(#)M_strings::chomp(3f): Tokenize a string : JSU- 20151030"
+! ident_9="@(#)M_strings::chomp(3f): Tokenize a string : JSU- 20151030"
 
 character(len=*)                         :: source_string    ! string to tokenize
 character(len=:),allocatable,intent(out) :: token            ! returned token
@@ -1163,6 +1280,7 @@ end function chomp
 !!      delim(3f) - [M_strings:TOKENS] parse a string and store tokens into
 !!      an array
 !!      (LICENSE:PD)
+!!
 !!##SYNOPSIS
 !!
 !!    subroutine delim(line,array,n,icount,ibegin,iterm,ilen,dlim)
@@ -1175,8 +1293,8 @@ end function chomp
 !!     integer,intent(out)          :: iterm(n)
 !!     integer,intent(out)          :: ilen
 !!     character(len=*)             :: dlim
-!!##DESCRIPTION
 !!
+!!##DESCRIPTION
 !!      Given a LINE of structure " par1 par2 par3 ... parn "
 !!      store each par(n) into a separate variable in ARRAY (UNLESS
 !!      ARRAY(1).eq.'#N#')
@@ -1257,13 +1375,15 @@ end function chomp
 !!     end program demo_delim
 !!
 !!  Expected output
+!!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 subroutine delim(line,array,n,icount,ibegin,iterm,ilen,dlim)
 
-! ident_9="@(#)M_strings::delim(3f): parse a string and store tokens into an array"
+! ident_10="@(#)M_strings::delim(3f): parse a string and store tokens into an array"
 
 !
 !     given a line of structure " par1 par2 par3 ... parn "
@@ -1389,6 +1509,7 @@ end subroutine delim
 !!     integer,intent(out),optional           :: ierr
 !!     logical,intent(in),optional            :: clip
 !!     character(len=:),allocatable           :: newline
+!!
 !!##DESCRIPTION
 !!    Globally replace one substring for another in string.
 !!    Either CMD or OLD and NEW must be specified.
@@ -1487,6 +1608,7 @@ end subroutine delim
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 subroutine crack_cmd(cmd,old,new,ierr)
@@ -1536,7 +1658,7 @@ end subroutine crack_cmd
 !===================================================================================================================================
 function replace(targetline,old,new,ierr,cmd,range) result (newline)
 
-! ident_10="@(#)M_strings::replace(3f): Globally replace one substring for another in string"
+! ident_11="@(#)M_strings::replace(3f): Globally replace one substring for another in string"
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 ! parameters
@@ -1664,6 +1786,7 @@ end function replace
 !!     integer,intent(out),optional  :: ierr
 !!     integer,intent(in),optional   :: start
 !!     integer,intent(in),optional   :: end
+!!
 !!##DESCRIPTION
 !!    Globally substitute one substring for another in string.
 !!
@@ -1714,13 +1837,15 @@ end function replace
 !!     th => TH    : THis is THe input string
 !!     "" => BEFORE: BEFORE:THis is THe input string
 !!     i => ""     : BEFORE:THs s THe nput strng
+!!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 subroutine substitute(targetline,old,new,ierr,start,end)
 
-! ident_11="@(#)M_strings::substitute(3f): Globally substitute one substring for another in string"
+! ident_12="@(#)M_strings::substitute(3f): Globally substitute one substring for another in string"
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 character(len=*)               :: targetline         ! input line to be changed
@@ -1855,6 +1980,7 @@ end subroutine substitute
 !!     character(len=*),intent(inout) :: target_string
 !!     character(len=*),intent(in)    :: cmd
 !!     integer                        :: ierr
+!!
 !!##DESCRIPTION
 !!    change an old substring into a new substring in a character variable
 !!    like a line editor. Primarily used to create interactive utilities
@@ -1906,8 +2032,10 @@ end subroutine substitute
 !!     This is A test string to chAnge
 !!     prefix: This is A test string to chAnge
 !!     prefix:ThisisAteststringtochAnge
+!!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 subroutine change(target_string,cmd,ierr)
@@ -1917,7 +2045,7 @@ subroutine change(target_string,cmd,ierr)
 ! a null old_string implies "beginning of string"
 !===================================================================================================================================
 
-! ident_12="@(#)M_strings::change(3f): change a character string like a line editor"
+! ident_13="@(#)M_strings::change(3f): change a character string like a line editor"
 
 character(len=*),intent(inout)   :: target_string          ! line to be changed
 character(len=*),intent(in)      :: cmd                    ! contains the instructions changing the string
@@ -1964,6 +2092,7 @@ end subroutine change
 !!##NAME
 !!     strtok(3f) - [M_strings:TOKENS] Tokenize a string
 !!     (LICENSE:PD)
+!!
 !!##SYNOPSIS
 !!
 !!  function strtok(source_string,itoken,token_start,token_end,delimiters)
@@ -1998,6 +2127,7 @@ end subroutine change
 !!     source_string  input string to parse
 !!     itoken         token count should be set to zero for a new string
 !!     delimiters     characters used to determine the end of tokens
+!!
 !!##RETURN
 !!     token_start    beginning position in SOURCE_STRING where token was found
 !!     token_end      ending position in SOURCE_STRING where token was found
@@ -2044,12 +2174,13 @@ end subroutine change
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 FUNCTION strtok(source_string,itoken,token_start,token_end,delimiters) result(strtok_status)
 ! JSU- 20151030
 
-! ident_13="@(#)M_strings::strtok(3f): Tokenize a string"
+! ident_14="@(#)M_strings::strtok(3f): Tokenize a string"
 
 character(len=*),intent(in)  :: source_string    ! Source string to tokenize.
 character(len=*),intent(in)  :: delimiters       ! list of separator characters. May change between calls
@@ -2115,8 +2246,8 @@ end function strtok
 !!     character(len=*) :: cline ! input string to change
 !!     ! directive provides directions on changing string
 !!     character(len=*) :: cmod
-!!##DESCRIPTION
 !!
+!!##DESCRIPTION
 !!   MODIF(3f) Modifies the line currently pointed at using a directive
 !!   that acts much like a line editor directive.
 !!   Primarily used to create interactive utilities such as input history
@@ -2187,6 +2318,7 @@ end function strtok
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 SUBROUTINE MODIF(CLINE,MOD)
@@ -2304,6 +2436,7 @@ END SUBROUTINE MODIF                     !RETURN
 !!    integer function len_white(string)
 !!
 !!     character(len=*) :: string
+!!
 !!##DESCRIPTION
 !!      len_white(3f) returns the position of the last character in
 !!      string that is not a whitespace character. The Fortran90 intrinsic
@@ -2314,6 +2447,7 @@ END SUBROUTINE MODIF                     !RETURN
 !!      77 character objects are fixed length and blank padded and the
 !!      LEN_TRIM() intrinsic did not exist. It should now be used only when
 !!      whitespace characters other than blanks are likely.
+!!
 !!##OPTIONS
 !!      string     input string whose trimmed length is being calculated
 !!                 ignoring all trailing whitespace characters.
@@ -2366,6 +2500,7 @@ END SUBROUTINE MODIF                     !RETURN
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 elemental integer function len_white(string)
@@ -2381,7 +2516,7 @@ elemental integer function len_white(string)
 !                still need instead of LEN_TRIM() because some systems stil pad CHARACTER with NULL
 !-----------------------------------------------------------------------------------------------------------------------------------
 
-! ident_14="@(#)M_strings::len_white(3f): return position of last non-blank/non-null character in string"
+! ident_15="@(#)M_strings::len_white(3f): return position of last non-blank/non-null character in string"
 
 character(len=*),intent(in):: string ! input string to determine length of
 integer                    :: i10
@@ -2440,14 +2575,16 @@ end function len_white
 !!
 !!      untrimmed string=[   ABCDEFG abcdefg                      ]
 !!      cropped string=[ABCDEFG abcdefg]
+!!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 function crop(strin) result (strout)
 use M_journal, only : journal
 
-! ident_15="@(#)M_strings::crop(3f): trim leading and trailings blanks from string"
+! ident_16="@(#)M_strings::crop(3f): trim leading and trailings blanks from string"
 
 character(len=*),intent(in)  :: strin
 character(len=:),allocatable :: strout
@@ -2469,6 +2606,7 @@ end function crop
 !!     character(len=*),intent(in)  :: old_set
 !!     character(len=*),intent(in)  :: new_set
 !!     character(len=len(instr))    :: outstr
+!!
 !!##DESCRIPTION
 !!    Translate, squeeze, and/or delete characters from the input string.
 !!
@@ -2526,11 +2664,12 @@ end function crop
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 PURE FUNCTION transliterate(instr,old_set,new_set) RESULT(outstr)
 
-! ident_16="@(#)M_strings::transliterate(3f): replace characters from old set with new set"
+! ident_17="@(#)M_strings::transliterate(3f): replace characters from old set with new set"
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 CHARACTER(LEN=*),INTENT(IN)  :: instr                             ! input string to change
@@ -2573,6 +2712,7 @@ END FUNCTION transliterate
 !!##NAME
 !!    rotate13(3f) - [M_strings] apply trivial ROT13 encryption to a string
 !!    (LICENSE:PD)
+!!
 !!##SYNOPSIS
 !!
 !!    rotate13(input) result(output)
@@ -2660,12 +2800,13 @@ END FUNCTION transliterate
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 function rotate13 (input)
 implicit none
 
-! ident_17="@(#)M_strings::rotate13(3f): converts a character to its ROT13 equivalent, which is a trivial encryption."
+! ident_18="@(#)M_strings::rotate13(3f): converts a character to its ROT13 equivalent, which is a trivial encryption."
 
 character(len=*),intent(in) :: input
 character(len=len(input))   :: rotate13
@@ -2703,6 +2844,7 @@ end function rotate13
 !!     character(len=*),intent(in),optional :: right
 !!     character(len=*),intent(in),optional :: left
 !!     character(len=:),allocatable         :: string
+!!
 !!##DESCRIPTION
 !!      JOIN(3f) appends the elements of a CHARACTER array into a single
 !!      CHARACTER variable, with elements 1 to N joined from left to right.
@@ -2759,11 +2901,12 @@ end function rotate13
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 pure function join(str,sep,trm,left,right) result (string)
 
-! ident_18="@(#)M_strings::join(3f): append an array of character variables with specified separator into a single CHARACTER variable"
+! ident_19="@(#)M_strings::join(3f): append an array of character variables with specified separator into a single CHARACTER variable"
 
 character(len=*),intent(in)          :: str(:)
 character(len=*),intent(in),optional :: sep
@@ -2805,6 +2948,7 @@ end function join
 !!
 !!     character(*), intent(in) :: str
 !!     character(len(str))      :: string
+!!
 !!##DESCRIPTION
 !!      reverse(string) returns a copy of the input string with
 !!      all characters reversed from right to left.
@@ -2829,11 +2973,12 @@ end function join
 !!      reversed output string is ...zyxwvutsrqponmlkjihgfedcba
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 elemental function reverse(string ) result (rev)
 
-! ident_19="@(#)M_strings::reverse(3f): Return a string reversed"
+! ident_20="@(#)M_strings::reverse(3f): Return a string reversed"
 
 character(len=*),intent(in)    :: string   ! string to reverse
 character(len=len(string))     :: rev      ! return value (reversed string)
@@ -2858,6 +3003,7 @@ end function reverse
 !!
 !!     character(*), intent(in)    :: str
 !!     character(len(str))         :: string  ! output string
+!!
 !!##DESCRIPTION
 !!    upper_quoted(string) returns a copy of the input string with all not-quoted
 !!    characters converted to uppercase, assuming ASCII character sets
@@ -2901,13 +3047,15 @@ end function reverse
 !!     'Single-Quoted' "with "" Quote" EVERYTHING ELSE
 !!     make first character uppercase  ... THIS IS A SENTENCE.
 !!     upper_quoted(3f) is elemental ==>ABC+DEF+GHI
+!!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 elemental pure function upper_quoted(str) result (string)
 
-! ident_20="@(#)M_strings::upper_quoted(3f): elemental function converts string to miniscule skipping strings quoted per Fortran syntax rules"
+! ident_21="@(#)M_strings::upper_quoted(3f): elemental function converts string to miniscule skipping strings quoted per Fortran syntax rules"
 
 character(len=*), intent(in)   :: str     ! The input string
 character(len=len(str))        :: string  ! The output string
@@ -2950,6 +3098,7 @@ end function upper_quoted
 !!     character(*), intent(in)    :: str
 !!     integer,optional,intent(in) :: begin,end
 !!     character(len(str))         :: string  ! output string
+!!
 !!##DESCRIPTION
 !!      upper(string) returns a copy of the input string with all characters
 !!      converted in the optionally specified range to uppercase, assuming
@@ -3000,8 +3149,10 @@ end function upper_quoted
 !!     upper-case output string is ... ABCDEFG ABCDEFG
 !!     make first character uppercase  ... This is a sentence.
 !!     UPPER(3f) is elemental ==>ABC+DEF+GHI
+!!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 !===================================================================================================================================
@@ -3018,7 +3169,7 @@ end function upper_quoted
 ! upper3: 267.21user 11.69system 4:49.21elapsed 96%CPU
 elemental pure function upper(str,begin,end) result (string)
 
-! ident_21="@(#)M_strings::upper(3f): Changes a string to uppercase"
+! ident_22="@(#)M_strings::upper(3f): Changes a string to uppercase"
 
 character(*), intent(In)      :: str                 ! inpout string to convert to all uppercase
 integer, intent(in), optional :: begin,end
@@ -3061,6 +3212,7 @@ end function upper
 !!     character(*), intent(in) :: str
 !!     integer,optional         :: begin, end
 !!     character(len(str))      :: string  ! output string
+!!
 !!##DESCRIPTION
 !!      lower(string) returns a copy of the input string with all characters
 !!      converted to miniscule over the specified range, assuming ASCII
@@ -3105,13 +3257,15 @@ end function upper
 !!
 !!       mixed-case input string is .... ABCDEFG abcdefg
 !!       lower-case output string is ... abcdefg abcdefg
+!!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 elemental pure function lower(str,begin,end) result (string)
 
-! ident_22="@(#)M_strings::lower(3f): Changes a string to lowercase over specified range"
+! ident_23="@(#)M_strings::lower(3f): Changes a string to lowercase over specified range"
 
 character(*), intent(In)     :: str
 character(len(str))          :: string
@@ -3151,7 +3305,6 @@ end function lower
 !!
 !!##SYNOPSIS
 !!
-!!
 !!    pure function switch(array) result (string)
 !!
 !!     character(len=1),intent(in) :: array(:)
@@ -3164,12 +3317,10 @@ end function lower
 !!     character(len=1),intent(in) :: array(:)
 !!     character(len=SIZE(array))  :: string
 !!##DESCRIPTION
-!!
 !!    SWITCH(3f): generic function that switches CHARACTER string to an array
 !!    of single characters or an array of single characters to a CHARACTER
 !!    string. Useful in passing strings to C. New Fortran features may
 !!    supersede these routines.
-!!
 !!
 !!##EXAMPLES
 !!
@@ -3243,11 +3394,12 @@ end function lower
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 pure function a2s(array)  result (string)
 
-! ident_23="@(#)M_strings::a2s(3fp): function to copy char array to string"
+! ident_24="@(#)M_strings::a2s(3fp): function to copy char array to string"
 
 character(len=1),intent(in) :: array(:)
 character(len=SIZE(array))  :: string
@@ -3261,7 +3413,7 @@ end function a2s
 !===================================================================================================================================
 pure function s2a(string)  RESULT (array)
 
-! ident_24="@(#)M_strings::s2a(3fp): function to copy string(1:Clen(string)) to char array"
+! ident_25="@(#)M_strings::s2a(3fp): function to copy string(1:Clen(string)) to char array"
 
 character(len=*),intent(in) :: string
 character(len=1)            :: array(len(string))
@@ -3285,10 +3437,12 @@ end function s2a
 !!
 !!     character(len=*),intent=(in)  :: string
 !!     character(len=1),allocatable  :: s2c(:)
+!!
 !!##DESCRIPTION
 !!    Given a character variable convert it to an array of single-character
 !!    character variables with the last element set to a null character.
 !!    This is generally used to pass character variables to C procedures.
+!!
 !!##EXAMPLES
 !!
 !!    Sample Program:
@@ -3317,12 +3471,13 @@ end function s2a
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 pure function s2c(string)  RESULT (array)
 use,intrinsic :: ISO_C_BINDING, only : C_CHAR
 
-! ident_25="@(#)M_strings::s2c(3f): copy string(1:Clen(string)) to char array with null terminator"
+! ident_26="@(#)M_strings::s2c(3f): copy string(1:Clen(string)) to char array with null terminator"
 
 character(len=*),intent(in)     :: string
 
@@ -3374,7 +3529,7 @@ function c2s(c_string_pointer) result(f_string)
 ! If the C string is null, it returns "NULL", similar to C's "(null)" printed in similar cases:
 use, intrinsic :: iso_c_binding, only: c_ptr,c_f_pointer,c_char,c_null_char
 
-! ident_26="@(#)M_strings::c2s(3f): copy pointer to C char array till a null is encountered to a Fortran string up to 4096 characters"
+! ident_27="@(#)M_strings::c2s(3f): copy pointer to C char array till a null is encountered to a Fortran string up to 4096 characters"
 
 integer,parameter                             :: max_length=4096
 type(c_ptr), intent(in)                       :: c_string_pointer
@@ -3416,6 +3571,7 @@ end function c2s
 !!
 !!     integer                        :: indent
 !!     character(len=*),intent(in)    :: line
+!!
 !!##DESCRIPTION
 !!    Count number of leading spaces in a CHARACTER variable.
 !!
@@ -3439,12 +3595,13 @@ end function c2s
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 function indent(line)
 implicit none
 
-! ident_27="@(#)M_strings::indent(3f): find number of leading spaces in a string"
+! ident_28="@(#)M_strings::indent(3f): find number of leading spaces in a string"
 
 integer                        :: indent
 character(len=*),intent(in)    :: line
@@ -3505,7 +3662,7 @@ function visible(input) result(output)
 character(len=*),intent(in)  :: input
 character(len=:),allocatable :: output
 
-! ident_28="@(#)M_strings::visible(3f) expand escape sequences in a string to control and meta-control representations"
+! ident_29="@(#)M_strings::visible(3f) expand escape sequences in a string to control and meta-control representations"
 
 integer                      :: i
 character(len=1)             :: c
@@ -3565,8 +3722,8 @@ end function visible
 !!    character(len=*)                      :: line
 !!    character(len=1),intent(in),optional  :: escape
 !!    character(len=:),allocatable          :: lineout
-!!##DESCRIPTION
 !!
+!!##DESCRIPTION
 !!     EXPAND() expands sequences used to represent commonly used escape
 !!     sequences or control characters. By default ...
 !!
@@ -3615,13 +3772,14 @@ end function visible
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 function expand(line,escape) result(lineout)
 USE ISO_C_BINDING ,ONLY: c_horizontal_tab
 implicit none
 
-! ident_29="@(#)M_strings::expand(3f): return string with escape sequences expanded"
+! ident_30="@(#)M_strings::expand(3f): return string with escape sequences expanded"
 
 character(len=*)                      :: line
 character(len=1),intent(in),optional  :: escape ! escape character. Default is backslash
@@ -3708,6 +3866,7 @@ end function expand
 !!##NAME
 !!    notabs(3f) - [M_strings:NONALPHA] expand tab characters
 !!    (LICENSE:PD)
+!!
 !!##SYNOPSIS
 !!
 !!    subroutine notabs(INSTR,OUTSTR,ILEN)
@@ -3715,6 +3874,7 @@ end function expand
 !!     character(len=*),intent=(in)  :: INSTR
 !!     character(len=*),intent=(out) :: OUTSTR
 !!     integer,intent=(out)          :: ILEN
+!!
 !!##DESCRIPTION
 !!     NOTABS() converts tabs in INSTR to spaces in OUTSTR while maintaining
 !!     columns. It assumes a tab is set every 8 characters. Trailing spaces
@@ -3763,11 +3923,12 @@ end function expand
 !!
 !!##AUTHOR
 !!     John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 subroutine notabs(INSTR,OUTSTR,ILEN)
 
-! ident_30="@(#)M_strings::notabs(3f): convert tabs to spaces while maintaining columns, remove CRLF chars"
+! ident_31="@(#)M_strings::notabs(3f): convert tabs to spaces while maintaining columns, remove CRLF chars"
 
 CHARACTER(LEN=*),INTENT(IN)   :: instr        ! input line to scan for tab characters
 CHARACTER(LEN=*),INTENT(OUT)  :: outstr       ! tab-expanded version of INSTR produced
@@ -3826,13 +3987,16 @@ END SUBROUTINE notabs
 !!    character(len=*),intent(in)  :: string
 !!    integer,intent(in),optional  :: length
 !!    character(len=:),allocatable :: adjustc
+!!
 !!##DESCRIPTION
 !!     Centers input text in a string of the length specified. Returns a
 !!     string of length LENGTH if LENGTH is present. Otherwise returns a
 !!     string of the length of the input string.
+!!
 !!##OPTIONS
 !!     string  input string to trim and center
 !!     length  line length to center text in, optional.
+!!
 !!##RETURNS
 !!     adjustc  centered output string
 !!
@@ -3862,13 +4026,15 @@ END SUBROUTINE notabs
 !!    ==================================================
 !!                this is a centered string
 !!    ==================================================
+!!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 pure function adjustc(string,length)
 
-! ident_31="@(#)M_strings::adjustc(3f): center text"
+! ident_32="@(#)M_strings::adjustc(3f): center text"
 
 !>
 !! PROCEDURE   adjustc(3f)
@@ -3915,8 +4081,8 @@ end function adjustc
 !!
 !!     character(len=*),intent(in)          :: str
 !!     character(len=:),allocatable         :: nospace
-!!##DESCRIPTION
 !!
+!!##DESCRIPTION
 !!    nospace(3f) removes space, tab, carriage return, new line, vertical
 !!    tab, formfeed and null characters (called "whitespace"). The output
 !!    is returned trimmed.
@@ -3944,13 +4110,15 @@ end function adjustc
 !!     original input string is ....  This     is      a     test
 !!     processed output string is ...Thisisatest
 !!     nospace test passed
+!!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 function nospace(line)
 
-! ident_32="@(#)M_strings::nospace(3f): remove all whitespace from input string"
+! ident_33="@(#)M_strings::nospace(3f): remove all whitespace from input string"
 
 character(len=*),intent(in)    ::  line             ! remove whitespace from this string and return it
 character(len=:),allocatable   ::  nospace          ! returned string
@@ -3985,16 +4153,19 @@ end function nospace
 !!     character(len=*)intent(in),optional :: pattern
 !!     character(len=*)intent(in),optional :: suffix
 !!     character(len=:),allocatable        :: strout
+!!
 !!##DESCRIPTION
 !!    stretch(3f) pads a string with spaces to at least the specified
 !!    length. If the trimmed input string is longer than the requested
 !!    length the original string is returned trimmed of trailing spaces.
+!!
 !!##OPTIONS
 !!    str      the input string to return trimmed, but then padded to
 !!             the specified length if shorter than length
 !!    length   The minimum string length to return
 !!    pattern  optional string to use as padding. Defaults to a space.
 !!    suffix   optional string to append to output string
+!!
 !!##RETURNS
 !!    strout  The input string padded to the requested length or
 !!            the trimmed input string if the input string is
@@ -4053,11 +4224,12 @@ end function nospace
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 function stretch(line,length,pattern,suffix) result(strout)
 
-! ident_33="@(#)M_strings::stretch(3f): return string padded to at least specified length"
+! ident_34="@(#)M_strings::stretch(3f): return string padded to at least specified length"
 
 character(len=*),intent(in)                  :: line
 integer,intent(in)                           :: length
@@ -4151,12 +4323,13 @@ end function stretch
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 !===================================================================================================================================
 function atleast(line,length,pattern) result(strout)
 
-! ident_34="@(#)M_strings::atleast(3f): return string padded to at least specified length"
+! ident_35="@(#)M_strings::atleast(3f): return string padded to at least specified length"
 
 character(len=*),intent(in)                :: line
 integer,intent(in)                         :: length
@@ -4183,14 +4356,18 @@ end function atleast
 !!     character(len=*)                     :: str
 !!     character(len=length)                :: strout
 !!     integer,intent(in)                   :: length
+!!
 !!##DESCRIPTION
 !!    lenset(3f) truncates a string or pads it with spaces to the specified
 !!    length.
+!!
 !!##OPTIONS
 !!    str     input string
 !!    length  output string length
+!!
 !!##RESULTS
 !!    strout  output string
+!!
 !!##EXAMPLE
 !!
 !!    Sample Program:
@@ -4213,11 +4390,12 @@ end function atleast
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 function lenset(line,length) result(strout)
 
-! ident_35="@(#)M_strings::lenset(3f): return string trimmed or padded to specified length"
+! ident_36="@(#)M_strings::lenset(3f): return string trimmed or padded to specified length"
 
 character(len=*),intent(in)  ::  line
 integer,intent(in)           ::  length
@@ -4241,6 +4419,7 @@ end function lenset
 !!     character(len=*),intent(in),optional :: str2
 !!     logical,intent(in)              :: expr
 !!     character(len=:),allocatable    :: strout
+!!
 !!##DESCRIPTION
 !!    merge_str(3f) pads the shorter of str1 and str2 to the longest length
 !!    of str1 and str2 and then calls MERGE(padded_str1,padded_str2,expr).
@@ -4283,15 +4462,17 @@ end function lenset
 !!
 !!     [first string]
 !!     [second string is longer]
+!!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 function merge_str(str1,str2,expr) result(strout)
 ! for some reason the MERGE(3f) intrinsic requires the strings it compares to be of equal length
 ! make an alias for MERGE(3f) that makes the lengths the same before doing the comparison by padding the shorter one with spaces
 
-! ident_36="@(#)M_strings::merge_str(3f): pads first and second arguments to MERGE(3f) to same length"
+! ident_37="@(#)M_strings::merge_str(3f): pads first and second arguments to MERGE(3f) to same length"
 
 character(len=*),intent(in),optional :: str1
 character(len=*),intent(in),optional :: str2
@@ -4342,6 +4523,7 @@ end function merge_str
 !!            whitespace is a space. If the optional CHAR parameter is supplied
 !!            it will be used to replace the whitespace. If a null character is
 !!            supplied for CHAR whitespace is removed.
+!!
 !!##RETURNS
 !!    OUTSTR  string of same length as input string but with all contiguous
 !!            whitespace reduced to a single space and leading whitespace
@@ -4373,14 +4555,16 @@ end function merge_str
 !!     >Thisisatest
 !!     >This:is:a:test
 !!     >AAAAAAAAAAAA
+!!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 !elemental pure function compact(str,char) result (outstr)
 function compact(str,char) result (outstr)
 
-! ident_37="@(#)M_strings::compact(3f): Converts white-space to single spaces"
+! ident_38="@(#)M_strings::compact(3f): Converts white-space to single spaces"
 
 character(len=*),intent(in)          :: str
 character(len=*),intent(in),optional :: char
@@ -4442,6 +4626,7 @@ end function compact
 !!
 !!     character(len=*),intent(in) :: INSTR
 !!     character(len=len(instr))   :: noesc
+!!
 !!##DESCRIPTION
 !!      Convert non-printable characters to a space.
 !!
@@ -4528,13 +4713,15 @@ end function compact
 !!
 !!    >                                  !"#$%&'()*+,-./0123456789:;<=>?@
 !!    ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+!!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 elemental function noesc(INSTR)
 
-! ident_38="@(#)M_strings::noesc(3f): convert non-printable characters to a space"
+! ident_39="@(#)M_strings::noesc(3f): convert non-printable characters to a space"
 
 character(len=*),intent(in) :: INSTR      ! string that might contain nonprintable characters
 character(len=len(instr))   :: noesc
@@ -4607,7 +4794,7 @@ end function noesc
 !!    Public Domain
 subroutine a2r(chars,valu,ierr)
 
-! ident_39="@(#)M_strings::a2r(3fp): subroutine returns real value from string"
+! ident_40="@(#)M_strings::a2r(3fp): subroutine returns real value from string"
 
 character(len=*),intent(in) :: chars                      ! input string
 real,intent(out)            :: valu                       ! value read from input string
@@ -4628,7 +4815,7 @@ end subroutine a2r
 !----------------------------------------------------------------------------------------------------------------------------------
 subroutine a2i(chars,valu,ierr)
 
-! ident_40="@(#)M_strings::a2i(3fp): subroutine returns integer value from string"
+! ident_41="@(#)M_strings::a2i(3fp): subroutine returns integer value from string"
 
 character(len=*),intent(in) :: chars                      ! input string
 integer,intent(out)         :: valu                       ! value read from input string
@@ -4649,7 +4836,7 @@ end subroutine a2i
 !----------------------------------------------------------------------------------------------------------------------------------
 subroutine a2d(chars,valu,ierr,onerr)
 
-! ident_41="@(#)M_strings::a2d(3fp): subroutine returns double value from string"
+! ident_42="@(#)M_strings::a2d(3fp): subroutine returns double value from string"
 
 !     1989,2016 John S. Urban.
 !
@@ -4673,7 +4860,7 @@ integer                      :: basevalue, ivalu
 character(len=3),save        :: nan_string='NaN'
 !----------------------------------------------------------------------------------------------------------------------------------
    ierr=0                                                       ! initialize error flag to zero
-   local_chars=chars
+   local_chars=unquote(chars)
    msg=''
    if(len(local_chars).eq.0)local_chars=' '
    call substitute(local_chars,',','')                          ! remove any comma characters
@@ -4744,12 +4931,14 @@ end subroutine a2d
 !!     doubleprecision              :: s2v
 !!     integer,intent(out),optional :: ierr
 !!     class(*),intent(in),optional :: onerr
+!!
 !!##DESCRIPTION
 !!    This function converts a string to a DOUBLEPRECISION numeric value.
 !!
 !!    The intrinsics INT(3f), REAL(3f), and DBLE(3f) are also extended
 !!    to take CHARACTER variables. The KIND= keyword is not supported
 !!    on the extensions.
+!!
 !!##OPTIONS
 !!
 !!     string   holds string assumed to represent a numeric value
@@ -4758,8 +4947,9 @@ end subroutine a2d
 !!              value an error occurred.
 !!     onerr    The value to return on error. A value of NaN is
 !!              returned on error by default.
+!!
 !!##RETURNS
-!!     s2v
+!!     s2v      numeric value read from string
 !!
 !!##EXAMPLE
 !!
@@ -4837,8 +5027,10 @@ end subroutine a2d
 !!     >          12345.678910000001 0.0000000000000000
 !!     12121.000000000000
 !!     >That's all folks!
+!!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 !>
@@ -4849,7 +5041,7 @@ end subroutine a2d
 doubleprecision function s2v(chars,ierr,onerr)
 !  1989 John S. Urban
 
-! ident_42="@(#)M_strings::s2v(3f): returns doubleprecision number from string"
+! ident_43="@(#)M_strings::s2v(3f): returns doubleprecision number from string"
 
 
 character(len=*),intent(in)  :: chars
@@ -4950,8 +5142,8 @@ end function dbles_s2v
 !!     integer,optional                         :: ierr
 !!     character(len=*),intent(in),optional     :: fmt
 !!     logical,intent(in)                       :: trimz
-!!##DESCRIPTION
 !!
+!!##DESCRIPTION
 !!    value_to_string(3f) returns a numeric representation of a numeric
 !!    value in a string given a numeric value of type REAL, DOUBLEPRECISION,
 !!    INTEGER or LOGICAL. It creates the string using internal writes. It
@@ -4973,6 +5165,7 @@ end function dbles_s2v
 !!       ILEN    position of last non-blank character in returned string;
 !!               optional.
 !!       IERR    If not zero, error occurred; optional.
+!!
 !!##EXAMPLE
 !!
 !!    Sample program:
@@ -5010,6 +5203,7 @@ end function dbles_s2v
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 subroutine value_to_string(gval,chars,length,err,fmt,trimz)
@@ -5109,7 +5303,6 @@ end subroutine value_to_string
 !!        character(len=*),optional,intent(in) :: fmt
 !!
 !!##DESCRIPTION
-!!
 !!    v2s(3f) returns a representation of a numeric value as a
 !!    string when given a numeric value of type REAL, DOUBLEPRECISION,
 !!    INTEGER or LOGICAL. It creates the strings using internal WRITE()
@@ -5147,12 +5340,13 @@ end subroutine value_to_string
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 ! very odd compiler problems in many (but not all) programs using this routine; GNU Fortran (GCC) 5.4.0; 20161030
 function v2s_bug(gval) result(outstr)
 
-! ident_43="@(#)M_strings::v2s_bug(3f): function returns string given numeric value"
+! ident_44="@(#)M_strings::v2s_bug(3f): function returns string given numeric value"
 
 class(*),intent(in)          :: gval                         ! input value to convert to a string
 character(len=:),allocatable :: outstr                       ! output string to generate
@@ -5163,7 +5357,7 @@ end function v2s_bug
 !===================================================================================================================================
 function d2s(dvalue,fmt) result(outstr)
 
-! ident_44="@(#)M_strings::d2s(3fp): private function returns string given doubleprecision value"
+! ident_45="@(#)M_strings::d2s(3fp): private function returns string given doubleprecision value"
 
 doubleprecision,intent(in)   :: dvalue                         ! input value to convert to a string
 character(len=*),intent(in),optional :: fmt
@@ -5179,7 +5373,7 @@ end function d2s
 !===================================================================================================================================
 function r2s(rvalue,fmt) result(outstr)
 
-! ident_45="@(#)M_strings::r2s(3fp): private function returns string given real value"
+! ident_46="@(#)M_strings::r2s(3fp): private function returns string given real value"
 
 real,intent(in)              :: rvalue                         ! input value to convert to a string
 character(len=*),intent(in),optional :: fmt
@@ -5195,7 +5389,7 @@ end function r2s
 !===================================================================================================================================
 function i2s(ivalue,fmt) result(outstr)
 
-! ident_46="@(#)M_strings::i2s(3fp): private function returns string given integer value"
+! ident_47="@(#)M_strings::i2s(3fp): private function returns string given integer value"
 
 integer,intent(in)           :: ivalue                         ! input value to convert to a string
 character(len=*),intent(in),optional :: fmt
@@ -5211,7 +5405,7 @@ end function i2s
 !===================================================================================================================================
 function l2s(lvalue,fmt) result(outstr)
 
-! ident_47="@(#)M_strings::l2s(3fp): private function returns string given logical value"
+! ident_48="@(#)M_strings::l2s(3fp): private function returns string given logical value"
 
 logical,intent(in)           :: lvalue                         ! input value to convert to a string
 character(len=*),intent(in),optional :: fmt
@@ -5231,20 +5425,24 @@ end function l2s
 !!##NAME
 !!    isnumber(3f) - [M_strings:NUMERIC] determine if a string represents a number
 !!    (LICENSE:PD)
+!!
 !!##SYNOPSIS
 !!
 !!    function isnumber(str,msg)
 !!
 !!     character(len=*),intent(in)  :: str
 !!     character(len=:),intent(out),allocatable,optional  :: msg
+!!
 !!##DESCRIPTION
 !!     ISNUMBER(3f) returns a value greater than zero if the string represents
 !!     a number, and a number less than or equal to zero if it is a bad number.
 !!     Blank characters are ignored.
+!!
 !!##OPTIONS
 !!     str  the string to evaluate as to whether it represents a numeric value
 !!          or not
 !!     msg  An optional message describing the string
+!!
 !!##RETURNS
 !!     isnumber  the following values are returned
 !!
@@ -5279,6 +5477,8 @@ end function l2s
 !!           read(line,*,iostat=ios,iomsg=message) value
 !!           if(ios.eq.0)then
 !!              write(*,*)'VALUE=',value
+!!           elseif( is_iostat_end(ios) ) then
+!!              stop 'end of file'
 !!           else
 !!              write(*,*)'ERROR:',ios,trim(message)
 !!           endif
@@ -5340,14 +5540,16 @@ end function l2s
 !!    >1e+2.0
 !!    > ERROR:        5010 Bad real number in item 1 of list input
 !!    >  ERROR for 1e+2.0           -5 :bad number
+!!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 function isNumber(string,msg,verbose)
 implicit none
 
-! ident_48="@(#)M_strings::isnumber(3f): Determines if a string is a number of not."
+! ident_49="@(#)M_strings::isnumber(3f): Determines if a string is a number of not."
 
 character(len=*),intent(in)    :: string
 character(len=:),intent(out),allocatable,optional :: msg
@@ -5478,15 +5680,18 @@ end function isNumber
 !!    trimzeros_(3fp) - [M_strings:NUMERIC] Delete trailing zeros from
 !!    numeric decimal string
 !!    (LICENSE:PD)
+!!
 !!##SYNOPSIS
 !!
 !!    subroutine trimzeros_(str)
 !!
 !!     character(len=*)  :: str
+!!
 !!##DESCRIPTION
 !!    TRIMZEROS_(3f) deletes trailing zeros from a string representing a
 !!    number. If the resulting string would end in a decimal point, one
 !!    trailing zero is added.
+!!
 !!##OPTIONS
 !!    str   input string will be assumed to be a numeric value and have
 !!          trailing zeros removed
@@ -5505,11 +5710,12 @@ end function isNumber
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 subroutine trimzeros_(string)
 
-! ident_49="@(#)M_strings::trimzeros_(3fp): Delete trailing zeros from numeric decimal string"
+! ident_50="@(#)M_strings::trimzeros_(3fp): Delete trailing zeros from numeric decimal string"
 
 ! if zero needs added at end assumes input string has room
 character(len=*)             :: string
@@ -5566,7 +5772,10 @@ end subroutine trimzeros_
 !!    integer,intent(out)   :: icurve_expanded(:)
 !!    integer,intent(out)   :: inums
 !!    integer,intent(out)   :: ierr
+!!
 !!##DESCRIPTION
+!!    expand a list of whole numbers where negative numbers indicate a range.
+!!    So [10,-20] would be expanded to [10,11,12,13,14,15,16,17,18,19,20].
 !!
 !!##OPTIONS
 !!    icurve_lists(:)      input array
@@ -5606,13 +5815,14 @@ end subroutine trimzeros_
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 subroutine listout(icurve_lists,icurve_expanded,inums_out,ierr)
 use M_journal, only : journal
 implicit none
 
-! ident_50="@(#)M_strings::listout(3f): copy icurve_lists to icurve_expanded expanding negative numbers to ranges (1 -10 means 1 thru 10)"
+! ident_51="@(#)M_strings::listout(3f): copy icurve_lists to icurve_expanded expanding negative numbers to ranges (1 -10 means 1 thru 10)"
 
 !   Created: 19971231
 integer,intent(in)    :: icurve_lists(:)             ! input array
@@ -5683,6 +5893,7 @@ end subroutine listout
 !!     quote(3f) - [M_strings:QUOTES] add quotes to string as if written
 !!     with list-directed input
 !!     (LICENSE:PD)
+!!
 !!##SYNOPSIS
 !!
 !!   function quote(str,mode,clip) result (quoted_str)
@@ -5691,6 +5902,7 @@ end subroutine listout
 !!    character(len=*),optional,intent(in) :: mode
 !!    logical,optional,intent(in)          :: clip
 !!    character(len=:),allocatable         :: quoted_str
+!!
 !!##DESCRIPTION
 !!    Add quotes to a CHARACTER variable as if it was written using
 !!    list-directed input. This is particularly useful for processing
@@ -5785,6 +5997,7 @@ end function quote
 !!     unquote(3f) - [M_strings:QUOTES] remove quotes from string as if
 !!     read with list-directed input
 !!     (LICENSE:PD)
+!!
 !!##SYNOPSIS
 !!
 !!   function unquote(quoted_str,esc) result (unquoted_str)
@@ -5792,6 +6005,7 @@ end function quote
 !!    character(len=*),intent(in)          :: quoted_str
 !!    character(len=1),optional,intent(in) :: esc
 !!    character(len=:),allocatable         :: unquoted_str
+!!
 !!##DESCRIPTION
 !!    Remove quotes from a CHARACTER variable as if it was read using
 !!    list-directed input. This is particularly useful for processing
@@ -5800,6 +6014,7 @@ end function quote
 !!    Fortran can now read using list-directed input from an internal file,
 !!    which should handle quoted strings, but list-directed input does not
 !!    support escape characters, which UNQUOTE(3f) does.
+!!
 !!##OPTIONS
 !!    quoted_str  input string to remove quotes from, using the rules of
 !!                list-directed input (two adjacent quotes inside a quoted
@@ -5809,9 +6024,11 @@ end function quote
 !!    esc         optional character used to protect the next quote
 !!                character from being processed as a quote, but simply as
 !!                a plain character.
+!!
 !!##RESULT
 !!    unquoted_str  The output string, which is based on removing quotes
 !!                  from quoted_str.
+!!
 !!##EXAMPLE
 !!
 !!   Sample program:
@@ -5852,6 +6069,7 @@ end function quote
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 function unquote(quoted_str,esc) result (unquoted_str)
@@ -6090,7 +6308,7 @@ end function unquote
 !!    Public Domain
 function describe(ch) result (string)
 
-! ident_51="@(#)M_strings::describe(3f): return string describing long name of a single character"
+! ident_52="@(#)M_strings::describe(3f): return string describing long name of a single character"
 
 character(len=1),intent(in)   :: ch
 character(len=:),allocatable  :: string
@@ -6246,8 +6464,8 @@ end function describe
 !!     class(*),intent(out)         :: values(:)
 !!     integer,intent(out)          :: icount
 !!     integer,intent(out),optional :: ierr
-!!##DESCRIPTION
 !!
+!!##DESCRIPTION
 !!   GETVALS(3f) reads a relatively arbitrary number of numeric values from
 !!   a character variable into a REAL array using list-directed input.
 !!
@@ -6270,12 +6488,10 @@ end function describe
 !!        10.0, 10.0, 10.0, 10.0
 !!
 !!##OPTIONS
-!!
 !!   LINE      A character variable containing the characters representing
 !!             a list of numbers
 !!
 !!##RETURNS
-!!
 !!   VALUES()  array holding numbers read from string. May be of type
 !!             INTEGER, REAL, DOUBLEPRECISION, or CHARACTER. If CHARACTER the
 !!             strings are returned as simple words instead of numeric values.
@@ -6334,12 +6550,13 @@ end function describe
 !!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 subroutine getvals(line,values,icount,ierr)
 implicit none
 
-! ident_52="@(#)M_strings::getvals(3f): read arbitrary number of values from a character variable"
+! ident_53="@(#)M_strings::getvals(3f): read arbitrary number of values from a character variable"
 
 ! JSU 20170831
 
@@ -6363,7 +6580,7 @@ integer                      :: ios, i, ierr_local,isize
    ierr_local=0
 
    words=' '                            ! make sure words() is initialized to null+blanks
-   buffer=trim(line)//"/"               ! add a slash to the end so how the read behaves with missing values is clearly defined
+   buffer=trim(unquote(line))//"/"      ! add a slash to the end so how the read behaves with missing values is clearly defined
    read(buffer,*,iostat=ios) words      ! undelimited strings are read into an array
    icount=0
    do i=1,isize                         ! loop thru array and convert non-blank words to numbers
@@ -6411,17 +6628,16 @@ end subroutine getvals
 !!        integer          :: inums
 !!        character(len=*) :: delims
 !!        integer          :: ierr
+!!
 !!##DESCRIPTION
 !!    This routine can take a string representing a series of numbers and
 !!    convert it to a numeric array and return how many numbers were found.
 !!
 !!##OPTIONS
-!!
 !!       LINE     Input string containing numbers
 !!       IREAD    maximum number of values to try to read from input string
 !!
 !!##RESULTS
-!!
 !!       VALUES   real array to be filled with numbers
 !!       INUMS    number of values successfully read (before error occurs
 !!                if one does)
@@ -6467,8 +6683,10 @@ end subroutine getvals
 !!     input string............. 10 20e3;3.45 -400.3e-2;1234; 5678
 !!     number of values found...           3
 !!     values...................   10.0000000  2.29999995  3.14159989
+!!
 !!##AUTHOR
 !!    John S. Urban
+!!
 !!##LICENSE
 !!    Public Domain
 subroutine string_to_values(line,iread,values,inums,delims,ierr)
@@ -6484,7 +6702,7 @@ implicit none
 !   Quits if encounters any errors in read.
 !----------------------------------------------------------------------------------------------------------------------------------
 
-! ident_53="@(#)M_strings::string_to_values(3f): reads an array of numbers from a numeric string"
+! ident_54="@(#)M_strings::string_to_values(3f): reads an array of numbers from a numeric string"
 
 character(len=*),intent(in)  :: line          ! input string
 integer,intent(in)           :: iread         ! maximum number of values to try to read into values
@@ -6576,8 +6794,8 @@ end subroutine string_to_values
 !!
 !!        character(len=*) :: line
 !!        doubleprecision,allocatable :: s2vs(:)
-!!##DESCRIPTION
 !!
+!!##DESCRIPTION
 !!    The function S2VS(3f) takes a string representing a series of numbers
 !!    and converts it to a numeric doubleprecision array. The string values
 !!    may be delimited by spaces, semi-colons, and commas by default.
@@ -6588,6 +6806,7 @@ end subroutine string_to_values
 !!              included, it should appear as the left-most character
 !!              in the list. The default is " ;," (spaces, semi-colons,
 !!              and commas).
+!!
 !!##RESULTS
 !!       S2VS   doubleprecision array
 !!
@@ -6635,7 +6854,7 @@ end subroutine string_to_values
 !!    Public Domain
 function s2vs(string,delim) result(darray)
 
-! ident_54="@(#)M_strings::s2vs(3f): function returns array of values from a string"
+! ident_55="@(#)M_strings::s2vs(3f): function returns array of values from a string"
 
 character(len=*),intent(in)        :: string                       ! keyword to retrieve value for from dictionary
 character(len=*),optional          :: delim                        ! delimiter characters
@@ -6711,7 +6930,7 @@ end function s2vs
 !!     Public Domain
 elemental function isprint(onechar)
 
-! ident_55="@(#)M_strings::isprint(3f): indicates if input character is a printable ASCII character"
+! ident_56="@(#)M_strings::isprint(3f): indicates if input character is a printable ASCII character"
 
 character,intent(in) :: onechar
 logical              :: isprint
@@ -6740,8 +6959,10 @@ end function isprint
 !!##DESCRIPTION
 !!    isgraph(3f) returns .true. if character is a printable character
 !!    except a space is considered non-printable
+!!
 !!##OPTIONS
 !!    onechar   character to test
+!!
 !!##RETURNS
 !!    isgraph   logical value returns true if character is a printable
 !!              non-space character
@@ -6770,7 +6991,7 @@ end function isprint
 !!     Public Domain
 elemental function isgraph(onechar)
 
-! ident_56="@(#)M_strings::isgraph(3f) :indicates if character is printable ASCII character excluding space"
+! ident_57="@(#)M_strings::isgraph(3f) :indicates if character is printable ASCII character excluding space"
 
 character,intent(in) :: onechar
 logical              :: isgraph
@@ -6833,7 +7054,7 @@ end function isgraph
 !!    Public Domain
 elemental function isalpha(ch) result(res)
 
-! ident_57="@(#)M_strings::isalpha(3f): Return .true. if character is a letter and .false. otherwise"
+! ident_58="@(#)M_strings::isalpha(3f): Return .true. if character is a letter and .false. otherwise"
 
 character,intent(in) :: ch
 logical              :: res
@@ -6894,7 +7115,7 @@ end function isalpha
 !!     Public Domain
 elemental function isxdigit(ch) result(res)
 
-! ident_58="@(#)M_strings::isxdigit(3f): returns .true. if c is a hexadecimal digit (0-9,a-f, or A-F)"
+! ident_59="@(#)M_strings::isxdigit(3f): returns .true. if c is a hexadecimal digit (0-9,a-f, or A-F)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -6964,7 +7185,7 @@ end function isxdigit
 !!     Public Domain
 elemental function isdigit(ch) result(res)
 
-! ident_59="@(#)M_strings::isdigit(3f): Returns .true. if ch is a digit (0-9) and .false. otherwise"
+! ident_60="@(#)M_strings::isdigit(3f): Returns .true. if ch is a digit (0-9) and .false. otherwise"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7026,7 +7247,7 @@ end function isdigit
 !!     Public Domain
 elemental function isblank(ch) result(res)
 
-! ident_60="@(#)M_strings::isblank(3f): returns .true. if character is a blank (space or horizontal tab)"
+! ident_61="@(#)M_strings::isblank(3f): returns .true. if character is a blank (space or horizontal tab)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7057,8 +7278,10 @@ end function isblank
 !!##DESCRIPTION
 !!     isascii(3f) returns .true. if the character is in the range char(0)
 !!     to char(127)
+!!
 !!##OPTIONS
 !!    onechar  character to test
+!!
 !!##RETURNS
 !!    isupper  logical value returns true if character is an ASCII
 !!             character.
@@ -7098,7 +7321,7 @@ end function isblank
 !!     Public Domain
 elemental function isascii(ch) result(res)
 
-! ident_61="@(#)M_strings::isascii(3f): returns .true. if character is in the range char(0) to char(127)"
+! ident_62="@(#)M_strings::isascii(3f): returns .true. if character is in the range char(0) to char(127)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7160,7 +7383,7 @@ end function isascii
 !!     Public Domain
 elemental function isspace(ch) result(res)
 
-! ident_62="@(#)M_strings::isspace(3f): true if null,space,tab,return,new line,vertical tab, or formfeed"
+! ident_63="@(#)M_strings::isspace(3f): true if null,space,tab,return,new line,vertical tab, or formfeed"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7227,7 +7450,7 @@ end function isspace
 !!     Public Domain
 elemental function iscntrl(ch) result(res)
 
-! ident_63="@(#)M_strings::iscntrl(3f): true if a delete or ordinary control character(0x7F or 0x00-0x1F)"
+! ident_64="@(#)M_strings::iscntrl(3f): true if a delete or ordinary control character(0x7F or 0x00-0x1F)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7294,7 +7517,7 @@ end function iscntrl
 !!     Public Domain
 elemental function ispunct(ch) result(res)
 
-! ident_64="@(#)M_strings::ispunct(3f): true if a printable punctuation character (isgraph(c)&&"
+! ident_65="@(#)M_strings::ispunct(3f): true if a printable punctuation character (isgraph(c)&&"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7448,7 +7671,7 @@ end function fortran_name
 !!     Public Domain
 pure elemental function isupper(ch) result(res)
 
-! ident_65="@(#)M_strings::isupper(3f): returns true if character is an uppercase letter (A-Z)"
+! ident_66="@(#)M_strings::isupper(3f): returns true if character is an uppercase letter (A-Z)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7513,7 +7736,7 @@ end function isupper
 !!     Public Domain
 elemental function islower(ch) result(res)
 
-! ident_66="@(#)M_strings::islower(3f): returns true if character is a miniscule letter (a-z)"
+! ident_67="@(#)M_strings::islower(3f): returns true if character is a miniscule letter (a-z)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7610,7 +7833,7 @@ end function islower
 !!    Public Domain
 elemental function isalnum(ch) result(res)
 
-! ident_67="@(#)M_strings::isalnum(3f): returns true if character is a letter (a-z,A-Z) or digit(0-9)"
+! ident_68="@(#)M_strings::isalnum(3f): returns true if character is a letter (a-z,A-Z) or digit(0-9)"
 
 character,intent(in)       :: ch
 logical                    :: res
@@ -7665,7 +7888,8 @@ end function isalnum
 !!    write(*,'("Start   Base (2 to 36): ")',advance='no'); read *, bd
 !!    write(*,'("Arrival Base (2 to 36): ")',advance='no'); read *, ba
 !!    INFINITE: do
-!!       write(*,'("Enter number in start base: ")',advance='no'); read *, x
+!!       write(*,'("Enter number in start base (0 to quit): ")',advance='no')
+!!       read *, x
 !!       if(x.eq.'0') exit INFINITE
 !!       if(base(x,bd,y,ba))then
 !!            write(*,'("In base ",I2,": ",A20)')  ba, y
@@ -7687,7 +7911,7 @@ character(len=*),intent(out) :: y
 integer,intent(in)           :: b,a
 integer                      :: temp
 
-! ident_68="@(#)M_strings::base(3f): convert whole number string in base [2-36] to string in alternate base [2-36]"
+! ident_69="@(#)M_strings::base(3f): convert whole number string in base [2-36] to string in alternate base [2-36]"
 
 base=.true.
 if(decodebase(x,b,temp)) then
@@ -7782,7 +8006,7 @@ end function base
 logical function decodebase(string,basein,out_baseten)
 implicit none
 
-! ident_69="@(#)M_strings::decodebase(3f): convert whole number string in base [2-36] to base 10 number"
+! ident_70="@(#)M_strings::decodebase(3f): convert whole number string in base [2-36] to base 10 number"
 
 character(len=*),intent(in)  :: string
 integer,intent(in)           :: basein
@@ -7858,7 +8082,6 @@ end function decodebase
 !===================================================================================================================================
 !>
 !!##NAME
-!!
 !!    codebase(3f) - [M_strings:BASE] convert whole number in base 10 to
 !!    string in base [2-36]
 !!    (LICENSE:PD)
@@ -7870,8 +8093,8 @@ end function decodebase
 !!    integer,intent(in)           :: in_base10
 !!    integer,intent(in)           :: out_base
 !!    character(len=*),intent(out) :: answer
-!!##DESCRIPTION
 !!
+!!##DESCRIPTION
 !!    Convert a number from base 10 to base OUT_BASE. The function returns
 !!    .FALSE. if OUT_BASE is not in [2..36] or if number IN_BASE10 is
 !!    too big.
@@ -7911,7 +8134,7 @@ end function decodebase
 logical function codebase(inval10,outbase,answer)
 implicit none
 
-! ident_70="@(#)M_strings::codebase(3f): convert whole number in base 10 to string in base [2-36]"
+! ident_71="@(#)M_strings::codebase(3f): convert whole number in base 10 to string in base [2-36]"
 
 integer,intent(in)           :: inval10
 integer,intent(in)           :: outbase
@@ -7951,7 +8174,7 @@ end function codebase
 !===================================================================================================================================
 function todecimal(base, instr)
 
-! ident_71="@(#)M_strings::todecimal(3f): given string and base return decimal integer"
+! ident_72="@(#)M_strings::todecimal(3f): given string and base return decimal integer"
 
 ! based on an example at rosetta code.
 character(len=36),parameter  :: alphanum = "0123456789abcdefghijklmnopqrstuvwxyz"
@@ -7975,7 +8198,7 @@ end function todecimal
 !===================================================================================================================================
 function tobase(base, number)
 
-! ident_72="@(#)M_strings::todecimal(3f): given integer and base return string"
+! ident_73="@(#)M_strings::todecimal(3f): given integer and base return string"
 
 ! based on an example at rosetta code.
 character(len=36),parameter  :: alphanum = "0123456789abcdefghijklmnopqrstuvwxyz"
@@ -8099,7 +8322,7 @@ end function tobase
 !!    Public Domain
 function fmt(source_string,length)
 
-! ident_73="@(#)M_strings::fmt(3f): wrap a long string into a paragraph"
+! ident_74="@(#)M_strings::fmt(3f): wrap a long string into a paragraph"
 
 character(len=*),intent(in)       :: source_string
 integer,intent(in)                :: length
@@ -8282,6 +8505,7 @@ end function setbits64
 !!             be of type INTEGER, LOGICAL, REAL, DOUBLEPRECISION, COMPLEX,
 !!             or CHARACTER.
 !!     nospace  if nospace=.true., then no spaces are added between values
+!!
 !!##RETURNS
 !!     msg     description to print
 !!
