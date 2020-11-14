@@ -418,6 +418,12 @@ character, public, parameter :: ascii_ff  = char(12)  ! form feed or newpage
 character, public, parameter :: ascii_cr  = char(13)  ! carriage return
 character, public, parameter :: ascii_esc = char(27)  ! escape
 !-----------------------------------------------------------------------------------------------------------------------------------
+public :: split2020, string_tokens
+
+interface split2020
+   module procedure :: split_tokens, split_first_last, split_pos
+end interface split2020
+!-----------------------------------------------------------------------------------------------------------------------------------
 CONTAINS
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -1115,7 +1121,7 @@ integer                       :: imax                   ! length of longest toke
       ireturn=icount
    end select
    allocate(character(len=imax) :: array(ireturn))                ! allocate the array to return
-   !allocate(array(ireturn))                                       ! allocate the array to turn
+   !allocate(array(ireturn))                                       ! allocate the array to return
 !-----------------------------------------------------------------------------------------------------------------------------------
    select case (trim(adjustl(ordr)))                              ! decide which order to store tokens
    case ('reverse','right') ; ii=ireturn ; iiii=-1                ! last to first
@@ -3171,29 +3177,32 @@ elemental pure function upper(str,begin,end) result (string)
 
 ! ident_22="@(#)M_strings::upper(3f): Changes a string to uppercase"
 
-character(*), intent(In)      :: str                 ! inpout string to convert to all uppercase
+character(*), intent(in)      :: str                 ! inpout string to convert to all uppercase
 integer, intent(in), optional :: begin,end
 character(len(str))           :: string              ! output string that contains no miniscule letters
 integer                       :: i                   ! loop counter
 integer                       :: ibegin,iend
+integer,parameter             :: diff = iachar('A')-iachar('a')
    string = str                                      ! initialize output string to input string
 
-   ibegin = 1
    if (present(begin))then
       ibegin = max(ibegin,begin)
+   else
+      ibegin = 1
    endif
 
-   iend = len_trim(str)
    if (present(end))then
       iend= min(iend,end)
+   else
+      iend = len_trim(str)
    endif
 
-   do i = ibegin, iend                               ! step thru each letter in the string in specified range
+   do concurrent (i = ibegin:iend)                   ! step thru each letter in the string in specified range
        select case (str(i:i))
        case ('a':'z')                                ! located miniscule letter
-          string(i:i) = char(iachar(str(i:i))-32)    ! change miniscule letter to uppercase
+          string(i:i) = char(iachar(str(i:i))-diff)  ! change miniscule letter to uppercase
        end select
-   end do
+   enddo
 
 end function upper
 !===================================================================================================================================
@@ -3267,30 +3276,33 @@ elemental pure function lower(str,begin,end) result (string)
 
 ! ident_23="@(#)M_strings::lower(3f): Changes a string to lowercase over specified range"
 
-character(*), intent(In)     :: str
+character(*), intent(in)     :: str
 character(len(str))          :: string
 integer,intent(in),optional  :: begin, end
 integer                      :: i
 integer                      :: ibegin, iend
+integer,parameter             :: diff = iachar('A')-iachar('a')
    string = str
 
-   ibegin = 1
    if (present(begin))then
       ibegin = max(ibegin,begin)
+   else
+      ibegin = 1
    endif
 
-   iend = len_trim(str)
    if (present(end))then
       iend= min(iend,end)
+   else
+      iend = len_trim(str)
    endif
 
-   do i = ibegin, iend                               ! step thru each letter in the string in specified range
+   do concurrent (i = ibegin:iend)                   ! step thru each letter in the string in specified range
       select case (str(i:i))
       case ('A':'Z')
-         string(i:i) = char(iachar(str(i:i))+32)     ! change letter to miniscule
+         string(i:i) = char(iachar(str(i:i))+diff)   ! change letter to miniscule
       case default
       end select
-   end do
+   enddo
 
 end function lower
 !===================================================================================================================================
@@ -3316,6 +3328,7 @@ end function lower
 !!
 !!     character(len=1),intent(in) :: array(:)
 !!     character(len=SIZE(array))  :: string
+!!
 !!##DESCRIPTION
 !!    SWITCH(3f): generic function that switches CHARACTER string to an array
 !!    of single characters or an array of single characters to a CHARACTER
@@ -4608,7 +4621,7 @@ endif
          outstr(position_in_output:position_in_output)=ch
          last_was_space=.false.
      end select
-   end do IFSPACE
+   enddo IFSPACE
 
 end function compact
 !===================================================================================================================================
@@ -5748,7 +5761,7 @@ integer                      :: i, ii
          str=str(1:i)                        ! found a non-zero character so trim string and exit
          exit
       end select
-   end do
+   enddo
    if(ipos>0)then                            ! if originally had an exponent place it back on
       string=trim(str)//trim(exp)
    else
@@ -8683,6 +8696,329 @@ integer :: i
 end subroutine print_generic
 !===================================================================================================================================
 end function msg_one
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
+!!    split2020(3f) - parse a string into tokens
+!!
+!!##SYNOPSIS
+!!
+!!   TOKEN form
+!!
+!!    subroutine split2020 (string, set, tokens, separator)
+!!    character(len=*),intent(in) :: string
+!!    character(len=*),intent(in) :: set
+!!    character(len=:),allocatable,intent(out) :: tokens(:)
+!!    character(len=1),allocatable,intent(out),optional :: separator(:)
+!!
+!!   BOUNDS ARRAY form
+!!
+!!    subroutine split2020 (string, set, first, last)
+!!    character(len=*),intent(in) :: string
+!!    character(len=*),intent(in) :: set
+!!    integer,allocatable,intent(out) :: first(:)
+!!    integer,allocatable,intent(out) :: last(:)
+!!
+!!   STEP THROUGH BY POSITION form
+!!
+!!    subroutine split2020 (string, set, pos [, back])
+!!    character(len=*),intent(in) :: string
+!!    character(len=*),intent(in) :: set
+!!    integer,intent(inout)       :: pos
+!!    logical,intent(in),optional :: back
+!!
+!!##DESCRIPTION
+!!    Parse a string into tokens. STRING, SET, TOKENS and SEPARATOR must
+!!    all be of the same CHARACTER kind type parameter.
+!!
+!!##OPTIONS
+!!    STRING      string to break into tokens
+!!
+!!    SET         Each character in SET is a token delimiter. A
+!!                sequence of zero or more characters in STRING delimited by
+!!                any token delimiter, or the beginning or end of STRING,
+!!                comprise a token. Thus, two consecutive token delimiters
+!!                in STRING, or a token delimiter in the first or last
+!!                character of STRING, indicate a token with zero length.
+!!
+!!                ??? how about if null defaults to all whitespace characters
+!!
+!!    TOKENS      It is allocated with the lower bound equal to
+!!                one and the upper bound equal to the number of tokens in
+!!                STRING, and with character length equal to the length of
+!!                the longest token. The tokens in STRING are assigned by
+!!                intrinsic assignment, in the order found, to the elements
+!!                of TOKENS, in array element order.
+!!
+!!                ???If input is null it still must be of size 1?
+!!
+!!    SEPARATOR   Each element in SEPARATOR(i) is assigned the value of
+!!                the ith token delimiter in STRING.
+!!                It is allocated with the lower bound equal to
+!!                one and the upper bound equal to one less than the number
+!!                of tokens in STRING, and with character length equal to
+!!                one.
+!!
+!!                ???one less than? '' ' '
+!!
+!!    FIRST     It is allocated with the lower bound equal to one and the
+!!              upper bound equal to the number of tokens in STRING. Each
+!!              element is assigned, in array element order, the starting
+!!              position of each token in STRING, in the order found. If a
+!!              token has zero length, the starting position is equal to one
+!!              if the token is at the beginning of STRING, and one greater
+!!              than the position of the preceding delimitor otherwise.
+!!
+!!    LAST      It is allocated with the lower bound equal to one and the
+!!              upper bound equal to the number of tokens in STRING. Each
+!!              element is assigned, in array element order, the ending
+!!              position of each token in STRING, in the order found. If
+!!              a token has zero length, the ending position is one less
+!!              than the starting position.
+!!
+!!    POS       If BACK is present with the value .TRUE., the value
+!!              of POS shall be in the range 0 < POS     LEN (STRING)+1;
+!!              otherwise it shall be in the range 0     POS LEN (STRING).
+!!
+!!              If BACK is absent or is present with the value .FALSE., POS
+!!              is assigned the position of the leftmost token delimiter in
+!!              STRING whose position is greater than POS, or if there is
+!!              no such character, it is assigned a value one greater than
+!!              the length of STRING. This identifies a token with starting
+!!              position one greater than the value of POS on invocation,
+!!              and ending position one less than the value of POS on return.
+!!
+!!              If BACK is present with the value true, POS is assigned the
+!!              position of the rightmost token delimiter in STRING whose
+!!              position is less than POS, or if there is no such character,
+!!              it is assigned the value zero. This identifies a token with
+!!              ending position one less than the value of POS on invocation,
+!!              and starting position one greater than the value of POS
+!!              on return.
+!!
+!!              When SPLIT is invoked with a value for POS of
+!!              1 <= POS <= LEN(STRING) and STRING(POS:POS) is not a
+!!              token delimiter present in SET, the token identified by
+!!              SPLIT does not comprise a complete token as described in the
+!!              description of the SET argument, but rather a partial token.
+!!
+!!    BACK      shall be a logical scalar. It is an INTENT (IN) argument. If
+!!              POS does not appear and BACK is present with the value true,
+!!              STRING is scanned backwards for tokens starting from the
+!!              end. If POS does not appear and BACK is absent or present
+!!              with the value false, STRING is scanned forwards for tokens
+!!              starting from the beginning.
+!!
+!!##EXAMPLES
+!!
+!! Sample of uses
+!!
+!!    program demo_sort2020
+!!    use M_strings, only : split2020
+!!    implicit none
+!!    character(len=*),parameter :: gen='(*("[",g0,"]":,","))'
+!!
+!!     ! Execution of TOKEN form
+!!     block
+!!       character (len=:), allocatable :: string
+!!       character (len=:), allocatable :: tokens(:)
+!!       character (len=*),parameter :: set = " ,"
+!!       string = 'first,second,third'
+!!       call split2020(string, set, tokens )
+!!       write(*,gen)tokens
+!!
+!!     ! assigns the value ['first ','second','third ' ]
+!!     ! to TOKENS.
+!!     endblock
+!!
+!!     ! Execution of BOUNDS form
+!!
+!!     block
+!!       character (len=:), allocatable :: string
+!!       character (len=*),parameter :: set = " ,"
+!!       integer, allocatable        :: first(:), last(:)
+!!       string =    'first,second,,forth'
+!!       call split2020 (string, set, first, last)
+!!       write(*,gen)first
+!!       write(*,gen)last
+!!
+!!     ! will assign the value [ 1, 7, 14, 15 ] to FIRST,
+!!     ! and the value [ 5, 12, 13, 19 ] to LAST.
+!!     endblock
+!!
+!!     ! Execution of STEP form
+!!     block
+!!       character (len=:), allocatable :: string
+!!       character (len=*),parameter :: set = " ,"
+!!       integer :: p, istart, iend
+!!       string = " one,   last  example  "
+!!       do while (p < len(string))
+!!         istart = p + 1
+!!         call split2020 (string, set, p)
+!!         iend=p-1
+!!         if(iend.gt.istart)then
+!!            print '(t3,a,1x,i0,1x,i0)', string (istart:iend),istart,iend
+!!         endif
+!!       enddo
+!!     endblock
+!!    end program demo_sort2020
+!!
+!!   Results:
+!!
+!!    [first ],[second],[third ]
+!!    [1],[7],[14],[15]
+!!    [5],[12],[13],[19]
+!!      one 2 4
+!!      last 9 12
+!!      example 15 21
+!!
+!!      > ??? option to skip adjacent delimiters (not return null tokens) common with whitespace
+!!      > ??? quoted strings, especially CSV both " and ', Fortran adjacent is insert versus other rules
+!!      > ??? escape character like \
+!!      > ??? multi-character delimiters like \n, \t,
+!!      > ??? regular expression separator
+!!
+!!##AUTHOR
+!!    Milan Curcic, "milancurcic@hey.com"
+!!
+!!##LICENSE
+!!    MIT
+!!
+!!##VERSION
+!!    version 0.1.0, copyright 2020, Milan Curcic
+  pure subroutine split_tokens(string, set, tokens, separator)
+    !! Splits a string into tokens using characters in set as token delimiters.
+    !! If present, separator contains the array of token delimiters.
+    character(*), intent(in) :: string
+    character(*), intent(in) :: set
+    character(:), allocatable, intent(out) :: tokens(:)
+    character, allocatable, intent(out), optional :: separator(:)
+
+    integer, allocatable :: first(:), last(:)
+    integer :: n
+
+    call split2020(string, set, first, last)
+    allocate(character(len=maxval(last - first) + 1) :: tokens(size(first)))
+
+    do concurrent (n = 1:size(tokens))
+      tokens(n) = string(first(n):last(n))
+    end do
+
+    if (present(separator)) then
+      allocate(separator(size(tokens) - 1))
+      do concurrent (n = 1:size(tokens) - 1)
+        separator(n) = string(first(n+1)-1:first(n+1)-1)
+      end do
+    end if
+
+  end subroutine split_tokens
+!===================================================================================================================================
+  pure subroutine split_first_last(string, set, first, last)
+    !! Computes the first and last indices of tokens in input string, delimited
+    !! by the characters in set, and stores them into first and last output
+    !! arrays.
+    character(*), intent(in) :: string
+    character(*), intent(in) :: set
+    integer, allocatable, intent(out) :: first(:)
+    integer, allocatable, intent(out) :: last(:)
+
+    character :: set_array(len(set))
+    logical, dimension(len(string)) :: is_first, is_last, is_separator
+    integer :: n, slen
+
+    slen = len(string)
+
+    do concurrent (n = 1:len(set))
+      set_array(n) = set(n:n)
+    end do
+
+    do concurrent (n = 1:slen)
+      is_separator(n) = any(string(n:n) == set_array)
+    end do
+
+    is_first = .false.
+    is_last = .false.
+
+    if (.not. is_separator(1)) is_first(1) = .true.
+
+    do concurrent (n = 2:slen-1)
+      if (.not. is_separator(n)) then
+        if (is_separator(n - 1)) is_first(n) = .true.
+        if (is_separator(n + 1)) is_last(n) = .true.
+      else
+        if (is_separator(n - 1)) then
+          is_first(n) = .true.
+          is_last(n-1) = .true.
+        end if
+      end if
+    end do
+
+    if (.not. is_separator(slen)) is_last(slen) = .true.
+
+    first = pack([(n, n = 1, slen)], is_first)
+    last = pack([(n, n = 1, slen)], is_last)
+
+  end subroutine split_first_last
+!===================================================================================================================================
+  pure subroutine split_pos(string, set, pos, back)
+    !! If back is absent, computes the leftmost token delimiter in string whose
+    !! position is > pos. If back is present and true, computes the rightmost
+    !! token delimiter in string whose position is < pos. The result is stored
+    !! in pos.
+    character(*), intent(in) :: string
+    character(*), intent(in) :: set
+    integer, intent(in out) :: pos
+    logical, intent(in), optional :: back
+
+    logical :: backward
+    character :: set_array(len(set))
+    integer :: n, result_pos
+
+    !TODO use optval when implemented in stdlib
+    !backward = optval(back, .false.)
+    backward = .false.
+    if (present(back)) backward = back
+
+    do concurrent (n = 1:len(set))
+      set_array(n) = set(n:n)
+    end do
+
+    if (backward) then
+      result_pos = 0
+      do n = pos - 1, 1, -1
+        if (any(string(n:n) == set_array)) then
+          result_pos = n
+          exit
+        end if
+      end do
+    else
+      result_pos = len(string) + 1
+      do n = pos + 1, len(string)
+        if (any(string(n:n) == set_array)) then
+          result_pos = n
+          exit
+        end if
+      end do
+    end if
+
+    pos = result_pos
+
+  end subroutine split_pos
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+  pure function string_tokens(string, set) result(tokens)
+    !! Splits a string into tokens using characters in set as token delimiters.
+    character(*), intent(in) :: string
+    character(*), intent(in) :: set
+    character(:), allocatable :: tokens(:)
+    call split_tokens(string, set, tokens)
+  end function string_tokens
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
 end module M_strings
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
