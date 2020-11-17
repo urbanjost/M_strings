@@ -3039,8 +3039,6 @@ end function reverse
 !!        & Quote" everything else'
 !!        write(*,*) 'mixed-case input string is ....',s
 !!        write(*,*) 'upper-case output string is ...',upper_quoted(s)
-!!        write(*,*) 'make first character uppercase  ... ', &
-!!        & upper_quoted('this is a sentence.')
 !!        write(*,'(1x,a,*(a:,"+"))') 'upper_quoted(3f) is elemental ==>', &
 !!        & upper_quoted(["abc","def","ghi"])
 !!     end program demo_upper_quoted
@@ -3051,7 +3049,6 @@ end function reverse
 !!     'Single-Quoted' "with "" Quote" everything else
 !!     upper-case output string is ... ABCDEFG ABCDEFG "Double-Quoted"
 !!     'Single-Quoted' "with "" Quote" EVERYTHING ELSE
-!!     make first character uppercase  ... THIS IS A SENTENCE.
 !!     upper_quoted(3f) is elemental ==>ABC+DEF+GHI
 !!
 !!##AUTHOR
@@ -3200,7 +3197,7 @@ integer,parameter             :: diff = iachar('A')-iachar('a')
    do concurrent (i = ibegin:iend)                   ! step thru each letter in the string in specified range
        select case (str(i:i))
        case ('a':'z')                                ! located miniscule letter
-          string(i:i) = char(iachar(str(i:i))-diff)  ! change miniscule letter to uppercase
+          string(i:i) = char(iachar(str(i:i))+diff)  ! change miniscule letter to uppercase
        end select
    enddo
 

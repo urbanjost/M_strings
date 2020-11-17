@@ -6,8 +6,6 @@
               & Quote" everything else'
               write(*,*) 'mixed-case input string is ....',s
               write(*,*) 'upper-case output string is ...',upper_quoted(s)
-              write(*,*) 'make first character uppercase  ... ', &
-              & upper_quoted('this is a sentence.')
               write(*,'(1x,a,*(a:,"+"))') 'upper_quoted(3f) is elemental ==>', &
               & upper_quoted(["abc","def","ghi"])
            end program demo_upper_quoted
