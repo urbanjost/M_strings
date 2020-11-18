@@ -3296,7 +3296,7 @@ integer,parameter             :: diff = iachar('A')-iachar('a')
    do concurrent (i = ibegin:iend)                   ! step thru each letter in the string in specified range
       select case (str(i:i))
       case ('A':'Z')
-         string(i:i) = char(iachar(str(i:i))+diff)   ! change letter to miniscule
+         string(i:i) = char(iachar(str(i:i))-diff)   ! change letter to miniscule
       case default
       end select
    enddo

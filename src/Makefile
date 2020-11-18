@@ -95,14 +95,17 @@ F90FLAGS := -O
 LDFLAGS := 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 all: $(PROG) $(CPROG)
+	rm -f M_journal.f90
 	@echo "That's all folks!"
 $(PROG): $(OBJS)
 
 	-$(F90) $(LDFLAGS) $@.f90 -o $@ $(OBJS) $(LIBS) # && ./$@ </dev/null
 
+M_journal.f90: ../aux/M_journal.f90
+	cp ../aux/M_journal.f90 .
 .PHONY: clean
 clean:
-	rm -f $(PROG) $(CPROG) $(OBJS) *.mod $(TEST)
+	rm -f $(PROG) $(CPROG) $(OBJS) *.mod $(TEST) M_journal.f90
 
 .PHONY: help
 

@@ -79,6 +79,9 @@ executable = [
 {  name="demo_visible",           source-dir="demo",  main="visible.f90"           }
 ]
 
+#auto-executables = false
+#auto-tests = false
+
 [dev-dependencies]
 M_msg          = { git = "https://github.com/urbanjost/M_msg.git" }
 
