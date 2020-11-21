@@ -1073,6 +1073,8 @@ integer                       :: imax                   ! length of longest toke
    if(present(nulls))then; nlls=lower(adjustl(nulls)); else; nlls='ignore'    ; endif ! optional parameter
 !-----------------------------------------------------------------------------------------------------------------------------------
    n=len(input_line)+1                        ! max number of strings INPUT_LINE could split into if all delimiter
+   if(allocated(ibegin))deallocate(ibegin)    !*! intel compiler says allocated already ???
+   if(allocated(iterm))deallocate(iterm)      !*! intel compiler says allocated already ???
    allocate(ibegin(n))                        ! allocate enough space to hold starting location of tokens if string all tokens
    allocate(iterm(n))                         ! allocate enough space to hold ending location of tokens if string all tokens
    ibegin(:)=1
@@ -8622,7 +8624,7 @@ class(*),intent(in) :: generic
       type is (real(kind=real32));      write(line(istart:),'(1pg0)') generic
       type is (real(kind=real64));      write(line(istart:),'(1pg0)') generic
       type is (real(kind=real128));     write(line(istart:),'(1pg0)') generic
-      type is (logical);                write(line(istart:),'(1l)') generic
+      type is (logical);                write(line(istart:),'(l1)') generic
       type is (character(len=*));       write(line(istart:),'(a)') trim(generic)
       type is (complex);                write(line(istart:),'("(",1pg0,",",1pg0,")")') generic
    end select
@@ -8684,7 +8686,7 @@ integer :: i
       type is (real(kind=real32));      write(line(istart:),'("[",*(1pg0,1x))') generic
       type is (real(kind=real64));      write(line(istart:),'("[",*(1pg0,1x))') generic
       type is (real(kind=real128));     write(line(istart:),'("[",*(1pg0,1x))') generic
-      type is (logical);                write(line(istart:),'("[",*(1l,1x))') generic
+      type is (logical);                write(line(istart:),'("[",*(l1,1x))') generic
       type is (character(len=*));       write(line(istart:),'("[",:*("""",a,"""",1x))') (trim(generic(i)),i=1,size(generic))
       type is (complex);                write(line(istart:),'("[",*("(",1pg0,",",1pg0,")",1x))') generic
    end select
