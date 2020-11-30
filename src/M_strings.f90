@@ -1085,11 +1085,7 @@ integer                       :: imax                   ! length of longest toke
    inotnull=0                                                     ! how many tokens found not composed of delimiters
    imax=0                                                         ! length of longest token found
 !-----------------------------------------------------------------------------------------------------------------------------------
-   select case (ilen)
-!-----------------------------------------------------------------------------------------------------------------------------------
-   case (:0)                                                      ! command was totally blank
-!-----------------------------------------------------------------------------------------------------------------------------------
-   case default                                                   ! there is at least one non-delimiter in INPUT_LINE if get here
+   if(ilen.gt.0)then                                              ! there is at least one non-delimiter in INPUT_LINE if get here
       icol=1                                                      ! initialize pointer into input line
       INFINITE: do i30=1,ilen,1                                   ! store into each array element
          ibegin(i30)=icol                                         ! assume start new token on the character
@@ -1113,8 +1109,7 @@ integer                       :: imax                   ! length of longest toke
             exit INFINITE
          endif
       enddo INFINITE
-!-----------------------------------------------------------------------------------------------------------------------------------
-   end select
+   endif
 !-----------------------------------------------------------------------------------------------------------------------------------
    select case (trim(adjustl(nlls)))
    case ('ignore','','ignoreend')
@@ -3788,8 +3783,9 @@ end function visible
 !!##LICENSE
 !!    Public Domain
 function expand(line,escape) result(lineout)
-USE ISO_C_BINDING ,ONLY: c_horizontal_tab
+!*!USE ISO_C_BINDING ,ONLY: c_horizontal_tab
 implicit none
+character(len=*),parameter :: c_horizontal_tab=char(9)
 
 ! ident_30="@(#)M_strings::expand(3f): return string with escape sequences expanded"
 
@@ -3852,8 +3848,7 @@ integer                               :: ios
                       lineout=lineout//char(xxx)
                    i=i+3
             case('r','R');lineout=lineout//char( 13)         ! %r     carriage return
-            case('t','T');lineout=lineout//char(  9)         ! %t     horizontal tab
-          !!case('t','T');lineout=lineout//c_horizontal_tab  ! %t     horizontal tab
+            case('t','T');lineout=lineout//c_horizontal_tab  ! %t     horizontal tab
             case('v','V');lineout=lineout//char( 11)         ! %v     vertical tab
             case('x','X','h','H')                            ! %x     xHH  byte with hexadecimal value HH (1 to 2 digits)
                       thr=line(i+1:)
@@ -5981,15 +5976,24 @@ character(len=*),optional,intent(in) :: mode
 logical,optional,intent(in)          :: clip
 character(len=:),allocatable         :: quoted_str
 
+logical                              :: clip_local
 character(len=1),parameter           :: double_quote = '"'
 character(len=20)                    :: local_mode
-!-----------------------------------------------------------------------------------------------------------------------------------
-   local_mode=merge_str(mode,'DOUBLE',present(mode))
-   if(merge(clip,.false.,present(clip)))then
+
+   if(present(clip))then
+      clip_local=clip
+   else
+      clip_local=.false.
+   endif
+
+   if(clip)then
       quoted_str=adjustl(str)
    else
       quoted_str=str
    endif
+
+   local_mode=merge_str(mode,'DOUBLE',present(mode))
+
    select case(lower(local_mode))
    case('double')
       quoted_str=double_quote//trim(replace(quoted_str,'"','""'))//double_quote
@@ -8623,7 +8627,7 @@ class(*),intent(in) :: generic
       type is (integer(kind=int64));    write(line(istart:),'(i0)') generic
       type is (real(kind=real32));      write(line(istart:),'(1pg0)') generic
       type is (real(kind=real64));      write(line(istart:),'(1pg0)') generic
-      type is (real(kind=real128));     write(line(istart:),'(1pg0)') generic
+      !*!type is (real(kind=real128));     write(line(istart:),'(1pg0)') generic
       type is (logical);                write(line(istart:),'(l1)') generic
       type is (character(len=*));       write(line(istart:),'(a)') trim(generic)
       type is (complex);                write(line(istart:),'("(",1pg0,",",1pg0,")")') generic
@@ -8685,7 +8689,7 @@ integer :: i
       type is (integer(kind=int64));    write(line(istart:),'("[",*(i0,1x))') generic
       type is (real(kind=real32));      write(line(istart:),'("[",*(1pg0,1x))') generic
       type is (real(kind=real64));      write(line(istart:),'("[",*(1pg0,1x))') generic
-      type is (real(kind=real128));     write(line(istart:),'("[",*(1pg0,1x))') generic
+      !*!type is (real(kind=real128));     write(line(istart:),'("[",*(1pg0,1x))') generic
       type is (logical);                write(line(istart:),'("[",*(l1,1x))') generic
       type is (character(len=*));       write(line(istart:),'("[",:*("""",a,"""",1x))') (trim(generic(i)),i=1,size(generic))
       type is (complex);                write(line(istart:),'("[",*("(",1pg0,",",1pg0,")",1x))') generic

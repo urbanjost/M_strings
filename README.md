@@ -64,8 +64,20 @@ Just download the github repository, enter the src/ directory and run make:
 
      git clone https://github.com/urbanjost/M_strings.git
      cd M_strings/src
-     # change Makefile if not using gfortran(1)
-     make
+     # change Makefile if not using one of the listed compilers
+     
+     # for gfortran
+     make clean
+     make F90=gfortran gfortran
+     
+     # for ifort
+     make clean
+     make F90=ifort ifort
+
+     # for nvfortran
+     make clean
+     make F90=nvfortran nvfortran
+
      # optionally
      make test # run the unit tests
      make run  # run all the demo programs from the manpages
