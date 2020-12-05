@@ -930,6 +930,8 @@ end function sep
 !!
 !!    program demo_split
 !!    use M_strings, only: split
+!!    implicit none
+!!    integer :: i
 !!    character(len=*),parameter     :: line=&
 !!    '  aBcdef   ghijklmnop qrstuvwxyz  1:|:2     333|333 a B cc    '
 !!    character(len=:),allocatable :: array(:) ! output array of tokens
@@ -1331,11 +1333,13 @@ end function chomp
 !!     program demo_delim
 !!
 !!     use M_strings, only: delim
+!!     implicit none
 !!     character(len=80) :: line
 !!     character(len=80) :: dlm
 !!     integer,parameter :: n=10
 !!     character(len=20) :: array(n)=' '
 !!     integer           :: ibegin(n),iterm(n)
+!!     integer           :: i20, icount, ilen, i10
 !!     line=' first  second 10.3 words_of_stuff  '
 !!     do i20=1,4
 !!        ! change delimiter list and what is calculated or parsed
@@ -2142,9 +2146,10 @@ end subroutine change
 !!
 !!     program demo_strtok
 !!     use M_strings, only : strtok
+!!     implicit none
 !!     character(len=264)          :: inline
 !!     character(len=*),parameter  :: delimiters=' ;,'
-!!     integer                     :: ios
+!!     integer                     :: ios, itoken, istart, iend
 !!        do ! read lines from stdin until end-of-file or error
 !!           read (unit=*,fmt="(a)",iostat=ios) inline
 !!           if(ios.ne.0)stop
@@ -2464,7 +2469,9 @@ END SUBROUTINE MODIF                     !RETURN
 !!    program demo_len_white
 !!
 !!      use M_strings, only : len_white
+!!      implicit none
 !!      character(len=80) ::  s
+!!      integer           :: ilen, lastnb
 !!      intrinsic len
 !!
 !!      s=' ABCDEFG abcdefg '
@@ -3178,17 +3185,15 @@ integer                       :: i                   ! loop counter
 integer                       :: ibegin,iend
 integer,parameter             :: diff = iachar('A')-iachar('a')
    string = str                                      ! initialize output string to input string
+   ibegin=1
+   iend=len_trim(str)
 
    if (present(begin))then
-      ibegin = max(ibegin,begin)
-   else
-      ibegin = 1
+      ibegin = min(max(ibegin,begin),iend)
    endif
 
    if (present(end))then
-      iend= min(iend,end)
-   else
-      iend = len_trim(str)
+      iend= max(1,min(iend,end))
    endif
 
    do concurrent (i = ibegin:iend)                   ! step thru each letter in the string in specified range
@@ -3277,17 +3282,15 @@ integer                      :: i
 integer                      :: ibegin, iend
 integer,parameter             :: diff = iachar('A')-iachar('a')
    string = str
+   ibegin=1
+   iend=len_trim(str)
 
    if (present(begin))then
-      ibegin = max(ibegin,begin)
-   else
-      ibegin = 1
+      ibegin = min(max(1,begin),iend)
    endif
 
    if (present(end))then
-      iend= min(iend,end)
-   else
-      iend = len_trim(str)
+      iend= max(1,min(iend,end))
    endif
 
    do concurrent (i = ibegin:iend)                   ! step thru each letter in the string in specified range
@@ -4644,8 +4647,10 @@ end function compact
 !!    program demo_noesc
 !!
 !!     use M_strings, only : noesc
+!!     implicit none
 !!     character(len=128) :: ascii
 !!     character(len=128) :: cleared
+!!     integer            :: i
 !!     ! fill variable with base ASCII character set
 !!     do i=1,128
 !!        ascii(i:i)=char(i-1)
@@ -4788,6 +4793,9 @@ end function noesc
 !!
 !!    program demo_string_to_value
 !!     use M_strings, only: string_to_value
+!!     implicit none
+!!     real :: value
+!!     integer :: ierr
 !!     character(len=80) :: string
 !!        string=' -40.5e-2 '
 !!        call string_to_value(string,value,ierr)
@@ -5215,7 +5223,7 @@ end function dbles_s2v
 !!    Public Domain
 subroutine value_to_string(gval,chars,length,err,fmt,trimz)
 
-character(len=*),parameter::ident_40="@(#)M_strings::value_to_string(3fp): subroutine returns a string from a value"
+! ident_44="@(#)M_strings::value_to_string(3fp): subroutine returns a string from a value"
 
 class(*),intent(in)                      :: gval
 character(len=*),intent(out)             :: chars
@@ -5353,7 +5361,7 @@ end subroutine value_to_string
 ! very odd compiler problems in many (but not all) programs using this routine; GNU Fortran (GCC) 5.4.0; 20161030
 function v2s_bug(gval) result(outstr)
 
-! ident_44="@(#)M_strings::v2s_bug(3f): function returns string given numeric value"
+! ident_45="@(#)M_strings::v2s_bug(3f): function returns string given numeric value"
 
 class(*),intent(in)          :: gval                         ! input value to convert to a string
 character(len=:),allocatable :: outstr                       ! output string to generate
@@ -5364,7 +5372,7 @@ end function v2s_bug
 !===================================================================================================================================
 function d2s(dvalue,fmt) result(outstr)
 
-! ident_45="@(#)M_strings::d2s(3fp): private function returns string given doubleprecision value"
+! ident_46="@(#)M_strings::d2s(3fp): private function returns string given doubleprecision value"
 
 doubleprecision,intent(in)   :: dvalue                         ! input value to convert to a string
 character(len=*),intent(in),optional :: fmt
@@ -5380,7 +5388,7 @@ end function d2s
 !===================================================================================================================================
 function r2s(rvalue,fmt) result(outstr)
 
-! ident_46="@(#)M_strings::r2s(3fp): private function returns string given real value"
+! ident_47="@(#)M_strings::r2s(3fp): private function returns string given real value"
 
 real,intent(in)              :: rvalue                         ! input value to convert to a string
 character(len=*),intent(in),optional :: fmt
@@ -5396,7 +5404,7 @@ end function r2s
 !===================================================================================================================================
 function i2s(ivalue,fmt) result(outstr)
 
-! ident_47="@(#)M_strings::i2s(3fp): private function returns string given integer value"
+! ident_48="@(#)M_strings::i2s(3fp): private function returns string given integer value"
 
 integer,intent(in)           :: ivalue                         ! input value to convert to a string
 character(len=*),intent(in),optional :: fmt
@@ -5412,7 +5420,7 @@ end function i2s
 !===================================================================================================================================
 function l2s(lvalue,fmt) result(outstr)
 
-! ident_48="@(#)M_strings::l2s(3fp): private function returns string given logical value"
+! ident_49="@(#)M_strings::l2s(3fp): private function returns string given logical value"
 
 logical,intent(in)           :: lvalue                         ! input value to convert to a string
 character(len=*),intent(in),optional :: fmt
@@ -5556,7 +5564,7 @@ end function l2s
 function isNumber(string,msg,verbose)
 implicit none
 
-! ident_49="@(#)M_strings::isnumber(3f): Determines if a string is a number of not."
+! ident_50="@(#)M_strings::isnumber(3f): Determines if a string is a number of not."
 
 character(len=*),intent(in)    :: string
 character(len=:),intent(out),allocatable,optional :: msg
@@ -5722,7 +5730,7 @@ end function isNumber
 !!    Public Domain
 subroutine trimzeros_(string)
 
-! ident_50="@(#)M_strings::trimzeros_(3fp): Delete trailing zeros from numeric decimal string"
+! ident_51="@(#)M_strings::trimzeros_(3fp): Delete trailing zeros from numeric decimal string"
 
 ! if zero needs added at end assumes input string has room
 character(len=*)             :: string
@@ -5829,7 +5837,7 @@ subroutine listout(icurve_lists,icurve_expanded,inums_out,ierr)
 use M_journal, only : journal
 implicit none
 
-! ident_51="@(#)M_strings::listout(3f): copy icurve_lists to icurve_expanded expanding negative numbers to ranges (1 -10 means 1 thru 10)"
+! ident_52="@(#)M_strings::listout(3f): copy icurve_lists to icurve_expanded expanding negative numbers to ranges (1 -10 means 1 thru 10)"
 
 !   Created: 19971231
 integer,intent(in)    :: icurve_lists(:)             ! input array
@@ -5976,18 +5984,15 @@ character(len=*),optional,intent(in) :: mode
 logical,optional,intent(in)          :: clip
 character(len=:),allocatable         :: quoted_str
 
-logical                              :: clip_local
 character(len=1),parameter           :: double_quote = '"'
 character(len=20)                    :: local_mode
 
    if(present(clip))then
-      clip_local=clip
-   else
-      clip_local=.false.
-   endif
-
-   if(clip)then
-      quoted_str=adjustl(str)
+      if(clip)then
+         quoted_str=adjustl(str)
+      else
+         quoted_str=str
+      endif
    else
       quoted_str=str
    endif
@@ -6324,7 +6329,7 @@ end function unquote
 !!    Public Domain
 function describe(ch) result (string)
 
-! ident_52="@(#)M_strings::describe(3f): return string describing long name of a single character"
+! ident_53="@(#)M_strings::describe(3f): return string describing long name of a single character"
 
 character(len=1),intent(in)   :: ch
 character(len=:),allocatable  :: string
@@ -6572,7 +6577,7 @@ end function describe
 subroutine getvals(line,values,icount,ierr)
 implicit none
 
-! ident_53="@(#)M_strings::getvals(3f): read arbitrary number of values from a character variable"
+! ident_54="@(#)M_strings::getvals(3f): read arbitrary number of values from a character variable"
 
 ! JSU 20170831
 
@@ -6669,9 +6674,11 @@ end subroutine getvals
 !!
 !!      program demo_string_to_values
 !!       use M_strings, only : string_to_values
+!!       implicit none
 !!       character(len=80)  :: s=' 10 20e3;3.45 -400.3e-2;1234; 5678 '
 !!       integer,parameter  :: isz=10
 !!       real               :: array(isz)
+!!       integer            :: inums, ierr, ii
 !!
 !!       call string_to_values(s,10,array,inums,' ;',ierr)
 !!       call reportit()
@@ -6718,7 +6725,7 @@ implicit none
 !   Quits if encounters any errors in read.
 !----------------------------------------------------------------------------------------------------------------------------------
 
-! ident_54="@(#)M_strings::string_to_values(3f): reads an array of numbers from a numeric string"
+! ident_55="@(#)M_strings::string_to_values(3f): reads an array of numbers from a numeric string"
 
 character(len=*),intent(in)  :: line          ! input string
 integer,intent(in)           :: iread         ! maximum number of values to try to read into values
@@ -6832,9 +6839,11 @@ end subroutine string_to_values
 !!
 !!      program demo_s2vs
 !!      use M_strings, only : s2vs
+!!      implicit none
 !!      character(len=80) :: s=' 10 20e3;3.45 -400.3e-2;1234; 5678 '
 !!      real,allocatable :: values(:)
 !!      integer,allocatable :: ivalues(:)
+!!      integer :: ii
 !!
 !!      values=s2vs(s)
 !!      ivalues=int(s2vs(s))
@@ -6870,7 +6879,7 @@ end subroutine string_to_values
 !!    Public Domain
 function s2vs(string,delim) result(darray)
 
-! ident_55="@(#)M_strings::s2vs(3f): function returns array of values from a string"
+! ident_56="@(#)M_strings::s2vs(3f): function returns array of values from a string"
 
 character(len=*),intent(in)        :: string                       ! keyword to retrieve value for from dictionary
 character(len=*),optional          :: delim                        ! delimiter characters
@@ -6946,7 +6955,7 @@ end function s2vs
 !!     Public Domain
 elemental function isprint(onechar)
 
-! ident_56="@(#)M_strings::isprint(3f): indicates if input character is a printable ASCII character"
+! ident_57="@(#)M_strings::isprint(3f): indicates if input character is a printable ASCII character"
 
 character,intent(in) :: onechar
 logical              :: isprint
@@ -7007,7 +7016,7 @@ end function isprint
 !!     Public Domain
 elemental function isgraph(onechar)
 
-! ident_57="@(#)M_strings::isgraph(3f) :indicates if character is printable ASCII character excluding space"
+! ident_58="@(#)M_strings::isgraph(3f) :indicates if character is printable ASCII character excluding space"
 
 character,intent(in) :: onechar
 logical              :: isgraph
@@ -7070,7 +7079,7 @@ end function isgraph
 !!    Public Domain
 elemental function isalpha(ch) result(res)
 
-! ident_58="@(#)M_strings::isalpha(3f): Return .true. if character is a letter and .false. otherwise"
+! ident_59="@(#)M_strings::isalpha(3f): Return .true. if character is a letter and .false. otherwise"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7131,7 +7140,7 @@ end function isalpha
 !!     Public Domain
 elemental function isxdigit(ch) result(res)
 
-! ident_59="@(#)M_strings::isxdigit(3f): returns .true. if c is a hexadecimal digit (0-9,a-f, or A-F)"
+! ident_60="@(#)M_strings::isxdigit(3f): returns .true. if c is a hexadecimal digit (0-9,a-f, or A-F)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7201,7 +7210,7 @@ end function isxdigit
 !!     Public Domain
 elemental function isdigit(ch) result(res)
 
-! ident_60="@(#)M_strings::isdigit(3f): Returns .true. if ch is a digit (0-9) and .false. otherwise"
+! ident_61="@(#)M_strings::isdigit(3f): Returns .true. if ch is a digit (0-9) and .false. otherwise"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7263,7 +7272,7 @@ end function isdigit
 !!     Public Domain
 elemental function isblank(ch) result(res)
 
-! ident_61="@(#)M_strings::isblank(3f): returns .true. if character is a blank (space or horizontal tab)"
+! ident_62="@(#)M_strings::isblank(3f): returns .true. if character is a blank (space or horizontal tab)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7337,7 +7346,7 @@ end function isblank
 !!     Public Domain
 elemental function isascii(ch) result(res)
 
-! ident_62="@(#)M_strings::isascii(3f): returns .true. if character is in the range char(0) to char(127)"
+! ident_63="@(#)M_strings::isascii(3f): returns .true. if character is in the range char(0) to char(127)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7399,7 +7408,7 @@ end function isascii
 !!     Public Domain
 elemental function isspace(ch) result(res)
 
-! ident_63="@(#)M_strings::isspace(3f): true if null,space,tab,return,new line,vertical tab, or formfeed"
+! ident_64="@(#)M_strings::isspace(3f): true if null,space,tab,return,new line,vertical tab, or formfeed"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7466,7 +7475,7 @@ end function isspace
 !!     Public Domain
 elemental function iscntrl(ch) result(res)
 
-! ident_64="@(#)M_strings::iscntrl(3f): true if a delete or ordinary control character(0x7F or 0x00-0x1F)"
+! ident_65="@(#)M_strings::iscntrl(3f): true if a delete or ordinary control character(0x7F or 0x00-0x1F)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7533,7 +7542,7 @@ end function iscntrl
 !!     Public Domain
 elemental function ispunct(ch) result(res)
 
-! ident_65="@(#)M_strings::ispunct(3f): true if a printable punctuation character (isgraph(c)&&"
+! ident_66="@(#)M_strings::ispunct(3f): true if a printable punctuation character (isgraph(c)&&"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7611,7 +7620,7 @@ end function ispunct
 !!      12 x@x                  F
 elemental function fortran_name(line) result (lout)
 
-! ident_65="@(#)M_strings::fortran_name(3f): Return .true. if name is a valid Fortran name"
+! ident_67="@(#)M_strings::fortran_name(3f): Return .true. if name is a valid Fortran name"
 
 ! determine if a string is a valid Fortran name ignoring trailing spaces (but not leading spaces)
 character(len=*),parameter   :: int='0123456789'
@@ -7687,7 +7696,7 @@ end function fortran_name
 !!     Public Domain
 pure elemental function isupper(ch) result(res)
 
-! ident_66="@(#)M_strings::isupper(3f): returns true if character is an uppercase letter (A-Z)"
+! ident_68="@(#)M_strings::isupper(3f): returns true if character is an uppercase letter (A-Z)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7752,7 +7761,7 @@ end function isupper
 !!     Public Domain
 elemental function islower(ch) result(res)
 
-! ident_67="@(#)M_strings::islower(3f): returns true if character is a miniscule letter (a-z)"
+! ident_69="@(#)M_strings::islower(3f): returns true if character is a miniscule letter (a-z)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -7849,7 +7858,7 @@ end function islower
 !!    Public Domain
 elemental function isalnum(ch) result(res)
 
-! ident_68="@(#)M_strings::isalnum(3f): returns true if character is a letter (a-z,A-Z) or digit(0-9)"
+! ident_70="@(#)M_strings::isalnum(3f): returns true if character is a letter (a-z,A-Z) or digit(0-9)"
 
 character,intent(in)       :: ch
 logical                    :: res
@@ -7927,7 +7936,7 @@ character(len=*),intent(out) :: y
 integer,intent(in)           :: b,a
 integer                      :: temp
 
-! ident_69="@(#)M_strings::base(3f): convert whole number string in base [2-36] to string in alternate base [2-36]"
+! ident_71="@(#)M_strings::base(3f): convert whole number string in base [2-36] to string in alternate base [2-36]"
 
 base=.true.
 if(decodebase(x,b,temp)) then
@@ -8022,7 +8031,7 @@ end function base
 logical function decodebase(string,basein,out_baseten)
 implicit none
 
-! ident_70="@(#)M_strings::decodebase(3f): convert whole number string in base [2-36] to base 10 number"
+! ident_72="@(#)M_strings::decodebase(3f): convert whole number string in base [2-36] to base 10 number"
 
 character(len=*),intent(in)  :: string
 integer,intent(in)           :: basein
@@ -8150,7 +8159,7 @@ end function decodebase
 logical function codebase(inval10,outbase,answer)
 implicit none
 
-! ident_71="@(#)M_strings::codebase(3f): convert whole number in base 10 to string in base [2-36]"
+! ident_73="@(#)M_strings::codebase(3f): convert whole number in base 10 to string in base [2-36]"
 
 integer,intent(in)           :: inval10
 integer,intent(in)           :: outbase
@@ -8190,7 +8199,7 @@ end function codebase
 !===================================================================================================================================
 function todecimal(base, instr)
 
-! ident_72="@(#)M_strings::todecimal(3f): given string and base return decimal integer"
+! ident_74="@(#)M_strings::todecimal(3f): given string and base return decimal integer"
 
 ! based on an example at rosetta code.
 character(len=36),parameter  :: alphanum = "0123456789abcdefghijklmnopqrstuvwxyz"
@@ -8214,7 +8223,7 @@ end function todecimal
 !===================================================================================================================================
 function tobase(base, number)
 
-! ident_73="@(#)M_strings::todecimal(3f): given integer and base return string"
+! ident_75="@(#)M_strings::todecimal(3f): given integer and base return string"
 
 ! based on an example at rosetta code.
 character(len=36),parameter  :: alphanum = "0123456789abcdefghijklmnopqrstuvwxyz"
@@ -8289,7 +8298,8 @@ end function tobase
 !!
 !!    program demo_fmt
 !!    use M_strings, only : fmt
-!!    character(len=80),allocatable :: paragraph(:)
+!!    implicit none
+!!    character(len=:),allocatable :: paragraph(:)
 !!    character(len=*),parameter    :: string= '&
 !!     &one two three four five &
 !!     &six seven eight &
@@ -8297,7 +8307,13 @@ end function tobase
 !!     &thirteen fourteen fifteen sixteen &
 !!     &seventeen'
 !!
+!!    write(*,*)'LEN=',len(string)
+!!    write(*,*)'INPUT:'
+!!    write(*,*)string
+!!
 !!    paragraph=fmt(string,40)
+!!    write(*,*)'LEN=',len(paragraph),' SIZE=',size(paragraph)
+!!    write(*,*)'OUTPUT:'
 !!    write(*,'(a)')paragraph
 !!
 !!    write(*,'(a)')fmt(string,0)
@@ -8307,29 +8323,6 @@ end function tobase
 !!
 !!  Results:
 !!
-!!    one two three four five six seven eight
-!!    nine ten eleven twelve thirteen fourteen
-!!    fifteen sixteen seventeen
-!!    one
-!!    two
-!!    three
-!!    four
-!!    five
-!!    six
-!!    seven
-!!    eight
-!!    nine
-!!    ten
-!!    eleven
-!!    twelve
-!!    thirteen
-!!    fourteen
-!!    fifteen
-!!    sixteen
-!!    seventeen
-!!       one two three four five six seven eight nine
-!!       ten eleven twelve thirteen fourteen fifteen
-!!       sixteen seventeen
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -8338,7 +8331,7 @@ end function tobase
 !!    Public Domain
 function fmt(source_string,length)
 
-! ident_74="@(#)M_strings::fmt(3f): wrap a long string into a paragraph"
+! ident_76="@(#)M_strings::fmt(3f): wrap a long string into a paragraph"
 
 character(len=*),intent(in)       :: source_string
 integer,intent(in)                :: length
@@ -8372,14 +8365,14 @@ integer                           :: i
             ilength=iword+1
          elseif(ilength+iword.le.length)then       ! this word will fit on current line
             if(i.eq.2)then
-               fmt(ilines)=fmt(ilines)(:ilength)//source_string(istart:iend)//' '
+               fmt(ilines)=fmt(ilines)(:ilength)//source_string(istart:iend)
             endif
             ilength=ilength+iword+1
          else                                      ! adding this word would make line too long so start new line
             ilines=ilines+1
             ilength=0
             if(i.eq.2)then
-               fmt(ilines)=fmt(ilines)(:ilength)//source_string(istart:iend)//' '
+               fmt(ilines)=fmt(ilines)(:ilength)//source_string(istart:iend)
             endif
             ilength=iword+1
          endif
@@ -8582,8 +8575,7 @@ end function setbits64
 function msg_scalar(generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9,nospace)
 implicit none
 
-character(len=*),parameter::ident_57="&
-&@(#)M_strings::msg_scalar(3fp): writes a message to a string composed of any standard scalar types"
+! ident_77="@(#)M_strings::msg_scalar(3fp): writes a message to a string composed of any standard scalar types"
 
 class(*),intent(in),optional  :: generic1 ,generic2 ,generic3 ,generic4 ,generic5
 class(*),intent(in),optional  :: generic6 ,generic7 ,generic8 ,generic9
@@ -8642,8 +8634,7 @@ end function msg_scalar
 function msg_one(generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9,nospace)
 implicit none
 
-character(len=*),parameter::ident_58="&
-&@(#)M_strings::msg_one(3fp): writes a message to a string composed of any standard one dimensional types"
+! ident_78="@(#)M_strings::msg_one(3fp): writes a message to a string composed of any standard one dimensional types"
 
 class(*),intent(in)           :: generic1(:)
 class(*),intent(in),optional  :: generic2(:), generic3(:), generic4(:), generic5(:)
@@ -8907,14 +8898,14 @@ end function msg_one
 
     do concurrent (n = 1:size(tokens))
       tokens(n) = string(first(n):last(n))
-    end do
+    enddo
 
     if (present(separator)) then
       allocate(separator(size(tokens) - 1))
       do concurrent (n = 1:size(tokens) - 1)
         separator(n) = string(first(n+1)-1:first(n+1)-1)
-      end do
-    end if
+      enddo
+    endif
 
   end subroutine split_tokens
 !===================================================================================================================================
@@ -8935,11 +8926,11 @@ end function msg_one
 
     do concurrent (n = 1:len(set))
       set_array(n) = set(n:n)
-    end do
+    enddo
 
     do concurrent (n = 1:slen)
       is_separator(n) = any(string(n:n) == set_array)
-    end do
+    enddo
 
     is_first = .false.
     is_last = .false.
@@ -8954,9 +8945,9 @@ end function msg_one
         if (is_separator(n - 1)) then
           is_first(n) = .true.
           is_last(n-1) = .true.
-        end if
-      end if
-    end do
+        endif
+      endif
+    enddo
 
     if (.not. is_separator(slen)) is_last(slen) = .true.
 
@@ -8986,7 +8977,7 @@ end function msg_one
 
     do concurrent (n = 1:len(set))
       set_array(n) = set(n:n)
-    end do
+    enddo
 
     if (backward) then
       result_pos = 0
@@ -8994,17 +8985,17 @@ end function msg_one
         if (any(string(n:n) == set_array)) then
           result_pos = n
           exit
-        end if
-      end do
+        endif
+      enddo
     else
       result_pos = len(string) + 1
       do n = pos + 1, len(string)
         if (any(string(n:n) == set_array)) then
           result_pos = n
           exit
-        end if
-      end do
-    end if
+        endif
+      enddo
+    endif
 
     pos = result_pos
 

@@ -1,8 +1,9 @@
            program demo_strtok
            use M_strings, only : strtok
+           implicit none
            character(len=264)          :: inline
            character(len=*),parameter  :: delimiters=' ;,'
-           integer                     :: ios
+           integer                     :: ios, itoken, istart, iend
               do ! read lines from stdin until end-of-file or error
                  read (unit=*,fmt="(a)",iostat=ios) inline
                  if(ios.ne.0)stop

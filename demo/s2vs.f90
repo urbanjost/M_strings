@@ -1,8 +1,10 @@
             program demo_s2vs
             use M_strings, only : s2vs
+            implicit none
             character(len=80) :: s=' 10 20e3;3.45 -400.3e-2;1234; 5678 '
             real,allocatable :: values(:)
             integer,allocatable :: ivalues(:)
+            integer :: ii
 
             values=s2vs(s)
             ivalues=int(s2vs(s))

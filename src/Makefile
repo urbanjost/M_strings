@@ -95,6 +95,7 @@ LDFLAGS :=
 # You can either ignore it, or disable the "may be used uninitialized"
 # warnings with -Wno-maybe-uninitialized or compile with optimizations
 # (-O1 and more).
+gfortran: F90=gfortran
 gfortran: F90FLAGS := -g -O -Wall -std=f2018 -Wextra -Wno-maybe-uninitialized -Wno-uninitialized
 gfortran: all
 	@echo built with $(F90)

@@ -1,8 +1,10 @@
             program demo_string_to_values
              use M_strings, only : string_to_values
+             implicit none
              character(len=80)  :: s=' 10 20e3;3.45 -400.3e-2;1234; 5678 '
              integer,parameter  :: isz=10
              real               :: array(isz)
+             integer            :: inums, ierr, ii
 
              call string_to_values(s,10,array,inums,' ;',ierr)
              call reportit()

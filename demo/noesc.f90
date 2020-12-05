@@ -1,8 +1,10 @@
           program demo_noesc
 
            use M_strings, only : noesc
+           implicit none
            character(len=128) :: ascii
            character(len=128) :: cleared
+           integer            :: i
            ! fill variable with base ASCII character set
            do i=1,128
               ascii(i:i)=char(i-1)

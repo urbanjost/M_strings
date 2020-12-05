@@ -1,7 +1,9 @@
           program demo_len_white
 
             use M_strings, only : len_white
+            implicit none
             character(len=80) ::  s
+            integer           :: ilen, lastnb
             intrinsic len
 
             s=' ABCDEFG abcdefg '

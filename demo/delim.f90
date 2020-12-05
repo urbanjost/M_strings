@@ -1,11 +1,13 @@
            program demo_delim
 
            use M_strings, only: delim
+           implicit none
            character(len=80) :: line
            character(len=80) :: dlm
            integer,parameter :: n=10
            character(len=20) :: array(n)=' '
            integer           :: ibegin(n),iterm(n)
+           integer           :: i20, icount, ilen, i10
            line=' first  second 10.3 words_of_stuff  '
            do i20=1,4
               ! change delimiter list and what is calculated or parsed
