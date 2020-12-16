@@ -71,7 +71,7 @@ TESTFILES = \
  ../test/test_suite_M_strings.f90 \
  ../test/M_strings_oops.f90 \
 $(NULL)
-TEST = ${TESTFILES:.f90=}
+TPROG = ${TESTFILES:.f90=}
 
 CPROGFILES = 
 
@@ -79,9 +79,9 @@ PROG = ${PROGFILES:.f90=}
 
 CPROG = ${CPROGFILES:.c=}
 
-SRCS =  M_journal.f90 M_strings.f90 M_strings_oop.f90 
+SRCS =  M_strings.f90 M_strings_oop.f90 
 
-OBJS =  M_journal.o M_strings.o M_strings_oop.o 
+OBJS =  M_strings.o M_strings_oop.o 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # platform-specific values you will probably change
 # 
@@ -115,25 +115,26 @@ nagfor: F90FLAGS := -C all
 nagfor: all
 	@echo built with $(F90)
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-all: $(PROG) $(CPROG)
-	rm -f M_journal.f90
+all: $(PROG) $(CPROG) # $(TPROG)
 	@echo "That's all folks!"
 $(PROG): $(OBJS)
 
 	-$(F90) $(LDFLAGS) $@.f90 -o $@ $(OBJS) $(LIBS) # && ./$@ </dev/null
 
-M_journal.f90: ../aux/M_journal.f90
-	cp ../aux/M_journal.f90 .
+#$(TPROG): $(OBJS)
+#
+#	-$(F90) $(LDFLAGS) $@.f90 -o $@ $(OBJS) $(LIBS) # && ./$@ </dev/null
+
 .PHONY: clean
 clean:
-	rm -f $(PROG) $(CPROG) $(OBJS) *.mod $(TEST) M_journal.f90
+	rm -f $(PROG) $(CPROG) $(OBJS) *.mod $(TPROG) 
 
 .PHONY: help
 
 help:
 	: make    '-- build M_strings M_strings_oop module'
 	: run     '-- run manpage demo programs and test program'
-	: test    '-- run test program (requires additional modules)'
+#	: test    '-- run test program (requires additional modules)'
 	: man     '-- show all manpages as text'
 	: ship    '-- rebuild archive files of manpages'
 	: clean   '-- clean directory of object files and executables'
@@ -157,12 +158,11 @@ run: $(PROG)
 #	echo $? | xargs -n 1  |xargs -iXX /bin/time XX  \</dev/null
 	echo $? | xargs -n 1  |(set +x;xargs -iXX env XX 2>&1)
 
-.PHONY: test
-test: $(OBJS)
-	# compile and load
-	$(F90) $(LDFLAGS) $(TESTFILES) -o ${TESTFILES:.f90=} $(OBJS) $(LIBS)
-	# run 
-	${TESTFILES:.f90=}
+#.PHONY: test
+#test: $(TPROG)
+#	# run everything
+#	echo $? | xargs -n 1  
+#	echo $? | xargs -n 1  |(set +x;xargs -iXX env XX 2>&1)
 
 .PHONY: doxygen
 doxygen: 
@@ -182,5 +182,4 @@ man:
 .F90.o:
 	$(F90) $(F90FLAGS) -c $<
 
-M_strings.o: M_journal.o
 M_strings_oop.o: M_strings.o

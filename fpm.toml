@@ -12,7 +12,7 @@ executable = [
 {  name="demo_adjustc",           source-dir="example",  main="adjustc.f90"           },
 {  name="demo_atleast",           source-dir="example",  main="atleast.f90"           },
 {  name="demo_base",              source-dir="example",  main="base.f90"              },
-{  name="demo_c2s",               source-dir="example",  main="c2s.f90"               },
+#{  name="demo_c2s",               source-dir="example",  main="c2s.f90"               },
 {  name="demo_change",            source-dir="example",  main="change.f90"            },
 {  name="demo_chomp",             source-dir="example",  main="chomp.f90"             },
 {  name="demo_codebase",          source-dir="example",  main="codebase.f90"          },
@@ -82,12 +82,7 @@ executable = [
 #auto-executables = false
 #auto-tests = false
 
-[dev-dependencies]
-M_msg          = { git = "https://github.com/urbanjost/M_msg.git" }
-
 [[test]]
 name="test_suite"
 source-dir="test"
 main="test_suite_M_strings.f90"
-[test.dependencies]
-M_msg          = { git = "https://github.com/urbanjost/M_msg.git" }

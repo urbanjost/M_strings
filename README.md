@@ -109,7 +109,7 @@ or just list it as a dependency in your fpm.toml project file.
 
 ## DEMO PROGRAMS
 
-There are demo programs extracted from the man pages in the test/demos/ directory
+There are demo programs extracted from the man pages in the example/ directory
 
 
 ## USER DOCUMENTATION
