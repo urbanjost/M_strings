@@ -45,7 +45,7 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 <div id="Container">
 <div id="Content">
 <CENTER>
-<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>upper_quoted (3m_strings)</NOBR><HR></H1>
+<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>dilate (3m_strings)</NOBR><HR></H1>
 </CENTER>
 <A name=0>
 
@@ -53,7 +53,7 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<B>upper_quoted</B>(3f) - [M_strings:CASE] elemental function converts string to miniscule skipping strings quoted per Fortran syntax rules
+<B>dilate</B>(3f) - [M_strings:NONALPHA] expand tab characters
 (LICENSE:PD)
 <P>
 </BLOCKQUOTE>
@@ -63,7 +63,7 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 <A HREF=#2>Description</A><BR>
 <A HREF=#3>Options</A><BR>
 <A HREF=#4>Results</A><BR>
-<A HREF=#5>Example</A><BR>
+<A HREF=#5>Examples</A><BR>
 <A HREF=#6>Author</A><BR>
 <A HREF=#7>License</A><BR>
 </BLOCKQUOTE>
@@ -73,11 +73,11 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-elemental pure function <B>upper_quoted</B>(<I>str</I>) result (<I>string</I>)
+function <B>dilate</B>(<I>INSTR</I>) <B>result</B>(<I>OUTSTR</I>)
 <P>
 <PRE>
-    character(*), intent(in)    :: str
-    character(len(str))         :: string  ! output string
+    character(len=*),intent=(in)  :: INSTR
+    character(len=:),allocatable  :: OUTSTR
 <P>
 </PRE>
 </BLOCKQUOTE>
@@ -87,14 +87,14 @@ elemental pure function <B>upper_quoted</B>(<I>str</I>) result (<I>string</I>)
 
 </A>
 <BLOCKQUOTE>
-<B>upper_quoted</B>(<I>string</I>) returns a copy of the input <I>string</I> with all not-quoted
-characters converted to uppercase, assuming ASCII character sets
-are being used. The quoting rules are the same as for Fortran source.
-Either a single or double quote starts a quoted <I>string</I>, and a quote
-character of the same type is doubled when it appears internally in
-the quoted <I>string</I>. If a double quote quotes the <I>string</I> single quotes
-may appear in the quoted <I>string</I> as single characters, and vice-versa
-for single quotes.
+<TABLE cellpadding=3>
+<TR valign=top><TD colspan=2>
+<B></B><B>dilate</B>() converts tabs in <I>INSTR</I> to spaces in <I>OUTSTR</I>. </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+It assumes a
+tab is set every 8 characters. Trailing spaces are removed.
+</TD></TR>
+<TR></TR></TABLE>In addition, trailing carriage returns and line feeds are removed
+(they are usually a problem created by going to and from MSWindows).
 </BLOCKQUOTE>
 <A name=3>
 
@@ -104,8 +104,8 @@ for single quotes.
 <BLOCKQUOTE>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B></B><I>str</I> </TD><TD valign=bottom>
-<I>string</I> to convert to uppercase
+<B>instr</B> </TD><TD valign=bottom>
+Input line to remove tabs from
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
@@ -116,41 +116,35 @@ for single quotes.
 <BLOCKQUOTE>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B>upper</B> </TD><TD valign=bottom>
-copy of the input <I>string</I> with all unquoted characters converted
-to uppercase
+<B>outstr</B> </TD><TD valign=bottom>
+Output string with tabs expanded.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=5>
 
-     <H3>EXAMPLE</H3>
+     <H3>EXAMPLES</H3>
 
 </A>
 <BLOCKQUOTE>
 Sample program:
 <P>
 <PRE>
-    program demo_upper_quoted
-    use M_strings, only: upper_quoted
-    implicit none
-    character(len=:),allocatable  :: s
-    s=&#146; ABCDEFG abcdefg "Double-Quoted" &#146;&#146;Single-Quoted&#146;&#146; "with ""&
-       & Quote" everything else&#146;
-       write(*,*) &#146;mixed-case input string is &#46;&#46;&#46;.&#146;,s
-       write(*,*) &#146;upper-case output string is &#46;&#46;&#46;&#146;,upper_quoted(s)
-       write(*,&#146;(1x,a,*(a:,"+"))&#146;) &#146;upper_quoted(3f) is elemental ==&gt;&#146;, &
-       & upper_quoted(["abc","def","ghi"])
-    end program demo_upper_quoted
+   program demo_dilate
 <P>
-</PRE>
-Expected output:
-<P>
-<PRE>
-    mixed-case input string is &#46;&#46;&#46;. ABCDEFG abcdefg "Double-Quoted"
-    &#146;Single-Quoted&#146; "with "" Quote" everything else
-    upper-case output string is &#46;&#46;&#46; ABCDEFG ABCDEFG "Double-Quoted"
-    &#146;Single-Quoted&#146; "with "" Quote" EVERYTHING ELSE
-    upper_quoted(3f) is elemental ==&gt;ABC+DEF+GHI
+   !  test filter to remove tabs and trailing white space from input
+   !  on files up to 1024 characters wide
+   use M_strings, only : dilate
+   implicit none
+   character(len=:),allocatable :: in
+   character(len=:),allocatable :: out
+   integer                      :: i
+      in=&#146;  this is my string  &#146;
+      ! change spaces to tabs to make a sample input
+      do i=1,len(in)
+         if(in(i:i).eq.&#146; &#146;)in(i:i)=char(9)
+      enddo
+      write(*,&#146;(a)&#146;)in,dilate(in)
+   end program demo_dilate
 <P>
 </PRE>
 </BLOCKQUOTE>
@@ -171,8 +165,8 @@ John S. Urban
 Public Domain
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I></I></TD> <TD width=33% align=center>upper_quoted (3m_strings)</TD> <TD align=right width=33%><I>December 20, 2020</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 5ca916c6-209a-4bcd-9d24-6ca75b685cc7 using man macros.</FONT>
-<br><br><center><img src="images/upper_quoted.gif"></center>
+<TABLE width=100%><TR> <TD width=33%><I></I></TD> <TD width=33% align=center>dilate (3m_strings)</TD> <TD align=right width=33%><I>December 20, 2020</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 61f2d18b-4c1a-4a6e-850b-c5430c467281 using man macros.</FONT>
+<br><br><center><img src="images/dilate.gif"></center>
 </div>
 </div>
 </body>
