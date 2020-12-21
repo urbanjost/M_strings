@@ -86,3 +86,5 @@ executable = [
 name="test_suite"
 source-dir="test"
 main="test_suite_M_strings.f90"
+[test.dependencies]
+M_msg          = { git = "https://github.com/urbanjost/M_msg.git" }
