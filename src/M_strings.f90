@@ -2591,8 +2591,7 @@ end function len_white
 !!     character(len=:),allocatable :: strout
 !!
 !!##DESCRIPTION
-!!    trim leading blanks from a string and return position of last
-!!    non-blank character in the string.
+!!    trim leading and trailing blanks from a string
 !!
 !!##OPTIONS
 !!    strin   input string to trim leading and trailing space from
@@ -2665,6 +2664,7 @@ end function crop
 !!             If the new_set is shorter than the old set the last character
 !!             in the new set is used to replace the remaining characters
 !!             in the new set.
+!!
 !!##RETURNS
 !!    outstr   instr with substitutions applied
 !!
