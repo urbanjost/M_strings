@@ -84,7 +84,7 @@ Just download the github repository, enter the src/ directory and run make:
      make help # see other developer options
 
 This will compile the M_strings(3f) module and optionally build all the
-example programs from the document pages in the PROGRAMS/ sub-directory
+example programs from the document pages in the example/ sub-directory
 and run the unit tests.
 
 ## SUPPORTS FPM 
