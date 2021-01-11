@@ -3818,11 +3818,11 @@ end function visible
 function expand(line,escape) result(lineout)
 !*!USE ISO_C_BINDING ,ONLY: c_horizontal_tab
 implicit none
-character(len=*),parameter :: c_horizontal_tab=char(9)
 
 ! ident_30="@(#)M_strings::expand(3f): return string with escape sequences expanded"
 
-character(len=*)                      :: line
+character(len=*),parameter            :: c_horizontal_tab=char(9)
+character(len=*),intent(in)           :: line
 character(len=1),intent(in),optional  :: escape ! escape character. Default is backslash
 ! expand escape sequences found in input string
 ! Escape sequences
