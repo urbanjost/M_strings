@@ -7609,7 +7609,7 @@ end function iscntrl
 !!
 !!##RETURNS
 !!    ispunct  logical value returns true if character is a printable
-!!             puncturation character.
+!!             punctuation character.
 !!
 !!##EXAMPLE
 !!
@@ -8860,7 +8860,7 @@ end function msg_one
 !!              position of each token in STRING, in the order found. If a
 !!              token has zero length, the starting position is equal to one
 !!              if the token is at the beginning of STRING, and one greater
-!!              than the position of the preceding delimitor otherwise.
+!!              than the position of the preceding delimiter otherwise.
 !!
 !!    LAST      It is allocated with the lower bound equal to one and the
 !!              upper bound equal to the number of tokens in STRING. Each
