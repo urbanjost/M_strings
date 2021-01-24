@@ -30,7 +30,7 @@
 !!      use M_strings, only : string_to_value,string_to_values,s2v,s2vs
 !!      use M_strings, only : value_to_string,v2s,msg
 !!      use M_strings, only : listout,getvals
-!!      use M_strings, only : matchw
+!!      use M_strings, only : matchw, ends_with
 !!      use M_strings, only : fmt
 !!      use M_strings, only : base, decodebase, codebase
 !!      use M_strings, only : isalnum, isalpha, iscntrl, isdigit
@@ -134,6 +134,7 @@
 !!   CHARACTER TESTS
 !!       matchw  compares given string for match to pattern which may
 !!               contain wildcard characters
+!!       ends_with   test whether strings ends with one of the specified suffixs
 !!
 !!       o isalnum   returns .true. if character is a letter or digit
 !!       o isalpha   returns .true. if character is a letter and
@@ -235,7 +236,7 @@
 !!     use M_strings, only : string_to_value, string_to_values, s2v, s2vs
 !!     use M_strings, only : value_to_string, v2s, msg
 !!     use M_strings, only : listout, getvals
-!!     use M_strings, only : matchw
+!!     use M_strings, only : matchw, ends_with
 !!     use M_strings, only : fmt
 !!     use M_strings, only : base, decodebase, codebase
 !!     use M_strings, only : isalnum, isalpha, iscntrl, isdigit, isgraph
@@ -358,6 +359,7 @@ PUBLIC codebase        !  convert whole number string in base [2-36] to base 10 
 PUBLIC decodebase      !  convert whole number in base 10 to string in base [2-36]
 !----------------------# LOGICAL TESTS
 PUBLIC matchw          !  compares given string for match to pattern which may contain wildcard characters
+PUBLIC ends_with       !  test whether strings ends with one of the specified suffix
 PUBLIC isalnum         !  elemental function returns .true. if CHR is a letter or digit
 PUBLIC isalpha         !  elemental function returns .true. if CHR is a letter and .false. otherwise
 PUBLIC isascii         !  elemental function returns .true. if the low order byte of c is in the range char(0) to char(127)
@@ -420,6 +422,11 @@ character, public, parameter :: ascii_lf  = char(10)  ! line feed or newline
 character, public, parameter :: ascii_ff  = char(12)  ! form feed or newpage
 character, public, parameter :: ascii_cr  = char(13)  ! carriage return
 character, public, parameter :: ascii_esc = char(27)  ! escape
+!-----------------------------------------------------------------------------------------------------------------------------------
+interface ends_with
+    procedure :: ends_with_str
+    procedure :: ends_with_any
+end interface ends_with
 !-----------------------------------------------------------------------------------------------------------------------------------
 public :: split2020, string_tokens
 
@@ -784,6 +791,87 @@ character(len=:),allocatable :: tbookmark, wbookmark
       endif
    enddo
 end function matchw
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
+!!    ends_with(3f) - [M_strings:MATCH] test if string ends with specified suffix(es)
+!!    (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!    function ends_with(source_string,suffix)
+!!
+!!     or
+!!
+!!    function ends_with(source_string,[suffixs])
+!!
+!!     character(len=*),intent(in)          :: source_string
+!!     character(len=*),intent(in)          :: suffix
+!!     logical                              :: ends_with
+!!
+!!##DESCRIPTION
+!!
+!!##OPTIONS
+!!     SOURCE_STRING  string to tokenize
+!!     SUFFIX         list of separator characters. May be scalar or an array.
+!!
+!!##RETURNS
+!!     ENDS_WITH      returns .TRUE. if one of the suffix match the end
+!!                    of SOURCE_STRING.
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_ends_with
+!!    use M_strings, only : ends_with
+!!    implicit none
+!!       write(*,*)ends_with('prog.a',['.o','.i','.s'])
+!!       write(*,*)ends_with('prog.f90',['.F90','.f90'])
+!!       write(*,*)ends_with('prog.pdf','.pdf')
+!!       write(*,*)ends_with('prog.doc','.txt')
+!!    end program demo_ends_with
+!!
+!!   Results:
+!!
+!!     F
+!!     T
+!!     T
+!!     F
+!!
+!!##AUTHOR
+!!    John S. Urban
+!!
+!!##LICENSE
+!!    Public Domain
+pure function ends_with_str(string, ending) result(matched)
+character(*), intent(in) :: string, ending
+integer                  :: n1, n2
+logical                  :: matched
+   n1 = len(string) - len(ending) + 1
+   n2 = len(string)
+   if (n1 < 1) then
+       matched = .false.
+   else
+       matched = (string(n1:n2) == ending)
+   endif
+end function ends_with_str
+!-----------------------------------------------------------------------------------------------------------------------------------
+pure function ends_with_any(string, endings) result(matched)
+character(*), intent(in) :: string
+character(*), intent(in) :: endings(:)
+logical                  :: matched
+integer                  :: i
+   matched = .true.
+   FINDIT: block
+   do i=1, size(endings)
+       if(ends_with_str(string,trim(endings(i)))) exit FINDIT
+   enddo
+   matched = .false.
+   endblock FINDIT
+end function ends_with_any
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
@@ -1187,7 +1275,7 @@ integer                       :: imax                   ! length of longest toke
 !!    function chomp(source_string,token[,delimiters])
 !!
 !!     character(len=*)                     :: source_string
-!!     character(len=:),intent(out),token   :: token
+!!     character(len=:),intent(out)         :: token
 !!     character(len=:),intent(in),optional :: delimiters
 !!     integer                              :: chomp
 !!
@@ -9419,6 +9507,153 @@ end subroutine print_generic
 
 end function str_one
 !===================================================================================================================================
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+function lowercase(str) result(lcstr)
+
+! convert string to lower case leaving quoted strings as is
+
+character (len=*):: str
+character (len=len_trim(str)):: lcstr
+integer :: ilen
+integer :: ioffset
+integer :: iquote
+integer :: i
+integer :: iav
+integer :: iqc
+
+ilen=len_trim(str)
+ioffset=iachar('A')-iachar('a')
+iquote=0
+lcstr=str
+do i=1,ilen
+  iav=iachar(str(i:i))
+  if(iquote==0 .and. (iav==34 .or.iav==39)) then
+    iquote=1
+    iqc=iav
+    cycle
+  end if
+  if(iquote==1 .and. iav==iqc) then
+    iquote=0
+    cycle
+  end if
+  if (iquote==1) cycle
+  if(iav >= iachar('A') .and. iav <= iachar('Z')) then
+    lcstr(i:i)=achar(iav-ioffset)
+  else
+    lcstr(i:i)=str(i:i)
+  end if
+end do
+
+end function lowercase
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+function uppercase(str) result(ucstr)
+
+! convert string to upper case leaving quoted strings as is
+
+character (len=*):: str
+character (len=len_trim(str)):: ucstr
+integer :: ilen
+integer :: ioffset
+integer :: iquote
+integer :: i
+integer :: iav
+integer :: iqc
+
+ilen=len_trim(str)
+ioffset=iachar('A')-iachar('a')
+iquote=0
+ucstr=str
+do i=1,ilen
+  iav=iachar(str(i:i))
+  if(iquote==0 .and. (iav==34 .or.iav==39)) then
+    iquote=1
+    iqc=iav
+    cycle
+  end if
+  if(iquote==1 .and. iav==iqc) then
+    iquote=0
+    cycle
+  end if
+  if (iquote==1) cycle
+  if(iav >= iachar('a') .and. iav <= iachar('z')) then
+    ucstr(i:i)=achar(iav+ioffset)
+  else
+    ucstr(i:i)=str(i:i)
+  end if
+end do
+
+end function uppercase
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+subroutine matching_delimiter(str,ipos,imatch)
+
+! Sets imatch to the position in string of the delimiter matching the delimiter
+! in position ipos. Allowable delimiters are (), [], {}, <>.
+
+character(len=*) :: str
+character :: delim1,delim2,ch
+integer :: ipos
+integer :: imatch
+integer :: lenstr
+integer :: idelim1, idelim2
+integer :: istart, iend
+integer :: inc
+integer :: isum
+integer :: i
+
+lenstr=len_trim(str)
+delim1=str(ipos:ipos)
+select case(delim1)
+   case('(')
+      idelim2=iachar(delim1)+1
+      istart=ipos+1
+      iend=lenstr
+      inc=1
+   case(')')
+      idelim2=iachar(delim1)-1
+      istart=ipos-1
+      iend=1
+      inc=-1
+   case('[','{','<')
+      idelim2=iachar(delim1)+2
+      istart=ipos+1
+      iend=lenstr
+      inc=1
+   case(']','}','>')
+      idelim2=iachar(delim1)-2
+      istart=ipos-1
+      iend=1
+      inc=-1
+   case default
+      write(*,*) delim1,' is not a valid delimiter'
+      return
+end select
+if(istart < 1 .or. istart > lenstr) then
+   write(*,*) delim1,' has no matching delimiter'
+   return
+end if
+delim2=achar(idelim2) ! matching delimiter
+
+isum=1
+do i=istart,iend,inc
+   ch=str(i:i)
+   if(ch /= delim1 .and. ch /= delim2) cycle
+   if(ch == delim1) isum=isum+1
+   if(ch == delim2) isum=isum-1
+   if(isum == 0) exit
+end do
+if(isum /= 0) then
+   write(*,*) delim1,' has no matching delimiter'
+   return
+end if
+imatch=i
+
+end subroutine matching_delimiter
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================

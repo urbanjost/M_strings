@@ -45,7 +45,7 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 <div id="Container">
 <div id="Content">
 <CENTER>
-<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>msg (3m_strings)</NOBR><HR></H1>
+<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>ends_with (3m_strings)</NOBR><HR></H1>
 </CENTER>
 <A name=0>
 
@@ -53,8 +53,9 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<B>msg</B>(3f) - [M_strings] converts any standard scalar type to a string
+<B>ends_with</B>(3f) - [M_strings:MATCH] test if string ends with specified <B>suffix</B>(es)
 (LICENSE:PD)
+<P>
 </BLOCKQUOTE>
 <A name=contents></A><H3>CONTENTS</H3></A>
 <BLOCKQUOTE>
@@ -72,13 +73,18 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<P>
-<B>function</B> <B>msg</B>(g1,g2g3,g4,g5,g6,g7,g8,g9,nospace)
+function <B>ends_with</B>(source_string,suffix)
 <P>
 <PRE>
-     class(*),intent(in),optional  :: g1,g2,g3,g4,g5,g6,g7,g8,g9
-     logical,intent(in),optional   :: nospace
-     character,len=(:),allocatable :: msg
+    or
+<P>
+</PRE>
+function <B>ends_with</B>(source_string,[suffixs])
+<P>
+<PRE>
+    character(len=*),intent(in)          :: source_string
+    character(len=*),intent(in)          :: suffix
+    logical                              :: ends_with
 <P>
 </PRE>
 </BLOCKQUOTE>
@@ -88,7 +94,7 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<B>msg</B>(3f) builds a space-separated string from up to nine scalar values.
+<P>
 </BLOCKQUOTE>
 <A name=3>
 
@@ -97,15 +103,13 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 </A>
 <BLOCKQUOTE>
 <TABLE cellpadding=3>
-<TR valign=top><TD width=6% nowrap>
-<B>g[1-9]</B> </TD><TD valign=bottom>
-optional value to print the value of after the message. May
-be of type INTEGER, LOGICAL, REAL, DOUBLEPRECISION, COMPLEX,
-or CHARACTER.
-</TD></TR>
 <TR valign=top><TD colspan=2>
-<B>nospace</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-if nospace=.true., then no spaces are added between values
+<B>SOURCE_STRING</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+string to tokenize
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>SUFFIX</B> </TD><TD valign=bottom>
+list of separator characters. May be scalar or an array.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
@@ -115,9 +119,10 @@ if nospace=.true., then no spaces are added between values
 </A>
 <BLOCKQUOTE>
 <TABLE cellpadding=3>
-<TR valign=top><TD width=6% nowrap>
-<B>msg</B> </TD><TD valign=bottom>
-description to print
+<TR valign=top><TD colspan=2>
+<B>ENDS_WITH</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+returns .TRUE. if one of the suffix match the end
+of SOURCE_STRING.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=5>
@@ -126,56 +131,45 @@ description to print
 
 </A>
 <BLOCKQUOTE>
-<P>
 Sample program:
 <P>
 <PRE>
-       program demo_msg
-       use M_strings, only : msg
-       implicit none
-       character(len=:),allocatable :: pr
-       character(len=:),allocatable :: frmt
-       integer                      :: biggest
-<P>
-       pr=msg(&#146;HUGE(3f) integers&#146;,huge(0),&
-       & &#146;and real&#146;,huge(0.0),&#146;and double&#146;,huge(0.0d0))
-       write(*,&#146;(a)&#146;)pr
-       pr=msg(&#146;real            :&#146;,&
-        & huge(0.0),0.0,12345.6789,tiny(0.0) )
-       write(*,&#146;(a)&#146;)pr
-       pr=msg(&#146;doubleprecision :&#146;,&
-        & huge(0.0d0),0.0d0,12345.6789d0,tiny(0.0d0) )
-       write(*,&#146;(a)&#146;)pr
-       pr=msg(&#146;complex         :&#146;,&
-        & cmplx(huge(0.0),tiny(0.0)) )
-       write(*,&#146;(a)&#146;)pr
-<P>
-       ! create a format on the fly
-       biggest=huge(0)
-       frmt=msg(&#146;(*(i&#146;,int(log10(real(biggest))),&#146;:,1x))&#146;,nospace=.true.)
-       write(*,*)&#146;format=&#146;,frmt
-<P>
-       ! although it will often work, using msg(3f) in an I/O statement
-       ! is not recommended
-       write(*,*)msg(&#146;program will now stop&#146;)
-<P>
-       end program demo_msg
+   program demo_ends_with
+   use M_strings, only : ends_with
+   implicit none
+      write(*,*)ends_with(&#146;prog.a&#146;,[&#146;.o&#146;,&#146;.i&#146;,&#146;.s&#146;])
+      write(*,*)ends_with(&#146;prog.f90&#146;,[&#146;.F90&#146;,&#146;.f90&#146;])
+      write(*,*)ends_with(&#146;prog.pdf&#146;,&#146;.pdf&#146;)
+      write(*,*)ends_with(&#146;prog.doc&#146;,&#146;.txt&#146;)
+   end program demo_ends_with
 <P>
 </PRE>
-Output
+Results:
+</BLOCKQUOTE>
+<A name=>
+
+    <H4>&nbsp; &nbsp; F</H4>
+</A>
+<BLOCKQUOTE>
+</BLOCKQUOTE>
+<A name=>
+
+    <H4>&nbsp; &nbsp; T</H4>
+</A>
+<BLOCKQUOTE>
+</BLOCKQUOTE>
+<A name=>
+
+    <H4>&nbsp; &nbsp; T</H4>
+</A>
+<BLOCKQUOTE>
+</BLOCKQUOTE>
+<A name=>
+
+    <H4>&nbsp; &nbsp; F</H4>
+</A>
+<BLOCKQUOTE>
 <P>
-<PRE>
-      HUGE(3f) integers 2147483647 and real 3.40282347E+38
-      and double 1.7976931348623157E+308
-      real            : 3.40282347E+38 0.00000000
-      12345.6787 1.17549435E-38
-      doubleprecision : 1.7976931348623157E+308 0.0000000000000000
-      12345.678900000001 2.2250738585072014E-308
-      complex         : (3.40282347E+38,1.17549435E-38)
-       format=(*(i9:,1x))
-       program will now stop
-<P>
-</PRE>
 </BLOCKQUOTE>
 <A name=6>
 
@@ -194,8 +188,8 @@ John S. Urban
 Public Domain
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I></I></TD> <TD width=33% align=center>msg (3m_strings)</TD> <TD align=right width=33%><I>January 22, 2021</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from aa29ecd6-7a48-45c8-b6ff-aecb5fee18b5 using man macros.</FONT>
-<br><br><center><img src="images/msg.gif"></center>
+<TABLE width=100%><TR> <TD width=33%><I></I></TD> <TD width=33% align=center>ends_with (3m_strings)</TD> <TD align=right width=33%><I>January 22, 2021</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 2dc3c3a7-0737-4a9d-991e-e7633c284790 using man macros.</FONT>
+<br><br><center><img src="images/ends_with.gif"></center>
 </div>
 </div>
 </body>
