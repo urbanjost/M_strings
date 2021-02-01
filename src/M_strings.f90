@@ -68,10 +68,10 @@
 !!       rotate13       apply trivial encryption algorithm ROT13 to a string
 !!
 !!   CASE
-!!       upper  function converts string to uppercase
-!!       lower  function converts string to miniscule
-!!       upper  function converts string to uppercase skipping strings
-!!              quoted per Fortran rules
+!!       upper          function converts string to uppercase
+!!       lower          function converts string to miniscule
+!!       upper_quoted   function converts string to uppercase skipping strings
+!!                      quoted per Fortran rules
 !!
 !!   WHITE SPACE
 !!       adjustc  elemental function centers text within the length of the
@@ -883,13 +883,13 @@ end function ends_with_any
 !===================================================================================================================================
 !>
 !!##NAME
-!!    sep(3f) - [M_strings:TOKENS] parse string into an array using
+!!    sep(3f) - [M_strings:TOKENS] function to parse string into an array using
 !!    specified delimiters
 !!    (LICENSE:PD)
 !!
 !!##SYNOPSIS
 !!
-!!    function sep(input_line,array,delimiters,nulls)
+!!    function sep(input_line,delimiters,nulls)
 !!
 !!     character(len=*),intent(in)              :: input_line
 !!     character(len=*),optional,intent(in)     :: delimiters
@@ -8448,8 +8448,7 @@ end function tobase
 !===================================================================================================================================
 !>
 !!##NAME
-!!    fmt(3f) - [M_strings:TOKENS] Tokenize a string, consuming it one
-!!    token per call
+!!    fmt(3f) - [M_strings:TOKENS] break a long line into a paragraph
 !!    (LICENSE:PD)
 !!
 !!##SYNOPSIS
