@@ -30,7 +30,7 @@
 !!      use M_strings, only : string_to_value,string_to_values,s2v,s2vs
 !!      use M_strings, only : value_to_string,v2s,msg
 !!      use M_strings, only : listout,getvals
-!!      use M_strings, only : matchw, ends_with
+!!      use M_strings, only : glob, ends_with
 !!      use M_strings, only : fmt
 !!      use M_strings, only : base, decodebase, codebase
 !!      use M_strings, only : isalnum, isalpha, iscntrl, isdigit
@@ -132,8 +132,8 @@
 !!       isnumber          determine if string represents a number
 !!
 !!   CHARACTER TESTS
-!!       matchw  compares given string for match to pattern which may
-!!               contain wildcard characters
+!!       glob        compares given string for match to pattern which may
+!!                   contain wildcard characters
 !!       ends_with   test whether strings ends with one of the specified suffixs
 !!
 !!       o isalnum   returns .true. if character is a letter or digit
@@ -236,7 +236,7 @@
 !!     use M_strings, only : string_to_value, string_to_values, s2v, s2vs
 !!     use M_strings, only : value_to_string, v2s, msg
 !!     use M_strings, only : listout, getvals
-!!     use M_strings, only : matchw, ends_with
+!!     use M_strings, only : glob, ends_with
 !!     use M_strings, only : fmt
 !!     use M_strings, only : base, decodebase, codebase
 !!     use M_strings, only : isalnum, isalpha, iscntrl, isdigit, isgraph
@@ -358,7 +358,8 @@ PUBLIC base            !  convert whole number string in base [2-36] to string i
 PUBLIC codebase        !  convert whole number string in base [2-36] to base 10 number
 PUBLIC decodebase      !  convert whole number in base 10 to string in base [2-36]
 !----------------------# LOGICAL TESTS
-PUBLIC matchw          !  compares given string for match to pattern which may contain wildcard characters
+PUBLIC glob            !  compares given string for match to pattern which may contain wildcard characters
+PUBLIC matchw          !  clone of glob -- for backward compatibiity
 PUBLIC ends_with       !  test whether strings ends with one of the specified suffix
 PUBLIC isalnum         !  elemental function returns .true. if CHR is a letter or digit
 PUBLIC isalpha         !  elemental function returns .true. if CHR is a letter and .false. otherwise
@@ -462,26 +463,29 @@ logical,save               :: debug=.false.
 integer,save               :: last_int=0
 !-----------------------------------------------------------------------------------------------------------------------------------
 !-----------------------------------------------------------------------------------------------------------------------------------
+! for compatibility allow old name for renamed procedures
+interface matchw; module procedure glob ;  end interface
+!-----------------------------------------------------------------------------------------------------------------------------------
 CONTAINS
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
 !>
 !!##NAME
-!!    matchw(3f) - [M_strings:COMPARE] compare given string for match to
-!!    pattern which may contain wildcard characters
+!!    glob(3f) - [M_strings:COMPARE] compare given string for match to
+!!    a pattern which may contain globbing wildcard characters
 !!    (LICENSE:PD)
 !!
 !!##SYNOPSIS
 !!
-!!    logical function matchw(string, pattern )
+!!    logical function glob(string, pattern )
 !!
 !!     character(len=*),intent(in) :: string
 !!     character(len=*),intent(in) :: pattern
 !!
 !!##DESCRIPTION
-!!    matchw(3f) compares given STRING for match to PATTERN which may
-!!    contain wildcard characters.
+!!    glob(3f) compares given STRING for match to PATTERN which may
+!!    contain basic wildcard "globbing" characters.
 !!
 !!    In this version to get a match the entire string must be described
 !!    by PATTERN. Trailing whitespace is significant, so trim the input
@@ -503,7 +507,7 @@ CONTAINS
 !!
 !!   Example program
 !!
-!!    program demo_matchw
+!!    program demo_glob
 !!    implicit none
 !!    ! This main() routine passes a bunch of test strings
 !!    ! into the above code.  In performance comparison mode,
@@ -666,7 +670,7 @@ CONTAINS
 !!    ! matching routines.
 !!    !
 !!    function test(tame, wild, bExpectedResult) result(bpassed)
-!!    use M_strings, only : matchw
+!!    use M_strings, only : glob
 !!       character(len=*) :: tame
 !!       character(len=*) :: wild
 !!       logical          :: bExpectedResult
@@ -675,7 +679,7 @@ CONTAINS
 !!       bResult = .true.    ! We'll do "&=" cumulative checking.
 !!       bPassed = .false.   ! Assume the worst.
 !!       write(*,*)repeat('=',79)
-!!       bResult = matchw(tame, wild) ! Call a wildcard matching routine.
+!!       bResult = glob(tame, wild) ! Call a wildcard matching routine.
 !!
 !!       ! To assist correctness checking, output the two strings in any
 !!       ! failing scenarios.
@@ -687,7 +691,7 @@ CONTAINS
 !!       endif
 !!
 !!    end function test
-!!    end program demo_matchw
+!!    end program demo_glob
 !!
 !!   Expected output
 !!
@@ -700,11 +704,11 @@ CONTAINS
 !!
 !!##LICENSE
 !!   Public Domain
-function matchw(tame,wild)
+function glob(tame,wild)
 
-! ident_6="@(#)M_strings::matchw(3f): function compares text strings, one of which can have wildcards ('*' or '?')."
+! ident_6="@(#)M_strings::glob(3f): function compares text strings, one of which can have wildcards ('*' or '?')."
 
-logical                    :: matchw
+logical                    :: glob
 character(len=*)           :: tame       ! A string without wildcards
 character(len=*)           :: wild       ! A (potentially) corresponding string with wildcards
 character(len=len(tame)+1) :: tametext
@@ -733,7 +737,7 @@ character(len=:),allocatable :: tbookmark, wbookmark
             endif
          enddo
          if(wildtext(wi:wi).eq.NULL) then        ! "x" matches "*"
-            matchw=.true.
+            glob=.true.
             return
          endif
          if(wildtext(wi:wi) .ne. '?') then
@@ -741,7 +745,7 @@ character(len=:),allocatable :: tbookmark, wbookmark
             do while (tametext(ti:ti) .ne. wildtext(wi:wi))
                ti=ti+1
                if (tametext(ti:ti).eq.NULL)then
-                  matchw=.false.
+                  glob=.false.
                   return                         ! "x" doesn't match "*y*"
                endif
             enddo
@@ -770,7 +774,7 @@ character(len=:),allocatable :: tbookmark, wbookmark
                cycle                             ! "mississippi" matches "*sip*"
             endif
          endif
-         matchw=.false.
+         glob=.false.
          return                                  ! "xy" doesn't match "x"
       endif
       ti=ti+1
@@ -783,14 +787,14 @@ character(len=:),allocatable :: tbookmark, wbookmark
             enddo
          endif
          if (wildtext(wi:wi).eq.NULL)then
-            matchw=.true.
+            glob=.true.
             return                               ! "x" matches "x"
          endif
-         matchw=.false.
+         glob=.false.
          return                                  ! "x" doesn't match "xy"
       endif
    enddo
-end function matchw
+end function glob
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================

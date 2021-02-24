@@ -14,7 +14,7 @@
            use M_strings, only : string_to_value, string_to_values, s2v, s2vs
            use M_strings, only : value_to_string, v2s, msg
            use M_strings, only : listout, getvals
-           use M_strings, only : matchw, ends_with
+           use M_strings, only : glob, ends_with
            use M_strings, only : fmt
            use M_strings, only : base, decodebase, codebase
            use M_strings, only : isalnum, isalpha, iscntrl, isdigit, isgraph
