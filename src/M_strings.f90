@@ -2968,13 +2968,15 @@ end function rotate13
 !!
 !!##SYNOPSIS
 !!
-!!    pure function join(str,sep,trm,left,right) result (string)
+!!    pure function join(str,sep,trm,left,right,start,end) result (string)
 !!
 !!     character(len=*),intent(in)          :: str(:)
 !!     character(len=*),intent(in),optional :: sep
 !!     logical,intent(in),optional          :: trm
 !!     character(len=*),intent(in),optional :: right
 !!     character(len=*),intent(in),optional :: left
+!!     character(len=*),intent(in),optional :: start
+!!     character(len=*),intent(in),optional :: end
 !!     character(len=:),allocatable         :: string
 !!
 !!##DESCRIPTION
@@ -2989,6 +2991,8 @@ end function rotate13
 !!              to a null string.
 !!      LEFT    string to place at left of each element
 !!      RIGHT   string to place at right of each element
+!!      START   prefix string
+!!      END     suffix string
 !!      TRM     option to trim each element of STR of trailing
 !!              spaces. Defaults to .TRUE.
 !!
@@ -3023,11 +3027,11 @@ end function rotate13
 !!
 !!   United we stand, divided we fall.
 !!   United     we        stand,    divided   we fall.
-!!   United    | we       | stand,   | divided  | we fall. |
-!!   United    | we       | stand,   | divided  | we fall. |
-!!   United    | we       | stand,   | divided  | we fall. |
-!!   United<> we<> stand,<> divided<> we fall.<>
-!!   [United];[ we];[ stand,];[ divided];[ we fall.];
+!!   United    | we       | stand,   | divided  | we fall.
+!!   United    | we       | stand,   | divided  | we fall.
+!!   United    | we       | stand,   | divided  | we fall.
+!!   United<> we<> stand,<> divided<> we fall.
+!!   [United];[ we];[ stand,];[ divided];[ we fall.]
 !!   [United][ we][ stand,][ divided][ we fall.]
 !!   >>United>> we>> stand,>> divided>> we fall.
 !!
@@ -3036,7 +3040,7 @@ end function rotate13
 !!
 !!##LICENSE
 !!    Public Domain
-pure function join(str,sep,trm,left,right) result (string)
+pure function join(str,sep,trm,left,right,start,end) result (string)
 
 ! ident_19="@(#)M_strings::join(3f): append an array of character variables with specified separator into a single CHARACTER variable"
 
@@ -3044,6 +3048,8 @@ character(len=*),intent(in)          :: str(:)
 character(len=*),intent(in),optional :: sep
 character(len=*),intent(in),optional :: right
 character(len=*),intent(in),optional :: left
+character(len=*),intent(in),optional :: start
+character(len=*),intent(in),optional :: end
 logical,intent(in),optional          :: trm
 character(len=:),allocatable         :: string
 integer                              :: i
@@ -3058,13 +3064,20 @@ character(len=:),allocatable         :: right_local
    if(present(right))then  ;  right_local=right  ;  else  ;  right_local=''    ;  endif
 
    string=''
-   do i = 1,size(str)
+   do i = 1,size(str)-1
       if(trm_local)then
          string=string//left_local//trim(str(i))//right_local//sep_local
       else
          string=string//left_local//str(i)//right_local//sep_local
       endif
    enddo
+   if(trm_local)then
+      string=string//left_local//trim(str(i))//right_local
+   else
+      string=string//left_local//str(i)//right_local
+   endif
+   if(present(start))string=start//string
+   if(present(end))string=string//end
 end function join
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -9603,7 +9616,7 @@ character :: delim1,delim2,ch
 integer :: ipos
 integer :: imatch
 integer :: lenstr
-integer :: idelim1, idelim2
+integer :: idelim2
 integer :: istart, iend
 integer :: inc
 integer :: isum
