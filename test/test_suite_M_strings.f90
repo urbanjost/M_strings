@@ -1,4 +1,4 @@
-module M_testsuite
+module M_testsuite_M_strings
 use M_verify
 use M_strings
 contains
@@ -2525,6 +2525,7 @@ subroutine test_dble()
    call unit_check('dble', dble('3.0d0').eq.3.0d0,msg='test string to double for overloaded DBLE()')
    call unit_check_done('dble',msg='overload of DBLE(3f)')
 end subroutine test_dble
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_setbits()
    !character(len=:),allocatable :: string
    call unit_check_start('setbits',' &
@@ -2548,13 +2549,14 @@ subroutine test_setbits()
    call unit_check_done('setbits',msg='setbits(3f) tests completed')
 end subroutine test_setbits
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-end module M_testsuite
+end module M_testsuite_M_strings
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 program runtest
 use M_msg
 use M_verify
 use M_verify, only : unit_check, unit_check_start, unit_check_good, unit_check_bad, unit_check_done
 use M_verify, only : unit_check_level
-use M_testsuite
+use M_testsuite_M_strings
    unit_check_command=''
    unit_check_keep_going=.true.
    unit_check_level=0

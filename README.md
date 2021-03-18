@@ -87,7 +87,7 @@ This will compile the M_strings(3f) module and optionally build all the
 example programs from the document pages in the example/ sub-directory
 and run the unit tests.
 
-## SUPPORTS FPM 
+## SUPPORTS FPM ![fpm](docs/images/fpm_logo.gif)
 #### (registered at the [fpm(1) registry](https://github.com/fortran-lang/fpm-registry) )
 
 Alternatively, download the github repository and build it with 
