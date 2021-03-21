@@ -1198,8 +1198,8 @@ integer                       :: imax                   ! length of longest toke
    if(present(nulls))then; nlls=lower(adjustl(nulls)); else; nlls='ignore'    ; endif ! optional parameter
 !-----------------------------------------------------------------------------------------------------------------------------------
    n=len(input_line)+1                        ! max number of strings INPUT_LINE could split into if all delimiter
-   if(allocated(ibegin))deallocate(ibegin)    !*! intel compiler says allocated already ???
-   if(allocated(iterm))deallocate(iterm)      !*! intel compiler says allocated already ???
+   if(allocated(ibegin))deallocate(ibegin)    !*! intel compiler says allocated already ?
+   if(allocated(iterm))deallocate(iterm)      !*! intel compiler says allocated already ?
    allocate(ibegin(n))                        ! allocate enough space to hold starting location of tokens if string all tokens
    allocate(iterm(n))                         ! allocate enough space to hold ending location of tokens if string all tokens
    ibegin(:)=1
@@ -3071,10 +3071,14 @@ character(len=:),allocatable         :: right_local
          string=string//left_local//str(i)//right_local//sep_local
       endif
    enddo
-   if(trm_local)then
-      string=string//left_local//trim(str(i))//right_local
+   if(size(str).ge.i)then ! if str is zero-sized i will be 1, not zero
+      string=string//left_local//right_local
    else
-      string=string//left_local//str(i)//right_local
+      if(trm_local)then
+         string=string//left_local//trim(str(i))//right_local
+      else
+         string=string//left_local//str(i)//right_local
+      endif
    endif
    if(present(start))string=start//string
    if(present(end))string=string//end
