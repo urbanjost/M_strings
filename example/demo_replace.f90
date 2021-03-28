@@ -10,7 +10,7 @@
           ! a null old substring means "at beginning of line"
           write(*,*) replace('my line of text','','BEFORE:')
 
-          ! a null old string deletes occurrences of the old substring
+          ! a null new string deletes occurrences of the old substring
           write(*,*) replace('I wonder i ii iii','i','')
 
           ! Examples of the use of RANGE
@@ -29,7 +29,7 @@
            & 'aa','CCCC',occurrence=-1,repeat=1)
           write(*,*)'replace lastaa with CCCC ['//targetline//']'
 
-          write(*,*)replace('myf90stuff.f90.f90','.f90','for',occurrence=-1,repeat=1)
+          write(*,*)replace('myf90stuff.f90.f90','f90','for',occurrence=-1,repeat=1)
           write(*,*)replace('myf90stuff.f90.f90','f90','for',occurrence=-2,repeat=2)
 
           end program demo_replace
