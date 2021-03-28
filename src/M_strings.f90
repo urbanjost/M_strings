@@ -16,7 +16,7 @@
 !!
 !!  public entities:
 !!
-!!      use M_strings, only : split,sep,delim,chomp
+!!      use M_strings, only : split,sep,delim,chomp,strtok
 !!      use M_strings, only : substitute,change,modif,transliterate,reverse
 !!      use M_strings, only : replace,join
 !!      use M_strings, only : upper,lower,upper_quoted
@@ -36,7 +36,9 @@
 !!      use M_strings, only : isalnum, isalpha, iscntrl, isdigit
 !!      use M_strings, only : isgraph, islower, isprint, ispunct
 !!      use M_strings, only : isspace, isupper, isascii, isblank, isxdigit
+!!      use M_strings, only : isnumber
 !!      use M_strings, only : fortran_name
+!!      use M_strings, only : describe
 !!
 !!   TOKENS
 !!       split  subroutine parses string using specified delimiter characters
@@ -47,6 +49,7 @@
 !!       chomp  function consumes input line as it returns next token in a
 !!              string using specified delimiters
 !!       fmt    convert a string into a paragraph
+!!       strtok tokenize a string like C strtok(3c) routine
 !!
 !!   EDITING
 !!       substitute     subroutine non-recursively globally replaces old
@@ -56,8 +59,8 @@
 !!                      (version of substitute(3f) without limitation on
 !!                      length of output string)
 !!       change         subroutine non-recursively globally replaces old
-!!                      substring
-!!                      with new substring with a directive like line editor
+!!                      substring with new substring with a directive like
+!!                      line editor
 !!       modif          subroutine modifies a string with a directive like the
 !!                      XEDIT line editor MODIFY command
 !!       transliterate  replace characters found in set one with characters
@@ -108,7 +111,7 @@
 !!       dilate   function to convert tabs to spaces assuming tabs are set
 !!                every 8 characters
 !!       expand   expand escape sequences in a string
-!!       visible  expand escape sequences in a string to control and
+!!       visible  expand escape sequences in a string to "control" and
 !!                meta-control representations
 !!
 !!   NUMERIC STRINGS
@@ -1629,15 +1632,16 @@ end subroutine delim
 !!
 !!##SYNOPSIS
 !!
-!!    function replace(targetline[,old,new|cmd],range,ierr,clip) result (newline)
+!!    function replace(targetline[,old,new|cmd],range,ignorecase,ierr) result (newline)
 !!
 !!     character(len=*)                       :: targetline
 !!     character(len=*),intent(in),optional   :: old
 !!     character(len=*),intent(in),optional   :: new
 !!     character(len=*),intent(in),optional   :: cmd
-!!     integer,intent(in),optional            :: range(2)
+!!     integer,intent(in),optional            :: occurrence
+!!     integer,intent(in),optional            :: repeat
+!!     logical,intent(in),optional            :: ignorecase
 !!     integer,intent(out),optional           :: ierr
-!!     logical,intent(in),optional            :: clip
 !!     character(len=:),allocatable           :: newline
 !!
 !!##DESCRIPTION
@@ -1651,14 +1655,17 @@ end subroutine delim
 !!     cmd         alternate way to specify old and new string, in
 !!                 the form c/old/new/; where "/" can be any character
 !!                 not in "old" or "new"
-!!     range       if present, only change range(1) to range(2) of
-!!                 occurrences of old string
-!!     ierr        error code. iF ier = -1 bad directive, >= 0 then
-!!                 count of changes made
-!!     clip        whether to return trailing spaces or not. Defaults
+!!     occurrence  if present, start changing at the Nth occurrence of the
+!!                 OLD string. If negative start replacing from the left
+!!                 end of the string.
+!!     repeat      number of replacements to perform. Defaults to a global
+!!                 replacement.
+!!     ignorecase  whether to ignore ASCII case or not. Defaults
 !!                 to .false.
 !!##RETURNS
 !!     newline     allocatable string returned
+!!     ierr        error code. iF ier = -1 bad directive, >= 0 then
+!!                 count of changes made
 !!
 !!##EXAMPLES
 !!
@@ -1669,72 +1676,36 @@ end subroutine delim
 !!    implicit none
 !!    character(len=:),allocatable :: targetline
 !!
-!!    targetline='this is the input string'
-!!
-!!    call testit('th','TH','THis is THe input string')
+!!    write(*,*) replace('Xis is Xe input string','X','th')
+!!    write(*,*) replace('Xis is xe input string','x','th',ignorecase=.true.)
+!!    write(*,*) replace('Xis is xe input string','X','th',ignorecase=.false.)
 !!
 !!    ! a null old substring means "at beginning of line"
-!!    call testit('','BEFORE:', 'BEFORE:THis is THe input string')
+!!    write(*,*) replace('my line of text','','BEFORE:')
 !!
-!!    ! a null new string deletes occurrences of the old substring
-!!    call testit('i','', 'BEFORE:THs s THe nput strng')
+!!    ! a null old string deletes occurrences of the old substring
+!!    write(*,*) replace('I wonder i ii iii','i','')
 !!
-!!    write(*,*)'Examples of the use of RANGE='
+!!    ! Examples of the use of RANGE
 !!
-!!    targetline=replace('a b ab baaa aaaa','a','A')
-!!    write(*,*)'replace a with A ['//targetline//']'
+!!    targetline=replace('aaaaaaaaa','a','A',occurrence=1,repeat=1)
+!!    write(*,*)'replace first a with A ['//targetline//']'
 !!
-!!    targetline=replace('a b ab baaa aaaa','a','A',range=[3,5])
-!!    write(*,*)'replace a with A instances 3 to 5 ['//targetline//']'
+!!    targetline=replace('aaaaaaaaa','a','A',occurrence=3,repeat=3)
+!!    write(*,*)'replace a with A for 3rd to 5th occurrence ['//targetline//']'
 !!
-!!    targetline=replace('a b ab baaa aaaa','a','',range=[3,5])
+!!    targetline=replace('ababababa','a','',occurrence=3,repeat=3)
 !!    write(*,*)'replace a with null instances 3 to 5 ['//targetline//']'
 !!
-!!    targetline=&
-!!    &replace('a b ab baaa aaaa aa aa a a a aa aaaaaa',&
-!!    & 'aa','CCCC',range=[3,5])
-!!    write(*,*)'replace aa with CCCC instances 3 to 5 ['//targetline//']'
+!!    targetline=replace( &
+!!     & 'a b ab baaa aaaa aa aa a a a aa aaaaaa',&
+!!     & 'aa','CCCC',occurrence=-1,repeat=1)
+!!    write(*,*)'replace lastaa with CCCC ['//targetline//']'
 !!
-!!    contains
-!!    subroutine testit(old,new,expected)
-!!    character(len=*),intent(in) :: old,new,expected
-!!    write(*,*)repeat('=',65)
-!!    write(*,*)'STARTED ['//targetline//']'
-!!    write(*,*)'OLD['//old//']', ' NEW['//new//']'
-!!    targetline=replace(targetline,old,new)
-!!    write(*,*)'GOT     ['//targetline//']'
-!!    write(*,*)'EXPECTED['//expected//']'
-!!    write(*,*)'TEST    [',targetline.eq.expected,']'
-!!    end subroutine testit
+!!    write(*,*)replace('myf90stuff.f90.f90','.f90','for',occurrence=-1,repeat=1)
+!!    write(*,*)replace('myf90stuff.f90.f90','f90','for',occurrence=-2,repeat=2)
 !!
 !!    end program demo_replace
-!!
-!!   Expected output
-!!
-!!     =================================================================
-!!     STARTED [this is the input string]
-!!     OLD[th] NEW[TH]
-!!     GOT     [THis is THe input string]
-!!     EXPECTED[THis is THe input string]
-!!     TEST    [ T ]
-!!     =================================================================
-!!     STARTED [THis is THe input string]
-!!     OLD[] NEW[BEFORE:]
-!!     GOT     [BEFORE:THis is THe input string]
-!!     EXPECTED[BEFORE:THis is THe input string]
-!!     TEST    [ T ]
-!!     =================================================================
-!!     STARTED [BEFORE:THis is THe input string]
-!!     OLD[i] NEW[]
-!!     GOT     [BEFORE:THs s THe nput strng]
-!!     EXPECTED[BEFORE:THs s THe nput strng]
-!!     TEST    [ T ]
-!!     Examples of the use of RANGE=
-!!     replace a with A [A b Ab bAAA AAAA]
-!!     replace a with A instances 3 to 5 [a b ab bAAA aaaa]
-!!     replace a with null instances 3 to 5 [a b ab b aaaa]
-!!     replace aa with CCCC instances 3 to 5 [a b ab baaa aaCCCC
-!!     CCCC CCCC a a a aa aaaaaa]
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -1786,7 +1757,7 @@ end subroutine crack_cmd
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
-function replace(targetline,old,new,ierr,cmd,range) result (newline)
+function replace(targetline,old,new,cmd,occurrence,repeat,ignorecase,ierr) result (newline)
 
 ! ident_11="@(#)M_strings::replace(3f): Globally replace one substring for another in string"
 
@@ -1795,15 +1766,17 @@ function replace(targetline,old,new,ierr,cmd,range) result (newline)
 character(len=*),intent(in)            :: targetline   ! input line to be changed
 character(len=*),intent(in),optional   :: old          ! old substring to replace
 character(len=*),intent(in),optional   :: new          ! new substring
-integer,intent(out),optional           :: ierr         ! error code. if ierr = -1 bad directive, >=0 then ierr changes made
 character(len=*),intent(in),optional   :: cmd          ! contains the instructions changing the string
-integer,intent(in),optional            :: range(2)     ! start and end of which changes to make
+integer,intent(in),optional            :: occurrence   ! Nth occurrence of OLD string to start replacement at
+integer,intent(in),optional            :: repeat       ! how many replacements
+logical,intent(in),optional            :: ignorecase
+integer,intent(out),optional           :: ierr         ! error code. if ierr = -1 bad directive, >=0 then ierr changes made
 !-----------------------------------------------------------------------------------------------------------------------------------
 ! returns
 character(len=:),allocatable  :: newline               ! output string buffer
 !-----------------------------------------------------------------------------------------------------------------------------------
 ! local
-character(len=:),allocatable  :: new_local, old_local
+character(len=:),allocatable  :: new_local, old_local, old_local_for_comparison
 integer                       :: icount,ichange,ier2
 integer                       :: original_input_length
 integer                       :: len_old, len_new
@@ -1813,7 +1786,15 @@ integer                       :: ind
 integer                       :: ic
 integer                       :: ichar
 integer                       :: range_local(2)
+character(len=:),allocatable  :: targetline_for_comparison   ! input line to be changed
+logical                       :: ignorecase_local
+logical                       :: flip
+character(len=:),allocatable  :: targetline_local   ! input line to be changed
 !-----------------------------------------------------------------------------------------------------------------------------------
+   flip=.false.
+   ignorecase_local=.false.
+   original_input_length=len_trim(targetline)          ! get non-blank length of input line
+
 !  get old_local and new_local from cmd or old and new
    if(present(cmd))then
       call crack_cmd(cmd,old_local,new_local,ier2)
@@ -1830,45 +1811,76 @@ integer                       :: range_local(2)
       call journal('sc','*replace* must specify OLD and NEW or CMD')
       return
    endif
+   if(present(ignorecase))then
+      ignorecase_local=ignorecase
+   else
+      ignorecase_local=.false.
+   endif
+   if(present(occurrence))then
+      range_local(1)=abs(occurrence)
+   else
+      range_local(1)=1
+   endif
+   if(present(repeat))then
+      range_local(2)=range_local(1)+repeat-1
+   else
+      range_local(2)=original_input_length
+   endif
+   if(ignorecase_local)then
+      targetline_for_comparison=lower(targetline)
+      old_local_for_comparison=lower(old_local)
+   else
+      targetline_for_comparison=targetline
+      old_local_for_comparison=old_local
+   endif
+   if(present(occurrence))then
+      if(occurrence.lt.0)then
+         flip=.true.
+         targetline_for_comparison=reverse(targetline_for_comparison)
+         targetline_local=reverse(targetline)
+         old_local_for_comparison=reverse(old_local_for_comparison)
+         old_local=reverse(old_local)
+         new_local=reverse(new_local)
+      else
+         targetline_local=targetline
+      endif
+   else
+      targetline_local=targetline
+   endif
 !-----------------------------------------------------------------------------------------------------------------------------------
    icount=0                                            ! initialize error flag/change count
    ichange=0                                           ! initialize error flag/change count
-   original_input_length=len_trim(targetline)          ! get non-blank length of input line
    len_old=len(old_local)                              ! length of old substring to be replaced
    len_new=len(new_local)                              ! length of new substring to replace old substring
    left_margin=1                                       ! left_margin is left margin of window to change
    right_margin=len(targetline)                        ! right_margin is right margin of window to change
    newline=''                                          ! begin with a blank line as output string
 !-----------------------------------------------------------------------------------------------------------------------------------
-   if(present(range))then
-      range_local=range
-   else
-      range_local=[1,original_input_length]
-   endif
-!-----------------------------------------------------------------------------------------------------------------------------------
    if(len_old.eq.0)then                                ! c//new/ means insert new at beginning of line (or left margin)
       ichar=len_new + original_input_length
       if(len_new.gt.0)then
-         newline=new_local(:len_new)//targetline(left_margin:original_input_length)
+         newline=new_local(:len_new)//targetline_local(left_margin:original_input_length)
       else
-         newline=targetline(left_margin:original_input_length)
+         newline=targetline_local(left_margin:original_input_length)
       endif
       ichange=1                                        ! made one change. actually, c/// should maybe return 0
       if(present(ierr))ierr=ichange
+      if(flip) newline=reverse(newline)
       return
    endif
 !-----------------------------------------------------------------------------------------------------------------------------------
    ichar=left_margin                                   ! place to put characters into output string
    ic=left_margin                                      ! place looking at in input string
    loop: do
-      ind=index(targetline(ic:),old_local(:len_old))+ic-1 ! try finding start of OLD in remaining part of input in change window
-      if(ind.eq.ic-1.or.ind.gt.right_margin)then          ! did not find old string or found old string past edit window
-         exit loop                                        ! no more changes left to make
+                                                       ! try finding start of OLD in remaining part of input in change window
+      ind=index(targetline_for_comparison(ic:),old_local_for_comparison(:len_old))+ic-1
+      if(ind.eq.ic-1.or.ind.gt.right_margin)then       ! did not find old string or found old string past edit window
+         exit loop                                     ! no more changes left to make
       endif
       icount=icount+1                                  ! found an old string to change, so increment count of change candidates
       if(ind.gt.ic)then                                ! if found old string past at current position in input string copy unchanged
          ladd=ind-ic                                   ! find length of character range to copy as-is from input to output
-         newline=newline(:ichar-1)//targetline(ic:ind-1)
+         newline=newline(:ichar-1)//targetline_local(ic:ind-1)
          ichar=ichar+ladd
       endif
       if(icount.ge.range_local(1).and.icount.le.range_local(2))then    ! check if this is an instance to change or keep
@@ -1888,13 +1900,14 @@ integer                       :: range_local(2)
 !-----------------------------------------------------------------------------------------------------------------------------------
    select case (ichange)
    case (0)                                            ! there were no changes made to the window
-      newline=targetline                               ! if no changes made output should be input
+      newline=targetline_local                         ! if no changes made output should be input
    case default
       if(ic.le.len(targetline))then                    ! if there is more after last change on original line add it
-         newline=newline(:ichar-1)//targetline(ic:max(ic,original_input_length))
+         newline=newline(:ichar-1)//targetline_local(ic:max(ic,original_input_length))
       endif
    end select
    if(present(ierr))ierr=ichange
+   if(flip) newline=reverse(newline)
 !-----------------------------------------------------------------------------------------------------------------------------------
 end function replace
 !===================================================================================================================================
@@ -2671,8 +2684,7 @@ end function len_white
 !===================================================================================================================================
 !>
 !!##NAME
-!!    crop(3f) - [M_strings:WHITESPACE] trim leading blanks and trailing
-!!    blanks from a string
+!!    crop(3f) - [M_strings:WHITESPACE] trim leading and trailing blanks and control characters from a string
 !!    (LICENSE:PD)
 !!
 !!##SYNOPSIS
@@ -2683,10 +2695,15 @@ end function len_white
 !!     character(len=:),allocatable :: strout
 !!
 !!##DESCRIPTION
-!!    trim leading and trailing blanks from a string
+!!    All control characters throughout the string are replaced with spaces
+!!    and leading and trailing spaces are trimmed from the resulting string.
+!!    Tabs are expanded assuming a stop every eight characters.
+!!
 !!
 !!##OPTIONS
-!!    strin   input string to trim leading and trailing space from
+!!    strin   input string to trim leading and trailing space and control
+!!    characters
+!!            from
 !!
 !!##RETURNS
 !!    strout  cropped version of input string
@@ -2715,11 +2732,11 @@ end function len_white
 !!    Public Domain
 function crop(strin) result (strout)
 
-! ident_16="@(#)M_strings::crop(3f): trim leading and trailings blanks from string"
+! ident_16="@(#)M_strings::crop(3f): replace control characters with whitespace and trim leading and trailings spaces from resulting string"
 
 character(len=*),intent(in)  :: strin
 character(len=:),allocatable :: strout
-   strout=trim(adjustl(strin))
+   strout=trim(adjustl(noesc(dilate(strin))))
 end function crop
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -2980,10 +2997,10 @@ end function rotate13
 !!     character(len=:),allocatable         :: string
 !!
 !!##DESCRIPTION
-!!      JOIN(3f) appends the elements of a CHARACTER array into a single
-!!      CHARACTER variable, with elements 1 to N joined from left to right.
-!!      By default each element is trimmed of trailing spaces and the
-!!      default separator is a null string.
+!!   JOIN(3f) appends the elements of a CHARACTER array into a single
+!!   CHARACTER variable, with elements 1 to N joined from left to right.
+!!   By default each element is trimmed of trailing spaces and the
+!!   default separator is a null string.
 !!
 !!##OPTIONS
 !!      STR(:)  array of CHARACTER variables to be joined
@@ -3042,38 +3059,30 @@ end function rotate13
 !!    Public Domain
 pure function join(str,sep,trm,left,right,start,end) result (string)
 
-! ident_19="@(#)M_strings::join(3f): append an array of character variables with specified separator into a single CHARACTER variable"
+! ident_19="@(#)M_strings::join(3f): merge string array into a single CHARACTER value adding specified separators, caps, prefix and suffix"
 
 character(len=*),intent(in)          :: str(:)
-character(len=*),intent(in),optional :: sep
-character(len=*),intent(in),optional :: right
-character(len=*),intent(in),optional :: left
-character(len=*),intent(in),optional :: start
-character(len=*),intent(in),optional :: end
+character(len=*),intent(in),optional :: sep, right, left, start, end
 logical,intent(in),optional          :: trm
+character(len=:),allocatable         :: sep_local, left_local, right_local
 character(len=:),allocatable         :: string
-integer                              :: i
 logical                              :: trm_local
-character(len=:),allocatable         :: sep_local
-character(len=:),allocatable         :: left_local
-character(len=:),allocatable         :: right_local
-
-   if(present(sep))then    ;  sep_local=sep      ;  else  ;  sep_local=''      ;  endif
-   if(present(trm))then    ;  trm_local=trm      ;  else  ;  trm_local=.true.  ;  endif
-   if(present(left))then   ;  left_local=left    ;  else  ;  left_local=''     ;  endif
-   if(present(right))then  ;  right_local=right  ;  else  ;  right_local=''    ;  endif
-
+integer                              :: i
+   if(present(sep))then   ; sep_local=sep     ; else ; sep_local=''     ; endif
+   if(present(trm))then   ; trm_local=trm     ; else ; trm_local=.true. ; endif
+   if(present(left))then  ; left_local=left   ; else ; left_local=''    ; endif
+   if(present(right))then ; right_local=right ; else ; right_local=''   ; endif
    string=''
-   do i = 1,size(str)-1
-      if(trm_local)then
-         string=string//left_local//trim(str(i))//right_local//sep_local
-      else
-         string=string//left_local//str(i)//right_local//sep_local
-      endif
-   enddo
-   if(size(str).lt.i)then ! if str is zero-sized i will be 1, not zero
+   if(size(str).eq.0)then
       string=string//left_local//right_local
    else
+      do i = 1,size(str)-1
+         if(trm_local)then
+            string=string//left_local//trim(str(i))//right_local//sep_local
+         else
+            string=string//left_local//str(i)//right_local//sep_local
+         endif
+      enddo
       if(trm_local)then
          string=string//left_local//trim(str(i))//right_local
       else
@@ -8705,11 +8714,11 @@ end function setbits64
 !!##SYNOPSIS
 !!
 !!
-!!     function msg(g1,g2g3,g4,g5,g6,g7,g8,g9,nospace)
+!!     function msg(g1,g2g3,g4,g5,g6,g7,g8,g9,sep)
 !!
 !!      class(*),intent(in),optional  :: g1,g2,g3,g4,g5,g6,g7,g8,g9
-!!      logical,intent(in),optional   :: nospace
-!!      character,len=(:),allocatable :: msg
+!!      character(len=*),intent(in),optional :: sep
+!!      character(len=:),allocatable :: msg
 !!
 !!##DESCRIPTION
 !!     msg(3f) builds a space-separated string from up to nine scalar values.
@@ -8718,7 +8727,7 @@ end function setbits64
 !!     g[1-9]  optional value to print the value of after the message. May
 !!             be of type INTEGER, LOGICAL, REAL, DOUBLEPRECISION, COMPLEX,
 !!             or CHARACTER.
-!!     nospace  if nospace=.true., then no spaces are added between values
+!!     sep     separator between values. Defaults to a space
 !!
 !!##RETURNS
 !!     msg     description to print
@@ -8750,7 +8759,7 @@ end function setbits64
 !!
 !!        ! create a format on the fly
 !!        biggest=huge(0)
-!!        frmt=msg('(*(i',int(log10(real(biggest))),':,1x))',nospace=.true.)
+!!        frmt=msg('(*(i',int(log10(real(biggest))),':,1x))',sep='')
 !!        write(*,*)'format=',frmt
 !!
 !!        ! although it will often work, using msg(3f) in an I/O statement
@@ -8777,25 +8786,24 @@ end function setbits64
 !!##LICENSE
 !!    Public Domain
 !===================================================================================================================================
-function msg_scalar(generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9,nospace)
+function msg_scalar(generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9,sep)
 implicit none
 
 ! ident_78="@(#)M_strings::msg_scalar(3fp): writes a message to a string composed of any standard scalar types"
 
 class(*),intent(in),optional  :: generic1 ,generic2 ,generic3 ,generic4 ,generic5
 class(*),intent(in),optional  :: generic6 ,generic7 ,generic8 ,generic9
-logical,intent(in),optional   :: nospace
+character(len=*),intent(in),optional :: sep
+character(len=:),allocatable  :: sep_local
 character(len=:), allocatable :: msg_scalar
 character(len=4096)           :: line
 integer                       :: istart
 integer                       :: increment
-   if(present(nospace))then
-      if(nospace)then
-         increment=1
-      else
-         increment=2
-      endif
+   if(present(sep))then
+      sep_local=sep
+      increment=len(sep)+1
    else
+      sep_local=' '
       increment=2
    endif
 
@@ -8830,13 +8838,14 @@ class(*),intent(in) :: generic
       type is (complex);                write(line(istart:),'("(",1pg0,",",1pg0,")")') generic
    end select
    istart=len_trim(line)+increment
+   line=trim(line)//sep_local
 end subroutine print_generic
 !===================================================================================================================================
 end function msg_scalar
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
-function msg_one(generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9,nospace)
+function msg_one(generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9,sep)
 implicit none
 
 ! ident_79="@(#)M_strings::msg_one(3fp): writes a message to a string composed of any standard one dimensional types"
@@ -8844,18 +8853,17 @@ implicit none
 class(*),intent(in)           :: generic1(:)
 class(*),intent(in),optional  :: generic2(:), generic3(:), generic4(:), generic5(:)
 class(*),intent(in),optional  :: generic6(:), generic7(:), generic8(:), generic9(:)
-logical,intent(in),optional   :: nospace
+character(len=*),intent(in),optional :: sep
+character(len=:),allocatable   :: sep_local
 character(len=:), allocatable :: msg_one
 character(len=4096)           :: line
 integer                       :: istart
 integer                       :: increment
-   if(present(nospace))then
-      if(nospace)then
-         increment=1
-      else
-         increment=2
-      endif
+   if(present(sep))then
+      sep_local=sep
+      increment=len(sep)+1
    else
+      sep_local=' '
       increment=2
    endif
 
@@ -8890,8 +8898,8 @@ integer :: i
       type is (character(len=*));       write(line(istart:),'("[",:*("""",a,"""",1x))') (trim(generic(i)),i=1,size(generic))
       type is (complex);                write(line(istart:),'("[",*("(",1pg0,",",1pg0,")",1x))') generic
    end select
-   line=trim(line)//"]"
    istart=len_trim(line)+increment
+   line=trim(line)//"]"//sep_local
 end subroutine print_generic
 !===================================================================================================================================
 end function msg_one
@@ -9399,24 +9407,23 @@ end subroutine write_message_only
 !===================================================================================================================================
 function str_scalar(generic0, generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9, &
                   & generica, genericb, genericc, genericd, generice, genericf, genericg, generich, generici, genericj, &
-                  & nospace)
+                  & sep)
 implicit none
 class(*),intent(in),optional  :: generic0, generic1, generic2, generic3, generic4
 class(*),intent(in),optional  :: generic5, generic6, generic7, generic8, generic9
 class(*),intent(in),optional  :: generica, genericb, genericc, genericd, generice
 class(*),intent(in),optional  :: genericf, genericg, generich, generici, genericj
-logical,intent(in),optional   :: nospace
+character(len=*),intent(in),optional :: sep
 character(len=:), allocatable :: str_scalar
 character(len=4096)           :: line
 integer                       :: istart
 integer                       :: increment
-   if(present(nospace))then
-      if(nospace)then
-         increment=1
-      else
-         increment=2
-      endif
+character(len=:),allocatable  :: sep_local
+   if(present(sep))then
+      sep_local=sep
+      increment=len(sep)+1
    else
+      sep_local=' '
       increment=2
    endif
 
@@ -9462,27 +9469,27 @@ class(*),intent(in) :: generic
       type is (complex);                write(line(istart:),'("(",1pg0,",",1pg0,")")') generic
    end select
    istart=len_trim(line)+increment
+   line=trim(line)//sep_local
 end subroutine print_generic
 
 end function str_scalar
 !===================================================================================================================================
-function str_one(generic0,generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9,nospace)
+function str_one(generic0,generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9,sep)
 implicit none
 class(*),intent(in)           :: generic0(:)
 class(*),intent(in),optional  :: generic1(:), generic2(:), generic3(:), generic4(:), generic5(:)
 class(*),intent(in),optional  :: generic6(:), generic7(:), generic8(:), generic9(:)
-logical,intent(in),optional   :: nospace
+character(len=*),intent(in),optional :: sep
+character(len=:),allocatable  :: sep_local
 character(len=:), allocatable :: str_one
 character(len=4096)           :: line
 integer                       :: istart
 integer                       :: increment
-   if(present(nospace))then
-      if(nospace)then
-         increment=1
-      else
-         increment=2
-      endif
+   if(present(sep))then
+      sep_local=sep
+      increment=len(sep)+1
    else
+      sep_local=' '
       increment=2
    endif
 
@@ -9521,7 +9528,7 @@ integer :: i
       class default
          stop 'unknown type in *print_generic*'
    end select
-   line=trim(line)//"]"
+   line=trim(line)//"]"//sep_local
    istart=len_trim(line)+increment
 end subroutine print_generic
 
