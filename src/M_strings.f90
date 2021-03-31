@@ -1632,22 +1632,22 @@ end subroutine delim
 !!
 !!##SYNOPSIS
 !!
-!!    function replace(targetline[,old,new|cmd],&
+!! syntax:
 !!
-!!     & occurrence, &
-!!     & repeat, &
-!!     & ignorecase, &
-!!     & ierr) result (newline)
-!!
-!!     character(len=*)                       :: targetline
-!!     character(len=*),intent(in),optional   :: old
-!!     character(len=*),intent(in),optional   :: new
-!!     character(len=*),intent(in),optional   :: cmd
-!!     integer,intent(in),optional            :: occurrence
-!!     integer,intent(in),optional            :: repeat
-!!     logical,intent(in),optional            :: ignorecase
-!!     integer,intent(out),optional           :: ierr
-!!     character(len=:),allocatable           :: newline
+!!      function replace(targetline,old,new,cmd,&
+!!       & occurrence, &
+!!       & repeat, &
+!!       & ignorecase, &
+!!       & ierr) result (newline)
+!!      character(len=*)                       :: targetline
+!!      character(len=*),intent(in),optional   :: old
+!!      character(len=*),intent(in),optional   :: new
+!!      character(len=*),intent(in),optional   :: cmd
+!!      integer,intent(in),optional            :: occurrence
+!!      integer,intent(in),optional            :: repeat
+!!      logical,intent(in),optional            :: ignorecase
+!!      integer,intent(out),optional           :: ierr
+!!      character(len=:),allocatable           :: newline
 !!
 !!##DESCRIPTION
 !!    Replace one substring for another in string.
@@ -1679,11 +1679,11 @@ end subroutine delim
 !!    program demo_replace
 !!    use M_strings, only : replace
 !!    implicit none
-!!    character(len=:),allocatable :: targetline
+!!    character(len=:),allocatable :: line
 !!
-!!    write(*,*) replace('Xis is Xe input string','X','th')
-!!    write(*,*) replace('Xis is xe input string','x','th',ignorecase=.true.)
-!!    write(*,*) replace('Xis is xe input string','X','th',ignorecase=.false.)
+!!    write(*,*)replace('Xis is Xe string','X','th')
+!!    write(*,*)replace('Xis is xe string','x','th',ignorecase=.true.)
+!!    write(*,*)replace('Xis is xe string','X','th',ignorecase=.false.)
 !!
 !!    ! a null old substring means "at beginning of line"
 !!    write(*,*) replace('my line of text','','BEFORE:')
@@ -1693,19 +1693,19 @@ end subroutine delim
 !!
 !!    ! Examples of the use of RANGE
 !!
-!!    targetline=replace('aaaaaaaaa','a','A',occurrence=1,repeat=1)
-!!    write(*,*)'replace first a with A ['//targetline//']'
+!!    line=replace('aaaaaaaaa','a','A',occurrence=1,repeat=1)
+!!    write(*,*)'replace first a with A ['//line//']'
 !!
-!!    targetline=replace('aaaaaaaaa','a','A',occurrence=3,repeat=3)
-!!    write(*,*)'replace a with A for 3rd to 5th occurrence ['//targetline//']'
+!!    line=replace('aaaaaaaaa','a','A',occurrence=3,repeat=3)
+!!    write(*,*)'replace a with A for 3rd to 5th occurrence ['//line//']'
 !!
-!!    targetline=replace('ababababa','a','',occurrence=3,repeat=3)
-!!    write(*,*)'replace a with null instances 3 to 5 ['//targetline//']'
+!!    line=replace('ababababa','a','',occurrence=3,repeat=3)
+!!    write(*,*)'replace a with null instances 3 to 5 ['//line//']'
 !!
-!!    targetline=replace( &
+!!    line=replace( &
 !!     & 'a b ab baaa aaaa aa aa a a a aa aaaaaa',&
 !!     & 'aa','CCCC',occurrence=-1,repeat=1)
-!!    write(*,*)'replace lastaa with CCCC ['//targetline//']'
+!!    write(*,*)'replace lastaa with CCCC ['//line//']'
 !!
 !!    write(*,*)replace('myf90stuff.f90.f90','f90','for',occurrence=-1,repeat=1)
 !!    write(*,*)replace('myf90stuff.f90.f90','f90','for',occurrence=-2,repeat=2)
@@ -1714,9 +1714,9 @@ end subroutine delim
 !!
 !!   Results:
 !!
-!!     this is the input string
-!!     this is the input string
-!!     this is xe input string
+!!     this is the string
+!!     this is the string
+!!     this is xe string
 !!     BEFORE:my line of text
 !!     I wonder
 !!     replace first a with A [Aaaaaaaaa]
@@ -9102,8 +9102,8 @@ end function msg_one
 !!
 !!      > ??? option to skip adjacent delimiters (not return null tokens) common with whitespace
 !!      > ??? quoted strings, especially CSV both " and ', Fortran adjacent is insert versus other rules
-!!      > ??? escape character like \
-!!      > ??? multi-character delimiters like \n, \t,
+!!      > ??? escape character like \\
+!!      > ??? multi-character delimiters like \\n, \\t,
 !!      > ??? regular expression separator
 !!
 !!##AUTHOR
