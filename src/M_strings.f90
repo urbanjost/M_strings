@@ -32,7 +32,7 @@
 !!      use M_strings, only : listout,getvals
 !!      use M_strings, only : glob, ends_with
 !!      use M_strings, only : fmt
-!!      use M_strings, only : base, decodebase, codebase
+!!      use M_strings, only : base, decodebase, codebase, base2
 !!      use M_strings, only : isalnum, isalpha, iscntrl, isdigit
 !!      use M_strings, only : isgraph, islower, isprint, ispunct
 !!      use M_strings, only : isspace, isupper, isascii, isblank, isxdigit
@@ -168,6 +168,7 @@
 !!   BASE CONVERSION
 !!       base       convert whole number string in base [2-36] to string
 !!                  in alternate base [2-36]
+!!       base2      convert INTEGER to a string representing a binary value
 !!       codebase   convert whole number string in base [2-36] to base
 !!                  10 number
 !!       decodebase convert whole number in base 10 to string in base [2-36]
@@ -241,7 +242,7 @@
 !!     use M_strings, only : listout, getvals
 !!     use M_strings, only : glob, ends_with
 !!     use M_strings, only : fmt
-!!     use M_strings, only : base, decodebase, codebase
+!!     use M_strings, only : base, decodebase, codebase, base2
 !!     use M_strings, only : isalnum, isalpha, iscntrl, isdigit, isgraph
 !!     use M_strings, only : islower, isprint, ispunct, isspace, isupper
 !!     use M_strings, only : isascii, isblank, isxdigit
@@ -360,6 +361,7 @@ PUBLIC setbits64       !  use a string representing a positive binary value to f
 PUBLIC base            !  convert whole number string in base [2-36] to string in alternate base [2-36]
 PUBLIC codebase        !  convert whole number string in base [2-36] to base 10 number
 PUBLIC decodebase      !  convert whole number in base 10 to string in base [2-36]
+PUBLIC base2           !  convert INTEGER to a string representing a binary value
 !----------------------# LOGICAL TESTS
 PUBLIC glob            !  compares given string for match to pattern which may contain wildcard characters
 PUBLIC matchw          !  clone of glob -- for backward compatibiity
@@ -8185,6 +8187,124 @@ else
 endif
 
 end function base
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
+!!    base2(3f) - [M_strings:BASE] convert whole number to string in base 2
+!!    (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!   logical function base2(int)
+!!
+!!    integer,intent(in)           :: int
+!!    character(len=:),allocatable :: base2
+!!##DESCRIPTION
+!!
+!!    Convert a whole number to a string in base 2.
+!!
+!!    The letters A,B,...,Z represent 10,11,...,36 in the base > 10.
+!!
+!!##OPTIONS
+!!    int   input string representing numeric whole value
+!!##RETURNS
+!!    base2   string representing input value in base 2
+!!##EXAMPLE
+!!
+!!   Sample program:
+!!
+!!    program demo_base2
+!!    use M_strings, only : base2
+!!    implicit none
+!!    integer                      :: i
+!!    character(len=:),allocatable :: string
+!!       write(*,'(a)') base2(huge(0))
+!!       write(*,'(a)') base2(0)
+!!       write(*,'(a)') base2(1-huge(0))
+!!    end program demo_base2
+!!
+!!##AUTHOR
+!!    John S. Urban
+!!##LICENSE
+!!    Public Domain
+! 0 in binary: 0
+! 42 in binary: 101010
+! huge(int) in binary: 1111111111111111111111111111111
+! 032 in binary is 100000
+! itimes=10000000
+!      G_TRICK=base2_f(32)   <BASE2_F  >Processor Time =  0.766 seconds.
+!      G_TRICK=base2_fdo(32) <BASE2_FDO>Processor Time =  0.958 seconds.
+!      G_TRICK=base2_a(32)   <BASE2_A  >Processor Time =  1.022 seconds.
+!      G_TRICK=base2_c(32)   <BASE2_C  >Processor Time =  7.208 seconds.
+!      G_TRICK=empty(32)     <EMPTY    >Processor Time =  0.132 seconds.
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+function base2(x) result(str)
+!  return string representing number as a binary number.  Fixed-length string:
+integer, intent(in) :: x
+integer           :: i
+character(len=max(1,bit_size(x)-leadz(x))) :: str
+    associate(n => len(str))
+      str = repeat('0',n)
+      do i = 0,n-1
+        if (btest(x,i)) str(n-i:n-i) = '1'
+      end do
+    end associate
+end function base2
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+function base2_fdo(x) result(str)
+!  return string representing number as a binary number.  Fixed-length string: do concurrent
+integer, intent(in) :: x
+character(len=max(1,bit_size(x)-leadz(x))) :: str
+
+integer :: n, i
+
+    if (x == 0) then
+      str(1:1) = '0'
+      return
+    endif
+    n = len(str)
+    str = repeat('0',n)
+    do concurrent (i = 0:n-1, btest(x,i))
+      str(n-i:n-i) = '1'
+    end do
+end function base2_fdo
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+function base2_a(x) result(str)
+!  return string representing number as a binary number. Allocatable-length string:
+integer, intent(in) :: x
+character(len=:), allocatable :: str
+
+integer :: n, i
+
+    n = max(1,bit_size(x)-leadz(x))
+    allocate(character(len=n) :: str)
+    if (x == 0) then
+      str(1:1) = '0'
+      return
+    endif
+
+    str = repeat('0',n)
+    do concurrent (i = 0:n-1, btest(x,i))
+      str(n-i:n-i) = '1'
+    end do
+end function base2_a
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+function base2_c(x) result(str)
+! internal write
+integer, intent(in) :: x
+character(len=max(1,bit_size(x)-leadz(x))) :: str
+    write( str, fmt="(b0)" ) x
+end function base2_c
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
