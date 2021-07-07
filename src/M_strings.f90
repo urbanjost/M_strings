@@ -3852,7 +3852,8 @@ function visible(input) result(output)
 character(len=*),intent(in)  :: input
 character(len=:),allocatable :: output
 
-character(len=*),parameter::ident_29="@(#)M_strings::visible(3f)"
+character(len=*),parameter::ident_29="&
+&@(#)M_strings::visible(3f): expand escape sequences in a string to control and meta-control representations"
 
 integer                      :: i
 character(len=1)             :: c
@@ -4199,7 +4200,6 @@ END SUBROUTINE notabs
 !!    use M_strings, only : dilate
 !!    implicit none
 !!    character(len=:),allocatable :: in
-!!    character(len=:),allocatable :: out
 !!    integer                      :: i
 !!       in='  this is my string  '
 !!       ! change spaces to tabs to make a sample input
@@ -8233,8 +8233,6 @@ end function base
 !!    program demo_base2
 !!    use M_strings, only : base2
 !!    implicit none
-!!    integer                      :: i
-!!    character(len=:),allocatable :: string
 !!       write(*,'(a)') base2(huge(0))
 !!       write(*,'(a)') base2(0)
 !!       write(*,'(a)') base2(1-huge(0))
@@ -9535,14 +9533,14 @@ end subroutine set_stdout_lun
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
-subroutine where_write_message_all(where, g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, nospace)
+subroutine where_write_message_all(where, g0,g1,g2,g3,g4,g5,g6,g7,g8,g9,nospace)
 implicit none
 
 !$(#) M_journal::where_write_message_all(3f): writes a message to a string composed of any standard scalar types
 
 character(len=*),intent(in)   :: where
 class(*),intent(in)           :: g0
-class(*),intent(in),optional  :: g1, g2, g3, g4, g5, g6, g7, g8 ,g9
+class(*),intent(in),optional  :: g1,g2,g3,g4,g5,g6,g7,g8,g9
 logical,intent(in),optional   :: nospace
 !!call where_write_message(where,str(g0, g1, g2, g3, g4, g5, g6, g7, g8, g9,nospace))
 end subroutine where_write_message_all
