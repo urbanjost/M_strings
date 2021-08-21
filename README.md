@@ -127,7 +127,9 @@ in addition in the docs/ directory there is
 
  - A single page that uses javascript to combine all the HTML descriptions
    of the manpages is at
-   [BOOK_FORTRAN](https://urbanjost.github.io/M_strings/BOOK_M_strings.html).
+   [BOOK_strings](https://urbanjost.github.io/M_strings/BOOK_M_strings.html).
+
+## [CHANGELOG](CHANGELOG.md)
 
 ## RESPONSES
 
