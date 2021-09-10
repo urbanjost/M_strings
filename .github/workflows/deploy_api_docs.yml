@@ -1,4 +1,5 @@
-name: Build FORD docs & deploy to gh-pages
+#name: Build FORD docs & deploy to gh-pages
+name: Build FORD(1) docs
 on:
   push:
     branches:
@@ -28,5 +29,8 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #          BRANCH: gh-pages
+          BRANCH: master
+#         ford(1) deletes the output directory before running
+#         so be careful to specify a unique subdirectory in
+#         your ford(1) configuration files
           FOLDER: docs/fpm-ford
-#          FOLDER: docs/page
