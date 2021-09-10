@@ -15,7 +15,7 @@ jobs:
         - os: macos-latest
           gcc_v: 9
         - os: windows-latest
-          gcc_v: 9
+          gcc_v: 8
 
     env:
       FC: gfortran
@@ -50,5 +50,5 @@ jobs:
         gfortran --version
         fpm test
 
-    - name: Run demo programs (fpm run)
-      run: fpm run
+#    - name: Run demo programs (fpm run)
+#      run: fpm run
