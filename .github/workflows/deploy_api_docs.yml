@@ -28,8 +28,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          BRANCH: gh-pages
-          BRANCH: master
+          BRANCH: gh-pages
 #         ford(1) deletes the output directory before running
 #         so be careful to specify a unique subdirectory in
 #         your ford(1) configuration files
