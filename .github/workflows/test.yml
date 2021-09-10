@@ -15,7 +15,7 @@ jobs:
         - os: macos-latest
           gcc_v: 9
         - os: windows-latest
-          gcc_v: 8
+          gcc_v: 9
 
     env:
       FC: gfortran
