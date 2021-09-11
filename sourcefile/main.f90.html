@@ -72,11 +72,8 @@
         
         
             <li><a href="../lists/programs.html">Programs</a></li>
-               
-        
         
             </ul>
-        
             </li>
 
 
@@ -95,8 +92,6 @@
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
-
-
 
           </ul>
         
@@ -126,7 +121,6 @@
   <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
-     
      
      
      
@@ -271,41 +265,41 @@
 
     <section>
       <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl"><pre><span></span><a id="ln-1" name="ln-1"></a>   <span class="k">program </span><span class="n">demo_replace</span>
-<a id="ln-2" name="ln-2"></a>   <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">replace</span>
-<a id="ln-3" name="ln-3"></a>   <span class="k">implicit none</span>
-<a id="ln-4" name="ln-4"></a><span class="k">   </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">targetline</span>
-<a id="ln-5" name="ln-5"></a>
-<a id="ln-6" name="ln-6"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Xis is Xe input string&#39;</span><span class="p">,</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="s1">&#39;th&#39;</span><span class="p">)</span>
-<a id="ln-7" name="ln-7"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Xis is xe input string&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;th&#39;</span><span class="p">,</span><span class="n">ignorecase</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
-<a id="ln-8" name="ln-8"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Xis is xe input string&#39;</span><span class="p">,</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="s1">&#39;th&#39;</span><span class="p">,</span><span class="n">ignorecase</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span>
-<a id="ln-9" name="ln-9"></a>
-<a id="ln-10" name="ln-10"></a>   <span class="c">! a null old substring means &quot;at beginning of line&quot;</span>
-<a id="ln-11" name="ln-11"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="n">replace</span><span class="p">(</span><span class="s1">&#39;my line of text&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="s1">&#39;BEFORE:&#39;</span><span class="p">)</span>
-<a id="ln-12" name="ln-12"></a>
-<a id="ln-13" name="ln-13"></a>   <span class="c">! a null old string deletes occurrences of the old substring</span>
-<a id="ln-14" name="ln-14"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="n">replace</span><span class="p">(</span><span class="s1">&#39;I wonder i ii iii&#39;</span><span class="p">,</span><span class="s1">&#39;i&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-<a id="ln-15" name="ln-15"></a>
-<a id="ln-16" name="ln-16"></a>   <span class="c">! Examples of the use of RANGE</span>
-<a id="ln-17" name="ln-17"></a>
-<a id="ln-18" name="ln-18"></a>   <span class="n">targetline</span><span class="o">=</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;aaaaaaaaa&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="n">occurrence</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="nb">repeat</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<a id="ln-19" name="ln-19"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;replace first a with A [&#39;</span><span class="o">//</span><span class="n">targetline</span><span class="o">//</span><span class="s1">&#39;]&#39;</span>
-<a id="ln-20" name="ln-20"></a>
-<a id="ln-21" name="ln-21"></a>   <span class="n">targetline</span><span class="o">=</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;aaaaaaaaa&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="n">occurrence</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="nb">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<a id="ln-22" name="ln-22"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;replace a with A for 3rd to 5th occurrence [&#39;</span><span class="o">//</span><span class="n">targetline</span><span class="o">//</span><span class="s1">&#39;]&#39;</span>
-<a id="ln-23" name="ln-23"></a>
-<a id="ln-24" name="ln-24"></a>   <span class="n">targetline</span><span class="o">=</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;ababababa&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">occurrence</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="nb">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<a id="ln-25" name="ln-25"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;replace a with null instances 3 to 5 [&#39;</span><span class="o">//</span><span class="n">targetline</span><span class="o">//</span><span class="s1">&#39;]&#39;</span>
-<a id="ln-26" name="ln-26"></a>
-<a id="ln-27" name="ln-27"></a>   <span class="n">targetline</span><span class="o">=</span><span class="n">replace</span><span class="p">(</span> <span class="p">&amp;</span>
-<a id="ln-28" name="ln-28"></a>    <span class="p">&amp;</span> <span class="s1">&#39;a b ab baaa aaaa aa aa a a a aa aaaaaa&#39;</span><span class="p">,&amp;</span>
-<a id="ln-29" name="ln-29"></a>    <span class="p">&amp;</span> <span class="s1">&#39;aa&#39;</span><span class="p">,</span><span class="s1">&#39;CCCC&#39;</span><span class="p">,</span><span class="n">occurrence</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span><span class="nb">repeat</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<a id="ln-30" name="ln-30"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;replace lastaa with CCCC [&#39;</span><span class="o">//</span><span class="n">targetline</span><span class="o">//</span><span class="s1">&#39;]&#39;</span>
-<a id="ln-31" name="ln-31"></a>
-<a id="ln-32" name="ln-32"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;myf90stuff.f90.f90&#39;</span><span class="p">,</span><span class="s1">&#39;.f90&#39;</span><span class="p">,</span><span class="s1">&#39;for&#39;</span><span class="p">,</span><span class="n">occurrence</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span><span class="nb">repeat</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<a id="ln-33" name="ln-33"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;myf90stuff.f90.f90&#39;</span><span class="p">,</span><span class="s1">&#39;f90&#39;</span><span class="p">,</span><span class="s1">&#39;for&#39;</span><span class="p">,</span><span class="n">occurrence</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span><span class="nb">repeat</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<a id="ln-34" name="ln-34"></a>
-<a id="ln-35" name="ln-35"></a>   <span class="k">end program </span><span class="n">demo_replace</span>
+    <div class="hl"><pre><span></span><a name="ln-1"></a>   <span class="k">program </span><span class="n">demo_replace</span>
+<a name="ln-2"></a>   <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">replace</span>
+<a name="ln-3"></a>   <span class="k">implicit none</span>
+<a name="ln-4"></a><span class="k">   </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">targetline</span>
+<a name="ln-5"></a>
+<a name="ln-6"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Xis is Xe input string&#39;</span><span class="p">,</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="s1">&#39;th&#39;</span><span class="p">)</span>
+<a name="ln-7"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Xis is xe input string&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;th&#39;</span><span class="p">,</span><span class="n">ignorecase</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+<a name="ln-8"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Xis is xe input string&#39;</span><span class="p">,</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="s1">&#39;th&#39;</span><span class="p">,</span><span class="n">ignorecase</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span>
+<a name="ln-9"></a>
+<a name="ln-10"></a>   <span class="c">! a null old substring means &quot;at beginning of line&quot;</span>
+<a name="ln-11"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="n">replace</span><span class="p">(</span><span class="s1">&#39;my line of text&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="s1">&#39;BEFORE:&#39;</span><span class="p">)</span>
+<a name="ln-12"></a>
+<a name="ln-13"></a>   <span class="c">! a null old string deletes occurrences of the old substring</span>
+<a name="ln-14"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="n">replace</span><span class="p">(</span><span class="s1">&#39;I wonder i ii iii&#39;</span><span class="p">,</span><span class="s1">&#39;i&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<a name="ln-15"></a>
+<a name="ln-16"></a>   <span class="c">! Examples of the use of RANGE</span>
+<a name="ln-17"></a>
+<a name="ln-18"></a>   <span class="n">targetline</span><span class="o">=</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;aaaaaaaaa&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="n">occurrence</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="nb">repeat</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a name="ln-19"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;replace first a with A [&#39;</span><span class="o">//</span><span class="n">targetline</span><span class="o">//</span><span class="s1">&#39;]&#39;</span>
+<a name="ln-20"></a>
+<a name="ln-21"></a>   <span class="n">targetline</span><span class="o">=</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;aaaaaaaaa&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="n">occurrence</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="nb">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<a name="ln-22"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;replace a with A for 3rd to 5th occurrence [&#39;</span><span class="o">//</span><span class="n">targetline</span><span class="o">//</span><span class="s1">&#39;]&#39;</span>
+<a name="ln-23"></a>
+<a name="ln-24"></a>   <span class="n">targetline</span><span class="o">=</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;ababababa&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">occurrence</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="nb">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<a name="ln-25"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;replace a with null instances 3 to 5 [&#39;</span><span class="o">//</span><span class="n">targetline</span><span class="o">//</span><span class="s1">&#39;]&#39;</span>
+<a name="ln-26"></a>
+<a name="ln-27"></a>   <span class="n">targetline</span><span class="o">=</span><span class="n">replace</span><span class="p">(</span> <span class="p">&amp;</span>
+<a name="ln-28"></a>    <span class="p">&amp;</span> <span class="s1">&#39;a b ab baaa aaaa aa aa a a a aa aaaaaa&#39;</span><span class="p">,&amp;</span>
+<a name="ln-29"></a>    <span class="p">&amp;</span> <span class="s1">&#39;aa&#39;</span><span class="p">,</span><span class="s1">&#39;CCCC&#39;</span><span class="p">,</span><span class="n">occurrence</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span><span class="nb">repeat</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a name="ln-30"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;replace lastaa with CCCC [&#39;</span><span class="o">//</span><span class="n">targetline</span><span class="o">//</span><span class="s1">&#39;]&#39;</span>
+<a name="ln-31"></a>
+<a name="ln-32"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;myf90stuff.f90.f90&#39;</span><span class="p">,</span><span class="s1">&#39;.f90&#39;</span><span class="p">,</span><span class="s1">&#39;for&#39;</span><span class="p">,</span><span class="n">occurrence</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span><span class="nb">repeat</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a name="ln-33"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;myf90stuff.f90.f90&#39;</span><span class="p">,</span><span class="s1">&#39;f90&#39;</span><span class="p">,</span><span class="s1">&#39;for&#39;</span><span class="p">,</span><span class="n">occurrence</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span><span class="nb">repeat</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a name="ln-34"></a>
+<a name="ln-35"></a>   <span class="k">end program </span><span class="n">demo_replace</span>
 </pre></div>
 
     </section>
@@ -318,17 +312,16 @@
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-6"><p>M_strings was developed by John S. Urban<br>&copy; 2021 
-                                          </p>
-        </div>
-        <div class="col-xs-6 col-md-6">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2021-09-11 02:47  
-            
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+             on 2021-09-10 22:57  
           </p>
         </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_strings was developed by John S. Urban</p></div>
       </div>
       <br>
       </div> <!-- /container -->    

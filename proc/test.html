@@ -72,11 +72,8 @@
         
         
             <li><a href="../lists/programs.html">Programs</a></li>
-               
-        
         
             </ul>
-        
             </li>
 
 
@@ -95,8 +92,6 @@
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
-
-
 
           </ul>
         
@@ -130,7 +125,6 @@
      
      
      
-     
     
     
      <li><i class="fa fa-list-ol"></i>
@@ -141,16 +135,16 @@
      
      
      
-    <li><i class="fa fa-code"></i><a href="../src/demo_matchw.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/demo_glob.f90"> Source File</a></li>
      
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
     
-     <li><a href='../sourcefile/demo_matchw.f90.html'>demo_matchw.f90</a></li>
+     <li><a href='../sourcefile/demo_glob.f90.html'>demo_glob.f90</a></li>
     
-     <li><a href='../program/demo_matchw.html'>demo_matchw</a></li>
+     <li><a href='../program/demo_glob.html'>demo_glob</a></li>
     
   
      <li class="active">test</li>
@@ -428,8 +422,8 @@ function test(tame, wild, bExpectedResult) result(bPassed)
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span>          <span class="k">function </span><span class="n">test</span><span class="p">(</span><span class="n">tame</span><span class="p">,</span> <span class="n">wild</span><span class="p">,</span> <span class="n">bExpectedResult</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">bpassed</span><span class="p">)</span>
-          <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">matchw</span>
+    <div class="highlight"><pre><span></span>          <span class="k">function </span><span class="n">test</span><span class="p">(</span><span class="n">tame</span><span class="p">,</span> <span class="n">wild</span><span class="p">,</span> <span class="n">bExpectedResult</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">bPassed</span><span class="p">)</span>
+          <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">glob</span>
              <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span> <span class="kd">::</span> <span class="n">tame</span>
              <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span> <span class="kd">::</span> <span class="n">wild</span>
              <span class="kt">logical</span>          <span class="kd">::</span> <span class="n">bExpectedResult</span>
@@ -438,7 +432,7 @@ function test(tame, wild, bExpectedResult) result(bPassed)
              <span class="n">bResult</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>    <span class="c">! We&#39;ll do &quot;&amp;=&quot; cumulative checking.</span>
              <span class="n">bPassed</span> <span class="o">=</span> <span class="p">.</span><span class="n">false</span><span class="p">.</span>   <span class="c">! Assume the worst.</span>
              <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">79</span><span class="p">)</span>
-             <span class="n">bResult</span> <span class="o">=</span> <span class="n">matchw</span><span class="p">(</span><span class="n">tame</span><span class="p">,</span> <span class="n">wild</span><span class="p">)</span> <span class="c">! Call a wildcard matching routine.</span>
+             <span class="n">bResult</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">tame</span><span class="p">,</span> <span class="n">wild</span><span class="p">)</span> <span class="c">! Call a wildcard matching routine.</span>
 
              <span class="c">! To assist correctness checking, output the two strings in any</span>
              <span class="c">! failing scenarios.</span>
@@ -465,17 +459,16 @@ function test(tame, wild, bExpectedResult) result(bPassed)
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-6"><p>M_strings was developed by John S. Urban<br>&copy; 2021 
-                                          </p>
-        </div>
-        <div class="col-xs-6 col-md-6">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2021-09-11 02:47  
-            
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+             on 2021-09-10 22:57  
           </p>
         </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_strings was developed by John S. Urban</p></div>
       </div>
       <br>
       </div> <!-- /container -->    

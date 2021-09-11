@@ -72,11 +72,8 @@
         
         
             <li><a href="../lists/programs.html">Programs</a></li>
-               
-        
         
             </ul>
-        
             </li>
 
 
@@ -95,8 +92,6 @@
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
-
-
 
           </ul>
         
@@ -126,7 +121,6 @@
   <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
-     
      
      
      
@@ -271,30 +265,30 @@
 
     <section>
       <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl"><pre><span></span><a id="ln-1" name="ln-1"></a>           <span class="k">program </span><span class="n">demo_M_strings</span>
-<a id="ln-2" name="ln-2"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">split</span><span class="p">,</span> <span class="n">delim</span><span class="p">,</span> <span class="n">chomp</span><span class="p">,</span> <span class="n">sep</span>
-<a id="ln-3" name="ln-3"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">substitute</span><span class="p">,</span> <span class="n">change</span><span class="p">,</span> <span class="n">modif</span>
-<a id="ln-4" name="ln-4"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">transliterate</span><span class="p">,</span> <span class="n">reverse</span>
-<a id="ln-5" name="ln-5"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">replace</span><span class="p">,</span> <span class="n">join</span>
-<a id="ln-6" name="ln-6"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">upper</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper_quoted</span>
-<a id="ln-7" name="ln-7"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">rotate13</span>
-<a id="ln-8" name="ln-8"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">adjustc</span><span class="p">,</span> <span class="n">compact</span><span class="p">,</span> <span class="n">nospace</span><span class="p">,</span> <span class="n">indent</span><span class="p">,</span> <span class="n">crop</span>
-<a id="ln-9" name="ln-9"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">unquote</span><span class="p">,</span> <span class="n">quote</span>
-<a id="ln-10" name="ln-10"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">len_white</span><span class="p">,</span> <span class="n">atleast</span><span class="p">,</span> <span class="n">stretch</span><span class="p">,</span> <span class="n">lenset</span><span class="p">,</span> <span class="n">merge_str</span>
-<a id="ln-11" name="ln-11"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">switch</span><span class="p">,</span> <span class="n">s2c</span><span class="p">,</span> <span class="n">c2s</span>
-<a id="ln-12" name="ln-12"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">noesc</span><span class="p">,</span> <span class="n">notabs</span><span class="p">,</span> <span class="n">dilate</span><span class="p">,</span> <span class="n">expand</span><span class="p">,</span> <span class="n">visible</span>
-<a id="ln-13" name="ln-13"></a>           <span class="c">!x!use M_strings, only : uc</span>
-<a id="ln-14" name="ln-14"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">string_to_value</span><span class="p">,</span> <span class="n">string_to_values</span><span class="p">,</span> <span class="n">s2v</span><span class="p">,</span> <span class="n">s2vs</span>
-<a id="ln-15" name="ln-15"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">value_to_string</span><span class="p">,</span> <span class="n">v2s</span><span class="p">,</span> <span class="n">msg</span>
-<a id="ln-16" name="ln-16"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">listout</span><span class="p">,</span> <span class="n">getvals</span>
-<a id="ln-17" name="ln-17"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">glob</span><span class="p">,</span> <span class="n">ends_with</span>
-<a id="ln-18" name="ln-18"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">fmt</span>
-<a id="ln-19" name="ln-19"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">base</span><span class="p">,</span> <span class="n">decodebase</span><span class="p">,</span> <span class="n">codebase</span><span class="p">,</span> <span class="n">base2</span>
-<a id="ln-20" name="ln-20"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">isalnum</span><span class="p">,</span> <span class="n">isalpha</span><span class="p">,</span> <span class="n">iscntrl</span><span class="p">,</span> <span class="n">isdigit</span><span class="p">,</span> <span class="n">isgraph</span>
-<a id="ln-21" name="ln-21"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">islower</span><span class="p">,</span> <span class="n">isprint</span><span class="p">,</span> <span class="n">ispunct</span><span class="p">,</span> <span class="n">isspace</span><span class="p">,</span> <span class="n">isupper</span>
-<a id="ln-22" name="ln-22"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">isascii</span><span class="p">,</span> <span class="n">isblank</span><span class="p">,</span> <span class="n">isxdigit</span>
-<a id="ln-23" name="ln-23"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">fortran_name</span>
-<a id="ln-24" name="ln-24"></a>           <span class="k">end program </span><span class="n">demo_M_strings</span>
+    <div class="hl"><pre><span></span><a name="ln-1"></a>           <span class="k">program </span><span class="n">demo_M_strings</span>
+<a name="ln-2"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">split</span><span class="p">,</span> <span class="n">delim</span><span class="p">,</span> <span class="n">chomp</span><span class="p">,</span> <span class="n">sep</span>
+<a name="ln-3"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">substitute</span><span class="p">,</span> <span class="n">change</span><span class="p">,</span> <span class="n">modif</span>
+<a name="ln-4"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">transliterate</span><span class="p">,</span> <span class="n">reverse</span>
+<a name="ln-5"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">replace</span><span class="p">,</span> <span class="n">join</span>
+<a name="ln-6"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">upper</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper_quoted</span>
+<a name="ln-7"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">rotate13</span>
+<a name="ln-8"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">adjustc</span><span class="p">,</span> <span class="n">compact</span><span class="p">,</span> <span class="n">nospace</span><span class="p">,</span> <span class="n">indent</span><span class="p">,</span> <span class="n">crop</span>
+<a name="ln-9"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">unquote</span><span class="p">,</span> <span class="n">quote</span>
+<a name="ln-10"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">len_white</span><span class="p">,</span> <span class="n">atleast</span><span class="p">,</span> <span class="n">stretch</span><span class="p">,</span> <span class="n">lenset</span><span class="p">,</span> <span class="n">merge_str</span>
+<a name="ln-11"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">switch</span><span class="p">,</span> <span class="n">s2c</span><span class="p">,</span> <span class="n">c2s</span>
+<a name="ln-12"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">noesc</span><span class="p">,</span> <span class="n">notabs</span><span class="p">,</span> <span class="n">dilate</span><span class="p">,</span> <span class="n">expand</span><span class="p">,</span> <span class="n">visible</span>
+<a name="ln-13"></a>           <span class="c">!x!use M_strings, only : uc</span>
+<a name="ln-14"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">string_to_value</span><span class="p">,</span> <span class="n">string_to_values</span><span class="p">,</span> <span class="n">s2v</span><span class="p">,</span> <span class="n">s2vs</span>
+<a name="ln-15"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">value_to_string</span><span class="p">,</span> <span class="n">v2s</span><span class="p">,</span> <span class="n">msg</span>
+<a name="ln-16"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">listout</span><span class="p">,</span> <span class="n">getvals</span>
+<a name="ln-17"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">glob</span><span class="p">,</span> <span class="n">ends_with</span>
+<a name="ln-18"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">fmt</span>
+<a name="ln-19"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">base</span><span class="p">,</span> <span class="n">decodebase</span><span class="p">,</span> <span class="n">codebase</span><span class="p">,</span> <span class="n">base2</span>
+<a name="ln-20"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">isalnum</span><span class="p">,</span> <span class="n">isalpha</span><span class="p">,</span> <span class="n">iscntrl</span><span class="p">,</span> <span class="n">isdigit</span><span class="p">,</span> <span class="n">isgraph</span>
+<a name="ln-21"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">islower</span><span class="p">,</span> <span class="n">isprint</span><span class="p">,</span> <span class="n">ispunct</span><span class="p">,</span> <span class="n">isspace</span><span class="p">,</span> <span class="n">isupper</span>
+<a name="ln-22"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">isascii</span><span class="p">,</span> <span class="n">isblank</span><span class="p">,</span> <span class="n">isxdigit</span>
+<a name="ln-23"></a>           <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">fortran_name</span>
+<a name="ln-24"></a>           <span class="k">end program </span><span class="n">demo_M_strings</span>
 </pre></div>
 
     </section>
@@ -307,17 +301,16 @@
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-6"><p>M_strings was developed by John S. Urban<br>&copy; 2021 
-                                          </p>
-        </div>
-        <div class="col-xs-6 col-md-6">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2021-09-11 02:47  
-            
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+             on 2021-09-10 22:57  
           </p>
         </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_strings was developed by John S. Urban</p></div>
       </div>
       <br>
       </div> <!-- /container -->    

@@ -72,11 +72,8 @@
         
         
             <li><a href="../lists/programs.html">Programs</a></li>
-               
-        
         
             </ul>
-        
             </li>
 
 
@@ -95,8 +92,6 @@
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
-
-
 
           </ul>
         
@@ -126,7 +121,6 @@
   <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
-     
      
      
      
@@ -271,27 +265,27 @@
 
     <section>
       <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl"><pre><span></span><a id="ln-1" name="ln-1"></a>          <span class="k">program </span><span class="n">demo_base</span>
-<a id="ln-2" name="ln-2"></a>          <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">base</span>
-<a id="ln-3" name="ln-3"></a>          <span class="k">implicit none</span>
-<a id="ln-4" name="ln-4"></a><span class="k">          </span><span class="kt">integer</span>           <span class="kd">::</span> <span class="n">ba</span><span class="p">,</span><span class="n">bd</span>
-<a id="ln-5" name="ln-5"></a>          <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span>
-<a id="ln-6" name="ln-6"></a>
-<a id="ln-7" name="ln-7"></a>          <span class="k">print</span> <span class="o">*</span><span class="p">,</span><span class="s1">&#39; BASE CONVERSION&#39;</span>
-<a id="ln-8" name="ln-8"></a>          <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(&quot;Start   Base (2 to 36): &quot;)&#39;</span><span class="p">,</span><span class="n">advance</span><span class="o">=</span><span class="s1">&#39;no&#39;</span><span class="p">);</span> <span class="k">read</span> <span class="o">*</span><span class="p">,</span> <span class="n">bd</span>
-<a id="ln-9" name="ln-9"></a>          <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(&quot;Arrival Base (2 to 36): &quot;)&#39;</span><span class="p">,</span><span class="n">advance</span><span class="o">=</span><span class="s1">&#39;no&#39;</span><span class="p">);</span> <span class="k">read</span> <span class="o">*</span><span class="p">,</span> <span class="n">ba</span>
-<a id="ln-10" name="ln-10"></a>          <span class="n">INFINITE</span><span class="p">:</span> <span class="k">do</span>
-<a id="ln-11" name="ln-11"></a><span class="k">             write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(&quot;Enter number in start base (0 to quit): &quot;)&#39;</span><span class="p">,</span><span class="n">advance</span><span class="o">=</span><span class="s1">&#39;no&#39;</span><span class="p">)</span>
-<a id="ln-12" name="ln-12"></a>             <span class="k">read</span> <span class="o">*</span><span class="p">,</span> <span class="n">x</span>
-<a id="ln-13" name="ln-13"></a>             <span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">eq</span><span class="p">.</span><span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="k">exit </span><span class="n">INFINITE</span>
-<a id="ln-14" name="ln-14"></a>             <span class="k">if</span><span class="p">(</span><span class="n">base</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">bd</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">ba</span><span class="p">))</span><span class="k">then</span>
-<a id="ln-15" name="ln-15"></a><span class="k">                  write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(&quot;In base &quot;,I2,&quot;: &quot;,A20)&#39;</span><span class="p">)</span>  <span class="n">ba</span><span class="p">,</span> <span class="n">y</span>
-<a id="ln-16" name="ln-16"></a>              <span class="k">else</span>
-<a id="ln-17" name="ln-17"></a><span class="k">                print</span> <span class="o">*</span><span class="p">,</span><span class="s1">&#39;Error in decoding/encoding number.&#39;</span>
-<a id="ln-18" name="ln-18"></a>              <span class="k">endif</span>
-<a id="ln-19" name="ln-19"></a><span class="k">           enddo </span><span class="n">INFINITE</span>
-<a id="ln-20" name="ln-20"></a>
-<a id="ln-21" name="ln-21"></a>           <span class="k">end program </span><span class="n">demo_base</span>
+    <div class="hl"><pre><span></span><a name="ln-1"></a>          <span class="k">program </span><span class="n">demo_base</span>
+<a name="ln-2"></a>          <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">base</span>
+<a name="ln-3"></a>          <span class="k">implicit none</span>
+<a name="ln-4"></a><span class="k">          </span><span class="kt">integer</span>           <span class="kd">::</span> <span class="n">ba</span><span class="p">,</span><span class="n">bd</span>
+<a name="ln-5"></a>          <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span>
+<a name="ln-6"></a>
+<a name="ln-7"></a>          <span class="k">print</span> <span class="o">*</span><span class="p">,</span><span class="s1">&#39; BASE CONVERSION&#39;</span>
+<a name="ln-8"></a>          <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(&quot;Start   Base (2 to 36): &quot;)&#39;</span><span class="p">,</span><span class="n">advance</span><span class="o">=</span><span class="s1">&#39;no&#39;</span><span class="p">);</span> <span class="k">read</span> <span class="o">*</span><span class="p">,</span> <span class="n">bd</span>
+<a name="ln-9"></a>          <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(&quot;Arrival Base (2 to 36): &quot;)&#39;</span><span class="p">,</span><span class="n">advance</span><span class="o">=</span><span class="s1">&#39;no&#39;</span><span class="p">);</span> <span class="k">read</span> <span class="o">*</span><span class="p">,</span> <span class="n">ba</span>
+<a name="ln-10"></a>          <span class="n">INFINITE</span><span class="p">:</span> <span class="k">do</span>
+<a name="ln-11"></a><span class="k">             write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(&quot;Enter number in start base (0 to quit): &quot;)&#39;</span><span class="p">,</span><span class="n">advance</span><span class="o">=</span><span class="s1">&#39;no&#39;</span><span class="p">)</span>
+<a name="ln-12"></a>             <span class="k">read</span> <span class="o">*</span><span class="p">,</span> <span class="n">x</span>
+<a name="ln-13"></a>             <span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">eq</span><span class="p">.</span><span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="k">exit </span><span class="n">INFINITE</span>
+<a name="ln-14"></a>             <span class="k">if</span><span class="p">(</span><span class="n">base</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">bd</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">ba</span><span class="p">))</span><span class="k">then</span>
+<a name="ln-15"></a><span class="k">                  write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(&quot;In base &quot;,I2,&quot;: &quot;,A20)&#39;</span><span class="p">)</span>  <span class="n">ba</span><span class="p">,</span> <span class="n">y</span>
+<a name="ln-16"></a>              <span class="k">else</span>
+<a name="ln-17"></a><span class="k">                print</span> <span class="o">*</span><span class="p">,</span><span class="s1">&#39;Error in decoding/encoding number.&#39;</span>
+<a name="ln-18"></a>              <span class="k">endif</span>
+<a name="ln-19"></a><span class="k">           enddo </span><span class="n">INFINITE</span>
+<a name="ln-20"></a>
+<a name="ln-21"></a>           <span class="k">end program </span><span class="n">demo_base</span>
 </pre></div>
 
     </section>
@@ -304,17 +298,16 @@
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-6"><p>M_strings was developed by John S. Urban<br>&copy; 2021 
-                                          </p>
-        </div>
-        <div class="col-xs-6 col-md-6">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2021-09-11 02:47  
-            
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+             on 2021-09-10 22:57  
           </p>
         </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_strings was developed by John S. Urban</p></div>
       </div>
       <br>
       </div> <!-- /container -->    
