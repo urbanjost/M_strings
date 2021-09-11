@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="string operations">
+    
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>demo_unquote &ndash; M_strings</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">M_strings </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="../lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+               
+            <li><a href="../lists/types.html">Derived Types</a></li>
+        
+        
+            <li><a href="../lists/programs.html">Programs</a></li>
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>demo_unquote
+    <small>Program</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title=" 2.1% of total for programs.">27 statements</a>
+     </li> 
+     
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/demo_unquote.f90"> Source File</a></li>
+     
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+    
+     <li><a href='../sourcefile/demo_unquote.f90.html'>demo_unquote.f90</a></li>
+    
+  
+     <li class="active">demo_unquote</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+<h3>Contents</h3>
+ 
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
+  <div id="vars-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../program/demo_unquote.html#variable-dummy~2">dummy</a>
+      
+      <a class="list-group-item" href="../program/demo_unquote.html#variable-esc~4">esc</a>
+      
+      <a class="list-group-item" href="../program/demo_unquote.html#variable-ios~12">ios</a>
+      
+      <a class="list-group-item" href="../program/demo_unquote.html#variable-msg~5">msg</a>
+      
+      <a class="list-group-item" href="../program/demo_unquote.html#variable-quoted_str~4">quoted_str</a>
+      
+      <a class="list-group-item" href="../program/demo_unquote.html#variable-unquoted_str~3">unquoted_str</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../program/demo_unquote.html#src">demo_unquote</a>
+  </div>
+</div>
+
+
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    
+  
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Uses</h3>
+      </div>
+      <ul class="list-group">
+      
+      <li class="list-group-item">
+  <ul class="list-inline">
+    
+    <li><a href='../module/m_strings.html'>M_strings</a></li>
+    
+  </ul>
+      </li>
+      
+      
+      
+      </ul>
+    </div>
+    
+
+    
+    
+    
+
+     <section class="visible-xs visible-sm hidden-md">
+       
+<h3>Contents</h3>
+ 
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
+  <div id="vars-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../program/demo_unquote.html#variable-dummy~2">dummy</a>
+      
+      <a class="list-group-item" href="../program/demo_unquote.html#variable-esc~4">esc</a>
+      
+      <a class="list-group-item" href="../program/demo_unquote.html#variable-ios~12">ios</a>
+      
+      <a class="list-group-item" href="../program/demo_unquote.html#variable-msg~5">msg</a>
+      
+      <a class="list-group-item" href="../program/demo_unquote.html#variable-quoted_str~4">quoted_str</a>
+      
+      <a class="list-group-item" href="../program/demo_unquote.html#variable-unquoted_str~3">unquoted_str</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../program/demo_unquote.html#src">demo_unquote</a>
+  </div>
+</div>
+
+
+
+     </section>
+     <br class="visible-xs visible-sm hidden-md">
+
+     
+
+    
+    <section>
+    <h2>Variables</h2>
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dummy~2"></span>character(len=1024)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>dummy</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-esc~4"></span>character(len=1),</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>esc</strong></td><td> =</td><td>'\'</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ios~12"></span>integer</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>ios</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-msg~5"></span>character(len=1024)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>msg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-quoted_str~4"></span>character(len=128)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>quoted_str</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-unquoted_str~3"></span>character(len=:),</td>
+  
+  
+  <td>allocatable</td><td>::</td>
+  <td><strong>unquoted_str</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    </section>
+    <br>
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+    
+    
+    
+    <section>
+    <h2 id="src">Source Code</h2>
+    <div class="highlight"><pre><span></span>          <span class="k">program </span><span class="n">demo_unquote</span>
+             <span class="k">use </span><span class="n">M_strings</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">unquote</span>
+             <span class="k">implicit none</span>
+<span class="k">             </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>           <span class="kd">::</span> <span class="n">quoted_str</span>
+             <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">unquoted_str</span>
+             <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">parameter</span>   <span class="kd">::</span> <span class="n">esc</span><span class="o">=</span><span class="s1">&#39;\&#39;</span>
+<span class="s1">             character(len=1024)          :: msg</span>
+<span class="s1">             integer                      :: ios</span>
+<span class="s1">             character(len=1024)          :: dummy</span>
+<span class="s1">             do</span>
+<span class="s1">                write(*,&#39;</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="s1">&#39;,advance=&#39;</span><span class="n">no</span><span class="s1">&#39;)&#39;</span><span class="n">Enter</span> <span class="n">test</span> <span class="n">string</span><span class="p">:</span><span class="s1">&#39;</span>
+<span class="s1">                read(*,&#39;</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="s1">&#39;,iostat=ios,iomsg=msg)quoted_str</span>
+<span class="s1">                if(ios.ne.0)then</span>
+<span class="s1">                   write(*,*)trim(msg)</span>
+<span class="s1">                   exit</span>
+<span class="s1">                endif</span>
+
+<span class="s1">                ! the original string</span>
+<span class="s1">                write(*,&#39;</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="s1">&#39;)&#39;</span><span class="n">QUOTED</span>       <span class="p">[</span><span class="s1">&#39;//trim(quoted_str)//&#39;</span><span class="p">]</span><span class="s1">&#39;</span>
+
+<span class="s1">                ! the string processed by unquote(3f)</span>
+<span class="s1">                unquoted_str=unquote(trim(quoted_str),esc)</span>
+<span class="s1">                write(*,&#39;</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="s1">&#39;)&#39;</span><span class="n">UNQUOTED</span>     <span class="p">[</span><span class="s1">&#39;//unquoted_str//&#39;</span><span class="p">]</span><span class="s1">&#39;</span>
+
+<span class="s1">                ! read the string list-directed to compare the results</span>
+<span class="s1">                read(quoted_str,*,iostat=ios,iomsg=msg)dummy</span>
+<span class="s1">                if(ios.ne.0)then</span>
+<span class="s1">                   write(*,*)trim(msg)</span>
+<span class="s1">                else</span>
+<span class="s1">                   write(*,&#39;</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="s1">&#39;)&#39;</span><span class="n">LIST</span> <span class="n">DIRECTED</span><span class="p">[</span><span class="s1">&#39;//trim(dummy)//&#39;</span><span class="p">]</span><span class="err">&#39;</span>
+                <span class="k">endif</span>
+<span class="k">             enddo</span>
+<span class="k">          end program </span><span class="n">demo_unquote</span>
+</pre></div>
+
+    </section>
+    
+    
+    </div>
+  </div>
+
+  
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+             on 2021-09-10 22:57  
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_strings was developed by John S. Urban</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>

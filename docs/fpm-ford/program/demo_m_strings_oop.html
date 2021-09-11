@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="string operations">
+    
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>demo_M_strings_oop &ndash; M_strings</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">M_strings </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="../lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+               
+            <li><a href="../lists/types.html">Derived Types</a></li>
+        
+        
+            <li><a href="../lists/programs.html">Programs</a></li>
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>demo_M_strings_oop
+    <small>Program</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title=" 7.8% of total for programs.">102 statements</a>
+     </li> 
+     
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/demo_M_strings_oop.f90"> Source File</a></li>
+     
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+    
+     <li><a href='../sourcefile/demo_m_strings_oop.f90.html'>demo_M_strings_oop.f90</a></li>
+    
+  
+     <li class="active">demo_M_strings_oop</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+<h3>Contents</h3>
+ 
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
+  <div id="vars-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../program/demo_m_strings_oop.html#variable-str1~2">str1</a>
+      
+      <a class="list-group-item" href="../program/demo_m_strings_oop.html#variable-str2~2">str2</a>
+      
+      <a class="list-group-item" href="../program/demo_m_strings_oop.html#variable-str3">str3</a>
+      
+      <a class="list-group-item" href="../program/demo_m_strings_oop.html#variable-str4">str4</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../program/demo_m_strings_oop.html#src">demo_M_strings_oop</a>
+  </div>
+</div>
+
+
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    
+  
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Uses</h3>
+      </div>
+      <ul class="list-group">
+      
+      <li class="list-group-item">
+  <ul class="list-inline">
+    
+    <li><a href='../module/m_strings_oop.html'>M_strings_oop</a></li>
+    
+  </ul>
+      </li>
+      
+      
+      
+      </ul>
+    </div>
+    
+
+    
+    
+    
+
+     <section class="visible-xs visible-sm hidden-md">
+       
+<h3>Contents</h3>
+ 
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
+  <div id="vars-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../program/demo_m_strings_oop.html#variable-str1~2">str1</a>
+      
+      <a class="list-group-item" href="../program/demo_m_strings_oop.html#variable-str2~2">str2</a>
+      
+      <a class="list-group-item" href="../program/demo_m_strings_oop.html#variable-str3">str3</a>
+      
+      <a class="list-group-item" href="../program/demo_m_strings_oop.html#variable-str4">str4</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../program/demo_m_strings_oop.html#src">demo_M_strings_oop</a>
+  </div>
+</div>
+
+
+
+     </section>
+     <br class="visible-xs visible-sm hidden-md">
+
+     
+
+    
+    <section>
+    <h2>Variables</h2>
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-str1~2"></span>type(<a href='../type/string.html'>string</a>)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>str1</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-str2~2"></span>type(<a href='../type/string.html'>string</a>)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>str2</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-str3"></span>type(<a href='../type/string.html'>string</a>)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>str3</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-str4"></span>type(<a href='../type/string.html'>string</a>)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>str4</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    </section>
+    <br>
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+    
+    
+    
+    <section>
+    <h2 id="src">Source Code</h2>
+    <div class="highlight"><pre><span></span>           <span class="k">program </span><span class="n">demo_M_strings_oop</span>
+           <span class="c">!</span>
+           <span class="c">! This is an example using the object-oriented class/type model</span>
+           <span class="c">! defined in M_strings_oop</span>
+           <span class="c">! This is essentially the same functionality as the procedures</span>
+           <span class="c">! combined with several Fortran intrinsics and overloaded operators</span>
+           <span class="c">!</span>
+           <span class="k">use </span><span class="n">M_strings_oop</span><span class="p">,</span><span class="k">only</span> <span class="p">:</span> <span class="n">string</span><span class="p">,</span> <span class="n">p</span>
+           <span class="k">implicit none</span>
+<span class="k">           TYPE</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="kd">::</span> <span class="n">str1</span>
+           <span class="k">TYPE</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="kd">::</span> <span class="n">str2</span>
+           <span class="k">TYPE</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="kd">::</span> <span class="n">str3</span>
+           <span class="k">TYPE</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="kd">::</span> <span class="n">str4</span>
+           <span class="c">!==============================================================================</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;exercise the M_STRING_OOP module interface&#39;</span>
+             <span class="c">! draw a break line in the output</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;Call methods of type(STRING)&#39;</span>
+             <span class="c">! define TYPE(STRING) with constructor</span>
+             <span class="n">str2</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;   This  is  a  String!       &#39;</span><span class="p">)</span>
+             <span class="n">str4</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39; a  String &#39;</span><span class="p">)</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+             <span class="c">! print members of type</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str2%str is ................ &#39;</span><span class="p">,</span><span class="n">str2</span><span class="p">%</span><span class="n">str</span>
+             <span class="c">! same as intrinsic LEN()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">202</span><span class="p">)</span><span class="s1">&#39;len ........................ &#39;</span><span class="p">,</span><span class="n">str2</span><span class="p">%</span><span class="nb">len</span><span class="p">()</span>
+             <span class="c">! same as intrinsic INDEX()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">202</span><span class="p">)</span><span class="s1">&#39;len_trim ................... &#39;</span><span class="p">,</span><span class="n">str2</span><span class="p">%</span><span class="nb">len_trim</span><span class="p">()</span>
+             <span class="c">! same as intrinsic INDEX()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">202</span><span class="p">)</span><span class="s1">&#39;index(&quot;is&quot;)................. &#39;</span><span class="p">,</span><span class="n">str2</span><span class="p">%</span><span class="nb">index</span><span class="p">(</span><span class="s2">&quot;is&quot;</span><span class="p">)</span>
+             <span class="c">! same as intrinsic INDEX()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">202</span><span class="p">)</span><span class="s1">&#39;index(&quot;is&quot;,back=.T.) ....... &#39;</span><span class="p">,</span><span class="n">str2</span><span class="p">%</span><span class="nb">index</span><span class="p">(</span><span class="s2">&quot;is&quot;</span><span class="p">,</span><span class="n">back</span><span class="o">=</span><span class="p">.</span><span class="n">TRUE</span><span class="p">.)</span>
+             <span class="c">! output TYPE(STRING) with %str all uppercase</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;upper ...................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">upper</span><span class="p">())</span>
+             <span class="c">! output TYPE(STRING) with %str all miniscule</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;lower ...................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">lower</span><span class="p">())</span>
+             <span class="c">! output TYPE(STRING) with %str reversed</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;reverse .................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">reverse</span><span class="p">())</span>
+             <span class="c">! same as intrinsic ADJUSTL()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;adjustl .................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="nb">adjustl</span><span class="p">())</span>
+             <span class="c">! same as intrinsic ADJUSTR()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;adjustr .................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="nb">adjustr</span><span class="p">())</span>
+             <span class="c">! center string in current string length</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;adjustc .................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">adjustc</span><span class="p">())</span>
+             <span class="c">! center string in string length of NN</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;adjustc(49) ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">adjustc</span><span class="p">(</span><span class="mi">49</span><span class="p">))</span>
+             <span class="c">! force %str to be NN characters long</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;lenset(49) ................. &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">lenset</span><span class="p">(</span><span class="mi">49</span><span class="p">))</span>
+             <span class="c">! same as intrinsic TRIM()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;trim ....................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="nb">trim</span><span class="p">())</span>
+             <span class="c">! trim leading and trailing spaces</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;crop ....................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">crop</span><span class="p">())</span>
+             <span class="c">! calls M_strings procedure SUBSTITUTE()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;substitute(&quot;This&quot;,&quot;Here&quot;) .. &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">substitute</span><span class="p">(</span><span class="s2">&quot;This&quot;</span><span class="p">,</span><span class="s2">&quot;Here&quot;</span><span class="p">))</span>
+             <span class="c">! calls M_strings procedure COMPACT()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;compact .................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">compact</span><span class="p">())</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;compact(&quot;&quot;) ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">compact</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;compact(&quot;:&quot;) ............... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">compact</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">))</span>
+             <span class="c">! calls M_strings procedure TRANSLITERATE()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot;aei&quot;,&quot;VWX&quot;) . &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot;aei&quot;</span><span class="p">,</span><span class="s2">&quot;VWX&quot;</span><span class="p">))</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot;aeiou&quot;,&quot; &quot;) . &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot;aeiou&quot;</span><span class="p">,</span><span class="s2">&quot; &quot;</span><span class="p">))</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot;aeiou&quot;,&quot;&quot;) .. &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot;aeiou&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot; aeiou&quot;,&quot;&quot;) . &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot; aeiou&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
+             <span class="c">! calls M_strings procedure SWITCH()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">404</span><span class="p">)</span><span class="s1">&#39;chars .................... . &#39;</span><span class="p">,</span><span class="n">str4</span><span class="p">%</span><span class="n">chars</span><span class="p">()</span>
+
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+             <span class="n">str2</span><span class="p">%</span><span class="n">str</span><span class="o">=</span><span class="s1">&#39;\t\tSome tabs\t   x\bX &#39;</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str2%str ................... &#39;</span><span class="p">,</span><span class="n">str2</span><span class="p">%</span><span class="n">str</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;expand ..................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">expand</span><span class="p">())</span>
+             <span class="n">str2</span><span class="o">=</span><span class="n">str2</span><span class="p">%</span><span class="n">expand</span><span class="p">()</span>
+             <span class="c">! calls M_strings procedure NOTABS()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;notabs ..................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">notabs</span><span class="p">())</span>
+             <span class="c">! calls M_strings procedure NOESC()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;noesc ...................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="p">%</span><span class="n">noesc</span><span class="p">())</span>
+
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;Casting to numeric variables&#39;</span>
+             <span class="n">str3</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;   12.345678901234567e1        &#39;</span><span class="p">)</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str3%str ................... &#39;</span><span class="p">,</span><span class="n">str3</span><span class="p">%</span><span class="n">str</span>
+             <span class="c">! calls M_strings procedure STRING_TO_VALUE()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;int  ....................... &#39;</span><span class="p">,</span> <span class="n">str3</span><span class="p">%</span><span class="nb">int</span><span class="p">()</span>
+             <span class="c">! calls M_strings procedure STRING_TO_VALUE()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;real ....................... &#39;</span><span class="p">,</span> <span class="n">str3</span><span class="p">%</span><span class="kt">real</span><span class="p">()</span>
+             <span class="c">! calls M_strings procedure STRING_TO_VALUE()</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;dble ....................... &#39;</span><span class="p">,</span> <span class="n">str3</span><span class="p">%</span><span class="nb">dble</span><span class="p">()</span>
+
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;Matching simple globbing patterns&#39;</span>
+             <span class="n">str3</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;   12.345678901234567e1        &#39;</span><span class="p">)</span>
+             <span class="n">str3</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;Four score and seven years ago&#39;</span><span class="p">)</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str3%str ................... &#39;</span><span class="p">,</span><span class="n">str3</span><span class="p">%</span><span class="n">str</span>
+             <span class="c">! calls M_strings procedure MATCHW</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;match(&quot;Fo*&quot;) ............... &#39;</span><span class="p">,</span> <span class="n">str3</span><span class="p">%</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;Fo*&quot;</span><span class="p">)</span>
+             <span class="c">! calls M_strings procedure MATCHW</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;match(&quot;and&quot;) ............... &#39;</span><span class="p">,</span> <span class="n">str3</span><span class="p">%</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;and&quot;</span><span class="p">)</span>
+             <span class="c">! calls M_strings procedure MATCHW</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;match(&quot;*and*&quot;) ............. &#39;</span><span class="p">,</span> <span class="n">str3</span><span class="p">%</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;*and*&quot;</span><span class="p">)</span>
+
+             <span class="mi">101</span> <span class="k">format</span><span class="p">(</span><span class="mi">1</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="s2">&quot;[&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="s2">&quot;]&quot;</span><span class="p">)</span>
+             <span class="mi">202</span> <span class="k">format</span><span class="p">(</span><span class="mi">1</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">i0</span><span class="p">)</span>
+             <span class="mi">303</span> <span class="k">format</span><span class="p">(</span><span class="mi">1</span><span class="n">x</span><span class="p">,</span><span class="o">*</span><span class="p">(</span><span class="n">l3</span><span class="p">))</span>
+             <span class="mi">404</span> <span class="k">format</span><span class="p">(</span><span class="mi">1</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="o">*</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">,</span><span class="n">a1</span><span class="p">,</span><span class="s2">&quot;]&quot;</span><span class="p">:))</span>
+
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;OVERLOADED OPERATORS (add and subtract,return TYPE(STRING))&#39;</span>
+             <span class="n">str1</span><span class="p">%</span><span class="n">str</span><span class="o">=</span><span class="s1">&#39;123.456&#39;</span>
+             <span class="n">str2</span><span class="p">%</span><span class="n">str</span><span class="o">=</span><span class="s1">&#39;AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj&#39;</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str1%str ................... &#39;</span><span class="p">,</span><span class="n">str1</span><span class="p">%</span><span class="n">str</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str2%str ................... &#39;</span><span class="p">,</span><span class="n">str2</span><span class="p">%</span><span class="n">str</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 + str2 ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span> <span class="o">+</span> <span class="n">str2</span><span class="p">)</span>
+             <span class="c">! a string that looks like a numeric value can have a value added</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 + 20000 ............... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span> <span class="o">+</span><span class="mi">20000</span><span class="p">)</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 - 20.0 ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span> <span class="o">-</span><span class="mi">2</span><span class="mf">0.0</span><span class="p">)</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str2 - &quot;Aa&quot; (removes ALL) .. &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span> <span class="o">-</span> <span class="s1">&#39;Aa&#39;</span><span class="p">)</span>
+
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;OVERLOADED OPERATORS (multiply,return TYPE(STRING))&#39;</span>
+             <span class="n">str1</span><span class="p">%</span><span class="n">str</span><span class="o">=</span><span class="s1">&#39;AaBbCcDdEeFfGgHhIiJj&#39;</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str1%str ................... &#39;</span><span class="p">,</span><span class="n">str1</span><span class="p">%</span><span class="n">str</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 * 3 ................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;OVERLOADED OPERATORS (//,return TYPE(STRING))&#39;</span>
+             <span class="n">str1</span><span class="p">%</span><span class="n">str</span><span class="o">=</span><span class="s1">&#39;String one:&#39;</span>
+             <span class="n">str2</span><span class="p">%</span><span class="n">str</span><span class="o">=</span><span class="s1">&#39;String two:&#39;</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str1%str ................... &#39;</span><span class="p">,</span><span class="n">str1</span><span class="p">%</span><span class="n">str</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str2%str ................... &#39;</span><span class="p">,</span><span class="n">str2</span><span class="p">%</span><span class="n">str</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 // str2 ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span> <span class="o">//</span> <span class="n">str2</span><span class="p">)</span>
+             <span class="c">! numeric values are converted to strings</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 // 20000 ............... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span> <span class="o">//</span> <span class="mi">20000</span><span class="p">)</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 // 20.0 ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span> <span class="o">//</span> <span class="mi">2</span><span class="mf">0.0</span><span class="p">)</span>
+
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;OVERLOADED OPERATORS (logical comparisons,return logical)&#39;</span>
+             <span class="c">! NOTE: comparisons are performed on the character variable members</span>
+             <span class="c">!       of the type(string)</span>
+             <span class="n">str1</span><span class="p">%</span><span class="n">str</span><span class="o">=</span><span class="s1">&#39;abcdefghij&#39;</span>
+             <span class="n">str2</span><span class="p">%</span><span class="n">str</span><span class="o">=</span><span class="s1">&#39;klmnopqrst&#39;</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str1%str ................... &#39;</span><span class="p">,</span><span class="n">str1</span><span class="p">%</span><span class="n">str</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str2%str ................... &#39;</span><span class="p">,</span><span class="n">str2</span><span class="p">%</span><span class="n">str</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;: EQ LT GT LE GE NE&#39;</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;compare str1 to str1&#39;</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">303</span><span class="p">)</span><span class="n">str1</span><span class="p">.</span><span class="n">eq</span><span class="p">.</span><span class="n">str1</span>  <span class="p">,</span><span class="n">str1</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="n">str1</span>  <span class="p">,</span><span class="n">str1</span><span class="p">.</span><span class="n">gt</span><span class="p">.</span><span class="n">str1</span>  <span class="p">,</span><span class="n">str1</span><span class="p">.</span><span class="n">le</span><span class="p">.</span><span class="n">str1</span> <span class="p">&amp;</span>
+                        <span class="p">&amp;</span> <span class="p">,</span><span class="n">str1</span><span class="p">.</span><span class="n">ge</span><span class="p">.</span><span class="n">str1</span>  <span class="p">,</span><span class="n">str1</span><span class="p">.</span><span class="n">ne</span><span class="p">.</span><span class="n">str1</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;compare str1 to str2&#39;</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">303</span><span class="p">)</span><span class="n">str1</span><span class="p">.</span><span class="n">eq</span><span class="p">.</span><span class="n">str2</span>  <span class="p">,</span><span class="n">str1</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="n">str2</span>  <span class="p">,</span><span class="n">str1</span><span class="p">.</span><span class="n">gt</span><span class="p">.</span><span class="n">str2</span>  <span class="p">,</span><span class="n">str1</span><span class="p">.</span><span class="n">le</span><span class="p">.</span><span class="n">str2</span> <span class="p">&amp;</span>
+                        <span class="p">&amp;</span> <span class="p">,</span><span class="n">str1</span><span class="p">.</span><span class="n">ge</span><span class="p">.</span><span class="n">str2</span>  <span class="p">,</span><span class="n">str1</span><span class="p">.</span><span class="n">ne</span><span class="p">.</span><span class="n">str2</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;compare str2 to str1&#39;</span>
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">303</span><span class="p">)</span><span class="n">str2</span><span class="p">.</span><span class="n">eq</span><span class="p">.</span><span class="n">str1</span>  <span class="p">,</span><span class="n">str2</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="n">str1</span>  <span class="p">,</span><span class="n">str2</span><span class="p">.</span><span class="n">gt</span><span class="p">.</span><span class="n">str1</span>  <span class="p">,</span><span class="n">str2</span><span class="p">.</span><span class="n">le</span><span class="p">.</span><span class="n">str1</span> <span class="p">&amp;</span>
+                        <span class="p">&amp;</span> <span class="p">,</span><span class="n">str2</span><span class="p">.</span><span class="n">ge</span><span class="p">.</span><span class="n">str1</span>  <span class="p">,</span><span class="n">str2</span><span class="p">.</span><span class="n">ne</span><span class="p">.</span><span class="n">str1</span>
+
+             <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+
+           <span class="k">end program </span><span class="n">demo_M_strings_oop</span>
+</pre></div>
+
+    </section>
+    
+    
+    </div>
+  </div>
+
+  
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+             on 2021-09-10 22:57  
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_strings was developed by John S. Urban</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>
