@@ -9,7 +9,7 @@ The `M_strings`(3fm) module is a collection of Fortran procedures that
 supplement the built-in intrinsic string routines.  Routines for parsing,
 tokenizing, changing case, substituting new strings for substrings,
 locating strings with simple wildcard expressions, removing tabs and
-line terminators and other string manipulations are included.
+line terminators as well as other string manipulations are included.
 
 `M_strings_oop`(3fm) is a companion module that provides an OOP interface
 to the `M_strings` module.
@@ -34,12 +34,12 @@ public entities:
                            isprint, ispunct, isspace, isupper, isascii, isblank, isxdigit
 
 ## INTRINSICS
+
 The M_strings(3fm) module supplements and works in combination with
-the Fortran built-in intrinsics. Standard Stand-alone Fortran lets
-you access the characters in a string using ranges much like they are
-character arrays, assignment, comparisons with standard operators,
-supports dynamically allocatable strings and supports concatenation
-using the // operator, as well as a number of intrinsic string routines:
+the Fortran built-in intrinsics. Standard Fortran lets you access the
+characters in a string using ranges much like they are character arrays,
+assignment, comparisons with standard operators, supports dynamically
+allocatable strings and supports concatenation using the // operator:
 
      adjustl             Left adjust a string
      adjustr             Right adjust a string
@@ -59,7 +59,7 @@ using the // operator, as well as a number of intrinsic string routines:
      lle                 Lexical less than or equal
      llt                 Lexical less than
 
-## DOWNLOAD AND BUILD
+## DOWNLOAD AND BUILD WITH MAKE(1)
 Just download the github repository, enter the src/ directory and run make:
 
      git clone https://github.com/urbanjost/M_strings.git
@@ -80,15 +80,14 @@ Just download the github repository, enter the src/ directory and run make:
 
      # optionally
      make test # run the unit tests
-     make run  # run all the demo programs from the manpages
+     make run  # run all the demo programs from the man-pages
      make help # see other developer options
 
 This will compile the M_strings(3f) module and optionally build all the
 example programs from the document pages in the example/ sub-directory
 and run the unit tests.
 
-## SUPPORTS FPM ![fpm](docs/images/fpm_logo.gif)
-#### (registered at the [fpm(1) registry](https://github.com/fortran-lang/fpm-registry) )
+## DOWNLOAD AND BUILD WITH FPM(1) ![fpm](docs/images/fpm_logo.gif)
 
 Alternatively, download the github repository and build it with 
 fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/fpm) )
@@ -107,27 +106,29 @@ or just list it as a dependency in your fpm.toml project file.
      M_strings        = { git = "https://github.com/urbanjost/M_strings.git" ,tag="v1.0.1"}
 ```
 
-## DEMO PROGRAMS
-
-There are demo programs extracted from the man pages in the example/ directory
+Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.com/fortran-lang/fpm-registry)
 
 
 ## USER DOCUMENTATION
 
  - The routines are summarized in the following section below.
+   in addition the following docs/ directory there is
 
-in addition in the docs/ directory there is
+ - An [index](https://urbanjost.github.io/M_strings/man3.html) to HTML versions
+   of the man-pages 
 
- - manpages in 
+ - A single page that uses javascript to combine all the HTML descriptions
+   of the man-pages is at
+   [BOOK_M_strings](https://urbanjost.github.io/M_strings/BOOK_M_strings.html).
+
+ - man-pages may be downloaded from
     + [manpages.zip](https://urbanjost.github.io/M_strings/manpages.zip) 
     + [manpages.tgz](https://urbanjost.github.io/M_strings/manpages.tgz) 
 
- - An [index](https://urbanjost.github.io/M_strings/man3.html) to HTML versions
-   of the manpages 
+## DEMO PROGRAMS
 
- - A single page that uses javascript to combine all the HTML descriptions
-   of the manpages is at
-   [BOOK_strings](https://urbanjost.github.io/M_strings/BOOK_M_strings.html).
+Each man-page includes a working example program. These and additional
+examples are included in the example/ directory.
 
 ## DEVELOPER DOCUMENTATION (__experimental__)
 
