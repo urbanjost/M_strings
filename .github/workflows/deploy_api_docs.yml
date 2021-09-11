@@ -29,7 +29,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
+          FOLDER: docs/fpm-ford
 #         ford(1) deletes the output directory before running
 #         so be careful to specify a unique subdirectory in
 #         your ford(1) configuration files
-          FOLDER: docs/fpm-ford
