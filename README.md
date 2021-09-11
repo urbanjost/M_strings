@@ -1,4 +1,4 @@
-![string](docs/images/yarnball.gif)
+![string](docs/images/alphabet.gif)
 # M_strings.f90 and associated files
 
 ## NAME
@@ -128,6 +128,11 @@ in addition in the docs/ directory there is
  - A single page that uses javascript to combine all the HTML descriptions
    of the manpages is at
    [BOOK_strings](https://urbanjost.github.io/M_strings/BOOK_M_strings.html).
+
+## DEVELOPER DOCUMENTATION (__experimental__)
+
+   The code was run through [ford(1)](https://politicalphysicist.github.io/ford-fortran-documentation.html)
+   to produce a [developers' document](https://urbanjost.github.io/M_strings/fpm-ford/index.html).
 
 ## [CHANGELOG](CHANGELOG.md)
 
