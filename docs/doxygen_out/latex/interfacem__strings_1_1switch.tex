@@ -1,0 +1,69 @@
+\hypertarget{interfacem__strings_1_1switch}{}\doxysection{m\+\_\+strings\+::switch Interface Reference}
+\label{interfacem__strings_1_1switch}\index{m\_strings::switch@{m\_strings::switch}}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+pure character(len=size(array)) function \mbox{\hyperlink{interfacem__strings_1_1switch_a9e8d2a8effdbed2a822cfe14bbb9983c}{a2s}} (array)
+\item 
+pure character(len=1) function, dimension(len(string)) \mbox{\hyperlink{interfacem__strings_1_1switch_a60d3e2ead0b3cfd08eaf61f93d3caf57}{s2a}} (string)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{interfacem__strings_1_1switch_a9e8d2a8effdbed2a822cfe14bbb9983c}\label{interfacem__strings_1_1switch_a9e8d2a8effdbed2a822cfe14bbb9983c}} 
+\index{m\_strings::switch@{m\_strings::switch}!a2s@{a2s}}
+\index{a2s@{a2s}!m\_strings::switch@{m\_strings::switch}}
+\doxysubsubsection{\texorpdfstring{a2s()}{a2s()}}
+{\footnotesize\ttfamily pure character(len=size(array)) function m\+\_\+strings\+::switch\+::a2s (\begin{DoxyParamCaption}\item[{character(len=1), dimension(\+:), intent(in)}]{array }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\hypertarget{namespacem__strings_autotoc_md162}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__strings_autotoc_md162}
+\begin{DoxyVerb}switch(3f) - [M_strings:ARRAY] converts between CHARACTER scalar and
+array of single characters
+(LICENSE:PD)
+\end{DoxyVerb}
+\hypertarget{namespacem__strings_autotoc_md163}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__strings_autotoc_md163}
+\begin{DoxyVerb}pure function switch(array) result (string)
+
+ character(len=1),intent(in) :: array(:)
+ character(len=SIZE(array))  :: string
+
+  or
+
+pure function switch(string) result (array)
+
+ character(len=1),intent(in) :: array(:)
+ character(len=SIZE(array))  :: string
+\end{DoxyVerb}
+\hypertarget{namespacem__strings_autotoc_md164}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__strings_autotoc_md164}
+S\+W\+I\+T\+C\+H(3f)\+: generic function that switches C\+H\+A\+R\+A\+C\+T\+ER string to an array of single characters or an array of single characters to a C\+H\+A\+R\+A\+C\+T\+ER string. Useful in passing strings to C. New Fortran features may supersede these routines.\hypertarget{namespacem__strings_autotoc_md165}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__strings_autotoc_md165}
+Sample program\+:
+
+program demo\+\_\+switch use M\+\_\+strings, only \+: switch, isalpha, islower, nospace character(len=$\ast$),parameter \+:: \& \& dashes=\textquotesingle{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---\textquotesingle{} character(len=$\ast$),parameter \+:: string=\textquotesingle{}This is a string\textquotesingle{} character(len=1024) \+:: line
+
+! First, examples of standard Fortran features ! returns array \mbox{[}F,T,T,T,T,T\mbox{]} write($\ast$,$\ast$)\mbox{[}\textquotesingle{}A\textquotesingle{},\textquotesingle{}=\textquotesingle{},\textquotesingle{}=\textquotesingle{},\textquotesingle{}=\textquotesingle{},\textquotesingle{}=\textquotesingle{},\textquotesingle{}=\textquotesingle{}\mbox{]}.eq.\textquotesingle{}=\textquotesingle{} ! this would return T write($\ast$,$\ast$)all(\mbox{[}\textquotesingle{}=\textquotesingle{},\textquotesingle{}=\textquotesingle{},\textquotesingle{}=\textquotesingle{},\textquotesingle{}=\textquotesingle{},\textquotesingle{}=\textquotesingle{},\textquotesingle{}=\textquotesingle{}\mbox{]}.eq.\textquotesingle{}=\textquotesingle{}) ! this would return F write($\ast$,$\ast$)all(\mbox{[}\textquotesingle{}A\textquotesingle{},\textquotesingle{}=\textquotesingle{},\textquotesingle{}=\textquotesingle{},\textquotesingle{}=\textquotesingle{},\textquotesingle{}=\textquotesingle{},\textquotesingle{}=\textquotesingle{}\mbox{]}.eq.\textquotesingle{}=\textquotesingle{})
+
+! so to test if the string D\+A\+S\+H\+ES is all dashes ! using S\+W\+I\+T\+C\+H(3f) is if(all(switch(dashes).eq.\textquotesingle{}-\/\textquotesingle{}))then write($\ast$,$\ast$)\textquotesingle{}D\+A\+S\+H\+ES is all dashes\textquotesingle{} endif
+
+! so to test is a string is all letters ! isalpha(3f) returns .true. only if character is a letter ! false because dashes are not a letter write($\ast$,$\ast$) all(isalpha(switch(dashes))) ! false because of spaces write($\ast$,$\ast$) all(isalpha(switch(string))) ! true because removed whitespace write($\ast$,$\ast$) all(isalpha(switch(nospace(string))))
+
+! to see if a string is all uppercase ! show the string write($\ast$,$\ast$) string ! converted to character array write($\ast$,\textquotesingle{}(1x,$\ast$(\char`\"{}\mbox{[}\char`\"{},a,\char`\"{}\mbox{]}\char`\"{}\+:))\textquotesingle{}) switch(string) write($\ast$,\textquotesingle{}($\ast$(l3))\textquotesingle{}) islower(switch(string))
+
+! we need a string that is all letters line=nospace(string) write($\ast$,$\ast$)\textquotesingle{}L\+I\+NE=\textquotesingle{},trim(line) ! all true except first character write($\ast$,$\ast$) islower(switch(nospace(string))) ! should be false write($\ast$,$\ast$) all(islower(switch(nospace(string)))) ! should be true write($\ast$,$\ast$) all(islower(switch(nospace(string(2\+:)))))
+
+end program demo\+\_\+switch
+
+Expected output
+
+F T T T T T T F D\+A\+S\+H\+ES is all dashes F F T This is a string \mbox{[}T\mbox{]}\mbox{[}h\mbox{]}\mbox{[}i\mbox{]}\mbox{[}s\mbox{]}\mbox{[} \mbox{]}\mbox{[}i\mbox{]}\mbox{[}s\mbox{]}\mbox{[} \mbox{]}\mbox{[}a\mbox{]}\mbox{[} \mbox{]}\mbox{[}s\mbox{]}\mbox{[}t\mbox{]}\mbox{[}r\mbox{]}\mbox{[}i\mbox{]}\mbox{[}n\mbox{]}\mbox{[}g\mbox{]} F T T T F T T F T F T T T T T T L\+I\+NE=Thisisastring F T T T T T T T T T T T T F T\hypertarget{namespacem__strings_autotoc_md166}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__strings_autotoc_md166}
+John S. Urban\hypertarget{namespacem__strings_autotoc_md167}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__strings_autotoc_md167}
+Public Domain \mbox{\Hypertarget{interfacem__strings_1_1switch_a60d3e2ead0b3cfd08eaf61f93d3caf57}\label{interfacem__strings_1_1switch_a60d3e2ead0b3cfd08eaf61f93d3caf57}} 
+\index{m\_strings::switch@{m\_strings::switch}!s2a@{s2a}}
+\index{s2a@{s2a}!m\_strings::switch@{m\_strings::switch}}
+\doxysubsubsection{\texorpdfstring{s2a()}{s2a()}}
+{\footnotesize\ttfamily pure character(len=1) function, dimension(len(string)) m\+\_\+strings\+::switch\+::s2a (\begin{DoxyParamCaption}\item[{character(len=$\ast$), intent(in)}]{string }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/urbanjs/venus/\+V600/github/\+M\+\_\+strings/src/\mbox{\hyperlink{M__strings_8f90}{M\+\_\+strings.\+f90}}\end{DoxyCompactItemize}

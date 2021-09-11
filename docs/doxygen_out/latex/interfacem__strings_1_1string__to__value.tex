@@ -1,0 +1,57 @@
+\hypertarget{interfacem__strings_1_1string__to__value}{}\doxysection{m\+\_\+strings\+::string\+\_\+to\+\_\+value Interface Reference}
+\label{interfacem__strings_1_1string__to__value}\index{m\_strings::string\_to\_value@{m\_strings::string\_to\_value}}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \mbox{\hyperlink{interfacem__strings_1_1string__to__value_afca39f47317f33e65a7bd2cb0f8ddf58}{a2d}} (chars, valu, ierr, onerr)
+\item 
+subroutine \mbox{\hyperlink{interfacem__strings_1_1string__to__value_aec779c978fa7bcc812c6cb029321b5f0}{a2r}} (chars, valu, ierr)
+\item 
+subroutine \mbox{\hyperlink{interfacem__strings_1_1string__to__value_a2089572a0b06d524be83d9089589c959}{a2i}} (chars, valu, ierr)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{interfacem__strings_1_1string__to__value_afca39f47317f33e65a7bd2cb0f8ddf58}\label{interfacem__strings_1_1string__to__value_afca39f47317f33e65a7bd2cb0f8ddf58}} 
+\index{m\_strings::string\_to\_value@{m\_strings::string\_to\_value}!a2d@{a2d}}
+\index{a2d@{a2d}!m\_strings::string\_to\_value@{m\_strings::string\_to\_value}}
+\doxysubsubsection{\texorpdfstring{a2d()}{a2d()}}
+{\footnotesize\ttfamily subroutine m\+\_\+strings\+::string\+\_\+to\+\_\+value\+::a2d (\begin{DoxyParamCaption}\item[{character(len=$\ast$), intent(in)}]{chars,  }\item[{doubleprecision, intent(out)}]{valu,  }\item[{integer, intent(out)}]{ierr,  }\item[{class($\ast$), intent(in), optional}]{onerr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{interfacem__strings_1_1string__to__value_a2089572a0b06d524be83d9089589c959}\label{interfacem__strings_1_1string__to__value_a2089572a0b06d524be83d9089589c959}} 
+\index{m\_strings::string\_to\_value@{m\_strings::string\_to\_value}!a2i@{a2i}}
+\index{a2i@{a2i}!m\_strings::string\_to\_value@{m\_strings::string\_to\_value}}
+\doxysubsubsection{\texorpdfstring{a2i()}{a2i()}}
+{\footnotesize\ttfamily subroutine m\+\_\+strings\+::string\+\_\+to\+\_\+value\+::a2i (\begin{DoxyParamCaption}\item[{character(len=$\ast$), intent(in)}]{chars,  }\item[{integer, intent(out)}]{valu,  }\item[{integer, intent(out)}]{ierr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{interfacem__strings_1_1string__to__value_aec779c978fa7bcc812c6cb029321b5f0}\label{interfacem__strings_1_1string__to__value_aec779c978fa7bcc812c6cb029321b5f0}} 
+\index{m\_strings::string\_to\_value@{m\_strings::string\_to\_value}!a2r@{a2r}}
+\index{a2r@{a2r}!m\_strings::string\_to\_value@{m\_strings::string\_to\_value}}
+\doxysubsubsection{\texorpdfstring{a2r()}{a2r()}}
+{\footnotesize\ttfamily subroutine m\+\_\+strings\+::string\+\_\+to\+\_\+value\+::a2r (\begin{DoxyParamCaption}\item[{character(len=$\ast$), intent(in)}]{chars,  }\item[{\mbox{\hyperlink{interfacem__strings_1_1real}{real}}, intent(out)}]{valu,  }\item[{integer, intent(out)}]{ierr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\hypertarget{namespacem__strings_autotoc_md283}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__strings_autotoc_md283}
+string\+\_\+to\+\_\+value(3f) -\/ \mbox{[}M\+\_\+strings\+:N\+U\+M\+E\+R\+IC\mbox{]} subroutine returns numeric value from string (L\+I\+C\+E\+N\+SE\+:PD)\hypertarget{namespacem__strings_autotoc_md284}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__strings_autotoc_md284}
+\begin{DoxyVerb}subroutine string_to_value(chars,valu,ierr)
+
+ character(len=*),intent(in)              :: chars   ! input string
+ integer|real|doubleprecision,intent(out) :: valu
+ integer,intent(out)                      :: ierr
+\end{DoxyVerb}
+\hypertarget{namespacem__strings_autotoc_md285}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__strings_autotoc_md285}
+Returns a numeric value from a numeric character string.
+
+Works with any g-\/format input, including integer, real, and exponential. If the input string begins with \char`\"{}\+B\char`\"{}, \char`\"{}\+Z\char`\"{}, or \char`\"{}\+O\char`\"{} and otherwise represents a positive whole number it is assumed to be a binary, hexadecimal, or octal value. If the string contains commas they are removed. If the string is of the form NN\+:M\+MM... or N\+N\+::\+M\+MM then NN is assumed to be the base of the whole number.
+
+If an error occurs in the R\+E\+AD, I\+O\+S\+T\+AT is returned in I\+E\+RR and value is set to zero. if no error occurs, I\+E\+RR=0.\hypertarget{namespacem__strings_autotoc_md286}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__strings_autotoc_md286}
+C\+H\+A\+RS input string to read numeric value from\hypertarget{namespacem__strings_autotoc_md287}{}\doxysubsubsection{R\+E\+T\+U\+R\+NS}\label{namespacem__strings_autotoc_md287}
+V\+A\+LU numeric value returned. May be I\+N\+T\+E\+G\+ER, R\+E\+AL, or D\+O\+U\+B\+L\+E\+P\+R\+E\+C\+I\+S\+I\+ON. I\+E\+RR error flag (0 == no error)\hypertarget{namespacem__strings_autotoc_md288}{}\doxysubsubsection{E\+X\+A\+M\+P\+LE}\label{namespacem__strings_autotoc_md288}
+Sample Program\+:
+
+program demo\+\_\+string\+\_\+to\+\_\+value use M\+\_\+strings, only\+: \mbox{\hyperlink{interfacem__strings_1_1string__to__value}{string\+\_\+to\+\_\+value}} implicit none real \+:: value integer \+:: ierr character(len=80) \+:: string string=\textquotesingle{} -\/40.\+5e-\/2 \textquotesingle{} call string\+\_\+to\+\_\+value(string,value,ierr) write($\ast$,$\ast$) \textquotesingle{}value of string \mbox{[}\textquotesingle{}//trim(string)//\textquotesingle{}\mbox{]} is \textquotesingle{},value end program demo\+\_\+string\+\_\+to\+\_\+value\hypertarget{namespacem__strings_autotoc_md289}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__strings_autotoc_md289}
+John S. Urban\hypertarget{namespacem__strings_autotoc_md290}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__strings_autotoc_md290}
+Public Domain 
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/urbanjs/venus/\+V600/github/\+M\+\_\+strings/src/\mbox{\hyperlink{M__strings_8f90}{M\+\_\+strings.\+f90}}\end{DoxyCompactItemize}
