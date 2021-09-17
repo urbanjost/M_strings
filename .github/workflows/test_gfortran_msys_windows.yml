@@ -27,8 +27,6 @@ jobs:
     - name: Install fpm
       shell: msys2 {0}
       run: |
-           echo $PATH
-           pwd
            wget https://raw.githubusercontent.com/urbanjost/easy/main/bootstrap/fpm.F90
            gfortran fpm.F90 -o fpm
 
@@ -36,7 +34,7 @@ jobs:
       shell: msys2 {0}
       run: |
         gfortran --version
-        fpm test --profile release -flag "-D _WIN32"
+        ./fpm test --profile release -flag "-D _WIN32"
       env:
          FC: gfortran
          TZ: UTC+04:00
@@ -45,7 +43,7 @@ jobs:
       shell: msys2 {0}
       run: |
         gfortran --version
-        fpm test --profile release -flag "-D _WIN32"
+        ./fpm test --profile release -flag "-D _WIN32"
       env:
          FC: gfortran
          TZ: UTC+04:00
