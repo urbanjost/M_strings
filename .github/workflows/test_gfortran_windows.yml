@@ -46,5 +46,4 @@ jobs:
 #      run: fpm run --profile release
 
     - name: cleanup MSWindows
-      if: contains(matrix.os, 'windows')
       run: dir
