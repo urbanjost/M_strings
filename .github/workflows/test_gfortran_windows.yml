@@ -1,0 +1,50 @@
+name: run fpm test on windows with gfortran
+
+on: [push, pull_request]
+
+jobs:
+  Build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest]
+        include:
+        - os: windows-latest
+          gcc_v: 8
+
+    env:
+      FC: gfortran
+      GCC_V: ${{ matrix.gcc_v }}
+      TZ: UTC+04:00
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v1
+
+    - name: Install fpm
+      uses: fortran-lang/setup-fpm@v3
+      with:
+        use-haskell: ${{ matrix.haskell }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Display environment
+      run: |
+        #make -k -p -fNOTTHERE
+        echo "end" > foo.f90
+        gfortran -cpp -E -dM foo.f90
+        gfortran --version
+        fpm --version
+
+    - name: tests MSWindows (debug)
+      run: fpm test --profile debug -flag "-D _WIN32"
+
+    - name: tests MSWindows (release)
+      run: fpm test --profile release -flag "-D _WIN32"
+
+#    - name: Run demo programs (fpm run)
+#      run: fpm run --profile release
+
+    - name: cleanup MSWindows
+      if: contains(matrix.os, 'windows')
+      run: dir

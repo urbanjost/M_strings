@@ -1,0 +1,55 @@
+name: run fpm test on ubuntu with gfortran
+
+on: [push, pull_request]
+
+jobs:
+  Build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest ]
+        include:
+        - os: ubuntu-latest
+          gcc_v: 9
+
+    env:
+      FC: gfortran
+      GCC_V: ${{ matrix.gcc_v }}
+      TZ: UTC+04:00
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v1
+
+    - name: Install GFortran Linux
+      run: |
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${GCC_V} 100 \
+        --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-${GCC_V} \
+        --slave /usr/bingcov gcov /usr/bin/gcov-${GCC_V}
+
+    - name: Install fpm
+      uses: fortran-lang/setup-fpm@v3
+      with:
+        use-haskell: ${{ matrix.haskell }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Display environment
+      run: |
+        #make -k -p -fNOTTHERE
+        echo "end" > foo.f90
+        gfortran -cpp -E -dM foo.f90
+        gfortran --version
+        fpm --version
+
+    - name: run fpm test on ubuntu with gfortran (debug)
+      run: fpm test --profile debug
+
+    - name: run fpm test on ubuntu with gfortran (release)
+      run: fpm test --profile release
+
+#    - name: Run demo programs (fpm run)
+#      run: fpm run --profile release
+
+    - name: cleanup Linux
+      run: ls -ltras
