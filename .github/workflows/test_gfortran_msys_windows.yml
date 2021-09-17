@@ -27,8 +27,10 @@ jobs:
     - name: Install fpm
       shell: msys2 {0}
       run: |
-        wget https://github.com/awvwgk/mingw-w64-fpm-pkgbuild/releases/download/current/mingw-w64-x86_64-fpm-0.2.0-1-any.pkg.tar.zst
-        pacman -U --noconfirm mingw-w64-x86_64-fpm-*-any.pkg.tar.zst
+           echo $PATH
+           pwd
+           wget https://raw.githubusercontent.com/urbanjost/easy/main/bootstrap/fpm.F90
+           gfortran fpm.F90 -o fpm
 
     - name: Run tests and demo programs (debug)
       shell: msys2 {0}
