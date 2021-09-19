@@ -1,0 +1,24 @@
+prefsize 16 16
+prefsize 500 500
+vinit
+ortho2 -100 100 -100 100
+circleprecision 128
+color 6
+makepoly
+circle 0 0 100 
+closepoly
+color 3
+linewidth 400
+circle 0 0 75
+move2 0 0
+textang 0 
+textsize 50 50
+centertext T
+linewidth 450
+drawstr UP
+print_ppm sample.ppm
+clear
+vexit
+# assuming you have imagemagick installed
+display sample.ppm
+quit
