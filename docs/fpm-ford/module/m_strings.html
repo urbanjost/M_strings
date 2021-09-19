@@ -448,84 +448,101 @@
   use M_strings, only : describe
 </code></pre></div>
 
-<p>TOKENS
-       split  subroutine parses string using specified delimiter characters
-              and stores tokens into an array
-       sep    function interface to split(3f)
-       delim  subroutine parses string using specified delimiter characters
-              and store tokens into an array
-       chomp  function consumes input line as it returns next token in a
-              string using specified delimiters
-       fmt    convert a string into a paragraph
-       strtok tokenize a string like C strtok(3c) routine</p>
-<p>EDITING
-       substitute     subroutine non-recursively globally replaces old
-                      substring with new substring
-       replace        function non-recursively globally replaces old
-                      substring with new substring using allocatable string
-                      (version of substitute(3f) without limitation on
-                      length of output string)
-       change         subroutine non-recursively globally replaces old
-                      substring with new substring with a directive like
-                      line editor
-       modif          subroutine modifies a string with a directive like the
-                      XEDIT line editor MODIFY command
-       transliterate  replace characters found in set one with characters
-                      from set two
-       reverse        reverse character order in a string
-       join           join an array of CHARACTER variables with specified
-                      separator
-       rotate13       apply trivial encryption algorithm ROT13 to a string</p>
-<p>CASE
-       upper          function converts string to uppercase
-       lower          function converts string to miniscule
-       upper_quoted   function converts string to uppercase skipping strings
-                      quoted per Fortran rules</p>
-<p>WHITE SPACE
-       adjustc  elemental function centers text within the length of the
-                input string
-       compact  left justify string and replace duplicate whitespace with
-                single characters or nothing
-       nospace  function replaces whitespace with nothing
-       indent   find number of leading spaces
-       crop     function trims leading and trailing spaces</p>
-<p>QUOTES
-       unquote  remove quotes from string as if read with list-directed input
-       quote    add quotes to string as if written with list-directed input</p>
-<p>STRING LENGTH
-       len_white  find location of last non-whitespace character
-       lenset     return a string of specified length
-       atleast    return a string of at least specified length
-       stretch    return a string of at least specified length with suffix
-       merge_str  make strings of equal length and then call MERGE(3f)
-                  intrinsic</p>
-<p>CHARACTER ARRAY VERSUS STRING
-       switch  switch between a string and an array of single characters
-       s2c     convert string to array of single characters and add null
-               terminator for passing to C
-       c2s     convert null-terminated array of single characters to
-               string for converting strings returned from C</p>
-<p>NONALPHA
-       noesc    convert non-printable ASCII8 characters to a space
-       notabs   convert tabs to spaces while maintaining columns,
-                assuming tabs are set every 8 characters
-       dilate   function to convert tabs to spaces assuming tabs are set
-                every 8 characters
-       expand   expand escape sequences in a string
-       visible  expand escape sequences in a string to &ldquo;control&rdquo; and
-                meta-control representations</p>
-<p>NUMERIC STRINGS
-       string_to_value   generic subroutine returns numeric value (REAL,
-                         DOUBLEPRECISION, INTEGER) from string
-       string_to_values  subroutine reads an array of numbers from a string
-       getvals           subroutine reads a relatively arbitrary number
-                         of values from a string using list-directed read
-       s2v               function returns DOUBLEPRECISION numeric value
-                         from string
-       s2vs              function returns a DOUBLEPRECISION array of numbers
-                         from a string
-       msg               append the values of up to nine values into a string</p>
-<div class="codehilite"><pre><span></span><code>   <span class="nv">value_to_string</span>   <span class="nv">generic</span> <span class="nv">subroutine</span> <span class="nv">returns</span> <span class="nv">string</span> <span class="nv">given</span> <span class="nv">numeric</span> <span class="nv">value</span>
+<p>TOKENS</p>
+<div class="codehilite"><pre><span></span><code>   <span class="nv">split</span>  <span class="nv">subroutine</span> <span class="nv">parses</span> <span class="nv">string</span> <span class="nv">using</span> <span class="nv">specified</span> <span class="nv">delimiter</span> <span class="nv">characters</span>
+          <span class="nv">and</span> <span class="nv">stores</span> <span class="nv">tokens</span> <span class="nv">into</span> <span class="nv">an</span> <span class="nv">array</span>
+   <span class="nv">sep</span>    <span class="nv">function</span> <span class="nv">interface</span> <span class="nv">to</span> <span class="nv">split</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>
+   <span class="nv">delim</span>  <span class="nv">subroutine</span> <span class="nv">parses</span> <span class="nv">string</span> <span class="nv">using</span> <span class="nv">specified</span> <span class="nv">delimiter</span> <span class="nv">characters</span>
+          <span class="nv">and</span> <span class="nv">store</span> <span class="nv">tokens</span> <span class="nv">into</span> <span class="nv">an</span> <span class="nv">array</span>
+   <span class="nv">chomp</span>  <span class="nv">function</span> <span class="nv">consumes</span> <span class="nv">input</span> <span class="nv">line</span> <span class="nv">as</span> <span class="nv">it</span> <span class="nv">returns</span> <span class="k">next</span> <span class="nv">token</span> <span class="nv">in</span> <span class="nv">a</span>
+          <span class="nv">string</span> <span class="nv">using</span> <span class="nv">specified</span> <span class="nv">delimiters</span>
+   <span class="nv">fmt</span>    <span class="nv">convert</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">into</span> <span class="nv">a</span> <span class="nv">paragraph</span>
+   <span class="nv">strtok</span> <span class="nv">tokenize</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">like</span> <span class="nv">C</span> <span class="nv">strtok</span><span class="ss">(</span><span class="mi">3</span><span class="nv">c</span><span class="ss">)</span> <span class="nv">routine</span>
+</code></pre></div>
+
+<p>EDITING</p>
+<div class="codehilite"><pre><span></span><code>   <span class="n">substitute</span>     <span class="n">subroutine</span> <span class="n">non</span><span class="o">-</span><span class="n">recursively</span> <span class="n">globally</span> <span class="n">replaces</span> <span class="n">old</span>
+                  <span class="n">substring</span> <span class="n">with</span> <span class="n">new</span> <span class="n">substring</span>
+   <span class="n">replace</span>        <span class="n">function</span> <span class="n">non</span><span class="o">-</span><span class="n">recursively</span> <span class="n">globally</span> <span class="n">replaces</span> <span class="n">old</span>
+                  <span class="n">substring</span> <span class="n">with</span> <span class="n">new</span> <span class="n">substring</span> <span class="n">using</span> <span class="n">allocatable</span> <span class="n">string</span>
+                  <span class="p">(</span><span class="n">version</span> <span class="n">of</span> <span class="n">substitute</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span> <span class="n">without</span> <span class="n">limitation</span> <span class="n">on</span>
+                  <span class="n">length</span> <span class="n">of</span> <span class="n">output</span> <span class="n">string</span><span class="p">)</span>
+   <span class="n">change</span>         <span class="n">subroutine</span> <span class="n">non</span><span class="o">-</span><span class="n">recursively</span> <span class="n">globally</span> <span class="n">replaces</span> <span class="n">old</span>
+                  <span class="n">substring</span> <span class="n">with</span> <span class="n">new</span> <span class="n">substring</span> <span class="n">with</span> <span class="n">a</span> <span class="n">directive</span> <span class="n">like</span>
+                  <span class="n">line</span> <span class="n">editor</span>
+   <span class="n">modif</span>          <span class="n">subroutine</span> <span class="n">modifies</span> <span class="n">a</span> <span class="n">string</span> <span class="n">with</span> <span class="n">a</span> <span class="n">directive</span> <span class="n">like</span> <span class="n">the</span>
+                  <span class="n">XEDIT</span> <span class="n">line</span> <span class="n">editor</span> <span class="n">MODIFY</span> <span class="n">command</span>
+   <span class="n">transliterate</span>  <span class="n">replace</span> <span class="n">characters</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">set</span> <span class="n">one</span> <span class="n">with</span> <span class="n">characters</span>
+                  <span class="n">from</span> <span class="n">set</span> <span class="n">two</span>
+   <span class="n">reverse</span>        <span class="n">reverse</span> <span class="n">character</span> <span class="n">order</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">string</span>
+   <span class="n">join</span>           <span class="n">join</span> <span class="n">an</span> <span class="n">array</span> <span class="n">of</span> <span class="n">CHARACTER</span> <span class="n">variables</span> <span class="n">with</span> <span class="n">specified</span>
+                  <span class="n">separator</span>
+   <span class="n">rotate13</span>       <span class="n">apply</span> <span class="n">trivial</span> <span class="n">encryption</span> <span class="n">algorithm</span> <span class="n">ROT13</span> <span class="n">to</span> <span class="n">a</span> <span class="n">string</span>
+</code></pre></div>
+
+<p>CASE</p>
+<div class="codehilite"><pre><span></span><code>   upper          function converts string to uppercase
+   lower          function converts string to miniscule
+   upper_quoted   function converts string to uppercase skipping strings
+                  quoted per Fortran rules
+</code></pre></div>
+
+<p>WHITE SPACE</p>
+<div class="codehilite"><pre><span></span><code>   adjustc  elemental function centers text within the length of the
+            input string
+   compact  left justify string and replace duplicate whitespace with
+            single characters or nothing
+   nospace  function replaces whitespace with nothing
+   indent   find number of leading spaces
+   crop     function trims leading and trailing spaces
+</code></pre></div>
+
+<p>QUOTES</p>
+<div class="codehilite"><pre><span></span><code>   <span class="nv">unquote</span>  <span class="nv">remove</span> <span class="nv">quotes</span> <span class="nv">from</span> <span class="nv">string</span> <span class="nv">as</span> <span class="k">if</span> <span class="nv">read</span> <span class="nv">with</span> <span class="nv">list</span><span class="o">-</span><span class="nv">directed</span> <span class="nv">input</span>
+   <span class="nv">quote</span>    <span class="nv">add</span> <span class="nv">quotes</span> <span class="nv">to</span> <span class="nv">string</span> <span class="nv">as</span> <span class="k">if</span> <span class="nv">written</span> <span class="nv">with</span> <span class="nv">list</span><span class="o">-</span><span class="nv">directed</span> <span class="nv">input</span>
+</code></pre></div>
+
+<p>STRING LENGTH</p>
+<div class="codehilite"><pre><span></span><code>   <span class="nv">len_white</span>  <span class="nv">find</span> <span class="nv">location</span> <span class="nv">of</span> <span class="nv">last</span> <span class="nv">non</span><span class="o">-</span><span class="nv">whitespace</span> <span class="nv">character</span>
+   <span class="nv">lenset</span>     <span class="k">return</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">of</span> <span class="nv">specified</span> <span class="nv">length</span>
+   <span class="nv">atleast</span>    <span class="k">return</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">of</span> <span class="nv">at</span> <span class="nv">least</span> <span class="nv">specified</span> <span class="nv">length</span>
+   <span class="nv">stretch</span>    <span class="k">return</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">of</span> <span class="nv">at</span> <span class="nv">least</span> <span class="nv">specified</span> <span class="nv">length</span> <span class="nv">with</span> <span class="nv">suffix</span>
+   <span class="nv">merge_str</span>  <span class="nv">make</span> <span class="nv">strings</span> <span class="nv">of</span> <span class="nv">equal</span> <span class="nv">length</span> <span class="nv">and</span> <span class="k">then</span> <span class="k">call</span> <span class="nl">MERGE</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>
+              <span class="nv">intrinsic</span>
+</code></pre></div>
+
+<p>CHARACTER ARRAY VERSUS STRING</p>
+<div class="codehilite"><pre><span></span><code>   <span class="nv">switch</span>  <span class="nv">switch</span> <span class="nv">between</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">and</span> <span class="nv">an</span> <span class="nv">array</span> <span class="nv">of</span> <span class="nv">single</span> <span class="nv">characters</span>
+   <span class="nv">s2c</span>     <span class="nv">convert</span> <span class="nv">string</span> <span class="nv">to</span> <span class="nv">array</span> <span class="nv">of</span> <span class="nv">single</span> <span class="nv">characters</span> <span class="nv">and</span> <span class="nv">add</span> <span class="nv">null</span>
+           <span class="nv">terminator</span> <span class="k">for</span> <span class="nv">passing</span> <span class="nv">to</span> <span class="nv">C</span>
+   <span class="nv">c2s</span>     <span class="nv">convert</span> <span class="nv">null</span><span class="o">-</span><span class="nv">terminated</span> <span class="nv">array</span> <span class="nv">of</span> <span class="nv">single</span> <span class="nv">characters</span> <span class="nv">to</span>
+           <span class="nv">string</span> <span class="k">for</span> <span class="nv">converting</span> <span class="nv">strings</span> <span class="nv">returned</span> <span class="nv">from</span> <span class="nv">C</span>
+</code></pre></div>
+
+<p>NONALPHA</p>
+<div class="codehilite"><pre><span></span><code>   <span class="nv">noesc</span>    <span class="nv">convert</span> <span class="nv">non</span><span class="o">-</span><span class="nv">printable</span> <span class="nv">ASCII8</span> <span class="nv">characters</span> <span class="nv">to</span> <span class="nv">a</span> <span class="nv">space</span>
+   <span class="nv">notabs</span>   <span class="nv">convert</span> <span class="nv">tabs</span> <span class="nv">to</span> <span class="nv">spaces</span> <span class="k">while</span> <span class="nv">maintaining</span> <span class="nv">columns</span>,
+            <span class="nv">assuming</span> <span class="nv">tabs</span> <span class="nv">are</span> <span class="nv">set</span> <span class="nv">every</span> <span class="mi">8</span> <span class="nv">characters</span>
+   <span class="nv">dilate</span>   <span class="nv">function</span> <span class="nv">to</span> <span class="nv">convert</span> <span class="nv">tabs</span> <span class="nv">to</span> <span class="nv">spaces</span> <span class="nv">assuming</span> <span class="nv">tabs</span> <span class="nv">are</span> <span class="nv">set</span>
+            <span class="nv">every</span> <span class="mi">8</span> <span class="nv">characters</span>
+   <span class="nv">expand</span>   <span class="nv">expand</span> <span class="nv">escape</span> <span class="nv">sequences</span> <span class="nv">in</span> <span class="nv">a</span> <span class="nv">string</span>
+   <span class="nv">visible</span>  <span class="nv">expand</span> <span class="nv">escape</span> <span class="nv">sequences</span> <span class="nv">in</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">to</span> <span class="s2">&quot;</span><span class="s">control</span><span class="s2">&quot;</span> <span class="nv">and</span>
+            <span class="nv">meta</span><span class="o">-</span><span class="nv">control</span> <span class="nv">representations</span>
+</code></pre></div>
+
+<p>NUMERIC STRINGS</p>
+<div class="codehilite"><pre><span></span><code>   <span class="nv">string_to_value</span>   <span class="nv">generic</span> <span class="nv">subroutine</span> <span class="nv">returns</span> <span class="nv">numeric</span> <span class="nv">value</span> <span class="ss">(</span><span class="nv">REAL</span>,
+                     <span class="nv">DOUBLEPRECISION</span>, <span class="nv">INTEGER</span><span class="ss">)</span> <span class="nv">from</span> <span class="nv">string</span>
+   <span class="nv">string_to_values</span>  <span class="nv">subroutine</span> <span class="nv">reads</span> <span class="nv">an</span> <span class="nv">array</span> <span class="nv">of</span> <span class="nv">numbers</span> <span class="nv">from</span> <span class="nv">a</span> <span class="nv">string</span>
+   <span class="nv">getvals</span>           <span class="nv">subroutine</span> <span class="nv">reads</span> <span class="nv">a</span> <span class="nv">relatively</span> <span class="nv">arbitrary</span> <span class="nv">number</span>
+                     <span class="nv">of</span> <span class="nv">values</span> <span class="nv">from</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">using</span> <span class="nv">list</span><span class="o">-</span><span class="nv">directed</span> <span class="nv">read</span>
+   <span class="nv">s2v</span>               <span class="nv">function</span> <span class="nv">returns</span> <span class="nv">DOUBLEPRECISION</span> <span class="nv">numeric</span> <span class="nv">value</span>
+                     <span class="nv">from</span> <span class="nv">string</span>
+   <span class="nv">s2vs</span>              <span class="nv">function</span> <span class="nv">returns</span> <span class="nv">a</span> <span class="nv">DOUBLEPRECISION</span> <span class="nv">array</span> <span class="nv">of</span> <span class="nv">numbers</span>
+                     <span class="nv">from</span> <span class="nv">a</span> <span class="nv">string</span>
+   <span class="nv">msg</span>               <span class="nv">append</span> <span class="nv">the</span> <span class="nv">values</span> <span class="nv">of</span> <span class="nv">up</span> <span class="nv">to</span> <span class="nv">nine</span> <span class="nv">values</span> <span class="nv">into</span> <span class="nv">a</span> <span class="nv">string</span>
+
+   <span class="nv">value_to_string</span>   <span class="nv">generic</span> <span class="nv">subroutine</span> <span class="nv">returns</span> <span class="nv">string</span> <span class="nv">given</span> <span class="nv">numeric</span> <span class="nv">value</span>
                      <span class="ss">(</span><span class="nv">REAL</span>, <span class="nv">DOUBLEPRECISION</span>, <span class="nv">INTEGER</span>, <span class="nv">LOGICAL</span> <span class="ss">)</span>
    <span class="nv">v2s</span>               <span class="nv">generic</span> <span class="nv">function</span> <span class="nv">returns</span> <span class="nv">string</span> <span class="nv">from</span> <span class="nv">numeric</span> <span class="nv">value</span>
                      <span class="ss">(</span><span class="nv">REAL</span>, <span class="nv">DOUBLEPRECISION</span>, <span class="nv">INTEGER</span> <span class="ss">)</span>
@@ -534,11 +551,12 @@
    <span class="nv">isnumber</span>          <span class="nv">determine</span> <span class="k">if</span> <span class="nv">string</span> <span class="nv">represents</span> <span class="nv">a</span> <span class="nv">number</span>
 </code></pre></div>
 
-<p>CHARACTER TESTS
-       glob        compares given string for match to pattern which may
-                   contain wildcard characters
-       ends_with   test whether strings ends with one of the specified suffixs</p>
-<div class="codehilite"><pre><span></span><code>   <span class="nv">o</span> <span class="nv">isalnum</span>   <span class="nv">returns</span> .<span class="nv">true</span>. <span class="k">if</span> <span class="nv">character</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">letter</span> <span class="nv">or</span> <span class="nv">digit</span>
+<p>CHARACTER TESTS</p>
+<div class="codehilite"><pre><span></span><code>   <span class="nv">glob</span>        <span class="nv">compares</span> <span class="nv">given</span> <span class="nv">string</span> <span class="k">for</span> <span class="nv">match</span> <span class="nv">to</span> <span class="nv">pattern</span> <span class="nv">which</span> <span class="nv">may</span>
+               <span class="nv">contain</span> <span class="nv">wildcard</span> <span class="nv">characters</span>
+   <span class="nv">ends_with</span>   <span class="nv">test</span> <span class="nv">whether</span> <span class="nv">strings</span> <span class="nv">ends</span> <span class="nv">with</span> <span class="nv">one</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">specified</span> <span class="nv">suffixs</span>
+
+   <span class="nv">o</span> <span class="nv">isalnum</span>   <span class="nv">returns</span> .<span class="nv">true</span>. <span class="k">if</span> <span class="nv">character</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">letter</span> <span class="nv">or</span> <span class="nv">digit</span>
    <span class="nv">o</span> <span class="nv">isalpha</span>   <span class="nv">returns</span> .<span class="nv">true</span>. <span class="k">if</span> <span class="nv">character</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">letter</span> <span class="nv">and</span>
                .<span class="nv">false</span>. <span class="nv">otherwise</span>
    <span class="nv">o</span> <span class="nv">iscntrl</span>   <span class="nv">returns</span> .<span class="nv">true</span>. <span class="k">if</span> <span class="nv">character</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">delete</span> <span class="nv">character</span> <span class="nv">or</span>
@@ -565,42 +583,47 @@
    <span class="nv">fortran_name</span>   <span class="nv">returns</span> .<span class="nv">true</span>. <span class="k">if</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">valid</span> <span class="nv">Fortran</span> <span class="nv">name</span>
 </code></pre></div>
 
-<p>BASE CONVERSION
-       base       convert whole number string in base [2-36] to string
-                  in alternate base [2-36]
-       base2      convert INTEGER to a string representing a binary value
-       codebase   convert whole number string in base [2-36] to base
-                  10 number
-       decodebase convert whole number in base 10 to string in base [2-36]</p>
-<p>MISCELLANEOUS
-       describe   returns a string describing the name of a single character</p>
-<p>INTRINSICS
-    The M_strings(3fm) module supplements and works in combination with
-    the Fortran built-in intrinsics. Stand-alone Fortran lets you access
-    the characters in a string using ranges much like they are character
-    arrays, assignment, comparisons with standard operators, supports
-    dynamically allocatable strings and supports concatenation using the //
-    operator, as well as a number of intrinsic string routines:</p>
-<div class="codehilite"><pre><span></span><code>    <span class="nv">adjustl</span>             <span class="nv">Left</span> <span class="nv">adjust</span> <span class="nv">a</span> <span class="nv">string</span>
-    <span class="nv">adjustr</span>             <span class="nv">Right</span> <span class="nv">adjust</span> <span class="nv">a</span> <span class="nv">string</span>
-    <span class="nv">index</span>               <span class="nv">Position</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">substring</span> <span class="nv">within</span> <span class="nv">a</span> <span class="nv">string</span>
-    <span class="nv">repeat</span>              <span class="nv">Repeated</span> <span class="nv">string</span> <span class="nv">concatenation</span>
-    <span class="nv">scan</span>                <span class="nv">Scan</span> <span class="nv">a</span> <span class="nv">string</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">presence</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">set</span>
-                        <span class="nv">of</span> <span class="nv">characters</span>
-    <span class="nv">trim</span>                <span class="nv">Remove</span> <span class="nv">trailing</span> <span class="nv">blank</span> <span class="nv">characters</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">string</span>
-    <span class="nv">verify</span>              <span class="nv">Scan</span> <span class="nv">a</span> <span class="nv">string</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">absence</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">set</span> <span class="nv">of</span>
-                        <span class="nv">characters</span>
-    <span class="nv">len</span>                 <span class="nv">It</span> <span class="nv">returns</span> <span class="nv">the</span> <span class="nv">length</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">character</span> <span class="nv">string</span>
-    <span class="nv">achar</span>               <span class="nv">converts</span> <span class="nv">an</span> <span class="nv">integer</span> <span class="nv">into</span> <span class="nv">a</span> <span class="nv">character</span>
-    <span class="nv">iachar</span>              <span class="nv">converts</span> <span class="nv">a</span> <span class="nv">character</span> <span class="nv">into</span> <span class="nv">an</span> <span class="nv">integer</span>
-    <span class="nv">len_trim</span>            <span class="nv">finds</span> <span class="nv">length</span> <span class="nv">of</span> <span class="nv">string</span> <span class="nv">with</span> <span class="nv">trailing</span> <span class="nv">spaces</span>
-                        <span class="nv">ignored</span>
-    <span class="nv">new_line</span>            <span class="nv">Newline</span> <span class="nv">character</span>
-    <span class="nv">selected_char_kind</span>  <span class="nv">Choose</span> <span class="nv">character</span> <span class="nv">kind</span>
-    <span class="nv">lge</span>                 <span class="nv">Lexical</span> <span class="nv">greater</span> <span class="nv">than</span> <span class="nv">or</span> <span class="nv">equal</span>
-    <span class="nv">lgt</span>                 <span class="nv">Lexical</span> <span class="nv">greater</span> <span class="nv">than</span>
-    <span class="nv">lle</span>                 <span class="nv">Lexical</span> <span class="nv">less</span> <span class="nv">than</span> <span class="nv">or</span> <span class="nv">equal</span>
-    <span class="nv">llt</span>                 <span class="nv">Lexical</span> <span class="nv">less</span> <span class="nv">than</span>
+<p>BASE CONVERSION</p>
+<div class="codehilite"><pre><span></span><code>   base       convert whole number string in base [2-36] to string
+              in alternate base [2-36]
+   base2      convert INTEGER to a string representing a binary value
+   codebase   convert whole number string in base [2-36] to base
+              10 number
+   decodebase convert whole number in base 10 to string in base [2-36]
+</code></pre></div>
+
+<p>MISCELLANEOUS</p>
+<div class="codehilite"><pre><span></span><code>   describe   returns a string describing the name of a single character
+</code></pre></div>
+
+<p>INTRINSICS</p>
+<div class="codehilite"><pre><span></span><code><span class="n">The</span> <span class="n">M_strings</span><span class="p">(</span><span class="mf">3f</span><span class="n">m</span><span class="p">)</span> <span class="k">module</span> <span class="n">supplements</span> <span class="k">and</span> <span class="n">works</span> <span class="n">in</span> <span class="n">combination</span> <span class="n">with</span>
+<span class="n">the</span> <span class="n">Fortran</span> <span class="n">built</span><span class="o">-</span><span class="n">in</span> <span class="n">intrinsics</span><span class="p">.</span> <span class="n">Stand</span><span class="o">-</span><span class="n">alone</span> <span class="n">Fortran</span> <span class="n">lets</span> <span class="n">you</span> <span class="n">access</span>
+<span class="n">the</span> <span class="n">characters</span> <span class="n">in</span> <span class="n">a</span> <span class="k">string</span> <span class="n">using</span> <span class="n">ranges</span> <span class="n">much</span> <span class="n">like</span> <span class="n">they</span> <span class="n">are</span> <span class="n">character</span>
+<span class="n">arrays</span><span class="p">,</span> <span class="n">assignment</span><span class="p">,</span> <span class="n">comparisons</span> <span class="n">with</span> <span class="n">standard</span> <span class="n">operators</span><span class="p">,</span> <span class="n">supports</span>
+<span class="n">dynamically</span> <span class="n">allocatable</span> <span class="n">strings</span> <span class="k">and</span> <span class="n">supports</span> <span class="n">concatenation</span> <span class="n">using</span> <span class="n">the</span> <span class="c1">//</span>
+<span class="n">operator</span><span class="p">,</span> <span class="n">as</span> <span class="n">well</span> <span class="n">as</span> <span class="n">a</span> <span class="n">number</span> <span class="n">of</span> <span class="n">intrinsic</span> <span class="k">string</span> <span class="nl">routines:</span>
+
+    <span class="n">adjustl</span>             <span class="n">Left</span> <span class="n">adjust</span> <span class="n">a</span> <span class="k">string</span>
+    <span class="n">adjustr</span>             <span class="n">Right</span> <span class="n">adjust</span> <span class="n">a</span> <span class="k">string</span>
+    <span class="n">index</span>               <span class="n">Position</span> <span class="n">of</span> <span class="n">a</span> <span class="n">substring</span> <span class="n">within</span> <span class="n">a</span> <span class="k">string</span>
+    <span class="k">repeat</span>              <span class="n">Repeated</span> <span class="k">string</span> <span class="n">concatenation</span>
+    <span class="n">scan</span>                <span class="n">Scan</span> <span class="n">a</span> <span class="k">string</span> <span class="k">for</span> <span class="n">the</span> <span class="n">presence</span> <span class="n">of</span> <span class="n">a</span> <span class="n">set</span>
+                        <span class="n">of</span> <span class="n">characters</span>
+    <span class="n">trim</span>                <span class="n">Remove</span> <span class="n">trailing</span> <span class="n">blank</span> <span class="n">characters</span> <span class="n">of</span> <span class="n">a</span> <span class="k">string</span>
+    <span class="n">verify</span>              <span class="n">Scan</span> <span class="n">a</span> <span class="k">string</span> <span class="k">for</span> <span class="n">the</span> <span class="n">absence</span> <span class="n">of</span> <span class="n">a</span> <span class="n">set</span> <span class="n">of</span>
+                        <span class="n">characters</span>
+    <span class="n">len</span>                 <span class="n">It</span> <span class="n">returns</span> <span class="n">the</span> <span class="n">length</span> <span class="n">of</span> <span class="n">a</span> <span class="n">character</span> <span class="k">string</span>
+    <span class="n">achar</span>               <span class="n">converts</span> <span class="n">an</span> <span class="k">integer</span> <span class="n">into</span> <span class="n">a</span> <span class="n">character</span>
+    <span class="n">iachar</span>              <span class="n">converts</span> <span class="n">a</span> <span class="n">character</span> <span class="n">into</span> <span class="n">an</span> <span class="k">integer</span>
+    <span class="n">len_trim</span>            <span class="n">finds</span> <span class="n">length</span> <span class="n">of</span> <span class="k">string</span> <span class="n">with</span> <span class="n">trailing</span> <span class="n">spaces</span>
+                        <span class="n">ignored</span>
+    <span class="n">new_line</span>            <span class="n">Newline</span> <span class="n">character</span>
+    <span class="n">selected_char_kind</span>  <span class="n">Choose</span> <span class="n">character</span> <span class="n">kind</span>
+    <span class="n">lge</span>                 <span class="n">Lexical</span> <span class="n">greater</span> <span class="n">than</span> <span class="k">or</span> <span class="n">equal</span>
+    <span class="n">lgt</span>                 <span class="n">Lexical</span> <span class="n">greater</span> <span class="n">than</span>
+    <span class="n">lle</span>                 <span class="n">Lexical</span> <span class="n">less</span> <span class="n">than</span> <span class="k">or</span> <span class="n">equal</span>
+    <span class="n">llt</span>                 <span class="n">Lexical</span> <span class="n">less</span> <span class="n">than</span>
 </code></pre></div>
 
 <p>OOPS INTERFACE
@@ -8950,7 +8973,7 @@ public subroutine <a href='../proc/value_to_string.html'>value_to_string</a>(gva
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-09-10 22:57  
+             on 2021-09-19 08:09  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_strings was developed by John S. Urban</p></div>

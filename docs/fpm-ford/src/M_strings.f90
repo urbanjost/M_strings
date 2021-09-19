@@ -41,6 +41,7 @@
 !!      use M_strings, only : describe
 !!
 !!   TOKENS
+!!
 !!       split  subroutine parses string using specified delimiter characters
 !!              and stores tokens into an array
 !!       sep    function interface to split(3f)
@@ -52,6 +53,7 @@
 !!       strtok tokenize a string like C strtok(3c) routine
 !!
 !!   EDITING
+!!
 !!       substitute     subroutine non-recursively globally replaces old
 !!                      substring with new substring
 !!       replace        function non-recursively globally replaces old
@@ -71,12 +73,14 @@
 !!       rotate13       apply trivial encryption algorithm ROT13 to a string
 !!
 !!   CASE
+!!
 !!       upper          function converts string to uppercase
 !!       lower          function converts string to miniscule
 !!       upper_quoted   function converts string to uppercase skipping strings
 !!                      quoted per Fortran rules
 !!
 !!   WHITE SPACE
+!!
 !!       adjustc  elemental function centers text within the length of the
 !!                input string
 !!       compact  left justify string and replace duplicate whitespace with
@@ -86,10 +90,12 @@
 !!       crop     function trims leading and trailing spaces
 !!
 !!   QUOTES
+!!
 !!       unquote  remove quotes from string as if read with list-directed input
 !!       quote    add quotes to string as if written with list-directed input
 !!
 !!   STRING LENGTH
+!!
 !!       len_white  find location of last non-whitespace character
 !!       lenset     return a string of specified length
 !!       atleast    return a string of at least specified length
@@ -98,6 +104,7 @@
 !!                  intrinsic
 !!
 !!   CHARACTER ARRAY VERSUS STRING
+!!
 !!       switch  switch between a string and an array of single characters
 !!       s2c     convert string to array of single characters and add null
 !!               terminator for passing to C
@@ -105,6 +112,7 @@
 !!               string for converting strings returned from C
 !!
 !!   NONALPHA
+!!
 !!       noesc    convert non-printable ASCII8 characters to a space
 !!       notabs   convert tabs to spaces while maintaining columns,
 !!                assuming tabs are set every 8 characters
@@ -115,6 +123,7 @@
 !!                meta-control representations
 !!
 !!   NUMERIC STRINGS
+!!
 !!       string_to_value   generic subroutine returns numeric value (REAL,
 !!                         DOUBLEPRECISION, INTEGER) from string
 !!       string_to_values  subroutine reads an array of numbers from a string
@@ -135,6 +144,7 @@
 !!       isnumber          determine if string represents a number
 !!
 !!   CHARACTER TESTS
+!!
 !!       glob        compares given string for match to pattern which may
 !!                   contain wildcard characters
 !!       ends_with   test whether strings ends with one of the specified suffixs
@@ -166,6 +176,7 @@
 !!       fortran_name   returns .true. if input string is a valid Fortran name
 !!
 !!   BASE CONVERSION
+!!
 !!       base       convert whole number string in base [2-36] to string
 !!                  in alternate base [2-36]
 !!       base2      convert INTEGER to a string representing a binary value
@@ -174,9 +185,11 @@
 !!       decodebase convert whole number in base 10 to string in base [2-36]
 !!
 !!   MISCELLANEOUS
+!!
 !!       describe   returns a string describing the name of a single character
 !!
 !!   INTRINSICS
+!!
 !!    The M_strings(3fm) module supplements and works in combination with
 !!    the Fortran built-in intrinsics. Stand-alone Fortran lets you access
 !!    the characters in a string using ranges much like they are character
