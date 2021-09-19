@@ -111,7 +111,7 @@ Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.co
 
 ## USER DOCUMENTATION
 
-   In addition to a [markdown document](HIGHLIGHTS.md)  with links to
+   In addition to a [markdown document](docs/HIGHLIGHTS.md)  with links to
    some of the most commonly used procedures, there are HTML documents for each
    subprogram in the style of man-pages:
 
