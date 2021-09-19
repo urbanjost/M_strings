@@ -1,8 +1,5 @@
 ---
 src_dir: src
-         app
-         example
-         test
 output_dir: docs/fpm-ford
 project: M_strings
 summary: string operations
@@ -16,6 +13,9 @@ exclude_dir: ./archive
              ./FODDER
              ./build
              ./man
+             ./app
+             ./example
+             ./test
              ./src/source
              ./docs/doxygen_out
 display: public
