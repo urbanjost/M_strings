@@ -125,6 +125,7 @@ Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.co
  - Literal man-pages for use on GNU/Linux, Unix and CygWin platforms:
     + [manpages.zip](https://urbanjost.github.io/M_strings/manpages.zip) 
     + [manpages.tgz](https://urbanjost.github.io/M_strings/manpages.tgz) 
+    + [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
 
 ## DEMO PROGRAMS
 
@@ -133,14 +134,7 @@ examples are included in the example/ directory.
 
 ## DEVELOPER DOCUMENTATION (__experimental__)
 
-   The code was run through [ford(1)](https://politicalphysicist.github.io/ford-fortran-documentation.html)
-   to produce a [developers' document](https://urbanjost.github.io/M_strings/fpm-ford/index.html).
+   - The code was run through [ford(1)](https://politicalphysicist.github.io/ford-fortran-documentation.html)
+     to produce a [developers' document](https://urbanjost.github.io/M_strings/fpm-ford/index.html).
+   - [github action status](docs/STATUS.md) 
 
-## [CHANGELOG](CHANGELOG.md)
-
-## RESPONSES
-
-Discussion is welcome here as well as at
- - [Fortran Discourse](https://fortran-lang.discourse.group)
- - [Fortran Wiki](http://fortranwiki.org)
- - [Google Fortran newsgroup](https://groups.google.com/forum/#!forum/comp.lang.fortran)
