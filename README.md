@@ -127,7 +127,7 @@ Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.co
     + [manpages.tgz](https://urbanjost.github.io/M_strings/manpages.tgz) 
     + [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
 
-## DEMO PROGRAMS![demos](docs/images/demos.gif)
+## DEMO PROGRAMS![demos](docs/images/demo.gif)
 
 Each man-page includes a working example program. These and additional
 examples are included in the example/ directory.
