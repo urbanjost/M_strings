@@ -59,7 +59,7 @@ allocatable strings and supports concatenation using the // operator:
      lle                 Lexical less than or equal
      llt                 Lexical less than
 
-## DOWNLOAD AND BUILD WITH MAKE(1)
+## DOWNLOAD and BUILD with make(1) ![gmake](docs/images/gnu.gif)
 Just download the github repository, enter the src/ directory and run make:
 
      git clone https://github.com/urbanjost/M_strings.git
@@ -109,7 +109,7 @@ or just list it as a dependency in your fpm.toml project file.
 Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.com/fortran-lang/fpm-registry)
 
 
-## USER DOCUMENTATION
+## USER DOCUMENTATION![manpages](docs/images/manpages.gif)
 
    In addition to a [markdown document](docs/HIGHLIGHTS.md)  with links to
    some of the most commonly used procedures, there are HTML documents for each
@@ -127,7 +127,7 @@ Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.co
     + [manpages.tgz](https://urbanjost.github.io/M_strings/manpages.tgz) 
     + [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
 
-## DEMO PROGRAMS
+## DEMO PROGRAMS![demos](docs/images/demos.gif)
 
 Each man-page includes a working example program. These and additional
 examples are included in the example/ directory.
