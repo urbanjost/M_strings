@@ -1673,18 +1673,18 @@ end subroutine delim
 !!     new         new substring
 !!     cmd         alternate way to specify old and new string, in
 !!                 the form c/old/new/; where "/" can be any character
-!!                 not in "old" or "new"
+!!                 not in "old" or "new".
 !!     occurrence  if present, start changing at the Nth occurrence of the
 !!                 OLD string. If negative start replacing from the left
 !!                 end of the string.
 !!     repeat      number of replacements to perform. Defaults to a global
 !!                 replacement.
 !!     ignorecase  whether to ignore ASCII case or not. Defaults
-!!                 to .false.
+!!                 to .false. .
 !!##RETURNS
 !!     newline     allocatable string returned
 !!     ierr        error code. iF ier = -1 bad directive, >= 0 then
-!!                 count of changes made
+!!                 count of changes made.
 !!
 !!##EXAMPLES
 !!
