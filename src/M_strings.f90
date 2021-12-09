@@ -516,8 +516,7 @@ CONTAINS
 !!             o "?" matching any one character
 !!             o "*" matching zero or more characters.
 !!               Do NOT use adjacent asterisks.
-!!             o Both strings may have trailing spaces which
-!!               are ignored.
+!!             o spaces are significant and must be matched or pretrimmed
 !!             o There is no escape character, so matching strings with
 !!               literal question mark and asterisk is problematic.
 !!
@@ -3357,9 +3356,9 @@ end function upper_quoted
 ! upper3: 267.21user 11.69system 4:49.21elapsed 96%CPU
 elemental pure function upper(str,begin,end) result (string)
 
-! ident_22="@(#)M_strings::upper(3f): Changes a string to uppercase"
+! ident_22="@(#)M_strings::upper(3f): returns a trimmed uppercase string"
 
-character(*), intent(in)      :: str                 ! inpout string to convert to all uppercase
+character(*), intent(in)      :: str                 ! input string to convert to all uppercase
 integer, intent(in), optional :: begin,end
 character(len(str))           :: string              ! output string that contains no miniscule letters
 integer                       :: i                   ! loop counter
@@ -3380,7 +3379,7 @@ integer,parameter             :: diff = iachar('A')-iachar('a')
    do concurrent (i = ibegin:iend)                   ! step thru each letter in the string in specified range
        select case (str(i:i))
        case ('a':'z')                                ! located miniscule letter
-          string(i:i) = char(iachar(str(i:i))+diff)  ! change miniscule letter to uppercase
+          string(i:i) = char(iachar(str(i:i))+diff)  ! change miniscule letter to majascule
        end select
    enddo
 
@@ -5728,23 +5727,23 @@ end function l2s
 !!     implicit none
 !!     character(len=256) :: line
 !!     real               :: value
-!!     integer            :: ios
+!!     integer            :: ios1, ios2
 !!     integer            :: answer
 !!     character(len=256) :: message
 !!     character(len=:),allocatable :: description
 !!        write(*,*)'Begin entering values, one per line'
 !!        do
-!!           read(*,'(a)',iostat=ios)line
+!!           read(*,'(a)',iostat=ios1)line
 !!           !
 !!           ! try string as number using list-directed input
 !!           line=''
-!!           read(line,*,iostat=ios,iomsg=message) value
-!!           if(ios.eq.0)then
+!!           read(line,*,iostat=ios2,iomsg=message) value
+!!           if(ios2.eq.0)then
 !!              write(*,*)'VALUE=',value
-!!           elseif( is_iostat_end(ios) ) then
+!!           elseif( is_iostat_end(ios1) ) then
 !!              stop 'end of file'
 !!           else
-!!              write(*,*)'ERROR:',ios,trim(message)
+!!              write(*,*)'ERROR:',ios2,trim(message)
 !!           endif
 !!           !
 !!           ! try string using isnumber(3f)
