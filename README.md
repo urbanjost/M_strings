@@ -59,6 +59,24 @@ allocatable strings and supports concatenation using the // operator:
      lle                 Lexical less than or equal
      llt                 Lexical less than
 
+## USER DOCUMENTATION   ![docs](docs/images/docs.gif)
+
+   In addition to a [markdown document](docs/HIGHLIGHTS.md)  with links to
+   some of the most commonly used procedures, there are HTML documents for each
+   subprogram in the style of man-pages:
+
+ - An [index](https://urbanjost.github.io/M_strings/man3.html) to the HTML versions
+   of the man-pages.
+
+ - A single page (that uses javascript) combining all the HTML descriptions of the man-pages
+   for easy searching and printing:
+   [BOOK_M_strings](https://urbanjost.github.io/M_strings/BOOK_M_strings.html).
+
+ - ![manpages](docs/images/manpages.gif) Literal man-pages for use on GNU/Linux, Unix and CygWin platforms:
+    + [manpages.zip](https://urbanjost.github.io/M_strings/manpages.zip) 
+    + [manpages.tgz](https://urbanjost.github.io/M_strings/manpages.tgz) 
+ - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
+
 ## DOWNLOAD and BUILD with make(1) ![gmake](docs/images/gnu.gif)
 Just download the github repository, enter the src/ directory and run make:
 
@@ -108,25 +126,6 @@ or just list it as a dependency in your fpm.toml project file.
 
 Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.com/fortran-lang/fpm-registry)
 
-
-## USER DOCUMENTATION![manpages](docs/images/manpages.gif)
-
-   In addition to a [markdown document](docs/HIGHLIGHTS.md)  with links to
-   some of the most commonly used procedures, there are HTML documents for each
-   subprogram in the style of man-pages:
-
- - An [index](https://urbanjost.github.io/M_strings/man3.html) to the HTML versions
-   of the man-pages.
-
- - A single page (that uses javascript) combining all the HTML descriptions of the man-pages
-   for easy searching and printing:
-   [BOOK_M_strings](https://urbanjost.github.io/M_strings/BOOK_M_strings.html).
-
- - Literal man-pages for use on GNU/Linux, Unix and CygWin platforms:
-    + [manpages.zip](https://urbanjost.github.io/M_strings/manpages.zip) 
-    + [manpages.tgz](https://urbanjost.github.io/M_strings/manpages.tgz) 
-    + [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
-
 ## DEMO PROGRAMS![demos](docs/images/demo.gif)
 
 Each man-page includes a working example program. These and additional
@@ -137,4 +136,3 @@ examples are included in the example/ directory.
    - The code was run through [ford(1)](https://politicalphysicist.github.io/ford-fortran-documentation.html)
      to produce a [developers' document](https://urbanjost.github.io/M_strings/fpm-ford/index.html).
    - [github action status](docs/STATUS.md) 
-
