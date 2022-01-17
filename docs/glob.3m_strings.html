@@ -53,11 +53,11 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<B>glob</B>(3f) - [M_strings:COMPARE] compare given string for match to
-a pattern which may contain globbing wildcard characters
-(LICENSE:PD)
-<P>
-</BLOCKQUOTE>
+<B>glob(3f) </B>- [M_strings:COMPARE] compare given string for match to
+<B>a pattern which may contain globbing wildcard characters
+</B><B>(LICENSE:PD)
+</B><B>
+</B></BLOCKQUOTE>
 <A name=contents></A><H3>CONTENTS</H3></A>
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
@@ -74,9 +74,9 @@ a pattern which may contain globbing wildcard characters
 
 </A>
 <BLOCKQUOTE>
+<PRE>
 logical function <B>glob</B>(<I>string</I>, pattern )
 <P>
-<PRE>
     character(len=*),intent(in) :: string
     character(len=*),intent(in) :: pattern
 <P>
@@ -164,12 +164,12 @@ Example program
 <P>
     do i=1,nReps
      ! Cases with repeating character sequences.
-     allpassed= test("a*abab", "a*b", .true.) .and. allpassed
-     allpassed= test("ab", "*?", .true.) .and. allpassed
-     allpassed= test("abc", "*?", .true.) .and. allpassed
-     allpassed= test("abcccd", "*ccd", .true.) .and. allpassed
-     allpassed= test("bLah", "bLaH", .false.) .and. allpassed
-     allpassed= test("mississippi", "*sip*", .true.) .and. allpassed
+     allpassed=  test("a*abab",       "a*b",    .true.)   .and.  allpassed
+     allpassed=  test("ab",           "*?",     .true.)   .and.  allpassed
+     allpassed=  test("abc",          "*?",     .true.)   .and.  allpassed
+     allpassed=  test("abcccd",       "*ccd",   .true.)   .and.  allpassed
+     allpassed=  test("bLah",         "bLaH",   .false.)  .and.  allpassed
+     allpassed=  test("mississippi",  "*sip*",  .true.)   .and.  allpassed
      allpassed= &
       & test("xxxx*zzzzzzzzy*f", "xxx*zzy*f", .true.) .and. allpassed
      allpassed= &
@@ -180,32 +180,32 @@ Example program
       & test("xxxxzzzzzzzzyf", "xxxx*zzy*fffff", .false.) .and. allpassed
      allpassed= &
       & test("xxxxzzzzzzzzyf", "xxxx*zzy*f", .true.) .and. allpassed
-     allpassed= test("xyxyxyzyxyz", "xy*z*xyz", .true.) .and. allpassed
-     allpassed= test("xyxyxyxyz", "xy*xyz", .true.) .and. allpassed
-     allpassed= test("mississippi", "mi*sip*", .true.) .and. allpassed
-     allpassed= test("ababac", "*abac*", .true.) .and. allpassed
-     allpassed= test("aaazz", "a*zz*", .true.) .and. allpassed
-     allpassed= test("a12b12", "*12*23", .false.) .and. allpassed
-     allpassed= test("a12b12", "a12b", .false.) .and. allpassed
-     allpassed= test("a12b12", "*12*12*", .true.) .and. allpassed
+     allpassed=  test("xyxyxyzyxyz",  "xy*z*xyz",  .true.)   .and.  allpassed
+     allpassed=  test("xyxyxyxyz",    "xy*xyz",    .true.)   .and.  allpassed
+     allpassed=  test("mississippi",  "mi*sip*",   .true.)   .and.  allpassed
+     allpassed=  test("ababac",       "*abac*",    .true.)   .and.  allpassed
+     allpassed=  test("aaazz",        "a*zz*",     .true.)   .and.  allpassed
+     allpassed=  test("a12b12",       "*12*23",    .false.)  .and.  allpassed
+     allpassed=  test("a12b12",       "a12b",      .false.)  .and.  allpassed
+     allpassed=  test("a12b12",       "*12*12*",   .true.)   .and.  allpassed
 <P>
      ! Additional cases where the &#146;*&#146; char appears in the tame string.
-     allpassed= test("*", "*", .true.) .and. allpassed
-     allpassed= test("a*r", "a*", .true.) .and. allpassed
-     allpassed= test("a*ar", "a*aar", .false.) .and. allpassed
+     allpassed=  test("*",     "*",      .true.)   .and.  allpassed
+     allpassed=  test("a*r",   "a*",     .true.)   .and.  allpassed
+     allpassed=  test("a*ar",  "a*aar",  .false.)  .and.  allpassed
 <P>
      ! More double wildcard scenarios.
-     allpassed= test("XYXYXYZYXYz", "XY*Z*XYz", .true.) .and. allpassed
-     allpassed= test("missisSIPpi", "*SIP*", .true.) .and. allpassed
-     allpassed= test("mississipPI", "*issip*PI", .true.) .and. allpassed
-     allpassed= test("xyxyxyxyz", "xy*xyz", .true.) .and. allpassed
-     allpassed= test("miSsissippi", "mi*sip*", .true.) .and. allpassed
-     allpassed= test("miSsissippi", "mi*Sip*", .false.) .and. allpassed
-     allpassed= test("abAbac", "*Abac*", .true.) .and. allpassed
-     allpassed= test("aAazz", "a*zz*", .true.) .and. allpassed
-     allpassed= test("A12b12", "*12*23", .false.) .and. allpassed
-     allpassed= test("a12B12", "*12*12*", .true.) .and. allpassed
-     allpassed= test("oWn", "*oWn*", .true.) .and. allpassed
+     allpassed=  test("XYXYXYZYXYz",  "XY*Z*XYz",   .true.)   .and.  allpassed
+     allpassed=  test("missisSIPpi",  "*SIP*",      .true.)   .and.  allpassed
+     allpassed=  test("mississipPI",  "*issip*PI",  .true.)   .and.  allpassed
+     allpassed=  test("xyxyxyxyz",    "xy*xyz",     .true.)   .and.  allpassed
+     allpassed=  test("miSsissippi",  "mi*sip*",    .true.)   .and.  allpassed
+     allpassed=  test("miSsissippi",  "mi*Sip*",    .false.)  .and.  allpassed
+     allpassed=  test("abAbac",       "*Abac*",     .true.)   .and.  allpassed
+     allpassed=  test("aAazz",        "a*zz*",      .true.)   .and.  allpassed
+     allpassed=  test("A12b12",       "*12*23",     .false.)  .and.  allpassed
+     allpassed=  test("a12B12",       "*12*12*",    .true.)   .and.  allpassed
+     allpassed=  test("oWn",          "*oWn*",      .true.)   .and.  allpassed
 <P>
      ! Completely tame (no wildcards) cases.
      allpassed= test("bLah", "bLah", .true.) .and. allpassed
@@ -214,23 +214,23 @@ Example program
      allpassed= test("a", "*?", .true.) .and. allpassed
 <P>
      ! More mixed wildcard tests including coverage for false positives.
-     allpassed= test("a", "??", .false.) .and. allpassed
-     allpassed= test("ab", "?*?", .true.) .and. allpassed
-     allpassed= test("ab", "*?*?*", .true.) .and. allpassed
-     allpassed= test("abc", "?**?*?", .true.) .and. allpassed
-     allpassed= test("abc", "?**?*&?", .false.) .and. allpassed
-     allpassed= test("abcd", "?b*??", .true.) .and. allpassed
-     allpassed= test("abcd", "?a*??", .false.) .and. allpassed
-     allpassed= test("abcd", "?**?c?", .true.) .and. allpassed
-     allpassed= test("abcd", "?**?d?", .false.) .and. allpassed
-     allpassed= test("abcde", "?*b*?*d*?", .true.) .and. allpassed
+     allpassed=  test("a",      "??",         .false.)  .and.  allpassed
+     allpassed=  test("ab",     "?*?",        .true.)   .and.  allpassed
+     allpassed=  test("ab",     "*?*?*",      .true.)   .and.  allpassed
+     allpassed=  test("abc",    "?**?*?",     .true.)   .and.  allpassed
+     allpassed=  test("abc",    "?**?*&?",    .false.)  .and.  allpassed
+     allpassed=  test("abcd",   "?b*??",      .true.)   .and.  allpassed
+     allpassed=  test("abcd",   "?a*??",      .false.)  .and.  allpassed
+     allpassed=  test("abcd",   "?**?c?",     .true.)   .and.  allpassed
+     allpassed=  test("abcd",   "?**?d?",     .false.)  .and.  allpassed
+     allpassed=  test("abcde",  "?*b*?*d*?",  .true.)   .and.  allpassed
 <P>
      ! Single-character-match cases.
-     allpassed= test("bLah", "bL?h", .true.) .and. allpassed
-     allpassed= test("bLaaa", "bLa?", .false.) .and. allpassed
-     allpassed= test("bLah", "bLa?", .true.) .and. allpassed
-     allpassed= test("bLaH", "?Lah", .false.) .and. allpassed
-     allpassed= test("bLaH", "?LaH", .true.) .and. allpassed
+     allpassed=  test("bLah",   "bL?h",  .true.)   .and.  allpassed
+     allpassed=  test("bLaaa",  "bLa?",  .false.)  .and.  allpassed
+     allpassed=  test("bLah",   "bLa?",  .true.)   .and.  allpassed
+     allpassed=  test("bLaH",   "?Lah",  .false.)  .and.  allpassed
+     allpassed=  test("bLaH",   "?LaH",  .true.)   .and.  allpassed
 <P>
      ! Many-wildcard scenarios.
      allpassed= test(&
@@ -359,7 +359,7 @@ in Dr Dobb&#146;s Journal, By Kirk J. Krauss, October 07, 2014
 Public Domain
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>glob (3m_strings)</TD> <TD align=right width=33%><I>January 03, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 3c38ad76-d4bd-46ce-b3db-4b5901e7edef using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>glob (3m_strings)</TD> <TD align=right width=33%><I>January 16, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 83f2c013-8145-43bf-b848-9b7681d3a6e2 using man macros.</FONT>
 <br><br><center><img src="images/glob.gif"></center>
 </div>
 </div>

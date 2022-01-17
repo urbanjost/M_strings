@@ -1,6 +1,6 @@
 # TOML file for fpm as described at https://github.com/fortran-lang/fpm/blob/master/manifest-reference.md
 name = "M_strings"
-version = "0.1.0"
+version = "2.0.0"
 license = "Public Domain"
 author = "John S. Urban"
 maintainer = "urbanjost@comcast.net"

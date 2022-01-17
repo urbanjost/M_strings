@@ -20,8 +20,6 @@
     <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
     
     
-    <link href="../css/user.css" rel="stylesheet">
-    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -289,23 +287,23 @@ public function isNumber(string, msg, verbose) result(isnumber)
  <span class="nv">implicit</span> <span class="nv">none</span>
  <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">256</span><span class="ss">)</span> :: <span class="nv">line</span>
  <span class="nv">real</span>               :: <span class="nv">value</span>
- <span class="nv">integer</span>            :: <span class="nv">ios</span>
+ <span class="nv">integer</span>            :: <span class="nv">ios1</span>, <span class="nv">ios2</span>
  <span class="nv">integer</span>            :: <span class="nv">answer</span>
  <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">256</span><span class="ss">)</span> :: <span class="nv">message</span>
  <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">description</span>
     <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">Begin entering values, one per line</span><span class="s1">&#39;</span>
     <span class="k">do</span>
-       <span class="nv">read</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span>,<span class="nv">iostat</span><span class="o">=</span><span class="nv">ios</span><span class="ss">)</span><span class="nv">line</span>
+       <span class="nv">read</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span>,<span class="nv">iostat</span><span class="o">=</span><span class="nv">ios1</span><span class="ss">)</span><span class="nv">line</span>
        <span class="o">!</span>
        <span class="o">!</span> <span class="nv">try</span> <span class="nv">string</span> <span class="nv">as</span> <span class="nv">number</span> <span class="nv">using</span> <span class="nv">list</span><span class="o">-</span><span class="nv">directed</span> <span class="nv">input</span>
        <span class="nv">line</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
-       <span class="nv">read</span><span class="ss">(</span><span class="nv">line</span>,<span class="o">*</span>,<span class="nv">iostat</span><span class="o">=</span><span class="nv">ios</span>,<span class="nv">iomsg</span><span class="o">=</span><span class="nv">message</span><span class="ss">)</span> <span class="nv">value</span>
-       <span class="k">if</span><span class="ss">(</span><span class="nv">ios</span>.<span class="nv">eq</span>.<span class="mi">0</span><span class="ss">)</span><span class="k">then</span>
+       <span class="nv">read</span><span class="ss">(</span><span class="nv">line</span>,<span class="o">*</span>,<span class="nv">iostat</span><span class="o">=</span><span class="nv">ios2</span>,<span class="nv">iomsg</span><span class="o">=</span><span class="nv">message</span><span class="ss">)</span> <span class="nv">value</span>
+       <span class="k">if</span><span class="ss">(</span><span class="nv">ios2</span>.<span class="nv">eq</span>.<span class="mi">0</span><span class="ss">)</span><span class="k">then</span>
           <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">VALUE=</span><span class="s1">&#39;</span>,<span class="nv">value</span>
-       <span class="k">elseif</span><span class="ss">(</span> <span class="nv">is_iostat_end</span><span class="ss">(</span><span class="nv">ios</span><span class="ss">)</span> <span class="ss">)</span> <span class="k">then</span>
+       <span class="k">elseif</span><span class="ss">(</span> <span class="nv">is_iostat_end</span><span class="ss">(</span><span class="nv">ios1</span><span class="ss">)</span> <span class="ss">)</span> <span class="k">then</span>
           <span class="nv">stop</span> <span class="s1">&#39;</span><span class="s">end of file</span><span class="s1">&#39;</span>
        <span class="k">else</span>
-          <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">ERROR:</span><span class="s1">&#39;</span>,<span class="nv">ios</span>,<span class="nv">trim</span><span class="ss">(</span><span class="nv">message</span><span class="ss">)</span>
+          <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">ERROR:</span><span class="s1">&#39;</span>,<span class="nv">ios2</span>,<span class="nv">trim</span><span class="ss">(</span><span class="nv">message</span><span class="ss">)</span>
        <span class="k">endif</span>
        <span class="o">!</span>
        <span class="o">!</span> <span class="nv">try</span> <span class="nv">string</span> <span class="nv">using</span> <span class="nv">isnumber</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>
@@ -813,13 +811,13 @@ subroutine next()
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
+        <div class="col-xs-6 col-md-4"><p>&copy; 2022 
                                           </p></div>
         <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-09-29 23:33  
+             on 2022-01-16 22:32  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_strings was developed by John S. Urban</p></div>
