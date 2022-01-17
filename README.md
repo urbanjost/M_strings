@@ -109,6 +109,7 @@ or just list it as a dependency in your fpm.toml project file.
 Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.com/fortran-lang/fpm-registry)
 
 ## DOCUMENTATION   ![docs](docs/images/docs.gif)
+
 ### USER
 
    In addition to a [markdown document](docs/HIGHLIGHTS.md)  with links to
