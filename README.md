@@ -59,35 +59,17 @@ allocatable strings and supports concatenation using the // operator:
      lle                 Lexical less than or equal
      llt                 Lexical less than
 
-## USER DOCUMENTATION   ![docs](docs/images/docs.gif)
-
-   In addition to a [markdown document](docs/HIGHLIGHTS.md)  with links to
-   some of the most commonly used procedures, there are HTML documents for each
-   subprogram in the style of man-pages:
-
- - An [index](https://urbanjost.github.io/M_strings/man3.html) to the HTML versions
-   of the man-pages.
-
- - A single page (that uses javascript) combining all the HTML descriptions of the man-pages
-   for easy searching and printing:
-   [BOOK_M_strings](https://urbanjost.github.io/M_strings/BOOK_M_strings.html).
-
- - ![manpages](docs/images/manpages.gif) Literal man-pages for use on GNU/Linux, Unix and CygWin platforms:
-    + [manpages.zip](https://urbanjost.github.io/M_strings/manpages.zip) 
-    + [manpages.tgz](https://urbanjost.github.io/M_strings/manpages.tgz) 
- - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
-
 ## DOWNLOAD and BUILD with make(1) ![gmake](docs/images/gnu.gif)
 Just download the github repository, enter the src/ directory and run make:
 
      git clone https://github.com/urbanjost/M_strings.git
      cd M_strings/src
      # change Makefile if not using one of the listed compilers
-     
+
      # for gfortran
      make clean
      make F90=gfortran gfortran
-     
+
      # for ifort
      make clean
      make F90=ifort ifort
@@ -107,7 +89,7 @@ and run the unit tests.
 
 ## DOWNLOAD AND BUILD WITH FPM(1) ![fpm](docs/images/fpm_logo.gif)
 
-Alternatively, download the github repository and build it with 
+Alternatively, download the github repository and build it with
 fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/fpm) )
 
 ```bash
@@ -126,13 +108,32 @@ or just list it as a dependency in your fpm.toml project file.
 
 Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.com/fortran-lang/fpm-registry)
 
+## DOCUMENTATION   ![docs](docs/images/docs.gif)
+### USER
+
+   In addition to a [markdown document](docs/HIGHLIGHTS.md)  with links to
+   some of the most commonly used procedures, there are HTML documents for each
+   subprogram in the style of man-pages:
+
+ - An [index](https://urbanjost.github.io/M_strings/man3.html) to the HTML versions
+   of the man-pages.
+
+ - A single page (that uses javascript) combining all the HTML descriptions of the man-pages
+   for easy searching and printing:
+   [BOOK_M_strings](https://urbanjost.github.io/M_strings/BOOK_M_strings.html).
+
+ - ![manpages](docs/images/manpages.gif) Literal man-pages for use on GNU/Linux, Unix and CygWin platforms:
+    + [manpages.zip](https://urbanjost.github.io/M_strings/manpages.zip)
+    + [manpages.tgz](https://urbanjost.github.io/M_strings/manpages.tgz)
+ - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
+
+### DEVELOPER (__experimental__)
+
+ - The code was run through [ford(1)](https://politicalphysicist.github.io/ford-fortran-documentation.html)
+   to produce a [developers' document](https://urbanjost.github.io/M_strings/fpm-ford/index.html).
+ - [github action status](docs/STATUS.md)
+
 ## DEMO PROGRAMS![demos](docs/images/demo.gif)
 
 Each man-page includes a working example program. These and additional
 examples are included in the example/ directory.
-
-## DEVELOPER DOCUMENTATION (__experimental__)
-
-   - The code was run through [ford(1)](https://politicalphysicist.github.io/ford-fortran-documentation.html)
-     to produce a [developers' document](https://urbanjost.github.io/M_strings/fpm-ford/index.html).
-   - [github action status](docs/STATUS.md) 
