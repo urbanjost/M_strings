@@ -6487,6 +6487,7 @@ end function edit_distance
 !!##SYNOPSIS
 !!
 !!    function cc(str1,str2,...str20,len) result (vec)
+!!
 !!     character(len=*),intent(in),optional   :: str1, str2 ... str20
 !!     integer,intent(in),optional            :: len
 !!
