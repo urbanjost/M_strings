@@ -15,6 +15,7 @@ append("decodebase.3m_strings.html");
 append("delim.3m_strings.html");
 append("describe.3m_strings.html");
 append("dilate.3m_strings.html");
+append("edit_distance.3m_strings.html");
 append("ends_with.3m_strings.html");
 append("expand.3m_strings.html");
 append("fmt.3m_strings.html");

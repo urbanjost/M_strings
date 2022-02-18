@@ -39,6 +39,7 @@
 !!      use M_strings, only : isnumber
 !!      use M_strings, only : fortran_name
 !!      use M_strings, only : describe
+!!      use M_strings, only : edit_distance
 !!
 !!   TOKENS
 !!
@@ -187,6 +188,8 @@
 !!   MISCELLANEOUS
 !!
 !!       describe   returns a string describing the name of a single character
+!!       edit_distance  returns a naive edit distance using the Levenshtein
+!!                      distance algorithm
 !!
 !!   INTRINSICS
 !!
@@ -396,6 +399,7 @@ public isxdigit        !  elemental function returns .true. if CHR is a hexadeci
 public fortran_name    !  elemental function returns .true. if LINE is a valid Fortran name
 !----------------------#
 public describe        !  returns a string describing character
+public edit_distance   !  returns a naive edit distance using the Levenshtein distance algorithm
 !----------------------#
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -6407,6 +6411,68 @@ logical                              :: inside
    unquoted_str=unquoted_str(:iput-1)
 !-----------------------------------------------------------------------------------------------------------------------------------
 end function unquote
+!==================================================================================================================================!
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!==================================================================================================================================!
+!>
+!!##NAME
+!!    edit_distance(3f) - [M_strings] returns a naive edit distance using
+!!    the Levenshtein distance algorithm
+!!    (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!    pure elemental function edit_distance(str1,str2) result (distance)
+!!
+!!     character(len=*),intent(in)   :: str1, str2
+!!     integer :: distance
+!!
+!!##DESCRIPTION
+!!
+!!   The Levenshtein distance function returns how many edits (deletions,
+!!   insertions, transposition) are required to turn one string into another.
+!!
+!!##EXAMPLES
+!!
+!!   Sample Program:
+!!
+!!    program demo_edit_distance
+!!    use M_strings, only : edit_distance
+!!       write(*,*)edit_distance('kittens','sitting')==3
+!!       write(*,*)edit_distance('geek','gesek')==1
+!!       write(*,*)edit_distance('Saturday','Sunday')==3
+!!    end program demo_edit_distance
+!!
+!!   Expected output
+!!
+!!     T
+!!     T
+!!     T
+!!
+!!##AUTHOR
+!!    John S. Urban
+!!
+!!##LICENSE
+!!    Public Domain
+! The Levenshtein distance function returns how many edits (deletions,
+! insertions, transposition) are required to turn one string into another.
+pure elemental integer function edit_distance (a,b)
+character(len=*), intent(in) :: a, b
+integer                      :: len_a, len_b, i, j, cost
+! matrix for calculating Levenshtein distance
+integer                      :: matrix(0:len_trim(a), 0:len_trim(b))
+   len_a = len_trim(a)
+   len_b = len_trim(b)
+   matrix(:,0) = [(i,i=0,len_a)]
+   matrix(0,:) = [(j,j=0,len_b)]
+   do i = 1, len_a
+      do j = 1, len_b
+         cost=merge(0,1,a(i:i)==b(j:j))
+         matrix(i,j) = min(matrix(i-1,j)+1, matrix(i,j-1)+1, matrix(i-1,j-1)+cost)
+      enddo
+   enddo
+   edit_distance = matrix(len_a,len_b)
+end function edit_distance
 !==================================================================================================================================!
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !==================================================================================================================================!

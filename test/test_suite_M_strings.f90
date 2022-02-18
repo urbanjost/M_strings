@@ -19,6 +19,7 @@ subroutine test_suite_m_strings()
    call test_decodebase()
    call test_delim()
    call test_describe()
+   call test_edit_distance()
    call test_expand()
    call test_getvals()
    call test_indent()
@@ -1655,7 +1656,14 @@ integer,allocatable         :: ivalues(:)
    call unit_check('s2vs',all(ivalues.eq.[10, 20000, 3, -4,1234,5678]))
    call unit_check_done('s2vs')
 end subroutine test_s2vs
-
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_edit_distance()
+integer,allocatable         :: ivalues(:)
+   call unit_check_start('edit_distance',' -description ''return naive edit distance using Levenshtein algorithm'''//OPTIONS)
+   ivalues=[ edit_distance('kittens','sitting'),edit_distance('geek','gesek'),edit_distance('Saturday','Sunday')]
+   call unit_check('edit_distance',all(ivalues.eq.[3,1,3]))
+   call unit_check_done('edit_distance')
+end subroutine test_edit_distance
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isprint
 !-!use M_strings, only: isprint
