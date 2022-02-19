@@ -20,6 +20,7 @@ subroutine test_suite_m_strings()
    call test_delim()
    call test_describe()
    call test_edit_distance()
+   call test_squeeze()
    call test_cc()
    call test_expand()
    call test_getvals()
@@ -1657,6 +1658,14 @@ integer,allocatable         :: ivalues(:)
    call unit_check('s2vs',all(ivalues.eq.[10, 20000, 3, -4,1234,5678]))
    call unit_check_done('s2vs')
 end subroutine test_s2vs
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_squeeze()
+   call unit_check_start('squeeze',' -description ''remove duplicate adjacent characters from strings'''//OPTIONS)
+   call unit_check('squeeze',all( &
+   & [ character(len=10) :: squeeze('abEeedeeee1','e'),squeeze('geek','e'),squeeze('a  b  c de    A',' ')].eq. &
+   & [ character(len=10) :: 'abEede1','gek','a b c de A'] ) )
+   call unit_check_done('squeeze')
+end subroutine test_squeeze
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_edit_distance()
 integer,allocatable         :: ivalues(:)

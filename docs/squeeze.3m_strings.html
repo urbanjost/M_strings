@@ -45,7 +45,7 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 <div id="Container">
 <div id="Content">
 <CENTER>
-<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>isspace (3m_strings)</NOBR><HR></H1>
+<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>squeeze (3m_strings)</NOBR><HR></H1>
 </CENTER>
 <A name=0>
 
@@ -53,8 +53,8 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<B>isspace</B>(3f) - [M_strings:COMPARE] returns .true. if character is a
-null, space, tab, carriage return, new line, vertical tab, or formfeed
+<B>squeeze</B>(3f) - [M_strings:EDITING] delete adjacent duplicate occurrences
+of a character from a string
 (LICENSE:PD)
 <P>
 </BLOCKQUOTE>
@@ -64,7 +64,7 @@ null, space, tab, carriage return, new line, vertical tab, or formfeed
 <A HREF=#2>Description</A><BR>
 <A HREF=#3>Options</A><BR>
 <A HREF=#4>Returns</A><BR>
-<A HREF=#5>Example</A><BR>
+<A HREF=#5>Examples</A><BR>
 <A HREF=#6>Author</A><BR>
 <A HREF=#7>License</A><BR>
 </BLOCKQUOTE>
@@ -74,12 +74,12 @@ null, space, tab, carriage return, new line, vertical tab, or formfeed
 
 </A>
 <BLOCKQUOTE>
-<P>
-<B>elemental</B> <I>function</I> <B>isspace</B>(onechar)
+function <B>squeeze</B>(STR,CHAR) result (<I>OUTSTR</I>)
 <P>
 <PRE>
-    character,intent(in) :: onechar
-    logical              :: isspace
+    character(len=*),intent(in)          :: STR
+    character(len=*),intent(in),optional :: CHAR
+    character(len=len(str))              :: OUTSTR
 <P>
 </PRE>
 </BLOCKQUOTE>
@@ -89,8 +89,8 @@ null, space, tab, carriage return, new line, vertical tab, or formfeed
 
 </A>
 <BLOCKQUOTE>
-<B>isspace</B>(3f) returns .true. if character is a null, space, tab,
-carriage return, new line, vertical tab, or formfeed
+<B>squeeze</B>(3f) reduces adjacent duplicates of the specified character to
+a single character
 </BLOCKQUOTE>
 <A name=3>
 
@@ -99,9 +99,14 @@ carriage return, new line, vertical tab, or formfeed
 </A>
 <BLOCKQUOTE>
 <TABLE cellpadding=3>
-<TR valign=top><TD colspan=2>
-<B>onechar</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-character to test
+<TR valign=top><TD width=6% nowrap>
+<B>STR</B> </TD><TD valign=bottom>
+input string in which to reduce adjacent duplicate characters
+to a single character
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>CHAR</B> </TD><TD valign=bottom>
+The character to remove adjacent duplicates of
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
@@ -111,38 +116,50 @@ character to test
 </A>
 <BLOCKQUOTE>
 <TABLE cellpadding=3>
-<TR valign=top><TD colspan=2>
-<B>isspace</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-returns true if character is ASCII white space
+<TR valign=top><TD width=6% nowrap>
+<B></B><I>OUTSTR</I> </TD><TD valign=bottom>
+string with all contiguous adjacent occurrences of CHAR removed
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=5>
 
-     <H3>EXAMPLE</H3>
+     <H3>EXAMPLES</H3>
 
 </A>
 <BLOCKQUOTE>
-Sample program:
+Sample Program:
 <P>
 <PRE>
-    program demo_isspace
-    use M_strings, only : isspace
-    implicit none
-    integer                    :: i
-    character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-       write(*,&#146;(20(g0,1x))&#146;)&#146;ISSPACE: &#146;, &
-       & iachar(pack( string, isspace(string) ))
-    end program demo_isspace
+   program demo_squeeze
+   use M_strings, only : squeeze
+   implicit none
+   character(len=:),allocatable :: strings(:)
+<P>
+   strings=[ character(len=72) :: &
+   &#146;&#146;, &
+   &#146;"If I were two-faced, would I be wearing this one?" --- Abraham Lincoln&#146;,  &
+   &#146;..1111111111111111111111111111111111111111111111111111111111111117777888&#146;, &
+   &#146;I never give &#146;&#146;em hell, I just tell the truth, and they think it&#146;&#146;s hell.&#146;,&
+   &#146;                                                    --- Harry S Truman&#146;    &
+   ]
+      call printme( trim(strings(1)), &#146; &#146; )
+      call printme( strings(2:4),     [&#146;-&#146;,&#146;7&#146;,&#146;.&#146;] )
+      call printme( strings(5),       [&#146; &#146;,&#146;-&#146;,&#146;r&#146;] )
+   contains
+   impure elemental subroutine printme(str,chr)
+   character(len=*),intent(in) :: str
+   character(len=1),intent(in) :: chr
+   character(len=:),allocatable :: answer
+      write(*,&#146;(a)&#146;)repeat(&#146;=&#146;,11)
+      write(*,&#146;("IN:   &lt;&lt;&lt;",g0,"&gt;&gt;&gt;")&#146;)str
+      answer=squeeze(str,chr)
+      write(*,&#146;("OUT:  &lt;&lt;&lt;",g0,"&gt;&gt;&gt;")&#146;)answer
+      write(*,&#146;("LENS: ",*(g0,1x))&#146;)"from",len(str),"to",len(answer),"for a change of",len(str)-len(answer)
+      write(*,&#146;("CHAR: ",g0)&#146;)chr
+   end subroutine printme
+   end program demo_squeeze
 <P>
 </PRE>
-<BLOCKQUOTE>
-Results:
-<P>
-<PRE>
-   ISSPACE:  0 9 10 11 12 13 32
-<P>
-</PRE>
-</BLOCKQUOTE>
 </BLOCKQUOTE>
 <A name=6>
 
@@ -161,8 +178,8 @@ John S. Urban
 Public Domain
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>isspace (3m_strings)</TD> <TD align=right width=33%><I>February 18, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from fca417a4-6d0c-42a7-9787-9c14a9908081 using man macros.</FONT>
-<br><br><center><img src="images/isspace.gif"></center>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>squeeze (3m_strings)</TD> <TD align=right width=33%><I>February 18, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from b2665452-7632-4d18-8962-f83760f109d3 using man macros.</FONT>
+<br><br><center><img src="images/squeeze.gif"></center>
 </div>
 </div>
 </body>
