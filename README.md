@@ -123,7 +123,7 @@ Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.co
    for easy searching and printing:
    [BOOK_M_strings](https://urbanjost.github.io/M_strings/BOOK_M_strings.html).
 
- - ![manpages](docs/images/manpages.gif) Literal man-pages for use on GNU/Linux, Unix and CygWin platforms:
+ - ![man-pages](docs/images/manpages.gif) Literal man-pages for use on GNU/Linux, Unix and CygWin platforms:
     + [manpages.zip](https://urbanjost.github.io/M_strings/manpages.zip)
     + [manpages.tgz](https://urbanjost.github.io/M_strings/manpages.tgz)
  - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes

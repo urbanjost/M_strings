@@ -14,7 +14,7 @@ PROGFILES = \
  ../example/demo_delim.f90  \
  ../example/demo_describe.f90  \
  ../example/demo_expand.f90  \
- ../example/demo_fmt.f90  \
+ ../example/demo_paragraph.f90  \
  ../example/demo_getvals.f90  \
  ../example/demo_indent.f90  \
  ../example/demo_isalnum.f90  \
