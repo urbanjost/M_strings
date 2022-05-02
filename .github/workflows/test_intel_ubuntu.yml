@@ -47,10 +47,14 @@ jobs:
         printenv >> $GITHUB_ENV
 
     - name: Install fpm
-      uses: fortran-lang/setup-fpm@v3
-      with:
-        use-haskell: ${{ matrix.haskell }}
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+           echo $PATH
+           pwd
+           uname -a
+           wget https://raw.githubusercontent.com/urbanjost/index/main/bootstrap/fpm.F90
+           mkdir -p /home/runner/.local/bin
+           ifort fpm.F90 -o /home/runner/.local/bin/fpm
+           ls -l
 
     - name: Run Intel unit tests on Linux
       run: |

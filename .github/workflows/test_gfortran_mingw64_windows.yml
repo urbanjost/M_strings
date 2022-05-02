@@ -40,7 +40,7 @@ jobs:
            echo $PATH
            pwd
            uname -a
-           wget https://raw.githubusercontent.com/urbanjost/easy/main/bootstrap/fpm.F90
+           wget https://raw.githubusercontent.com/urbanjost/index/main/bootstrap/fpm.F90
            gfortran fpm.F90 -o fpm
            ls -l
 
@@ -48,7 +48,7 @@ jobs:
       run: |
         gfortran --version
         PATH=$PATH:.
-        fpm test --compiler gfortran --profile release -flag "-D _WIN32"
+        ./fpm test --compiler gfortran --profile release -flag "-D _WIN32"
       env:
         FPM_COMPILER: gfortran
         CC: gcc
@@ -60,7 +60,7 @@ jobs:
       run: |
         PATH=$PATH:.
         gfortran --version
-        fpm test --compiler gfortran --profile debug   -flag "-D _WIN32"
+        ./fpm test --compiler gfortran --profile debug   -flag "-D _WIN32"
       env:
         FPM_COMPILER: gfortran
         CC: gcc
