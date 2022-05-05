@@ -1,4 +1,4 @@
-name: run fpm test on windows with gfortran
+name: windows with gfortran
 
 on: [push, pull_request]
 

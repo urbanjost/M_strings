@@ -1,4 +1,4 @@
-name: run fpm test on macos with gfortran
+name: macos with gfortran
 
 on: [push, pull_request]
 

@@ -1,4 +1,4 @@
-name: run fpm test on windows mingw64 with gfortran
+name: windows mingw64 with gfortran
 
 on: [push, pull_request]
 

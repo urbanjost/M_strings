@@ -1,4 +1,4 @@
-name: run fpm test on ubuntu with gfortran
+name: ubuntu with gfortran
 
 on: [push, pull_request]
 
@@ -46,10 +46,10 @@ jobs:
         gfortran --version
         fpm --version
 
-    - name: run fpm test on ubuntu with gfortran (debug)
+    - name: ubuntu with gfortran (debug)
       run: fpm test --profile debug
 
-    - name: run fpm test on ubuntu with gfortran (release)
+    - name: ubuntu with gfortran (release)
       run: fpm test --profile release
 
 #    - name: Run demo programs (fpm run)

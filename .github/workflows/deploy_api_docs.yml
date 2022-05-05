@@ -1,5 +1,5 @@
 #name: Build FORD docs & deploy to gh-pages
-name: Build FORD(1) docs
+name:
 on:
   push:
     branches:

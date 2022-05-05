@@ -1,4 +1,4 @@
-name: run fpm test on linux with intel
+name: linux with intel
 
 on: [push, pull_request]
 
