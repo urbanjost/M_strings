@@ -1,4 +1,4 @@
-name: run fpm test with msys windows gfortran
+name: msys windows gfortran
 
 on: [push, pull_request]
 
