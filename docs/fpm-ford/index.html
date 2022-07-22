@@ -133,6 +133,138 @@ author_pic:
 twitter:
 website:
 -->
+<p><img alt="string" src="docs/images/alphabet.gif"></p>
+<h1 id="m_stringsf90-and-associated-files">M_strings.f90 and associated files</h1>
+<h2 id="name">NAME</h2>
+<p>M_strings and M_strings_oops - Fortran modules for processing strings</p>
+<h2 id="description">DESCRIPTION</h2>
+<p>The <code>M_strings</code>(3fm) module is a collection of Fortran procedures that
+supplement the built-in intrinsic string routines.  Routines for parsing,
+tokenizing, changing case, substituting new strings for substrings,
+locating strings with simple wildcard expressions, removing tabs and
+line terminators as well as other string manipulations are included.</p>
+<p><code>M_strings_oop</code>(3fm) is a companion module that provides an OOP interface
+to the <code>M_strings</code> module.</p>
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>public entities:</p>
+<div class="codehilite"><pre><span></span><code> use M_strings, only : split,delim,chomp
+ use M_strings, only : substitute,change,modif,transliterate,reverse,replace,join
+ use M_strings, only : upper,lower,upper_quoted
+ use M_strings, only : rotate13
+ use M_strings, only : adjustc,compact,nospace,indent,crop,unquote,quote
+ use M_strings, only : len_white,atleast,stretch,lenset,merge_str
+ use M_strings, only : switch,s2c,c2s
+ use M_strings, only : noesc,notabs,expand,uc,visible
+ use M_strings, only : string_to_value,string_to_values,s2v,s2vs,value_to_string,v2s,msg
+ use M_strings, only : listout,getvals
+ use M_strings, only : matchw
+ use M_strings, only : fmt
+ use M_strings, only : base, decodebase, codebase
+ use M_strings, only : isalnum, isalpha, iscntrl, isdigit, isgraph, islower,
+                       isprint, ispunct, isspace, isupper, isascii, isblank, isxdigit
+</code></pre></div>
+
+<h2 id="intrinsics">INTRINSICS</h2>
+<p>The M_strings(3fm) module supplements and works in combination with
+the Fortran built-in intrinsics. Standard Fortran lets you access the
+characters in a string using ranges much like they are character arrays,
+assignment, comparisons with standard operators, supports dynamically
+allocatable strings and supports concatenation using the // operator:</p>
+<div class="codehilite"><pre><span></span><code> <span class="nv">adjustl</span>             <span class="nv">Left</span> <span class="nv">adjust</span> <span class="nv">a</span> <span class="nv">string</span>
+ <span class="nv">adjustr</span>             <span class="nv">Right</span> <span class="nv">adjust</span> <span class="nv">a</span> <span class="nv">string</span>
+ <span class="nv">index</span>               <span class="nv">Position</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">substring</span> <span class="nv">within</span> <span class="nv">a</span> <span class="nv">string</span>
+ <span class="nv">repeat</span>              <span class="nv">Repeated</span> <span class="nv">string</span> <span class="nv">concatenation</span>
+ <span class="nv">scan</span>                <span class="nv">Scan</span> <span class="nv">a</span> <span class="nv">string</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">presence</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">set</span> <span class="nv">of</span> <span class="nv">characters</span>
+ <span class="nv">trim</span>                <span class="nv">Remove</span> <span class="nv">trailing</span> <span class="nv">blank</span> <span class="nv">characters</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">string</span>
+ <span class="nv">verify</span>              <span class="nv">Scan</span> <span class="nv">a</span> <span class="nv">string</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">absence</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">set</span> <span class="nv">of</span> <span class="nv">characters</span>
+ <span class="nv">len</span>                 <span class="nv">It</span> <span class="nv">returns</span> <span class="nv">the</span> <span class="nv">length</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">character</span> <span class="nv">string</span>
+ <span class="nv">achar</span>               <span class="nv">converts</span> <span class="nv">an</span> <span class="nv">integer</span> <span class="nv">into</span> <span class="nv">a</span> <span class="nv">character</span>
+ <span class="nv">iachar</span>              <span class="nv">converts</span> <span class="nv">a</span> <span class="nv">character</span> <span class="nv">into</span> <span class="nv">an</span> <span class="nv">integer</span>
+ <span class="nv">len_trim</span>            <span class="nv">finds</span> <span class="nv">length</span> <span class="nv">of</span> <span class="nv">string</span> <span class="nv">with</span> <span class="nv">trailing</span> <span class="nv">spaces</span> <span class="nv">ignored</span>
+ <span class="nv">new_line</span>            <span class="nv">Newline</span> <span class="nv">character</span>
+ <span class="nv">selected_char_kind</span>  <span class="nv">Choose</span> <span class="nv">character</span> <span class="nv">kind</span>
+ <span class="nv">lge</span>                 <span class="nv">Lexical</span> <span class="nv">greater</span> <span class="nv">than</span> <span class="nv">or</span> <span class="nv">equal</span>
+ <span class="nv">lgt</span>                 <span class="nv">Lexical</span> <span class="nv">greater</span> <span class="nv">than</span>
+ <span class="nv">lle</span>                 <span class="nv">Lexical</span> <span class="nv">less</span> <span class="nv">than</span> <span class="nv">or</span> <span class="nv">equal</span>
+ <span class="nv">llt</span>                 <span class="nv">Lexical</span> <span class="nv">less</span> <span class="nv">than</span>
+</code></pre></div>
+
+<h2 id="download-and-build-with-make1">DOWNLOAD and BUILD with make(1) <img alt="gmake" src="docs/images/gnu.gif"></h2>
+<p>Just download the github repository, enter the src/ directory and run make:</p>
+<div class="codehilite"><pre><span></span><code> <span class="nv">git</span> <span class="nv">clone</span> <span class="nv">https</span>:<span class="o">//</span><span class="nv">github</span>.<span class="nv">com</span><span class="o">/</span><span class="nv">urbanjost</span><span class="o">/</span><span class="nv">M_strings</span>.<span class="nv">git</span>
+ <span class="nv">cd</span> <span class="nv">M_strings</span><span class="o">/</span><span class="nv">src</span>
+ # <span class="nv">change</span> <span class="nv">Makefile</span> <span class="k">if</span> <span class="nv">not</span> <span class="nv">using</span> <span class="nv">one</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">listed</span> <span class="nv">compilers</span>
+
+ # <span class="k">for</span> <span class="nv">gfortran</span>
+ <span class="nv">make</span> <span class="nv">clean</span>
+ <span class="nv">make</span> <span class="nv">F90</span><span class="o">=</span><span class="nv">gfortran</span> <span class="nv">gfortran</span>
+
+ # <span class="k">for</span> <span class="nv">ifort</span>
+ <span class="nv">make</span> <span class="nv">clean</span>
+ <span class="nv">make</span> <span class="nv">F90</span><span class="o">=</span><span class="nv">ifort</span> <span class="nv">ifort</span>
+
+ # <span class="k">for</span> <span class="nv">nvfortran</span>
+ <span class="nv">make</span> <span class="nv">clean</span>
+ <span class="nv">make</span> <span class="nv">F90</span><span class="o">=</span><span class="nv">nvfortran</span> <span class="nv">nvfortran</span>
+
+ # <span class="nv">optionally</span>
+ <span class="nv">make</span> <span class="nv">test</span> # <span class="nv">run</span> <span class="nv">the</span> <span class="nv">unit</span> <span class="nv">tests</span>
+ <span class="nv">make</span> <span class="nv">run</span>  # <span class="nv">run</span> <span class="nv">all</span> <span class="nv">the</span> <span class="nv">demo</span> <span class="nv">programs</span> <span class="nv">from</span> <span class="nv">the</span> <span class="nv">man</span><span class="o">-</span><span class="nv">pages</span>
+ <span class="nv">make</span> <span class="nv">help</span> # <span class="nv">see</span> <span class="nv">other</span> <span class="nv">developer</span> <span class="nv">options</span>
+</code></pre></div>
+
+<p>This will compile the M_strings(3f) module and optionally build all the
+example programs from the document pages in the example/ sub-directory
+and run the unit tests.</p>
+<h2 id="download-and-build-with-fpm1">DOWNLOAD AND BUILD WITH FPM(1) <img alt="fpm" src="docs/images/fpm_logo.gif"></h2>
+<p>Alternatively, download the github repository and build it with
+fpm ( as described at <a href="https://github.com/fortran-lang/fpm">Fortran Package Manager</a> )</p>
+<div class="codehilite"><pre><span></span><code>     git clone https://github.com/urbanjost/M_strings.git
+     <span class="nb">cd</span> M_strings
+     fpm build
+     fpm <span class="nb">test</span>  <span class="c1"># run unit tests</span>
+</code></pre></div>
+
+<p>or just list it as a dependency in your fpm.toml project file.</p>
+<div class="codehilite"><pre><span></span><code>     <span class="k">[dependencies]</span>
+     <span class="n">M_strings</span>        <span class="o">=</span> <span class="p">{</span> <span class="n">git</span> <span class="o">=</span> <span class="s">&quot;https://github.com/urbanjost/M_strings.git&quot;</span> <span class="p">,</span><span class="n">tag</span><span class="o">=</span><span class="s">&quot;v1.0.1&quot;</span><span class="p">}</span>
+</code></pre></div>
+
+<p>Note that M_strings.f90 is registered at the <a href="https://github.com/fortran-lang/fpm-registry">fpm(1) registry</a></p>
+<h2 id="documentation">DOCUMENTATION   <img alt="docs" src="docs/images/docs.gif"></h2>
+<h3 id="user">USER</h3>
+<p>In addition to a <a href="docs/HIGHLIGHTS.md">markdown document</a>  with links to
+   some of the most commonly used procedures, there are HTML documents for each
+   subprogram in the style of man-pages:</p>
+<ul>
+<li>
+<p>An <a href="https://urbanjost.github.io/M_strings/man3.html">index</a> to the HTML versions
+   of the man-pages.</p>
+</li>
+<li>
+<p>A single page (that uses javascript) combining all the HTML descriptions of the man-pages
+   for easy searching and printing:
+   <a href="https://urbanjost.github.io/M_strings/BOOK_M_strings.html">BOOK_M_strings</a>.</p>
+</li>
+<li>
+<p><img alt="man-pages" src="docs/images/manpages.gif"> Literal man-pages for use on GNU/Linux, Unix and CygWin platforms:</p>
+<ul>
+<li><a href="https://urbanjost.github.io/M_strings/manpages.zip">manpages.zip</a></li>
+<li><a href="https://urbanjost.github.io/M_strings/manpages.tgz">manpages.tgz</a></li>
+</ul>
+</li>
+<li><a href="docs/CHANGELOG.md">CHANGELOG</a> provides a history of significant changes</li>
+</ul>
+<h3 id="developer-experimental">DEVELOPER (<strong>experimental</strong>)</h3>
+<ul>
+<li>The code was run through <a href="https://politicalphysicist.github.io/ford-fortran-documentation.html">ford(1)</a>
+   to produce a <a href="https://urbanjost.github.io/M_strings/fpm-ford/index.html">developers&rsquo; document</a>.</li>
+<li><a href="docs/STATUS.md">github action status</a></li>
+</ul>
+<h2 id="demo-programs">DEMO PROGRAMS<img alt="demos" src="docs/images/demo.gif"></h2>
+<p>Each man-page includes a working example program. These and additional
+examples are included in the example/ directory.</p>
+<hr>
         </div>
 		  
         <div class="col-md-4">
@@ -170,7 +302,7 @@ website:
               <ul>
                 
                   
-                    <li><a href='./sourcefile/m_strings.f90.html'>M_strings.f90</a></li>
+                    <li><a href='./sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
                   
                 
                   
@@ -221,6 +353,10 @@ website:
                   
                 
                   
+                    <li><a href='./proc/cc.html'>cc</a></li>
+                  
+                
+                  
                     <li><a href='./proc/change.html'>change</a></li>
                   
                 
@@ -237,11 +373,15 @@ website:
                   
                 
                   
-                    <li><a href='./proc/crop.html'>crop</a></li>
+                    <li><a href="./lists/procedures.html"><em>All procedures&hellip;</em></a></li>
                   
                 
                   
-                    <li><a href="./lists/procedures.html"><em>All procedures&hellip;</em></a></li>
+                
+                  
+                
+                  
+                
                   
                 
                   
@@ -412,7 +552,7 @@ website:
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-01-16 22:32  
+             on 2022-07-06 23:08  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_strings was developed by John S. Urban</p></div>

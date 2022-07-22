@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 8.8% of total for modules and submodules.">341 statements</a>
+    title=" 8.5% of total for modules and submodules.">341 statements</a>
      </li> 
      
      
@@ -225,7 +225,7 @@
     
     <div class="col-md-9" id='text'>
     <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>M_strings_oop(3f) - [M_strings::INTRO] OOP Fortran string module
+<div class="codehilite"><pre><span></span><code>M_strings_oop(3f) - [M_strings::INTRO::OOPS] OOP Fortran string module
 </code></pre></div>
 
 <h2 id="synopsis">SYNOPSIS</h2>
@@ -269,15 +269,15 @@
  <span class="n">TYPE</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="p">::</span> <span class="n">str2</span>
  <span class="n">TYPE</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="p">::</span> <span class="n">str3</span>
  <span class="n">TYPE</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="p">::</span> <span class="n">str4</span>
- <span class="o">!==============================================================================</span>
+ <span class="o">!====================================================================</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;exercise the M_STRING_OOP module interface&#39;</span>
    <span class="o">!</span> <span class="n">draw</span> <span class="n">a</span> <span class="k">break</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">output</span>
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;Call methods of type(STRING)&#39;</span>
    <span class="o">!</span> <span class="n">define</span> <span class="n">TYPE</span><span class="p">(</span><span class="n">STRING</span><span class="p">)</span> <span class="n">with</span> <span class="n">constructor</span>
    <span class="n">str2</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;   This  is  a  String!       &#39;</span><span class="p">)</span>
    <span class="n">str4</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39; a  String &#39;</span><span class="p">)</span>
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span>
    <span class="o">!</span> <span class="nb">print</span> <span class="n">members</span> <span class="n">of</span> <span class="n">type</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str2</span><span class="si">%s</span><span class="s1">tr is ................ &#39;</span><span class="p">,</span><span class="n">str2</span><span class="o">%</span><span class="nb">str</span>
    <span class="o">!</span> <span class="n">same</span> <span class="k">as</span> <span class="n">intrinsic</span> <span class="n">LEN</span><span class="p">()</span>
@@ -301,28 +301,33 @@
    <span class="o">!</span> <span class="n">center</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">current</span> <span class="n">string</span> <span class="n">length</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;adjustc .................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">adjustc</span><span class="p">())</span>
    <span class="o">!</span> <span class="n">center</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">string</span> <span class="n">length</span> <span class="n">of</span> <span class="n">NN</span>
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;adjustc(49) ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">adjustc</span><span class="p">(</span><span class="mi">49</span><span class="p">))</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;adjustc(40) ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">adjustc</span><span class="p">(</span><span class="mi">40</span><span class="p">))</span>
    <span class="o">!</span> <span class="n">force</span> <span class="o">%</span><span class="nb">str</span> <span class="n">to</span> <span class="n">be</span> <span class="n">NN</span> <span class="n">characters</span> <span class="n">long</span>
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;lenset(49) ................. &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">lenset</span><span class="p">(</span><span class="mi">49</span><span class="p">))</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;lenset(40) ................. &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">lenset</span><span class="p">(</span><span class="mi">40</span><span class="p">))</span>
    <span class="o">!</span> <span class="n">same</span> <span class="k">as</span> <span class="n">intrinsic</span> <span class="n">TRIM</span><span class="p">()</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;trim ....................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">trim</span><span class="p">())</span>
    <span class="o">!</span> <span class="n">trim</span> <span class="n">leading</span> <span class="ow">and</span> <span class="n">trailing</span> <span class="n">spaces</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;crop ....................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">crop</span><span class="p">())</span>
    <span class="o">!</span> <span class="n">calls</span> <span class="n">M_strings</span> <span class="n">procedure</span> <span class="n">SUBSTITUTE</span><span class="p">()</span>
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;substitute(&quot;This&quot;,&quot;Here&quot;) .. &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">substitute</span><span class="p">(</span><span class="s2">&quot;This&quot;</span><span class="p">,</span><span class="s2">&quot;Here&quot;</span><span class="p">))</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;substitute(&quot;This&quot;,&quot;Here&quot;) .. &#39;</span><span class="p">,</span><span class="o">&amp;</span>
+           <span class="o">&amp;</span> <span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">substitute</span><span class="p">(</span><span class="s2">&quot;This&quot;</span><span class="p">,</span><span class="s2">&quot;Here&quot;</span><span class="p">))</span>
    <span class="o">!</span> <span class="n">calls</span> <span class="n">M_strings</span> <span class="n">procedure</span> <span class="n">COMPACT</span><span class="p">()</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;compact .................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">compact</span><span class="p">())</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;compact(&quot;&quot;) ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">compact</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;compact(&quot;:&quot;) ............... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">compact</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">))</span>
    <span class="o">!</span> <span class="n">calls</span> <span class="n">M_strings</span> <span class="n">procedure</span> <span class="n">TRANSLITERATE</span><span class="p">()</span>
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot;aei&quot;,&quot;VWX&quot;) . &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot;aei&quot;</span><span class="p">,</span><span class="s2">&quot;VWX&quot;</span><span class="p">))</span>
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot;aeiou&quot;,&quot; &quot;) . &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot;aeiou&quot;</span><span class="p">,</span><span class="s2">&quot; &quot;</span><span class="p">))</span>
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot;aeiou&quot;,&quot;&quot;) .. &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot;aeiou&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot; aeiou&quot;,&quot;&quot;) . &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot; aeiou&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot;aei&quot;,&quot;VWX&quot;) . &#39;</span><span class="p">,</span><span class="o">&amp;</span>
+           <span class="o">&amp;</span> <span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot;aei&quot;</span><span class="p">,</span><span class="s2">&quot;VWX&quot;</span><span class="p">))</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot;aeiou&quot;,&quot; &quot;) . &#39;</span><span class="p">,</span><span class="o">&amp;</span>
+           <span class="o">&amp;</span> <span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot;aeiou&quot;</span><span class="p">,</span><span class="s2">&quot; &quot;</span><span class="p">))</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot;aeiou&quot;,&quot;&quot;) .. &#39;</span><span class="p">,</span><span class="o">&amp;</span>
+           <span class="o">&amp;</span> <span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot;aeiou&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot; aeiou&quot;,&quot;&quot;) . &#39;</span><span class="p">,</span><span class="o">&amp;</span>
+           <span class="o">&amp;</span> <span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot; aeiou&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
    <span class="o">!</span> <span class="n">calls</span> <span class="n">M_strings</span> <span class="n">procedure</span> <span class="n">SWITCH</span><span class="p">()</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">404</span><span class="p">)</span><span class="s1">&#39;chars .................... . &#39;</span><span class="p">,</span><span class="n">str4</span><span class="o">%</span><span class="n">chars</span><span class="p">()</span>
 
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span>
    <span class="n">str2</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Some tabs</span><span class="se">\t</span><span class="s1">   x</span><span class="se">\b</span><span class="s1">X &#39;</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str2</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str2</span><span class="o">%</span><span class="nb">str</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;expand ..................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">expand</span><span class="p">())</span>
@@ -332,7 +337,7 @@
    <span class="o">!</span> <span class="n">calls</span> <span class="n">M_strings</span> <span class="n">procedure</span> <span class="n">NOESC</span><span class="p">()</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;noesc ...................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">noesc</span><span class="p">())</span>
 
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;Casting to numeric variables&#39;</span>
    <span class="n">str3</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;   12.345678901234567e1        &#39;</span><span class="p">)</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str3</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str3</span><span class="o">%</span><span class="nb">str</span>
@@ -343,7 +348,7 @@
    <span class="o">!</span> <span class="n">calls</span> <span class="n">M_strings</span> <span class="n">procedure</span> <span class="n">STRING_TO_VALUE</span><span class="p">()</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;dble ....................... &#39;</span><span class="p">,</span> <span class="n">str3</span><span class="o">%</span><span class="n">dble</span><span class="p">()</span>
 
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;Matching simple globbing patterns&#39;</span>
    <span class="n">str3</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;   12.345678901234567e1        &#39;</span><span class="p">)</span>
    <span class="n">str3</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;Four score and seven years ago&#39;</span><span class="p">)</span>
@@ -360,7 +365,7 @@
    <span class="mi">303</span> <span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="n">x</span><span class="p">,</span><span class="o">*</span><span class="p">(</span><span class="n">l3</span><span class="p">))</span>
    <span class="mi">404</span> <span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="o">*</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">,</span><span class="n">a1</span><span class="p">,</span><span class="s2">&quot;]&quot;</span><span class="p">:))</span>
 
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;OVERLOADED OPERATORS (add and subtract,return TYPE(STRING))&#39;</span>
    <span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;123.456&#39;</span>
    <span class="n">str2</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj&#39;</span>
@@ -372,13 +377,13 @@
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 - 20.0 ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span> <span class="o">-</span><span class="mf">20.0</span><span class="p">)</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str2 - &quot;Aa&quot; (removes ALL) .. &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span> <span class="o">-</span> <span class="s1">&#39;Aa&#39;</span><span class="p">)</span>
 
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;OVERLOADED OPERATORS (multiply,return TYPE(STRING))&#39;</span>
    <span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;AaBbCcDdEeFfGgHhIiJj&#39;</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str1</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str1</span><span class="o">%</span><span class="nb">str</span>
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 * 3 ................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 * 2 ................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
 
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;OVERLOADED OPERATORS (//,return TYPE(STRING))&#39;</span>
    <span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;String one:&#39;</span>
    <span class="n">str2</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;String two:&#39;</span>
@@ -389,7 +394,7 @@
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 // 20000 ............... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span> <span class="o">//</span> <span class="mi">20000</span><span class="p">)</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 // 20.0 ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span> <span class="o">//</span> <span class="mf">20.0</span><span class="p">)</span>
 
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span>
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;OVERLOADED OPERATORS (logical comparisons,return logical)&#39;</span>
    <span class="o">!</span> <span class="n">NOTE</span><span class="p">:</span> <span class="n">comparisons</span> <span class="n">are</span> <span class="n">performed</span> <span class="n">on</span> <span class="n">the</span> <span class="n">character</span> <span class="n">variable</span> <span class="n">members</span>
    <span class="o">!</span>       <span class="n">of</span> <span class="n">the</span> <span class="n">type</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
@@ -408,91 +413,102 @@
    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">303</span><span class="p">)</span><span class="n">str2</span><span class="o">.</span><span class="n">eq</span><span class="o">.</span><span class="n">str1</span>  <span class="p">,</span><span class="n">str2</span><span class="o">.</span><span class="n">lt</span><span class="o">.</span><span class="n">str1</span>  <span class="p">,</span><span class="n">str2</span><span class="o">.</span><span class="n">gt</span><span class="o">.</span><span class="n">str1</span>  <span class="p">,</span><span class="n">str2</span><span class="o">.</span><span class="n">le</span><span class="o">.</span><span class="n">str1</span> <span class="o">&amp;</span>
               <span class="o">&amp;</span> <span class="p">,</span><span class="n">str2</span><span class="o">.</span><span class="n">ge</span><span class="o">.</span><span class="n">str1</span>  <span class="p">,</span><span class="n">str2</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">str1</span>
 
-   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">78</span><span class="p">)</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span>
 
  <span class="n">end</span> <span class="n">program</span> <span class="n">demo_M_strings_oop</span>
 </code></pre></div>
 
 <p>Expected output</p>
-<div class="codehilite"><pre><span></span><code>  <span class="n">exercise</span> <span class="n">the</span> <span class="n">M_STRING_OOP</span> <span class="n">module</span> <span class="n">interface</span>
-  <span class="o">=============================================================================</span>
-  <span class="n">Call</span> <span class="n">methods</span> <span class="n">of</span> <span class="n">type</span><span class="p">(</span><span class="n">STRING</span><span class="p">)</span>
-  <span class="o">=============================================================================</span>
-  <span class="n">str2</span><span class="o">%</span><span class="n">str</span> <span class="n">is</span> <span class="p">................</span> <span class="p">[</span>   <span class="n">This</span>  <span class="n">is</span>  <span class="n">a</span>  <span class="n">String</span><span class="o">!</span>             <span class="p">]</span>
-  <span class="n">len</span> <span class="p">........................</span> <span class="mi">36</span>
-  <span class="n">len_trim</span> <span class="p">...................</span> <span class="mi">23</span>
-  <span class="n">index</span><span class="p">(</span><span class="s">&quot;is&quot;</span><span class="p">).................</span> <span class="mi">6</span>
-  <span class="n">index</span><span class="p">(</span><span class="s">&quot;is&quot;</span><span class="p">,</span><span class="n">back</span><span class="o">=</span><span class="p">.</span><span class="n">T</span><span class="p">.)</span> <span class="p">.......</span> <span class="mi">10</span>
-  <span class="n">upper</span> <span class="p">......................</span> <span class="p">[</span>   <span class="n">THIS</span>  <span class="n">IS</span>  <span class="n">A</span>  <span class="n">STRING</span><span class="o">!</span>             <span class="p">]</span>
-  <span class="n">lower</span> <span class="p">......................</span> <span class="p">[</span>   <span class="n">this</span>  <span class="n">is</span>  <span class="n">a</span>  <span class="n">string</span><span class="o">!</span>             <span class="p">]</span>
-  <span class="n">reverse</span> <span class="p">....................</span> <span class="p">[</span>             <span class="o">!</span><span class="n">gnirtS</span>  <span class="n">a</span>  <span class="n">si</span>  <span class="n">sihT</span>   <span class="p">]</span>
-  <span class="n">adjustl</span> <span class="p">....................</span> <span class="p">[</span><span class="n">This</span>  <span class="n">is</span>  <span class="n">a</span>  <span class="n">String</span><span class="o">!</span>                <span class="p">]</span>
-  <span class="n">adjustr</span> <span class="p">....................</span> <span class="p">[</span>                <span class="n">This</span>  <span class="n">is</span>  <span class="n">a</span>  <span class="n">String</span><span class="o">!</span><span class="p">]</span>
-  <span class="n">adjustc</span> <span class="p">....................</span> <span class="p">[</span>        <span class="n">This</span>  <span class="n">is</span>  <span class="n">a</span>  <span class="n">String</span><span class="o">!</span>        <span class="p">]</span>
-  <span class="n">adjustc</span><span class="p">(</span><span class="mi">49</span><span class="p">)</span> <span class="p">................</span> <span class="p">[</span>              <span class="n">This</span>  <span class="n">is</span>  <span class="n">a</span>  <span class="n">String</span><span class="o">!</span>               <span class="p">]</span>
-  <span class="n">lenset</span><span class="p">(</span><span class="mi">49</span><span class="p">)</span> <span class="p">.................</span> <span class="p">[</span>   <span class="n">This</span>  <span class="n">is</span>  <span class="n">a</span>  <span class="n">String</span><span class="o">!</span>                          <span class="p">]</span>
-  <span class="n">trim</span> <span class="p">.......................</span> <span class="p">[</span>   <span class="n">This</span>  <span class="n">is</span>  <span class="n">a</span>  <span class="n">String</span><span class="o">!</span><span class="p">]</span>
-  <span class="n">crop</span> <span class="p">.......................</span> <span class="p">[</span><span class="n">This</span>  <span class="n">is</span>  <span class="n">a</span>  <span class="n">String</span><span class="o">!</span><span class="p">]</span>
-  <span class="n">substitute</span><span class="p">(</span><span class="s">&quot;This&quot;</span><span class="p">,</span><span class="s">&quot;Here&quot;</span><span class="p">)</span> <span class="p">..</span> <span class="p">[</span>   <span class="n">Here</span>  <span class="n">is</span>  <span class="n">a</span>  <span class="n">String</span><span class="o">!</span>             <span class="p">]</span>
-  <span class="n">compact</span> <span class="p">....................</span> <span class="p">[</span><span class="n">This</span> <span class="n">is</span> <span class="n">a</span> <span class="n">String</span><span class="o">!</span><span class="p">]</span>
-  <span class="n">compact</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span> <span class="p">................</span> <span class="p">[</span><span class="n">ThisisaString</span><span class="o">!</span><span class="p">]</span>
-  <span class="n">compact</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">)</span> <span class="p">...............</span> <span class="p">[</span><span class="nl">This</span><span class="p">:</span><span class="nl">is</span><span class="p">:</span><span class="nl">a</span><span class="p">:</span><span class="n">String</span><span class="o">!</span><span class="p">]</span>
-  <span class="n">transliterate</span><span class="p">(</span><span class="s">&quot;aei&quot;</span><span class="p">,</span><span class="s">&quot;VWX&quot;</span><span class="p">)</span> <span class="p">.</span> <span class="p">[</span>   <span class="n">ThXs</span>  <span class="n">Xs</span>  <span class="n">V</span>  <span class="n">StrXng</span><span class="o">!</span>             <span class="p">]</span>
-  <span class="n">transliterate</span><span class="p">(</span><span class="s">&quot;aeiou&quot;</span><span class="p">,</span><span class="s">&quot; &quot;</span><span class="p">)</span> <span class="p">.</span> <span class="p">[</span>   <span class="n">Th</span> <span class="n">s</span>   <span class="n">s</span>     <span class="n">Str</span> <span class="n">ng</span><span class="o">!</span>             <span class="p">]</span>
-  <span class="n">transliterate</span><span class="p">(</span><span class="s">&quot;aeiou&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">)</span> <span class="p">..</span> <span class="p">[</span>   <span class="n">Ths</span>  <span class="n">s</span>    <span class="n">Strng</span><span class="o">!</span>                 <span class="p">]</span>
-  <span class="n">transliterate</span><span class="p">(</span><span class="s">&quot; aeiou&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">)</span> <span class="p">.</span> <span class="p">[</span><span class="n">ThssStrng</span><span class="o">!</span>                          <span class="p">]</span>
-  <span class="n">chars</span> <span class="p">....................</span> <span class="p">.</span> <span class="p">[</span> <span class="p">][</span><span class="n">a</span><span class="p">][</span> <span class="p">][</span><span class="n">s</span><span class="p">][</span><span class="n">t</span><span class="p">][</span><span class="n">r</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">n</span><span class="p">][</span><span class="n">g</span><span class="p">][</span> <span class="p">]</span>
-  <span class="o">=============================================================================</span>
-  <span class="n">str2</span><span class="o">%</span><span class="n">str</span> <span class="p">...................</span> <span class="p">[</span><span class="err">\</span><span class="n">t</span><span class="err">\</span><span class="n">tSome</span> <span class="n">tabs</span><span class="err">\</span><span class="n">t</span>   <span class="n">x</span><span class="err">\</span><span class="n">bX</span> <span class="p">]</span>
-  <span class="n">expand</span> <span class="p">.....................</span> <span class="p">[</span>         <span class="n">Some</span> <span class="n">tabs</span>          <span class="n">x</span>   <span class="n">X</span><span class="p">]</span>
-  <span class="n">notabs</span> <span class="p">.....................</span> <span class="p">[</span>                <span class="n">Some</span> <span class="n">tabs</span>          <span class="n">x</span>    <span class="n">X</span><span class="p">]</span>
-  <span class="n">noesc</span> <span class="p">......................</span> <span class="p">[</span>  <span class="n">Some</span> <span class="n">tabs</span>    <span class="n">x</span> <span class="n">X</span><span class="p">]</span>
-  <span class="o">=============================================================================</span>
-  <span class="n">Casting</span> <span class="n">to</span> <span class="n">numeric</span> <span class="n">variables</span>
-  <span class="n">str3</span><span class="o">%</span><span class="n">str</span> <span class="p">...................</span> <span class="p">[</span>   <span class="mf">12.345678901234567e1</span>        <span class="p">]</span>
-  <span class="kt">int</span>  <span class="p">.......................</span>          <span class="mi">123</span>
-  <span class="n">real</span> <span class="p">.......................</span>    <span class="mf">123.456787</span>
-  <span class="n">dble</span> <span class="p">.......................</span>    <span class="mf">123.45678901234567</span>
-  <span class="o">=============================================================================</span>
-  <span class="n">Matching</span> <span class="n">simple</span> <span class="n">globbing</span> <span class="n">patterns</span>
-  <span class="n">str3</span><span class="o">%</span><span class="n">str</span> <span class="p">...................</span> <span class="p">[</span><span class="n">Four</span> <span class="n">score</span> <span class="n">and</span> <span class="n">seven</span> <span class="n">years</span> <span class="n">ago</span><span class="p">]</span>
-  <span class="n">match</span><span class="p">(</span><span class="s">&quot;Fo*&quot;</span><span class="p">)</span> <span class="p">...............</span>  <span class="n">T</span>
-  <span class="n">match</span><span class="p">(</span><span class="s">&quot;and&quot;</span><span class="p">)</span> <span class="p">...............</span>  <span class="n">F</span>
-  <span class="n">match</span><span class="p">(</span><span class="s">&quot;*and*&quot;</span><span class="p">)</span> <span class="p">.............</span>  <span class="n">T</span>
-  <span class="o">==============================================================================</span>
-  <span class="n">OVERLOADED</span> <span class="n">OPERATORS</span> <span class="p">(</span><span class="n">add</span> <span class="n">and</span> <span class="n">subtract</span><span class="p">,</span> <span class="k">return</span> <span class="n">TYPE</span><span class="p">(</span><span class="n">STRING</span><span class="p">))</span>
-  <span class="n">str1</span><span class="o">%</span><span class="n">str</span> <span class="p">...................</span> <span class="p">[</span><span class="mf">123.456</span><span class="p">]</span>
-  <span class="n">str2</span><span class="o">%</span><span class="n">str</span> <span class="p">...................</span> <span class="p">[</span><span class="n">AaBbCcDdEeFfGgHhIiJj</span> <span class="n">AaBbCcDdEeFfGgHhIiJj</span><span class="p">]</span>
-  <span class="n">str1</span> <span class="o">+</span> <span class="n">str2</span> <span class="p">................</span> <span class="mf">123.456</span> <span class="n">AaBbCcDdEeFfGgHhIiJj</span> <span class="n">AaBbCcDdEeFfGgHhIiJj</span>
-  <span class="n">str1</span> <span class="o">+</span> <span class="mi">20000</span> <span class="p">...............</span> <span class="mf">20123.455999999998</span>
-  <span class="n">str1</span> <span class="o">-</span> <span class="mf">20.0</span> <span class="p">................</span> <span class="mf">-103.456</span>
-  <span class="n">str2</span> <span class="o">-</span> <span class="s">&quot;Aa&quot;</span> <span class="p">(</span><span class="n">removes</span> <span class="n">ALL</span><span class="p">)</span> <span class="p">..</span> <span class="n">BbCcDdEeFfGgHhIiJj</span> <span class="n">BbCcDdEeFfGgHhIiJj</span>
-  <span class="o">=============================================================================</span>
-  <span class="n">OVERLOADED</span> <span class="n">OPERATORS</span> <span class="p">(</span><span class="n">multiply</span><span class="p">,</span> <span class="k">return</span> <span class="n">TYPE</span><span class="p">(</span><span class="n">STRING</span><span class="p">))</span>
-  <span class="n">str1</span><span class="o">%</span><span class="n">str</span> <span class="p">...................</span> <span class="p">[</span><span class="n">AaBbCcDdEeFfGgHhIiJj</span><span class="p">]</span>
-  <span class="n">str1</span> <span class="o">*</span> <span class="mi">3</span> <span class="p">...................</span> <span class="n">AaBbCcDdEeFfGgHhIiJjAaBbCcDdEeFfGgHhIiJjAaBbCcDdEeFfGgHhIiJj</span>
-  <span class="o">=============================================================================</span>
-  <span class="n">OVERLOADED</span> <span class="n">OPERATORS</span> <span class="p">(</span><span class="c1">//, return TYPE(STRING))</span>
-  <span class="n">str1</span><span class="o">%</span><span class="n">str</span> <span class="p">...................</span> <span class="p">[</span><span class="n">String</span> <span class="nl">one</span><span class="p">:]</span>
-  <span class="n">str2</span><span class="o">%</span><span class="n">str</span> <span class="p">...................</span> <span class="p">[</span><span class="n">String</span> <span class="nl">two</span><span class="p">:]</span>
-  <span class="n">str1</span> <span class="c1">// str2 ................ String one:String two:</span>
-  <span class="n">str1</span> <span class="c1">// 20000 ............... String one:20000</span>
-  <span class="n">str1</span> <span class="c1">// 20.0 ................ String one:20.0</span>
-  <span class="o">=============================================================================</span>
-  <span class="n">OVERLOADED</span> <span class="n">OPERATORS</span> <span class="p">(</span><span class="n">logical</span> <span class="n">comparisons</span><span class="p">,</span> <span class="k">return</span> <span class="n">logical</span><span class="p">)</span>
-  <span class="n">str1</span><span class="o">%</span><span class="n">str</span> <span class="p">...................</span> <span class="p">[</span><span class="n">abcdefghij</span><span class="p">]</span>
-  <span class="n">str2</span><span class="o">%</span><span class="n">str</span> <span class="p">...................</span> <span class="p">[</span><span class="n">klmnopqrst</span><span class="p">]</span>
-  <span class="o">:</span> <span class="n">EQ</span> <span class="n">LT</span> <span class="n">GT</span> <span class="n">LE</span> <span class="n">GE</span> <span class="n">NE</span>
-  <span class="n">compare</span> <span class="n">str1</span> <span class="n">to</span> <span class="nl">str1</span>
-  <span class="p">:</span>  <span class="n">T</span>  <span class="n">F</span>  <span class="n">F</span>  <span class="n">T</span>  <span class="n">T</span>  <span class="n">F</span>
-  <span class="n">compare</span> <span class="n">str1</span> <span class="n">to</span> <span class="nl">str2</span>
-  <span class="p">:</span>  <span class="n">F</span>  <span class="n">T</span>  <span class="n">F</span>  <span class="n">T</span>  <span class="n">F</span>  <span class="n">T</span>
-  <span class="n">compare</span> <span class="n">str2</span> <span class="n">to</span> <span class="nl">str1</span>
-  <span class="p">:</span>  <span class="n">F</span>  <span class="n">F</span>  <span class="n">T</span>  <span class="n">F</span>  <span class="n">T</span>  <span class="n">T</span>
-  <span class="o">=============================================================================</span>
-</code></pre></div>
-
-<p>Expected output</p>
+<dl>
+<dt>exercise the M_STRING_OOP module interface</dt>
+<dt>===================================================================</dt>
+<dt>Call methods of type(STRING)</dt>
+<dt>===================================================================</dt>
+<dt>str2%str is ................ [   This  is  a  String!             ]</dt>
+<dt>len ........................ 36</dt>
+<dt>len_trim ................... 23</dt>
+<dt>index(&ldquo;is&rdquo;)................. 6</dt>
+<dt>index(&ldquo;is&rdquo;,back=.T.) ....... 10</dt>
+<dt>upper ...................... [   THIS  IS  A  STRING!             ]</dt>
+<dt>lower ...................... [   this  is  a  string!             ]</dt>
+<dt>reverse .................... [             !gnirtS  a  si  sihT   ]</dt>
+<dt>adjustl .................... [This  is  a  String!                ]</dt>
+<dt>adjustr .................... [                This  is  a  String!]</dt>
+<dt>adjustc .................... [        This  is  a  String!        ]</dt>
+<dt>adjustc(40) ................ [              This  is  a  String!      ]</dt>
+<dt>lenset(40) ................. [   This  is  a  String!                 ]</dt>
+<dt>trim ....................... [   This  is  a  String!]</dt>
+<dt>crop ....................... [This  is  a  String!]</dt>
+<dt>substitute(&ldquo;This&rdquo;,&rdquo;Here&rdquo;) .. [   Here  is  a  String!             ]</dt>
+<dt>compact .................... [This is a String!]</dt>
+<dt>compact(&ldquo;&rdquo;) ................ [ThisisaString!]</dt>
+<dt>compact(&ldquo;:&rdquo;) ............... [This:is:a:String!]</dt>
+<dt>transliterate(&ldquo;aei&rdquo;,&rdquo;VWX&rdquo;) . [   ThXs  Xs  V  StrXng!             ]</dt>
+<dt>transliterate(&ldquo;aeiou&rdquo;,&rdquo; &ldquo;) . [   Th s   s     Str ng!             ]</dt>
+<dt>transliterate(&ldquo;aeiou&rdquo;,&rdquo;&ldquo;) .. [   Ths  s    Strng!                 ]</dt>
+<dt>transliterate(&rdquo; aeiou&rdquo;,&rdquo;&ldquo;) . [ThssStrng!                          ]</dt>
+<dt>chars .................... . [ ][a][ ][s][t][r][i][n][g][ ]</dt>
+<dt>===================================================================</dt>
+<dt>str2%str ................... [\t\tSome tabs\t   x\bX ]</dt>
+<dt>expand ..................... [         Some tabs          x   X]</dt>
+<dt>notabs ..................... [                Some tabs          x    X]</dt>
+<dt>noesc ...................... [  Some tabs    x X]</dt>
+<dt>===================================================================</dt>
+<dt>Casting to numeric variables</dt>
+<dt>str3%str ................... [   12.345678901234567e1        ]</dt>
+<dt>int  .......................          123</dt>
+<dt>real .......................    123.456787</dt>
+<dt>dble .......................    123.45678901234567</dt>
+<dt>===================================================================</dt>
+<dt>Matching simple globbing patterns</dt>
+<dt>str3%str ................... [Four score and seven years ago]</dt>
+<dt>match(&ldquo;Fo*&rdquo;) ...............  T</dt>
+<dt>match(&ldquo;and&rdquo;) ...............  F</dt>
+<dt>match(&ldquo;<em>and</em>&rdquo;) .............  T</dt>
+<dt>====================================================================</dt>
+<dt>OVERLOADED OPERATORS (add and subtract, return TYPE(STRING))</dt>
+<dt>str1%str ................... [123.456]</dt>
+<dt>str2%str ................... [AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj]</dt>
+<dt>str1 + str2 ................ 123.456 AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj</dt>
+<dt>str1 + 20000 ............... 20123.455999999998</dt>
+<dt>str1 - 20.0 ................ -103.456</dt>
+<dt>str2 - &ldquo;Aa&rdquo; (removes ALL) .. BbCcDdEeFfGgHhIiJj BbCcDdEeFfGgHhIiJj</dt>
+<dt>===================================================================</dt>
+<dt>OVERLOADED OPERATORS (multiply, return TYPE(STRING))</dt>
+<dt>str1%str ................... [AaBbCcDdEeFfGgHhIiJj]</dt>
+<dt>str1 * 2 ................... AaBbCcDdEeFfGgHhIiJjAaBbCcDdEeFfGgHhIiJj</dt>
+<dt>===================================================================</dt>
+<dt>OVERLOADED OPERATORS (//, return TYPE(STRING))</dt>
+<dt>str1%str ................... [String one:]</dt>
+<dt>str2%str ................... [String two:]</dt>
+<dt>str1 // str2 ................ String one:String two:</dt>
+<dt>str1 // 20000 ............... String one:20000</dt>
+<dt>str1 // 20.0 ................ String one:20.0</dt>
+<dt>===================================================================</dt>
+<dt>OVERLOADED OPERATORS (logical comparisons, return logical)</dt>
+<dt>str1%str ................... [abcdefghij]</dt>
+<dt>str2%str ................... [klmnopqrst]</dt>
+<dd>
+<dl>
+<dt>EQ LT GT LE GE NE</dt>
+<dt>compare str1 to str1</dt>
+<dd>
+<dl>
+<dt>T  F  F  T  T  F</dt>
+<dt>compare str1 to str2</dt>
+<dd>
+<dl>
+<dt>F  T  F  T  F  T</dt>
+<dt>compare str2 to str1</dt>
+<dd>F  F  T  F  T  T
+   ===================================================================</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
 <h2 id="author">AUTHOR</h2>
 <div class="codehilite"><pre><span></span><code>John S. Urban
 </code></pre></div>
@@ -974,7 +990,7 @@ public function <a href='../proc/p.html'>p</a>(self) result(string_out)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-01-16 22:32  
+             on 2022-07-06 23:08  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_strings was developed by John S. Urban</p></div>

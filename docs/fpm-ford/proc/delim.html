@@ -126,19 +126,19 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 3.2% of total for procedures.">78 statements</a>
+    title=" 3.0% of total for procedures.">78 statements</a>
      </li> 
      
      
      
-    <li><i class="fa fa-code"></i><a href="../src/M_strings.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/M_strings.F90"> Source File</a></li>
      
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
     
-     <li><a href='../sourcefile/m_strings.f90.html'>M_strings.f90</a></li>
+     <li><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
     
      <li><a href='../module/m_strings.html'>M_strings</a></li>
     
@@ -339,7 +339,33 @@ public subroutine delim(line, array, n, icount, ibegin, iterm, lgth, dlim)
  <span class="n">end</span> <span class="n">program</span> <span class="n">demo_delim</span>
 </code></pre></div>
 
-<p>Expected output</p>
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code><span class="o">=========================================================</span>
+<span class="n">PARSING</span><span class="o">=</span><span class="p">[</span> <span class="n">first</span>  <span class="n">second</span> <span class="mf">10.3</span> <span class="n">words_of_stuff</span><span class="p">]</span> <span class="n">on</span>
+ <span class="n">number</span> <span class="n">of</span> <span class="n">tokens</span> <span class="n">found</span><span class="o">=</span>           <span class="mi">4</span>
+ <span class="n">last</span> <span class="n">character</span> <span class="k">in</span> <span class="n">column</span>           <span class="mi">34</span>
+<span class="p">[</span><span class="n">first</span><span class="p">][</span><span class="n">second</span><span class="p">][</span><span class="mf">10.3</span><span class="p">][</span><span class="n">words_of_stuff</span><span class="p">]</span>
+<span class="p">[</span><span class="n">first</span><span class="p">][</span><span class="n">second</span><span class="p">][</span><span class="mf">10.3</span><span class="p">][</span><span class="n">words_of_stuff</span><span class="p">]</span>
+<span class="o">=========================================================</span>
+<span class="n">PARSING</span><span class="o">=</span><span class="p">[</span> <span class="n">first</span>  <span class="n">second</span> <span class="mf">10.3</span> <span class="n">words_of_stuff</span><span class="p">]</span> <span class="n">on</span> <span class="n">o</span>
+ <span class="n">number</span> <span class="n">of</span> <span class="n">tokens</span> <span class="n">found</span><span class="o">=</span>           <span class="mi">4</span>
+ <span class="n">last</span> <span class="n">character</span> <span class="k">in</span> <span class="n">column</span>           <span class="mi">34</span>
+<span class="p">[</span> <span class="n">first</span>  <span class="n">sec</span><span class="p">][</span><span class="n">nd</span> <span class="mf">10.3</span> <span class="n">w</span><span class="p">][</span><span class="n">rds_</span><span class="p">][</span><span class="n">f_stuff</span><span class="p">]</span>
+<span class="p">[</span> <span class="n">first</span>  <span class="n">sec</span><span class="p">][</span><span class="n">nd</span> <span class="mf">10.3</span> <span class="n">w</span><span class="p">][</span><span class="n">rds_</span><span class="p">][</span><span class="n">f_stuff</span><span class="p">]</span>
+<span class="o">=========================================================</span>
+<span class="n">PARSING</span><span class="o">=</span><span class="p">[</span> <span class="n">first</span>  <span class="n">second</span> <span class="mf">10.3</span> <span class="n">words_of_stuff</span><span class="p">]</span> <span class="n">on</span>  <span class="n">aeiou</span>
+ <span class="n">number</span> <span class="n">of</span> <span class="n">tokens</span> <span class="n">found</span><span class="o">=</span>          <span class="mi">10</span>
+ <span class="n">last</span> <span class="n">character</span> <span class="k">in</span> <span class="n">column</span>           <span class="mi">34</span>
+
+<span class="p">[</span><span class="n">f</span><span class="p">][</span><span class="n">rst</span><span class="p">][</span><span class="n">s</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">nd</span><span class="p">][</span><span class="mf">10.3</span><span class="p">][</span><span class="n">w</span><span class="p">][</span><span class="n">rds_</span><span class="p">][</span><span class="n">f_st</span><span class="p">][</span><span class="n">ff</span><span class="p">]</span>
+<span class="o">=========================================================</span>
+<span class="n">PARSING</span><span class="o">=</span><span class="p">[</span><span class="n">AAAaBBBBBBbIIIIIi</span>  <span class="n">J</span> <span class="n">K</span> <span class="n">L</span><span class="p">]</span> <span class="n">on</span>  <span class="n">aeiou</span>
+ <span class="n">number</span> <span class="n">of</span> <span class="n">tokens</span> <span class="n">found</span><span class="o">=</span>           <span class="mi">5</span>
+ <span class="n">last</span> <span class="n">character</span> <span class="k">in</span> <span class="n">column</span>           <span class="mi">24</span>
+
+<span class="p">[</span><span class="n">AAA</span><span class="p">][</span><span class="n">BBBBBBbIIIII</span><span class="p">][</span><span class="n">J</span><span class="p">][</span><span class="n">K</span><span class="p">][</span><span class="n">L</span><span class="p">]</span>
+</code></pre></div>
+
 <h2 id="author">AUTHOR</h2>
 <div class="codehilite"><pre><span></span><code>John S. Urban
 </code></pre></div>
@@ -412,7 +438,7 @@ public subroutine delim(line, array, n, icount, ibegin, iterm, lgth, dlim)
   
 <tr>
   
-  <td><span class="anchor" id="variable-icount~3"></span>integer,</td>
+  <td><span class="anchor" id="variable-icount~4"></span>integer,</td>
   <td>intent(out)</td>
   <td></td>
   
@@ -848,7 +874,7 @@ public subroutine delim(line, array, n, icount, ibegin, iterm, lgth, dlim)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-01-16 22:32  
+             on 2022-07-06 23:08  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_strings was developed by John S. Urban</p></div>

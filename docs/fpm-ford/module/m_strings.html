@@ -126,19 +126,19 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title="91.2% of total for modules and submodules.">3521 statements</a>
+    title="91.5% of total for modules and submodules.">3655 statements</a>
      </li> 
      
      
      
-    <li><i class="fa fa-code"></i><a href="../src/M_strings.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/M_strings.F90"> Source File</a></li>
      
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
     
-     <li><a href='../sourcefile/m_strings.f90.html'>M_strings.f90</a></li>
+     <li><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
     
   
      <li class="active">M_strings</li>
@@ -245,6 +245,8 @@
       
       <a class="list-group-item" href="../module/m_strings.html#proc-c2s">c2s</a>
       
+      <a class="list-group-item" href="../module/m_strings.html#proc-cc">cc</a>
+      
       <a class="list-group-item" href="../module/m_strings.html#proc-chomp">chomp</a>
       
       <a class="list-group-item" href="../module/m_strings.html#proc-codebase">codebase</a>
@@ -259,9 +261,9 @@
       
       <a class="list-group-item" href="../module/m_strings.html#proc-dilate">dilate</a>
       
-      <a class="list-group-item" href="../module/m_strings.html#proc-expand">expand</a>
+      <a class="list-group-item" href="../module/m_strings.html#proc-edit_distance">edit_distance</a>
       
-      <a class="list-group-item" href="../module/m_strings.html#proc-fmt">fmt</a>
+      <a class="list-group-item" href="../module/m_strings.html#proc-expand">expand</a>
       
       <a class="list-group-item" href="../module/m_strings.html#proc-fortran_name">fortran_name</a>
       
@@ -303,6 +305,8 @@
       
       <a class="list-group-item" href="../module/m_strings.html#proc-lenset">lenset</a>
       
+      <a class="list-group-item" href="../module/m_strings.html#proc-longest_common_substring">longest_common_substring</a>
+      
       <a class="list-group-item" href="../module/m_strings.html#proc-lower">lower</a>
       
       <a class="list-group-item" href="../module/m_strings.html#proc-merge_str">merge_str</a>
@@ -310,6 +314,8 @@
       <a class="list-group-item" href="../module/m_strings.html#proc-noesc">noesc</a>
       
       <a class="list-group-item" href="../module/m_strings.html#proc-nospace">nospace</a>
+      
+      <a class="list-group-item" href="../module/m_strings.html#proc-paragraph">paragraph</a>
       
       <a class="list-group-item" href="../module/m_strings.html#proc-quote">quote</a>
       
@@ -334,6 +340,8 @@
       <a class="list-group-item" href="../module/m_strings.html#proc-setbits64">setbits64</a>
       
       <a class="list-group-item" href="../module/m_strings.html#proc-setbits8">setbits8</a>
+      
+      <a class="list-group-item" href="../module/m_strings.html#proc-squeeze">squeeze</a>
       
       <a class="list-group-item" href="../module/m_strings.html#proc-stretch">stretch</a>
       
@@ -403,7 +411,7 @@
     
     <div class="col-md-9" id='text'>
     <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>M_strings(3f) - [M_strings::INTRO::OOPS] Fortran string module
+<div class="codehilite"><pre><span></span><code>M_strings(3f) - [M_strings::INTRO] Fortran string module
 </code></pre></div>
 
 <h2 id="description">DESCRIPTION</h2>
@@ -429,12 +437,13 @@
   use M_strings, only : len_white,atleast,stretch,lenset,merge_str
   use M_strings, only : switch,s2c,c2s
   use M_strings, only : noesc,notabs,dilate,expand,visible
+  use M_strings, only : longest_common_substring
   !x!use M_strings, only : uc
   use M_strings, only : string_to_value,string_to_values,s2v,s2vs
   use M_strings, only : value_to_string,v2s,msg
   use M_strings, only : listout,getvals
   use M_strings, only : glob, ends_with
-  use M_strings, only : fmt
+  use M_strings, only : paragraph
   use M_strings, only : base, decodebase, codebase, base2
   use M_strings, only : isalnum, isalpha, iscntrl, isdigit
   use M_strings, only : isgraph, islower, isprint, ispunct
@@ -442,6 +451,8 @@
   use M_strings, only : isnumber
   use M_strings, only : fortran_name
   use M_strings, only : describe
+  use M_strings, only : edit_distance
+  use M_strings, only : cc
 </code></pre></div>
 
 <p>TOKENS</p>
@@ -452,7 +463,7 @@
           <span class="nv">and</span> <span class="nv">store</span> <span class="nv">tokens</span> <span class="nv">into</span> <span class="nv">an</span> <span class="nv">array</span>
    <span class="nv">chomp</span>  <span class="nv">function</span> <span class="nv">consumes</span> <span class="nv">input</span> <span class="nv">line</span> <span class="nv">as</span> <span class="nv">it</span> <span class="nv">returns</span> <span class="k">next</span> <span class="nv">token</span> <span class="nv">in</span> <span class="nv">a</span>
           <span class="nv">string</span> <span class="nv">using</span> <span class="nv">specified</span> <span class="nv">delimiters</span>
-   <span class="nv">fmt</span>    <span class="nv">convert</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">into</span> <span class="nv">a</span> <span class="nv">paragraph</span>
+   <span class="nv">paragraph</span>    <span class="nv">convert</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">into</span> <span class="nv">a</span> <span class="nv">paragraph</span>
    <span class="nv">strtok</span> <span class="nv">tokenize</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">like</span> <span class="nv">C</span> <span class="nv">strtok</span><span class="ss">(</span><span class="mi">3</span><span class="nv">c</span><span class="ss">)</span> <span class="nv">routine</span>
 </code></pre></div>
 
@@ -474,6 +485,7 @@
    <span class="n">join</span>           <span class="n">join</span> <span class="n">an</span> <span class="n">array</span> <span class="n">of</span> <span class="n">CHARACTER</span> <span class="n">variables</span> <span class="n">with</span> <span class="n">specified</span>
                   <span class="n">separator</span>
    <span class="n">rotate13</span>       <span class="n">apply</span> <span class="n">trivial</span> <span class="n">encryption</span> <span class="n">algorithm</span> <span class="n">ROT13</span> <span class="n">to</span> <span class="n">a</span> <span class="n">string</span>
+   <span class="n">squeeze</span>        <span class="n">delete</span> <span class="n">adjacent</span> <span class="n">duplicate</span> <span class="n">characters</span> <span class="n">from</span> <span class="n">a</span> <span class="n">string</span>
 </code></pre></div>
 
 <p>CASE</p>
@@ -491,6 +503,8 @@
    nospace  function replaces whitespace with nothing
    indent   find number of leading spaces
    crop     function trims leading and trailing spaces
+
+   See Also: squeeze
 </code></pre></div>
 
 <p>QUOTES</p>
@@ -589,7 +603,12 @@
 </code></pre></div>
 
 <p>MISCELLANEOUS</p>
-<div class="codehilite"><pre><span></span><code>   describe   returns a string describing the name of a single character
+<div class="codehilite"><pre><span></span><code>   <span class="nv">cc</span>         <span class="k">return</span> <span class="nv">up</span> <span class="nv">to</span> <span class="nv">twenty</span> <span class="nv">strings</span> <span class="nv">of</span> <span class="nv">arbitrary</span> <span class="nv">length</span> <span class="nv">as</span> <span class="nv">an</span> <span class="nv">array</span>
+   <span class="nv">describe</span>   <span class="nv">returns</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">describing</span> <span class="nv">the</span> <span class="nv">name</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">single</span> <span class="nv">character</span>
+   <span class="nv">edit_distance</span>  <span class="nv">returns</span> <span class="nv">a</span> <span class="nv">naive</span> <span class="nv">edit</span> <span class="nv">distance</span> <span class="nv">using</span> <span class="nv">the</span> <span class="nv">Levenshtein</span>
+                  <span class="nv">distance</span> <span class="nv">algorithm</span>
+   <span class="nv">longest_common_substring</span>  <span class="nv">function</span> <span class="nv">that</span> <span class="nv">returns</span> <span class="nv">the</span> <span class="nv">longest</span> <span class="nv">common</span>
+                             <span class="nv">substring</span> <span class="nv">of</span> <span class="nv">two</span> <span class="nv">strings</span>.
 </code></pre></div>
 
 <p>INTRINSICS</p>
@@ -622,10 +641,12 @@
     <span class="n">llt</span>                 <span class="n">Lexical</span> <span class="n">less</span> <span class="n">than</span>
 </code></pre></div>
 
-<p>OOPS INTERFACE
-    The M_strings_oop(3fm) module (included with the M_strings(3fm)
-    module) provides an OOP (Object-Oriented Programming) interface to
-    the M_strings(3fm) module.</p>
+<p>OOPS INTERFACE</p>
+<div class="codehilite"><pre><span></span><code>The M_strings_oop(3fm) module (included with the M_strings(3fm)
+module) provides an OOP (Object-Oriented Programming) interface to
+the M_strings(3fm) module.
+</code></pre></div>
+
 <h2 id="see-also">SEE ALSO</h2>
 <div class="codehilite"><pre><span></span><code><span class="n">There</span> <span class="n">are</span> <span class="n">additional</span> <span class="n">routines</span> <span class="n">in</span> <span class="n">other</span> <span class="n">GPF</span> <span class="n">modules</span> <span class="k">for</span> <span class="n">working</span> <span class="n">with</span>
 <span class="n">expressions</span> <span class="p">(</span><span class="n">M_calculator</span><span class="p">),</span> <span class="kt">time</span> <span class="n">strings</span> <span class="p">(</span><span class="n">M_time</span><span class="p">),</span> <span class="n">random</span> <span class="n">strings</span>
@@ -639,7 +660,6 @@
 <span class="nv">interface</span> <span class="nv">does</span> <span class="nv">not</span> <span class="nv">have</span> <span class="nv">individual</span> <span class="nv">man</span><span class="ss">(</span><span class="mi">1</span><span class="ss">)</span> <span class="nv">pages</span>, <span class="nv">but</span> <span class="nv">is</span> <span class="nv">instead</span>
 <span class="nv">demonstrated</span> <span class="nv">using</span> <span class="nv">the</span> <span class="nv">following</span> <span class="nv">example</span> <span class="nv">program</span>:
 
-
  <span class="nv">program</span> <span class="nv">demo_M_strings</span>
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">split</span>, <span class="nv">delim</span>, <span class="nv">chomp</span>, <span class="nv">sep</span>
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">substitute</span>, <span class="nv">change</span>, <span class="nv">modif</span>
@@ -647,17 +667,18 @@
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">replace</span>, <span class="nv">join</span>
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">upper</span>, <span class="nv">lower</span>, <span class="nv">upper_quoted</span>
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">rotate13</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">adjustc</span>, <span class="nv">compact</span>, <span class="nv">nospace</span>, <span class="nv">indent</span>, <span class="nv">crop</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">adjustc</span>, <span class="nv">compact</span>, <span class="nv">nospace</span>, <span class="nv">indent</span>, <span class="nv">crop</span>, <span class="nv">squeeze</span>
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">unquote</span>, <span class="nv">quote</span>
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">len_white</span>, <span class="nv">atleast</span>, <span class="nv">stretch</span>, <span class="nv">lenset</span>, <span class="nv">merge_str</span>
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">switch</span>, <span class="nv">s2c</span>, <span class="nv">c2s</span>
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">noesc</span>, <span class="nv">notabs</span>, <span class="nv">dilate</span>, <span class="nv">expand</span>, <span class="nv">visible</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">longest_common_substring</span>
  <span class="o">!</span><span class="nv">x</span><span class="o">!</span><span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">uc</span>
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">string_to_value</span>, <span class="nv">string_to_values</span>, <span class="nv">s2v</span>, <span class="nv">s2vs</span>
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">value_to_string</span>, <span class="nv">v2s</span>, <span class="nv">msg</span>
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">listout</span>, <span class="nv">getvals</span>
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">glob</span>, <span class="nv">ends_with</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">fmt</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">paragraph</span>
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">base</span>, <span class="nv">decodebase</span>, <span class="nv">codebase</span>, <span class="nv">base2</span>
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">isalnum</span>, <span class="nv">isalpha</span>, <span class="nv">iscntrl</span>, <span class="nv">isdigit</span>, <span class="nv">isgraph</span>
  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">islower</span>, <span class="nv">isprint</span>, <span class="nv">ispunct</span>, <span class="nv">isspace</span>, <span class="nv">isupper</span>
@@ -792,6 +813,8 @@
       
       <a class="list-group-item" href="../module/m_strings.html#proc-c2s">c2s</a>
       
+      <a class="list-group-item" href="../module/m_strings.html#proc-cc">cc</a>
+      
       <a class="list-group-item" href="../module/m_strings.html#proc-chomp">chomp</a>
       
       <a class="list-group-item" href="../module/m_strings.html#proc-codebase">codebase</a>
@@ -806,9 +829,9 @@
       
       <a class="list-group-item" href="../module/m_strings.html#proc-dilate">dilate</a>
       
-      <a class="list-group-item" href="../module/m_strings.html#proc-expand">expand</a>
+      <a class="list-group-item" href="../module/m_strings.html#proc-edit_distance">edit_distance</a>
       
-      <a class="list-group-item" href="../module/m_strings.html#proc-fmt">fmt</a>
+      <a class="list-group-item" href="../module/m_strings.html#proc-expand">expand</a>
       
       <a class="list-group-item" href="../module/m_strings.html#proc-fortran_name">fortran_name</a>
       
@@ -850,6 +873,8 @@
       
       <a class="list-group-item" href="../module/m_strings.html#proc-lenset">lenset</a>
       
+      <a class="list-group-item" href="../module/m_strings.html#proc-longest_common_substring">longest_common_substring</a>
+      
       <a class="list-group-item" href="../module/m_strings.html#proc-lower">lower</a>
       
       <a class="list-group-item" href="../module/m_strings.html#proc-merge_str">merge_str</a>
@@ -857,6 +882,8 @@
       <a class="list-group-item" href="../module/m_strings.html#proc-noesc">noesc</a>
       
       <a class="list-group-item" href="../module/m_strings.html#proc-nospace">nospace</a>
+      
+      <a class="list-group-item" href="../module/m_strings.html#proc-paragraph">paragraph</a>
       
       <a class="list-group-item" href="../module/m_strings.html#proc-quote">quote</a>
       
@@ -881,6 +908,8 @@
       <a class="list-group-item" href="../module/m_strings.html#proc-setbits64">setbits64</a>
       
       <a class="list-group-item" href="../module/m_strings.html#proc-setbits8">setbits8</a>
+      
+      <a class="list-group-item" href="../module/m_strings.html#proc-squeeze">squeeze</a>
       
       <a class="list-group-item" href="../module/m_strings.html#proc-stretch">stretch</a>
       
@@ -3413,6 +3442,374 @@ public function <a href='../proc/c2s.html'>c2s</a>(c_string_pointer) result(f_st
     
     
   <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-cc"></span><h3>
+public function <a href='../proc/cc.html'>cc</a>(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20, len) result(vec)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+
+
+
+
+
+
+
+<p>Sample Program:</p><a href="../proc/cc.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x1</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x2</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x3</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x4</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x5</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x6</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x7</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x8</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x9</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x10</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x11</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x12</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x13</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x14</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x15</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x16</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x17</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x18</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x19</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>x20</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer,</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>len</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  
+  
+  
+  
+     <h4>Return Value <small>character(len=:),
+  allocatable, (:)</small></h4>
+  
+    
+
+  </div>
+  </div>
+
+    
+    
+  <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-chomp"></span><h3>
 public function <a href='../proc/chomp.html'>chomp</a>(source_string, token, delimiters)
     
@@ -3994,6 +4391,90 @@ public function <a href='../proc/dilate.html'>dilate</a>(instr) result(outstr)
     
     
   <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-edit_distance"></span><h3>
+public pure elemental function <a href='../proc/edit_distance.html'>edit_distance</a>(a, b)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+
+
+
+
+
+
+
+<p>The Levenshtein distance function returns how many edits (deletions,
+   insertions, transposition) are required to turn one string into another.</p><a href="../proc/edit_distance.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>a</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>b</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  
+  
+  
+  
+     <h4>Return Value <small>integer
+  </small></h4>
+  
+    
+
+  </div>
+  </div>
+
+    
+    
+  <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-expand"></span><h3>
 public function <a href='../proc/expand.html'>expand</a>(line, escape) result(lineout)
     
@@ -4068,89 +4549,6 @@ public function <a href='../proc/expand.html'>expand</a>(line, escape) result(li
   
      <h4>Return Value <small>character(len=:),
   allocatable</small></h4>
-  
-    
-
-  </div>
-  </div>
-
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-fmt"></span><h3>
-public function <a href='../proc/fmt.html'>fmt</a>(source_string, length)
-    
-    
-   
-</h3></div>
-  <div class="panel-body">
-       
-    
-
-
-
-
-
-
-
-<p>function fmt(source_string,length)</p><a href="../proc/fmt.html" class="pull-right"><emph>Read more&hellip;</emph></a>
-    
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
-<tbody>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>character(len=*),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>source_string</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>length</strong></td><td></td>
-  
-</tr>
-
-</tbody>
-</table>
-
-      
-    
-    
-
-  
-  
-  
-  
-     <h4>Return Value <small>character(len=:),
-  allocatable, (:)</small></h4>
   
     
 
@@ -5674,6 +6072,89 @@ public function <a href='../proc/lenset.html'>lenset</a>(line, length) result(st
     
     
   <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-longest_common_substring"></span><h3>
+public function <a href='../proc/longest_common_substring.html'>longest_common_substring</a>(a, b) result(match)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+
+
+
+
+
+
+
+<p>Sample program</p><a href="../proc/longest_common_substring.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>a</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>b</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  
+  
+  
+  
+     <h4>Return Value <small>character(len=:),
+  allocatable</small></h4>
+  
+    
+
+  </div>
+  </div>
+
+    
+    
+  <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-lower"></span><h3>
 public pure elemental function <a href='../proc/lower.html'>lower</a>(str, begin, end) result(string)
     
@@ -5997,6 +6478,89 @@ public function <a href='../proc/nospace.html'>nospace</a>(line)
   
      <h4>Return Value <small>character(len=:),
   allocatable</small></h4>
+  
+    
+
+  </div>
+  </div>
+
+    
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-paragraph"></span><h3>
+public function <a href='../proc/paragraph.html'>paragraph</a>(source_string, length)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+
+
+
+
+
+
+
+<p>function paragraph(source_string,length)</p><a href="../proc/paragraph.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>source_string</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>length</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  
+  
+  
+  
+     <h4>Return Value <small>character(len=:),
+  allocatable, (:)</small></h4>
   
     
 
@@ -6992,6 +7556,89 @@ public function <a href='../proc/setbits8.html'>setbits8</a>(string) result(answ
     
     
   <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-squeeze"></span><h3>
+public function <a href='../proc/squeeze.html'>squeeze</a>(str, charp) result(outstr)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+
+
+
+
+
+
+
+<p>Sample Program:</p><a href="../proc/squeeze.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>str</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=1),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>charp</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  
+  
+  
+  
+     <h4>Return Value <small>character(len=:),
+  allocatable</small></h4>
+  
+    
+
+  </div>
+  </div>
+
+    
+    
+  <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-stretch"></span><h3>
 public function <a href='../proc/stretch.html'>stretch</a>(line, length, pattern, suffix) result(strout)
     
@@ -7605,7 +8252,8 @@ public pure elemental function <a href='../proc/upper_quoted.html'>upper_quoted<
 
 
 
-<p>upper_quoted(3f) - [M_strings:CASE] elemental function converts string to miniscule skipping strings quoted per Fortran syntax rules
+<p>upper_quoted(3f) - [M_strings:CASE] elemental function converts string to
+                miniscule skipping strings quoted per Fortran syntax rules
  (LICENSE:PD)</p><a href="../proc/upper_quoted.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
     <h4>Arguments</h4>
@@ -8969,7 +9617,7 @@ public subroutine <a href='../proc/value_to_string.html'>value_to_string</a>(gva
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-01-16 22:32  
+             on 2022-07-06 23:08  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_strings was developed by John S. Urban</p></div>

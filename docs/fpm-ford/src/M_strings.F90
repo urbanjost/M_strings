@@ -248,7 +248,6 @@
 !!    interface does not have individual man(1) pages, but is instead
 !!    demonstrated using the following example program:
 !!
-!!
 !!     program demo_M_strings
 !!     use M_strings, only : split, delim, chomp, sep
 !!     use M_strings, only : substitute, change, modif
@@ -682,9 +681,9 @@ CONTAINS
 !!      allpassed= test("abc",&
 !!      &"********a********b********c********", .true.) .and. allpassed
 !!      allpassed=&
-!!      &test("********a********b********c********", "abc", .false.) .and. allpassed
+!!      &test("********a********b********c********", "abc",.false.).and.allpassed
 !!      allpassed= &
-!!      &test("abc", "********a********b********b********", .false.) .and. allpassed
+!!      &test("abc", "********a********b********b********",.false.).and.allpassed
 !!      allpassed= test("*abc*", "***a*b*c***", .true.) .and. allpassed
 !!
 !!      ! A case-insensitive algorithm test.
@@ -833,7 +832,8 @@ end function glob
 !===================================================================================================================================
 !>
 !!##NAME
-!!    ends_with(3f) - [M_strings:MATCH] test if string ends with specified suffix(es)
+!!    ends_with(3f) - [M_strings:MATCH] test if string ends with specified
+!!                    suffix(es)
 !!    (LICENSE:PD)
 !!
 !!##SYNOPSIS
@@ -2765,7 +2765,8 @@ end function len_white
 !===================================================================================================================================
 !>
 !!##NAME
-!!    crop(3f) - [M_strings:WHITESPACE] trim leading and trailing blanks and control characters from a string
+!!    crop(3f) - [M_strings:WHITESPACE] trim leading and trailing blanks
+!!               and control characters from a string
 !!    (LICENSE:PD)
 !!
 !!##SYNOPSIS
@@ -2779,7 +2780,6 @@ end function len_white
 !!    All control characters throughout the string are replaced with spaces
 !!    and leading and trailing spaces are trimmed from the resulting string.
 !!    Tabs are expanded assuming a stop every eight characters.
-!!
 !!
 !!##OPTIONS
 !!    strin   input string to trim leading and trailing space and control
@@ -2824,7 +2824,8 @@ end function crop
 !===================================================================================================================================
 !>
 !!##NAME
-!!    transliterate(3f) - [M_strings:EDITING] replace characters from old set with new set
+!!    transliterate(3f) - [M_strings:EDITING] replace characters from old
+!!                        set with new set
 !!    (LICENSE:PD)
 !!
 !!##SYNOPSIS
@@ -4656,7 +4657,8 @@ end function atleast
 !===================================================================================================================================
 !>
 !!##NAME
-!!    lenset(3f) - [M_strings:LENGTH] return string trimmed or padded to specified length
+!!    lenset(3f) - [M_strings:LENGTH] return string trimmed or padded to
+!!                 specified length
 !!    (LICENSE:PD)
 !!
 !!##SYNOPSIS
@@ -4862,7 +4864,8 @@ end function merge_str
 !!       write(*,'("IN:   <<<",g0,">>>")')str
 !!       answer=squeeze(str,chr)
 !!       write(*,'("OUT:  <<<",g0,">>>")')answer
-!!       write(*,'("LENS: ",*(g0,1x))')"from",len(str),"to",len(answer),"for a change of",len(str)-len(answer)
+!!       write(*,'("LENS: ",*(g0,1x))')"from",len(str),"to",len(answer), &
+!!               & "for a change of",len(str)-len(answer)
 !!       write(*,'("CHAR: ",g0)')chr
 !!    end subroutine printme
 !!    end program demo_squeeze
@@ -5447,7 +5450,6 @@ doubleprecision function s2v(chars,ierr,onerr)
 !  1989 John S. Urban
 
 ! ident_44="@(#)M_strings::s2v(3f): returns doubleprecision number from string;zero if error occurs"
-
 
 character(len=*),intent(in)  :: chars
 integer,optional             :: ierr
@@ -6614,7 +6616,8 @@ end function edit_distance
 !==================================================================================================================================!
 !>
 !!##NAME
-!!    cc(3f) - [M_strings] return up to twenty strings of arbitrary length as an array
+!!    cc(3f) - [M_strings] return up to twenty strings of arbitrary length
+!!             as an array
 !!    (LICENSE:PD)
 !!
 !!##SYNOPSIS
@@ -7527,7 +7530,6 @@ end function s2vs
 !!    ISPRINT:  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEF
 !!    GHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmn
 !!    opqrstuvwxyz{|}~
-!!
 !!
 !!##AUTHOR
 !!     John S. Urban
@@ -8823,7 +8825,6 @@ end function decodebase
 !!
 !!    The letters A,B,...,Z represent 10,11,...,36 in the base > 10.
 !!
-!!
 !!##EXAMPLE
 !!
 !!   Sample program:
@@ -9592,9 +9593,11 @@ end function msg_one
 !!      last 9 12
 !!      example 15 21
 !!
-!!      > ??? option to skip adjacent delimiters (not return null tokens) common with whitespace
-!!      > ??? quoted strings, especially CSV both " and ', Fortran adjacent is insert versus other rules
-!!      > ??? escape character like \\
+!!      > ??? option to skip adjacent delimiters (not return null tokens)
+!!      >     common with whitespace
+!!      > ??? quoted strings, especially CSV both " and ', Fortran adjacent
+!!      >     is insert versus other rules
+!!      > ??? escape character like \\ .
 !!      > ??? multi-character delimiters like \\n, \\t,
 !!      > ??? regular expression separator
 !!
@@ -10196,7 +10199,8 @@ end subroutine matching_delimiter
 !===================================================================================================================================
 !>
 !!##NAME
-!!    longest_common_substring(3f) - [M_strings] function that returns the longest common substring of two strings.
+!!    longest_common_substring(3f) - [M_strings] function that returns the
+!!                                   longest common substring of two strings.
 !!##SYNOPSIS
 !!
 !!    function longest_common_substring(a,b) result(match)
@@ -10225,12 +10229,12 @@ end subroutine matching_delimiter
 !!    program demo_longest_common_substring
 !!    use M_strings, only : longest_common_substring
 !!    implicit none
-!!       call  compare('testing123testingthing', 'thisis',                 'thi')
-!!       call  compare('testing',                'sting',                  'sting')
-!!       call  compare('thisisatest_stinger',    'testing123testingthing', 'sting')
-!!       call  compare('thisisatest_stinger',    'thisis',                 'thisis')
-!!       call  compare('thisisatest',            'testing123testing',      'test')
-!!       call  compare('thisisatest',            'thisisatest',            'thisisatest')
+!!       call compare('testing123testingthing','thisis',              'thi')
+!!       call compare('testing',             'sting',               'sting')
+!!       call compare('thisisatest_stinger', 'testing123testingthing','sting')
+!!       call compare('thisisatest_stinger', 'thisis',              'thisis')
+!!       call compare('thisisatest',         'testing123testing',   'test')
+!!       call compare('thisisatest',         'thisisatest',         'thisisatest')
 !!    contains
 !!
 !!    subroutine compare(a,b,answer)
