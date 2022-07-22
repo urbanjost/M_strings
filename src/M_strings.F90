@@ -788,7 +788,7 @@ character(len=:),allocatable :: tbookmark, wbookmark
          ! Got a non-match. If we've set our bookmarks, back up to one or both of them and retry.
          if(wbookmark.ne.NULL) then
             if(wildtext(wi:).ne. wbookmark) then
-               wildtext = wbookmark;
+               wildtext = wbookmark
                wlen=len_trim(wbookmark)
                wi=1
                ! Don't go this far back again.
@@ -959,6 +959,9 @@ end function ends_with_any
 !!                NULLS='return' adjacent delimiters create an empty element
 !!                in the output ARRAY. If NULLS='ignoreend' then only
 !!                trailing delimiters at the right of the string are ignored.
+!!    ORDER='ASCENDING'|'DESCENDING'  by default the tokens are returned from
+!!                                    last to first; order='ASCENDING' returns
+!!                                    them from first to last (left to right).
 !!##RETURNS
 !!    SEP       Output array of tokens
 !!
@@ -1008,7 +1011,7 @@ end function ends_with_any
 !!
 !!##LICENSE
 !!    Public Domain
-function sep(input_line,delimiters,nulls)
+function sep(input_line,delimiters,nulls,order)
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 ! ident_7="@(#)M_strings::sep(3f): parse string on delimiter characters and store tokens into an allocatable array"
@@ -1023,8 +1026,20 @@ intrinsic index, min, present, len
 character(len=*),intent(in)              :: input_line  ! input string to tokenize
 character(len=*),optional,intent(in)     :: delimiters  ! list of delimiter characters
 character(len=*),optional,intent(in)     :: nulls       ! return strings composed of delimiters or not ignore|return|ignoreend
+character(len=*),optional,intent(in)     :: order       ! return strings composed of delimiters or not ignore|return|ignoreend
+
 character(len=:),allocatable             :: sep(:)      ! output array of tokens
+integer                                  :: isize
    call split(input_line,sep,delimiters,'right',nulls)
+   if(present(order))then
+   select case(order)
+   case('ascending','ASCENDING')
+    isize=size(sep)
+    if(isize.gt.1)then
+       sep=sep(isize:1:-1)
+    endif
+   end select
+   endif
 !-----------------------------------------------------------------------------------------------------------------------------------
 end function sep
 !===================================================================================================================================
