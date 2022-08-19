@@ -158,6 +158,25 @@ integer :: i
       allpassed=test("bLah", "bLa?", .true.) .and. allpassed
       allpassed=test("bLaH", "?Lah", .false.) .and. allpassed
       allpassed=test("bLaH", "?LaH", .true.) .and. allpassed
+  
+      !!
+      allpassed=  test('abcdefghijk'  ,  '?b*',      .true.)  .and.  allpassed
+      allpassed=  test('abcdefghijk'  ,  '*c*',      .true.)  .and.  allpassed
+      allpassed=  test('abcdefghijk'  ,  '*c',       .false.) .and.  allpassed
+      allpassed=  test('abcdefghijk'  ,  '*c*k',     .true.)  .and.  allpassed
+      allpassed=  test('LS'           ,  '?OW',      .false.) .and.  allpassed
+      allpassed=  test('teztit'       ,  'tez*t*t',  .true.)  .and.  allpassed
+
+      ! Two pattern match problems that might pose difficulties
+      allpassed=  test('e '           , '*e* ',         .true.)  .and.  allpassed
+      allpassed=  test('abcde       ' , '*e      *',    .true.)  .and.  allpassed
+      allpassed=  test('baaaaa'//char(0)       , 'b*a'//char(0),          .true.)  .and.  allpassed
+      allpassed=  test('bababa'                , 'b*ba',                  .true.)  .and.  allpassed
+      allpassed=  test('baaaaax'      , 'b*ax',         .true.)  .and.  allpassed
+      allpassed=  test('baaaaa'       , 'b*ax',         .false.) .and.  allpassed
+      allpassed=  test('baaaaax'      , 'b*a',          .false.) .and.  allpassed
+      allpassed=  test(''             , 'b*',           .false.) .and.  allpassed
+      allpassed=  test('3'            , '??',           .false.) .and.  allpassed
 
       ! Many-wildcard scenarios.
       allpassed= test(&
