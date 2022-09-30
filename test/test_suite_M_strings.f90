@@ -16,6 +16,7 @@ subroutine test_suite_m_strings()
    call test_codebase()
    call test_compact()
    call test_crop()
+   call test_clip()
    call test_decodebase()
    call test_delim()
    call test_describe()
@@ -904,6 +905,16 @@ subroutine test_len_white()
    call unit_check('len_white',len_white('A b c  '//char(9)//char(10)//char(11)//char(12)//char(13)).eq.5,msg='')
    call unit_check_done('len_white',msg='len_white(3f) tests completed')
 end subroutine test_len_white
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_clip()
+   call unit_check_start('clip',' &
+      & -description ''function trims leading and trailing spaces'' '//OPTIONS )
+   call unit_check('clip',clip('    A B CC D      ').eq.'A B CC D',msg='clip string test 1')
+   call unit_check('clip',clip('A B CC D').eq.'A B CC D',msg='clip string test 2')
+   call unit_check('clip',clip('A B CC D    ').eq.'A B CC D',msg='clip string test 3')
+   call unit_check('clip',clip('     A B CC D    ').eq.'A B CC D',msg='clip string test 4')
+   call unit_check_done('clip')
+end subroutine test_clip
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_crop()
    call unit_check_start('crop',' &
