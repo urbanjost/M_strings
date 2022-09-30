@@ -40,13 +40,13 @@ jobs:
         echo "end" > foo.f90
         gfortran -cpp -E -dM foo.f90
         gfortran --version
-        fpm --version
+        ./fpm --version
 
     - name: tests MSWindows (debug)
-      run: fpm test --profile debug -flag "-D _WIN32"
+      run: ./fpm test --profile debug -flag "-D _WIN32"
 
     - name: tests MSWindows (release)
-      run: fpm test --profile release -flag "-D _WIN32"
+      run: ./fpm test --profile release -flag "-D _WIN32"
 
 #    - name: Run demo programs (fpm run)
 #      run: fpm run --profile release
