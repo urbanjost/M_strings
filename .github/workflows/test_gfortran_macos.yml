@@ -30,9 +30,6 @@ jobs:
 
     - name: Install fpm
       run: |
-           echo $PATH
-           pwd
-           uname -a
            wget https://raw.githubusercontent.com/urbanjost/index/main/bootstrap/fpm.F90
            mkdir -p /Users/runner/bin
            gfortran fpm.F90 -o /Users/runner/bin/fpm
@@ -40,6 +37,10 @@ jobs:
 
     - name: Display environment
       run: |
+        echo $PATH
+        pwd
+        uname -a
+        ulimit -a
         echo "end" > foo.f90
         gfortran -cpp -E -dM foo.f90
         gfortran --version
@@ -47,12 +48,12 @@ jobs:
 
     - name: tests MacOS (debug)
       run: |
-          ulimit -s unlimited
+          #ulimit -s unlimited
           fpm test --profile debug
 
     - name: tests MacOS (release)
       run: |
-          ulimit -s unlimited
+          #ulimit -s unlimited
           fpm test --profile release
 
     - name: cleanup MacOS
