@@ -47,13 +47,13 @@ jobs:
 
     - name: tests MacOS (debug)
       run: |
-      ulimit -s unlimited
-      fpm test --profile debug
+          ulimit -s unlimited
+          fpm test --profile debug
 
     - name: tests MacOS (release)
       run: |
-      ulimit -s unlimited
-      fpm test --profile release
+          ulimit -s unlimited
+          fpm test --profile release
 
     - name: cleanup MacOS
       run: ls -ltras
