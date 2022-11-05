@@ -11,7 +11,7 @@ jobs:
         os: [ macos-latest ]
         include:
         - os: macos-latest
-          gcc_v: 9
+          gcc_v: 12
     env:
       FC: gfortran
       GCC_V: ${{ matrix.gcc_v }}
@@ -24,7 +24,7 @@ jobs:
     - name: Install GFortran macOS
       run: |
           ls /usr/local/bin/gfortran-*
-          ln -s /usr/local/bin/gfortran-${GCC_V} /usr/local/bin/gfortran
+          ln -f -s /usr/local/bin/gfortran-${GCC_V} /usr/local/bin/gfortran
           which gfortran-${GCC_V}
           which gfortran
 
@@ -46,10 +46,14 @@ jobs:
         fpm --version
 
     - name: tests MacOS (debug)
-      run: fpm test --profile debug
+      run: |
+      ulimit -s unlimited
+      fpm test --profile debug
 
     - name: tests MacOS (release)
-      run: fpm test --profile release
+      run: |
+      ulimit -s unlimited
+      fpm test --profile release
 
     - name: cleanup MacOS
       run: ls -ltras

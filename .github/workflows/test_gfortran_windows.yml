@@ -9,7 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest]
-        gcc_v: [9] # Version of GFortran we want to use.
+        gcc_v: [11] # Version of GFortran we want to use.
         include:
 
         - os: windows-latest
@@ -28,25 +28,42 @@ jobs:
 
     - name: Install fpm
       run: |
-           echo $PATH
-           pwd
-           uname -a
+           Set-PSDebug -Trace 1
+           $Env:Path += [IO.Path]::PathSeparator + $pwd
            curl https://raw.githubusercontent.com/urbanjost/index/main/bootstrap/fpm.F90 --output fpm.F90
-           gfortran fpm.F90 -o fpm
-
+           gfortran -D_WIN32 fpm.F90 -g -fbacktrace -o fpm.exe
+           ls fpm.exe
+           curl https://raw.githubusercontent.com/urbanjost/index/main/bootstrap/hello.f90 --output hello.f90
+           gfortran hello.f90 -g -fbacktrace -o hello.exe
+           ls hello.exe
     - name: Display environment
       run: |
-        #make -k -p -fNOTTHERE
+        Set-PSDebug -Trace 1
+        $Env:Path += [IO.Path]::PathSeparator + $pwd
+        make -k -p -fNOTTHERE
+        pwd
+        uname -a
         echo "end" > foo.f90
         gfortran -cpp -E -dM foo.f90
+        env
+        which gfortran
         gfortran --version
-        ./fpm --version
+        hello.exe
+        hello
+        fpm --version
+        exit 0
 
     - name: tests MSWindows (debug)
-      run: ./fpm test --profile debug -flag "-D _WIN32"
+      run: |
+           Set-PSDebug -Trace 1
+           $Env:Path += [IO.Path]::PathSeparator + $pwd
+           fpm.exe test --profile debug -flag "-D _WIN32"
 
     - name: tests MSWindows (release)
-      run: ./fpm test --profile release -flag "-D _WIN32"
+      run: |
+           Set-PSDebug -Trace 1
+           $Env:Path += [IO.Path]::PathSeparator + $pwd
+           fpm.exe test --profile release -flag "-D _WIN32"
 
 #    - name: Run demo programs (fpm run)
 #      run: fpm run --profile release
