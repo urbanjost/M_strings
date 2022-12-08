@@ -6704,13 +6704,19 @@ end function unquote
 !!    Public Domain
 ! The Levenshtein distance function returns how many edits (deletions,
 ! insertions, transposition) are required to turn one string into another.
+
 pure elemental integer function edit_distance (a,b)
 character(len=*), intent(in) :: a, b
 integer                      :: len_a, len_b, i, j, cost
 ! matrix for calculating Levenshtein distance
-integer                      :: matrix(0:len_trim(a), 0:len_trim(b))
+!integer                      :: matrix(0:len_trim(a), 0:len_trim(b)) ! not supported by all compilers yet
+integer,allocatable          :: matrix(:,:)
    len_a = len_trim(a)
    len_b = len_trim(b)
+   !-------------------------------------- ! required by older compilers instead of above declaration
+   if(allocated(matrix))deallocate(matrix)
+   allocate(matrix(0:len_a,0:len_b))
+   !--------------------------------------
    matrix(:,0) = [(i,i=0,len_a)]
    matrix(0,:) = [(j,j=0,len_b)]
    do i = 1, len_a
