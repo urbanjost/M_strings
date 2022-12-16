@@ -868,7 +868,7 @@ end function glob
 !===================================================================================================================================
 !>
 !!##NAME
-!!    ends_with(3f) - [M_strings:MATCH] test if string ends with specified
+!!    ends_with(3f) - [M_strings:COMPARE] test if string ends with specified
 !!                    suffix(es)
 !!    (LICENSE:PD)
 !!
@@ -5258,7 +5258,7 @@ end function noesc
 !===================================================================================================================================
 !>
 !!##NAME
-!!      string_to_value(3f) - [M_strings:NUMERIC] subroutine returns numeric
+!!      string_to_value(3f) - [M_strings:TYPE] subroutine returns numeric
 !!      value from string
 !!      (LICENSE:PD)
 !!
@@ -5438,7 +5438,7 @@ end subroutine a2d
 !===================================================================================================================================
 !>
 !!##NAME
-!!    s2v(3f) - [M_strings:NUMERIC] function returns doubleprecision
+!!    s2v(3f) - [M_strings:TYPE] function returns doubleprecision
 !!    numeric value from a string
 !!    (LICENSE:PD)
 !!
@@ -5639,7 +5639,7 @@ end function dbles_s2v
 !===================================================================================================================================
 !>
 !!##NAME
-!!      value_to_string(3f) - [M_strings:NUMERIC] return numeric string
+!!      value_to_string(3f) - [M_strings:TYPE] return numeric string
 !!      from a numeric value
 !!      (LICENSE:PD)
 !!
@@ -5809,7 +5809,7 @@ end subroutine value_to_string
 !===================================================================================================================================
 !>
 !!##NAME
-!!      v2s(3f) - [M_strings:NUMERIC] return numeric string from a numeric value
+!!      v2s(3f) - [M_strings:TYPE] return numeric string from a numeric value
 !!      (LICENSE:PD)
 !!
 !!##SYNOPSIS
@@ -5941,7 +5941,7 @@ end function l2s
 !===================================================================================================================================
 !>
 !!##NAME
-!!    isnumber(3f) - [M_strings:NUMERIC] determine if a string represents a number
+!!    isnumber(3f) - [M_strings:TYPE] determine if a string represents a number
 !!    (LICENSE:PD)
 !!
 !!##SYNOPSIS
@@ -6195,7 +6195,7 @@ end function isNumber
 !===================================================================================================================================
 !>
 !!##NAME
-!!    trimzeros_(3fp) - [M_strings:NUMERIC] Delete trailing zeros from
+!!    trimzeros_(3fp) - [M_strings:TYPE] Delete trailing zeros from
 !!    numeric decimal string
 !!    (LICENSE:PD)
 !!
@@ -6665,7 +6665,7 @@ end function unquote
 !==================================================================================================================================!
 !>
 !!##NAME
-!!    edit_distance(3f) - [M_strings] returns a naive edit distance using
+!!    edit_distance(3f) - [M_strings:DESCRIBE] returns a naive edit distance using
 !!    the Levenshtein distance algorithm
 !!    (LICENSE:PD)
 !!
@@ -6733,7 +6733,7 @@ end function edit_distance
 !==================================================================================================================================!
 !>
 !!##NAME
-!!    cc(3f) - [M_strings] return up to twenty strings of arbitrary length
+!!    cc(3f) - [M_strings:ARRAY] return up to twenty strings of arbitrary length
 !!             as an array
 !!    (LICENSE:PD)
 !!
@@ -6865,7 +6865,7 @@ end function cc
 !==================================================================================================================================!
 !>
 !!##NAME
-!!    describe(3f) - [M_strings] returns a string describing the name of
+!!    describe(3f) - [M_strings:DESCRIBE] returns a string describing the name of
 !!    a single character
 !!    (LICENSE:PD)
 !!
@@ -7175,7 +7175,7 @@ end function describe
 !===================================================================================================================================
 !>
 !!##NAME
-!!    getvals(3f) - [M_strings:NUMERIC] read arbitrary number of REAL values
+!!    getvals(3f) - [M_strings:TYPE] read arbitrary number of REAL values
 !!    from a character variable up to size of VALUES() array
 !!    (LICENSE:PD)
 !!
@@ -7337,7 +7337,7 @@ end subroutine getvals
 !===================================================================================================================================
 !>
 !!##NAME
-!!      string_to_values(3f) - [M_strings:NUMERIC] read a string representing
+!!      string_to_values(3f) - [M_strings:TYPE] read a string representing
 !!      numbers into a numeric array
 !!      (LICENSE:PD)
 !!
@@ -7508,7 +7508,7 @@ end subroutine string_to_values
 !===================================================================================================================================
 !>
 !!##NAME
-!!      s2vs(3f) - [M_strings:NUMERIC] given a string representing numbers
+!!      s2vs(3f) - [M_strings:TYPE] given a string representing numbers
 !!      return a numeric array
 !!      (LICENSE:PD)
 !!
@@ -9334,7 +9334,7 @@ end function setbits64
 !===================================================================================================================================
 !>
 !!##NAME
-!!     msg(3f) - [M_strings] converts any standard scalar type to a string
+!!     msg(3f) - [M_strings:TYPE] converts any standard scalar type to a string
 !!     (LICENSE:PD)
 !!##SYNOPSIS
 !!
@@ -10374,8 +10374,8 @@ end subroutine matching_delimiter
 !===================================================================================================================================
 !>
 !!##NAME
-!!    longest_common_substring(3f) - [M_strings] function that returns the
-!!                                   longest common substring of two strings.
+!!    longest_common_substring(3f) - [M_strings:COMPARE] function that
+!!    returns the longest common substring of two strings.
 !!##SYNOPSIS
 !!
 !!    function longest_common_substring(a,b) result(match)
