@@ -22,7 +22,7 @@
 !!      use M_strings, only : upper,lower,upper_quoted
 !!      use M_strings, only : rotate13
 !!      use M_strings, only : adjustc,compact,nospace,indent
-!!      use M_strings, only : crop,clip,unquote,quote
+!!      use M_strings, only : crop,clip,unquote,quote,matching_delimiter
 !!      use M_strings, only : len_white,atleast,stretch,lenset,merge_str
 !!      use M_strings, only : switch,s2c,c2s
 !!      use M_strings, only : noesc,notabs,dilate,expand,visible
@@ -98,7 +98,7 @@
 !!       See Also: squeeze
 !!
 !!   QUOTES
-!!
+!!       matching_delimiter  find position of matching delimiter
 !!       unquote  remove quotes from string as if read with list-directed input
 !!       quote    add quotes to string as if written with list-directed input
 !!
@@ -258,7 +258,7 @@
 !!     use M_strings, only : upper, lower, upper_quoted
 !!     use M_strings, only : rotate13
 !!     use M_strings, only : adjustc, compact, nospace, indent, crop, clip, squeeze
-!!     use M_strings, only : unquote, quote
+!!     use M_strings, only : unquote, quote, matching_delimiter
 !!     use M_strings, only : len_white, atleast, stretch, lenset, merge_str
 !!     use M_strings, only : switch, s2c, c2s
 !!     use M_strings, only : noesc, notabs, dilate, expand, visible
@@ -331,6 +331,7 @@ public indent          !  count number of leading spaces
 public crop            !  function trims leading and trailing spaces and control characters
 public clip            !  function trims leading and trailing spaces
 !----------------------# QUOTES
+public matching_delimiter !  find position of matching delimiter
 public unquote         !  remove quotes from string as if read with list-directed input
 public quote           !  add quotes to string as if written with list-directed input
 !----------------------# STRING LENGTH
@@ -10244,17 +10245,78 @@ enddo
 
 end function uppercase
 !===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()=
+!===================================================================================================================================
+!>
+!!##NAME
+!!     matching_delimiter(3f) - [M_strings:QUOTES] find position of matching delimiter
+!!     (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!   impure elemental subroutine matching_delimiter(str,ipos,imatch)
+!!
+!!    character(len=*),intent(in)  :: str
+!!    integer,intent(in)           :: ipos
+!!    integer,intent(out)          :: imatch
+!!
+!!##DESCRIPTION
+!!    Sets imatch to the position in string of the delimiter matching the
+!!    delimiter in position ipos. Allowable delimiters are (), [], {}, <>.
+!!
+!!##OPTIONS
+!!    str     input string to locate delimiter position in
+!!    ipos    position of delimiter to find match for
+!!    imatch  location of matching delimiter. If no match is found, zero (0)
+!!            is returned.
+!!
+!!##EXAMPLE
+!!
+!!   Sample program:
+!!
+!!    program demo_matching_delimiter
+!!       use M_strings, only : matching_delimiter
+!!       implicit none
+!!       character(len=128)  :: str
+!!       integer             :: imatch
+!!
+!!       str=' a [[[[b] and ] then ] finally ]'
+!!       write(*,*)'string=',str
+!!       call matching_delimiter(str,1,imatch)
+!!       write(*,*)'location=',imatch
+!!       call matching_delimiter(str,4,imatch)
+!!       write(*,*)'location=',imatch
+!!       call matching_delimiter(str,5,imatch)
+!!       write(*,*)'location=',imatch
+!!       call matching_delimiter(str,6,imatch)
+!!       write(*,*)'location=',imatch
+!!       call matching_delimiter(str,7,imatch)
+!!       write(*,*)'location=',imatch
+!!       call matching_delimiter(str,32,imatch)
+!!       write(*,*)'location=',imatch
+!!
+!!    end program demo_matching_delimiter
+!!
+!!##AUTHOR
+!!    John S. Urban
+!!
+!!##LICENSE
+!!    Public Domain
+!===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
-subroutine matching_delimiter(str,ipos,imatch)
+impure elemental subroutine matching_delimiter(str,ipos,imatch)
 
 ! Sets imatch to the position in string of the delimiter matching the delimiter
 ! in position ipos. Allowable delimiters are (), [], {}, <>.
 
-character(len=*) :: str
+! pedigree?
+
+character(len=*),intent(in) :: str
+integer,intent(in) :: ipos
+integer,intent(out) :: imatch
+
 character :: delim1,delim2,ch
-integer :: ipos
-integer :: imatch
 integer :: lenstr
 integer :: idelim2
 integer :: istart, iend
@@ -10262,6 +10324,7 @@ integer :: inc
 integer :: isum
 integer :: i
 
+imatch=0
 lenstr=len_trim(str)
 delim1=str(ipos:ipos)
 select case(delim1)

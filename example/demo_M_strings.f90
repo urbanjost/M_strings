@@ -6,7 +6,7 @@
       use M_strings, only : upper, lower, upper_quoted
       use M_strings, only : rotate13
       use M_strings, only : adjustc, compact, nospace, indent, crop, clip, squeeze
-      use M_strings, only : unquote, quote
+      use M_strings, only : unquote, quote, matching_delimiter
       use M_strings, only : len_white, atleast, stretch, lenset, merge_str
       use M_strings, only : switch, s2c, c2s
       use M_strings, only : noesc, notabs, dilate, expand, visible
