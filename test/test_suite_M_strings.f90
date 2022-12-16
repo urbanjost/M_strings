@@ -1,8 +1,10 @@
 module M_testsuite_M_strings
+use,intrinsic :: iso_fortran_env,only : std_in=>input_unit,std_out=>output_unit,std_err=>error_unit
 use M_verify
 use M_strings
 character(len=*),parameter :: options=' -section 3 -library libGPF -filename `pwd`/M_strings.FF &
 & -documentation y -ufpp   y -ccall  n -archive  GPF.a '
+character(len=*),parameter :: g='(*(g0,1x))'
 contains
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_suite_m_strings()
@@ -78,6 +80,7 @@ subroutine test_suite_m_strings()
    call test_stretch()
    call test_trimzeros_()
    call test_setbits()
+   call test_match_delimiter()
 end subroutine test_suite_m_strings
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_matchw()
@@ -261,9 +264,9 @@ integer :: i
       ! To assist correctness checking, output the two strings in any failing scenarios.
       if (bExpectedResult .eqv. bResult) then
          bPassed = .true.
-         !if(nReps == 1) write(*,*)"Passed match on ",tame," vs. ", wild
+         !if(nReps == 1) write(std_err,g)"Passed match on ",tame," vs. ", wild
       else
-         !if(nReps == 1) write(*,*)"Failed match on ",tame," vs. ", wild
+         !if(nReps == 1) write(std_err,g)"Failed match on ",tame," vs. ", wild
       endif
       if(i==1)call unit_check('matchw',bExpectedResult.eqv.bResult,'string',tame,'pattern',wild,'expected',bExpectedResult)
    end function test
@@ -308,16 +311,16 @@ subroutine testit(old,new,expected)
 character(len=*),intent(in) :: old,new,expected
 
    if(unit_check_level.gt.0)then
-      write(*,*)repeat('=',79)
-      write(*,*)'STARTED ['//targetline//']'
-      write(*,*)'OLD['//old//']', ' NEW['//new//']'
+      write(std_err,g)repeat('=',79)
+      write(std_err,g)'STARTED ['//targetline//']'
+      write(std_err,g)'OLD['//old//']', ' NEW['//new//']'
    endif
 
    targetline=replace(targetline,old,new)
 
    if(unit_check_level.gt.0)then
-      write(*,*)'GOT     ['//targetline//']'
-      write(*,*)'EXPECTED['//expected//']'
+      write(std_err,g)'GOT     ['//targetline//']'
+      write(std_err,g)'EXPECTED['//expected//']'
    endif
    call unit_check('replace',targetline.eq.expected,msg='')
 end subroutine testit
@@ -351,10 +354,10 @@ subroutine testit(generated,expected)
 character(len=*),intent(in) :: generated
 character(len=*),intent(in) :: expected
    if(unit_check_level.gt.0)then
-      write(*,*)'JOIN(3F) TEST'
-      write(*,*)'INPUT       ','['//s//']'
-      write(*,*)'GENERATED   ',generated
-      write(*,*)'EXPECTED    ',expected
+      write(std_err,g)'JOIN(3F) TEST'
+      write(std_err,g)'INPUT       ','['//s//']'
+      write(std_err,g)'GENERATED   ',generated
+      write(std_err,g)'EXPECTED    ',expected
    endif
    call unit_check('join',generated.eq.expected,msg='output is '//generated)
 end subroutine testit
@@ -541,27 +544,27 @@ integer                 :: i10
    call delim(line,array,n,icount,ibegin,iterm,ilen,dlm)
 
    if(unit_check_level.gt.0)then
-      write(*,'(a)')'PARSING=['//trim(line)//'] on '//trim(dlm)
-      write(*,*)'number of tokens found=',icount
-      write(*,*)'last character in column ',ilen
+      write(std_err,'(a)')'PARSING=['//trim(line)//'] on '//trim(dlm)
+      write(std_err,g)'number of tokens found=',icount
+      write(std_err,g)'last character in column ',ilen
       if(icount.gt.0)then
          if(ilen.ne.iterm(icount))then
-            write(*,*)'ignored from column ',iterm(icount)+1,' to ',ilen
+            write(std_err,g)'ignored from column ',iterm(icount)+1,' to ',ilen
          endif
          do i10=1,icount
             ! check flag to see if ARRAY() was set
             if(array(1).ne.'#N#')then
                ! from returned array
-               write(*,'(a,a,a)',advance='no')'[',array(i10)(:iterm(i10)-ibegin(i10)+1),']'
+               write(std_err,'(a,a,a)',advance='no')'[',array(i10)(:iterm(i10)-ibegin(i10)+1),']'
             endif
          enddo
          ! using start and end positions in IBEGIN() and ITERM()
-         write(*,*)
+         write(std_err,g)
          do i10=1,icount
             ! from positions in original line
-            write(*,'(a,a,a)',advance='no') '[',line(ibegin(i10):iterm(i10)),']'
+            write(std_err,'(a,a,a)',advance='no') '[',line(ibegin(i10):iterm(i10)),']'
          enddo
-         write(*,*)
+         write(std_err,g)
       endif
    endif
 end subroutine testit
@@ -589,17 +592,17 @@ character(len=10)               :: nulls(3)=['ignore    ', 'return    ', 'ignore
    CALL testit()
    CALL split(line,array,dlm,order,nulls(1))
    if(unit_check_level.gt.0)then
-      write(*,*)size(array)
+      write(std_err,g)size(array)
    endif
    order=orders(2)
    CALL split(line,array,dlm,order,nulls(2))
    if(unit_check_level.gt.0)then
-      write(*,*)size(array)
+      write(std_err,g)size(array)
    endif
    order=orders(1)
    CALL split(line,array,dlm,order,nulls(3))
    if(unit_check_level.gt.0)then
-      write(*,*)size(array)
+      write(std_err,g)size(array)
    endif
 !-----------------------------------------------------------------------------------------------------------------------------------
    LINE=' abcdef ghijklmnop qrstuvwxyz  1:2  333333 a b cc    '
@@ -642,13 +645,13 @@ character(len=10)               :: nulls(3)=['ignore    ', 'return    ', 'ignore
    SUBROUTINE testit()
    integer :: i
    if(unit_check_level.gt.0)then
-      WRITE(*,'(80("="))')
-      WRITE(*,'(A)')'parsing ['//TRIM(line)//']'//'with delimiters set to ['//dlm//'] and order '//trim(order)//''
+      write(std_err,'(80("="))')
+      write(std_err,'(A)')'parsing ['//TRIM(line)//']'//'with delimiters set to ['//dlm//'] and order '//trim(order)//''
    endif
    CALL split(line,array,dlm,order)
    if(unit_check_level.gt.0)then
-      WRITE(*,'("number of tokens found=",i0)')SIZE(array)
-      WRITE(*,'(I0,T10,A)')(i,TRIM(array(i)),i=1,SIZE(array))
+      write(std_err,'("number of tokens found=",i0)')SIZE(array)
+      write(std_err,'(I0,T10,A)')(i,TRIM(array(i)),i=1,SIZE(array))
    endif
    END SUBROUTINE testit
 end subroutine test_split
@@ -670,21 +673,21 @@ chars=chars(36:1:-1) ! reverse order of characters
 call unit_check('combined',lower(reverse(switch(chars))).eq.lc,msg='combined lower(),reverse(),switch()')
 !-----------------------------------------------------------------------------------------------------------------------------------
 if(unit_check_level.gt.0)then
-   write(*,*)'isprint'
-   write(*,*)'   letter a      ',isprint('a')
-   write(*,*)'   horizontal tab',isprint(char(9))
-   write(*,*)'   array of letters;.',isprint([';','.',' '])
-   write(*,*)'   array of letters',isprint(switch(uc))
-   write(*,*)'   array of letters',isprint(uc)
+   write(std_err,g)'isprint'
+   write(std_err,g)'   letter a      ',isprint('a')
+   write(std_err,g)'   horizontal tab',isprint(char(9))
+   write(std_err,g)'   array of letters;.',isprint([';','.',' '])
+   write(std_err,g)'   array of letters',isprint(switch(uc))
+   write(std_err,g)'   array of letters',isprint(uc)
 endif
 !-----------------------------------------------------------------------------------------------------------------------------------
 if(unit_check_level.gt.0)then
-   write(*,*)'isgraph'
-   write(*,*)'   letter a      ',isgraph('a')
-   write(*,*)'   horizontal tab',isgraph(char(9))
-   write(*,*)'   array of letters;.',isgraph([';','.',' '])
-   write(*,*)'   array of letters',isgraph(switch(uc))
-   write(*,*)'   array of letters',isgraph(uc)
+   write(std_err,g)'isgraph'
+   write(std_err,g)'   letter a      ',isgraph('a')
+   write(std_err,g)'   horizontal tab',isgraph(char(9))
+   write(std_err,g)'   array of letters;.',isgraph([';','.',' '])
+   write(std_err,g)'   array of letters',isgraph(switch(uc))
+   write(std_err,g)'   array of letters',isgraph(uc)
 endif
 !-----------------------------------------------------------------------------------------------------------------------------------
 call unit_check_done('combined')
@@ -705,7 +708,7 @@ integer                       :: ipass
    do while ( chomp(str,token,delimiters) .ge. 0 )
       ipass=ipass+1
       if(unit_check_level.gt.0)then
-         print *, ipass,'TOKEN=['//trim(token)//']'
+         write( std_err,g) ipass,'TOKEN=['//trim(token)//']'
       endif
       select case(ipass)
       case(1); call unit_check('chomp', token.eq.'a'   ,'token=',token)
@@ -741,16 +744,16 @@ integer                         :: ier          ! error code. if ier = -1 bad di
    ml=1
    mr=len(targetline)
    if(unit_check_level.gt.0)then
-      write(*,*)'ORIGINAL: '//targetline
+      write(std_err,g)'ORIGINAL: '//targetline
    endif
    call substitute(targetline,old,new,ier,ml,mr) !Globally substitute one substring for another in string
    if(unit_check_level.gt.0)then
-      write(*,*)'C@'//OLD//'@'//NEW//'@ ==>'//targetline
+      write(std_err,g)'C@'//OLD//'@'//NEW//'@ ==>'//targetline
    endif
 !-----------------------------------------------------------------------------------------------------------------------------------
    if(ier.ne.3)then
       if(unit_check_level.gt.0)then
-         write(*,*)ier,targetline
+         write(std_err,g)ier,targetline
       endif
       call unit_check_bad('substitute')
    endif
@@ -761,35 +764,35 @@ integer                         :: ier          ! error code. if ier = -1 bad di
 !-----------------------------------------------------------------------------------------------------------------------------------
    targetline='This and that, This and that,                               '
    if(unit_check_level.gt.0)then
-      write(*,*)'ORIGINAL: '//targetline
+      write(std_err,g)'ORIGINAL: '//targetline
    endif
 
    old=''
    new='BEGINNING: '
    call substitute(targetline,old,new) !Globally substitute one substring for another in string
    if(unit_check_level.gt.0)then
-      write(*,*)'C@'//OLD//'@'//NEW//'@ ==>'//targetline
+      write(std_err,g)'C@'//OLD//'@'//NEW//'@ ==>'//targetline
    endif
 
    old='This'
    new='THIS'
    call substitute(targetline,old,new) !Globally substitute one substring for another in string
    if(unit_check_level.gt.0)then
-      write(*,*)'C@'//OLD//'@'//NEW//'@ ==>'//targetline
+      write(std_err,g)'C@'//OLD//'@'//NEW//'@ ==>'//targetline
    endif
 
    old='that'
    new='LONGER STRING'
    call substitute(targetline,old,new) !Globally substitute one substring for another in string
    if(unit_check_level.gt.0)then
-      write(*,*)'C@'//OLD//'@'//NEW//'@ ==>'//targetline
+      write(std_err,g)'C@'//OLD//'@'//NEW//'@ ==>'//targetline
    endif
 
    old='LONGER STRING'
    new=''
    call substitute(targetline,old,new) !Globally substitute one substring for another in string
    if(unit_check_level.gt.0)then
-      write(*,*)'C@'//OLD//'@'//NEW//'@ ==>'//targetline
+      write(std_err,g)'C@'//OLD//'@'//NEW//'@ ==>'//targetline
    endif
 
    if ( targetline .ne. 'BEGINNING: THIS and , THIS and ,')then
@@ -807,42 +810,42 @@ subroutine test_change
 character(len=132)  :: line=' The rain in Spain falls mainly on the plain. '
 integer             :: ier
    if(unit_check_level.gt.0)then
-      write(*,*)' LINE='//trim(line)
+      write(std_err,g)' LINE='//trim(line)
    endif
    ! indicate test of change(3f) has begun
    call unit_check_start('change',' -description ''replace substring with new string with a directive like line editor'' '//OPTIONS)
    call change(line, 'c/ain/AIN'     ,ier)
    if(unit_check_level.gt.0)then
-      write(*,*)'IER=',ier
+      write(std_err,g)'IER=',ier
    endif
    call unit_check('change',ier.eq.4,'without trailing slash')
 
    call change(line, 'c/ The r/R/'   ,ier)
    if(unit_check_level.gt.0)then
-      write(*,*)'IER=',ier
+      write(std_err,g)'IER=',ier
    endif
    call unit_check('change',ier.eq.1,'with trailing slash')
 
    call change(line, 'c/ /'          ,ier)
    if(unit_check_level.gt.0)then
-      write(*,*)'IER=',ier
+      write(std_err,g)'IER=',ier
    endif
    call unit_check('change',ier.ge.7,'no new string') ! remove spaces
 
    call change(line, 'c//PREFIX:'    ,ier)
    if(unit_check_level.gt.0)then
-      write(*,*)'IER=',ier
+      write(std_err,g)'IER=',ier
    endif
    call unit_check('change',ier.eq.1,'null new string')
 
    call change(line, 'c/XYZ/xxxxxx:' ,ier)
    if(unit_check_level.gt.0)then
-      write(*,*)'IER=',ier
+      write(std_err,g)'IER=',ier
    endif
    call unit_check('change',ier.eq.0,'no matching old string')
 
    if(unit_check_level.gt.0)then
-      write(*,*)'IER=',ier,' LINE='//trim(line)
+      write(std_err,g)'IER=',ier,' LINE='//trim(line)
    endif
    call unit_check('change','PREFIX:RAINinSpAINfallsmAINlyontheplAIN.' .eq. line,'check cumulative changes')
 
@@ -869,13 +872,13 @@ integer                       :: itoken
 
    itoken=0 ! must set ITOKEN=0 before looping on strtok(3f) on a new string.
    if(unit_check_level.gt.0)then
-      write(*,*)trim(inline)
+      write(std_err,g)trim(inline)
    endif
    do while ( strtok(inline,itoken,is,ie,delimiters) )
       istart(itoken)=is
       iend(itoken)=ie
       if(unit_check_level.gt.0)then
-         print *, itoken,'TOKEN=['//(inline(istart(itoken):iend(itoken)))//']',istart(itoken),iend(itoken)
+         write( std_err,g) itoken,'TOKEN=['//(inline(istart(itoken):iend(itoken)))//']',istart(itoken),iend(itoken)
       endif
    enddo
    call unit_check('strtok',all(istart(:itoken).eq.istart_expected) .and. &
@@ -958,9 +961,9 @@ if(reverse(lc).eq.'9876543210zyxwvutsrqponmlkjihgfedcba')then
    call unit_check_good('reverse')
 else
    if(unit_check_level.gt.0)then
-      write(*,*)'error: reverse '
-      write(*,*)'iN:  ['//lc//']'
-      write(*,*)'OUT: ['//reverse(lc)//']'
+      write(std_err,g)'error: reverse '
+      write(std_err,g)'iN:  ['//lc//']'
+      write(std_err,g)'OUT: ['//reverse(lc)//']'
    endif
    call unit_check_bad('reverse')
 endif
@@ -1001,11 +1004,11 @@ character(len=1)            :: chars(36)
 integer :: i
 !-----------------------------------------------------------------------------------------------------------------------------------
 if(unit_check_level.gt.0)then
-   write(*,*)'switch:' ! switch: switch between single string and an array of single characters; generic name for {a2s,s2a}
-   write(*,*)'switch LC string to an array'
-   write(*,'(i0,1x,*(a,1x))') size(switch(lc)),switch(lc)
-   write(*,*)'switch UC string to an array'
-   write(*,'(i0,1x,*(a,1x))') size(switch(uc)),switch(uc)
+   write(std_err,g)'switch:' ! switch: switch between single string and an array of single characters; generic name for {a2s,s2a}
+   write(std_err,g)'switch LC string to an array'
+   write(std_err,'(i0,1x,*(a,1x))') size(switch(lc)),switch(lc)
+   write(std_err,g)'switch UC string to an array'
+   write(std_err,'(i0,1x,*(a,1x))') size(switch(uc)),switch(uc)
 endif
    call unit_check_start('switch',' &
       & -description ''generic switch between a string and an array of single characters (a2s,s2a)'' '//OPTIONS )
@@ -1020,19 +1023,19 @@ do i=1,size(chars)
 enddo
 
 if(unit_check_level.gt.0)then
-   write(*,*)'put string UC into array CHARS'
+   write(std_err,g)'put string UC into array CHARS'
 endif
 chars=switch(uc)
 if(unit_check_level.gt.0)then
-   write(*,*)'put CHARS array into CHARS array in reverse order like reverse'
+   write(std_err,g)'put CHARS array into CHARS array in reverse order like reverse'
 endif
 chars=chars(36:1:-1)
 if(unit_check_level.gt.0)then
-   write(*,*)'put CHARS array into string reversed and compare to original UC string'
+   write(std_err,g)'put CHARS array into string reversed and compare to original UC string'
 endif
 if( uc .ne. switch(chars(36:1:-1)) )then
    if(unit_check_level.gt.0)then
-      write(*,*)switch(chars(36:1:-1))
+      write(std_err,g)switch(chars(36:1:-1))
    endif
    call unit_check_bad('switch')
 endif
@@ -1075,23 +1078,23 @@ integer :: i
 character(len=2) :: controls(0:31)
    call unit_check_start('visible', ' '//OPTIONS )
    do i=32,126
-      call unit_check('visible',visible(char(i)).eq.char(i))
+      call unit_check('visible',visible(char(i)).eq.char(i),i,visible(char(i)))
    enddo
    controls=['^@  ', '^A  ', '^B  ', '^C  ', '^D  ', '^E  ', '^F  ', '^G  ', '^H  ', '^I  ', &
              '^J  ', '^K  ', '^L  ', '^M  ', '^N  ', '^O  ', '^P  ', '^Q  ', '^R  ', '^S  ', &
              '^T  ', '^U  ', '^V  ', '^W  ', '^X  ', '^Y  ', '^Z  ', '^[  ', '^\  ', '^]  ', &
              '^^  ', '^_  ']
    do i=0,31
-      call unit_check('visible',visible(char(i)).eq.controls(i))
+      call unit_check('visible',visible(char(i)).eq.controls(i),i,visible(char(i)))
    enddo
-   call unit_check('visible',visible(char(127)).eq.'^?')
+   call unit_check('visible',visible(char(127)).eq.'^?',127,visible(char(i)))
    if(unit_check_level.gt.0)then
       do i=0,255
-         write(*,'(i0,1x,a)')i,visible(char(i))
+         write(std_err,'(i0,1x,a,1x,i0)')i,visible(char(i)),i
       enddo
    endif
    do i=32,126
-      call unit_check('visible',char(i).eq.visible(char(i)))
+      call unit_check('visible',char(i).eq.visible(char(i)),i,visible(char(i)),char(i))
    enddo
    call unit_check_done('visible')
 end subroutine test_visible
@@ -1136,9 +1139,9 @@ integer                      :: iout
    expected='one     and                     two'
    call notabs(inline,outline,iout)
    if(unit_check_level.ne.0)then
-      write(*,*)'*test_notabs*',inline
-      write(*,*)'*test_notabs*',outline
-      write(*,*)'*test_notabs*',len_trim(outline),iout
+      write(std_err,g)'*test_notabs*',inline
+      write(std_err,g)'*test_notabs*',outline
+      write(std_err,g)'*test_notabs*',len_trim(outline),iout
    endif
    call unit_check('notabs',outline.eq.expected.and.iout.eq.35,msg='expand a line with tabs in it')
    call unit_check_done('notabs',msg='')
@@ -1173,7 +1176,7 @@ integer                       :: i
    do i=1,size(left)
       left(i)=adjustl(left(i))
    enddo
-   if(unit_check_level.gt.0)write(*,'(a)')left
+   if(unit_check_level.gt.0)write(std_err,'(a)')left
 
    ! now center the left-justified copy
    do i=1,size(left)
@@ -1186,13 +1189,13 @@ integer                       :: i
    do i=1,size(left)
       input(i)=repeat(' ',i-1)//left(i)
    enddo
-   if(unit_check_level.gt.0)write(*,'(a)')input
+   if(unit_check_level.gt.0)write(std_err,'(a)')input
 
    ! recenter it again
    do i=1,size(left)
       input(i)=adjustc(left(i))
    enddo
-   if(unit_check_level.gt.0)write(*,'(a)')input
+   if(unit_check_level.gt.0)write(std_err,'(a)')input
    call unit_check('adjustc',all(expected.eq.input),msg='text centering')
 
    call unit_check_done('adjustc')
@@ -1249,13 +1252,13 @@ character(len=:), allocatable :: answer
 
    answer=merge_str('first string', 'second string is longer',10.eq.10)
    if(unit_check_level.gt.0)then
-      write(*,*)'['//answer//']',len(answer)
+      write(std_err,g)'['//answer//']',len(answer)
    endif
    call unit_check('merge_str',answer.eq.'first string'.and.len(answer).eq.12,msg='check true value ')
 
    answer=merge_str('first string', 'second string is longer',10.ne.10)
    if(unit_check_level.gt.0)then
-      write(*,*)'['//answer//']',len(answer)
+      write(std_err,g)'['//answer//']',len(answer)
    endif
    call unit_check('merge_str',answer.eq.'second string is longer'.and.len(answer).eq.23,msg='check false value')
 
@@ -1301,18 +1304,18 @@ integer           :: i10
       write(clr,'(i3.3,1x,"    eol")')i10
       out=noesc(in)
       if(unit_check_level.gt.0)then
-         write(*,'(a)')trim(in)
-         write(*,'(a)')trim(out)
+         write(std_err,'(a)')trim(in)
+         write(std_err,'(a)')trim(out)
       endif
       SELECT CASE (i10)
       CASE (:31,127)
         if(out.ne.clr)then
-           write(*,*)'Error: noesc did not replace a string with blanks that it should have'
+           write(std_err,g)'Error: noesc did not replace a string with blanks that it should have'
            call unit_check_bad('noesc')
         endif
       CASE DEFAULT
         if(in.ne.out)then
-           write(*,*)'Error: noesc changed a string it should not have'
+           write(std_err,g)'Error: noesc changed a string it should not have'
            call unit_check_bad('noesc')
         endif
       END SELECT
@@ -1338,20 +1341,20 @@ integer           :: ierr
    CALL string_to_value(STRING,DVALUE,IERR)
    CALL string_to_value(STRING,IVALUE,IERR)
    if(unit_check_level.gt.0)then
-      WRITE(*,*) 'string_to_value: real value is ',-40.5e-2
-      WRITE(*,*) 'string_to_value: double value is ',-40.5d-2
-      WRITE(*,*) 'string_to_value: real value of string ['//trim(STRING)//'] is ',RVALUE
-      WRITE(*,*) 'string_to_value: double value of string ['//trim(STRING)//'] is ',DVALUE
-      WRITE(*,*) 'string_to_value: integer value of string ['//trim(STRING)//'] is ',IVALUE
+      write(std_err,g) 'string_to_value: real value is ',-40.5e-2
+      write(std_err,g) 'string_to_value: double value is ',-40.5d-2
+      write(std_err,g) 'string_to_value: real value of string ['//trim(STRING)//'] is ',RVALUE
+      write(std_err,g) 'string_to_value: double value of string ['//trim(STRING)//'] is ',DVALUE
+      write(std_err,g) 'string_to_value: integer value of string ['//trim(STRING)//'] is ',IVALUE
    endif
    STRING=' -40.5d-2 '
    if(unit_check_level.gt.0)then
       CALL string_to_value(STRING,RVALUE,IERR)
-      WRITE(*,*) 'string_to_value: real value of string ['//trim(STRING)//'] is ',RVALUE
+      write(std_err,g) 'string_to_value: real value of string ['//trim(STRING)//'] is ',RVALUE
       CALL string_to_value(STRING,DVALUE,IERR)
-      WRITE(*,*) 'string_to_value: double value of string ['//trim(STRING)//'] is ',DVALUE
+      write(std_err,g) 'string_to_value: double value of string ['//trim(STRING)//'] is ',DVALUE
        CALL string_to_value(STRING,IVALUE,IERR)
-      WRITE(*,*) 'string_to_value: integer value of string ['//trim(STRING)//'] is ',IVALUE
+      write(std_err,g) 'string_to_value: integer value of string ['//trim(STRING)//'] is ',IVALUE
    endif
    good=0
    call unit_check('string_to_value',rvalue.eq.-40.5e-2)
@@ -1375,20 +1378,20 @@ integer           :: ierr
    SUM2=5.555555555555555555555555555555555d0+5.555555555555555555555555555555555e0+INT(5.555555555555555555555555555555555)
    DELTA=spacing(0.0d0)+spacing(0.0)
    if(unit_check_level.gt.0)then
-      write(*,'(80("="))')
-      WRITE(*,*) 'string_to_value: real value is ', 5.555555555555555555555555555555555e0
-      WRITE(*,*) 'string_to_value: double value is ', 5.555555555555555555555555555555555d0
-      WRITE(*,*) 'string_to_value: value of string ['//trim(STRING)//'] is ',RVALUE
-      WRITE(*,*) 'string_to_value: value of string ['//trim(STRING)//'] is ',DVALUE
-      WRITE(*,*) 'string_to_value: value of string ['//trim(STRING)//'] is ',IVALUE
-      WRITE(*,*) 'string_to_value: SUM=', SUM
-      WRITE(*,*) 'string_to_value: SUM2=', SUM2
-      WRITE(*,*) 'string_to_value: DELTA=', DELTA
+      write(std_err,'(80("="))')
+      write(std_err,g) 'string_to_value: real value is ', 5.555555555555555555555555555555555e0
+      write(std_err,g) 'string_to_value: double value is ', 5.555555555555555555555555555555555d0
+      write(std_err,g) 'string_to_value: value of string ['//trim(STRING)//'] is ',RVALUE
+      write(std_err,g) 'string_to_value: value of string ['//trim(STRING)//'] is ',DVALUE
+      write(std_err,g) 'string_to_value: value of string ['//trim(STRING)//'] is ',IVALUE
+      write(std_err,g) 'string_to_value: SUM=', SUM
+      write(std_err,g) 'string_to_value: SUM2=', SUM2
+      write(std_err,g) 'string_to_value: DELTA=', DELTA
    endif
    if(sum.eq.sum2)then
       good=good*10+1
       if(unit_check_level.gt.0)then
-      write(*,*)'string_to_value: good ',good
+      write(std_err,g)'string_to_value: good ',good
       endif
    else
       call unit_check_bad('string_to_value')
@@ -1396,7 +1399,7 @@ integer           :: ierr
    if(sum+delta.ge.sum2.and.sum-delta.le.sum2)then
       good=good*10+1
       if(unit_check_level.gt.0)then
-      write(*,*)'string_to_value: good ',good
+      write(std_err,g)'string_to_value: good ',good
       endif
    else
       call unit_check_bad('string_to_value')
@@ -1415,9 +1418,9 @@ doubleprecision SUM, SUM2, DELTA
 
    SUM=s2v('5.55555555555555555555555555e0')+REAL(s2v('5.55555555555555555555555555d0'))+INT(s2v('5.55555555555555555555555555'))
    if(unit_check_level.gt.0)then
-      WRITE(*,*) 's2v: SUM2=', SUM2
-      WRITE(*,*) 's2v: SUM=', SUM
-      WRITE(*,*) 's2v: DELTA=', DELTA
+      write(std_err,g) 's2v: SUM2=', SUM2
+      write(std_err,g) 's2v: SUM=', SUM
+      write(std_err,g) 's2v: DELTA=', DELTA
    endif
    call unit_check('s2v',sum+delta.ge.sum2.and.sum-delta.le.sum2, 'SUM=',sum,'SUM2=',sum2,'DELTA=',delta)
    call unit_check_done('s2v')
@@ -1439,7 +1442,7 @@ integer           :: IERRSUM=0
    DVALUE=5.5555555555555555555555d0
    call value_to_string(DVALUE,STRING,ILEN,IERR)
    if(unit_check_level.gt.0)then
-      write(*,*)'value_to_string: DOUBLE TEST VALUE=',dvalue,'STRING=',trim(string),' ILEN=',ilen,'IERR=',ierr
+      write(std_err,g)'value_to_string: DOUBLE TEST VALUE=',dvalue,'STRING=',trim(string),' ILEN=',ilen,'IERR=',ierr
    endif
    IERRSUM=IERRSUM+IERR
    if(ILEN.le.0)IERRSUM=IERRSUM+1000
@@ -1447,7 +1450,7 @@ integer           :: IERRSUM=0
    RVALUE=3.3333333333333333333333
    call value_to_string(RVALUE,STRING,ILEN,IERR)
    if(unit_check_level.gt.0)then
-      write(*,*)'value_to_string: REAL TEST VALUE=',rvalue,'STRING=',trim(string),' ILEN=',ilen,'IERR=',ierr
+      write(std_err,g)'value_to_string: REAL TEST VALUE=',rvalue,'STRING=',trim(string),' ILEN=',ilen,'IERR=',ierr
    endif
    IERRSUM=IERRSUM+IERR
    if(ILEN.le.0)IERRSUM=IERRSUM+10000
@@ -1455,7 +1458,7 @@ integer           :: IERRSUM=0
    IVALUE=1234567890
    call value_to_string(IVALUE,STRING,ILEN,IERR)
    if(unit_check_level.gt.0)then
-      write(*,*)'value_to_string: INTEGER TEST VALUE=',ivalue,'STRING=',trim(string),' ILEN=',ilen,'IERR=',ierr
+      write(std_err,g)'value_to_string: INTEGER TEST VALUE=',ivalue,'STRING=',trim(string),' ILEN=',ilen,'IERR=',ierr
    endif
    IERRSUM=IERRSUM+IERR
    if(string.ne.'1234567890')then
@@ -1468,13 +1471,13 @@ integer           :: IERRSUM=0
    IVALUE=0
    call value_to_string(IVALUE,STRING,ILEN,IERR)
    if(unit_check_level.gt.0)then
-      write(*,*)'value_to_string: INTEGER TEST VALUE=',ivalue,'STRING=',trim(string),' ILEN=',ilen,'IERR=',ierr
+      write(std_err,g)'value_to_string: INTEGER TEST VALUE=',ivalue,'STRING=',trim(string),' ILEN=',ilen,'IERR=',ierr
    endif
 
    IVALUE=-12345
    call value_to_string(IVALUE,STRING,ILEN,IERR)
    if(unit_check_level.gt.0)then
-      write(*,*)'value_to_string: INTEGER TEST VALUE=',ivalue,'STRING=',trim(string),' ILEN=',ilen,'IERR=',ierr
+      write(std_err,g)'value_to_string: INTEGER TEST VALUE=',ivalue,'STRING=',trim(string),' ILEN=',ilen,'IERR=',ierr
    endif
    if(string.ne.'-12345')then
        IERRSUM=IERRSUM+1000000
@@ -1498,9 +1501,9 @@ doubleprecision SUM, SUM2, DELTA
    SUM=SUM+REAL(s2v(v2s_bug(5.55555555555555555555555555e0)))
    SUM=SUM+INT(s2v(v2s_bug(5.55555555555555555555555555e0)))
    if(unit_check_level.gt.0)then
-      WRITE(*,*) 'v2s_bug: SUM2=', SUM2
-      WRITE(*,*) 'v2s_bug: SUM=', SUM
-      WRITE(*,*) 'v2s_bug: DELTA=', DELTA
+      write(std_err,g) 'v2s_bug: SUM2=', SUM2
+      write(std_err,g) 'v2s_bug: SUM=', SUM
+      write(std_err,g) 'v2s_bug: DELTA=', DELTA
    endif
    call unit_check('v2s_bug',sum+delta.ge.sum2.and.sum-delta.le.sum2)
    call unit_check_done('v2s_bug')
@@ -1575,8 +1578,8 @@ character(len=:),allocatable :: test_out(:)
 
    do i=1,size(test_in)
       if(unit_check_level.gt.0)then
-         write(*,'(a)')'ORIGINAL ['//test_in(i)//']'
-         write(*,'(a)')'QUOTED   ['//quote(test_in(i))//']'
+         write(std_err,'(a)')'ORIGINAL ['//test_in(i)//']'
+         write(std_err,'(a)')'QUOTED   ['//quote(test_in(i))//']'
       endif
       call unit_check('quote',quote(test_in(i)).eq.test_out(i),quote(test_in(i)),'==>',trim(test_out(i)))
    enddo
@@ -1604,12 +1607,12 @@ character(len=:),allocatable :: tests(:)
       unquoted_str=unquote(trim(quoted_str),esc)                    ! the string processed by unquote(3f)
       read(quoted_str,*,iostat=ios,iomsg=msg)dummy                  ! read the string list-directed to compare the results
       if(unit_check_level.gt.0)then
-         write(*,'(a)')'QUOTED        ['//trim(quoted_str)//']'     ! the original string
-         write(*,'(a)')'UNQUOTED      ['//unquoted_str//']'
+         write(std_err,'(a)')'QUOTED        ['//trim(quoted_str)//']'     ! the original string
+         write(std_err,'(a)')'UNQUOTED      ['//unquoted_str//']'
          if(ios.ne.0)then
-            write(*,*)trim(msg)
+            write(std_err,g)trim(msg)
          else
-            write(*,'(a)')'LIST DIRECTED ['//trim(dummy)//']'
+            write(std_err,'(a)')'LIST DIRECTED ['//trim(dummy)//']'
          endif
       endif
       call unit_check('unquote',unquoted_str.eq.dummy,msg=trim(dummy)//'==>'//unquoted_str)
@@ -1630,7 +1633,7 @@ integer                       :: i
 ! call all descriptions to exercise procedure
 if(unit_check_level.gt.0)then
    do i=0,number_of_chars-1
-      write(*,*)i,char(i),' ',describe(char(i))
+      write(std_err,g)i,char(i),' ',describe(char(i))
    enddo
 endif
 
@@ -1665,8 +1668,8 @@ integer            :: icount,ierr
 
    call getvals('1234.56d0 3.3333d0, 5.5555d0',dvalues,icount,ierr)
    if(unit_check_level.gt.0)then
-      write(*,*)dvalues(:icount)
-      write(*,*)[1234.56d0,3.3333d0,5.5555d0]
+      write(std_err,g)dvalues(:icount)
+      write(std_err,g)[1234.56d0,3.3333d0,5.5555d0]
    endif
    call unit_check('getvals',all(dvalues(:icount).eq.[1234.56d0,3.3333d0,5.5555d0]),msg='double test')
 
@@ -1735,13 +1738,13 @@ integer :: i
       SELECT CASE (i)
       CASE (32:126)
          if (isprint(char(i)) .eqv. .false.)then
-            write(*,*)'   ',i,isprint(char(i))
+            write(std_err,g)'   ',i,isprint(char(i))
             call unit_check_bad('isprint')
             stop 2
          endif
       CASE DEFAULT
          if (isprint(char(i)) .eqv. .true.)then
-            write(*,*)'   ',i,isprint(char(i))
+            write(std_err,g)'   ',i,isprint(char(i))
             call unit_check_bad('isprint')
             stop 3
          endif
@@ -1761,13 +1764,13 @@ integer :: i
       SELECT CASE (i)
       CASE (33:126)
          if (isgraph(char(i)) .eqv. .false.)then
-            write(*,*)'   ',i,isgraph(char(i))
+            write(std_err,g)'   ',i,isgraph(char(i))
             call unit_check_bad('isgraph')
             stop 2
          endif
       CASE DEFAULT
          if (isgraph(char(i)) .eqv. .true.)then
-            write(*,*)'   ',i,isgraph(char(i))
+            write(std_err,g)'   ',i,isgraph(char(i))
             call unit_check_bad('isgraph')
             stop 3
          endif
@@ -1789,13 +1792,13 @@ integer                       :: i
       SELECT CASE (ch)
       CASE ('a':'z','A':'Z')
          if (isalpha(ch) .eqv. .false.)then
-            write(*,*)'isalpha: failed on character ',i,isalpha(ch)
+            write(std_err,g)'isalpha: failed on character ',i,isalpha(ch)
             call unit_check_bad('isalpha')
             stop 1
          endif
       CASE DEFAULT
          if (isalpha(ch) .eqv. .true.)then
-            write(*,*)'isalpha: failed on character ',i,isalpha(ch)
+            write(std_err,g)'isalpha: failed on character ',i,isalpha(ch)
             call unit_check_bad('isalpha')
             stop 2
          endif
@@ -1818,13 +1821,13 @@ integer                       :: i
       SELECT CASE (ch)
       CASE ('a':'f','A':'F','0':'9')
          if (isxdigit(char(i)) .eqv. .false.)then
-            write(*,*)'isxdigit: failed on character ',i,isxdigit(char(i))
+            write(std_err,g)'isxdigit: failed on character ',i,isxdigit(char(i))
             call unit_check_bad('isxdigit')
             stop 1
          endif
       CASE DEFAULT
          if (isxdigit(char(i)) .eqv. .true.)then
-            write(*,*)'isxdigit: failed on character ',i,isxdigit(char(i))
+            write(std_err,g)'isxdigit: failed on character ',i,isxdigit(char(i))
             call unit_check_bad('isxdigit')
             stop 2
          endif
@@ -1845,13 +1848,13 @@ integer                       :: i
       SELECT CASE (i)
       CASE (48:57)
          if (isdigit(char(i)) .eqv. .false.)then
-            write(*,*)'isdigit: failed on character ',i,isdigit(char(i))
+            write(std_err,g)'isdigit: failed on character ',i,isdigit(char(i))
             call unit_check_bad('isdigit')
             stop 1
          endif
       CASE DEFAULT
          if (isdigit(char(i)) .eqv. .true.)then
-            write(*,*)'isdigit: failed on character ',i,isdigit(char(i))
+            write(std_err,g)'isdigit: failed on character ',i,isdigit(char(i))
             call unit_check_bad('isdigit')
             stop 2
          endif
@@ -1872,13 +1875,13 @@ integer                       :: i
       select case (i)
       case (9,32)
          if (isblank(char(i)) .eqv. .false.)then
-            write(*,*)'isblank: failed on character ',i,isblank(char(i))
+            write(std_err,g)'isblank: failed on character ',i,isblank(char(i))
             call unit_check_bad('isblank')
             stop 1
          endif
       case default
          if (isblank(char(i)) .eqv. .true.)then
-            write(*,*)'isblank: failed on character ',i,isblank(char(i))
+            write(std_err,g)'isblank: failed on character ',i,isblank(char(i))
             call unit_check_bad('isblank')
             stop 2
          endif
@@ -1900,13 +1903,13 @@ integer                       :: i
       SELECT CASE (i)
       CASE (0:127)
          if (isascii(char(i)) .eqv. .false.)then
-            write(*,*)'isascii: failed on character ',i,isascii(char(i))
+            write(std_err,g)'isascii: failed on character ',i,isascii(char(i))
             call unit_check_bad('isascii')
             stop 1
          endif
       CASE DEFAULT
          if (isascii(char(i)) .eqv. .true.)then
-            write(*,*)'isascii: failed on character ',i,isascii(char(i))
+            write(std_err,g)'isascii: failed on character ',i,isascii(char(i))
             call unit_check_bad('isascii')
             stop 2
          endif
@@ -1929,13 +1932,13 @@ integer                       :: i
       SELECT CASE (i)
       CASE (0,9:13,32)
          if (isspace(char(i)) .eqv. .false.)then
-            write(*,*)'isspace: failed on character ',i,isspace(char(i))
+            write(std_err,g)'isspace: failed on character ',i,isspace(char(i))
             call unit_check_bad('isspace')
             stop 1
          endif
       CASE DEFAULT
          if (isspace(char(i)) .eqv. .true.)then
-            write(*,*)'isspace: failed on character ',i,isspace(char(i))
+            write(std_err,g)'isspace: failed on character ',i,isspace(char(i))
             call unit_check_bad('isspace')
             stop 2
          endif
@@ -1957,13 +1960,13 @@ integer                       :: i
       SELECT CASE (i)
       CASE (0:31,127)
          if (iscntrl(char(i)) .eqv. .false.)then
-            write(*,*)'iscntrl: failed on character ',i,iscntrl(char(i))
+            write(std_err,g)'iscntrl: failed on character ',i,iscntrl(char(i))
             call unit_check_bad('iscntrl')
             stop 1
          endif
       CASE DEFAULT
          if (iscntrl(char(i)) .eqv. .true.)then
-            write(*,*)'iscntrl: failed on character ',i,iscntrl(char(i))
+            write(std_err,g)'iscntrl: failed on character ',i,iscntrl(char(i))
             call unit_check_bad('iscntrl')
             stop 2
          endif
@@ -1985,13 +1988,13 @@ integer                       :: i
       SELECT CASE (i)
       CASE (33:47, 58:64, 91:96, 123:126)
          if (ispunct(char(i)) .eqv. .false.)then
-            write(*,*)'ispunct: failed on character ',i,ispunct(char(i))
+            write(std_err,g)'ispunct: failed on character ',i,ispunct(char(i))
             call unit_check_bad('ispunct')
             stop 1
          endif
       CASE DEFAULT
          if (ispunct(char(i)) .eqv. .true.)then
-            write(*,*)'ispunct: failed on character ',i,ispunct(char(i))
+            write(std_err,g)'ispunct: failed on character ',i,ispunct(char(i))
             call unit_check_bad('ispunct')
             stop 2
          endif
@@ -2014,13 +2017,13 @@ integer                       :: i
       SELECT CASE (ch)
       CASE ('A':'Z')
          if (isupper(ch) .eqv. .false.)then
-            write(*,*)'isupper: failed on character ',i,isupper(ch)
+            write(std_err,g)'isupper: failed on character ',i,isupper(ch)
             call unit_check_bad('isupper')
             stop 1
          endif
       CASE DEFAULT
          if (isupper(ch) .eqv. .true.)then
-            write(*,*)'isupper: failed on character ',i,isupper(ch)
+            write(std_err,g)'isupper: failed on character ',i,isupper(ch)
             call unit_check_bad('isupper')
             stop 2
          endif
@@ -2043,13 +2046,13 @@ integer                       :: i
       SELECT CASE (ch)
       CASE ('a':'z')
          if (islower(ch) .eqv. .false.)then
-            write(*,*)'islower: failed on character ',i,islower(ch)
+            write(std_err,g)'islower: failed on character ',i,islower(ch)
             call unit_check_bad('islower')
             stop 1
          endif
       CASE DEFAULT
          if (islower(ch) .eqv. .true.)then
-            write(*,*)'islower: failed on character ',i,islower(ch)
+            write(std_err,g)'islower: failed on character ',i,islower(ch)
             call unit_check_bad('islower')
             stop 2
          endif
@@ -2072,13 +2075,13 @@ integer                       :: i
       SELECT CASE (ch)
       CASE ('a':'z','A':'Z','0':'9')
          if (isalnum(char(i)) .eqv. .false.)then
-            write(*,*)'isalnum: failed on character ',i,isalnum(char(i))
+            write(std_err,g)'isalnum: failed on character ',i,isalnum(char(i))
             call unit_check_bad('isalnum')
             stop 1
          endif
       CASE DEFAULT
          if (isalnum(char(i)) .eqv. .true.)then
-            write(*,*)'isalnum: failed on character ',i,isalnum(char(i))
+            write(std_err,g)'isalnum: failed on character ',i,isalnum(char(i))
             call unit_check_bad('isalnum')
             stop 2
          endif
@@ -2119,6 +2122,20 @@ subroutine test_setbits()
    call unit_check_done('setbits',msg='setbits(3f) tests completed')
 end subroutine test_setbits
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_match_delimiter()
+   !character(len=:),allocatable :: string
+   call unit_check_start('match_delimiter',' -description    ''find matching delimiter'' '//OPTIONS )
+   !string='11111111'
+   !call unit_check('match_delimiter',match_delimiter(string).eq.0,match_delimiter(string))
+   !string='1111111111111111'
+   !call unit_check('match_delimiter',match_delimiter(string).eq.0,match_delimiter(string))
+   !string='11111111111111111111111111111111'
+   !call unit_check('match_delimiter',match_delimiter(string).eq.0,match_delimiter(string))
+   !string='1111111111111111111111111111111111111111111111111111111111111111'
+   !call unit_check('match_delimiter',match_delimiter(string).eq.0,match_delimiter(string))
+   call unit_check_done('match_delimiter',msg='match_delimiter(3f) tests completed')
+end subroutine test_match_delimiter
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 end module M_testsuite_M_strings
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 program runtest
@@ -2127,6 +2144,7 @@ use M_verify, only : unit_check_command, unit_check_keep_going, unit_check_level
 use M_testsuite_M_strings
    unit_check_command=''
    unit_check_keep_going=.true.
+!  unit_check_level=1
    unit_check_level=0
    call test_suite_M_strings()
    call unit_check_stop()

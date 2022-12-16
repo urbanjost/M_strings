@@ -9232,7 +9232,6 @@ end function paragraph
 !===================================================================================================================================
 function setbits8(string) result(answer)
 use, intrinsic :: iso_fortran_env, only : int8, int16, int32, int64
-use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, stdout=>output_unit, stderr=>error_unit
 implicit none
 integer(kind=int8)          :: answer
 character(len=8),intent(in) :: string
@@ -9258,7 +9257,6 @@ end function setbits8
 !-----------------------------------------------------------------------------------------------------------------------------------
 function setbits16(string) result(answer)
 use, intrinsic :: iso_fortran_env, only : int8, int16, int32, int64
-use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, stdout=>output_unit, stderr=>error_unit
 implicit none
 integer(kind=int16)          :: answer
 character(len=16),intent(in) :: string
@@ -9284,7 +9282,6 @@ end function setbits16
 !-----------------------------------------------------------------------------------------------------------------------------------
 function setbits32(string) result(answer)
 use, intrinsic :: iso_fortran_env, only : int8, int16, int32, int64
-use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, stdout=>output_unit, stderr=>error_unit
 implicit none
 integer(kind=int32)          :: answer
 character(len=32),intent(in) :: string
@@ -9310,7 +9307,6 @@ end function setbits32
 !-----------------------------------------------------------------------------------------------------------------------------------
 function setbits64(string) result(answer)
 use, intrinsic :: iso_fortran_env, only : int8, int16, int32, int64
-use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, stdout=>output_unit, stderr=>error_unit
 implicit none
 integer(kind=int64)          :: answer
 character(len=64),intent(in) :: string
