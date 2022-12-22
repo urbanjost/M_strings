@@ -59,7 +59,11 @@ allocatable strings and supports concatenation using the // operator:
      lle                 Lexical less than or equal
      llt                 Lexical less than
 
-## DOWNLOAD and BUILD with make(1) ![gmake](docs/images/gnu.gif)
+---
+![gmake](docs/images/gnu.gif)
+---
+
+## DOWNLOAD and BUILD with make(1)
 Just download the github repository, enter the src/ directory and run make:
 
      git clone https://github.com/urbanjost/M_strings.git
@@ -87,7 +91,11 @@ This will compile the M_strings(3f) module and optionally build all the
 example programs from the document pages in the example/ sub-directory
 and run the unit tests.
 
-## DOWNLOAD AND BUILD WITH FPM(1) ![fpm](docs/images/fpm_logo.gif)
+---
+![fpm](docs/images/fpm_logo.gif)
+---
+
+## DOWNLOAD AND BUILD WITH FPM(1)
 
 Alternatively, download the github repository and build it with
 fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/fpm) )
@@ -108,7 +116,11 @@ or just list it as a dependency in your fpm.toml project file.
 
 Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.com/fortran-lang/fpm-registry)
 
-## DOCUMENTATION   ![docs](docs/images/docs.gif)
+---
+![docs](docs/images/docs.gif)
+---
+
+## DOCUMENTATION
 
 ### USER
 
@@ -134,7 +146,11 @@ Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.co
    to produce a [developers' document](https://urbanjost.github.io/M_strings/fpm-ford/index.html).
  - [github action status](docs/STATUS.md)
 
-## DEMO PROGRAMS![demos](docs/images/demo.gif)
+---
+![demos](docs/images/demo.gif)
+---
+
+## DEMO PROGRAMS
 
 Each man-page includes a working example program. These and additional
 examples are included in the example/ directory.

@@ -1,5 +1,6 @@
       program demo_M_strings
       use M_strings, only : split, delim, chomp, sep
+      use M_strings, only : split2020, find_field
       use M_strings, only : substitute, change, modif
       use M_strings, only : transliterate, reverse
       use M_strings, only : replace, join

@@ -17,6 +17,7 @@
 !!  public entities:
 !!
 !!      use M_strings, only : split,sep,delim,chomp,strtok
+!!      use M_strings, only : split2020, find_field
 !!      use M_strings, only : substitute,change,modif,transliterate,reverse
 !!      use M_strings, only : replace,join
 !!      use M_strings, only : upper,lower,upper_quoted
@@ -54,6 +55,12 @@
 !!              string using specified delimiters
 !!       paragraph    convert a string into a paragraph
 !!       strtok tokenize a string like C strtok(3c) routine
+!!
+!!       CONTRIBUTIONS
+!!
+!!       split2020   split a string using prototype of proposed standard
+!!                   procedure
+!!       find_field  token a string
 !!
 !!   EDITING
 !!
@@ -252,6 +259,7 @@
 !!
 !!     program demo_M_strings
 !!     use M_strings, only : split, delim, chomp, sep
+!!     use M_strings, only : split2020, find_field
 !!     use M_strings, only : substitute, change, modif
 !!     use M_strings, only : transliterate, reverse
 !!     use M_strings, only : replace, join
@@ -468,6 +476,7 @@ interface ends_with
 end interface ends_with
 !-----------------------------------------------------------------------------------------------------------------------------------
 public :: split2020, string_tokens
+public :: find_field
 
 interface split2020
    module procedure :: split_tokens, split_first_last, split_pos
@@ -9533,7 +9542,239 @@ end function msg_one
 !===================================================================================================================================
 !>
 !!##NAME
-!!    split2020(3f) - parse a string into tokens
+!!    find_field(3f) - [M_strings:TOKENS] parse a string into tokens
+!!    (LICENSE:MIT)
+!!
+!!##SYNOPSIS
+!!
+!!    subroutine find_field (string, field, position, delims, delim, found)
+!!
+!!     character*(*),intent(in)           :: string
+!!     character*(*),intent(out)          :: field
+!!     integer,optional,intent(inout)     :: position
+!!     character*(*),optional,intent(in)  :: delims
+!!     character*(*),optional,intent(out) :: delim
+!!     logical,optional,intent(out)       :: found
+!!
+!!##DESCRIPTION
+!!
+!!    Find a delimited field in a string.
+!!
+!!    Here's my equivalent, which I've used for nearly 2 decades, as you can
+!!    see from the date. This doesn't try to mimic the C strtok (and doesn't
+!!    have its limitations either). It is in a much more native Fortran style.
+!!
+!!    It is a little more complicated than some because it does some things
+!!    that I regularly find useful. For example, it can tell the caller what
+!!    trailing delimiter it found. This can be useful, for example, to
+!!    distinguish between
+!!
+!!        somefield, someotherfield
+!!
+!!    versus
+!!
+!!        somefield=somevalue, someotherfield
+!!
+!!    Also, I have a bit of special handling for blanks. All the usage
+!!    information is in the argument descriptions. Note that most of the
+!!    arguments are optional.
+!!
+!!        from comp.lang.fortran @ Richard Maine
+!!
+!!##OPTIONS
+!!    STRING     The string input.
+!!
+!!    FIELD      The returned field. Blank if no field found.
+!!
+!!    POSITION   On entry, the starting position for searching for the field.
+!!               Default is 1 if the argument is not present.
+!!               On exit, the starting position of the next field or
+!!               len(string)+1 if there is no following field.
+!!
+!!    DELIMS     String containing the characters to be accepted as delimiters.
+!!               If this includes a blank character, then leading blanks are
+!!               removed from the returned field and the end delimiter may
+!!               optionally be preceeded by blanks. If this argument is
+!!               not present, the default delimiter set is a blank.
+!!
+!!    DELIM      Returns the actual delimiter that terminated the field.
+!!               Returns char(0) if the field was terminated by the end of
+!!               the string or if no field was found.
+!!               If blank is in delimiters and the field was terminated
+!!               by one or more blanks, followed by a non-blank delimiter,
+!!               the non-blank delimiter is returned.
+!!
+!!    FOUND      True if a field was found.
+!!
+!!##EXAMPLES
+!!
+!! Sample of uses
+!!
+!!        program demo_find_field
+!!        use M_strings, only : find_field
+!!        implicit none
+!!        character(len=256)           :: string
+!!        character(len=256)           :: field
+!!        integer                      :: position
+!!        character(len=:),allocatable :: delims
+!!        character(len=1)             :: delim
+!!        logical                      :: found
+!!
+!!        delims='[,]'
+!!        position=1
+!!        found=.true.
+!!        string='[a,b,[ccc,ddd],and more]'
+!!        write(*,'(a)')trim(string)
+!!        do
+!!           call find_field(string,field,position,delims,delim,found=found)
+!!           if(.not.found)exit
+!!           write(*,'("<",a,">")')trim(field)
+!!        enddo
+!!        write(*,'(*(g0))')repeat('=',70)
+!!
+!!        position=1
+!!        found=.true.
+!!        write(*,'(a)')trim(string)
+!!        do
+!!           call find_field(string,field,position,'[], ',delim,found=found)
+!!           if(.not.found)exit
+!!           write(*,'("<",a,">",i0,1x,a)')trim(field),position,delim
+!!        enddo
+!!        write(*,'(*(g0))')repeat('=',70)
+!!
+!!        end program demo_find_field
+!! ```
+!! Results:
+!! ```text
+!!  > [a,b,[ccc,ddd],and more]
+!!  > <>
+!!  > <a>
+!!  > <b>
+!!  > <>
+!!  > <ccc>
+!!  > <ddd>
+!!  > <>
+!!  > <and more>
+!!  > <>
+!!  > ======================================================================
+!!  > [a,b,[ccc,ddd],and more]
+!!  > <>2 [
+!!  > <a>4 ,
+!!  > <b>6 ,
+!!  > <>7 [
+!!  > <ccc>11 ,
+!!  > <ddd>15 ]
+!!  > <>16 ,
+!!  > <and>20
+!!  > <more>257 ]
+!!  > ======================================================================
+!!
+!!##AUTHOR
+!!    Richard Maine
+!!
+!!##LICENSE
+!!    MIT
+!!
+!!##VERSION
+!!    version 0.1.0, copyright Nov 15 1990, Richard Maine
+!!
+!!    Minor editing to conform to inclusion in the string procedure module
+subroutine find_field (string, field, position, delims, delim, found)
+
+!-- Find a delimited field in a string.
+!-- 15 Nov 90, Richard Maine.
+
+!-------------------- interface.
+character*(*),intent(in)           :: string
+character*(*),intent(out)          :: field
+integer,optional,intent(inout)     :: position
+character*(*),optional,intent(in)  :: delims
+character*(*),optional,intent(out) :: delim
+logical,optional,intent(out)       :: found
+!-------------------- local.
+character  :: delimiter*1
+integer    :: pos, field_start, field_end, i
+logical    :: trim_blanks
+!-------------------- executable code.
+   field = ''
+   delimiter = char(0)
+   pos = 1
+   if (present(found)) found = .false.
+   if (present(position)) pos = position
+   if (pos > len(string)) goto 9000
+   !if (pos < 1) error stop 'Illegal position in find_field'
+   if (pos < 1) stop 'Illegal position in find_field'
+
+   !-- Skip leading blanks if blank is a delimiter.
+   field_start = pos
+   trim_blanks = .true.
+   if (present(delims)) trim_blanks = index(delims,' ') /= 0
+   if (trim_blanks) then
+      i = verify(string(pos:),' ')
+      if (i == 0) then
+         pos = len(string) + 1
+         goto 9000
+      end if
+      field_start = pos + i - 1
+   end if
+   if (present(found)) found = .true.
+
+   !-- Find the end of the field.
+   if (present(delims)) then
+      i = scan(string(field_start:), delims)
+   else
+      i = scan(string(field_start:), ' ')
+   end if
+   if (i == 0) then
+      field_end = len(string)
+      delimiter = char(0)
+      pos = field_end + 1
+   else
+      field_end = field_start + i - 2
+      delimiter = string(field_end+1:field_end+1)
+      pos = field_end + 2
+   end if
+
+   !-- Return the field.
+   field = string(field_start:field_end)
+
+   !-- Skip trailing blanks if blank is a delimiter.
+   if (trim_blanks) then
+      i = verify(string(field_end+1:), ' ')
+      if (i == 0) then
+         pos = len(string) + 1
+         goto 9000
+      end if
+      pos = field_end + i
+
+      !-- If the first non-blank character is a delimiter,
+      !-- skip blanks after it.
+      i = 0
+      if (present(delims)) i = index(delims, string(pos:pos))
+      if (i /= 0) then
+         delimiter = string(pos:pos)
+         pos = pos + 1
+         i = verify(string(pos:), ' ')
+         if (i == 0) then
+            pos = len(string) + 1
+         else
+            pos = pos + i - 1
+         end if
+      end if
+   end if
+   !---------- Normal exit.
+   9000 continue
+   if (present(delim)) delim = delimiter
+   if (present(position)) position = pos
+end subroutine find_field
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
+!!    split2020(3f) - [M_strings:TOKENS] parse a string into tokens using
+!!    proposed f2023 method
+!!    (LICENSE:PD)
 !!
 !!##SYNOPSIS
 !!

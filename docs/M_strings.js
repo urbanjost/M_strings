@@ -20,6 +20,7 @@ append("dilate.3m_strings.html");
 append("edit_distance.3m_strings.html");
 append("ends_with.3m_strings.html");
 append("expand.3m_strings.html");
+append("find_field.3m_strings.html");
 append("fortran_name.3m_strings.html");
 append("getvals.3m_strings.html");
 append("glob.3m_strings.html");
