@@ -22,7 +22,7 @@ public entities:
      use M_strings, only : upper,lower,upper_quoted
      use M_strings, only : rotate13
      use M_strings, only : adjustc,compact,nospace,indent,crop,unquote,quote
-     use M_strings, only : len_white,atleast,stretch,lenset,merge_str
+     use M_strings, only : len_white,pad,lpad,rpad,zpad,stretch,lenset,merge_str
      use M_strings, only : switch,s2c,c2s
      use M_strings, only : noesc,notabs,expand,uc,visible
      use M_strings, only : string_to_value,string_to_values,s2v,s2vs,value_to_string,v2s,msg

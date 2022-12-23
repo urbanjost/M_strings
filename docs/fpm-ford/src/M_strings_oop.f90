@@ -177,14 +177,14 @@
 !!       write(*,101)'str2%str ................... ',str2%str
 !!       write(*,*)': EQ LT GT LE GE NE'
 !!       write(*,*)'compare str1 to str1'
-!!       write(*,303)str1.eq.str1  ,str1.lt.str1  ,str1.gt.str1  ,str1.le.str1 &
-!!                  & ,str1.ge.str1  ,str1.ne.str1
+!!       write(*,303)str1 == str1  ,str1 < str1  ,str1 > str1  ,str1 <= str1 &
+!!                  & ,str1 >= str1  ,str1 /= str1
 !!       write(*,*)'compare str1 to str2'
-!!       write(*,303)str1.eq.str2  ,str1.lt.str2  ,str1.gt.str2  ,str1.le.str2 &
-!!                  & ,str1.ge.str2  ,str1.ne.str2
+!!       write(*,303)str1 == str2  ,str1 < str2  ,str1 > str2  ,str1 <= str2 &
+!!                  & ,str1 >= str2  ,str1 /= str2
 !!       write(*,*)'compare str2 to str1'
-!!       write(*,303)str2.eq.str1  ,str2.lt.str1  ,str2.gt.str1  ,str2.le.str1 &
-!!                  & ,str2.ge.str1  ,str2.ne.str1
+!!       write(*,303)str2 == str1  ,str2 < str1  ,str2 > str1  ,str2 <= str1 &
+!!                  & ,str2 >= str1  ,str2 /= str1
 !!
 !!       write(*,*)repeat('=',68)
 !!
@@ -286,7 +286,7 @@ module M_strings_oop
 ! methods it supports and overloading of operators to support the new data type.
 !
 use M_strings, only : upper, lower                       ! case
-use M_strings, only : lenset, atleast, adjustc, compact, crop     ! whitespace
+use M_strings, only : lenset, pad, lpad, rpad, zpad, adjustc, compact, crop     ! whitespace
 use M_strings, only : reverse
 use M_strings, only : notabs, noesc, expand
 use M_strings, only : substitute, transliterate
@@ -319,7 +319,10 @@ contains
    procedure  ::  len            =>  oop_len
    procedure  ::  len_trim       =>  oop_len_trim
    procedure  ::  lenset         =>  oop_lenset
-   procedure  ::  atleast        =>  oop_atleast
+   procedure  ::  pad            =>  oop_pad
+   procedure  ::  lpad           =>  oop_lpad
+   procedure  ::  rpad           =>  oop_rpad
+   procedure  ::  zpad           =>  oop_zpad
    procedure  ::  match          =>  oop_matchw
    procedure  ::  lower          =>  oop_lower
    procedure  ::  noesc          =>  oop_noesc
@@ -375,7 +378,7 @@ contains
 !
 function construct_from_fill(chars,len)
 
-! ident_1="@(#)M_strings::construct_from_fill(3f): construct TYPE(STRING)"
+! ident_1="@(#) M_strings construct_from_fill(3f) construct TYPE(STRING)"
 
 character(len=*),intent(in),optional :: chars
 integer,intent(in),optional          :: len
@@ -399,7 +402,7 @@ end function construct_from_fill
 !===================================================================================================================================
 function oop_len(self) result (length)
 
-! ident_2="@(#)M_strings::oop_len(3f): length of string"
+! ident_2="@(#) M_strings oop_len(3f) length of string"
 
 class(string),intent(in)    :: self
 integer                     :: length
@@ -410,7 +413,7 @@ end function oop_len
 !===================================================================================================================================
 function oop_len_trim(self) result (length)
 
-! ident_3="@(#)M_strings::oop_len_trim(3f): trimmed length of string"
+! ident_3="@(#) M_strings oop_len_trim(3f) trimmed length of string"
 
 class(string),intent(in)    :: self
 integer                     :: length
@@ -421,7 +424,7 @@ end function oop_len_trim
 !===================================================================================================================================
 function oop_switch(self) result (array)
 
-! ident_4="@(#)M_strings::oop_switch(3f): convert string to array of single characters"
+! ident_4="@(#) M_strings oop_switch(3f) convert string to array of single characters"
 
 class(string),intent(in)    :: self
 character(len=1)            :: array(len(self%str))
@@ -432,7 +435,7 @@ end function oop_switch
 !===================================================================================================================================
 function oop_index(self,substring,back) result (location)
 
-! ident_5="@(#)M_strings::oop_index(3f): find starting position of a substring in a string"
+! ident_5="@(#) M_strings oop_index(3f) find starting position of a substring in a string"
 
 class(string),intent(in)    :: self
 character(len=*),intent(in) :: substring
@@ -449,7 +452,7 @@ end function oop_index
 !===================================================================================================================================
 function oop_upper(self) result (string_out)
 
-! ident_6="@(#)M_strings::oop_upper(3f): convert string to uppercase"
+! ident_6="@(#) M_strings oop_upper(3f) convert string to uppercase"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -460,7 +463,7 @@ end function oop_upper
 !===================================================================================================================================
 function oop_lower(self) result (string_out)
 
-! ident_7="@(#)M_strings::oop_lower(3f): convert string to miniscule"
+! ident_7="@(#) M_strings oop_lower(3f) convert string to miniscule"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -471,7 +474,7 @@ end function oop_lower
 !===================================================================================================================================
 function oop_expand(self,escape_char) result (string_out)
 
-! ident_8="@(#)M_strings::oop_expand(3f): expand common escape sequences by calling expand(3f)"
+! ident_8="@(#) M_strings oop_expand(3f) expand common escape sequences by calling expand(3f)"
 
 class(string),intent(in)      :: self
 character,intent(in),optional :: escape_char
@@ -487,7 +490,7 @@ end function oop_expand
 !===================================================================================================================================
 function oop_trim(self) result (string_out)
 
-! ident_9="@(#)M_strings::oop_trim(3f): trim trailing spaces"
+! ident_9="@(#) M_strings oop_trim(3f) trim trailing spaces"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -498,7 +501,7 @@ end function oop_trim
 !===================================================================================================================================
 function oop_crop(self) result (string_out)
 
-! ident_10="@(#)M_strings::oop_crop(3f): crop leading and trailing spaces"
+! ident_10="@(#) M_strings oop_crop(3f) crop leading and trailing spaces"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -509,7 +512,7 @@ end function oop_crop
 !===================================================================================================================================
 function oop_reverse(self) result (string_out)
 
-! ident_11="@(#)M_strings::oop_reverse(3f): reverse string"
+! ident_11="@(#) M_strings oop_reverse(3f) reverse string"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -520,7 +523,7 @@ end function oop_reverse
 !===================================================================================================================================
 function oop_adjustl(self) result (string_out)
 
-! ident_12="@(#)M_strings::oop_adjustl(3f): adjust string to left"
+! ident_12="@(#) M_strings oop_adjustl(3f) adjust string to left"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -531,7 +534,7 @@ end function oop_adjustl
 !===================================================================================================================================
 function oop_adjustr(self) result (string_out)
 
-! ident_13="@(#)M_strings::oop_adjustr(3f): adjust string to right"
+! ident_13="@(#) M_strings oop_adjustr(3f) adjust string to right"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -542,7 +545,7 @@ end function oop_adjustr
 !===================================================================================================================================
 function oop_adjustc(self,length) result (string_out)
 
-! ident_14="@(#)M_strings::oop_adjustc(3f): adjust string to center"
+! ident_14="@(#) M_strings oop_adjustc(3f) adjust string to center"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -558,7 +561,7 @@ end function oop_adjustc
 !===================================================================================================================================
 function oop_int(self) result (value)
 
-! ident_15="@(#)M_strings::oop_int(3f): string to integer"
+! ident_15="@(#) M_strings oop_int(3f) string to integer"
 
 class(string),intent(in)     :: self
 integer                      :: value
@@ -570,7 +573,7 @@ end function oop_int
 !===================================================================================================================================
 function oop_real(self) result (value)
 
-! ident_16="@(#)M_strings::oop_real(3f): string to real"
+! ident_16="@(#) M_strings oop_real(3f) string to real"
 
 class(string),intent(in)     :: self
 real                         :: value
@@ -582,7 +585,7 @@ end function oop_real
 !===================================================================================================================================
 function oop_dble(self) result (value)
 
-! ident_17="@(#)M_strings::oop_dble(3f): string to double"
+! ident_17="@(#) M_strings oop_dble(3f) string to double"
 
 class(string),intent(in)     :: self
 doubleprecision              :: value
@@ -594,7 +597,7 @@ end function oop_dble
 !===================================================================================================================================
 function oop_compact(self,char) result (string_out)
 
-! ident_18="@(#)M_strings::oop_compact(3f): adjust string to center"
+! ident_18="@(#) M_strings oop_compact(3f) adjust string to center"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -611,7 +614,7 @@ end function oop_compact
 !===================================================================================================================================
 function oop_substitute(self,old,new) result (string_out)
 
-! ident_19="@(#)M_strings::oop_substitute(3f): change all occurrences of oldstring to newstring non-recursively"
+! ident_19="@(#) M_strings oop_substitute(3f) change all occurrences of oldstring to newstring non-recursively"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -625,7 +628,7 @@ end function oop_substitute
 !===================================================================================================================================
 function oop_transliterate(self,old,new) result (string_out)
 
-! ident_20="@(#)M_strings::oop_transliterate(3f): change all occurrences of oldstring to newstring non-recursively"
+! ident_20="@(#) M_strings oop_transliterate(3f) change all occurrences of oldstring to newstring non-recursively"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -636,21 +639,57 @@ end function oop_transliterate
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
-function oop_atleast(self,length) result (string_out)
+function oop_pad(self,length) result (string_out)
 
-! ident_21="@(#)M_strings::oop_atleast(3f): set string to at least specified length"
+! ident_21="@(#) M_strings oop_pad(3f) set string to at least specified length"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
 integer,intent(in)           :: length
-   string_out%str=atleast(self%str,length)
-end function oop_atleast
+   string_out%str=pad(self%str,length)
+end function oop_pad
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+function oop_zpad(self,length) result (string_out)
+
+! ident_22="@(#) M_strings oop_zpad(3f) set string to at least specified length"
+
+class(string),intent(in)     :: self
+type(string)                 :: string_out
+integer,intent(in)           :: length
+   string_out%str=zpad(self%str,length)
+end function oop_zpad
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+function oop_lpad(self,length) result (string_out)
+
+! ident_23="@(#) M_strings oop_lpad(3f) set string to at least specified length"
+
+class(string),intent(in)     :: self
+type(string)                 :: string_out
+integer,intent(in)           :: length
+   string_out%str=lpad(self%str,length)
+end function oop_lpad
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+function oop_rpad(self,length) result (string_out)
+
+! ident_24="@(#) M_strings oop_rpad(3f) set string to at least specified length"
+
+class(string),intent(in)     :: self
+type(string)                 :: string_out
+integer,intent(in)           :: length
+   string_out%str=rpad(self%str,length)
+end function oop_rpad
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
 function oop_lenset(self,length) result (string_out)
 
-! ident_22="@(#)M_strings::oop_lenset(3f): set string to specific length"
+! ident_25="@(#) M_strings oop_lenset(3f) set string to specific length"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -662,7 +701,7 @@ end function oop_lenset
 !===================================================================================================================================
 function oop_matchw(self,pattern) result (answer)
 
-! ident_23="@(#)M_strings::oop_matchw(3f): test if wildcard pattern matches string"
+! ident_26="@(#) M_strings oop_matchw(3f) test if wildcard pattern matches string"
 
 class(string),intent(in)     :: self
 character(len=*),intent(in)  :: pattern
@@ -674,7 +713,7 @@ end function oop_matchw
 !===================================================================================================================================
 function oop_notabs(self) result (string_out)
 
-! ident_24="@(#)M_strings::oop_notabs(3f): expand tab characters assuming tab stops every eight(8) characters"
+! ident_27="@(#) M_strings oop_notabs(3f) expand tab characters assuming tab stops every eight(8) characters"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -688,7 +727,7 @@ end function oop_notabs
 !===================================================================================================================================
 function oop_noesc(self) result (string_out)
 
-! ident_25="@(#)M_strings::oop_noesc(3f): replace non-printable characters with spaces"
+! ident_28="@(#) M_strings oop_noesc(3f) replace non-printable characters with spaces"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -699,7 +738,7 @@ end function oop_noesc
 !===================================================================================================================================
 function p(self) result (string_out)
 
-! ident_26="@(#)M_strings::oop_p(3f): return CHARACTER string from TYPE(STRING)"
+! ident_29="@(#) M_strings oop_p(3f) return CHARACTER string from TYPE(STRING)"
 
 class(string),intent(in)     :: self
 character(len=len(self%str)) :: string_out
@@ -713,7 +752,7 @@ subroutine init_string(self)
 ! allow for TYPE(STRING) object to be initialized.
 !
 
-! ident_27="@(#)M_strings::init_dt(3f): initialize TYPE(STRING)"
+! ident_30="@(#) M_strings init_dt(3f) initialize TYPE(STRING)"
 
 class(string)                        :: self
    self%str=''
@@ -725,7 +764,7 @@ end subroutine init_string
 !===================================================================================================================================
 function string_plus_value(self,value) result (other)
 
-! ident_28="@(#)M_strings::string_plus_value(3f): add value to TYPE(STRING)"
+! ident_31="@(#) M_strings string_plus_value(3f) add value to TYPE(STRING)"
 
 class(string),intent(in)      :: self
 type(string)                  :: other
@@ -743,7 +782,7 @@ end function string_plus_value
 !===================================================================================================================================
 function string_minus_value(self,value) result (other)
 
-! ident_29="@(#)M_strings::string_minus_value(3f): subtract value from TYPE(STRING)"
+! ident_32="@(#) M_strings string_minus_value(3f) subtract value from TYPE(STRING)"
 
 class(string),intent(in)      :: self
 type(string)                  :: other
@@ -765,7 +804,7 @@ end function string_minus_value
 !===================================================================================================================================
 function string_append_value(self,value) result (other)
 
-! ident_30="@(#)M_strings::string_append_value(3f): append value to TYPE(STRING)"
+! ident_33="@(#) M_strings string_append_value(3f) append value to TYPE(STRING)"
 
 class(string),intent(in)      :: self
 type(string)                  :: other
@@ -783,7 +822,7 @@ end function string_append_value
 !===================================================================================================================================
 function string_multiply_value(self,value) result (other)
 
-! ident_31="@(#)M_strings::string_multiply_value(3f): multiply TYPE(STRING) value times"
+! ident_34="@(#) M_strings string_multiply_value(3f) multiply TYPE(STRING) value times"
 
 class(string),intent(in)      :: self
 type(string)                  :: other
@@ -799,36 +838,36 @@ end function string_multiply_value
 !===================================================================================================================================
 logical function eq(self,other)
 
-! ident_32="@(#)M_strings::eq(3f): compare derived type string objects (eq,lt,gt,le,ge,ne)"
+! ident_35="@(#) M_strings eq(3f) compare derived type string objects (eq lt gt le ge ne)"
 
    class(string),intent(in) :: self
    type(string),intent(in)  :: other
-   eq= self%str .eq. other%str
+   eq= self%str  ==  other%str
 end function eq
 logical function lt(self,other)
    class(string),intent(in) :: self
    type(string),intent(in)  :: other
-   lt= self%str .lt. other%str
+   lt= self%str  <  other%str
 end function lt
 logical function gt(self,other)
    class(string),intent(in) :: self
    type(string),intent(in)  :: other
-   gt= self%str .gt. other%str
+   gt= self%str  >  other%str
 end function gt
 logical function le(self,other)
    class(string),intent(in) :: self
    type(string),intent(in)  :: other
-   le= self%str .le. other%str
+   le= self%str  <=  other%str
 end function le
 logical function ge(self,other)
    class(string),intent(in) :: self
    type(string),intent(in)  :: other
-   ge= self%str .ge. other%str
+   ge= self%str  >=  other%str
 end function ge
 logical function ne(self,other)
    class(string),intent(in) :: self
    type(string),intent(in)  :: other
-   ne= self%str .ne. other%str
+   ne= self%str  /=  other%str
 end function ne
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!

@@ -9,7 +9,7 @@ contains
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_suite_m_strings()
    call test_adjustc()
-   call test_atleast()
+   call test_pad()
    call test_lpad()
    call test_rpad()
    call test_zpad()
@@ -1228,15 +1228,15 @@ subroutine test_stretch()
    call unit_check_done('stretch',msg='tests completed')
 end subroutine test_stretch
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_atleast()
-   call unit_check_start('atleast',' -description ''return a string of at least specified length'' '//OPTIONS )
-   call unit_check('atleast',atleast('Hello World',20)//'!' == 'Hello World         !',msg='check if padded')
-   call unit_check('atleast',len(atleast('Hello World',20)) == 20,msg='check padded length')
-   call unit_check('atleast',len(atleast('Hello World',2)) == 11 &
-           .and.atleast('Hello World',2) == 'Hello World', &
+subroutine test_pad()
+   call unit_check_start('pad',' -description ''return a string of at least specified length'' '//OPTIONS )
+   call unit_check('pad',pad('Hello World',20)//'!' == 'Hello World         !',msg='check if padded')
+   call unit_check('pad',len(pad('Hello World',20)) == 20,msg='check padded length')
+   call unit_check('pad',len(pad('Hello World',2)) == 11 &
+           .and.pad('Hello World',2) == 'Hello World', &
            msg='check not truncated')
-   call unit_check_done('atleast',msg='tests completed')
-end subroutine test_atleast
+   call unit_check_done('pad',msg='tests completed')
+end subroutine test_pad
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_zpad()
    call unit_check_start('zpad',' -description ''return a string left-padded with zeros'' '//OPTIONS )

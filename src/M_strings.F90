@@ -24,7 +24,7 @@
 !!      use M_strings, only : rotate13
 !!      use M_strings, only : adjustc,compact,nospace,indent
 !!      use M_strings, only : crop,clip,unquote,quote,matching_delimiter
-!!      use M_strings, only : len_white,atleast,lpad,rpad,zpad,stretch,lenset,merge_str
+!!      use M_strings, only : len_white,pad,lpad,rpad,zpad,stretch,lenset,merge_str
 !!      use M_strings, only : switch,s2c,c2s
 !!      use M_strings, only : noesc,notabs,dilate,expand,visible
 !!      use M_strings, only : longest_common_substring
@@ -94,7 +94,7 @@
 !!
 !!       len_white  find location of last non-whitespace character
 !!       lenset     return a string of specified length
-!!       atleast    return a string of at least specified length
+!!       pad        return a string of at least specified length
 !!       zpad       pad integer or string to length with zero characters
 !!                  on left
 !!       lpad       convert scalar intrinsic to a string padded on left to
@@ -274,7 +274,7 @@
 !!     use M_strings, only : rotate13
 !!     use M_strings, only : adjustc, compact, nospace, indent, crop, clip, squeeze
 !!     use M_strings, only : unquote, quote, matching_delimiter
-!!     use M_strings, only : atleast, zpad, lpad, rpad, stretch, lenset
+!!     use M_strings, only : pad, zpad, lpad, rpad, stretch, lenset
 !!     use M_strings, only : len_white, merge_str
 !!     use M_strings, only : switch, s2c, c2s
 !!     use M_strings, only : noesc, notabs, dilate, expand, visible
@@ -353,7 +353,7 @@ public unquote         !  remove quotes from string as if read with list-directe
 public quote           !  add quotes to string as if written with list-directed input
 !----------------------# STRING LENGTH
 public lenset          !  return a string as specified length
-public atleast         !  return a string of at least specified length
+public pad             !  return a string of at least specified length
 public zpad            !  return a string of at least specified length padded on left with zeros
 public lpad            !  convert value to a string of at least specified length padded on left with zeros
 public rpad            !  convert value to a string of at least specified length padded on right with zeros
@@ -524,6 +524,7 @@ integer,save               :: last_int=0
 !-----------------------------------------------------------------------------------------------------------------------------------
 ! for compatibility allow old name for renamed procedures
 interface matchw; module procedure glob ;  end interface
+interface atleast; module procedure pad ;  end interface
 !-----------------------------------------------------------------------------------------------------------------------------------
 CONTAINS
 !===================================================================================================================================
@@ -4681,9 +4682,9 @@ character(len=*),intent(in),optional         :: suffix
 !-!character(len=max(length,len(trim(line)))) :: strout
 character(len=:),allocatable                 :: strout
    if(present(pattern))then
-      strout=atleast(line,length,pattern)
+      strout=pad(line,length,pattern)
    else
-      strout=atleast(line,length)
+      strout=pad(line,length)
    endif
    if(present(suffix))then
       strout=strout//suffix
@@ -4769,12 +4770,12 @@ character(len=4096)              :: line
       type is (logical);                write(line,'(l1)') valuein
       type is (complex);                write(line,'("(",1pg0,",",1pg0,")")') valuein
       type is (character(len=*))
-         strout= atleast(valuein,length,' ',clip=.true.)
+         strout= pad(valuein,length,' ',clip=.true.)
          return
       class default
               stop '<ERROR>*rpad* unknown type'
    end select
-         strout= atleast(line,length,' ',clip=.true.)
+         strout= pad(line,length,' ',clip=.true.)
 end function rpad
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -4856,12 +4857,12 @@ character(len=4096)              :: line
       type is (logical);                write(line,'(l1)') valuein
       type is (complex);                write(line,'("(",1pg0,",",1pg0,")")') valuein
       type is (character(len=*))
-         strout= atleast(valuein,length,' ',right=.false.,clip=.true.)
+         strout= pad(valuein,length,' ',right=.false.,clip=.true.)
          return
       class default
               stop '<ERROR>*lpad* unknown type'
    end select
-         strout= atleast(line,length,' ',clip=.true.,right=.false.)
+         strout= pad(line,length,' ',clip=.true.,right=.false.)
 end function lpad
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -4887,7 +4888,7 @@ end function lpad
 !!
 !!    For strings this is basically an alias for
 !!
-!!        strout=atleast(str,length,'0',clip=.true.,right=.false.)
+!!        strout=pad(str,length,'0',clip=.true.,right=.false.)
 !!
 !!    For integers the same is often done with internal WRITE(3f) statements
 !!
@@ -4959,21 +4960,21 @@ character(len=4096)              :: line
       type is (character(len=*));       line=valuein
       type is (complex);                write(line,'("(",1pg0,",",1pg0,")")') valuein
    end select
-   strout= atleast(trim(line),length,'0',clip=.true.,right=.false.)
+   strout= pad(trim(line),length,'0',clip=.true.,right=.false.)
 end function zpad
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
 !>
 !!##NAME
-!!   atleast(3f) - [M_strings:LENGTH] return string padded to at least
+!!   pad(3f) - [M_strings:LENGTH] return string padded to at least
 !!   specified length
 !!   (LICENSE:PD)
 !!
 !!##SYNOPSIS
 !!
 !!
-!!   function atleast(str,length,pattern,right,clip) result(strout)
+!!   function pad(str,length,pattern,right,clip) result(strout)
 !!
 !!    character(len=*)                           :: str
 !!    integer,intent(in)                         :: length
@@ -4983,7 +4984,7 @@ end function zpad
 !!    logical,intent(in),optional                :: clip
 !!
 !!##DESCRIPTION
-!!   atleast(3f) pads a string with a pattern to at least the specified
+!!   pad(3f) pads a string with a pattern to at least the specified
 !!   length. If the trimmed input string is longer than the requested
 !!   length the trimmed string is returned.
 !!
@@ -5006,31 +5007,31 @@ end function zpad
 !!
 !!  Sample Program:
 !!
-!!    program demo_atleast
-!!     use M_strings, only : atleast
+!!    program demo_pad
+!!     use M_strings, only : pad
 !!     implicit none
 !!     character(len=10)            :: string='abcdefghij'
 !!     character(len=:),allocatable :: answer
 !!     integer                      :: i
 !!     character(len=*),parameter   :: g='(*(g0))'
-!!        answer=atleast(string,5)
+!!        answer=pad(string,5)
 !!        write(*,'("[",a,"]")') answer
-!!        answer=atleast(string,20)
+!!        answer=pad(string,20)
 !!        write(*,'("[",a,"]")') answer
 !!        i=30
 !!        write(*,g)
 !!        write(*,'(1x,a,1x,i0)') &
-!!         & atleast('CHAPTER 1 : The beginning ',i,'.'), 1   , &
-!!         & atleast('CHAPTER 2 : The end ',i,'.'),       1234, &
-!!         & atleast('APPENDIX ',i,'.'),                  1235
+!!         & pad('CHAPTER 1 : The beginning ',i,'.'), 1   , &
+!!         & pad('CHAPTER 2 : The end ',i,'.'),       1234, &
+!!         & pad('APPENDIX ',i,'.'),                  1235
 !!        write(*,*)
 !!        write(*,'(1x,a,i7)') &
-!!         & atleast('CHAPTER 1 : The beginning ',i,'.'), 1   , &
-!!         & atleast('CHAPTER 2 : The end ',i,'.'),       1234, &
-!!         & atleast('APPENDIX ',i,'.'),                  1235
+!!         & pad('CHAPTER 1 : The beginning ',i,'.'), 1   , &
+!!         & pad('CHAPTER 2 : The end ',i,'.'),       1234, &
+!!         & pad('APPENDIX ',i,'.'),                  1235
 !!
-!!         write(*,g)atleast('12',5,'0',right=.false.)
-!!    end program demo_atleast
+!!         write(*,g)pad('12',5,'0',right=.false.)
+!!    end program demo_pad
 !!
 !!  Results:
 !!
@@ -5045,15 +5046,19 @@ end function zpad
 !!     CHAPTER 2 : The end ..........   1234
 !!     APPENDIX .....................   1235
 !!
+!!##SEE ALSO
+!!     adjustl(3f), adjustr(3f), repeat(3f), trim(3f), len_trim(3f), len(3f)
+!!
+!!     adjustc(3f), stretch(3f), lpad(3f), rpad(3f), zpad(3f), lenset(3f)
 !!##AUTHOR
 !!    John S. Urban
 !!
 !!##LICENSE
 !!    Public Domain
 !===================================================================================================================================
-function atleast(line,length,pattern,right,clip) result(strout)
+function pad(line,length,pattern,right,clip) result(strout)
 
-!$@(#) M_strings::atleast(3f): return string padded to at least specified length
+!$@(#) M_strings::pad(3f): return string padded to at least specified length
 
 character(len=*),intent(in)          :: line
 integer,intent(in)                   :: length
@@ -5090,7 +5095,7 @@ else
    endif
 
 endif
-end function atleast
+end function pad
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================

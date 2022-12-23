@@ -4,9 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
    <meta name="description" content="string operations">
-    
     <meta name="author" content="John S. Urban" >
     <link rel="icon" href="./favicon.png">
 
@@ -16,10 +14,7 @@
     <link href="./css/pygments.css" rel="stylesheet">
     <link href="./css/font-awesome.min.css" rel="stylesheet">
     <link href="./css/local.css" rel="stylesheet">
-    
     <link  href="./tipuesearch/tipuesearch.css" rel="stylesheet">
-    
-    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -48,49 +43,25 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-        
             <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
               <a href="#" class="dropdown-toggle"
               data-toggle="dropdown" role="button"
               aria-haspopup="true"
      aria-expanded="false">Contents <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          
-              
             <li><a href="./lists/files.html">Source Files</a></li>
-        
-        
-        
             <li><a href="./lists/modules.html">Modules</a></li>
-        
-            
-                                
             <li><a href="./lists/procedures.html">Procedures</a></li>
-        
-               
-            <li><a href="./lists/types.html">Derived Types</a></li>
-        
-        
+                   <li><a href="./lists/types.html">Derived Types</a></li>
+       
             </ul>
-            </li>
-
-
-<li class="visible-xs hidden-sm visible-lg"><a href="./lists/files.html">Source Files</a></li>
-
-
-
-<li class="visible-xs hidden-sm visible-lg"><a href="./lists/modules.html">Modules</a></li>
-
-
-
-<li class="visible-xs hidden-sm visible-lg"><a href="./lists/procedures.html">Procedures</a></li>
-
-                             
-<li class="visible-xs hidden-sm visible-lg"><a href="./lists/types.html">Derived Types</a></li>
-
-
-          </ul>
         
+            </li>
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/files.html">Source Files</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/modules.html">Modules</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/procedures.html">Procedures</a></li>
+                             <li class="visible-xs hidden-sm visible-lg"><a href="./lists/types.html">Derived Types</a></li>
+          </ul>
         <form action="./search.html" class="navbar-form navbar-right" role="search">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
@@ -99,34 +70,22 @@
         <button type="submit" class="btn btn-default">Submit</button>
 -->
         </form>
-        
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
     <div class="container">
-    
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
         <p>string operations</p>
-        	 
 	<p> Find us on&hellip;</p>
         <p>
-        	 
           <a class="btn btn-lg btn-primary" href="https://github.com/urbanjost/M_strings" role="button">GitHub</a>
-			 
-			 
-			 
-			 
-	         
-			 
         </p>
       </div>
 
       <div class="row" id='text'>
-		  
         <div class="col-md-8">
-		  
           <h1>M_strings</h1>
           <!--
 author_pic:
@@ -152,7 +111,7 @@ to the <code>M_strings</code> module.</p>
  use M_strings, only : upper,lower,upper_quoted
  use M_strings, only : rotate13
  use M_strings, only : adjustc,compact,nospace,indent,crop,unquote,quote
- use M_strings, only : len_white,atleast,stretch,lenset,merge_str
+ use M_strings, only : len_white,pad,lpad,rpad,zpad,stretch,lenset,merge_str
  use M_strings, only : switch,s2c,c2s
  use M_strings, only : noesc,notabs,expand,uc,visible
  use M_strings, only : string_to_value,string_to_values,s2v,s2vs,value_to_string,v2s,msg
@@ -189,7 +148,9 @@ allocatable strings and supports concatenation using the // operator:</p>
  <span class="nv">llt</span>                 <span class="nv">Lexical</span> <span class="nv">less</span> <span class="nv">than</span>
 </code></pre></div>
 
-<h2 id="download-and-build-with-make1">DOWNLOAD and BUILD with make(1) <img alt="gmake" src="docs/images/gnu.gif"></h2>
+<hr>
+<h2 id="_1"><img alt="gmake" src="docs/images/gnu.gif"></h2>
+<h2 id="download-and-build-with-make1">DOWNLOAD and BUILD with make(1)</h2>
 <p>Just download the github repository, enter the src/ directory and run make:</p>
 <div class="codehilite"><pre><span></span><code> <span class="nv">git</span> <span class="nv">clone</span> <span class="nv">https</span>:<span class="o">//</span><span class="nv">github</span>.<span class="nv">com</span><span class="o">/</span><span class="nv">urbanjost</span><span class="o">/</span><span class="nv">M_strings</span>.<span class="nv">git</span>
  <span class="nv">cd</span> <span class="nv">M_strings</span><span class="o">/</span><span class="nv">src</span>
@@ -216,7 +177,9 @@ allocatable strings and supports concatenation using the // operator:</p>
 <p>This will compile the M_strings(3f) module and optionally build all the
 example programs from the document pages in the example/ sub-directory
 and run the unit tests.</p>
-<h2 id="download-and-build-with-fpm1">DOWNLOAD AND BUILD WITH FPM(1) <img alt="fpm" src="docs/images/fpm_logo.gif"></h2>
+<hr>
+<h2 id="_2"><img alt="fpm" src="docs/images/fpm_logo.gif"></h2>
+<h2 id="download-and-build-with-fpm1">DOWNLOAD AND BUILD WITH FPM(1)</h2>
 <p>Alternatively, download the github repository and build it with
 fpm ( as described at <a href="https://github.com/fortran-lang/fpm">Fortran Package Manager</a> )</p>
 <div class="codehilite"><pre><span></span><code>     git clone https://github.com/urbanjost/M_strings.git
@@ -226,12 +189,14 @@ fpm ( as described at <a href="https://github.com/fortran-lang/fpm">Fortran Pack
 </code></pre></div>
 
 <p>or just list it as a dependency in your fpm.toml project file.</p>
-<div class="codehilite"><pre><span></span><code>     <span class="k">[dependencies]</span>
-     <span class="n">M_strings</span>        <span class="o">=</span> <span class="p">{</span> <span class="n">git</span> <span class="o">=</span> <span class="s">&quot;https://github.com/urbanjost/M_strings.git&quot;</span> <span class="p">,</span><span class="n">tag</span><span class="o">=</span><span class="s">&quot;v1.0.1&quot;</span><span class="p">}</span>
+<div class="codehilite"><pre><span></span><code><span class="w">     </span><span class="k">[dependencies]</span><span class="w"></span>
+<span class="w">     </span><span class="n">M_strings</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://github.com/urbanjost/M_strings.git&quot;</span><span class="w"> </span><span class="p">,</span><span class="n">tag</span><span class="o">=</span><span class="s">&quot;v1.0.1&quot;</span><span class="p">}</span><span class="w"></span>
 </code></pre></div>
 
 <p>Note that M_strings.f90 is registered at the <a href="https://github.com/fortran-lang/fpm-registry">fpm(1) registry</a></p>
-<h2 id="documentation">DOCUMENTATION   <img alt="docs" src="docs/images/docs.gif"></h2>
+<hr>
+<h2 id="_3"><img alt="docs" src="docs/images/docs.gif"></h2>
+<h2 id="documentation">DOCUMENTATION</h2>
 <h3 id="user">USER</h3>
 <p>In addition to a <a href="docs/HIGHLIGHTS.md">markdown document</a>  with links to
    some of the most commonly used procedures, there are HTML documents for each
@@ -247,7 +212,7 @@ fpm ( as described at <a href="https://github.com/fortran-lang/fpm">Fortran Pack
    <a href="https://urbanjost.github.io/M_strings/BOOK_M_strings.html">BOOK_M_strings</a>.</p>
 </li>
 <li>
-<p><img alt="man-pages" src="docs/images/manpages.gif"> Literal man-pages for use on GNU/Linux, Unix and CygWin platforms:</p>
+<p><img alt="man-pages" src="docs/images/manpages.gif"> man-page archives for use on GNU/Linux, Unix and CygWin platforms:</p>
 <ul>
 <li><a href="https://urbanjost.github.io/M_strings/manpages.zip">manpages.zip</a></li>
 <li><a href="https://urbanjost.github.io/M_strings/manpages.tgz">manpages.tgz</a></li>
@@ -261,301 +226,71 @@ fpm ( as described at <a href="https://github.com/fortran-lang/fpm">Fortran Pack
    to produce a <a href="https://urbanjost.github.io/M_strings/fpm-ford/index.html">developers&rsquo; document</a>.</li>
 <li><a href="docs/STATUS.md">github action status</a></li>
 </ul>
-<h2 id="demo-programs">DEMO PROGRAMS<img alt="demos" src="docs/images/demo.gif"></h2>
+<hr>
+<h2 id="_4"><img alt="demos" src="docs/images/demo.gif"></h2>
+<h2 id="demo-programs">DEMO PROGRAMS</h2>
 <p>Each man-page includes a working example program. These and additional
 examples are included in the example/ directory.</p>
 <hr>
         </div>
-		  
         <div class="col-md-4">
 	  <div class="well">
           <h2>Developer Info</h2>
           <h4>John S. Urban</h4>
           
-          
-			   
             <div class="text-center"><div class="btn-group" role="group">
-              
-              
-              
               <a class="btn btn-lg btn-primary" href="https://github.com/urbanjost/M_strings"><i class="fa fa-github fa-lg"></i></a>
-				  
-				  
-              
-              
-              
-              
             </div></div>
-            
        </div>
        </div>
-       
       </div>
-      
-      
-      
-      
-		
       <div class="row">
         <div class="col-xs-6 col-sm-3">
               <h3>Source Files</h3>
-              <ul>
-                
-                  
-                    <li><a href='./sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
-                  
-                
-                  
+              <ul>                    <li><a href='./sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
                     <li><a href='./sourcefile/m_strings_oop.f90.html'>M_strings_oop.f90</a></li>
-                  
-                
-              </ul>
+</ul>
           </div>
-          
 		  <div class="col-xs-6 col-sm-3">
               <h3>Modules</h3>
-              <ul>
-                
-                  
-                    <li><a href='./module/m_strings.html'>M_strings</a></li>
-                  
-                
-                  
+              <ul>                    <li><a href='./module/m_strings.html'>M_strings</a></li>
                     <li><a href='./module/m_strings_oop.html'>M_strings_oop</a></li>
-                  
-                
-              </ul>
+</ul>
           </div>
-          
-          
 		  <div class="col-xs-6 col-sm-3">
               <h3>Procedures</h3>
-              <ul>
-                
-                  
-                    <li><a href='./proc/adjustc.html'>adjustc</a></li>
-                  
-                
-                  
-                    <li><a href='./proc/atleast.html'>atleast</a></li>
-                  
-                
-                  
+              <ul>                    <li><a href='./proc/adjustc.html'>adjustc</a></li>
                     <li><a href='./proc/base.html'>base</a></li>
-                  
-                
-                  
                     <li><a href='./proc/base2.html'>base2</a></li>
-                  
-                
-                  
                     <li><a href='./proc/c2s.html'>c2s</a></li>
-                  
-                
-                  
                     <li><a href='./proc/cc.html'>cc</a></li>
-                  
-                
-                  
                     <li><a href='./proc/change.html'>change</a></li>
-                  
-                
-                  
                     <li><a href='./proc/chomp.html'>chomp</a></li>
-                  
-                
-                  
+                    <li><a href='./proc/clip.html'>clip</a></li>
                     <li><a href='./proc/codebase.html'>codebase</a></li>
-                  
-                
-                  
                     <li><a href='./proc/compact.html'>compact</a></li>
-                  
-                
-                  
-                    <li><a href="./lists/procedures.html"><em>All procedures&hellip;</em></a></li>
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-              </ul>
+</ul>
           </div>
-          
-          
 		  <div class="col-xs-6 col-sm-3">
               <h3>Derived Types</h3>
-              <ul>
-                
-                  
-                    <li><a href='./type/string.html'>string</a></li>
-                  
-                
-              </ul>
+              <ul>                    <li><a href='./type/string.html'>string</a></li>
+</ul>
           </div>
-          
       </div>
-
     <hr>    
     </div> <!-- /container -->
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2022 
-                                          </p></div>
-        <div class="col-xs-6 col-md-4 col-md-push-4">
+        <div class="col-xs-6 col-md-6"><p>M_strings was developed by John S. Urban<br>&copy; 2022 
+</p>
+        </div>
+        <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-07-06 23:08  
-          </p>
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2022-12-23 15:47            </p>
         </div>
-        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_strings was developed by John S. Urban</p></div>
       </div>
       <br>
       </div> <!-- /container -->    
@@ -581,14 +316,11 @@ examples are included in the example/ directory.</p>
         extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
       });
     </script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
     
     <script src="./tipuesearch/tipuesearch_content.js"></script>
     <script src="./tipuesearch/tipuesearch_set.js"></script>
     <script src="./tipuesearch/tipuesearch.js"></script>
-    
     
   </body>
 </html>

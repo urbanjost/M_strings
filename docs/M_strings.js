@@ -2,7 +2,6 @@ function loadthem(){
 append("M_strings.3m_strings.html");
 append("M_strings_oop.3m_strings.html");
 append("adjustc.3m_strings.html");
-append("atleast.3m_strings.html");
 append("base.3m_strings.html");
 append("base2.3m_strings.html");
 append("c2s.3m_strings.html");
@@ -53,6 +52,7 @@ append("msg.3m_strings.html");
 append("noesc.3m_strings.html");
 append("nospace.3m_strings.html");
 append("notabs.3m_strings.html");
+append("pad.3m_strings.html");
 append("paragraph.3m_strings.html");
 append("quote.3m_strings.html");
 append("replace.3m_strings.html");
