@@ -8,7 +8,8 @@
       use M_strings, only : rotate13
       use M_strings, only : adjustc, compact, nospace, indent, crop, clip, squeeze
       use M_strings, only : unquote, quote, matching_delimiter
-      use M_strings, only : len_white, atleast, stretch, lenset, merge_str
+      use M_strings, only : atleast, zpad, lpad, rpad, stretch, lenset
+      use M_strings, only : len_white, merge_str
       use M_strings, only : switch, s2c, c2s
       use M_strings, only : noesc, notabs, dilate, expand, visible
       use M_strings, only : longest_common_substring

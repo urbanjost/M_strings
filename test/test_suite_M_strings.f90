@@ -10,6 +10,9 @@ contains
 subroutine test_suite_m_strings()
    call test_adjustc()
    call test_atleast()
+   call test_lpad()
+   call test_rpad()
+   call test_zpad()
    call test_base()
    call test_base2()
    call test_c2s()
@@ -1234,6 +1237,30 @@ subroutine test_atleast()
            msg='check not truncated')
    call unit_check_done('atleast',msg='tests completed')
 end subroutine test_atleast
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_zpad()
+   call unit_check_start('zpad',' -description ''return a string left-padded with zeros'' '//OPTIONS )
+   call unit_check('zpad',zpad(4,4) == '0004',zpad(4,4),'vs','0004')
+   call unit_check('zpad',zpad(4,4) == '0004',zpad(4,4),'vs','0004')
+   call unit_check('zpad',zpad(' 123 ',4) == '0123',zpad(' 123 ',4),'vs','0123')
+   call unit_check_done('zpad',msg='tests completed')
+end subroutine test_zpad
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_lpad()
+   call unit_check_start('lpad',' -description ''return a left-padded string'' '//OPTIONS )
+   call unit_check('lpad',lpad(4,4) == '   4',lpad(4,4),'vs','   4')
+   call unit_check('lpad',lpad(4,4) == '   4',lpad(4,4),'vs','   4')
+   call unit_check('lpad',lpad(' 123 ',4) == ' 123 ',lpad(' 123 ',4),'vs',' 123')
+   call unit_check_done('lpad',msg='tests completed')
+end subroutine test_lpad
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_rpad()
+   call unit_check_start('rpad',' -description ''return a right-padded string'' '//OPTIONS )
+   call unit_check('rpad',rpad(4,4) == '4   ',rpad(4,2),'vs','4   ')
+   call unit_check('rpad',rpad(-4,4) == '-4   ',rpad(-4,2),'vs','-4  ')
+   call unit_check('rpad','['//rpad(' 123 ',4)//']' == '['//'123 '//']','['//rpad(' 123 ',4)//']','vs [','123 '//']')
+   call unit_check_done('rpad',msg='tests completed')
+end subroutine test_rpad
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_lenset()
 character(len=10)            :: string='abcdefghij'
