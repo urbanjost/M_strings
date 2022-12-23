@@ -11,6 +11,7 @@ append("chomp.3m_strings.html");
 append("clip.3m_strings.html");
 append("codebase.3m_strings.html");
 append("compact.3m_strings.html");
+append("cpad.3m_strings.html");
 append("crop.3m_strings.html");
 append("decodebase.3m_strings.html");
 append("delim.3m_strings.html");

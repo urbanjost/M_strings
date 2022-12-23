@@ -28,9 +28,8 @@ checked ...
        + Renamed atleast(3f) to pad(3f). The atleast(3f) name remains as an 
          alias for pad(3f), but is deprecated.
 ### :green_circle: ADD:
-       + Added rpad(3f), lpad(3f), and zpad(3f) as shortcuts for common
-         uses of pad(3f).
-
+       + Added rpad(3f), lpad(3f), cpad(3f) and zpad(3f) as shortcuts
+         for common uses of pad(3f).
 ---
 **2021-08-21**  John S. Urban  <https://github.com/urbanjost>
 

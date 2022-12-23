@@ -11,6 +11,7 @@ subroutine test_suite_m_strings()
    call test_adjustc()
    call test_pad()
    call test_lpad()
+   call test_cpad()
    call test_rpad()
    call test_zpad()
    call test_base()
@@ -1253,6 +1254,13 @@ subroutine test_lpad()
    call unit_check('lpad',lpad(' 123 ',4) == ' 123 ',lpad(' 123 ',4),'vs',' 123')
    call unit_check_done('lpad',msg='tests completed')
 end subroutine test_lpad
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_cpad()
+   call unit_check_start('cpad',' -description ''return a left-padded string'' '//OPTIONS )
+   call unit_check('cpad',cpad(4,3) == ' 4 ',cpad(4,3),'vs',' 4 ')
+   call unit_check('cpad',cpad('123',8) == '  123   ',cpad('123',8),'vs','  123   ')
+   call unit_check_done('cpad',msg='tests completed')
+end subroutine test_cpad
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_rpad()
    call unit_check_start('rpad',' -description ''return a right-padded string'' '//OPTIONS )
