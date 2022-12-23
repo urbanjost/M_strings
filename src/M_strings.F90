@@ -90,6 +90,20 @@
 !!       upper_quoted   function converts string to uppercase skipping strings
 !!                      quoted per Fortran rules
 !!
+!!   STRING LENGTH AND PADDING
+!!
+!!       len_white  find location of last non-whitespace character
+!!       lenset     return a string of specified length
+!!       atleast    return a string of at least specified length
+!!       zpad       pad integer or string to length with zero characters
+!!                  on left
+!!       lpad       convert scalar intrinsic to a string padded on left to
+!!                  specified length
+!!       rpad       convert scalar intrinsic to a string padded on right to
+!!                  specified length
+!!       stretch    return a string of at least specified length with suffix
+!!       merge_str  make strings of equal length and then call MERGE(3f)
+!!                  intrinsic
 !!   WHITE SPACE
 !!
 !!       adjustc  elemental function centers text within the length of the
@@ -105,24 +119,11 @@
 !!       See Also: squeeze
 !!
 !!   QUOTES
+!!
 !!       matching_delimiter  find position of matching delimiter
 !!       unquote  remove quotes from string as if read with list-directed input
 !!       quote    add quotes to string as if written with list-directed input
 !!
-!!   STRING LENGTH
-!!
-!!       len_white  find location of last non-whitespace character
-!!       lenset     return a string of specified length
-!!       atleast    return a string of at least specified length
-!!       zpad       pad integer or string to length with zero characters
-!!                  on left
-!!       lpad       convert scalar intrinsic to a string padded on left to
-!!                  specified length
-!!       rpad       convert scalar intrinsic to a string padded on right to
-!!                  specified length
-!!       stretch    return a string of at least specified length with suffix
-!!       merge_str  make strings of equal length and then call MERGE(3f)
-!!                  intrinsic
 !!
 !!   CHARACTER ARRAY VERSUS STRING
 !!
@@ -4705,14 +4706,16 @@ end function stretch
 !!     integer,intent(in)      :: length
 !!
 !!##DESCRIPTION
-!!    rpad(3f) converts a scalar value to a string and then
-!!    pads it on the right with spaces to at least the specified
-!!    length. If the trimmed input string is longer than the requested length
-!!    the string is returned trimmed of leading and trailing spaces.
+!!    rpad(3f) converts a scalar intrinsic value to a string and then pads
+!!    it on the right with spaces to at least the specified length. If the
+!!    trimmed input string is longer than the requested length the string
+!!    is returned trimmed of leading and trailing spaces.
 !!
 !!##OPTIONS
-!!    str      the input value to return as a string, padded on the right to
-!!             the specified length if shorter than length
+!!    str      the input value to return as a string, padded on the left to
+!!             the specified length if shorter than length. The input may be
+!!             any intrinsic scalar which is converted to a cropped string
+!!             much as if written with list-directed output.
 !!    length   The minimum string length to return
 !!
 !!##RETURNS
@@ -4735,6 +4738,13 @@ end function stretch
 !!      end program demo_rpad
 !!
 !!  Results:
+!!
+!!      > [my string           ]
+!!      > [my string           ]
+!!      > [my string           ]
+!!      > [my string           ]
+!!      > [42     ]
+!!      > [0.111111112         ]
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -4771,8 +4781,8 @@ end function rpad
 !===================================================================================================================================
 !>
 !!##NAME
-!!    lpad(3f) - [M_strings:LENGTH] convert to a string and pad on the left
-!!    to requested length
+!!    lpad(3f) - [M_strings:LENGTH] convert to a cropped string and then
+!!    blank-pad on the left to requested length
 !!    (LICENSE:PD)
 !!
 !!##SYNOPSIS
@@ -4783,14 +4793,16 @@ end function rpad
 !!     integer,intent(in)      :: length
 !!
 !!##DESCRIPTION
-!!    lpad(3f) converts a scalar value to a string and then
-!!    pads it on the left with spaces to at least the specified
-!!    length. If the trimmed input string is longer than the requested length
-!!    the string is returned trimmed of leading and trailing spaces.
+!!    lpad(3f) converts a scalar value to a cropped string and then pads
+!!    it on the left with spaces to at least the specified length. If
+!!    the trimmed input is longer than the requested length the string is
+!!    returned trimmed of leading and trailing spaces.
 !!
 !!##OPTIONS
 !!    str      the input value to return as a string, padded on the left to
-!!             the specified length if shorter than length
+!!             the specified length if shorter than length. The input may be
+!!             any intrinsic scalar which is converted to a cropped string
+!!             much as if written with list-directed output.
 !!    length   The minimum string length to return
 !!
 !!##RETURNS
@@ -4812,7 +4824,14 @@ end function rpad
 !!          write(*,'("[",a,"]")') lpad( valuein=1.0/9.0 , length=20)
 !!      end program demo_lpad
 !!
-!!  Results:
+!! Results:
+!!
+!!     > [           my string]
+!!     > [           my string]
+!!     > [           my string]
+!!     > [           my string]
+!!     > [     42]
+!!     > [         0.111111112]
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -4849,7 +4868,7 @@ end function lpad
 !===================================================================================================================================
 !>
 !!##NAME
-!!    zpad(3f) - [M_strings:LENGTH] pad a string on the left with zeros
+!!    zpad(3f) - [M_strings:LENGTH] pad a string on the left with zeros to
 !!    specified length
 !!    (LICENSE:PD)
 !!
@@ -4868,18 +4887,20 @@ end function lpad
 !!
 !!    For strings this is basically an alias for
 !!
-!!        strout=atleast(str,length'0',clip=.true.,right=.false.)
+!!        strout=atleast(str,length,'0',clip=.true.,right=.false.)
 !!
 !!    For integers the same is often done with internal WRITE(3f) statements
 !!
 !!        write(strout,'(i5.5)')ivalue
 !!
-!!    but the function call can be inlined; if the length is exceeded the
-!!    input string is not truncated; and the output string is cropped.
+!!    but the function call can be inlined; if the length is exceeded by
+!!    the resulting input the input string is not truncated; and the output
+!!    string is cropped.
 !!
 !!##OPTIONS
 !!    str      the input string to return trimmed, but then padded to
-!!             the specified length if shorter than length
+!!             the specified length if shorter than length. If an integer
+!!             is input it is first converted to a string.
 !!    length   The minimum string length to return
 !!
 !!##RETURNS
@@ -4894,10 +4915,17 @@ end function lpad
 !!      program demo_zpad
 !!       use M_strings, only : zpad
 !!       implicit none
+!!       integer :: lun, i
 !!          write(*,'("[",a,"]")') zpad( '111', 5)
 !!          write(*,'("[",a,"]")') zpad( '123456789', 5)
 !!          write(*,'("[",a,"]")') zpad( '  34567  ', 7)
 !!          write(*,'("[",a,"]")') zpad( valuein=42 , length=7)
+!!
+!!          ! open output_00085.dat
+!!          i=85
+!!          open(newunit=lun,file='output_'//zpad(i,5)//'.dat')
+!!          close(unit=lun,status='delete')
+!!
 !!      end program demo_zpad
 !!
 !!  Results:
