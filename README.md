@@ -16,6 +16,7 @@ to the `M_strings` module.
 
 ## SYNOPSIS
 public entities:
+
    use M_strings, only : [split](https://urbanjost.github.io/M_strings/split.3m_strings), [sep](https://urbanjost.github.io/M_strings/sep.3m_strings), [delim](https://urbanjost.github.io/M_strings/delim.3m_strings), [chomp](https://urbanjost.github.io/M_strings/chomp.3m_strings), [strtok](https://urbanjost.github.io/M_strings/strtok.3m_strings)             
    use M_strings, only : [split2020](https://urbanjost.github.io/M_strings/split2020.3m_strings), [find_field](https://urbanjost.github.io/M_strings/find_field.3m_strings)             
    use M_strings, only : [substitute](https://urbanjost.github.io/M_strings/substitute.3m_strings), [change](https://urbanjost.github.io/M_strings/change.3m_strings), [modif](https://urbanjost.github.io/M_strings/modif.3m_strings), [transliterate](https://urbanjost.github.io/M_strings/transliterate.3m_strings), [reverse](https://urbanjost.github.io/M_strings/reverse.3m_strings), [squeeze](https://urbanjost.github.io/M_strings/squeeze.3m_strings)             
