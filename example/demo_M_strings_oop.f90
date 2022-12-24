@@ -24,7 +24,7 @@
         write(*,101)'str2%str is ................ ',str2%str
         ! same as intrinsic LEN()
         write(*,202)'len ........................ ',str2%len()
-        ! same as intrinsic INDEX()
+        ! same as intrinsic LEN_TRIM()
         write(*,202)'len_trim ................... ',str2%len_trim()
         ! same as intrinsic INDEX()
         write(*,202)'index("is")................. ',str2%index("is")

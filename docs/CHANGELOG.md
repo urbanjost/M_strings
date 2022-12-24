@@ -22,6 +22,12 @@ checked ...
    - [x] registered in fpm(1) repository
 
 ---
+**2022-12-24**  John S. Urban  <https://github.com/urbanjost>
+
+### :green_circle: ADD:
+       + Added extension to nint(3f) to allow for string arguments
+       + Added find_field(3f) by Richard Maine
+---
 **2022-12-23**  John S. Urban  <https://github.com/urbanjost>
 
 ### :orange_circle: DIFF:

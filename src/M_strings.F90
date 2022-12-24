@@ -18,7 +18,7 @@
 !!
 !!      use M_strings, only : split,sep,delim,chomp,strtok
 !!      use M_strings, only : split2020, find_field
-!!      use M_strings, only : substitute,change,modif,transliterate,reverse
+!!      use M_strings, only : substitute,change,modif,transliterate,reverse,squeeze
 !!      use M_strings, only : replace,join
 !!      use M_strings, only : upper,lower,upper_quoted
 !!      use M_strings, only : rotate13
@@ -28,7 +28,6 @@
 !!      use M_strings, only : switch,s2c,c2s
 !!      use M_strings, only : noesc,notabs,dilate,expand,visible
 !!      use M_strings, only : longest_common_substring
-!!      !x!use M_strings, only : uc
 !!      use M_strings, only : string_to_value,string_to_values,s2v,s2vs
 !!      use M_strings, only : value_to_string,v2s,msg
 !!      use M_strings, only : listout,getvals
@@ -43,6 +42,7 @@
 !!      use M_strings, only : describe
 !!      use M_strings, only : edit_distance
 !!      use M_strings, only : cc
+!!      use M_strings, only : int, real, dble, nint
 !!
 !!   TOKENS
 !!
@@ -267,31 +267,33 @@
 !!    demonstrated using the following example program:
 !!
 !!     program demo_M_strings
-!!     use M_strings, only : split, delim, chomp, sep
+!!     use M_strings, only : split,sep,delim,chomp,strtok
 !!     use M_strings, only : split2020, find_field
-!!     use M_strings, only : substitute, change, modif
-!!     use M_strings, only : transliterate, reverse
-!!     use M_strings, only : replace, join
-!!     use M_strings, only : upper, lower, upper_quoted
+!!     use M_strings, only : substitute,change,modif,transliterate,reverse,squeeze
+!!     use M_strings, only : replace,join
+!!     use M_strings, only : upper,lower,upper_quoted
 !!     use M_strings, only : rotate13
-!!     use M_strings, only : adjustc, compact, nospace, indent, crop, clip, squeeze
-!!     use M_strings, only : unquote, quote, matching_delimiter
-!!     use M_strings, only : pad, zpad, lpad, cpad, rpad, stretch, lenset
-!!     use M_strings, only : len_white, merge_str
-!!     use M_strings, only : switch, s2c, c2s
-!!     use M_strings, only : noesc, notabs, dilate, expand, visible
+!!     use M_strings, only : adjustc,compact,nospace,indent
+!!     use M_strings, only : crop,clip,unquote,quote,matching_delimiter
+!!     use M_strings, only : len_white,pad,lpad,cpad,rpad,zpad,stretch,lenset,merge_str
+!!     use M_strings, only : switch,s2c,c2s
+!!     use M_strings, only : noesc,notabs,dilate,expand,visible
 !!     use M_strings, only : longest_common_substring
-!!     !x!use M_strings, only : uc
-!!     use M_strings, only : string_to_value, string_to_values, s2v, s2vs
-!!     use M_strings, only : value_to_string, v2s, msg
-!!     use M_strings, only : listout, getvals
+!!     use M_strings, only : string_to_value,string_to_values,s2v,s2vs
+!!     use M_strings, only : value_to_string,v2s,msg
+!!     use M_strings, only : listout,getvals
 !!     use M_strings, only : glob, ends_with
 !!     use M_strings, only : paragraph
 !!     use M_strings, only : base, decodebase, codebase, base2
-!!     use M_strings, only : isalnum, isalpha, iscntrl, isdigit, isgraph
-!!     use M_strings, only : islower, isprint, ispunct, isspace, isupper
-!!     use M_strings, only : isascii, isblank, isxdigit
+!!     use M_strings, only : isalnum, isalpha, iscntrl, isdigit
+!!     use M_strings, only : isgraph, islower, isprint, ispunct
+!!     use M_strings, only : isspace, isupper, isascii, isblank, isxdigit
+!!     use M_strings, only : isnumber
 !!     use M_strings, only : fortran_name
+!!     use M_strings, only : describe
+!!     use M_strings, only : edit_distance
+!!     use M_strings, only : cc
+!!     use M_strings, only : int, real, dble, nint
 !!     end program demo_M_strings
 !!
 !!   Expected output
@@ -394,15 +396,12 @@ public listout         !  expand a list of numbers where  negative numbers denot
 !
 ! extend intrinsics to accept CHARACTER values
 !
-public int, real, dble
+public int, real, dble, nint
 
 interface int;     module procedure int_s2v;           end interface
 interface real;    module procedure real_s2v;          end interface
 interface dble;    module procedure dble_s2v;          end interface
-
-interface int;     module procedure ints_s2v;          end interface
-interface real;    module procedure reals_s2v;         end interface
-interface dble;    module procedure dbles_s2v;         end interface
+interface nint;    module procedure nint_s2v;          end interface
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 !----------------------# BIT ROUTINES
@@ -417,7 +416,6 @@ public decodebase      !  convert whole number in base 10 to string in base [2-3
 public base2           !  convert INTEGER to a string representing a binary value
 !----------------------# LOGICAL TESTS
 public glob            !  compares given string for match to pattern which may contain wildcard characters
-public matchw          !  clone of glob -- for backward compatibiity
 public ends_with       !  test whether strings ends with one of the specified suffix
 public isalnum         !  elemental function returns .true. if CHR is a letter or digit
 public isalpha         !  elemental function returns .true. if CHR is a letter and .false. otherwise
@@ -528,6 +526,8 @@ integer,save               :: last_int=0
 ! for compatibility allow old name for renamed procedures
 interface matchw; module procedure glob ;  end interface
 interface atleast; module procedure pad ;  end interface
+public matchw          !  clone of glob -- for backward compatibiity
+public atleast         !  clone of pad -- for backward compatibiity
 !-----------------------------------------------------------------------------------------------------------------------------------
 CONTAINS
 !===================================================================================================================================
@@ -5999,53 +5999,25 @@ end function s2v
 !===================================================================================================================================
 ! calls to s2v(3f) for extending intrinsics int(3f), real(3f), dble(3f)
 !===================================================================================================================================
-doubleprecision function dble_s2v(chars)
+impure elemental doubleprecision function dble_s2v(chars)
 character(len=*),intent(in) :: chars
    dble_s2v=s2v(chars)
 end function dble_s2v
 !===================================================================================================================================
-real function real_s2v(chars)
+impure elemental real function real_s2v(chars)
 character(len=*),intent(in) :: chars
    real_s2v=real(s2v(chars))
 end function real_s2v
 !===================================================================================================================================
-integer function int_s2v(chars)
+impure elemental integer function int_s2v(chars)
 character(len=*),intent(in) :: chars
    int_s2v=int(s2v(chars))
 end function int_s2v
 !===================================================================================================================================
-function ints_s2v(chars)
-integer,allocatable         :: ints_s2v(:)
-character(len=*),intent(in) :: chars(:)
-integer                     :: i,isize
-   isize=size(chars)
-   allocate(ints_s2v(isize))
-   do i=1,isize
-      ints_s2v(i)=int(s2v(chars(i)))
-   enddo
-end function ints_s2v
-!===================================================================================================================================
-function reals_s2v(chars)
-real,allocatable            :: reals_s2v(:)
-character(len=*),intent(in) :: chars(:)
-integer                     :: i,isize
-   isize=size(chars)
-   allocate(reals_s2v(isize))
-   do i=1,isize
-      reals_s2v(i)=real(s2v(chars(i)))
-   enddo
-end function reals_s2v
-!===================================================================================================================================
-function dbles_s2v(chars)
-doubleprecision,allocatable :: dbles_s2v(:)
-character(len=*),intent(in) :: chars(:)
-integer                     :: i,isize
-   isize=size(chars)
-   allocate(dbles_s2v(isize))
-   do i=1,isize
-      dbles_s2v(i)=s2v(chars(i))
-   enddo
-end function dbles_s2v
+impure elemental integer function nint_s2v(chars)
+character(len=*),intent(in) :: chars
+   nint_s2v=nint(s2v(chars))
+end function nint_s2v
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()())()()()()()()()()()()()()!
 !===================================================================================================================================

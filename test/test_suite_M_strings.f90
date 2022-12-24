@@ -81,6 +81,7 @@ subroutine test_suite_m_strings()
    call test_dble()
    call test_int()
    call test_real()
+   call test_nint()
    call test_stretch()
    call test_trimzeros_()
    call test_setbits()
@@ -2124,6 +2125,14 @@ integer                       :: i
    enddo
    call unit_check_good('isalnum')
 end subroutine test_isalnum
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_nint()
+   call unit_check_start('nint',' ' //OPTIONS )
+   call unit_check('nint',nint('1234.4') == 1234,msg='test string to integer for overloaded NINT("1234.4")')
+   call unit_check('nint',nint('1234.5') == 1235,msg='test string to integer for overloaded NINT("1234.5")')
+   call unit_check('nint',nint('1234.6') == 1235,msg='test string to integer for overloaded NINT("1234.6")')
+   call unit_check_done('nint',msg=' overload of NINT()')
+end subroutine test_nint
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_int()
    call unit_check_start('int',' ' //OPTIONS )
