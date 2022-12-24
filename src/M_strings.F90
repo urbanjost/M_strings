@@ -9252,8 +9252,9 @@ end function base
 !!
 !!    function base2(int)
 !!
-!!    integer,intent(in)           :: int
-!!    character(len=:),allocatable :: base2
+!!     integer,intent(in)           :: int
+!!     character(len=:),allocatable :: base2
+!!
 !!##DESCRIPTION
 !!
 !!    Convert a whole number to a string in base 2.
