@@ -5999,20 +5999,199 @@ end function s2v
 !===================================================================================================================================
 ! calls to s2v(3f) for extending intrinsics int(3f), real(3f), dble(3f)
 !===================================================================================================================================
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()())()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
+!!      dble(3f) - [M_strings:TYPE] overloads DBLE(3f) so it can handle character arguments
+!!      (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!    impure elemental function dble(string)
+!!
+!!     character(len=*) :: string
+!!     integer          :: dble
+!!
+!!##DESCRIPTION
+!!    dble(3f) returns a DOUBLE value when given a numeric representation of a
+!!    numeric value. This overloads the DBLE(3f) intrinsic so that CHARACTER
+!!    arguments assumed to represent a numeric value may be input.
+!!
+!!##OPTIONS
+!!       STRING  input string to be converted to a dble value
+!!
+!!##RETURNS
+!!    DBLE  double precision value represented by input string
+!!
+!!##EXAMPLE
+!!
+!!    Sample program:
+!!
+!!      program demo_dble
+!!      use M_strings, only: dble
+!!      implicit none
+!!      character(len=80) :: string
+!!      write(*,*)dble('100'),dble('20.4')
+!!      write(*,*)'dble still works',dble(20),dble(20.4)
+!!      write(*,*)'elemental',&
+!!      & dble([character(len=23) :: '10','20.3','20.5','20.6'])
+!!      end program demo_dble
+!!##AUTHOR
+!!    John S. Urban
+!!
+!!##LICENSE
+!!    Public Domain
 impure elemental doubleprecision function dble_s2v(chars)
 character(len=*),intent(in) :: chars
    dble_s2v=s2v(chars)
 end function dble_s2v
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()())()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
+!!      real(3f) - [M_strings:TYPE] overloads REAL(3f) so it can handle character arguments
+!!      (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!    impure elemental function real(string)
+!!
+!!     character(len=*) :: string
+!!     integer          :: real
+!!
+!!##DESCRIPTION
+!!    real(3f) returns a REAL value when given a numeric representation of a
+!!    numeric value. This overloads the REAL(3f) intrinsic so that CHARACTER
+!!    arguments assumed to represent a numeric value may be input.
+!!
+!!##OPTIONS
+!!       STRING  input string to be converted to a real value
+!!
+!!##RETURNS
+!!       REAL  real value represented by input string
+!!
+!!##EXAMPLE
+!!
+!!    Sample program:
+!!
+!!      program demo_real
+!!      use M_strings, only: real
+!!      implicit none
+!!      character(len=80) :: string
+!!      write(*,*)real('100'),real('20.4')
+!!      write(*,*)'real still works',real(20)
+!!      write(*,*)'elemental',&
+!!      & real([character(len=23) :: '10','20.3','20.5','20.6'])
+!!      end program demo_real
+!!
+!!##AUTHOR
+!!    John S. Urban
+!!
+!!##LICENSE
+!!    Public Domain
 !===================================================================================================================================
 impure elemental real function real_s2v(chars)
 character(len=*),intent(in) :: chars
    real_s2v=real(s2v(chars))
 end function real_s2v
 !===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()())()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
+!!      int(3f) - [M_strings:TYPE] overloads INT(3f) so it can handle character arguments
+!!      (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!    impure elemental function int(string)
+!!
+!!     character(len=*) :: string
+!!     integer          :: int
+!!
+!!##DESCRIPTION
+!!    int(3f) returns an integer when given a numeric representation of a
+!!    numeric value. This overloads the INT(3f) intrinsic so that CHARACTER
+!!    arguments assumed to represent a numeric value may be input.
+!!
+!!##OPTIONS
+!!       STRING  input string to be converted to an integer
+!!
+!!##RETURNS
+!!       INT  integer represented by input string
+!!
+!!##EXAMPLE
+!!
+!!    Sample program:
+!!
+!!      program demo_int
+!!      use M_strings, only: int
+!!      implicit none
+!!      character(len=80) :: string
+!!      write(*,*)int('100'),int('20.4')
+!!      write(*,*)'int still works',int(20.4)
+!!      write(*,*)'elemental',&
+!!      & int([character(len=23) :: '10','20.3','20.5','20.6'])
+!!      end program demo_int
+!!
+!!##AUTHOR
+!!    John S. Urban
+!!
+!!##LICENSE
+!!    Public Domain
+!===================================================================================================================================
 impure elemental integer function int_s2v(chars)
 character(len=*),intent(in) :: chars
    int_s2v=int(s2v(chars))
 end function int_s2v
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()())()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
+!!      nint(3f) - [M_strings:TYPE] overloads NINT(3f) so it can handle character arguments
+!!      (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!    impure elemental function nint(string)
+!!
+!!     character(len=*) :: string
+!!     integer          :: nint
+!!
+!!##DESCRIPTION
+!!    nint(3f) returns an integer when given a numeric representation of a
+!!    numeric value. This overloads the NINT(3f) intrinsic so that CHARACTER
+!!    arguments assumed to represent a numeric value may be input.
+!!
+!!##OPTIONS
+!!       STRING  input string to be converted to an integer
+!!
+!!##RETURNS
+!!       NINT  integer represented by input string
+!!
+!!##EXAMPLE
+!!
+!!    Sample program:
+!!
+!!      program demo_nint
+!!      use M_strings, only: nint
+!!      implicit none
+!!      character(len=80) :: string
+!!      write(*,*)nint('100'),nint('20.4')
+!!      write(*,*)'nint still works',nint(20.4)
+!!      write(*,*)'elemental',&
+!!      & nint([character(len=23) :: '10','20.3','20.5','20.6'])
+!!      end program demo_nint
+!!
+!!##AUTHOR
+!!    John S. Urban
+!!
+!!##LICENSE
+!!    Public Domain
 !===================================================================================================================================
 impure elemental integer function nint_s2v(chars)
 character(len=*),intent(in) :: chars
