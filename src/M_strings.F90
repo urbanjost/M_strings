@@ -6038,6 +6038,14 @@ end function s2v
 !!      write(*,*)'elemental',&
 !!      & dble([character(len=23) :: '10','20.3','20.5','20.6'])
 !!      end program demo_dble
+!!
+!! Results:
+!!
+!!      >    100.00000000000000        20.399999999999999
+!!      >  dble still works   20.000000000000000 20.399999618530273
+!!      >  elemental   10.00000000000000  20.30000000000000
+!!      >  20.50000000000000 20.60000000000000
+!!
 !!##AUTHOR
 !!    John S. Urban
 !!
@@ -6086,6 +6094,12 @@ end function dble_s2v
 !!      write(*,*)'elemental',&
 !!      & real([character(len=23) :: '10','20.3','20.5','20.6'])
 !!      end program demo_real
+!!
+!! Results:
+!!
+!!      >    100.000000       20.3999996
+!!      >  real still works   20.0000000
+!!      >  elemental   10.0000000  20.2999992  20.5000000  20.6000004
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -6137,6 +6151,12 @@ end function real_s2v
 !!      & int([character(len=23) :: '10','20.3','20.5','20.6'])
 !!      end program demo_int
 !!
+!! Results:
+!!
+!!      >          100          20
+!!      >  int still works          20
+!!      >  elemental          10          20          20          20
+!!
 !!##AUTHOR
 !!    John S. Urban
 !!
@@ -6186,6 +6206,12 @@ end function int_s2v
 !!      write(*,*)'elemental',&
 !!      & nint([character(len=23) :: '10','20.3','20.5','20.6'])
 !!      end program demo_nint
+!!
+!! Results:
+!!
+!!      >          100          20
+!!      >  nint still works          20
+!!      >  elemental          10          20          21          21
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -9224,7 +9250,7 @@ end function base
 !!
 !!##SYNOPSIS
 !!
-!!   logical function base2(int)
+!!    function base2(int)
 !!
 !!    integer,intent(in)           :: int
 !!    character(len=:),allocatable :: base2
@@ -9232,7 +9258,9 @@ end function base
 !!
 !!    Convert a whole number to a string in base 2.
 !!
-!!    The letters A,B,...,Z represent 10,11,...,36 in the base > 10.
+!!    This is often done with the B edit descriptor and
+!!    an internal WRITE() statement, but is done without
+!!    calling the I/O routines, and as a function.
 !!
 !!##OPTIONS
 !!    int   input string representing numeric whole value
@@ -9242,13 +9270,22 @@ end function base
 !!
 !!   Sample program:
 !!
-!!    program demo_base2
-!!    use M_strings, only : base2
-!!    implicit none
-!!       write(*,'(a)') base2(huge(0))
-!!       write(*,'(a)') base2(0)
-!!       write(*,'(a)') base2(1-huge(0))
-!!    end program demo_base2
+!!      program demo_base2
+!!      use M_strings, only : base2
+!!      implicit none
+!!         write(*,'(a)') base2(huge(0))
+!!         write(*,'(a)') base2(0)
+!!         write(*,'(a)') base2(64)
+!!         write(*,'(a)') base2(-64)
+!!         write(*,'(a)') base2(-huge(0)-1)
+!!      end program demo_base2
+!! Results:
+!!
+!!     > 1111111111111111111111111111111
+!!     > 0
+!!     > 1000000
+!!     > 11111111111111111111111111000000
+!!     > 10000000000000000000000000000000
 !!
 !!##AUTHOR
 !!    John S. Urban
