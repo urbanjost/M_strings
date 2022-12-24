@@ -1,4 +1,4 @@
-![string](docs/images/alphabet.gif)
+![string](docs/images/strings.gif)
 # M_strings.f90 and associated files
 
 ## NAME
