@@ -152,6 +152,73 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>expand(3f) - [M_strings:NONALPHA] expand C-like escape sequences
+(LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>function expand(line,escape) result(lineout)</p>
+<div class="codehilite"><pre><span></span><code>character(len=*)                      :: line
+character(len=1),intent(in),optional  :: escape
+character(len=:),allocatable          :: lineout
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">EXPAND</span><span class="ss">()</span> <span class="nv">expands</span> <span class="nv">sequences</span> <span class="nv">used</span> <span class="nv">to</span> <span class="nv">represent</span> <span class="nv">commonly</span> <span class="nv">used</span> <span class="nv">escape</span>
+ <span class="nv">sequences</span> <span class="nv">or</span> <span class="nv">control</span> <span class="nv">characters</span>. <span class="nv">By</span> <span class="nv">default</span> ...
+
+ <span class="nv">Escape</span> <span class="nv">sequences</span>
+   \      <span class="nv">backslash</span>
+   <span class="nv">a</span>      <span class="nv">alert</span> <span class="ss">(</span><span class="nv">BEL</span><span class="ss">)</span> <span class="o">--</span> <span class="nv">g</span> <span class="nv">is</span> <span class="nv">an</span> <span class="nv">alias</span> <span class="k">for</span> <span class="nv">a</span>
+   <span class="nv">b</span>      <span class="nv">backspace</span>
+   <span class="nv">c</span>      <span class="nv">suppress</span> <span class="nv">further</span> <span class="nv">output</span>
+   <span class="nv">e</span>      <span class="nv">escape</span>
+   <span class="nv">f</span>      <span class="nv">form</span> <span class="nv">feed</span>
+   <span class="nv">n</span>      <span class="nv">new</span> <span class="nv">line</span>
+   <span class="nv">r</span>      <span class="nv">carriage</span> <span class="k">return</span>
+   <span class="nv">t</span>      <span class="nv">horizontal</span> <span class="nv">tab</span>
+   <span class="nv">v</span>      <span class="nv">vertical</span> <span class="nv">tab</span>
+   <span class="nv">oNNN</span>   <span class="nv">byte</span> <span class="nv">with</span> <span class="nv">octal</span> <span class="nv">value</span> <span class="nv">NNN</span> <span class="ss">(</span><span class="mi">3</span> <span class="nv">digits</span><span class="ss">)</span>
+   <span class="nv">dNNN</span>   <span class="nv">byte</span> <span class="nv">with</span> <span class="nv">decimal</span> <span class="nv">value</span> <span class="nv">NNN</span> <span class="ss">(</span><span class="mi">3</span> <span class="nv">digits</span><span class="ss">)</span>
+   <span class="nv">xHH</span>    <span class="nv">byte</span> <span class="nv">with</span> <span class="nv">hexadecimal</span> <span class="nv">value</span> <span class="nv">HH</span> <span class="ss">(</span><span class="mi">2</span> <span class="nv">digits</span><span class="ss">)</span> <span class="o">--</span> <span class="nv">h</span> <span class="nv">is</span> <span class="nv">an</span> <span class="nv">alias</span> <span class="k">for</span> <span class="nv">x</span>
+
+ <span class="nv">The</span> <span class="nv">default</span> <span class="nv">escape</span> <span class="nv">character</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">backslash</span>, <span class="nv">but</span> <span class="nv">this</span> <span class="nv">may</span> <span class="nv">be</span>
+ <span class="nv">changed</span> <span class="nv">using</span> <span class="nv">the</span> <span class="nv">optional</span> <span class="nv">parameter</span> <span class="nv">ESCAPE</span>.
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">Sample</span> <span class="nv">Program</span>:
+
+ <span class="nv">program</span> <span class="nv">demo_expand</span>
+ <span class="o">!</span>  <span class="nv">test</span> <span class="nv">filter</span> <span class="nv">to</span> <span class="nv">expand</span> <span class="nv">escape</span> <span class="nv">sequences</span> <span class="nv">in</span> <span class="nv">input</span> <span class="nv">lines</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">expand</span>
+ <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">1024</span><span class="ss">)</span> :: <span class="nv">line</span>
+ <span class="nv">integer</span>             :: <span class="nv">ios</span>
+    <span class="nv">READFILE</span>: <span class="nv">block</span>
+       <span class="k">do</span>
+          <span class="nv">read</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(A)</span><span class="s1">&#39;</span>,<span class="nv">iostat</span><span class="o">=</span><span class="nv">ios</span><span class="ss">)</span><span class="nv">line</span>
+          <span class="k">if</span><span class="ss">(</span><span class="nv">ios</span> <span class="o">/=</span> <span class="mi">0</span><span class="ss">)</span> <span class="k">exit</span> <span class="nv">READFILE</span>
+          <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">expand</span><span class="ss">(</span><span class="nv">line</span><span class="ss">))</span>
+       <span class="nv">enddo</span>
+    <span class="nv">endblock</span> <span class="nv">READFILE</span>
+ <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_expand</span>
+
+<span class="nv">Sample</span> <span class="nv">input</span>:
+
+  \<span class="nv">e</span>[<span class="mi">2</span><span class="nv">J</span>
+  \<span class="nv">tABC</span>\<span class="nv">tabc</span>
+  \<span class="nv">tA</span>\<span class="nv">a</span>
+  \<span class="nv">nONE</span>\<span class="nv">nTWO</span>\<span class="nv">nTHREE</span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -250,12 +317,25 @@
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">expand</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="n">escape</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">lineout</span><span class="p">)</span><span class="w"></span>
-<span class="k">implicit none</span>
+<span class="c">!x!USE ISO_C_BINDING ,ONLY: c_horizontal_tab</span>
+<span class="k">implicit none</span><span class="w"></span>
 
+<span class="c">! ident_31=&quot;@(#) M_strings expand(3f) return string with escape sequences expanded&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="nb">c_horizontal_tab</span><span class="o">=</span><span class="nb">char</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="w"></span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">line</span><span class="w"></span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">escape</span><span class="w"> </span><span class="c">! escape character. Default is backslash</span>
+<span class="c">! expand escape sequences found in input string</span>
+<span class="c">! Escape sequences</span>
+<span class="c">!    %%      escape character           %a     alert (BEL) -- gi is an alias for a</span>
+<span class="c">!    %b      backspace                  %c     suppress further output</span>
+<span class="c">!    %e      escape                     %E     escape</span>
+<span class="c">!    %f      form feed                  %n     new line</span>
+<span class="c">!    %r      carriage return            %t     horizontal tab</span>
+<span class="c">!    %v      vertical tab</span>
+<span class="c">!    %oNNN   byte with octal value NNN (3 digits)</span>
+<span class="c">!    %dNNN   byte with decimal value NNN (3 digits)</span>
+<span class="c">!    %xHH    byte with hexadecimal value HH (2 digits) -- h is an alias for x</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">esc</span><span class="w">    </span><span class="c">! escape character. Default is %</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">lineout</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
@@ -340,7 +420,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

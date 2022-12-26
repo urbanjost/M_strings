@@ -152,6 +152,105 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">paragraph</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">TOKENS</span>] <span class="k">break</span> <span class="nv">a</span> <span class="nv">long</span> <span class="nv">line</span> <span class="nv">into</span> <span class="nv">a</span> <span class="nv">paragraph</span>
+<span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>function paragraph(source_string,length)</p>
+<div class="codehilite"><pre><span></span><code>character(len=*),intent(in)       :: source_string
+integer,intent(in)                :: length
+character(allocatable(len=length)    :: paragraph(:)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">paragraph</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">breaks</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">long</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">simple</span><span class="w"> </span><span class="n">paragraph</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">specified</span><span class="w"></span>
+<span class="n">line</span><span class="w"> </span><span class="n">length</span><span class="o">.</span><span class="w"></span>
+
+<span class="n">Given</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">long</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="k">break</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">spaces</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">no</span><span class="w"></span>
+<span class="n">variable</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">longer</span><span class="w"> </span><span class="n">than</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">specified</span><span class="w"> </span><span class="n">length</span><span class="o">.</span><span class="w"> </span><span class="n">Individual</span><span class="w"> </span><span class="n">words</span><span class="w"> </span><span class="n">longer</span><span class="w"></span>
+<span class="n">than</span><span class="w"> </span><span class="n">LENGTH</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">placed</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">themselves</span><span class="o">.</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">SOURCE_STRING</span>  <span class="nv">input</span> <span class="nv">string</span> <span class="nv">to</span> <span class="k">break</span> <span class="nv">into</span> <span class="nv">an</span> <span class="nv">array</span> <span class="nv">of</span> <span class="nv">shorter</span> <span class="nv">strings</span>
+                <span class="nv">on</span> <span class="nv">blank</span> <span class="nv">delimiters</span>
+ <span class="nv">LENGTH</span>         <span class="nv">length</span> <span class="nv">of</span> <span class="nv">lines</span> <span class="nv">to</span> <span class="k">break</span> <span class="nv">the</span> <span class="nv">string</span> <span class="nv">into</span>.
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="n">PARAGRAPH</span><span class="w">  </span><span class="n">character</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">filled</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">source_string</span><span class="w"></span>
+<span class="w">            </span><span class="n">broken</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">spaces</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">LENGTH</span><span class="o">.</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<p>sample program</p>
+<div class="codehilite"><pre><span></span><code><span class="n">program</span> <span class="n">demo_paragraph</span>
+<span class="k">use</span> <span class="n">M_strings</span>, <span class="n">only</span> : <span class="n">paragraph</span>
+<span class="n">implicit</span> <span class="nb">none</span>
+<span class="n">character</span>(<span class="n">len</span>=:),<span class="n">allocatable</span> :: <span class="n">paragrph</span>(:)
+<span class="n">character</span>(<span class="n">len</span>=*),<span class="nb">parameter</span>    :: <span class="n">string</span>= <span class="s">&#39;&amp;</span>
+<span class="s"> &amp;one two three four five &amp;</span>
+<span class="s"> &amp;six seven eight &amp;</span>
+<span class="s"> &amp;nine ten eleven twelve &amp;</span>
+<span class="s"> &amp;thirteen fourteen fifteen sixteen &amp;</span>
+<span class="s"> &amp;seventeen&#39;</span>
+
+<span class="nb">write</span>(*,*)<span class="s">&#39;LEN=&#39;</span>,<span class="n">len</span>(<span class="n">string</span>)
+<span class="nb">write</span>(*,*)<span class="s">&#39;INPUT:&#39;</span>
+<span class="nb">write</span>(*,*)<span class="n">string</span>
+
+<span class="n">paragrph</span>=<span class="n">paragraph</span>(<span class="n">string</span>,<span class="mi">40</span>)
+<span class="nb">write</span>(*,*)<span class="s">&#39;LEN=&#39;</span>,<span class="n">len</span>(<span class="n">paragrph</span>),<span class="s">&#39; SIZE=&#39;</span>,<span class="n">size</span>(<span class="n">paragrph</span>)
+<span class="nb">write</span>(*,*)<span class="s">&#39;OUTPUT:&#39;</span>
+<span class="nb">write</span>(*,<span class="s">&#39;(a)&#39;</span>)<span class="n">paragrph</span>
+
+<span class="nb">write</span>(*,<span class="s">&#39;(a)&#39;</span>)<span class="n">paragraph</span>(<span class="n">string</span>,<span class="mi">0</span>)
+<span class="nb">write</span>(*,<span class="s">&#39;(3x,a)&#39;</span>)<span class="n">paragraph</span>(<span class="n">string</span>,<span class="mi">47</span>)
+
+<span class="nb">end</span> <span class="n">program</span> <span class="n">demo_paragraph</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code> LEN=         106
+ INPUT:
+ one two three four five six seven eight nine ten eleven twelve
+ thirteen fourteen fifteen sixteen seventeen
+ LEN=          40  SIZE=           3
+ OUTPUT:
+one two three four five six seven eight
+nine ten eleven twelve thirteen fourteen
+fifteen sixteen seventeen
+one
+two
+three
+four
+five
+six
+seven
+eight
+nine
+ten
+eleven
+twelve
+thirteen
+fourteen
+fifteen
+sixteen
+seventeen
+   one two three four five six seven eight nine
+   ten eleven twelve thirteen fourteen fifteen
+   sixteen seventeen
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -251,6 +350,7 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">paragraph</span><span class="p">(</span><span class="n">source_string</span><span class="p">,</span><span class="n">length</span><span class="p">)</span><span class="w"></span>
 
+<span class="c">! ident_81=&quot;@(#) M_strings paragraph(3f) wrap a long string into a paragraph&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">source_string</span><span class="w"></span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                </span><span class="kd">::</span><span class="w"> </span><span class="n">length</span><span class="w"></span>
@@ -263,6 +363,9 @@
 <span class="kt">integer</span><span class="w">                           </span><span class="kd">::</span><span class="w"> </span><span class="n">ilength</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                           </span><span class="kd">::</span><span class="w"> </span><span class="n">iword</span><span class="p">,</span><span class="w"> </span><span class="n">iword_max</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                           </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="c">!  parse string once to find out how big to make the returned array, then redo everything but store the data</span>
+<span class="c">!  could store array of endpoints and leave original whitespace alone or many other options</span>
 <span class="w">   </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="w"></span>
 <span class="w">      </span><span class="n">iword_max</span><span class="o">=</span><span class="mi">0</span><span class="w">                                  </span><span class="c">! length of longest token</span>
 <span class="w">      </span><span class="n">ilines</span><span class="o">=</span><span class="mi">1</span><span class="w">                                     </span><span class="c">! number of output line output will go on</span>
@@ -320,7 +423,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

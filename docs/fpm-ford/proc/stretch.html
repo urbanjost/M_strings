@@ -152,6 +152,97 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">stretch</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">LENGTH</span>] <span class="k">return</span> <span class="nv">string</span> <span class="nv">padded</span> <span class="nv">to</span> <span class="nv">at</span> <span class="nv">least</span>
+<span class="nv">specified</span> <span class="nv">length</span>
+<span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">stretch(str,length,pattern,suffix) result</span><span class="p">(</span>strout<span class="p">)</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">         </span><span class="p">::</span><span class="w"> </span><span class="n">str</span><span class="w"></span>
+<span class="w"> </span><span class="n">integer</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                  </span><span class="p">::</span><span class="w"> </span><span class="nb">length</span><span class="w"></span>
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">)</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nb">pattern</span><span class="w"></span>
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">)</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">suffix</span><span class="w"></span>
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w">        </span><span class="p">::</span><span class="w"> </span><span class="n">strout</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">stretch</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">pads</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">with</span> <span class="nv">spaces</span> <span class="nv">to</span> <span class="nv">at</span> <span class="nv">least</span> <span class="nv">the</span> <span class="nv">specified</span>
+<span class="nv">length</span>. <span class="k">If</span> <span class="nv">the</span> <span class="nv">trimmed</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">longer</span> <span class="nv">than</span> <span class="nv">the</span> <span class="nv">requested</span>
+<span class="nv">length</span> <span class="nv">the</span> <span class="nv">original</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">returned</span> <span class="nv">trimmed</span> <span class="nv">of</span> <span class="nv">trailing</span> <span class="nv">spaces</span>.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">str</span>      <span class="nv">the</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">to</span> <span class="k">return</span> <span class="nv">trimmed</span>, <span class="nv">but</span> <span class="k">then</span> <span class="nv">padded</span> <span class="nv">to</span>
+         <span class="nv">the</span> <span class="nv">specified</span> <span class="nv">length</span> <span class="k">if</span> <span class="nv">shorter</span> <span class="nv">than</span> <span class="nv">length</span>
+<span class="nv">length</span>   <span class="nv">The</span> <span class="nv">minimum</span> <span class="nv">string</span> <span class="nv">length</span> <span class="nv">to</span> <span class="k">return</span>
+<span class="nv">pattern</span>  <span class="nv">optional</span> <span class="nv">string</span> <span class="nv">to</span> <span class="nv">use</span> <span class="nv">as</span> <span class="nv">padding</span>. <span class="nv">Defaults</span> <span class="nv">to</span> <span class="nv">a</span> <span class="nv">space</span>.
+<span class="nv">suffix</span>   <span class="nv">optional</span> <span class="nv">string</span> <span class="nv">to</span> <span class="nv">append</span> <span class="nv">to</span> <span class="nv">output</span> <span class="nv">string</span>
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">strout</span>  <span class="nv">The</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">padded</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">requested</span> <span class="nv">length</span> <span class="nv">or</span>
+        <span class="nv">the</span> <span class="nv">trimmed</span> <span class="nv">input</span> <span class="nv">string</span> <span class="k">if</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">is</span>
+        <span class="nv">longer</span> <span class="nv">than</span> <span class="nv">the</span> <span class="nv">requested</span> <span class="nv">length</span>.
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<p>Sample Program:</p>
+<p>program demo_stretch
+    use M_strings, only : stretch
+    implicit none
+    character(len=10)            :: string=&rsquo;abcdefghij&rsquo;
+    character(len=:),allocatable :: answer
+    integer                      :: i
+       answer=stretch(string,5)
+       write(<em>,&rsquo;(&ldquo;[&ldquo;,a,&rdquo;]&rdquo;)&rsquo;) answer
+       answer=stretch(string,20)
+       write(</em>,&rsquo;(&ldquo;[&ldquo;,a,&rdquo;]&rdquo;)&rsquo;) answer
+       i=30
+       write(<em>,</em>)
+       write(<em>,&rsquo;(1x,a,i0)&rsquo;) &amp;
+        &amp; stretch(&lsquo;CHAPTER 1 : The beginning &lsquo;,i,&rsquo;.&rsquo;), 1    ,&amp;
+        &amp; stretch(&lsquo;CHAPTER 2 : The end &lsquo;,i,&rsquo;.&rsquo;),       1234 ,&amp;
+        &amp; stretch(&lsquo;APPENDIX &lsquo;,i,&rsquo;.&rsquo;),                  1235
+       write(</em>,<em>)
+       write(</em>,&rsquo;(1x,a,i7)&rsquo;) &amp;
+        &amp; stretch(&lsquo;CHAPTER 1 : The beginning &lsquo;,i,&rsquo;.&rsquo;), 1    ,&amp;
+        &amp; stretch(&lsquo;CHAPTER 2 : The end &lsquo;,i,&rsquo;.&rsquo;),       1234 ,&amp;
+        &amp; stretch(&lsquo;APPENDIX &lsquo;,i,&rsquo;.&rsquo;),                  1235
+       write(<em>,</em>)
+       write(<em>,</em>) &amp;
+        &amp; stretch(&lsquo;CHAPTER 1 : The beginning &lsquo;,i,suffix=&rsquo;: &lsquo;), 1
+       write(<em>,</em>) &amp;
+        &amp; stretch(&lsquo;CHAPTER 2 : The end &lsquo;,i,suffix=&rsquo;: &lsquo;),1234
+       write(<em>,</em>) &amp;
+        &amp; stretch(&lsquo;APPENDIX &lsquo;,i,suffix=&rsquo;: &lsquo;),           1235
+   end program demo_stretch</p>
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">[abcdefghij]</span><span class="w"></span>
+<span class="k">[abcdefghij          ]</span><span class="w"></span>
+
+<span class="w"> </span><span class="na">CHAPTER 1 : The beginning ....1</span><span class="w"></span>
+<span class="w"> </span><span class="na">CHAPTER 2 : The end ..........1234</span><span class="w"></span>
+<span class="w"> </span><span class="na">APPENDIX .....................1235</span><span class="w"></span>
+
+<span class="w"> </span><span class="na">CHAPTER 1 : The beginning ....      1</span><span class="w"></span>
+<span class="w"> </span><span class="na">CHAPTER 2 : The end ..........   1234</span><span class="w"></span>
+<span class="w"> </span><span class="na">APPENDIX .....................   1235</span><span class="w"></span>
+
+<span class="w"> </span><span class="na">CHAPTER 1 : The beginning     :            1</span><span class="w"></span>
+<span class="w"> </span><span class="na">CHAPTER 2 : The end           :         1234</span><span class="w"></span>
+<span class="w"> </span><span class="na">APPENDIX                      :         1235</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -281,11 +372,13 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">stretch</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="n">length</span><span class="p">,</span><span class="n">pattern</span><span class="p">,</span><span class="n">suffix</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">strout</span><span class="p">)</span><span class="w"></span>
 
+<span class="c">! ident_36=&quot;@(#) M_strings stretch(3f) return string padded to at least specified length&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                  </span><span class="kd">::</span><span class="w"> </span><span class="n">line</span><span class="w"></span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                           </span><span class="kd">::</span><span class="w"> </span><span class="n">length</span><span class="w"></span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">pattern</span><span class="w"></span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">suffix</span><span class="w"></span>
+<span class="c">!-!character(len=max(length,len(trim(line)))) :: strout</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">strout</span><span class="w"></span>
 <span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">pattern</span><span class="p">))</span><span class="k">then</span>
 <span class="k">      </span><span class="n">strout</span><span class="o">=</span><span class="n">pad</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="n">length</span><span class="p">,</span><span class="n">pattern</span><span class="p">)</span><span class="w"></span>
@@ -316,7 +409,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

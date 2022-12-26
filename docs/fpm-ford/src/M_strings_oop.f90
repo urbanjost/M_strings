@@ -141,7 +141,7 @@
 !!       write(*,*)repeat('=',68)
 !!       write(*,*)'OVERLOADED OPERATORS (add and subtract,return TYPE(STRING))'
 !!       str1%str='123.456'
-!!       str2%str='AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj'
+!!       str2%str='AaBbCcDdEeFfGgHhIi AaBbCcDdEeFfGgHhIi'
 !!       write(*,101)'str1%str ................... ',str1%str
 !!       write(*,101)'str2%str ................... ',str2%str
 !!       write(*,*)'str1 + str2 ................ ',p(str1 + str2)
@@ -152,7 +152,7 @@
 !!
 !!       write(*,*)repeat('=',68)
 !!       write(*,*)'OVERLOADED OPERATORS (multiply,return TYPE(STRING))'
-!!       str1%str='AaBbCcDdEeFfGgHhIiJj'
+!!       str1%str='AaBbCcDdEeFfGgHhIi'
 !!       write(*,101)'str1%str ................... ',str1%str
 !!       write(*,*)'str1 * 2 ................... ',p(str1 * 2)
 !!
@@ -239,23 +239,23 @@
 !!   match("*and*") .............  T
 !!   ====================================================================
 !!   OVERLOADED OPERATORS (add and subtract, return TYPE(STRING))
-!!   str1%str ................... [123.456]
-!!   str2%str ................... [AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj]
-!!   str1 + str2 ................ 123.456 AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj
-!!   str1 + 20000 ............... 20123.455999999998
-!!   str1 - 20.0 ................ -103.456
-!!   str2 - "Aa" (removes ALL) .. BbCcDdEeFfGgHhIiJj BbCcDdEeFfGgHhIiJj
+!!   str1%str .................. [123.456]
+!!   str2%str .................. [AaBbCcDdEeFfGgHhIi AaBbCcDdEeFfGgHhIi]
+!!   str1 + str2 ............... 123.456 AaBbCcDdEeFfGgHhIi AaBbCcDdEeFfGgHhIi
+!!   str1 + 20000 .............. 20123.455999999998
+!!   str1 - 20.0 ............... -103.456
+!!   str2 - "Aa" (removes ALL) . BbCcDdEeFfGgHhIi BbCcDdEeFfGgHhIi
 !!   ===================================================================
 !!   OVERLOADED OPERATORS (multiply, return TYPE(STRING))
-!!   str1%str ................... [AaBbCcDdEeFfGgHhIiJj]
-!!   str1 * 2 ................... AaBbCcDdEeFfGgHhIiJjAaBbCcDdEeFfGgHhIiJj
+!!   str1%str ................... [AaBbCcDdEeFfGgHhIi]
+!!   str1 * 2 ................... AaBbCcDdEeFfGgHhIiAaBbCcDdEeFfGgHhIi
 !!   ===================================================================
 !!   OVERLOADED OPERATORS (//, return TYPE(STRING))
 !!   str1%str ................... [String one:]
 !!   str2%str ................... [String two:]
-!!   str1 // str2 ................ String one:String two:
-!!   str1 // 20000 ............... String one:20000
-!!   str1 // 20.0 ................ String one:20.0
+!!   str1 // str2 ............... String one:String two:
+!!   str1 // 20000 .............. String one:20000
+!!   str1 // 20.0 ............... String one:20.0
 !!   ===================================================================
 !!   OVERLOADED OPERATORS (logical comparisons, return logical)
 !!   str1%str ................... [abcdefghij]

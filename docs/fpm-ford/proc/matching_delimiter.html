@@ -152,6 +152,63 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code> matching_delimiter(3f) - [M_strings:QUOTES] find position of matching delimiter
+ (LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>impure elemental subroutine matching_delimiter(str,ipos,imatch)</p>
+<div class="codehilite"><pre><span></span><code>character(len=*),intent(in)  :: str
+integer,intent(in)           :: ipos
+integer,intent(out)          :: imatch
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code>Sets imatch to the position in string of the delimiter matching the
+delimiter in position ipos. Allowable delimiters are (), [], {}, &lt;&gt;.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">str</span>     <span class="nv">input</span> <span class="nv">string</span> <span class="nv">to</span> <span class="nv">locate</span> <span class="nv">delimiter</span> <span class="nv">position</span> <span class="nv">in</span>
+<span class="nv">ipos</span>    <span class="nv">position</span> <span class="nv">of</span> <span class="nv">delimiter</span> <span class="nv">to</span> <span class="nv">find</span> <span class="nv">match</span> <span class="k">for</span>
+<span class="nv">imatch</span>  <span class="nv">location</span> <span class="nv">of</span> <span class="nv">matching</span> <span class="nv">delimiter</span>. <span class="k">If</span> <span class="nv">no</span> <span class="nv">match</span> <span class="nv">is</span> <span class="nv">found</span>, <span class="nv">zero</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
+        <span class="nv">is</span> <span class="nv">returned</span>.
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">program</span><span class="w"> </span><span class="n">demo_matching_delimiter</span><span class="w"></span>
+<span class="w">   </span><span class="k">use</span><span class="w"> </span><span class="n">M_strings</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="n">matching_delimiter</span><span class="w"></span>
+<span class="w">   </span><span class="n">implicit</span><span class="w"> </span><span class="k">none</span><span class="w"></span>
+<span class="w">   </span><span class="k">character</span><span class="p">(</span><span class="nf">len</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span><span class="w">  </span><span class="o">::</span><span class="w"> </span><span class="nf">str</span><span class="w"></span>
+<span class="w">   </span><span class="k">integer</span><span class="w">             </span><span class="o">::</span><span class="w"> </span><span class="n">imatch</span><span class="w"></span>
+
+<span class="w">   </span><span class="nf">str</span><span class="o">=</span><span class="s1">&#39; a [[[[b] and ] then ] finally ]&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;string=&#39;</span><span class="p">,</span><span class="nf">str</span><span class="w"></span>
+<span class="w">   </span><span class="k">call</span><span class="w"> </span><span class="n">matching_delimiter</span><span class="p">(</span><span class="nf">str</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">imatch</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;location=&#39;</span><span class="p">,</span><span class="n">imatch</span><span class="w"></span>
+<span class="w">   </span><span class="k">call</span><span class="w"> </span><span class="n">matching_delimiter</span><span class="p">(</span><span class="nf">str</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">imatch</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;location=&#39;</span><span class="p">,</span><span class="n">imatch</span><span class="w"></span>
+<span class="w">   </span><span class="k">call</span><span class="w"> </span><span class="n">matching_delimiter</span><span class="p">(</span><span class="nf">str</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">imatch</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;location=&#39;</span><span class="p">,</span><span class="n">imatch</span><span class="w"></span>
+<span class="w">   </span><span class="k">call</span><span class="w"> </span><span class="n">matching_delimiter</span><span class="p">(</span><span class="nf">str</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="n">imatch</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;location=&#39;</span><span class="p">,</span><span class="n">imatch</span><span class="w"></span>
+<span class="w">   </span><span class="k">call</span><span class="w"> </span><span class="n">matching_delimiter</span><span class="p">(</span><span class="nf">str</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="n">imatch</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;location=&#39;</span><span class="p">,</span><span class="n">imatch</span><span class="w"></span>
+<span class="w">   </span><span class="k">call</span><span class="w"> </span><span class="n">matching_delimiter</span><span class="p">(</span><span class="nf">str</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="n">imatch</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;location=&#39;</span><span class="p">,</span><span class="n">imatch</span><span class="w"></span>
+
+<span class="k">end</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">demo_matching_delimiter</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -259,7 +316,10 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">impure elemental subroutine </span><span class="n">matching_delimiter</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="n">ipos</span><span class="p">,</span><span class="n">imatch</span><span class="p">)</span><span class="w"></span>
 
+<span class="c">! Sets imatch to the position in string of the delimiter matching the delimiter</span>
+<span class="c">! in position ipos. Allowable delimiters are (), [], {}, &lt;&gt;.</span>
 
+<span class="c">! pedigree?</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">str</span><span class="w"></span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ipos</span><span class="w"></span>
@@ -342,7 +402,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

@@ -152,6 +152,82 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">substitute</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">EDITING</span>] <span class="nv">subroutine</span> <span class="nv">globally</span> <span class="nv">substitutes</span>
+<span class="nv">one</span> <span class="nv">substring</span> <span class="k">for</span> <span class="nv">another</span> <span class="nv">in</span> <span class="nv">string</span>
+<span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">subroutine</span> <span class="nv">substitute</span><span class="ss">(</span><span class="nv">targetline</span>,<span class="nv">old</span>,<span class="nv">new</span>,<span class="nv">ierr</span>,<span class="nv">start</span>,<span class="k">end</span><span class="ss">)</span>
+
+ <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>              :: <span class="nv">targetline</span>
+ <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">intent</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span>   :: <span class="nv">old</span>
+ <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">intent</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span>   :: <span class="nv">new</span>
+ <span class="nv">integer</span>,<span class="nv">intent</span><span class="ss">(</span><span class="nv">out</span><span class="ss">)</span>,<span class="nv">optional</span>  :: <span class="nv">ierr</span>
+ <span class="nv">integer</span>,<span class="nv">intent</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span>,<span class="nv">optional</span>   :: <span class="nv">start</span>
+ <span class="nv">integer</span>,<span class="nv">intent</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span>,<span class="nv">optional</span>   :: <span class="k">end</span>
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">Globally</span> <span class="nv">substitute</span> <span class="nv">one</span> <span class="nv">substring</span> <span class="k">for</span> <span class="nv">another</span> <span class="nv">in</span> <span class="nv">string</span>.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> <span class="n">TARGETLINE</span>  <span class="n">input</span> <span class="n">line</span> <span class="n">to</span> <span class="n">be</span> <span class="n">changed</span><span class="p">.</span> <span class="n">Must</span> <span class="n">be</span> <span class="n">long</span> <span class="n">enough</span> <span class="n">to</span>
+             <span class="n">hold</span> <span class="n">altered</span> <span class="n">output</span><span class="p">.</span>
+ <span class="n">OLD</span>         <span class="n">substring</span> <span class="n">to</span> <span class="n">find</span> <span class="n">and</span> <span class="n">replace</span>
+ <span class="kr">NEW</span>         <span class="n">replacement</span> <span class="n">for</span> <span class="n">OLD</span> <span class="n">substring</span>
+ <span class="n">IERR</span>        <span class="n">error</span> <span class="n">code</span><span class="p">.</span> <span class="n">If</span> <span class="n">IER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">bad</span> <span class="n">directive</span><span class="p">,</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="n">then</span>
+             <span class="n">count</span> <span class="n">of</span> <span class="n">changes</span> <span class="n">made</span><span class="p">.</span>
+ <span class="n">START</span>       <span class="n">sets</span> <span class="n">the</span> <span class="n">left</span> <span class="n">margin</span> <span class="n">to</span> <span class="n">be</span> <span class="n">scanned</span> <span class="n">for</span> <span class="n">OLD</span> <span class="n">in</span>
+             <span class="n">TARGETLINE</span><span class="p">.</span>
+ <span class="kr">END</span>         <span class="n">sets</span> <span class="n">the</span> <span class="n">right</span> <span class="n">margin</span> <span class="n">to</span> <span class="n">be</span> <span class="n">scanned</span> <span class="n">for</span> <span class="n">OLD</span> <span class="n">in</span>
+             <span class="n">TARGETLINE</span><span class="p">.</span>
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample Program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_substitute</span>
+<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">substitute</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="o">!</span> <span class="nv">must</span> <span class="nv">be</span> <span class="nv">long</span> <span class="nv">enough</span> <span class="nv">to</span> <span class="nv">hold</span> <span class="nv">changed</span> <span class="nv">line</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">80</span><span class="ss">)</span> :: <span class="nv">targetline</span>
+
+<span class="nv">targetline</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">this is the input string</span><span class="s1">&#39;</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">ORIGINAL    : </span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">targetline</span><span class="ss">)</span>
+
+<span class="o">!</span> <span class="nv">changes</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">to</span> <span class="s1">&#39;</span><span class="s">THis is THe input string</span><span class="s1">&#39;</span>
+<span class="k">call</span> <span class="nl">substitute</span><span class="ss">(</span><span class="nv">targetline</span>,<span class="s1">&#39;</span><span class="s">th</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">TH</span><span class="s1">&#39;</span><span class="ss">)</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">th =&gt; TH    : </span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">targetline</span><span class="ss">)</span>
+
+<span class="o">!</span> <span class="nv">a</span> <span class="nv">null</span> <span class="nv">old</span> <span class="nv">substring</span> <span class="nv">means</span> <span class="s2">&quot;</span><span class="s">at beginning of line</span><span class="s2">&quot;</span>
+<span class="o">!</span> <span class="nv">changes</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">to</span> <span class="s1">&#39;</span><span class="s">BEFORE:this is the input string</span><span class="s1">&#39;</span>
+<span class="k">call</span> <span class="nl">substitute</span><span class="ss">(</span><span class="nv">targetline</span>,<span class="s1">&#39;&#39;</span>,<span class="s1">&#39;</span><span class="s">BEFORE:</span><span class="s1">&#39;</span><span class="ss">)</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">&quot;&quot; =&gt; BEFORE: </span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">targetline</span><span class="ss">)</span>
+
+<span class="o">!</span> <span class="nv">a</span> <span class="nv">null</span> <span class="nv">new</span> <span class="nv">string</span> <span class="nv">deletes</span> <span class="nv">occurrences</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">old</span> <span class="nv">substring</span>
+<span class="o">!</span> <span class="nv">changes</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">to</span> <span class="s1">&#39;</span><span class="s">ths s the nput strng</span><span class="s1">&#39;</span>
+<span class="k">call</span> <span class="nl">substitute</span><span class="ss">(</span><span class="nv">targetline</span>,<span class="s1">&#39;</span><span class="s">i</span><span class="s1">&#39;</span>,<span class="s1">&#39;&#39;</span><span class="ss">)</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">i =&gt; &quot;&quot;     : </span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">targetline</span><span class="ss">)</span>
+
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_substitute</span>
+</code></pre></div>
+
+<p>Expected output</p>
+<div class="codehilite"><pre><span></span><code> ORIGINAL    : this is the input string
+ th =&gt; TH    : THis is THe input string
+ &quot;&quot; =&gt; BEFORE: BEFORE:THis is THe input string
+ i =&gt; &quot;&quot;     : BEFORE:THs s THe nput strng
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -304,13 +380,16 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">substitute</span><span class="p">(</span><span class="n">targetline</span><span class="p">,</span><span class="n">old</span><span class="p">,</span><span class="n">new</span><span class="p">,</span><span class="n">ierr</span><span class="p">,</span><span class="n">start</span><span class="p">,</span><span class="k">end</span><span class="p">)</span><span class="w"></span>
 
+<span class="c">! ident_12=&quot;@(#) M_strings substitute(3f) Globally substitute one substring for another in string&quot;</span>
 
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">targetline</span><span class="w">         </span><span class="c">! input line to be changed</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">old</span><span class="w">                </span><span class="c">! old substring to replace</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">new</span><span class="w">                </span><span class="c">! new substring</span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">),</span><span class="k">optional</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">ierr</span><span class="w">               </span><span class="c">! error code. if ierr = -1 bad directive, &gt;=0 then ierr changes made</span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">start</span><span class="w">              </span><span class="c">! start sets the left margin</span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="k">end</span><span class="w">                </span><span class="c">! end sets the right margin</span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">targetline</span><span class="p">))</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dum1</span><span class="w">               </span><span class="c">! scratch string buffers</span>
 <span class="kt">integer</span><span class="w">                        </span><span class="kd">::</span><span class="w"> </span><span class="n">ml</span><span class="p">,</span><span class="w"> </span><span class="n">mr</span><span class="p">,</span><span class="w"> </span><span class="n">ier1</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                        </span><span class="kd">::</span><span class="w"> </span><span class="n">maxlengthout</span><span class="w">       </span><span class="c">! MAXIMUM LENGTH ALLOWED FOR NEW STRING</span>
@@ -323,6 +402,7 @@
 <span class="kt">integer</span><span class="w">                        </span><span class="kd">::</span><span class="w"> </span><span class="n">id</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                        </span><span class="kd">::</span><span class="w"> </span><span class="n">ic</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                        </span><span class="kd">::</span><span class="w"> </span><span class="n">ichr</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">start</span><span class="p">))</span><span class="w"> </span><span class="k">then</span><span class="w">                            </span><span class="c">! optional starting column</span>
 <span class="w">      </span><span class="n">ml</span><span class="o">=</span><span class="n">start</span><span class="w"></span>
 <span class="w">   </span><span class="k">else</span>
@@ -332,12 +412,14 @@
 <span class="w">      </span><span class="n">mr</span><span class="o">=</span><span class="k">end</span>
 <span class="k">   else</span>
 <span class="k">      </span><span class="n">mr</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">targetline</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="k">endif</span>
-<span class="k">   </span><span class="n">ier1</span><span class="o">=</span><span class="mi">0</span><span class="w">                                              </span><span class="c">! initialize error flag/change count</span>
+<span class="w">   </span><span class="k">endif</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="w">   </span><span class="n">ier1</span><span class="o">=</span><span class="mi">0</span><span class="w">                                              </span><span class="c">! initialize error flag/change count</span>
 <span class="w">   </span><span class="n">maxlengthout</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">targetline</span><span class="p">)</span><span class="w">                        </span><span class="c">! max length of output string</span>
 <span class="w">   </span><span class="n">original_input_length</span><span class="o">=</span><span class="nb">len_trim</span><span class="p">(</span><span class="n">targetline</span><span class="p">)</span><span class="w">          </span><span class="c">! get non-blank length of input line</span>
 <span class="w">   </span><span class="n">dum1</span><span class="p">(:)</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="w">                                         </span><span class="c">! initialize string to build output in</span>
 <span class="w">   </span><span class="n">id</span><span class="o">=</span><span class="n">mr</span><span class="o">-</span><span class="n">ml</span><span class="w">                                            </span><span class="c">! check for window option ! change to optional parameter(s)</span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">   </span><span class="n">len_old</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">old</span><span class="p">)</span><span class="w">                                    </span><span class="c">! length of old substring to be replaced</span>
 <span class="w">   </span><span class="n">len_new</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">new</span><span class="p">)</span><span class="w">                                    </span><span class="c">! length of new substring to replace old substring</span>
 <span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="k">then</span><span class="w">                                     </span><span class="c">! no window so change entire input string</span>
@@ -349,6 +431,7 @@
 <span class="w">      </span><span class="n">ir</span><span class="o">=</span><span class="n">min0</span><span class="p">(</span><span class="n">mr</span><span class="p">,</span><span class="n">maxlengthout</span><span class="p">)</span><span class="w">                         </span><span class="c">! use right margin or rightmost</span>
 <span class="w">      </span><span class="n">dum1</span><span class="o">=</span><span class="n">targetline</span><span class="p">(:</span><span class="n">il</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w">                           </span><span class="c">! begin with what&#39;s below margin</span>
 <span class="w">   </span><span class="k">endif</span><span class="w">                                               </span><span class="c">! end of window settings</span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="n">len_old</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="k">then</span><span class="w">                                </span><span class="c">! c//new/ means insert new at beginning of line (or left margin)</span>
 <span class="w">      </span><span class="n">ichr</span><span class="o">=</span><span class="n">len_new</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">original_input_length</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">ichr</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">maxlengthout</span><span class="p">)</span><span class="k">then</span>
@@ -366,8 +449,9 @@
 <span class="w">      </span><span class="n">ier1</span><span class="o">=</span><span class="mi">1</span><span class="w">                                           </span><span class="c">! made one change. actually, c/// should maybe return 0</span>
 <span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">ierr</span><span class="p">))</span><span class="n">ierr</span><span class="o">=</span><span class="n">ier1</span><span class="w"></span>
 <span class="w">      </span><span class="k">return</span>
-<span class="k">   endif</span>
-<span class="k">   </span><span class="n">ichr</span><span class="o">=</span><span class="n">il</span><span class="w">                                            </span><span class="c">! place to put characters into output string</span>
+<span class="k">   endif</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="w">   </span><span class="n">ichr</span><span class="o">=</span><span class="n">il</span><span class="w">                                            </span><span class="c">! place to put characters into output string</span>
 <span class="w">   </span><span class="n">ic</span><span class="o">=</span><span class="n">il</span><span class="w">                                               </span><span class="c">! place looking at in input string</span>
 <span class="w">   </span><span class="n">loop</span><span class="p">:</span><span class="w"> </span><span class="k">do</span>
 <span class="k">      </span><span class="n">ind</span><span class="o">=</span><span class="nb">index</span><span class="p">(</span><span class="n">targetline</span><span class="p">(</span><span class="n">ic</span><span class="p">:),</span><span class="n">old</span><span class="p">(:</span><span class="n">len_old</span><span class="p">))</span><span class="o">+</span><span class="n">ic</span><span class="o">-</span><span class="mi">1</span><span class="w">    </span><span class="c">! try to find start of old string in remaining part of input in change window</span>
@@ -394,6 +478,7 @@
 <span class="w">      </span><span class="k">endif</span>
 <span class="k">      </span><span class="n">ic</span><span class="o">=</span><span class="n">ind</span><span class="o">+</span><span class="n">len_old</span><span class="w"></span>
 <span class="w">   </span><span class="k">enddo </span><span class="n">loop</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">   </span><span class="k">select case</span><span class="w"> </span><span class="p">(</span><span class="n">ier1</span><span class="p">)</span><span class="w"></span>
 <span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="p">(:</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">call </span><span class="n">journal</span><span class="p">(</span><span class="s1">&#39;sc&#39;</span><span class="p">,</span><span class="s1">&#39;*substitute* new line will be too long&#39;</span><span class="p">)</span><span class="w"></span>
@@ -412,6 +497,7 @@
 <span class="k">      </span><span class="n">targetline</span><span class="o">=</span><span class="n">dum1</span><span class="p">(:</span><span class="n">maxlengthout</span><span class="p">)</span><span class="w"></span>
 <span class="w">   </span><span class="k">end select</span>
 <span class="k">   if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">ierr</span><span class="p">))</span><span class="n">ierr</span><span class="o">=</span><span class="n">ier1</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="k">end subroutine </span><span class="n">substitute</span><span class="w"></span>
 </pre></div>
 
@@ -433,7 +519,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

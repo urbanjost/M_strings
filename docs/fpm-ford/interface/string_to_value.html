@@ -290,7 +290,65 @@
     <div class="panel-heading codesum"><span class="anchor" id="proc-a2r"></span><h3>private  subroutine a2r(chars, valu, ierr)  
 </h3></div>
     <div class="panel-body">
-        
+        <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>  string_to_value(3f) - [M_strings:TYPE] subroutine returns numeric
+  value from string
+  (LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>subroutine string_to_value(chars,valu,ierr)
+
+ character(len=*),intent(in)              :: chars   ! input string
+ integer|real|doubleprecision,intent(out) :: valu
+ integer,intent(out)                      :: ierr
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">Returns</span> <span class="nv">a</span> <span class="nv">numeric</span> <span class="nv">value</span> <span class="nv">from</span> <span class="nv">a</span> <span class="nv">numeric</span> <span class="nv">character</span> <span class="nv">string</span>.
+
+<span class="nv">Works</span> <span class="nv">with</span> <span class="nv">any</span> <span class="nv">g</span><span class="o">-</span><span class="nv">format</span> <span class="nv">input</span>, <span class="nv">including</span> <span class="nv">integer</span>, <span class="nv">real</span>, <span class="nv">and</span>
+<span class="nv">exponential</span>. <span class="k">If</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">begins</span> <span class="nv">with</span> <span class="s2">&quot;</span><span class="s">B</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">Z</span><span class="s2">&quot;</span>, <span class="nv">or</span> <span class="s2">&quot;</span><span class="s">O</span><span class="s2">&quot;</span>
+<span class="nv">and</span> <span class="nv">otherwise</span> <span class="nv">represents</span> <span class="nv">a</span> <span class="nv">positive</span> <span class="nv">whole</span> <span class="nv">number</span> <span class="nv">it</span> <span class="nv">is</span> <span class="nv">assumed</span> <span class="nv">to</span>
+<span class="nv">be</span> <span class="nv">a</span> <span class="nv">binary</span>, <span class="nv">hexadecimal</span>, <span class="nv">or</span> <span class="nv">octal</span> <span class="nv">value</span>. <span class="k">If</span> <span class="nv">the</span> <span class="nv">string</span> <span class="nv">contains</span>
+<span class="nv">commas</span> <span class="nv">they</span> <span class="nv">are</span> <span class="nv">removed</span>. <span class="k">If</span> <span class="nv">the</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">form</span> <span class="nv">NN</span>:<span class="nv">MMM</span>... <span class="nv">or</span>
+<span class="nv">NN</span>#<span class="nv">MMM</span> <span class="k">then</span> <span class="nv">NN</span> <span class="nv">is</span> <span class="nv">assumed</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">the</span> <span class="nv">base</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">whole</span> <span class="nv">number</span>.
+
+<span class="k">If</span> <span class="nv">an</span> <span class="nv">error</span> <span class="nv">occurs</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">READ</span>, <span class="nv">IOSTAT</span> <span class="nv">is</span> <span class="nv">returned</span> <span class="nv">in</span> <span class="nv">IERR</span> <span class="nv">and</span>
+<span class="nv">value</span> <span class="nv">is</span> <span class="nv">set</span> <span class="nv">to</span> <span class="nv">zero</span>. <span class="k">if</span> <span class="nv">no</span> <span class="nv">error</span> <span class="nv">occurs</span>, <span class="nv">IERR</span><span class="o">=</span><span class="mi">0</span>.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code>   CHARS  input string to read numeric value from
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code>VALU   numeric value returned. May be INTEGER, REAL, or
+          DOUBLEPRECISION.
+IERR   error flag (0 == no error)
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<p>Sample Program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_string_to_value</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">string_to_value</span>
+ <span class="nv">implicit</span> <span class="nv">none</span>
+ <span class="nv">real</span> :: <span class="nv">value</span>
+ <span class="nv">integer</span> :: <span class="nv">ierr</span>
+ <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">80</span><span class="ss">)</span> :: <span class="nv">string</span>
+    <span class="nv">string</span><span class="o">=</span><span class="s1">&#39;</span><span class="s"> -40.5e-2 </span><span class="s1">&#39;</span>
+    <span class="k">call</span> <span class="nl">string_to_value</span><span class="ss">(</span><span class="nv">string</span>,<span class="nv">value</span>,<span class="nv">ierr</span><span class="ss">)</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">value of string [</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">string</span><span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">] is </span><span class="s1">&#39;</span>,<span class="nv">value</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_string_to_value</span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -440,7 +498,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

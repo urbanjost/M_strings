@@ -152,6 +152,91 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>chomp(3f) - [M_strings:TOKENS] Tokenize a string, consuming it one
+token per call
+(LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">chomp</span><span class="p">(</span>source_string,token[,delimiters]<span class="p">)</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">)</span><span class="w">                     </span><span class="p">::</span><span class="w"> </span><span class="n">source_string</span><span class="w"></span>
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">         </span><span class="p">::</span><span class="w"> </span><span class="n">token</span><span class="w"></span>
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">delimiters</span><span class="w"></span>
+<span class="w"> </span><span class="n">integer</span><span class="w">                              </span><span class="p">::</span><span class="w"> </span><span class="n">chomp</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">The</span> <span class="nv">CHOMP</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">function</span> <span class="nv">is</span> <span class="nv">used</span> <span class="nv">to</span> <span class="nv">isolate</span> <span class="nv">sequential</span> <span class="nv">tokens</span> <span class="nv">in</span> <span class="nv">a</span>
+<span class="nv">string</span>, <span class="nv">SOURCE_STRING</span>. <span class="nv">These</span> <span class="nv">tokens</span> <span class="nv">are</span> <span class="nv">delimited</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">string</span> <span class="nv">by</span> <span class="nv">at</span>
+<span class="nv">least</span> <span class="nv">one</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">characters</span> <span class="nv">in</span> <span class="nv">DELIMITERS</span>. <span class="nv">This</span> <span class="nv">routine</span> <span class="nv">consumes</span> <span class="nv">the</span>
+<span class="nv">source_string</span> <span class="nv">one</span> <span class="nv">token</span> <span class="nv">per</span> <span class="nv">call</span>. <span class="nv">It</span> <span class="nv">returns</span> <span class="o">-</span><span class="mi">1</span> <span class="nv">when</span> <span class="nv">complete</span>. <span class="nv">The</span>
+<span class="nv">default</span> <span class="nv">delimiter</span> <span class="nv">list</span> <span class="nv">is</span> <span class="s2">&quot;</span><span class="s">space,tab,carriage return,newline</span><span class="s2">&quot;</span>.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> SOURCE_STRING  string to tokenize
+ DELIMITERS     list of separator characters
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code> TOKEN          returned token
+ CHOMP          status flag. 0 = success, -1 = no tokens remain
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_chomp</span>
+
+<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">chomp</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">100</span><span class="ss">)</span>            :: <span class="nv">inline</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span>  :: <span class="nv">token</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span>    :: <span class="nv">delimiters</span><span class="o">=</span><span class="s1">&#39;</span><span class="s"> ;,</span><span class="s1">&#39;</span>
+<span class="nv">integer</span>                       :: <span class="nv">ios</span>
+<span class="nv">integer</span>                       :: <span class="nv">icount</span>
+<span class="nv">integer</span>                       :: <span class="nv">itoken</span>
+   <span class="nv">icount</span><span class="o">=</span><span class="mi">0</span>
+   <span class="k">do</span>        <span class="o">!</span> <span class="nv">read</span> <span class="nv">lines</span> <span class="nv">from</span> <span class="nv">stdin</span> <span class="k">until</span> <span class="k">end</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">file</span> <span class="nv">or</span> <span class="nv">error</span>
+      <span class="nv">read</span> <span class="ss">(</span><span class="nv">unit</span><span class="o">=*</span>,<span class="nv">fmt</span><span class="o">=</span><span class="s2">&quot;</span><span class="s">(a)</span><span class="s2">&quot;</span>,<span class="nv">iostat</span><span class="o">=</span><span class="nv">ios</span><span class="ss">)</span> <span class="nv">inline</span>
+      <span class="k">if</span><span class="ss">(</span><span class="nv">ios</span> <span class="o">/=</span> <span class="mi">0</span><span class="ss">)</span><span class="nv">stop</span>
+      <span class="nv">icount</span><span class="o">=</span><span class="nv">icount</span><span class="o">+</span><span class="mi">1</span>
+      <span class="nv">itoken</span><span class="o">=</span><span class="mi">0</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">INLINE </span><span class="s1">&#39;</span>,<span class="nv">trim</span><span class="ss">(</span><span class="nv">inline</span><span class="ss">)</span>
+      <span class="k">do</span> <span class="k">while</span> <span class="ss">(</span> <span class="nv">chomp</span><span class="ss">(</span><span class="nv">inline</span>,<span class="nv">token</span>,<span class="nv">delimiters</span><span class="ss">)</span> <span class="o">&gt;=</span>  <span class="mi">0</span><span class="ss">)</span>
+         <span class="nv">itoken</span><span class="o">=</span><span class="nv">itoken</span><span class="o">+</span><span class="mi">1</span>
+         <span class="nv">print</span> <span class="o">*</span>, <span class="nv">itoken</span>,<span class="s1">&#39;</span><span class="s">TOKEN=[</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">token</span><span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+      <span class="nv">enddo</span>
+   <span class="nv">enddo</span>
+
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_chomp</span>
+</code></pre></div>
+
+<p>sample input file</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="nt">this</span><span class="w"> </span><span class="nt">is</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">test</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">chomp</span><span class="o">;</span><span class="w"> </span><span class="nt">A</span><span class="p">:</span><span class="nd">B</span><span class="w"> </span><span class="o">:;,</span><span class="nt">C</span><span class="o">;;</span><span class="w"></span>
+</code></pre></div>
+
+<p>sample output file</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">INLINE</span><span class="w">     </span><span class="n">this</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">chomp</span><span class="p">;</span><span class="w"> </span><span class="nl">A</span><span class="p">:</span><span class="n">B</span><span class="w"> </span><span class="err">:</span><span class="p">;,</span><span class="n">C</span><span class="p">;;</span><span class="w"></span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w">           </span><span class="mi">1</span><span class="w"> </span><span class="n">TOKEN</span><span class="o">=[</span><span class="n">this</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w">           </span><span class="mi">2</span><span class="w"> </span><span class="n">TOKEN</span><span class="o">=[</span><span class="n">is</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w">           </span><span class="mi">3</span><span class="w"> </span><span class="n">TOKEN</span><span class="o">=[</span><span class="n">a</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w">           </span><span class="mi">4</span><span class="w"> </span><span class="n">TOKEN</span><span class="o">=[</span><span class="n">test</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w">           </span><span class="mi">5</span><span class="w"> </span><span class="n">TOKEN</span><span class="o">=[</span><span class="n">of</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w">           </span><span class="mi">6</span><span class="w"> </span><span class="n">TOKEN</span><span class="o">=[</span><span class="n">chomp</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w">           </span><span class="mi">7</span><span class="w"> </span><span class="n">TOKEN</span><span class="o">=[</span><span class="n">A:B</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w">           </span><span class="mi">8</span><span class="w"> </span><span class="n">TOKEN</span><span class="o">=[</span><span class="n">:</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w">           </span><span class="mi">9</span><span class="w"> </span><span class="n">TOKEN</span><span class="o">=[</span><span class="n">C</span><span class="o">]</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -266,6 +351,7 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">FUNCTION </span><span class="n">chomp</span><span class="p">(</span><span class="n">source_string</span><span class="p">,</span><span class="n">token</span><span class="p">,</span><span class="n">delimiters</span><span class="p">)</span><span class="w"></span>
 
+<span class="c">! ident_9=&quot;@(#) M_strings chomp(3f) Tokenize a string JSU- 20151030&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span><span class="w">                         </span><span class="kd">::</span><span class="w"> </span><span class="n">source_string</span><span class="w">    </span><span class="c">! string to tokenize</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">token</span><span class="w">            </span><span class="c">! returned token</span>
@@ -275,12 +361,16 @@
 <span class="kt">integer</span><span class="w">                                  </span><span class="kd">::</span><span class="w"> </span><span class="n">token_start</span><span class="w">      </span><span class="c">! beginning of token found if function result is .true.</span>
 <span class="kt">integer</span><span class="w">                                  </span><span class="kd">::</span><span class="w"> </span><span class="n">token_end</span><span class="w">        </span><span class="c">! end of token found if function result is .true.</span>
 <span class="kt">integer</span><span class="w">                                  </span><span class="kd">::</span><span class="w"> </span><span class="n">isource_len</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="c">!  calculate where token_start should start for this pass</span>
 <span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">delimiters</span><span class="p">))</span><span class="k">then</span>
 <span class="k">      </span><span class="n">delimiters_local</span><span class="o">=</span><span class="n">delimiters</span><span class="w"></span>
 <span class="w">   </span><span class="k">else</span><span class="w">                                          </span><span class="c">! increment start to previous end + 1</span>
 <span class="w">      </span><span class="n">delimiters_local</span><span class="o">=</span><span class="nb">char</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="o">//</span><span class="nb">char</span><span class="p">(</span><span class="mi">09</span><span class="p">)</span><span class="o">//</span><span class="nb">char</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">//</span><span class="nb">char</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span><span class="w"> </span><span class="c">! space,horizontal tab, newline, carriage return</span>
-<span class="w">   </span><span class="k">endif</span>
-<span class="k">   </span><span class="n">isource_len</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">source_string</span><span class="p">)</span><span class="w">                </span><span class="c">! length of input string</span>
+<span class="w">   </span><span class="k">endif</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="w">   </span><span class="n">isource_len</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">source_string</span><span class="p">)</span><span class="w">                </span><span class="c">! length of input string</span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">   </span><span class="c">! find beginning of token</span>
 <span class="w">   </span><span class="n">token_start</span><span class="o">=</span><span class="mi">1</span><span class="w"></span>
 <span class="w">   </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">token_start</span><span class="w">  </span><span class="o">&lt;=</span><span class="w">  </span><span class="n">isource_len</span><span class="p">)</span><span class="w">       </span><span class="c">! step thru each character to find next delimiter, if any</span>
@@ -289,8 +379,9 @@
 <span class="w">      </span><span class="k">else</span>
 <span class="k">         exit</span>
 <span class="k">      endif</span>
-<span class="k">   enddo</span>
-<span class="k">   </span><span class="n">token_end</span><span class="o">=</span><span class="n">token_start</span><span class="w"></span>
+<span class="k">   enddo</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="w">   </span><span class="n">token_end</span><span class="o">=</span><span class="n">token_start</span><span class="w"></span>
 <span class="w">   </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">token_end</span><span class="w">  </span><span class="o">&lt;=</span><span class="w">  </span><span class="n">isource_len</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w">                         </span><span class="c">! step thru each character to find next delimiter, if any</span>
 <span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="nb">index</span><span class="p">(</span><span class="n">delimiters_local</span><span class="p">,</span><span class="n">source_string</span><span class="p">(</span><span class="n">token_end</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">token_end</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="w">  </span><span class="o">/=</span><span class="w">  </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w">  </span><span class="c">! found a delimiter in next character</span>
 <span class="w">         </span><span class="k">exit</span>
@@ -306,7 +397,8 @@
 <span class="w">   </span><span class="k">else</span>
 <span class="k">      </span><span class="n">token</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w"></span>
 <span class="w">      </span><span class="n">source_string</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w"></span>
-<span class="w">   </span><span class="k">endif</span>
+<span class="w">   </span><span class="k">endif</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="k">end function </span><span class="n">chomp</span><span class="w"></span>
 </pre></div>
 
@@ -328,7 +420,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

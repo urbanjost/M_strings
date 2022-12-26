@@ -152,6 +152,130 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>s2v(3f) - [M_strings:TYPE] function returns doubleprecision
+numeric value from a string
+(LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">s2v</span><span class="p">(</span>string[,ierr][,onerr]<span class="p">)</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">)</span><span class="w">             </span><span class="p">::</span><span class="w"> </span><span class="nb">string</span><span class="w"></span>
+<span class="w"> </span><span class="n">doubleprecision</span><span class="w">              </span><span class="p">::</span><span class="w"> </span><span class="n">s2v</span><span class="w"></span>
+<span class="w"> </span><span class="n">integer</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">out</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">ierr</span><span class="w"></span>
+<span class="w"> </span><span class="nb">class</span><span class="p">(</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">onerr</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">This</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="n">converts</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">DOUBLEPRECISION</span><span class="w"> </span><span class="n">numeric</span><span class="w"> </span><span class="n">value</span><span class="o">.</span><span class="w"></span>
+
+<span class="n">The</span><span class="w"> </span><span class="n">intrinsics</span><span class="w"> </span><span class="n">INT</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">),</span><span class="w"> </span><span class="n">REAL</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">),</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">DBLE</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">also</span><span class="w"> </span><span class="n">extended</span><span class="w"></span>
+<span class="n">to</span><span class="w"> </span><span class="n">take</span><span class="w"> </span><span class="n">CHARACTER</span><span class="w"> </span><span class="n">variables</span><span class="o">.</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">KIND</span><span class="o">=</span><span class="w"> </span><span class="n">keyword</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">supported</span><span class="w"></span>
+<span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">extensions</span><span class="o">.</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">string</span>   <span class="nv">holds</span> <span class="nv">string</span> <span class="nv">assumed</span> <span class="nv">to</span> <span class="nv">represent</span> <span class="nv">a</span> <span class="nv">numeric</span> <span class="nv">value</span>
+ <span class="nv">ierr</span>     <span class="k">If</span> <span class="nv">an</span> <span class="nv">error</span> <span class="nv">occurs</span> <span class="nv">the</span> <span class="nv">program</span> <span class="nv">is</span> <span class="nv">stopped</span> <span class="k">if</span> <span class="nv">the</span> <span class="nv">optional</span>
+          <span class="nv">parameter</span> <span class="nv">IERR</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">present</span>. <span class="k">If</span> <span class="nv">IERR</span> <span class="nv">returns</span> <span class="nv">a</span> <span class="nv">non</span><span class="o">-</span><span class="nv">zero</span>
+          <span class="nv">value</span> <span class="nv">an</span> <span class="nv">error</span> <span class="nv">occurred</span>.
+ <span class="nv">onerr</span>    <span class="nv">The</span> <span class="nv">value</span> <span class="nv">to</span> <span class="k">return</span> <span class="nv">on</span> <span class="nv">error</span>. <span class="nv">A</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">NaN</span> <span class="nv">is</span>
+          <span class="nv">returned</span> <span class="nv">on</span> <span class="nv">error</span> <span class="nv">by</span> <span class="nv">default</span>.
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code> s2v      numeric value read from string
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<p>Sample Program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_s2v</span>
+
+ <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">s2v</span>, <span class="nv">int</span>, <span class="nv">real</span>, <span class="nv">dble</span>
+ <span class="nv">implicit</span> <span class="nv">none</span>
+ <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">8</span><span class="ss">)</span>              :: <span class="nv">s</span><span class="o">=</span><span class="s1">&#39;</span><span class="s"> 10.345 </span><span class="s1">&#39;</span>
+ <span class="nv">integer</span>                       :: <span class="nv">i</span>
+ <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">14</span><span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">strings</span><span class="ss">(</span>:<span class="ss">)</span>
+ <span class="nv">doubleprecision</span>               :: <span class="nv">dv</span>
+ <span class="nv">integer</span>                       :: <span class="nv">errnum</span>
+
+ <span class="o">!</span> <span class="nv">different</span> <span class="nv">strings</span> <span class="nv">representing</span> <span class="nv">INTEGER</span>, <span class="nv">REAL</span>, <span class="nv">and</span> <span class="nv">DOUBLEPRECISION</span>
+ <span class="nv">strings</span><span class="o">=</span>[<span class="o">&amp;</span>
+ <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s"> 10.345       </span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+ <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">+10           </span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+ <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">    -3        </span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+ <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">    -4.94e-2  </span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+ <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">0.1           </span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+ <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">12345.678910d0</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+ <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">              </span><span class="s1">&#39;</span>,<span class="o">&amp;</span> <span class="o">!</span> <span class="nv">Note</span>: <span class="nv">will</span> <span class="k">return</span> <span class="nv">zero</span> <span class="nv">without</span> <span class="nv">an</span> <span class="nv">error</span> <span class="nv">message</span>
+ <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">1 2 1 2 1 . 0 </span><span class="s1">&#39;</span>,<span class="o">&amp;</span> <span class="o">!</span> <span class="nv">Note</span>: <span class="nv">spaces</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">ignored</span>
+ <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">WHAT?         </span><span class="s1">&#39;</span>]  <span class="o">!</span> <span class="nv">Note</span>: <span class="nv">error</span> <span class="nv">messages</span> <span class="nv">will</span> <span class="nv">appear</span>, <span class="nv">zero</span> <span class="nv">returned</span>
+
+ <span class="o">!</span> <span class="nv">a</span> <span class="nv">numeric</span> <span class="nv">value</span> <span class="nv">is</span> <span class="nv">returned</span>,
+ <span class="o">!</span> <span class="nv">so</span> <span class="nv">it</span> <span class="nv">can</span> <span class="nv">be</span> <span class="nv">used</span> <span class="nv">in</span> <span class="nv">numeric</span> <span class="nv">expression</span>
+ <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">1/2 value of string is </span><span class="s1">&#39;</span>,<span class="nv">s2v</span><span class="ss">(</span><span class="nv">s</span><span class="ss">)</span><span class="o">/</span><span class="mi">2</span>.<span class="mi">0</span><span class="nv">d0</span>
+ <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span>
+ <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s"> STRING            VALUE                    ERROR_NUMBER</span><span class="s1">&#39;</span>
+ <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">)</span>
+    <span class="o">!</span> <span class="nv">Note</span>: <span class="nv">not</span> <span class="nv">a</span> <span class="nv">good</span> <span class="nv">idea</span> <span class="nv">to</span> <span class="nv">use</span> <span class="nv">s2v</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">in</span> <span class="nv">a</span> <span class="nv">WRITE</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">statement</span>,
+    <span class="o">!</span> <span class="nv">as</span> <span class="nv">it</span> <span class="nv">does</span> <span class="nv">I</span><span class="o">/</span><span class="nv">O</span> <span class="nv">when</span> <span class="nv">errors</span> <span class="nv">occur</span>, <span class="nv">so</span> <span class="nv">called</span> <span class="nv">on</span> <span class="nv">a</span> <span class="nv">separate</span> <span class="nv">line</span>
+    <span class="nv">dv</span><span class="o">=</span><span class="nv">s2v</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">errnum</span><span class="ss">)</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="nv">strings</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="nv">dv</span>,<span class="nv">errnum</span>
+ <span class="nv">enddo</span>
+ <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s2">&quot;</span><span class="s">Extended intrinsics</span><span class="s2">&quot;</span>
+ <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">given inputs:</span><span class="s1">&#39;</span>,<span class="nv">s</span>,<span class="nv">strings</span><span class="ss">(</span>:<span class="mi">8</span><span class="ss">)</span>
+ <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">INT(3f):</span><span class="s1">&#39;</span>,<span class="nv">int</span><span class="ss">(</span><span class="nv">s</span><span class="ss">)</span>,<span class="nv">int</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">(</span>:<span class="mi">8</span><span class="ss">))</span>
+ <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">REAL(3f):</span><span class="s1">&#39;</span>,<span class="nv">real</span><span class="ss">(</span><span class="nv">s</span><span class="ss">)</span>,<span class="nv">real</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">(</span>:<span class="mi">8</span><span class="ss">))</span>
+ <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">DBLE(3f):</span><span class="s1">&#39;</span>,<span class="nv">dble</span><span class="ss">(</span><span class="nv">s</span><span class="ss">)</span>,<span class="nv">dble</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">(</span>:<span class="mi">8</span><span class="ss">))</span>
+ <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s2">&quot;</span><span class="s">That&#39;s all folks!</span><span class="s2">&quot;</span>
+
+ <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_s2v</span>
+
+<span class="nv">Expected</span> <span class="nv">output</span>
+
+ <span class="o">&gt;</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">string</span> <span class="nv">is</span>    <span class="mi">5</span>.<span class="mi">1725000000000003</span>
+ <span class="o">&gt;</span>
+ <span class="o">&gt;</span> <span class="nv">STRING</span>            <span class="nv">VALUE</span>                    <span class="nv">ERROR_NUMBER</span>
+ <span class="o">&gt;</span> <span class="mi">10</span>.<span class="mi">345</span>       <span class="o">=</span>   <span class="mi">10</span>.<span class="mi">345000000000001</span>                <span class="mi">0</span>
+ <span class="o">&gt;+</span><span class="mi">10</span>           <span class="o">=</span>   <span class="mi">10</span>.<span class="mi">000000000000000</span>                <span class="mi">0</span>
+ <span class="o">&gt;</span>    <span class="o">-</span><span class="mi">3</span>        <span class="o">=</span>  <span class="o">-</span><span class="mi">3</span>.<span class="mi">0000000000000000</span>                <span class="mi">0</span>
+ <span class="o">&gt;</span>    <span class="o">-</span><span class="mi">4</span>.<span class="mi">94</span><span class="nv">e</span><span class="o">-</span><span class="mi">2</span>  <span class="o">=</span>  <span class="o">-</span><span class="mi">4</span>.<span class="mi">9399999999999999</span><span class="nv">E</span><span class="o">-</span><span class="mi">002</span>           <span class="mi">0</span>
+ <span class="o">&gt;</span><span class="mi">0</span>.<span class="mi">1</span>           <span class="o">=</span>  <span class="mi">0</span>.<span class="mi">10000000000000001</span>                <span class="mi">0</span>
+ <span class="o">&gt;</span><span class="mi">12345</span>.<span class="mi">678910</span><span class="nv">d0</span><span class="o">=</span>   <span class="mi">12345</span>.<span class="mi">678910000001</span>                <span class="mi">0</span>
+ <span class="o">&gt;</span>              <span class="o">=</span>   <span class="mi">0</span>.<span class="mi">0000000000000000</span>                <span class="mi">0</span>
+ <span class="o">&gt;</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> . <span class="mi">0</span> <span class="o">=</span>   <span class="mi">12121</span>.<span class="mi">000000000000</span>                <span class="mi">0</span>
+ <span class="o">&gt;*</span><span class="nv">a2d</span><span class="o">*</span> <span class="o">-</span> <span class="nv">cannot</span> <span class="nv">produce</span> <span class="nv">number</span> <span class="nv">from</span> <span class="nv">string</span> [<span class="nv">WHAT</span>?]
+ <span class="o">&gt;*</span><span class="nv">a2d</span><span class="o">*</span> <span class="o">-</span> [<span class="nv">Bad</span> <span class="nv">value</span> <span class="nv">during</span> <span class="nv">floating</span> <span class="nv">point</span> <span class="nv">read</span>]
+ <span class="o">&gt;</span><span class="nv">WHAT</span>?         <span class="o">=</span>   <span class="mi">0</span>.<span class="mi">0000000000000000</span>             <span class="mi">5010</span>
+ <span class="o">&gt;</span><span class="nv">Extended</span> <span class="nv">intrinsics</span>
+ <span class="o">&gt;</span><span class="nv">given</span> <span class="nv">inputs</span>: <span class="mi">10</span>.<span class="mi">345</span> <span class="mi">10</span>.<span class="mi">345</span> <span class="o">+</span><span class="mi">10</span> <span class="o">-</span><span class="mi">3</span> <span class="o">-</span><span class="mi">4</span>.<span class="mi">94</span><span class="nv">e</span><span class="o">-</span><span class="mi">2</span> <span class="mi">0</span>.<span class="mi">1</span>
+ <span class="mi">12345</span>.<span class="mi">678910</span><span class="nv">d0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> . <span class="mi">0</span>
+ <span class="o">&gt;</span><span class="nv">INT</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>: <span class="mi">10</span> <span class="mi">10</span> <span class="mi">10</span> <span class="o">-</span><span class="mi">3</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">12345</span> <span class="mi">0</span> <span class="mi">12121</span>
+ <span class="o">&gt;</span><span class="nv">REAL</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>: <span class="mi">10</span>.<span class="mi">3450003</span> <span class="mi">10</span>.<span class="mi">3450003</span> <span class="mi">10</span>.<span class="mi">0000000</span> <span class="o">-</span><span class="mi">3</span>.<span class="mi">00000000</span>
+ <span class="o">-</span><span class="mi">4</span>.<span class="mi">94000018</span><span class="nv">E</span><span class="o">-</span><span class="mi">02</span>
+ <span class="o">&gt;</span>          <span class="mi">0</span>.<span class="mi">100000001</span> <span class="mi">12345</span>.<span class="mi">6787</span> <span class="mi">0</span>.<span class="mi">00000000</span> <span class="mi">12121</span>.<span class="mi">0000</span>
+ <span class="o">&gt;</span><span class="nv">DBLE</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>: <span class="mi">10</span>.<span class="mi">345000000000001</span> <span class="mi">10</span>.<span class="mi">345000000000001</span>
+ <span class="mi">10</span>.<span class="mi">000000000000000</span>
+ <span class="o">&gt;</span>          <span class="o">-</span><span class="mi">3</span>.<span class="mi">0000000000000000</span> <span class="o">-</span><span class="mi">4</span>.<span class="mi">9399999999999999</span><span class="nv">E</span><span class="o">-</span><span class="mi">002</span>
+ <span class="mi">0</span>.<span class="mi">10000000000000001</span>
+ <span class="o">&gt;</span>          <span class="mi">12345</span>.<span class="mi">678910000001</span> <span class="mi">0</span>.<span class="mi">0000000000000000</span>
+ <span class="mi">12121</span>.<span class="mi">000000000000</span>
+ <span class="o">&gt;</span><span class="nv">That</span><span class="s1">&#39;</span><span class="s">s all folks!</span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
+
+<h2 id="procedure">PROCEDURE:</h2>
+<p>DESCRIPTION: s2v(3f): function returns doubleprecision number from string;zero if error occurs</p>
+<h2 id="version-20-20160704">VERSION:     2.0, 20160704</h2>
+<p>AUTHOR:      John S. Urban</p>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -265,7 +389,9 @@
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="n">doubleprecision</span><span class="w"> </span><span class="k">function </span><span class="n">s2v</span><span class="p">(</span><span class="n">chars</span><span class="p">,</span><span class="n">ierr</span><span class="p">,</span><span class="n">onerr</span><span class="p">)</span><span class="w"></span>
+<span class="c">!  1989 John S. Urban</span>
 
+<span class="c">! ident_48=&quot;@(#) M_strings s2v(3f) returns doubleprecision number from string;zero if error occurs&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">chars</span><span class="w"></span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">ierr</span><span class="w"></span>
@@ -309,7 +435,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

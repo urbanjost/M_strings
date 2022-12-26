@@ -321,7 +321,7 @@
 <span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span><span class="w"></span>
 <span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;OVERLOADED OPERATORS (add and subtract,return TYPE(STRING))&#39;</span><span class="w"></span>
 <span class="w">   </span><span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;123.456&#39;</span><span class="w"></span>
-<span class="w">   </span><span class="n">str2</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">str2</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;AaBbCcDdEeFfGgHhIi AaBbCcDdEeFfGgHhIi&#39;</span><span class="w"></span>
 <span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str1</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="w"></span>
 <span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str2</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str2</span><span class="o">%</span><span class="nb">str</span><span class="w"></span>
 <span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 + str2 ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">str2</span><span class="p">)</span><span class="w"></span>
@@ -332,7 +332,7 @@
 
 <span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span><span class="w"></span>
 <span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;OVERLOADED OPERATORS (multiply,return TYPE(STRING))&#39;</span><span class="w"></span>
-<span class="w">   </span><span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;AaBbCcDdEeFfGgHhIiJj&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;AaBbCcDdEeFfGgHhIi&#39;</span><span class="w"></span>
 <span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str1</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="w"></span>
 <span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 * 2 ................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
 
@@ -420,23 +420,23 @@
 <dt>match(&ldquo;<em>and</em>&rdquo;) .............  T</dt>
 <dt>====================================================================</dt>
 <dt>OVERLOADED OPERATORS (add and subtract, return TYPE(STRING))</dt>
-<dt>str1%str ................... [123.456]</dt>
-<dt>str2%str ................... [AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj]</dt>
-<dt>str1 + str2 ................ 123.456 AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj</dt>
-<dt>str1 + 20000 ............... 20123.455999999998</dt>
-<dt>str1 - 20.0 ................ -103.456</dt>
-<dt>str2 - &ldquo;Aa&rdquo; (removes ALL) .. BbCcDdEeFfGgHhIiJj BbCcDdEeFfGgHhIiJj</dt>
+<dt>str1%str .................. [123.456]</dt>
+<dt>str2%str .................. [AaBbCcDdEeFfGgHhIi AaBbCcDdEeFfGgHhIi]</dt>
+<dt>str1 + str2 ............... 123.456 AaBbCcDdEeFfGgHhIi AaBbCcDdEeFfGgHhIi</dt>
+<dt>str1 + 20000 .............. 20123.455999999998</dt>
+<dt>str1 - 20.0 ............... -103.456</dt>
+<dt>str2 - &ldquo;Aa&rdquo; (removes ALL) . BbCcDdEeFfGgHhIi BbCcDdEeFfGgHhIi</dt>
 <dt>===================================================================</dt>
 <dt>OVERLOADED OPERATORS (multiply, return TYPE(STRING))</dt>
-<dt>str1%str ................... [AaBbCcDdEeFfGgHhIiJj]</dt>
-<dt>str1 * 2 ................... AaBbCcDdEeFfGgHhIiJjAaBbCcDdEeFfGgHhIiJj</dt>
+<dt>str1%str ................... [AaBbCcDdEeFfGgHhIi]</dt>
+<dt>str1 * 2 ................... AaBbCcDdEeFfGgHhIiAaBbCcDdEeFfGgHhIi</dt>
 <dt>===================================================================</dt>
 <dt>OVERLOADED OPERATORS (//, return TYPE(STRING))</dt>
 <dt>str1%str ................... [String one:]</dt>
 <dt>str2%str ................... [String two:]</dt>
-<dt>str1 // str2 ................ String one:String two:</dt>
-<dt>str1 // 20000 ............... String one:20000</dt>
-<dt>str1 // 20.0 ................ String one:20.0</dt>
+<dt>str1 // str2 ............... String one:String two:</dt>
+<dt>str1 // 20000 .............. String one:20000</dt>
+<dt>str1 // 20.0 ............... String one:20.0</dt>
 <dt>===================================================================</dt>
 <dt>OVERLOADED OPERATORS (logical comparisons, return logical)</dt>
 <dt>str1%str ................... [abcdefghij]</dt>
@@ -1159,7 +1159,7 @@ generic,
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

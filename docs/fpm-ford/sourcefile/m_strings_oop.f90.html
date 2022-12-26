@@ -348,7 +348,7 @@
 <a id="ln-141" name="ln-141" href="#ln-141"></a><span class="c">!!       write(*,*)repeat(&#39;=&#39;,68)</span>
 <a id="ln-142" name="ln-142" href="#ln-142"></a><span class="c">!!       write(*,*)&#39;OVERLOADED OPERATORS (add and subtract,return TYPE(STRING))&#39;</span>
 <a id="ln-143" name="ln-143" href="#ln-143"></a><span class="c">!!       str1%str=&#39;123.456&#39;</span>
-<a id="ln-144" name="ln-144" href="#ln-144"></a><span class="c">!!       str2%str=&#39;AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj&#39;</span>
+<a id="ln-144" name="ln-144" href="#ln-144"></a><span class="c">!!       str2%str=&#39;AaBbCcDdEeFfGgHhIi AaBbCcDdEeFfGgHhIi&#39;</span>
 <a id="ln-145" name="ln-145" href="#ln-145"></a><span class="c">!!       write(*,101)&#39;str1%str ................... &#39;,str1%str</span>
 <a id="ln-146" name="ln-146" href="#ln-146"></a><span class="c">!!       write(*,101)&#39;str2%str ................... &#39;,str2%str</span>
 <a id="ln-147" name="ln-147" href="#ln-147"></a><span class="c">!!       write(*,*)&#39;str1 + str2 ................ &#39;,p(str1 + str2)</span>
@@ -359,7 +359,7 @@
 <a id="ln-152" name="ln-152" href="#ln-152"></a><span class="c">!!</span>
 <a id="ln-153" name="ln-153" href="#ln-153"></a><span class="c">!!       write(*,*)repeat(&#39;=&#39;,68)</span>
 <a id="ln-154" name="ln-154" href="#ln-154"></a><span class="c">!!       write(*,*)&#39;OVERLOADED OPERATORS (multiply,return TYPE(STRING))&#39;</span>
-<a id="ln-155" name="ln-155" href="#ln-155"></a><span class="c">!!       str1%str=&#39;AaBbCcDdEeFfGgHhIiJj&#39;</span>
+<a id="ln-155" name="ln-155" href="#ln-155"></a><span class="c">!!       str1%str=&#39;AaBbCcDdEeFfGgHhIi&#39;</span>
 <a id="ln-156" name="ln-156" href="#ln-156"></a><span class="c">!!       write(*,101)&#39;str1%str ................... &#39;,str1%str</span>
 <a id="ln-157" name="ln-157" href="#ln-157"></a><span class="c">!!       write(*,*)&#39;str1 * 2 ................... &#39;,p(str1 * 2)</span>
 <a id="ln-158" name="ln-158" href="#ln-158"></a><span class="c">!!</span>
@@ -446,23 +446,23 @@
 <a id="ln-239" name="ln-239" href="#ln-239"></a><span class="c">!!   match(&quot;*and*&quot;) .............  T</span>
 <a id="ln-240" name="ln-240" href="#ln-240"></a><span class="c">!!   ====================================================================</span>
 <a id="ln-241" name="ln-241" href="#ln-241"></a><span class="c">!!   OVERLOADED OPERATORS (add and subtract, return TYPE(STRING))</span>
-<a id="ln-242" name="ln-242" href="#ln-242"></a><span class="c">!!   str1%str ................... [123.456]</span>
-<a id="ln-243" name="ln-243" href="#ln-243"></a><span class="c">!!   str2%str ................... [AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj]</span>
-<a id="ln-244" name="ln-244" href="#ln-244"></a><span class="c">!!   str1 + str2 ................ 123.456 AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj</span>
-<a id="ln-245" name="ln-245" href="#ln-245"></a><span class="c">!!   str1 + 20000 ............... 20123.455999999998</span>
-<a id="ln-246" name="ln-246" href="#ln-246"></a><span class="c">!!   str1 - 20.0 ................ -103.456</span>
-<a id="ln-247" name="ln-247" href="#ln-247"></a><span class="c">!!   str2 - &quot;Aa&quot; (removes ALL) .. BbCcDdEeFfGgHhIiJj BbCcDdEeFfGgHhIiJj</span>
+<a id="ln-242" name="ln-242" href="#ln-242"></a><span class="c">!!   str1%str .................. [123.456]</span>
+<a id="ln-243" name="ln-243" href="#ln-243"></a><span class="c">!!   str2%str .................. [AaBbCcDdEeFfGgHhIi AaBbCcDdEeFfGgHhIi]</span>
+<a id="ln-244" name="ln-244" href="#ln-244"></a><span class="c">!!   str1 + str2 ............... 123.456 AaBbCcDdEeFfGgHhIi AaBbCcDdEeFfGgHhIi</span>
+<a id="ln-245" name="ln-245" href="#ln-245"></a><span class="c">!!   str1 + 20000 .............. 20123.455999999998</span>
+<a id="ln-246" name="ln-246" href="#ln-246"></a><span class="c">!!   str1 - 20.0 ............... -103.456</span>
+<a id="ln-247" name="ln-247" href="#ln-247"></a><span class="c">!!   str2 - &quot;Aa&quot; (removes ALL) . BbCcDdEeFfGgHhIi BbCcDdEeFfGgHhIi</span>
 <a id="ln-248" name="ln-248" href="#ln-248"></a><span class="c">!!   ===================================================================</span>
 <a id="ln-249" name="ln-249" href="#ln-249"></a><span class="c">!!   OVERLOADED OPERATORS (multiply, return TYPE(STRING))</span>
-<a id="ln-250" name="ln-250" href="#ln-250"></a><span class="c">!!   str1%str ................... [AaBbCcDdEeFfGgHhIiJj]</span>
-<a id="ln-251" name="ln-251" href="#ln-251"></a><span class="c">!!   str1 * 2 ................... AaBbCcDdEeFfGgHhIiJjAaBbCcDdEeFfGgHhIiJj</span>
+<a id="ln-250" name="ln-250" href="#ln-250"></a><span class="c">!!   str1%str ................... [AaBbCcDdEeFfGgHhIi]</span>
+<a id="ln-251" name="ln-251" href="#ln-251"></a><span class="c">!!   str1 * 2 ................... AaBbCcDdEeFfGgHhIiAaBbCcDdEeFfGgHhIi</span>
 <a id="ln-252" name="ln-252" href="#ln-252"></a><span class="c">!!   ===================================================================</span>
 <a id="ln-253" name="ln-253" href="#ln-253"></a><span class="c">!!   OVERLOADED OPERATORS (//, return TYPE(STRING))</span>
 <a id="ln-254" name="ln-254" href="#ln-254"></a><span class="c">!!   str1%str ................... [String one:]</span>
 <a id="ln-255" name="ln-255" href="#ln-255"></a><span class="c">!!   str2%str ................... [String two:]</span>
-<a id="ln-256" name="ln-256" href="#ln-256"></a><span class="c">!!   str1 // str2 ................ String one:String two:</span>
-<a id="ln-257" name="ln-257" href="#ln-257"></a><span class="c">!!   str1 // 20000 ............... String one:20000</span>
-<a id="ln-258" name="ln-258" href="#ln-258"></a><span class="c">!!   str1 // 20.0 ................ String one:20.0</span>
+<a id="ln-256" name="ln-256" href="#ln-256"></a><span class="c">!!   str1 // str2 ............... String one:String two:</span>
+<a id="ln-257" name="ln-257" href="#ln-257"></a><span class="c">!!   str1 // 20000 .............. String one:20000</span>
+<a id="ln-258" name="ln-258" href="#ln-258"></a><span class="c">!!   str1 // 20.0 ............... String one:20.0</span>
 <a id="ln-259" name="ln-259" href="#ln-259"></a><span class="c">!!   ===================================================================</span>
 <a id="ln-260" name="ln-260" href="#ln-260"></a><span class="c">!!   OVERLOADED OPERATORS (logical comparisons, return logical)</span>
 <a id="ln-261" name="ln-261" href="#ln-261"></a><span class="c">!!   str1%str ................... [abcdefghij]</span>
@@ -1114,7 +1114,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

@@ -152,6 +152,57 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>crop(3f) - [M_strings:WHITESPACE] trim leading and trailing blanks
+           and control characters from a string
+(LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">crop(strin) result </span><span class="p">(</span>strout<span class="p">)</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="p">::</span><span class="w"> </span><span class="n">strin</span><span class="w"></span>
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">strout</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code>All control characters throughout the string are replaced with spaces
+and leading and trailing spaces are trimmed from the resulting string.
+Tabs are expanded assuming a stop every eight characters.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code>strin   input string to trim leading and trailing space and control
+        characters from
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code>strout  cropped version of input string
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_crop</span>
+<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">crop</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">20</span><span class="ss">)</span> ::  <span class="nv">untrimmed</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">   ABCDEFG abcdefg  </span><span class="s1">&#39;</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">untrimmed string=[</span><span class="s1">&#39;</span>,<span class="nv">untrimmed</span>,<span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">cropped string=[</span><span class="s1">&#39;</span>,<span class="nv">crop</span><span class="ss">(</span><span class="nv">untrimmed</span><span class="ss">)</span>,<span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_crop</span>
+</code></pre></div>
+
+<p>Expected output</p>
+<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="n">untrimmed</span><span class="w"> </span><span class="n">string</span><span class="o">=</span><span class="p">[</span><span class="w">   </span><span class="n">ABCDEFG</span><span class="w"> </span><span class="n">abcdefg</span><span class="w">                      </span><span class="p">]</span><span class="w"></span>
+<span class="w">  </span><span class="n">cropped</span><span class="w"> </span><span class="n">string</span><span class="o">=</span><span class="p">[</span><span class="n">ABCDEFG</span><span class="w"> </span><span class="n">abcdefg</span><span class="p">]</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -236,6 +287,7 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">crop</span><span class="p">(</span><span class="n">strin</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="p">(</span><span class="n">strout</span><span class="p">)</span><span class="w"></span>
 
+<span class="c">! ident_16=&quot;@(#) M_strings crop(3f) replace control characters with whitespace and trim leading and trailings spaces from resulting string&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">strin</span><span class="w"></span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">strout</span><span class="w"></span>
@@ -261,7 +313,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

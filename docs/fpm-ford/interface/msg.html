@@ -204,7 +204,87 @@
     <div class="panel-heading codesum"><span class="anchor" id="proc-msg_scalar"></span><h3>private  function msg_scalar(generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9, sep)  
 </h3></div>
     <div class="panel-body">
-        
+        <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code> msg(3f) - [M_strings:TYPE] converts any standard scalar type to a string
+ (LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="nf">msg</span><span class="p">(</span>g1,g2g3,g4,g5,g6,g7,g8,g9,sep<span class="p">)</span><span class="w"></span>
+
+<span class="w">  </span><span class="nb">class</span><span class="p">(</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w">  </span><span class="p">::</span><span class="w"> </span><span class="n">g1</span><span class="p">,</span><span class="n">g2</span><span class="p">,</span><span class="n">g3</span><span class="p">,</span><span class="n">g4</span><span class="p">,</span><span class="n">g5</span><span class="p">,</span><span class="n">g6</span><span class="p">,</span><span class="n">g7</span><span class="p">,</span><span class="n">g8</span><span class="p">,</span><span class="n">g9</span><span class="w"></span>
+<span class="w">  </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">sep</span><span class="w"></span>
+<span class="w">  </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">msg</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code> msg(3f) builds a space-separated string from up to nine scalar values.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> g[1-9]  optional value to print the value of after the message. May
+         be of type INTEGER, LOGICAL, REAL, DOUBLEPRECISION, COMPLEX,
+         or CHARACTER.
+ sep     separator between values. Defaults to a space
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code> msg     description to print
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code>    <span class="nv">program</span> <span class="nv">demo_msg</span>
+    <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">msg</span>
+    <span class="nv">implicit</span> <span class="nv">none</span>
+    <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">pr</span>
+    <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">frmt</span>
+    <span class="nv">integer</span>                      :: <span class="nv">biggest</span>
+
+    <span class="nv">pr</span><span class="o">=</span><span class="nv">msg</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">HUGE(3f) integers</span><span class="s1">&#39;</span>,<span class="nv">huge</span><span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>,<span class="o">&amp;</span>
+    <span class="o">&amp;</span> <span class="s1">&#39;</span><span class="s">and real</span><span class="s1">&#39;</span>,<span class="nv">huge</span><span class="ss">(</span><span class="mi">0</span>.<span class="mi">0</span><span class="ss">)</span>,<span class="s1">&#39;</span><span class="s">and double</span><span class="s1">&#39;</span>,<span class="nv">huge</span><span class="ss">(</span><span class="mi">0</span>.<span class="mi">0</span><span class="nv">d0</span><span class="ss">))</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">pr</span>
+    <span class="nv">pr</span><span class="o">=</span><span class="nv">msg</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">real            :</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+     <span class="o">&amp;</span> <span class="nv">huge</span><span class="ss">(</span><span class="mi">0</span>.<span class="mi">0</span><span class="ss">)</span>,<span class="mi">0</span>.<span class="mi">0</span>,<span class="mi">12345</span>.<span class="mi">6789</span>,<span class="nv">tiny</span><span class="ss">(</span><span class="mi">0</span>.<span class="mi">0</span><span class="ss">)</span> <span class="ss">)</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">pr</span>
+    <span class="nv">pr</span><span class="o">=</span><span class="nv">msg</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">doubleprecision :</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+     <span class="o">&amp;</span> <span class="nv">huge</span><span class="ss">(</span><span class="mi">0</span>.<span class="mi">0</span><span class="nv">d0</span><span class="ss">)</span>,<span class="mi">0</span>.<span class="mi">0</span><span class="nv">d0</span>,<span class="mi">12345</span>.<span class="mi">6789</span><span class="nv">d0</span>,<span class="nv">tiny</span><span class="ss">(</span><span class="mi">0</span>.<span class="mi">0</span><span class="nv">d0</span><span class="ss">)</span> <span class="ss">)</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">pr</span>
+    <span class="nv">pr</span><span class="o">=</span><span class="nv">msg</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">complex         :</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+     <span class="o">&amp;</span> <span class="nv">cmplx</span><span class="ss">(</span><span class="nv">huge</span><span class="ss">(</span><span class="mi">0</span>.<span class="mi">0</span><span class="ss">)</span>,<span class="nv">tiny</span><span class="ss">(</span><span class="mi">0</span>.<span class="mi">0</span><span class="ss">))</span> <span class="ss">)</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">pr</span>
+
+    <span class="o">!</span> <span class="nv">create</span> <span class="nv">a</span> <span class="nv">format</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">fly</span>
+    <span class="nv">biggest</span><span class="o">=</span><span class="nv">huge</span><span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
+    <span class="nv">frmt</span><span class="o">=</span><span class="nv">msg</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">(*(i</span><span class="s1">&#39;</span>,<span class="nv">int</span><span class="ss">(</span><span class="nv">log10</span><span class="ss">(</span><span class="nv">real</span><span class="ss">(</span><span class="nv">biggest</span><span class="ss">)))</span>,<span class="s1">&#39;</span><span class="s">:,1x))</span><span class="s1">&#39;</span>,<span class="nv">sep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="ss">)</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">format=</span><span class="s1">&#39;</span>,<span class="nv">frmt</span>
+
+    <span class="o">!</span> <span class="nv">although</span> <span class="nv">it</span> <span class="nv">will</span> <span class="nv">often</span> <span class="nv">work</span>, <span class="nv">using</span> <span class="nv">msg</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">in</span> <span class="nv">an</span> <span class="nv">I</span><span class="o">/</span><span class="nv">O</span> <span class="nv">statement</span>
+    <span class="o">!</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">recommended</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="nv">msg</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">program will now stop</span><span class="s1">&#39;</span><span class="ss">)</span>
+
+    <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_msg</span>
+</code></pre></div>
+
+<p>Output</p>
+<div class="codehilite"><pre><span></span><code>   HUGE(3f) integers 2147483647 and real 3.40282347E+38
+   and double 1.7976931348623157E+308
+   real            : 3.40282347E+38 0.00000000
+   12345.6787 1.17549435E-38
+   doubleprecision : 1.7976931348623157E+308 0.0000000000000000
+   12345.678900000001 2.2250738585072014E-308
+   complex         : (3.40282347E+38,1.17549435E-38)
+    format=(*(i9:,1x))
+    program will now stop
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -574,7 +654,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

@@ -152,6 +152,82 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>  <span class="nv">s2vs</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">TYPE</span>] <span class="nv">given</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">representing</span> <span class="nv">numbers</span>
+  <span class="k">return</span> <span class="nv">a</span> <span class="nv">numeric</span> <span class="nv">array</span>
+  <span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code><span class="w">   </span><span class="k">function</span><span class="w"> </span><span class="nf">s2vs</span><span class="p">(</span>line[,delim]<span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nb">line</span><span class="w"></span>
+<span class="w">    </span><span class="n">doubleprecision</span><span class="p">,</span><span class="n">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">s2vs</span><span class="p">(:)</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code>The function S2VS(3f) takes a string representing a series of numbers
+and converts it to a numeric doubleprecision array. The string values
+may be delimited by spaces, semi-colons, and commas by default.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code>   <span class="nv">LINE</span>   <span class="nv">Input</span> <span class="nv">string</span> <span class="nv">containing</span> <span class="nv">numbers</span>
+   <span class="nv">DELIM</span>  <span class="nv">optional</span> <span class="nv">list</span> <span class="nv">of</span> <span class="nv">delimiter</span> <span class="nv">characters</span>. <span class="k">If</span> <span class="nv">a</span> <span class="nv">space</span> <span class="nv">is</span>
+          <span class="nv">included</span>, <span class="nv">it</span> <span class="nv">should</span> <span class="nv">appear</span> <span class="nv">as</span> <span class="nv">the</span> <span class="nv">left</span><span class="o">-</span><span class="nv">most</span> <span class="nv">character</span>
+          <span class="nv">in</span> <span class="nv">the</span> <span class="nv">list</span>. <span class="nv">The</span> <span class="nv">default</span> <span class="nv">is</span> <span class="s2">&quot;</span><span class="s"> ;,</span><span class="s2">&quot;</span> <span class="ss">(</span><span class="nv">spaces</span>, <span class="nv">semi</span><span class="o">-</span><span class="nv">colons</span>,
+          <span class="nv">and</span> <span class="nv">commas</span><span class="ss">)</span>.
+</code></pre></div>
+
+<h2 id="results">RESULTS</h2>
+<div class="codehilite"><pre><span></span><code>   S2VS   doubleprecision array
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<p>Sample Program:</p>
+<div class="codehilite"><pre><span></span><code>  <span class="nv">program</span> <span class="nv">demo_s2vs</span>
+  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">s2vs</span>
+  <span class="nv">implicit</span> <span class="nv">none</span>
+  <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">80</span><span class="ss">)</span> :: <span class="nv">s</span><span class="o">=</span><span class="s1">&#39;</span><span class="s"> 10 20e3;3.45 -400.3e-2;1234; 5678 </span><span class="s1">&#39;</span>
+  <span class="nv">real</span>,<span class="nv">allocatable</span> :: <span class="nv">values</span><span class="ss">(</span>:<span class="ss">)</span>
+  <span class="nv">integer</span>,<span class="nv">allocatable</span> :: <span class="nv">ivalues</span><span class="ss">(</span>:<span class="ss">)</span>
+  <span class="nv">integer</span> :: <span class="nv">ii</span>
+
+  <span class="nv">values</span><span class="o">=</span><span class="nv">s2vs</span><span class="ss">(</span><span class="nv">s</span><span class="ss">)</span>
+  <span class="nv">ivalues</span><span class="o">=</span><span class="nv">int</span><span class="ss">(</span><span class="nv">s2vs</span><span class="ss">(</span><span class="nv">s</span><span class="ss">))</span>
+  <span class="k">call</span> <span class="nl">reportit</span><span class="ss">()</span>
+
+  <span class="nv">contains</span>
+    <span class="nv">subroutine</span> <span class="nv">reportit</span><span class="ss">()</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">S2VS:</span><span class="s1">&#39;</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">input string.............</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+       <span class="o">&amp;</span> <span class="nv">trim</span><span class="ss">(</span><span class="nv">s</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">number of values found...</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+       <span class="o">&amp;</span> <span class="nv">size</span><span class="ss">(</span><span class="nv">values</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">values...................</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+       <span class="o">&amp;</span> <span class="ss">(</span><span class="nv">values</span><span class="ss">(</span><span class="nv">ii</span><span class="ss">)</span>,<span class="nv">ii</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">values</span><span class="ss">))</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">ivalues..................</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+       <span class="o">&amp;</span> <span class="ss">(</span><span class="nv">ivalues</span><span class="ss">(</span><span class="nv">ii</span><span class="ss">)</span>,<span class="nv">ii</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">values</span><span class="ss">))</span>
+    <span class="k">end</span> <span class="nv">subroutine</span> <span class="nv">reportit</span>
+  <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_s2vs</span>
+</code></pre></div>
+
+<p>Expected output</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="nt">S2VS</span><span class="o">:</span><span class="w"></span>
+<span class="w"> </span><span class="nt">input</span><span class="w"> </span><span class="nt">string</span><span class="o">.............</span><span class="w"> </span><span class="nt">10</span><span class="w"> </span><span class="nt">20e3</span><span class="o">;</span><span class="nt">3</span><span class="p">.</span><span class="nc">45</span><span class="w"> </span><span class="nt">-400</span><span class="p">.</span><span class="nc">3e-2</span><span class="o">;</span><span class="nt">1234</span><span class="o">;</span><span class="w"> </span><span class="nt">5678</span><span class="w"></span>
+<span class="w"> </span><span class="nt">number</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">values</span><span class="w"> </span><span class="nt">found</span><span class="o">...</span><span class="w">           </span><span class="nt">6</span><span class="w"></span>
+<span class="w"> </span><span class="nt">values</span><span class="o">...................</span><span class="w">   </span><span class="nt">10</span><span class="p">.</span><span class="nc">0000000</span><span class="w"> </span><span class="nt">20000</span><span class="p">.</span><span class="nc">0000</span><span class="w"> </span><span class="nt">3</span><span class="p">.</span><span class="nc">45000005</span><span class="w"></span>
+<span class="w"> </span><span class="nt">-4</span><span class="p">.</span><span class="nc">00299978</span><span class="w"> </span><span class="nt">1234</span><span class="p">.</span><span class="nc">00000</span><span class="w"> </span><span class="nt">5678</span><span class="p">.</span><span class="nc">00000</span><span class="w"></span>
+<span class="nt">ivalues</span><span class="o">..................</span><span class="w"> </span><span class="nt">10</span><span class="w"> </span><span class="nt">20000</span><span class="w"> </span><span class="nt">3</span><span class="w"> </span><span class="nt">-4</span><span class="w"> </span><span class="nt">1234</span><span class="w"> </span><span class="nt">5678</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -251,6 +327,7 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">s2vs</span><span class="p">(</span><span class="n">string</span><span class="p">,</span><span class="n">delim</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">darray</span><span class="p">)</span><span class="w"></span>
 
+<span class="c">! ident_61=&quot;@(#) M_strings s2vs(3f) function returns array of values from a string&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">        </span><span class="kd">::</span><span class="w"> </span><span class="n">string</span><span class="w">                       </span><span class="c">! keyword to retrieve value for from dictionary</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">optional</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">delim</span><span class="w">                        </span><span class="c">! delimiter characters</span>
@@ -260,16 +337,19 @@
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">carray</span><span class="p">(:)</span><span class="w">                    </span><span class="c">! convert value to an array using split(3f)</span>
 <span class="kt">integer</span><span class="w">                            </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                            </span><span class="kd">::</span><span class="w"> </span><span class="n">ier</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">delim</span><span class="p">))</span><span class="k">then</span>
 <span class="k">      </span><span class="n">delim_local</span><span class="o">=</span><span class="n">delim</span><span class="w"></span>
 <span class="w">   </span><span class="k">else</span>
 <span class="k">      </span><span class="n">delim_local</span><span class="o">=</span><span class="s1">&#39; ;,&#39;</span><span class="w"></span>
-<span class="w">   </span><span class="k">endif</span>
-<span class="k">   call </span><span class="n">split</span><span class="p">(</span><span class="n">string</span><span class="p">,</span><span class="n">carray</span><span class="p">,</span><span class="n">delimiters</span><span class="o">=</span><span class="n">delim_local</span><span class="p">)</span><span class="w">         </span><span class="c">! split string into an array</span>
+<span class="w">   </span><span class="k">endif</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="w">   </span><span class="k">call </span><span class="n">split</span><span class="p">(</span><span class="n">string</span><span class="p">,</span><span class="n">carray</span><span class="p">,</span><span class="n">delimiters</span><span class="o">=</span><span class="n">delim_local</span><span class="p">)</span><span class="w">         </span><span class="c">! split string into an array</span>
 <span class="w">   </span><span class="k">allocate</span><span class="p">(</span><span class="n">darray</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">carray</span><span class="p">)))</span><span class="w">                           </span><span class="c">! create the output array</span>
 <span class="w">   </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">carray</span><span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">call </span><span class="n">string_to_value</span><span class="p">(</span><span class="n">carray</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">darray</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">ier</span><span class="p">)</span><span class="w">       </span><span class="c">! convert the string to a numeric value</span>
-<span class="w">   </span><span class="k">enddo</span>
+<span class="w">   </span><span class="k">enddo</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="k">end function </span><span class="n">s2vs</span><span class="w"></span>
 </pre></div>
 
@@ -291,7 +371,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

@@ -1,13 +1,15 @@
       program demo_M_strings
       use M_strings, only : split,sep,delim,chomp,strtok
       use M_strings, only : split2020, find_field
-      use M_strings, only : substitute,change,modif,transliterate,reverse,squeeze
+      use M_strings, only : substitute,change,modif,transliterate,&
+              & reverse,squeeze
       use M_strings, only : replace,join
       use M_strings, only : upper,lower,upper_quoted
       use M_strings, only : rotate13
       use M_strings, only : adjustc,compact,nospace,indent
       use M_strings, only : crop,clip,unquote,quote,matching_delimiter
-      use M_strings, only : len_white,pad,lpad,cpad,rpad,zpad,stretch,lenset,merge_str
+      use M_strings, only : len_white,pad,lpad,cpad,rpad,zpad,&
+              & stretch,lenset,merge_str
       use M_strings, only : switch,s2c,c2s
       use M_strings, only : noesc,notabs,dilate,expand,visible
       use M_strings, only : longest_common_substring

@@ -164,6 +164,58 @@
     </div>
 
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="n">s2c</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="n">M_strings</span><span class="p">:</span><span class="n">ARRAY</span><span class="p">]</span><span class="w"> </span><span class="nb">convert</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">of</span><span class="w"></span>
+<span class="w">  </span><span class="n">characters</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="n">element</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="n">LICENSE</span><span class="p">:</span><span class="n">PD</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">s2c</span><span class="p">(</span>string<span class="p">)</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">=(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="p">::</span><span class="w"> </span><span class="nb">string</span><span class="w"></span>
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="mi">1</span><span class="p">),</span><span class="n">allocatable</span><span class="w">  </span><span class="p">::</span><span class="w"> </span><span class="n">s2c</span><span class="p">(:)</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">Given</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="nb">convert</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">single</span><span class="o">-</span><span class="n">character</span><span class="w"></span>
+<span class="n">character</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="n">element</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="w"> </span><span class="n">character</span><span class="o">.</span><span class="w"></span>
+<span class="n">This</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">generally</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="k">pass</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="n">procedures</span><span class="o">.</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">Sample</span> <span class="nv">Program</span>:
+
+ <span class="nv">program</span> <span class="nv">demo_s2c</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">s2c</span>
+ <span class="nv">implicit</span> <span class="nv">none</span>
+ <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span>   :: <span class="nv">string</span><span class="o">=</span><span class="s2">&quot;</span><span class="s">single string</span><span class="s2">&quot;</span>
+ <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">3</span><span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">array</span><span class="ss">(</span>:<span class="ss">)</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">INPUT STRING </span><span class="s1">&#39;</span>,<span class="nv">trim</span><span class="ss">(</span><span class="nv">string</span><span class="ss">)</span>
+    <span class="o">!</span> <span class="nv">put</span> <span class="nv">one</span> <span class="nv">character</span> <span class="nv">into</span> <span class="nv">each</span> <span class="mi">3</span><span class="o">-</span><span class="nv">character</span> <span class="nv">element</span> <span class="nv">of</span> <span class="nv">array</span>
+    <span class="nv">array</span><span class="o">=</span><span class="nv">s2c</span><span class="ss">(</span><span class="nv">string</span><span class="ss">)</span>
+    <span class="o">!</span> <span class="nv">write</span> <span class="nv">array</span> <span class="nv">with</span> <span class="nv">ASCII</span> <span class="nv">Decimal</span> <span class="nv">Equivalent</span> <span class="nv">below</span> <span class="nv">it</span> <span class="nv">except</span> <span class="k">show</span>
+    <span class="o">!</span> <span class="nv">unprintable</span> <span class="nv">characters</span> <span class="nv">like</span> <span class="nv">NULL</span> <span class="nv">as</span> <span class="s2">&quot;</span><span class="s">XXX</span><span class="s2">&quot;</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(1x,*(&quot;[&quot;,a3,&quot;]&quot;:))</span><span class="s1">&#39;</span><span class="ss">)</span><span class="o">&amp;</span>
+         <span class="o">&amp;</span> <span class="nv">merge</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">XXX</span><span class="s1">&#39;</span>,<span class="nv">array</span>,<span class="nv">iachar</span><span class="ss">(</span><span class="nv">array</span><span class="ss">(</span>:<span class="ss">)(</span><span class="mi">1</span>:<span class="mi">1</span><span class="ss">))</span> <span class="o">&lt;</span> <span class="mi">32</span><span class="ss">)</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(1x,*(&quot;[&quot;,i3,&quot;]&quot;:))</span><span class="s1">&#39;</span><span class="ss">)</span><span class="o">&amp;</span>
+         <span class="o">&amp;</span> <span class="nv">iachar</span><span class="ss">(</span><span class="nv">array</span><span class="ss">(</span>:<span class="ss">)(</span><span class="mi">1</span>:<span class="mi">1</span><span class="ss">))</span>
+ <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_s2c</span>
+</code></pre></div>
+
+<p>Expected output:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">INPUT</span><span class="w"> </span><span class="n">STRING</span><span class="w"> </span><span class="n">single</span><span class="w"> </span><span class="n">string</span><span class="w"></span>
+<span class="o">[</span><span class="n">s  </span><span class="o">][</span><span class="n">i  </span><span class="o">][</span><span class="n">n  </span><span class="o">][</span><span class="n">g  </span><span class="o">][</span><span class="n">l  </span><span class="o">][</span><span class="n">e  </span><span class="o">][</span><span class="n">   </span><span class="o">][</span><span class="n">s  </span><span class="o">][</span><span class="n">t  </span><span class="o">][</span><span class="n">r  </span><span class="o">][</span><span class="n">i  </span><span class="o">][</span><span class="n">n  </span><span class="o">][</span><span class="n">g  </span><span class="o">][</span><span class="n">XXX</span><span class="o">]</span><span class="w"></span>
+<span class="o">[</span><span class="n">115</span><span class="o">][</span><span class="n">105</span><span class="o">][</span><span class="n">110</span><span class="o">][</span><span class="n">103</span><span class="o">][</span><span class="n">108</span><span class="o">][</span><span class="n">101</span><span class="o">][</span><span class="n"> 32</span><span class="o">][</span><span class="n">115</span><span class="o">][</span><span class="n">116</span><span class="o">][</span><span class="n">114</span><span class="o">][</span><span class="n">105</span><span class="o">][</span><span class="n">110</span><span class="o">][</span><span class="n">103</span><span class="o">][</span><span class="n">  0</span><span class="o">]</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -247,11 +299,14 @@
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">pure function </span><span class="n">s2c</span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="w">  </span><span class="k">RESULT</span><span class="w"> </span><span class="p">(</span><span class="k">array</span><span class="p">)</span><span class="w"></span>
-<span class="k">use</span><span class="p">,</span><span class="k">intrinsic</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="nb">ISO_C_BINDING</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kt">C_CHAR</span>
+<span class="k">use</span><span class="p">,</span><span class="k">intrinsic</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="nb">ISO_C_BINDING</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kt">C_CHAR</span><span class="w"></span>
 
+<span class="c">! ident_27=&quot;@(#) M_strings s2c(3f) copy string(1 Clen(string)) to char array with null terminator&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">string</span><span class="w"></span>
 
+<span class="c">! This is changing, but currently the most portable way to pass a CHARACTER variable to C is to convert it to an array of</span>
+<span class="c">! character variables with length one and add a null character to the end of the array. The s2c(3f) function helps do this.</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="kt">C_CHAR</span><span class="p">,</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="k">array</span><span class="p">(</span><span class="nb">len_trim</span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                         </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
 <span class="w">   </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="k">array</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
@@ -279,7 +334,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

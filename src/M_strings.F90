@@ -18,13 +18,15 @@
 !!
 !!      use M_strings, only : split,sep,delim,chomp,strtok
 !!      use M_strings, only : split2020, find_field
-!!      use M_strings, only : substitute,change,modif,transliterate,reverse,squeeze
+!!      use M_strings, only : substitute,change,modif,transliterate,&
+!!              & reverse,squeeze
 !!      use M_strings, only : replace,join
 !!      use M_strings, only : upper,lower,upper_quoted
 !!      use M_strings, only : rotate13
 !!      use M_strings, only : adjustc,compact,nospace,indent
 !!      use M_strings, only : crop,clip,unquote,quote,matching_delimiter
-!!      use M_strings, only : len_white,pad,lpad,cpad,rpad,zpad,stretch,lenset,merge_str
+!!      use M_strings, only : len_white,pad,lpad,cpad,rpad,zpad,&
+!!              & stretch,lenset,merge_str
 !!      use M_strings, only : switch,s2c,c2s
 !!      use M_strings, only : noesc,notabs,dilate,expand,visible
 !!      use M_strings, only : longest_common_substring
@@ -269,13 +271,15 @@
 !!     program demo_M_strings
 !!     use M_strings, only : split,sep,delim,chomp,strtok
 !!     use M_strings, only : split2020, find_field
-!!     use M_strings, only : substitute,change,modif,transliterate,reverse,squeeze
+!!     use M_strings, only : substitute,change,modif,transliterate,&
+!!             & reverse,squeeze
 !!     use M_strings, only : replace,join
 !!     use M_strings, only : upper,lower,upper_quoted
 !!     use M_strings, only : rotate13
 !!     use M_strings, only : adjustc,compact,nospace,indent
 !!     use M_strings, only : crop,clip,unquote,quote,matching_delimiter
-!!     use M_strings, only : len_white,pad,lpad,cpad,rpad,zpad,stretch,lenset,merge_str
+!!     use M_strings, only : len_white,pad,lpad,cpad,rpad,zpad,&
+!!             & stretch,lenset,merge_str
 !!     use M_strings, only : switch,s2c,c2s
 !!     use M_strings, only : noesc,notabs,dilate,expand,visible
 !!     use M_strings, only : longest_common_substring
@@ -586,168 +590,170 @@ CONTAINS
 !!    integer :: nReps
 !!    logical :: allpassed
 !!    integer :: i
-!!     allpassed = .true.
+!!    allpassed = .true.
 !!
-!!     nReps = 10000
-!!     ! Can choose as many repetitions as you're expecting
-!!     ! in the real world.
-!!     nReps = 1
+!!    nReps = 10000
+!!    ! Can choose as many repetitions as you're expecting
+!!    ! in the real world.
+!!    nReps = 1
 !!
-!!     do i=1,nReps
-!!         ! Cases with repeating character sequences.
-!!         allpassed=  test("a*abab",       "a*b",    .true.)   .and.  allpassed
-!!         allpassed=  test("ab",           "*?",     .true.)   .and.  allpassed
-!!         allpassed=  test("abc",          "*?",     .true.)   .and.  allpassed
-!!         allpassed=  test("abcccd",       "*ccd",   .true.)   .and.  allpassed
-!!         allpassed=  test("bLah",         "bLaH",   .false.)  .and.  allpassed
-!!         allpassed=  test("mississippi",  "*sip*",  .true.)   .and.  allpassed
-!!         allpassed= &
-!!          & test("xxxx*zzzzzzzzy*f", "xxx*zzy*f", .true.) .and. allpassed
-!!         allpassed= &
-!!          & test("xxxx*zzzzzzzzy*f", "xxxx*zzy*fffff", .false.) .and. allpassed
-!!         allpassed= &
-!!          & test("mississipissippi", "*issip*ss*", .true.) .and. allpassed
-!!         allpassed= &
-!!          & test("xxxxzzzzzzzzyf", "xxxx*zzy*fffff", .false.) .and. allpassed
-!!         allpassed= &
-!!          & test("xxxxzzzzzzzzyf", "xxxx*zzy*f", .true.) .and. allpassed
-!!         allpassed=  test("xyxyxyzyxyz",  "xy*z*xyz",  .true.)   .and.  allpassed
-!!         allpassed=  test("xyxyxyxyz",    "xy*xyz",    .true.)   .and.  allpassed
-!!         allpassed=  test("mississippi",  "mi*sip*",   .true.)   .and.  allpassed
-!!         allpassed=  test("ababac",       "*abac*",    .true.)   .and.  allpassed
-!!         allpassed=  test("aaazz",        "a*zz*",     .true.)   .and.  allpassed
-!!         allpassed=  test("a12b12",       "*12*23",    .false.)  .and.  allpassed
-!!         allpassed=  test("a12b12",       "a12b",      .false.)  .and.  allpassed
-!!         allpassed=  test("a12b12",       "*12*12*",   .true.)   .and.  allpassed
+!!    do i=1,nReps
+!!       ! Cases with repeating character sequences.
+!!       allpassed= test("a*abab",      "a*b",   .true.)  .and. allpassed
+!!       allpassed= test("ab",          "*?",    .true.)  .and. allpassed
+!!       allpassed= test("abc",         "*?",    .true.)  .and. allpassed
+!!       allpassed= test("abcccd",      "*ccd",  .true.)  .and. allpassed
+!!       allpassed= test("bLah",        "bLaH",  .false.) .and. allpassed
+!!       allpassed= test("mississippi", "*sip*", .true.)  .and. allpassed
+!!       allpassed= &
+!!        & test("xxxx*zzzzzzzzy*f", "xxx*zzy*f", .true.) .and. allpassed
+!!       allpassed= &
+!!        & test("xxxx*zzzzzzzzy*f", "xxxx*zzy*fffff", .false.) .and. allpassed
+!!       allpassed= &
+!!        & test("mississipissippi", "*issip*ss*", .true.) .and. allpassed
+!!       allpassed= &
+!!        & test("xxxxzzzzzzzzyf", "xxxx*zzy*fffff", .false.) .and. allpassed
+!!       allpassed= &
+!!        & test("xxxxzzzzzzzzyf", "xxxx*zzy*f", .true.) .and. allpassed
+!!       allpassed= test("xyxyxyzyxyz", "xy*z*xyz", .true.)  .and. allpassed
+!!       allpassed= test("xyxyxyxyz",   "xy*xyz",   .true.)  .and. allpassed
+!!       allpassed= test("mississippi", "mi*sip*",  .true.)  .and. allpassed
+!!       allpassed= test("ababac",      "*abac*",   .true.)  .and. allpassed
+!!       allpassed= test("aaazz",       "a*zz*",    .true.)  .and. allpassed
+!!       allpassed= test("a12b12",      "*12*23",   .false.) .and. allpassed
+!!       allpassed= test("a12b12",      "a12b",     .false.) .and. allpassed
+!!       allpassed= test("a12b12",      "*12*12*",  .true.)  .and. allpassed
 !!
-!!         ! Additional cases where the '*' char appears in the tame string.
-!!         allpassed=  test("*",     "*",      .true.)   .and.  allpassed
-!!         allpassed=  test("a*r",   "a*",     .true.)   .and.  allpassed
-!!         allpassed=  test("a*ar",  "a*aar",  .false.)  .and.  allpassed
+!!       ! Additional cases where the '*' char appears in the tame string.
+!!       allpassed= test("*",     "*",      .true.)  .and. allpassed
+!!       allpassed= test("a*r",   "a*",     .true.)  .and. allpassed
+!!       allpassed= test("a*ar",  "a*aar",  .false.) .and. allpassed
 !!
-!!         ! More double wildcard scenarios.
-!!         allpassed=  test("XYXYXYZYXYz",  "XY*Z*XYz",   .true.)   .and.  allpassed
-!!         allpassed=  test("missisSIPpi",  "*SIP*",      .true.)   .and.  allpassed
-!!         allpassed=  test("mississipPI",  "*issip*PI",  .true.)   .and.  allpassed
-!!         allpassed=  test("xyxyxyxyz",    "xy*xyz",     .true.)   .and.  allpassed
-!!         allpassed=  test("miSsissippi",  "mi*sip*",    .true.)   .and.  allpassed
-!!         allpassed=  test("miSsissippi",  "mi*Sip*",    .false.)  .and.  allpassed
-!!         allpassed=  test("abAbac",       "*Abac*",     .true.)   .and.  allpassed
-!!         allpassed=  test("aAazz",        "a*zz*",      .true.)   .and.  allpassed
-!!         allpassed=  test("A12b12",       "*12*23",     .false.)  .and.  allpassed
-!!         allpassed=  test("a12B12",       "*12*12*",    .true.)   .and.  allpassed
-!!         allpassed=  test("oWn",          "*oWn*",      .true.)   .and.  allpassed
+!!       ! More double wildcard scenarios.
+!!       allpassed= test("XYXYXYZYXYz", "XY*Z*XYz",  .true.)  .and. allpassed
+!!       allpassed= test("missisSIPpi", "*SIP*",     .true.)  .and. allpassed
+!!       allpassed= test("mississipPI", "*issip*PI", .true.)  .and. allpassed
+!!       allpassed= test("xyxyxyxyz",   "xy*xyz",    .true.)  .and. allpassed
+!!       allpassed= test("miSsissippi", "mi*sip*",   .true.)  .and. allpassed
+!!       allpassed= test("miSsissippi", "mi*Sip*",   .false.) .and. allpassed
+!!       allpassed= test("abAbac",      "*Abac*",    .true.)  .and. allpassed
+!!       allpassed= test("aAazz",       "a*zz*",     .true.)  .and. allpassed
+!!       allpassed= test("A12b12",      "*12*23",    .false.) .and. allpassed
+!!       allpassed= test("a12B12",      "*12*12*",   .true.)  .and. allpassed
+!!       allpassed= test("oWn",         "*oWn*",     .true.)  .and. allpassed
 !!
-!!         ! Completely tame (no wildcards) cases.
-!!         allpassed= test("bLah", "bLah", .true.) .and. allpassed
+!!       ! Completely tame (no wildcards) cases.
+!!       allpassed= test("bLah", "bLah", .true.) .and. allpassed
 !!
-!!         ! Simple mixed wildcard tests suggested by IBMer Marlin Deckert.
-!!         allpassed= test("a", "*?", .true.) .and. allpassed
+!!       ! Simple mixed wildcard tests suggested by IBMer Marlin Deckert.
+!!       allpassed= test("a", "*?", .true.) .and. allpassed
 !!
-!!         ! More mixed wildcard tests including coverage for false positives.
-!!         allpassed=  test("a",      "??",         .false.)  .and.  allpassed
-!!         allpassed=  test("ab",     "?*?",        .true.)   .and.  allpassed
-!!         allpassed=  test("ab",     "*?*?*",      .true.)   .and.  allpassed
-!!         allpassed=  test("abc",    "?**?*?",     .true.)   .and.  allpassed
-!!         allpassed=  test("abc",    "?**?*&?",    .false.)  .and.  allpassed
-!!         allpassed=  test("abcd",   "?b*??",      .true.)   .and.  allpassed
-!!         allpassed=  test("abcd",   "?a*??",      .false.)  .and.  allpassed
-!!         allpassed=  test("abcd",   "?**?c?",     .true.)   .and.  allpassed
-!!         allpassed=  test("abcd",   "?**?d?",     .false.)  .and.  allpassed
-!!         allpassed=  test("abcde",  "?*b*?*d*?",  .true.)   .and.  allpassed
+!!       ! More mixed wildcard tests including coverage for false positives.
+!!       allpassed= test("a",      "??",         .false.) .and. allpassed
+!!       allpassed= test("ab",     "?*?",        .true.)  .and. allpassed
+!!       allpassed= test("ab",     "*?*?*",      .true.)  .and. allpassed
+!!       allpassed= test("abc",    "?**?*?",     .true.)  .and. allpassed
+!!       allpassed= test("abc",    "?**?*&?",    .false.) .and. allpassed
+!!       allpassed= test("abcd",   "?b*??",      .true.)  .and. allpassed
+!!       allpassed= test("abcd",   "?a*??",      .false.) .and. allpassed
+!!       allpassed= test("abcd",   "?**?c?",     .true.)  .and. allpassed
+!!       allpassed= test("abcd",   "?**?d?",     .false.) .and. allpassed
+!!       allpassed= test("abcde",  "?*b*?*d*?",  .true.)  .and. allpassed
 !!
-!!         ! Single-character-match cases.
-!!         allpassed=  test("bLah",   "bL?h",  .true.)   .and.  allpassed
-!!         allpassed=  test("bLaaa",  "bLa?",  .false.)  .and.  allpassed
-!!         allpassed=  test("bLah",   "bLa?",  .true.)   .and.  allpassed
-!!         allpassed=  test("bLaH",   "?Lah",  .false.)  .and.  allpassed
-!!         allpassed=  test("bLaH",   "?LaH",  .true.)   .and.  allpassed
+!!       ! Single-character-match cases.
+!!       allpassed= test("bLah",   "bL?h",  .true.)  .and. allpassed
+!!       allpassed= test("bLaaa",  "bLa?",  .false.) .and. allpassed
+!!       allpassed= test("bLah",   "bLa?",  .true.)  .and. allpassed
+!!       allpassed= test("bLaH",   "?Lah",  .false.) .and. allpassed
+!!       allpassed= test("bLaH",   "?LaH",  .true.)  .and. allpassed
 !!
-!!         allpassed=  test('abcdefghijk'  ,  '?b*',      .true.)  .and.  allpassed
-!!         allpassed=  test('abcdefghijk'  ,  '*c*',      .true.)  .and.  allpassed
-!!         allpassed=  test('abcdefghijk'  ,  '*c',       .false.) .and.  allpassed
-!!         allpassed=  test('abcdefghijk'  ,  '*c*k',     .true.)  .and.  allpassed
-!!         allpassed=  test('LS'           ,  '?OW',      .false.) .and.  allpassed
-!!         allpassed=  test('teztit'       ,  'tez*t*t',  .true.)  .and.  allpassed
-!!           ! Two pattern match problems that might pose difficulties
-!!         allpassed=  test('e '           , '*e* ',         .true.)  .and.  allpassed
-!!         allpassed=  test('abcde       ' , '*e      *',    .true.)  .and.  allpassed
-!!         allpassed=  test('bababa'       , 'b*ba',         .true.)  .and.  allpassed
-!!         allpassed=  test('baaaaax'      , 'b*ax',         .true.)  .and.  allpassed
-!!         allpassed=  test('baaaaa'       , 'b*ax',         .false.) .and.  allpassed
-!!         allpassed=  test('baaaaax'      , 'b*a',          .false.) .and.  allpassed
-!!         allpassed=  test(''             , 'b*',           .false.) .and.  allpassed
-!!         allpassed=  test(''             , '*',            .true.) .and.  allpassed
-!!         allpassed=  test('b'            , '',             .false.) .and.  allpassed
-!!         allpassed=  test('3'            , '??',           .false.) .and.  allpassed
-!!         ! known flaws
-!!         allpassed=  test(''             , '',             .true.) .and.  allpassed
-!!         allpassed=  test('baaaaa'       , 'b*a',          .true.)  .and.  allpassed
-!!         ! add unused character to work around
-!!         allpassed=  test(''//char(0)       , ''//char(0),    .true.) .and.  allpassed
-!!         allpassed=  test('baaaaa'//char(0) , 'b*a'//char(0), .true.)  .and.  allpassed
+!!       allpassed= test('abcdefghijk' ,  '?b*',     .true.)  .and. allpassed
+!!       allpassed= test('abcdefghijk' ,  '*c*',     .true.)  .and. allpassed
+!!       allpassed= test('abcdefghijk' ,  '*c',      .false.) .and.  allpassed
+!!       allpassed= test('abcdefghijk' ,  '*c*k',    .true.)  .and. allpassed
+!!       allpassed= test('LS'          ,  '?OW',     .false.) .and.  allpassed
+!!       allpassed= test('teztit'      ,  'tez*t*t', .true.)  .and. allpassed
+!!         ! Two pattern match problems that might pose difficulties
+!!       allpassed= test('e '           , '*e* ',      .true.) .and. allpassed
+!!       allpassed= test('abcde       ' , '*e      *', .true.) .and. allpassed
+!!       allpassed= test('bababa'       , 'b*ba',      .true.) .and. allpassed
+!!       allpassed= test('baaaaax'      , 'b*ax',      .true.) .and. allpassed
+!!       allpassed= test('baaaaa'       , 'b*ax',      .false.) .and. allpassed
+!!       allpassed= test('baaaaax'      , 'b*a',       .false.) .and. allpassed
+!!       allpassed= test(''             , 'b*',        .false.) .and. allpassed
+!!       allpassed= test(''             , '*',         .true.) .and.  allpassed
+!!       allpassed= test('b'            , '',          .false.) .and. allpassed
+!!       allpassed= test('3'            , '??',        .false.) .and. allpassed
+!!       ! known flaws
+!!       allpassed= test(''             , '',          .true.) .and. allpassed
+!!       allpassed= test('baaaaa'       , 'b*a',       .true.) .and. allpassed
+!!       ! add unused character to work around
+!!       allpassed= test(''//char(0),      ''//char(0),   .true.).and.allpassed
+!!       allpassed= test('baaaaa'//char(0),'b*a'//char(0),.true.).and.allpassed
 !!
-!!         ! Many-wildcard scenarios.
-!!         allpassed= test(&
-!!         &"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&
-!!         &aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",&
-!!         &"a*a*a*a*a*a*aa*aaa*a*a*b",&
-!!         &.true.) .and. allpassed
-!!         allpassed= test(&
-!!         &"abababababababababababababababababababaacacacacacacac&
-!!         &adaeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
-!!         &"*a*b*ba*ca*a*aa*aaa*fa*ga*b*",&
-!!         &.true.) .and. allpassed
-!!         allpassed= test(&
-!!         &"abababababababababababababababababababaacacacacacaca&
-!!         &cadaeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
-!!         &"*a*b*ba*ca*a*x*aaa*fa*ga*b*",&
-!!         &.false.) .and. allpassed
-!!         allpassed= test(&
-!!         &"abababababababababababababababababababaacacacacacacacad&
-!!         &aeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
-!!         &"*a*b*ba*ca*aaaa*fa*ga*gggg*b*",&
-!!         &.false.) .and. allpassed
-!!         allpassed= test(&
-!!         &"abababababababababababababababababababaacacacacacacacad&
-!!         &aeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
-!!         &"*a*b*ba*ca*aaaa*fa*ga*ggg*b*",&
-!!         &.true.) .and. allpassed
-!!         allpassed= test("aaabbaabbaab", "*aabbaa*a*", .true.) .and. allpassed
-!!         allpassed= &
-!!         test("a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*",&
-!!         &"a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*", .true.) .and. allpassed
-!!         allpassed= test("aaaaaaaaaaaaaaaaa",&
-!!         &"*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*", .true.) .and. allpassed
-!!         allpassed= test("aaaaaaaaaaaaaaaa",&
-!!         &"*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*", .false.) .and. allpassed
-!!         allpassed= test(&
-!!         &"abc*abcd*abcde*abcdef*abcdefg*abcdefgh*abcdefghi*abcdefghij&
-!!         &*abcdefghijk*abcdefghijkl*abcdefghijklm*abcdefghijklmn",&
-!!         & "abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc&
-!!         &*abc*abc*abc*",&
-!!         &.false.) .and. allpassed
-!!         allpassed= test(&
-!!         &"abc*abcd*abcde*abcdef*abcdefg*abcdefgh*abcdefghi*abcdefghij&
-!!         &*abcdefghijk*abcdefghijkl*abcdefghijklm*abcdefghijklmn",&
-!!         &"abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*",&
-!!         &.true.) .and. allpassed
-!!         allpassed= test("abc*abcd*abcd*abc*abcd",&
-!!         &"abc*abc*abc*abc*abc", .false.) .and. allpassed
-!!         allpassed= test( "abc*abcd*abcd*abc*abcd*abcd&
-!!         &*abc*abcd*abc*abc*abcd", &
-!!         &"abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abcd",&
-!!         &.true.) .and. allpassed
-!!         allpassed= test("abc",&
-!!         &"********a********b********c********", .true.) .and. allpassed
-!!         allpassed=&
-!!         &test("********a********b********c********", "abc",.false.).and.allpassed
-!!         allpassed= &
-!!         &test("abc", "********a********b********b********",.false.).and.allpassed
-!!         allpassed= test("*abc*", "***a*b*c***", .true.) .and. allpassed
+!!       ! Many-wildcard scenarios.
+!!       allpassed= test(&
+!!       &"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&
+!!       &aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",&
+!!       &"a*a*a*a*a*a*aa*aaa*a*a*b",&
+!!       &.true.) .and. allpassed
+!!       allpassed= test(&
+!!       &"abababababababababababababababababababaacacacacacacac&
+!!       &adaeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
+!!       &"*a*b*ba*ca*a*aa*aaa*fa*ga*b*",&
+!!       &.true.) .and. allpassed
+!!       allpassed= test(&
+!!       &"abababababababababababababababababababaacacacacacaca&
+!!       &cadaeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
+!!       &"*a*b*ba*ca*a*x*aaa*fa*ga*b*",&
+!!       &.false.) .and. allpassed
+!!       allpassed= test(&
+!!       &"abababababababababababababababababababaacacacacacacacad&
+!!       &aeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
+!!       &"*a*b*ba*ca*aaaa*fa*ga*gggg*b*",&
+!!       &.false.) .and. allpassed
+!!       allpassed= test(&
+!!       &"abababababababababababababababababababaacacacacacacacad&
+!!       &aeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab",&
+!!       &"*a*b*ba*ca*aaaa*fa*ga*ggg*b*",&
+!!       &.true.) .and. allpassed
+!!       allpassed= test("aaabbaabbaab","*aabbaa*a*",.true.).and.allpassed
+!!       allpassed= &
+!!       test("a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*",&
+!!       &"a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*", .true.) .and. allpassed
+!!       allpassed= test("aaaaaaaaaaaaaaaaa",&
+!!       &"*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*", .true.) .and. allpassed
+!!       allpassed= test("aaaaaaaaaaaaaaaa",&
+!!       &"*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*", .false.) .and. allpassed
+!!       allpassed= test(&
+!!       &"abc*abcd*abcde*abcdef*abcdefg*abcdefgh*abcdefghi*abcdefghij&
+!!       &*abcdefghijk*abcdefghijkl*abcdefghijklm*abcdefghijklmn",&
+!!       & "abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc&
+!!       &*abc*abc*abc*",&
+!!       &.false.) .and. allpassed
+!!       allpassed= test(&
+!!       &"abc*abcd*abcde*abcdef*abcdefg*abcdefgh*abcdefghi*abcdefghij&
+!!       &*abcdefghijk*abcdefghijkl*abcdefghijklm*abcdefghijklmn",&
+!!       &"abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*",&
+!!       &.true.) .and. allpassed
+!!       allpassed= test("abc*abcd*abcd*abc*abcd",&
+!!       &"abc*abc*abc*abc*abc", .false.) .and. allpassed
+!!       allpassed= test( "abc*abcd*abcd*abc*abcd*abcd&
+!!       &*abc*abcd*abc*abc*abcd", &
+!!       &"abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abcd",&
+!!       &.true.) .and. allpassed
+!!       allpassed= test("abc",&
+!!       &"********a********b********c********", .true.) .and. allpassed
+!!       allpassed=&
+!!       &test("********a********b********c********", "abc",.false.)&
+!!       & .and.allpassed
+!!       allpassed= &
+!!       &test("abc", "********a********b********b********",.false.)&
+!!       & .and.allpassed
+!!       allpassed= test("*abc*", "***a*b*c***", .true.) .and. allpassed
 !!
-!!         ! A case-insensitive algorithm test.
-!!         ! allpassed=test("mississippi", "*issip*PI", .true.) .and. allpassed
+!!       ! A case-insensitive algorithm test.
+!!       ! allpassed=test("mississippi", "*issip*PI", .true.) .and. allpassed
 !!     enddo
 !!
 !!     if (allpassed)then
@@ -931,7 +937,7 @@ end function glob
 !!    use, intrinsic :: iso_fortran_env, only : stdout=>output_unit
 !!    implicit none
 !!       write(stdout,*)ends_with('prog.a',['.o','.i','.s'])
-!!       write(stdout,*)ends_with('prog.f90',['.F90','.f90','.f   ','.F   '])
+!!       write(stdout,*)ends_with('prog.f90',['.F90','.f90','.f  ','.F  '])
 !!       write(stdout,*)ends_with('prog.pdf','.pdf')
 !!       write(stdout,*)ends_with('prog.doc','.txt')
 !!    end program demo_ends_with
@@ -5357,8 +5363,8 @@ end function merge_str
 !!     character(len=len(str))              :: OUTSTR
 !!
 !!##DESCRIPTION
-!!    squeeze(3f) reduces adjacent duplicates of the specified character to
-!!    a single character
+!!    squeeze(3f) reduces adjacent duplicates of the specified character
+!!    to a single character
 !!
 !!##OPTIONS
 !!    STR     input string in which to reduce adjacent duplicate characters
@@ -5378,12 +5384,16 @@ end function merge_str
 !!    character(len=:),allocatable :: strings(:)
 !!
 !!    strings=[ character(len=72) :: &
-!!    '', &
-!!    '"If I were two-faced, would I be wearing this one?" --- Abraham Lincoln',  &
-!!    '..1111111111111111111111111111111111111111111111111111111111111117777888', &
-!!    'I never give ''em hell, I just tell the truth, and they think it''s hell.',&
-!!    '                                                    --- Harry S Truman'    &
-!!    ]
+!!    &'', &
+!!    &'"If I were two-faced,&
+!!    &would I be wearing this one?" --- Abraham Lincoln',  &
+!!    &'..1111111111111111111&
+!!    &111111111111111111111111111111111111111111117777888', &
+!!    &'I never give ''em hell,&
+!!    &I just tell the truth, and they think it''s hell.',&
+!!    &'                                                  &
+!!    & --- Harry S Truman'    &
+!!    &]
 !!       call printme( trim(strings(1)), ' ' )
 !!       call printme( strings(2:4),     ['-','7','.'] )
 !!       call printme( strings(5),       [' ','-','r'] )
@@ -11253,12 +11263,12 @@ end subroutine matching_delimiter
 !!    program demo_longest_common_substring
 !!    use M_strings, only : longest_common_substring
 !!    implicit none
-!!       call compare('testing123testingthing','thisis',              'thi')
-!!       call compare('testing',             'sting',               'sting')
-!!       call compare('thisisatest_stinger', 'testing123testingthing','sting')
-!!       call compare('thisisatest_stinger', 'thisis',              'thisis')
-!!       call compare('thisisatest',         'testing123testing',   'test')
-!!       call compare('thisisatest',         'thisisatest',         'thisisatest')
+!!      call compare('testing123testingthing','thisis',             'thi')
+!!      call compare('testing',             'sting',              'sting')
+!!      call compare('thisisatest_stinger','testing123testingthing','sting')
+!!      call compare('thisisatest_stinger', 'thisis',            'thisis')
+!!      call compare('thisisatest',         'testing123testing',   'test')
+!!      call compare('thisisatest',      'thisisatest',     'thisisatest')
 !!    contains
 !!
 !!    subroutine compare(a,b,answer)

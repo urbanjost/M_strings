@@ -152,6 +152,55 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">isalpha</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">COMPARE</span>] <span class="nv">returns</span> .<span class="nv">true</span>. <span class="k">if</span> <span class="nv">character</span> <span class="nv">is</span> <span class="nv">a</span>
+<span class="nv">letter</span> <span class="nv">and</span> .<span class="nv">false</span>. <span class="nv">otherwise</span>
+<span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>elemental function isalpha(onechar)</p>
+<div class="codehilite"><pre><span></span><code>character,intent(in) :: onechar
+logical              :: isalpha
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nf">isalpha</span><span class="p">(</span><span class="mi">3</span><span class="no">f</span><span class="p">)</span><span class="w"> </span><span class="no">returns</span><span class="w"> </span><span class="no">.true.</span><span class="w"> </span><span class="no">if</span><span class="w"> </span><span class="no">character</span><span class="w"> </span><span class="no">is</span><span class="w"> </span><span class="no">a</span><span class="w"> </span><span class="no">letter</span><span class="w"> </span><span class="no">and</span><span class="w"></span>
+<span class="na">.false.</span><span class="w"> </span><span class="no">otherwise</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code>onechar  character to test
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">isalpha</span>  <span class="nv">logical</span> <span class="nv">value</span> <span class="nv">returns</span> .<span class="nv">true</span>. <span class="k">if</span> <span class="nv">character</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">ASCII</span> <span class="nv">letter</span>
+         <span class="nv">or</span> <span class="nv">false</span> <span class="nv">otherwise</span>.
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<p>Sample program</p>
+<div class="codehilite"><pre><span></span><code> <span class="nv">program</span> <span class="nv">demo_isalpha</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">isalpha</span>
+ <span class="nv">implicit</span> <span class="nv">none</span>
+ <span class="nv">integer</span>                    :: <span class="nv">i</span>
+ <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">1</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">string</span><span class="ss">(</span><span class="o">*</span><span class="ss">)</span><span class="o">=</span>[<span class="ss">(</span><span class="nv">char</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">i</span><span class="o">=</span><span class="mi">0</span>,<span class="mi">127</span><span class="ss">)</span>]
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(40(a))</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">ISGRAPH: </span><span class="s1">&#39;</span>,<span class="nv">pack</span><span class="ss">(</span> <span class="nv">string</span>, <span class="nv">isalpha</span><span class="ss">(</span><span class="nv">string</span><span class="ss">)</span> <span class="ss">)</span>
+ <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_isalpha</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">ISGRAPH</span><span class="o">:</span><span class="w"> </span><span class="n">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm</span><span class="w"></span>
+<span class="n">nopqrstuvwxyz</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -236,6 +285,7 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">elemental function </span><span class="n">isalpha</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="w"></span>
 
+<span class="c">! ident_64=&quot;@(#) M_strings isalpha(3f) Return .true. if character is a letter and .false. otherwise&quot;</span>
 
 <span class="kt">character</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ch</span><span class="w"></span>
 <span class="kt">logical</span><span class="w">              </span><span class="kd">::</span><span class="w"> </span><span class="n">res</span><span class="w"></span>
@@ -266,7 +316,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

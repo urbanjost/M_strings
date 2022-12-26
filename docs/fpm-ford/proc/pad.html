@@ -152,6 +152,92 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<p>pad(3f) - [M_strings:LENGTH] return string padded to at least
+   specified length
+   (LICENSE:PD)</p>
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>function pad(str,length,pattern,right,clip) result(strout)</p>
+<div class="codehilite"><pre><span></span><code>character(len=*)                           :: str
+integer,intent(in)                         :: length
+character(len=max(length,len(trim(line)))) :: strout
+character(len=*),intent(in),optional       :: pattern
+logical,intent(in),optional                :: right
+logical,intent(in),optional                :: clip
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<p>pad(3f) pads a string with a pattern to at least the specified
+   length. If the trimmed input string is longer than the requested
+   length the trimmed string is returned.</p>
+<h2 id="options">OPTIONS</h2>
+<p>str      the input string to return trimmed, but then padded to
+            the specified length if shorter than length
+   length   The minimum string length to return
+   pattern  optional string to use as padding. Defaults to a space.
+   right    if true pads string on the right, else on the left
+   clip     trim spaces from input string but otherwise retain length.
+            Except for simple cases you typically would trim the input
+            yourself.</p>
+<h2 id="returns">RETURNS</h2>
+<p>strout  The input string padded to the requested length or
+           the trimmed input string if the input string is
+           longer than the requested length.</p>
+<h2 id="example">EXAMPLE</h2>
+<p>Sample Program:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">program</span> <span class="n">demo_pad</span>
+ <span class="n">use</span> <span class="n">M_strings</span><span class="p">,</span> <span class="n">only</span> <span class="p">:</span> <span class="n">pad</span>
+ <span class="n">implicit</span> <span class="n">none</span>
+ <span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>            <span class="p">::</span> <span class="n">string</span><span class="o">=</span><span class="s">&#39;abcdefghij&#39;</span>
+ <span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="o">=</span><span class="p">:),</span><span class="n">allocatable</span> <span class="p">::</span> <span class="n">answer</span>
+ <span class="n">integer</span>                      <span class="p">::</span> <span class="n">i</span>
+ <span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="o">=*</span><span class="p">),</span><span class="n">parameter</span>   <span class="p">::</span> <span class="n">g</span><span class="o">=</span><span class="s">&#39;(*(g0))&#39;</span>
+    <span class="n">answer</span><span class="o">=</span><span class="n">pad</span><span class="p">(</span><span class="n">string</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">write</span><span class="cm">(*,&#39;(&quot;[&quot;,a,&quot;]&quot;)&#39;) answer</span>
+<span class="cm">    answer=pad(string,20)</span>
+<span class="cm">    write(*,&#39;(&quot;[&quot;,a,&quot;]&quot;)&#39;) answer</span>
+<span class="cm">    i=30</span>
+<span class="cm">    write(*,g)</span>
+<span class="cm">    write(*,&#39;(1x,a,1x,i0)&#39;) &amp;</span>
+<span class="cm">     &amp; pad(&#39;CHAPTER 1 : The beginning &#39;,i,&#39;.&#39;), 1   , &amp;</span>
+<span class="cm">     &amp; pad(&#39;CHAPTER 2 : The end &#39;,i,&#39;.&#39;),       1234, &amp;</span>
+<span class="cm">     &amp; pad(&#39;APPENDIX &#39;,i,&#39;.&#39;),                  1235</span>
+<span class="cm">    write(*,*)</span>
+    <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s">&#39;(1x,a,i7)&#39;</span><span class="p">)</span> <span class="o">&amp;</span>
+     <span class="o">&amp;</span> <span class="n">pad</span><span class="p">(</span><span class="s">&#39;CHAPTER 1 : The beginning &#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s">&#39;.&#39;</span><span class="p">),</span> <span class="mi">1</span>   <span class="p">,</span> <span class="o">&amp;</span>
+     <span class="o">&amp;</span> <span class="n">pad</span><span class="p">(</span><span class="s">&#39;CHAPTER 2 : The end &#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s">&#39;.&#39;</span><span class="p">),</span>       <span class="mi">1234</span><span class="p">,</span> <span class="o">&amp;</span>
+     <span class="o">&amp;</span> <span class="n">pad</span><span class="p">(</span><span class="s">&#39;APPENDIX &#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s">&#39;.&#39;</span><span class="p">),</span>                  <span class="mi">1235</span>
+
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12&#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s">&#39;0&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span>
+<span class="n">end</span> <span class="n">program</span> <span class="n">demo_pad</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">[abcdefghij]</span><span class="w"></span>
+<span class="k">[abcdefghij          ]</span><span class="w"></span>
+
+<span class="w"> </span><span class="na">CHAPTER 1 : The beginning .... 1</span><span class="w"></span>
+<span class="w"> </span><span class="na">CHAPTER 2 : The end .......... 1234</span><span class="w"></span>
+<span class="w"> </span><span class="na">APPENDIX ..................... 1235</span><span class="w"></span>
+
+<span class="w"> </span><span class="na">CHAPTER 1 : The beginning ....      1</span><span class="w"></span>
+<span class="w"> </span><span class="na">CHAPTER 2 : The end ..........   1234</span><span class="w"></span>
+<span class="w"> </span><span class="na">APPENDIX .....................   1235</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="see-also">SEE ALSO</h2>
+<div class="codehilite"><pre><span></span><code> adjustl(3f), adjustr(3f), repeat(3f), trim(3f), len_trim(3f), len(3f)
+
+ adjustc(3f), stretch(3f), lpad(3f), rpad(3f), cpad(3f), zpad(3f), lenset(3f)
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -296,6 +382,7 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">pad</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="n">length</span><span class="p">,</span><span class="n">pattern</span><span class="p">,</span><span class="n">right</span><span class="p">,</span><span class="n">clip</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">strout</span><span class="p">)</span><span class="w"></span>
 
+<span class="c">!$@(#) M_strings::pad(3f): return string padded to at least specified length</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">line</span><span class="w"></span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                   </span><span class="kd">::</span><span class="w"> </span><span class="n">length</span><span class="w"></span>
@@ -353,7 +440,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

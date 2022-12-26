@@ -152,6 +152,84 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">quote</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">QUOTES</span>] <span class="nv">add</span> <span class="nv">quotes</span> <span class="nv">to</span> <span class="nv">string</span> <span class="nv">as</span> <span class="k">if</span> <span class="nv">written</span>
+ <span class="nv">with</span> <span class="nv">list</span><span class="o">-</span><span class="nv">directed</span> <span class="nv">input</span>
+ <span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>function quote(str,mode,clip) result (quoted_str)</p>
+<div class="codehilite"><pre><span></span><code>character(len=*),intent(in)          :: str
+character(len=*),optional,intent(in) :: mode
+logical,optional,intent(in)          :: clip
+character(len=:),allocatable         :: quoted_str
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">Add</span><span class="w"> </span><span class="n">quotes</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">CHARACTER</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">was</span><span class="w"> </span><span class="n">written</span><span class="w"> </span><span class="n">using</span><span class="w"></span>
+<span class="n">list</span><span class="o">-</span><span class="n">directed</span><span class="w"> </span><span class="n">input</span><span class="o">.</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">particularly</span><span class="w"> </span><span class="n">useful</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">processing</span><span class="w"></span>
+<span class="n">strings</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">CSV</span><span class="w"> </span><span class="n">files</span><span class="o">.</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">str</span>    <span class="nv">input</span> <span class="nv">string</span> <span class="nv">to</span> <span class="nv">add</span> <span class="nv">quotes</span> <span class="nv">to</span>, <span class="nv">using</span> <span class="nv">the</span> <span class="nv">rules</span> <span class="nv">of</span>
+       <span class="nv">list</span><span class="o">-</span><span class="nv">directed</span> <span class="nv">input</span> <span class="ss">(</span><span class="nv">single</span> <span class="nv">quotes</span> <span class="nv">are</span> <span class="nv">replaced</span> <span class="nv">by</span> <span class="nv">two</span>
+       <span class="nv">adjacent</span> <span class="nv">quotes</span><span class="ss">)</span>
+<span class="nv">mode</span>   <span class="nv">alternate</span> <span class="nv">quoting</span> <span class="nv">methods</span> <span class="nv">are</span> <span class="nv">supported</span>:
+
+         <span class="nv">DOUBLE</span>   <span class="nv">default</span>. <span class="nv">replace</span> <span class="nv">quote</span> <span class="nv">with</span> <span class="nv">double</span> <span class="nv">quotes</span>
+         <span class="nv">ESCAPE</span>   <span class="nv">replace</span> <span class="nv">quotes</span> <span class="nv">with</span> <span class="nv">backslash</span><span class="o">-</span><span class="nv">quote</span> <span class="nv">instead</span> <span class="nv">of</span>
+                  <span class="nv">double</span> <span class="nv">quotes</span>
+
+<span class="nv">clip</span>   <span class="nv">default</span> <span class="nv">is</span> <span class="nv">to</span> <span class="nv">trim</span> <span class="nv">leading</span> <span class="nv">and</span> <span class="nv">trailing</span> <span class="nv">spaces</span> <span class="nv">from</span> <span class="nv">the</span>
+       <span class="nv">string</span>. <span class="k">If</span> <span class="nv">CLIP</span> <span class="nv">is</span> .<span class="nv">FALSE</span>. <span class="nv">spaces</span> <span class="nv">are</span> <span class="nv">not</span> <span class="nv">trimmed</span>
+</code></pre></div>
+
+<h2 id="result">RESULT</h2>
+<div class="codehilite"><pre><span></span><code>quoted_str  The output string, which is based on adding quotes to STR.
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_quote</span>
+<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">quote</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">str</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">1024</span><span class="ss">)</span>          :: <span class="nv">msg</span>
+<span class="nv">integer</span>                      :: <span class="nv">ios</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">80</span><span class="ss">)</span>            :: <span class="nv">inline</span>
+   <span class="k">do</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span>,<span class="nv">advance</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">no</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">Enter test string:</span><span class="s1">&#39;</span>
+      <span class="nv">read</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span>,<span class="nv">iostat</span><span class="o">=</span><span class="nv">ios</span>,<span class="nv">iomsg</span><span class="o">=</span><span class="nv">msg</span><span class="ss">)</span><span class="nv">inline</span>
+      <span class="k">if</span><span class="ss">(</span><span class="nv">ios</span> <span class="o">/=</span> <span class="mi">0</span><span class="ss">)</span><span class="k">then</span>
+         <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">inline</span><span class="ss">)</span>
+         <span class="k">exit</span>
+      <span class="k">endif</span>
+
+      <span class="o">!</span> <span class="nv">the</span> <span class="nv">original</span> <span class="nv">string</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">ORIGINAL     [</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">inline</span><span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+
+      <span class="o">!</span> <span class="nv">the</span> <span class="nv">string</span> <span class="nv">processed</span> <span class="nv">by</span> <span class="nv">quote</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>
+      <span class="nv">str</span><span class="o">=</span><span class="nv">quote</span><span class="ss">(</span><span class="nv">inline</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">QUOTED     [</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">str</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+
+      <span class="o">!</span> <span class="nv">write</span> <span class="nv">the</span> <span class="nv">string</span> <span class="nv">list</span><span class="o">-</span><span class="nv">directed</span> <span class="nv">to</span> <span class="nv">compare</span> <span class="nv">the</span> <span class="nv">results</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span>,<span class="nv">iostat</span><span class="o">=</span><span class="nv">ios</span>,<span class="nv">iomsg</span><span class="o">=</span><span class="nv">msg</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">LIST DIRECTED:</span><span class="s1">&#39;</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span>,<span class="nv">iostat</span><span class="o">=</span><span class="nv">ios</span>,<span class="nv">iomsg</span><span class="o">=</span><span class="nv">msg</span>,<span class="nv">delim</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">none</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">inline</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span>,<span class="nv">iostat</span><span class="o">=</span><span class="nv">ios</span>,<span class="nv">iomsg</span><span class="o">=</span><span class="nv">msg</span>,<span class="nv">delim</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">quote</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">inline</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span>,<span class="nv">iostat</span><span class="o">=</span><span class="nv">ios</span>,<span class="nv">iomsg</span><span class="o">=</span><span class="nv">msg</span>,<span class="nv">delim</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">apostrophe</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">inline</span>
+   <span class="nv">enddo</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_quote</span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -293,7 +371,8 @@
 <span class="w">   </span><span class="k">case </span><span class="n">default</span><span class="w"></span>
 <span class="w">      </span><span class="k">call </span><span class="n">journal</span><span class="p">(</span><span class="s1">&#39;sc&#39;</span><span class="p">,</span><span class="s1">&#39;*quote* ERROR: unknown quote mode &#39;</span><span class="p">,</span><span class="n">local_mode</span><span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">quoted_str</span><span class="o">=</span><span class="n">str</span><span class="w"></span>
-<span class="w">   </span><span class="k">end select</span>
+<span class="w">   </span><span class="k">end select</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="k">end function </span><span class="n">quote</span><span class="w"></span>
 </pre></div>
 
@@ -315,7 +394,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

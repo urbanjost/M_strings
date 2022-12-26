@@ -204,7 +204,109 @@
     <div class="panel-heading codesum"><span class="anchor" id="proc-a2s"></span><h3>private pure function a2s(array) result(string)  
 </h3></div>
     <div class="panel-body">
-        
+        <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>switch(3f) - [M_strings:ARRAY] converts between CHARACTER scalar and
+array of single characters
+(LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>pure function switch(array) result (string)
+
+ character(len=1),intent(in) :: array(:)
+ character(len=SIZE(array))  :: string
+
+  or
+
+pure function switch(string) result (array)
+
+ character(len=1),intent(in) :: array(:)
+ character(len=SIZE(array))  :: string
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code>SWITCH(3f): generic function that switches CHARACTER string to an array
+of single characters or an array of single characters to a CHARACTER
+string. Useful in passing strings to C. New Fortran features may
+supersede these routines.
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_switch</span>
+<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">switch</span>, <span class="nv">isalpha</span>, <span class="nv">islower</span>, <span class="nv">nospace</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="o">&amp;</span>
+<span class="o">&amp;</span> <span class="nv">dashes</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">-----------------------------------</span><span class="s1">&#39;</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">string</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">This is a string</span><span class="s1">&#39;</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">1024</span><span class="ss">)</span>        :: <span class="nv">line</span>
+
+<span class="o">!</span> <span class="nv">First</span>, <span class="nv">examples</span> <span class="nv">of</span> <span class="nv">standard</span> <span class="nv">Fortran</span> <span class="nv">features</span>
+<span class="o">!</span> <span class="nv">returns</span> <span class="nv">array</span> [<span class="nv">F</span>,<span class="nv">T</span>,<span class="nv">T</span>,<span class="nv">T</span>,<span class="nv">T</span>,<span class="nv">T</span>]
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span>[<span class="s1">&#39;</span><span class="s">A</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>] <span class="o">==</span> <span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>
+<span class="o">!</span> <span class="nv">this</span> <span class="nv">would</span> <span class="k">return</span> <span class="nv">T</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="nv">all</span><span class="ss">(</span>[<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>] <span class="o">==</span> <span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span><span class="ss">)</span>
+<span class="o">!</span> <span class="nv">this</span> <span class="nv">would</span> <span class="k">return</span> <span class="nv">F</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="nv">all</span><span class="ss">(</span>[<span class="s1">&#39;</span><span class="s">A</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>] <span class="o">==</span> <span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span><span class="ss">)</span>
+
+<span class="o">!</span> <span class="nv">so</span> <span class="nv">to</span> <span class="nv">test</span> <span class="k">if</span> <span class="nv">the</span> <span class="nv">string</span> <span class="nv">DASHES</span> <span class="nv">is</span> <span class="nv">all</span> <span class="nv">dashes</span>
+<span class="o">!</span> <span class="nv">using</span> <span class="nv">SWITCH</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">is</span>
+<span class="k">if</span><span class="ss">(</span><span class="nv">all</span><span class="ss">(</span><span class="nv">switch</span><span class="ss">(</span><span class="nv">dashes</span><span class="ss">)</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">-</span><span class="s1">&#39;</span><span class="ss">))</span><span class="k">then</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">DASHES is all dashes</span><span class="s1">&#39;</span>
+<span class="k">endif</span>
+
+<span class="o">!</span> <span class="nv">so</span> <span class="nv">to</span> <span class="nv">test</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">all</span> <span class="nv">letters</span>
+<span class="o">!</span> <span class="nv">isalpha</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">returns</span> .<span class="nv">true</span>. <span class="nv">only</span> <span class="k">if</span> <span class="nv">character</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">letter</span>
+<span class="o">!</span> <span class="nv">false</span> <span class="nv">because</span> <span class="nv">dashes</span> <span class="nv">are</span> <span class="nv">not</span> <span class="nv">a</span> <span class="nv">letter</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="nv">all</span><span class="ss">(</span><span class="nv">isalpha</span><span class="ss">(</span><span class="nv">switch</span><span class="ss">(</span><span class="nv">dashes</span><span class="ss">)))</span>
+<span class="o">!</span> <span class="nv">false</span> <span class="nv">because</span> <span class="nv">of</span> <span class="nv">spaces</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="nv">all</span><span class="ss">(</span><span class="nv">isalpha</span><span class="ss">(</span><span class="nv">switch</span><span class="ss">(</span><span class="nv">string</span><span class="ss">)))</span>
+<span class="o">!</span> <span class="nv">true</span> <span class="nv">because</span> <span class="nv">removed</span> <span class="nv">whitespace</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="nv">all</span><span class="ss">(</span><span class="nv">isalpha</span><span class="ss">(</span><span class="nv">switch</span><span class="ss">(</span><span class="nv">nospace</span><span class="ss">(</span><span class="nv">string</span><span class="ss">))))</span>
+
+<span class="o">!</span> <span class="nv">to</span> <span class="nv">see</span> <span class="k">if</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">all</span> <span class="nv">uppercase</span>
+<span class="o">!</span> <span class="k">show</span> <span class="nv">the</span> <span class="nv">string</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="nv">string</span>
+<span class="o">!</span> <span class="nv">converted</span> <span class="nv">to</span> <span class="nv">character</span> <span class="nv">array</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(1x,*(&quot;[&quot;,a,&quot;]&quot;:))</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">switch</span><span class="ss">(</span><span class="nv">string</span><span class="ss">)</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(*(l3))</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">islower</span><span class="ss">(</span><span class="nv">switch</span><span class="ss">(</span><span class="nv">string</span><span class="ss">))</span>
+
+<span class="o">!</span> <span class="nv">we</span> <span class="nv">need</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">that</span> <span class="nv">is</span> <span class="nv">all</span> <span class="nv">letters</span>
+<span class="nv">line</span><span class="o">=</span><span class="nv">nospace</span><span class="ss">(</span><span class="nv">string</span><span class="ss">)</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">LINE=</span><span class="s1">&#39;</span>,<span class="nv">trim</span><span class="ss">(</span><span class="nv">line</span><span class="ss">)</span>
+<span class="o">!</span> <span class="nv">all</span> <span class="nv">true</span> <span class="nv">except</span> <span class="nv">first</span> <span class="nv">character</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="nv">islower</span><span class="ss">(</span><span class="nv">switch</span><span class="ss">(</span><span class="nv">nospace</span><span class="ss">(</span><span class="nv">string</span><span class="ss">)))</span>
+<span class="o">!</span> <span class="nv">should</span> <span class="nv">be</span> <span class="nv">false</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="nv">all</span><span class="ss">(</span><span class="nv">islower</span><span class="ss">(</span><span class="nv">switch</span><span class="ss">(</span><span class="nv">nospace</span><span class="ss">(</span><span class="nv">string</span><span class="ss">))))</span>
+<span class="o">!</span> <span class="nv">should</span> <span class="nv">be</span> <span class="nv">true</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="nv">all</span><span class="ss">(</span><span class="nv">islower</span><span class="ss">(</span><span class="nv">switch</span><span class="ss">(</span><span class="nv">nospace</span><span class="ss">(</span><span class="nv">string</span><span class="ss">(</span><span class="mi">2</span>:<span class="ss">)))))</span>
+
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_switch</span>
+</code></pre></div>
+
+<p>Expected output</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"></span>
+<span class="w"> </span><span class="n">T</span><span class="w"></span>
+<span class="w"> </span><span class="n">F</span><span class="w"></span>
+<span class="w"> </span><span class="n">DASHES</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="ow">all</span><span class="w"> </span><span class="n">dashes</span><span class="w"></span>
+<span class="w"> </span><span class="n">F</span><span class="w"></span>
+<span class="w"> </span><span class="n">F</span><span class="w"></span>
+<span class="w"> </span><span class="n">T</span><span class="w"></span>
+<span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">string</span><span class="w"></span>
+<span class="w"> </span><span class="o">[</span><span class="n">T</span><span class="o">][</span><span class="n">h</span><span class="o">][</span><span class="n">i</span><span class="o">][</span><span class="n">s</span><span class="o">][</span><span class="n"> </span><span class="o">][</span><span class="n">i</span><span class="o">][</span><span class="n">s</span><span class="o">][</span><span class="n"> </span><span class="o">][</span><span class="n">a</span><span class="o">][</span><span class="n"> </span><span class="o">][</span><span class="n">s</span><span class="o">][</span><span class="n">t</span><span class="o">][</span><span class="n">r</span><span class="o">][</span><span class="n">i</span><span class="o">][</span><span class="n">n</span><span class="o">][</span><span class="n">g</span><span class="o">]</span><span class="w"></span>
+<span class="w">  </span><span class="n">F</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">F</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">F</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">F</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span><span class="w"></span>
+<span class="w"> </span><span class="n">LINE</span><span class="o">=</span><span class="n">Thisisastring</span><span class="w"></span>
+<span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"></span>
+<span class="w"> </span><span class="n">F</span><span class="w"></span>
+<span class="w"> </span><span class="n">T</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -304,7 +406,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

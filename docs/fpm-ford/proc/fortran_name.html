@@ -152,6 +152,66 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">fortran_name</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">COMPARE</span>] <span class="nv">test</span> <span class="k">if</span> <span class="nv">string</span> <span class="nv">meets</span> <span class="nv">criteria</span>
+ <span class="k">for</span> <span class="nv">being</span> <span class="nv">a</span> <span class="nv">fortran</span> <span class="nv">name</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code> elemental function fortran_name(line) result (lout)
+
+  character(len=*),intent(in)  :: line
+  logical                      :: lout
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">Determines</span> <span class="k">if</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">an</span> <span class="nv">allowed</span> <span class="nv">Fortran</span> <span class="nv">name</span>. <span class="nv">To</span> <span class="nv">pass</span> <span class="nv">the</span> <span class="nv">input</span>
+ <span class="nv">string</span> <span class="nv">must</span> <span class="nv">be</span> <span class="nv">composed</span> <span class="nv">of</span> <span class="mi">1</span> <span class="nv">to</span> <span class="mi">63</span> <span class="nv">ASCII</span> <span class="nv">characters</span> <span class="nv">and</span> <span class="nv">start</span> <span class="nv">with</span> <span class="nv">a</span>
+ <span class="nv">letter</span> <span class="nv">and</span> <span class="nv">be</span> <span class="nv">composed</span> <span class="nv">entirely</span> <span class="nv">of</span> <span class="nv">alphanumeric</span> <span class="nv">characters</span> [<span class="nv">a</span><span class="o">-</span><span class="nv">zA</span><span class="o">-</span><span class="nv">Z0</span><span class="o">-</span><span class="mi">9</span>]
+ <span class="nv">and</span> <span class="nv">underscores</span>.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> LINE   input string to test. Leading spaces are significant but
+        trailing spaces are ignored.
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">LOUT</span>   <span class="nv">a</span> <span class="nv">logical</span> <span class="nv">value</span> <span class="nv">indicating</span> <span class="k">if</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">passed</span> <span class="nv">or</span> <span class="nv">failed</span>
+        <span class="nv">the</span> <span class="nv">test</span> <span class="nv">to</span> <span class="nv">see</span> <span class="k">if</span> <span class="nv">it</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">valid</span> <span class="nv">Fortran</span> <span class="nv">name</span> <span class="nv">or</span> <span class="nv">not</span>.
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">Sample</span><span class="w"> </span><span class="n">program</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">program</span><span class="w"> </span><span class="n">demo_fortran_name</span><span class="w"></span>
+<span class="w">  </span><span class="n">use</span><span class="w"> </span><span class="n">M_strings</span><span class="p">,</span><span class="w"> </span><span class="n">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">fortran_name</span><span class="w"></span>
+<span class="w">  </span><span class="n">implicit</span><span class="w"> </span><span class="n">none</span><span class="w"></span>
+<span class="w">  </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span><span class="n">parameter</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">names</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="o">=</span><span class="p">[</span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w">  </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="s1">&#39;_name&#39;</span><span class="p">,</span><span class="w">         </span><span class="s1">&#39;long_variable_name&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;name_&#39;</span><span class="p">,</span><span class="w">         </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="s1">&#39;12L&#39;</span><span class="p">,</span><span class="w">           </span><span class="s1">&#39;a__b__c  &#39;</span><span class="p">,</span><span class="w">          </span><span class="s1">&#39;PropertyOfGas&#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="s1">&#39;3%3&#39;</span><span class="p">,</span><span class="w">           </span><span class="s1">&#39;$NAME&#39;</span><span class="p">,</span><span class="w">              </span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w">             </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="s1">&#39;Variable-name&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w">                  </span><span class="s1">&#39;x@x&#39;</span><span class="w"> </span><span class="p">]</span><span class="w"></span>
+<span class="w">  </span><span class="n">integer</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">     </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(i3,1x,a20,1x,l1)&#39;</span><span class="p">)</span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">     </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">names</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">fortran_name</span><span class="p">(</span><span class="n">names</span><span class="p">(</span><span class="n">i</span><span class="p">)),</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">names</span><span class="p">))</span><span class="w"></span>
+<span class="w">  </span><span class="n">end</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">demo_fortran_name</span><span class="w"></span>
+
+<span class="n">Results</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">  </span><span class="o">&gt;</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="n">_name</span><span class="w">                </span><span class="n">F</span><span class="w"></span>
+<span class="w">  </span><span class="o">&gt;</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="n">long_variable_name</span><span class="w">   </span><span class="n">T</span><span class="w"></span>
+<span class="w">  </span><span class="o">&gt;</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="n">name_</span><span class="w">                </span><span class="n">T</span><span class="w"></span>
+<span class="w">  </span><span class="o">&gt;</span><span class="w">  </span><span class="mi">4</span><span class="w"> </span><span class="mi">12</span><span class="n">L</span><span class="w">                  </span><span class="n">F</span><span class="w"></span>
+<span class="w">  </span><span class="o">&gt;</span><span class="w">  </span><span class="mi">5</span><span class="w"> </span><span class="n">a__b__c</span><span class="w">              </span><span class="n">T</span><span class="w"></span>
+<span class="w">  </span><span class="o">&gt;</span><span class="w">  </span><span class="mi">6</span><span class="w"> </span><span class="n">PropertyOfGas</span><span class="w">        </span><span class="n">T</span><span class="w"></span>
+<span class="w">  </span><span class="o">&gt;</span><span class="w">  </span><span class="mi">7</span><span class="w"> </span><span class="mi">3</span><span class="o">%</span><span class="mi">3</span><span class="w">                  </span><span class="n">F</span><span class="w"></span>
+<span class="w">  </span><span class="o">&gt;</span><span class="w">  </span><span class="mi">8</span><span class="w"> </span><span class="o">$</span><span class="n">NAME</span><span class="w">                </span><span class="n">F</span><span class="w"></span>
+<span class="w">  </span><span class="o">&gt;</span><span class="w">  </span><span class="mi">9</span><span class="w">                      </span><span class="n">F</span><span class="w"></span>
+<span class="w">  </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">Variable</span><span class="o">-</span><span class="n">name</span><span class="w">        </span><span class="n">F</span><span class="w"></span>
+<span class="w">  </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">11</span><span class="w"> </span><span class="n">A</span><span class="w">                    </span><span class="n">T</span><span class="w"></span>
+<span class="w">  </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="n">x</span><span class="err">@</span><span class="n">x</span><span class="w">                  </span><span class="n">F</span><span class="w"></span>
+</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -236,7 +296,9 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">elemental function </span><span class="n">fortran_name</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="p">(</span><span class="n">lout</span><span class="p">)</span><span class="w"></span>
 
+<span class="c">! ident_72=&quot;@(#) M_strings fortran_name(3f) Return .true. if name is a valid Fortran name&quot;</span>
 
+<span class="c">! determine if a string is a valid Fortran name ignoring trailing spaces (but not leading spaces)</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="nb">int</span><span class="o">=</span><span class="s1">&#39;0123456789&#39;</span><span class="w"></span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">lower</span><span class="o">=</span><span class="s1">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span><span class="w"></span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">upper</span><span class="o">=</span><span class="s1">&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;</span><span class="w"></span>
@@ -274,7 +336,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

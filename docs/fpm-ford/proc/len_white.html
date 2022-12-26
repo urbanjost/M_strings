@@ -152,6 +152,96 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>  len_white(3f) - [M_strings:LENGTH] get length of string trimmed
+  of whitespace.
+  (LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>integer function len_white(string)
+
+ character(len=*) :: string
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code>  len_white(3f) returns the position of the last character in
+  string that is not a whitespace character. The Fortran90 intrinsic
+  LEN_TRIM() should be used when trailing whitespace can be assumed
+  to always be spaces.
+
+  This procedure was heavily used in the past because ANSI FORTRAN
+  77 character objects are fixed length and blank padded and the
+  LEN_TRIM() intrinsic did not exist. It should now be used only when
+  whitespace characters other than blanks are likely.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code>  string     input string whose trimmed length is being calculated
+             ignoring all trailing whitespace characters.
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code>  len_white  the number of characters in the trimmed string
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<p>Sample Program:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">program</span><span class="w"> </span><span class="n">demo_len_white</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">use</span><span class="w"> </span><span class="n">M_strings</span><span class="p">,</span><span class="w"> </span><span class="n">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">len_white</span><span class="w"></span>
+<span class="w">  </span><span class="n">implicit</span><span class="w"> </span><span class="n">none</span><span class="w"></span>
+<span class="w">  </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w">  </span><span class="n">s</span><span class="w"></span>
+<span class="w">  </span><span class="n">integer</span><span class="w">           </span><span class="p">::</span><span class="w"> </span><span class="n">lgth</span><span class="p">,</span><span class="w"> </span><span class="n">lastnb</span><span class="w"></span>
+<span class="w">  </span><span class="n">intrinsic</span><span class="w"> </span><span class="n">len</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">s</span><span class="o">=</span><span class="s1">&#39; ABCDEFG abcdefg &#39;</span><span class="w"></span>
+<span class="w">  </span><span class="n">lgth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="n">lastnb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len_white</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;total length of variable is &#39;</span><span class="p">,</span><span class="n">lgth</span><span class="w"></span>
+<span class="w">  </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;trimmed length of variable is &#39;</span><span class="p">,</span><span class="n">lastnb</span><span class="w"></span>
+<span class="w">  </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;trimmed string=[&#39;</span><span class="p">,</span><span class="n">s</span><span class="p">(:</span><span class="n">lastnb</span><span class="p">),</span><span class="s1">&#39;]&#39;</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">demo_len_white</span><span class="w"></span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">is</span><span class="w">           </span><span class="mi">80</span><span class="w"></span>
+<span class="w"> </span><span class="n">trimmed</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">is</span><span class="w">           </span><span class="mi">16</span><span class="w"></span>
+<span class="w"> </span><span class="n">trimmed</span><span class="w"> </span><span class="n">string</span><span class="o">=</span><span class="p">[</span><span class="w"> </span><span class="n">ABCDEFG</span><span class="w"> </span><span class="n">abcdefg</span><span class="p">]</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="notes">NOTES</h2>
+<p>o len_white</p>
+<div class="codehilite"><pre><span></span><code>  <span class="nv">is</span> <span class="nv">a</span> <span class="nv">resource</span><span class="o">-</span><span class="nv">intensive</span> <span class="nv">routine</span>. <span class="nv">Once</span> <span class="nv">the</span> <span class="k">end</span> <span class="nv">of</span>
+  <span class="nv">the</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">found</span>, <span class="nv">it</span> <span class="nv">is</span> <span class="nv">probably</span> <span class="nv">best</span> <span class="nv">to</span> <span class="nv">keep</span> <span class="nv">track</span> <span class="nv">of</span> <span class="nv">it</span> <span class="nv">in</span>
+  <span class="nv">order</span> <span class="nv">to</span> <span class="nv">avoid</span> <span class="nv">repeated</span> <span class="nv">calls</span> <span class="nv">to</span> <span class="nv">len_white</span>. <span class="nv">Because</span> <span class="nv">they</span>
+  <span class="nv">might</span> <span class="nv">be</span> <span class="nv">more</span> <span class="nv">efficient</span>, <span class="nv">consider</span> <span class="nv">looking</span> <span class="k">for</span> <span class="nv">vendor</span><span class="o">-</span><span class="nv">supplied</span> <span class="nv">or</span>
+  <span class="nv">system</span><span class="o">-</span><span class="nv">optimized</span> <span class="nv">equivalents</span>. <span class="k">For</span> <span class="nv">example</span>:
+
+     <span class="nv">o</span> <span class="nv">lnblnk</span> <span class="o">-</span> <span class="nv">Solaris</span> <span class="nv">f77</span>
+     <span class="nv">o</span> <span class="nv">len_trim</span> <span class="o">-</span> <span class="nv">FORTRAN</span> <span class="mi">90</span>
+</code></pre></div>
+
+<p>o Some compilers seem to have trouble passing a string of variable
+   length properly. To be safe, use something like this:</p>
+<div class="codehilite"><pre><span></span><code><span class="w">   </span><span class="n">subroutine</span><span class="w"> </span><span class="n">message</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="o">=*</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">length</span><span class="w"></span>
+<span class="w">       </span><span class="n">lgth</span><span class="o">=</span><span class="n">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w">        </span><span class="o">!</span><span class="w"> </span><span class="n">get</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">variable</span><span class="w"></span>
+<span class="w">       </span><span class="o">!</span><span class="w"> </span><span class="n">explicitly</span><span class="w"> </span><span class="n">specify</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">substring</span><span class="w"> </span><span class="n">instead</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">just</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">name</span><span class="w"></span>
+<span class="w">       </span><span class="n">lastnb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len_white</span><span class="p">(</span><span class="n">s</span><span class="p">(:</span><span class="n">lgth</span><span class="p">))</span><span class="w"></span>
+<span class="w">       </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;error:[&#39;</span><span class="p">,</span><span class="n">s</span><span class="p">(:</span><span class="n">lastnb</span><span class="p">),</span><span class="s1">&#39;]&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">end</span><span class="w"> </span><span class="n">subroutine</span><span class="w"> </span><span class="n">messages</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -235,7 +325,19 @@
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">elemental </span><span class="kt">integer </span><span class="k">function </span><span class="n">len_white</span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="w"></span>
+<span class="c">!  DEPRECATED. Use len_trim(3f),trim(3f) unless you might have trailing nulls (common when interacting with C procedures)&quot;</span>
+<span class="c">!  John S. Urban, 1984, 1997-12-31</span>
+<span class="c">!  Note that if the string is blank, a length of 0 is returned; which is not a legal string length in Fortran77.</span>
+<span class="c">!  this routine used to return one instead of zero.</span>
+<span class="c">!   - mod 1:     1994</span>
+<span class="c">!                added null (char(0)) because HP and some Suns not padding</span>
+<span class="c">!                strings with blank, but with null characters; 1994 JSU</span>
+<span class="c">!   - mod 2:     1999</span>
+<span class="c">!                update syntax with INTENT(), ENDDO, no RETURN</span>
+<span class="c">!                still need instead of LEN_TRIM() because some systems stil pad CHARACTER with NULL</span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 
+<span class="c">! ident_15=&quot;@(#) M_strings len_white(3f) return position of last non-blank/non-null character in string&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="kd">::</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="c">! input string to determine length of</span>
 <span class="kt">integer</span><span class="w">                    </span><span class="kd">::</span><span class="w"> </span><span class="n">i10</span><span class="w"></span>
@@ -272,7 +374,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

@@ -152,6 +152,81 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>decodebase(3f) - [M_strings:BASE] convert whole number string in base
+[2-36] to base 10 number
+(LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>logical function decodebase(string,basein,out10)</p>
+<div class="codehilite"><pre><span></span><code>character(len=*),intent(in)  :: string
+integer,intent(in)           :: basein
+integer,intent(out)          :: out10
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">Convert</span> <span class="nv">a</span> <span class="nv">numeric</span> <span class="nv">string</span> <span class="nv">representing</span> <span class="nv">a</span> <span class="nv">whole</span> <span class="nv">number</span> <span class="nv">in</span> <span class="nv">base</span> <span class="nv">BASEIN</span>
+<span class="nv">to</span> <span class="nv">base</span> <span class="mi">10</span>. <span class="nv">The</span> <span class="nv">function</span> <span class="nv">returns</span> <span class="nv">FALSE</span> <span class="k">if</span> <span class="nv">BASEIN</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">range</span>
+[<span class="mi">2</span>..<span class="mi">36</span>] <span class="nv">or</span> <span class="k">if</span> <span class="nv">string</span> <span class="nv">STRING</span> <span class="nv">contains</span> <span class="nv">invalid</span> <span class="nv">characters</span> <span class="nv">in</span> <span class="nv">base</span> <span class="nv">BASEIN</span>
+<span class="nv">or</span> <span class="k">if</span> <span class="nb">result</span> <span class="nv">OUT10</span> <span class="nv">is</span> <span class="nv">too</span> <span class="nv">big</span>
+
+<span class="nv">The</span> <span class="nv">letters</span> <span class="nv">A</span>,<span class="nv">B</span>,...,<span class="nv">Z</span> <span class="nv">represent</span> <span class="mi">10</span>,<span class="mi">11</span>,...,<span class="mi">36</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">base</span> <span class="o">&gt;</span> <span class="mi">10</span>.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code>string   input string. It represents a whole number in
+         the base specified by BASEIN unless BASEIN is set
+         to zero. When BASEIN is zero STRING is assumed to
+         be of the form BASE#VALUE where BASE represents
+         the function normally provided by BASEIN.
+basein   base of input string; either 0 or from 2 to 36.
+out10    output value in base 10
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">program</span><span class="w"> </span><span class="nt">demo_decodebase</span><span class="w"></span>
+<span class="nt">use</span><span class="w"> </span><span class="nt">M_strings</span><span class="o">,</span><span class="w"> </span><span class="nt">only</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nt">codebase</span><span class="o">,</span><span class="w"> </span><span class="nt">decodebase</span><span class="w"></span>
+<span class="nt">implicit</span><span class="w"> </span><span class="nt">none</span><span class="w"></span>
+<span class="nt">integer</span><span class="w">           </span><span class="o">::</span><span class="w"> </span><span class="nt">ba</span><span class="o">,</span><span class="nt">bd</span><span class="w"></span>
+<span class="nt">character</span><span class="o">(</span><span class="nt">len</span><span class="o">=</span><span class="nt">40</span><span class="o">)</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nt">x</span><span class="o">,</span><span class="nt">y</span><span class="w"></span>
+<span class="nt">integer</span><span class="w">           </span><span class="o">::</span><span class="w"> </span><span class="nt">r</span><span class="w"></span>
+
+<span class="nt">print</span><span class="w"> </span><span class="o">*,</span><span class="s1">&#39; BASE CONVERSION&#39;</span><span class="w"></span>
+<span class="nt">write</span><span class="o">(*,</span><span class="s1">&#39;(&quot;Start   Base (2 to 36): &quot;)&#39;</span><span class="o">,</span><span class="nt">advance</span><span class="o">=</span><span class="s1">&#39;no&#39;</span><span class="o">);</span><span class="w"> </span><span class="nt">read</span><span class="w"> </span><span class="o">*,</span><span class="w"> </span><span class="nt">bd</span><span class="w"></span>
+<span class="nt">write</span><span class="o">(*,</span><span class="s1">&#39;(&quot;Arrival Base (2 to 36): &quot;)&#39;</span><span class="o">,</span><span class="nt">advance</span><span class="o">=</span><span class="s1">&#39;no&#39;</span><span class="o">);</span><span class="w"> </span><span class="nt">read</span><span class="w"> </span><span class="o">*,</span><span class="w"> </span><span class="nt">ba</span><span class="w"></span>
+<span class="nt">INFINITE</span><span class="o">:</span><span class="w"> </span><span class="nt">do</span><span class="w"></span>
+<span class="w">   </span><span class="nt">print</span><span class="w"> </span><span class="o">*,</span><span class="s1">&#39;&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="nt">write</span><span class="o">(*,</span><span class="s1">&#39;(&quot;Enter number in start base: &quot;)&#39;</span><span class="o">,</span><span class="nt">advance</span><span class="o">=</span><span class="s1">&#39;no&#39;</span><span class="o">);</span><span class="w"> </span><span class="nt">read</span><span class="w"> </span><span class="o">*,</span><span class="w"> </span><span class="nt">x</span><span class="w"></span>
+<span class="w">   </span><span class="nt">if</span><span class="o">(</span><span class="nt">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;0&#39;</span><span class="o">)</span><span class="w"> </span><span class="nt">exit</span><span class="w"> </span><span class="nt">INFINITE</span><span class="w"></span>
+<span class="w">   </span><span class="nt">if</span><span class="o">(</span><span class="nt">decodebase</span><span class="o">(</span><span class="nt">x</span><span class="o">,</span><span class="nt">bd</span><span class="o">,</span><span class="nt">r</span><span class="o">))</span><span class="w"> </span><span class="nt">then</span><span class="w"></span>
+<span class="w">      </span><span class="nt">if</span><span class="o">(</span><span class="nt">codebase</span><span class="o">(</span><span class="nt">r</span><span class="o">,</span><span class="nt">ba</span><span class="o">,</span><span class="nt">y</span><span class="o">))</span><span class="w"> </span><span class="nt">then</span><span class="w"></span>
+<span class="w">        </span><span class="nt">write</span><span class="o">(*,</span><span class="s1">&#39;(&quot;In base &quot;,I2,&quot;: &quot;,A20)&#39;</span><span class="o">)</span><span class="w">  </span><span class="nt">ba</span><span class="o">,</span><span class="w"> </span><span class="nt">y</span><span class="w"></span>
+<span class="w">      </span><span class="nt">else</span><span class="w"></span>
+<span class="w">        </span><span class="nt">print</span><span class="w"> </span><span class="o">*,</span><span class="s1">&#39;Error in coding number.&#39;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">endif</span><span class="w"></span>
+<span class="w">   </span><span class="nt">else</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print</span><span class="w"> </span><span class="o">*,</span><span class="s1">&#39;Error in decoding number.&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="nt">endif</span><span class="w"></span>
+<span class="nt">enddo</span><span class="w"> </span><span class="nt">INFINITE</span><span class="w"></span>
+
+<span class="nt">end</span><span class="w"> </span><span class="nt">program</span><span class="w"> </span><span class="nt">demo_decodebase</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+
+   Ref.: &quot;Math matiques en Turbo-Pascal by
+          M. Ducamp and A. Reverchon (2),
+          Eyrolles, Paris, 1988&quot;.
+
+based on a F90 Version By J-P Moreau (www.jpmoreau.fr)
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -265,8 +340,9 @@
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="kt">logical </span><span class="k">function </span><span class="n">decodebase</span><span class="p">(</span><span class="n">string</span><span class="p">,</span><span class="n">basein</span><span class="p">,</span><span class="n">out_baseten</span><span class="p">)</span><span class="w"></span>
-<span class="k">implicit none</span>
+<span class="k">implicit none</span><span class="w"></span>
 
+<span class="c">! ident_77=&quot;@(#) M_strings decodebase(3f) convert whole number string in base [2-36] to base 10 number&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">string</span><span class="w"></span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">basein</span><span class="w"></span>
@@ -357,7 +433,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 11:21            </p>
+ on 2022-12-26 14:17            </p>
         </div>
       </div>
       <br>

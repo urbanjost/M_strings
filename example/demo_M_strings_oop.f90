@@ -110,7 +110,7 @@
         write(*,*)repeat('=',68)
         write(*,*)'OVERLOADED OPERATORS (add and subtract,return TYPE(STRING))'
         str1%str='123.456'
-        str2%str='AaBbCcDdEeFfGgHhIiJj AaBbCcDdEeFfGgHhIiJj'
+        str2%str='AaBbCcDdEeFfGgHhIi AaBbCcDdEeFfGgHhIi'
         write(*,101)'str1%str ................... ',str1%str
         write(*,101)'str2%str ................... ',str2%str
         write(*,*)'str1 + str2 ................ ',p(str1 + str2)
@@ -121,7 +121,7 @@
 
         write(*,*)repeat('=',68)
         write(*,*)'OVERLOADED OPERATORS (multiply,return TYPE(STRING))'
-        str1%str='AaBbCcDdEeFfGgHhIiJj'
+        str1%str='AaBbCcDdEeFfGgHhIi'
         write(*,101)'str1%str ................... ',str1%str
         write(*,*)'str1 * 2 ................... ',p(str1 * 2)
 
