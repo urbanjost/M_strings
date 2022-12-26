@@ -24,6 +24,6 @@
       use M_strings, only : fortran_name
       use M_strings, only : describe
       use M_strings, only : edit_distance
-      use M_strings, only : cc
+      use M_strings, only : bundle
       use M_strings, only : int, real, dble, nint
       end program demo_M_strings

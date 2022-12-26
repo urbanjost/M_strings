@@ -28,7 +28,7 @@ subroutine test_suite_m_strings()
    call test_describe()
    call test_edit_distance()
    call test_squeeze()
-   call test_cc()
+   call test_bundle()
    call test_expand()
    call test_getvals()
    call test_indent()
@@ -1757,12 +1757,13 @@ integer,allocatable         :: ivalues(:)
    call unit_check_done('edit_distance')
 end subroutine test_edit_distance
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_cc()
+subroutine test_bundle()
 integer,allocatable         :: ivalues(:)
-   call unit_check_start('cc',' -description ''return array from list of strings'''//OPTIONS)
-   call unit_check('cc',all(cc('kittens','sit','three') == ["kittens","sit    ","three  "]), "'kittens','sit    ','three  '")
-   call unit_check_done('cc')
-end subroutine test_cc
+   call unit_check_start('bundle',' -description ''return array from list of strings'''//OPTIONS)
+   call unit_check('bundle',all(bundle('kittens','sit','three') == ["kittens","sit    ","three  "]), &
+                                                                  &"'kittens','sit    ','three  '")
+   call unit_check_done('bundle')
+end subroutine test_bundle
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isprint
 !-!use M_strings, only: isprint
