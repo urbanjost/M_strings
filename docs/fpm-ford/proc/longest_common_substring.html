@@ -152,80 +152,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>longest_common_substring(3f) - [M_strings:COMPARE] function that
-returns the longest common substring of two strings.
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">longest_common_substring(a,b) result</span><span class="p">(</span>match<span class="p">)</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="p">::</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"></span>
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">match</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">that</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">longest</span><span class="w"> </span><span class="n">common</span><span class="w"> </span><span class="n">substring</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="nb">strings</span><span class="p">.</span><span class="w"></span>
-
-<span class="n">Note</span><span class="w"> </span><span class="s">that</span><span class="w"> </span><span class="s">substrings</span><span class="w"> </span><span class="s">are</span><span class="w"> </span><span class="s">consecutive</span><span class="w"> </span><span class="s">characters</span><span class="w"> </span><span class="s">within</span><span class="w"> </span><span class="s">a</span><span class="w"> </span><span class="s">string.</span><span class="w"></span>
-<span class="n">This</span><span class="w"> </span><span class="s">distinguishes</span><span class="w"> </span><span class="s">them</span><span class="w"> </span><span class="s">from</span><span class="w"> </span><span class="s">subsequences,</span><span class="w"> </span><span class="s">which</span><span class="w"> </span><span class="s">is</span><span class="w"> </span><span class="s">any</span><span class="w"> </span><span class="s">sequence</span><span class="w"> </span><span class="s">of</span><span class="w"></span>
-<span class="n">characters</span><span class="w"> </span><span class="s">within</span><span class="w"> </span><span class="s">a</span><span class="w"> </span><span class="s">string,</span><span class="w"> </span><span class="s">even</span><span class="w"> </span><span class="s">if</span><span class="w"> </span><span class="s">there</span><span class="w"> </span><span class="s">are</span><span class="w"> </span><span class="s">extraneous</span><span class="w"> </span><span class="s">characters</span><span class="w"> </span><span class="s">in</span><span class="w"></span>
-<span class="nb">between</span><span class="w"> </span><span class="n">them</span><span class="p">.</span><span class="w"></span>
-
-<span class="n">Hence</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">longest</span><span class="w"> </span><span class="n">common</span><span class="w"> </span><span class="n">subsequence</span><span class="w"> </span><span class="nb">between</span><span class="w"> </span><span class="s">&quot;thisisatest&quot;</span><span class="w"> </span><span class="n">and</span><span class="w"></span>
-<span class="s">&quot;testing123testing&quot;</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="s">&quot;tsitest&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">whereas</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">longest</span><span class="w"> </span><span class="n">common</span><span class="w"> </span><span class="n">substring</span><span class="w"></span>
-<span class="n">is</span><span class="w"> </span><span class="s">just</span><span class="w"> </span><span class="s">&quot;test&quot;.</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">a</span>,<span class="nv">b</span>  <span class="nv">strings</span> <span class="nv">to</span> <span class="nv">search</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">longest</span> <span class="nv">common</span> <span class="nv">substring</span>.
-</code></pre></div>
-
-<h2 id="returns">RETURNS</h2>
-<div class="codehilite"><pre><span></span><code>longest_common_substring  the longest common substring found
-</code></pre></div>
-
-<h2 id="example">EXAMPLE</h2>
-<p>Sample program</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_longest_common_substring</span>
-<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">longest_common_substring</span>
-<span class="nv">implicit</span> <span class="nv">none</span>
-   <span class="k">call</span> <span class="nl">compare</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">testing123testingthing</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">thisis</span><span class="s1">&#39;</span>,              <span class="s1">&#39;</span><span class="s">thi</span><span class="s1">&#39;</span><span class="ss">)</span>
-   <span class="k">call</span> <span class="nl">compare</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">testing</span><span class="s1">&#39;</span>,             <span class="s1">&#39;</span><span class="s">sting</span><span class="s1">&#39;</span>,               <span class="s1">&#39;</span><span class="s">sting</span><span class="s1">&#39;</span><span class="ss">)</span>
-   <span class="k">call</span> <span class="nl">compare</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">thisisatest_stinger</span><span class="s1">&#39;</span>, <span class="s1">&#39;</span><span class="s">testing123testingthing</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">sting</span><span class="s1">&#39;</span><span class="ss">)</span>
-   <span class="k">call</span> <span class="nl">compare</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">thisisatest_stinger</span><span class="s1">&#39;</span>, <span class="s1">&#39;</span><span class="s">thisis</span><span class="s1">&#39;</span>,              <span class="s1">&#39;</span><span class="s">thisis</span><span class="s1">&#39;</span><span class="ss">)</span>
-   <span class="k">call</span> <span class="nl">compare</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">thisisatest</span><span class="s1">&#39;</span>,         <span class="s1">&#39;</span><span class="s">testing123testing</span><span class="s1">&#39;</span>,   <span class="s1">&#39;</span><span class="s">test</span><span class="s1">&#39;</span><span class="ss">)</span>
-   <span class="k">call</span> <span class="nl">compare</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">thisisatest</span><span class="s1">&#39;</span>,         <span class="s1">&#39;</span><span class="s">thisisatest</span><span class="s1">&#39;</span>,         <span class="s1">&#39;</span><span class="s">thisisatest</span><span class="s1">&#39;</span><span class="ss">)</span>
-<span class="nv">contains</span>
-
-<span class="nv">subroutine</span> <span class="nv">compare</span><span class="ss">(</span><span class="nv">a</span>,<span class="nv">b</span>,<span class="nv">answer</span><span class="ss">)</span>
-<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">intent</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span> :: <span class="nv">a</span>, <span class="nv">b</span>, <span class="nv">answer</span>
-<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">match</span>
-<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">g</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(*(g0))</span><span class="s1">&#39;</span>
-<span class="nv">integer</span> :: <span class="nv">i</span>
-   <span class="nv">match</span><span class="o">=</span><span class="nv">longest_common_substring</span><span class="ss">(</span><span class="nv">a</span>,<span class="nv">b</span><span class="ss">)</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">comparing &quot;</span><span class="s1">&#39;</span>,<span class="nv">a</span>,<span class="s1">&#39;</span><span class="s">&quot; and &quot;</span><span class="s1">&#39;</span>,<span class="nv">b</span>,<span class="s1">&#39;</span><span class="s">&quot;</span><span class="s1">&#39;</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span> <span class="nv">merge</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">(PASSED) &quot;</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">(FAILED) &quot;</span><span class="s1">&#39;</span>,<span class="nv">answer</span> <span class="o">==</span> <span class="nv">match</span><span class="ss">)</span>, <span class="o">&amp;</span>
-   <span class="o">&amp;</span> <span class="nv">match</span>,<span class="s1">&#39;</span><span class="s">&quot;; expected &quot;</span><span class="s1">&#39;</span>,<span class="nv">answer</span>,<span class="s1">&#39;</span><span class="s">&quot;</span><span class="s1">&#39;</span>
-<span class="k">end</span> <span class="nv">subroutine</span> <span class="nv">compare</span>
-
-<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_longest_common_substring</span>
-</code></pre></div>
-
-<p>expected output</p>
-<div class="codehilite"><pre><span></span><code>comparing &quot;testing123testingthing&quot; and &quot;thisis&quot;
-(PASSED) &quot;thi&quot;; expected &quot;thi&quot;
-comparing &quot;testing&quot; and &quot;sting&quot;
-(PASSED) &quot;sting&quot;; expected &quot;sting&quot;
-comparing &quot;thisisatest_stinger&quot; and &quot;testing123testingthing&quot;
-(PASSED) &quot;sting&quot;; expected &quot;sting&quot;
-comparing &quot;thisisatest_stinger&quot; and &quot;thisis&quot;
-(PASSED) &quot;thisis&quot;; expected &quot;thisis&quot;
-comparing &quot;thisisatest&quot; and &quot;testing123testing&quot;
-(PASSED) &quot;test&quot;; expected &quot;test&quot;
-comparing &quot;thisisatest&quot; and &quot;thisisatest&quot;
-(PASSED) &quot;thisisatest&quot;; expected &quot;thisisatest&quot;
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -376,7 +302,7 @@ comparing &quot;thisisatest&quot; and &quot;thisisatest&quot;
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

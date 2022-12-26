@@ -152,88 +152,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code><span class="n">join</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="n">M_strings</span><span class="p">:</span><span class="n">EDITING</span><span class="p">]</span><span class="w"> </span><span class="n">append</span><span class="w"> </span><span class="n">CHARACTER</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">into</span><span class="w"></span>
-<span class="n">a</span><span class="w"> </span><span class="n">single</span><span class="w"> </span><span class="n">CHARACTER</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">specified</span><span class="w"> </span><span class="n">separator</span><span class="w"></span>
-<span class="p">(</span><span class="n">LICENSE</span><span class="p">:</span><span class="n">PD</span><span class="p">)</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">pure</span> <span class="nv">function</span> <span class="nv">join</span><span class="ss">(</span><span class="nv">str</span>,<span class="nv">sep</span>,<span class="nv">trm</span>,<span class="nv">left</span>,<span class="nv">right</span>,<span class="nv">start</span>,<span class="k">end</span><span class="ss">)</span> <span class="nb">result</span> <span class="ss">(</span><span class="nv">string</span><span class="ss">)</span>
-
- <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">intent</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span>          :: <span class="nv">str</span><span class="ss">(</span>:<span class="ss">)</span>
- <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">intent</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span>,<span class="nv">optional</span> :: <span class="nv">sep</span>
- <span class="nv">logical</span>,<span class="nv">intent</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span>,<span class="nv">optional</span>          :: <span class="nv">trm</span>
- <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">intent</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span>,<span class="nv">optional</span> :: <span class="nv">right</span>
- <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">intent</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span>,<span class="nv">optional</span> :: <span class="nv">left</span>
- <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">intent</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span>,<span class="nv">optional</span> :: <span class="nv">start</span>
- <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">intent</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span>,<span class="nv">optional</span> :: <span class="k">end</span>
- <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span>         :: <span class="nv">string</span>
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<p>JOIN(3f) appends the elements of a CHARACTER array into a single
-   CHARACTER variable, with elements 1 to N joined from left to right.
-   By default each element is trimmed of trailing spaces and the
-   default separator is a null string.</p>
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="n">STR</span><span class="p">(:)</span><span class="w">  </span><span class="n">array</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">CHARACTER</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">joined</span><span class="w"></span>
-<span class="w">  </span><span class="n">SEP</span><span class="w">     </span><span class="n">separator</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">place</span><span class="w"> </span><span class="n">between</span><span class="w"> </span><span class="n">each</span><span class="w"> </span><span class="n">variable</span><span class="o">.</span><span class="w"> </span><span class="n">defaults</span><span class="w"></span>
-<span class="w">          </span><span class="n">to</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="w"> </span><span class="n">string</span><span class="o">.</span><span class="w"></span>
-<span class="w">  </span><span class="n">LEFT</span><span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">place</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">each</span><span class="w"> </span><span class="n">element</span><span class="w"></span>
-<span class="w">  </span><span class="n">RIGHT</span><span class="w">   </span><span class="n">string</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">place</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">each</span><span class="w"> </span><span class="n">element</span><span class="w"></span>
-<span class="w">  </span><span class="n">START</span><span class="w">   </span><span class="n">prefix</span><span class="w"> </span><span class="n">string</span><span class="w"></span>
-<span class="w">  </span><span class="n">END</span><span class="w">     </span><span class="n">suffix</span><span class="w"> </span><span class="n">string</span><span class="w"></span>
-<span class="w">  </span><span class="n">TRM</span><span class="w">     </span><span class="n">option</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">trim</span><span class="w"> </span><span class="n">each</span><span class="w"> </span><span class="n">element</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">STR</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">trailing</span><span class="w"></span>
-<span class="w">          </span><span class="n">spaces</span><span class="o">.</span><span class="w"> </span><span class="n">Defaults</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="o">.</span><span class="n">TRUE</span><span class="o">.</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="result">RESULT</h2>
-<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="n">STRING</span><span class="w">  </span><span class="n">CHARACTER</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">composed</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">elements</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">STR</span><span class="p">()</span><span class="w"></span>
-<span class="w">          </span><span class="n">appended</span><span class="w"> </span><span class="n">together</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">optional</span><span class="w"> </span><span class="n">separator</span><span class="w"> </span><span class="n">SEP</span><span class="w"> </span><span class="n">placed</span><span class="w"></span>
-<span class="w">          </span><span class="n">between</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">elements</span><span class="o">.</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="example">EXAMPLE</h2>
-<p>Sample program:</p>
-<p>program demo_join
-   use M_strings, only: join
-   implicit none
-   character(len=:),allocatable  :: s(:)
-   character(len=:),allocatable  :: out
-   integer                       :: i
-     s=[character(len=10) :: &lsquo;United&rsquo;,&rsquo; we&rsquo;,&rsquo; stand,&rsquo;, &amp;
-     &amp; &lsquo; divided&rsquo;,&rsquo; we fall.&rsquo;]
-     out=join(s)
-     write(<em>,&rsquo;(a)&rsquo;) out
-     write(</em>,&rsquo;(a)&rsquo;) join(s,trm=.false.)
-     write(<em>,&rsquo;(a)&rsquo;) (join(s,trm=.false.,sep=&rsquo;|&rsquo;),i=1,3)
-     write(</em>,&rsquo;(a)&rsquo;) join(s,sep=&rsquo;&lt;&gt;&rsquo;)
-     write(<em>,&rsquo;(a)&rsquo;) join(s,sep=&rsquo;;&rsquo;,left=&rsquo;[&lsquo;,right=&rsquo;]&rsquo;)
-     write(</em>,&rsquo;(a)&rsquo;) join(s,left=&rsquo;[&lsquo;,right=&rsquo;]&rsquo;)
-     write(*,&rsquo;(a)&rsquo;) join(s,left=&rsquo;&gt;&gt;&rsquo;)
-   end program demo_join</p>
-<p>Expected output:</p>
-<p>United we stand, divided we fall.
-   United     we        stand,    divided   we fall.
-   United    | we       | stand,   | divided  | we fall.
-   United    | we       | stand,   | divided  | we fall.
-   United    | we       | stand,   | divided  | we fall.
-   United&lt;&gt; we&lt;&gt; stand,&lt;&gt; divided&lt;&gt; we fall.
-   [United];[ we];[ stand,];[ divided];[ we fall.]
-   [United][ we][ stand,][ divided][ we fall.]</p>
-<blockquote>
-<blockquote>
-<p>United&gt;&gt; we&gt;&gt; stand,&gt;&gt; divided&gt;&gt; we fall.</p>
-</blockquote>
-</blockquote>
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -408,7 +326,6 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">pure function </span><span class="n">join</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="n">sep</span><span class="p">,</span><span class="n">trm</span><span class="p">,</span><span class="n">left</span><span class="p">,</span><span class="n">right</span><span class="p">,</span><span class="n">start</span><span class="p">,</span><span class="k">end</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="w"></span>
 
-<span class="c">! ident_20=&quot;@(#) M_strings join(3f) merge string array into a single CHARACTER value adding specified separators caps prefix and suffix&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">str</span><span class="p">(:)</span><span class="w"></span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">sep</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="k">end</span>
@@ -461,7 +378,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

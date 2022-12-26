@@ -152,74 +152,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">merge_str</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">LENGTH</span>] <span class="nv">pads</span> <span class="nv">strings</span> <span class="nv">to</span> <span class="nv">same</span> <span class="nv">length</span> <span class="nv">and</span>
-<span class="k">then</span> <span class="nv">calls</span> <span class="nv">MERGE</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>
-<span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">merge_str(str1,str2,expr) result</span><span class="p">(</span>strout<span class="p">)</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">str1</span><span class="w"></span>
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">str2</span><span class="w"></span>
-<span class="w"> </span><span class="nb">logical</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">              </span><span class="p">::</span><span class="w"> </span><span class="n">expr</span><span class="w"></span>
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w">    </span><span class="p">::</span><span class="w"> </span><span class="n">strout</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">merge_str</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">pads</span> <span class="nv">the</span> <span class="nv">shorter</span> <span class="nv">of</span> <span class="nv">str1</span> <span class="nv">and</span> <span class="nv">str2</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">longest</span> <span class="nv">length</span>
-<span class="nv">of</span> <span class="nv">str1</span> <span class="nv">and</span> <span class="nv">str2</span> <span class="nv">and</span> <span class="k">then</span> <span class="nv">calls</span> <span class="nv">MERGE</span><span class="ss">(</span><span class="nv">padded_str1</span>,<span class="nv">padded_str2</span>,<span class="nv">expr</span><span class="ss">)</span>.
-<span class="nv">It</span> <span class="nv">trims</span> <span class="nv">trailing</span> <span class="nv">spaces</span> <span class="nv">off</span> <span class="nv">the</span> <span class="nb">result</span> <span class="nv">and</span> <span class="nv">returns</span> <span class="nv">the</span> <span class="nv">trimmed</span>
-<span class="nv">string</span>. <span class="nv">This</span> <span class="nv">makes</span> <span class="nv">it</span> <span class="nv">easier</span> <span class="nv">to</span> <span class="k">call</span> <span class="nl">MERGE</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">with</span> <span class="nv">strings</span>, <span class="nv">as</span>
-<span class="nv">MERGE</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">requires</span> <span class="nv">the</span> <span class="nv">strings</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">the</span> <span class="nv">same</span> <span class="nv">length</span>.
-
-<span class="nv">NOTE</span>: <span class="nv">STR1</span> <span class="nv">and</span> <span class="nv">STR2</span> <span class="nv">are</span> <span class="nv">always</span> <span class="nv">required</span> <span class="nv">even</span> <span class="nv">though</span> <span class="nv">declared</span> <span class="nv">optional</span>.
-      <span class="nv">this</span> <span class="nv">is</span> <span class="nv">so</span> <span class="nv">the</span> <span class="nv">call</span> <span class="s2">&quot;</span><span class="s">STR_MERGE(A,B,present(A))</span><span class="s2">&quot;</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">valid</span> <span class="nv">call</span>.
-      <span class="nv">The</span> <span class="nv">parameters</span> <span class="nv">STR1</span> <span class="nv">and</span> <span class="nv">STR2</span> <span class="nv">when</span> <span class="nv">they</span> <span class="nv">are</span> <span class="nv">optional</span> <span class="nv">parameters</span>
-      <span class="nv">can</span> <span class="nv">be</span> <span class="nv">passed</span> <span class="nv">to</span> <span class="nv">a</span> <span class="nv">procedure</span> <span class="k">if</span> <span class="nv">the</span> <span class="nv">options</span> <span class="nv">are</span> <span class="nv">optional</span> <span class="nv">on</span> <span class="nv">the</span>
-      <span class="nv">called</span> <span class="nv">procedure</span>.
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">STR1</span>    <span class="nv">string</span> <span class="nv">to</span> <span class="k">return</span> <span class="k">if</span> <span class="nv">the</span> <span class="nv">logical</span> <span class="nv">expression</span> <span class="nv">EXPR</span> <span class="nv">is</span> <span class="nv">true</span>
-<span class="nv">STR2</span>    <span class="nv">string</span> <span class="nv">to</span> <span class="k">return</span> <span class="k">if</span> <span class="nv">the</span> <span class="nv">logical</span> <span class="nv">expression</span> <span class="nv">EXPR</span> <span class="nv">is</span> <span class="nv">false</span>
-<span class="nv">EXPR</span>    <span class="nv">logical</span> <span class="nv">expression</span> <span class="nv">to</span> <span class="nv">evaluate</span> <span class="nv">to</span> <span class="nv">determine</span> <span class="nv">whether</span> <span class="nv">to</span> <span class="k">return</span>
-        <span class="nv">STR1</span> <span class="nv">when</span> <span class="nv">true</span>, <span class="nv">and</span> <span class="nv">STR2</span> <span class="nv">when</span> <span class="nv">false</span>.
-</code></pre></div>
-
-<h2 id="result">RESULT</h2>
-<div class="codehilite"><pre><span></span><code> MERGE_STR  a trimmed string is returned that is otherwise the value
-            of STR1 or STR2, depending on the logical expression EXPR.
-</code></pre></div>
-
-<h2 id="examples">EXAMPLES</h2>
-<p>Sample Program:</p>
-<div class="codehilite"><pre><span></span><code> <span class="nv">program</span> <span class="nv">demo_merge_str</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">merge_str</span>
- <span class="nv">implicit</span> <span class="nv">none</span>
- <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>, <span class="nv">allocatable</span> :: <span class="nv">answer</span>
-    <span class="nv">answer</span><span class="o">=</span><span class="nv">merge_str</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">first string</span><span class="s1">&#39;</span>, <span class="o">&amp;</span>
-     <span class="o">&amp;</span> <span class="s1">&#39;</span><span class="s">second string is longer</span><span class="s1">&#39;</span>,<span class="mi">10</span> <span class="o">==</span> <span class="mi">10</span><span class="ss">)</span>
-    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">answer</span>
-    <span class="nv">answer</span><span class="o">=</span><span class="nv">merge_str</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">first string</span><span class="s1">&#39;</span>, <span class="o">&amp;</span>
-     <span class="o">&amp;</span> <span class="s1">&#39;</span><span class="s">second string is longer</span><span class="s1">&#39;</span>,<span class="mi">10</span> <span class="o">/=</span> <span class="mi">10</span><span class="ss">)</span>
-    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">answer</span>
- <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_merge_str</span>
-</code></pre></div>
-
-<p>Expected output</p>
-<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="p">[</span><span class="n">first</span><span class="w"> </span><span class="n">string</span><span class="p">]</span><span class="w"></span>
-<span class="w"> </span><span class="p">[</span><span class="n">second</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">longer</span><span class="p">]</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -282,7 +214,7 @@
 
       <h3>Return Value
         <small>
-          <span class="anchor" id="variable-strout~4"></span>
+          <span class="anchor" id="variable-strout~5"></span>
           character(len=:), allocatable
         </small>
       </h3>
@@ -333,10 +265,7 @@
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">merge_str</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span><span class="n">str2</span><span class="p">,</span><span class="n">expr</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">strout</span><span class="p">)</span><span class="w"></span>
-<span class="c">! for some reason the MERGE(3f) intrinsic requires the strings it compares to be of equal length</span>
-<span class="c">! make an alias for MERGE(3f) that makes the lengths the same before doing the comparison by padding the shorter one with spaces</span>
 
-<span class="c">! ident_41=&quot;@(#) M_strings merge_str(3f) pads first and second arguments to MERGE(3f) to same length&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">str1</span><span class="w"></span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">str2</span><span class="w"></span>
@@ -379,7 +308,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

@@ -152,115 +152,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code> noesc(3f) - [M_strings:NONALPHA] convert non-printable characters
- to a space
- (LICENSE:PD)
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code>elemental function noesc(INSTR)
-
- character(len=*),intent(in) :: INSTR
- character(len=len(instr))   :: noesc
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code>  Convert non-printable characters to a space.
-</code></pre></div>
-
-<h2 id="examples">EXAMPLES</h2>
-<p>Sample Program:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">program</span><span class="w"> </span><span class="n">demo_noesc</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">M_strings</span><span class="p">,</span><span class="w"> </span><span class="n">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">noesc</span><span class="w"></span>
-<span class="w"> </span><span class="n">implicit</span><span class="w"> </span><span class="n">none</span><span class="w"></span>
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">ascii</span><span class="w"></span>
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">cleared</span><span class="w"></span>
-<span class="w"> </span><span class="n">integer</span><span class="w">            </span><span class="p">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
-<span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="n">ASCII</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">set</span><span class="w"></span>
-<span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">128</span><span class="w"></span>
-<span class="w">    </span><span class="n">ascii</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="nb">char</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-<span class="w"> </span><span class="n">enddo</span><span class="w"></span>
-<span class="w"> </span><span class="n">cleared</span><span class="o">=</span><span class="n">noesc</span><span class="p">(</span><span class="n">ascii</span><span class="p">)</span><span class="w"></span>
-<span class="w"> </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;characters and their ADE (ASCII Decimal Equivalent)&#39;</span><span class="w"></span>
-<span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">ade</span><span class="p">(</span><span class="n">ascii</span><span class="p">)</span><span class="w"></span>
-<span class="w"> </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;Cleared of non-printable characters&#39;</span><span class="w"></span>
-<span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">ade</span><span class="p">(</span><span class="n">cleared</span><span class="p">)</span><span class="w"></span>
-<span class="w"> </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;Cleared string:&#39;</span><span class="w"></span>
-<span class="w"> </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">cleared</span><span class="w"></span>
-<span class="w"> </span><span class="n">contains</span><span class="w"></span>
-<span class="w">   </span><span class="n">subroutine</span><span class="w"> </span><span class="n">ade</span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="n">implicit</span><span class="w"> </span><span class="n">none</span><span class="w"></span>
-<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="nb">print</span><span class="w"></span>
-<span class="w">   </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="o">=*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="ow">in</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">string</span><span class="w"></span>
-<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">characters</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="nb">print</span><span class="w"></span>
-<span class="w">   </span><span class="n">integer</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">lgth</span><span class="w"></span>
-<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">step</span><span class="w"> </span><span class="n">thru</span><span class="w"> </span><span class="n">string</span><span class="w"></span>
-<span class="w">   </span><span class="n">integer</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
-<span class="w">      </span><span class="o">!</span><span class="w"> </span><span class="n">get</span><span class="w"> </span><span class="n">trimmed</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="n">string</span><span class="w"></span>
-<span class="w">      </span><span class="n">lgth</span><span class="o">=</span><span class="n">len_trim</span><span class="p">(</span><span class="n">string</span><span class="p">(:</span><span class="n">len</span><span class="p">(</span><span class="n">string</span><span class="p">)))</span><span class="w"></span>
-
-<span class="w">      </span><span class="o">!</span><span class="w"> </span><span class="n">replace</span><span class="w"> </span><span class="n">lower</span><span class="w"> </span><span class="n">unprintable</span><span class="w"> </span><span class="n">characters</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">spaces</span><span class="w"></span>
-<span class="w">      </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)(</span><span class="n">merge</span><span class="p">(</span><span class="n">string</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">),</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="o">&amp;</span><span class="w"></span>
-<span class="w">      </span><span class="o">&amp;</span><span class="w"> </span><span class="n">iachar</span><span class="p">(</span><span class="n">string</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">))</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">32</span><span class="w">        </span><span class="o">&amp;</span><span class="w"></span>
-<span class="w">      </span><span class="o">&amp;</span><span class="w"> </span><span class="o">.</span><span class="ow">and</span><span class="o">.</span><span class="w">                            </span><span class="o">&amp;</span><span class="w"></span>
-<span class="w">      </span><span class="o">&amp;</span><span class="w"> </span><span class="n">iachar</span><span class="p">(</span><span class="n">string</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">126</span><span class="p">)</span><span class="w">      </span><span class="o">&amp;</span><span class="w"></span>
-<span class="w">      </span><span class="o">&amp;</span><span class="w"> </span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">lgth</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">      </span><span class="o">!</span><span class="w"> </span><span class="nb">print</span><span class="w"> </span><span class="n">ADE</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">underneath</span><span class="w"> </span><span class="n">it</span><span class="w"></span>
-<span class="w">      </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">202</span><span class="p">)</span><span class="w">     </span><span class="p">(</span><span class="n">iachar</span><span class="p">(</span><span class="n">string</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">))</span><span class="o">/</span><span class="mi">100</span><span class="p">,</span><span class="w">    </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">lgth</span><span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">202</span><span class="p">)(</span><span class="n">mod</span><span class="p">(</span><span class="w"> </span><span class="n">iachar</span><span class="p">(</span><span class="n">string</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">)),</span><span class="mi">100</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">lgth</span><span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">202</span><span class="p">)(</span><span class="n">mod</span><span class="p">((</span><span class="n">iachar</span><span class="p">(</span><span class="n">string</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">))),</span><span class="mi">10</span><span class="p">),</span><span class="w">   </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">lgth</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">printing</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">characters</span><span class="w"></span>
-<span class="w">   </span><span class="mi">101</span><span class="w">   </span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">a1</span><span class="p">:))</span><span class="w"></span>
-<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">printing</span><span class="w"> </span><span class="n">ADE</span><span class="w"> </span><span class="n">values</span><span class="w"></span>
-<span class="w">   </span><span class="mi">202</span><span class="w">   </span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">i1</span><span class="p">:))</span><span class="w"></span>
-<span class="w">   </span><span class="n">end</span><span class="w"> </span><span class="n">subroutine</span><span class="w"> </span><span class="n">ade</span><span class="w"></span>
-<span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">demo_noesc</span><span class="w"></span>
-
-<span class="n">Expected</span><span class="w"> </span><span class="n">output</span><span class="w"></span>
-
-<span class="n">The</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">printed</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ADE</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">vertically</span><span class="w"> </span><span class="n">beneath</span><span class="o">.</span><span class="w"></span>
-<span class="n">The</span><span class="w"> </span><span class="n">original</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ADEs</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="mi">000</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="mf">127.</span><span class="w"> </span><span class="n">After</span><span class="w"></span>
-<span class="n">NOESC</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">called</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="s2">&quot;non-printable&quot;</span><span class="w"></span>
-<span class="n">characters</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">replaced</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">space</span><span class="w"> </span><span class="p">(</span><span class="n">ADE</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="mi">032</span><span class="p">)</span><span class="o">.</span><span class="w"></span>
-</code></pre></div>
-
-<p>characters and their ADE (ASCII Decimal Equivalent)</p>
-<div class="codehilite"><pre><span></span><code><span class="o">&gt;</span><span class="w">                                 </span><span class="err">!&quot;#$</span><span class="o">%&amp;</span><span class="err">&#39;</span><span class="p">()</span><span class="o">*+</span><span class="p">,</span><span class="o">-</span><span class="p">.</span><span class="o">/</span><span class="mi">0123456789</span><span class="w"></span>
-<span class="err">:</span><span class="p">;</span><span class="o">&lt;=&gt;</span><span class="vm">?</span><span class="nv">@ABCDEFGHIJKLMNOPQRSTUVWXYZ</span><span class="o">[</span><span class="n">\</span><span class="o">]^</span><span class="n">_</span><span class="err">`</span><span class="n">abcdefghijklmnopqrstuvwxyz</span><span class="err">{</span><span class="o">|</span><span class="err">}</span><span class="o">~</span><span class="w"></span>
-<span class="o">&gt;</span><span class="mi">0000000000000000000000000000000000000000000000000000000000</span><span class="w"></span>
-<span class="mi">0000000000000000000000000000000000000000001111111111111111111111111111</span><span class="w"></span>
-<span class="o">&gt;</span><span class="mi">00000000001111111111222222222233333333334444444444555555555566666666</span><span class="w"></span>
-<span class="mi">667777777777888888888899999999990000000000111111111122222222</span><span class="w"></span>
-<span class="o">&gt;</span><span class="mi">012345678901234567890123456789012345678901234567890123456789012345678</span><span class="w"></span>
-<span class="mi">90123456789012345678901234567890123456789012345678901234567</span><span class="w"></span>
-</code></pre></div>
-
-<p>Cleared of non-printable characters</p>
-<div class="codehilite"><pre><span></span><code><span class="o">&gt;</span><span class="w">                                 </span><span class="err">!&quot;#$</span><span class="o">%&amp;</span><span class="err">&#39;</span><span class="p">()</span><span class="o">*+</span><span class="p">,</span><span class="o">-</span><span class="p">.</span><span class="o">/</span><span class="mi">0123456789</span><span class="w"></span>
-<span class="err">:</span><span class="p">;</span><span class="o">&lt;=&gt;</span><span class="vm">?</span><span class="nv">@ABCDEFGHIJKLMNOPQRSTUVWXYZ</span><span class="o">[</span><span class="n">\</span><span class="o">]^</span><span class="n">_</span><span class="err">`</span><span class="n">abcdefghijklmnopqrstuvwxyz</span><span class="err">{</span><span class="o">|</span><span class="err">}</span><span class="o">~</span><span class="w"></span>
-<span class="o">&gt;</span><span class="mi">0000000000000000000000000000000000000000000000000000000000</span><span class="w"></span>
-<span class="mi">000000000000000000000000000000000000000000111111111111111111111111111</span><span class="w"></span>
-<span class="o">&gt;</span><span class="mi">3333333333333333333333333333333333333333444444444455555555</span><span class="w"></span>
-<span class="mi">556666666666777777777788888888889999999999000000000011111111112222222</span><span class="w"></span>
-<span class="o">&gt;</span><span class="mi">2222222222222222222222222222222223456789012345678901234567</span><span class="w"></span>
-<span class="mi">890123456789012345678901234567890123456789012345678901234567890123456</span><span class="w"></span>
-</code></pre></div>
-
-<p>Cleared string:</p>
-<div class="codehilite"><pre><span></span><code>&gt;                                  !&quot;#$%&amp;&#39;()*+,-./0123456789:;&lt;=&gt;?@
-ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -345,12 +236,10 @@ ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">elemental function </span><span class="n">noesc</span><span class="p">(</span><span class="n">INSTR</span><span class="p">)</span><span class="w"></span>
 
-<span class="c">! ident_43=&quot;@(#) M_strings noesc(3f) convert non-printable characters to a space&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">INSTR</span><span class="w">      </span><span class="c">! string that might contain nonprintable characters</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">instr</span><span class="p">))</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">noesc</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                     </span><span class="kd">::</span><span class="w"> </span><span class="n">ic</span><span class="p">,</span><span class="n">i10</span><span class="w"></span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">   </span><span class="n">noesc</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w">                               </span><span class="c">! initialize output string</span>
 <span class="w">   </span><span class="k">do </span><span class="n">i10</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="nb">len_trim</span><span class="p">(</span><span class="n">INSTR</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">INSTR</span><span class="p">)))</span><span class="w"></span>
 <span class="w">      </span><span class="n">ic</span><span class="o">=</span><span class="nb">iachar</span><span class="p">(</span><span class="n">INSTR</span><span class="p">(</span><span class="n">i10</span><span class="p">:</span><span class="n">i10</span><span class="p">))</span><span class="w"></span>
@@ -381,7 +270,7 @@ ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

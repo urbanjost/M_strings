@@ -152,68 +152,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<p>upper_quoted(3f) - [M_strings:CASE] elemental function converts string to
-                miniscule skipping strings quoted per Fortran syntax rules
- (LICENSE:PD)</p>
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code>elemental pure function upper_quoted(str) result (string)
-
- character(*), intent(in)    :: str
- character(len(str))         :: string  ! output string
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">upper_quoted</span><span class="ss">(</span><span class="nv">string</span><span class="ss">)</span> <span class="nv">returns</span> <span class="nv">a</span> <span class="nv">copy</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">with</span> <span class="nv">all</span> <span class="nv">not</span><span class="o">-</span><span class="nv">quoted</span>
-<span class="nv">characters</span> <span class="nv">converted</span> <span class="nv">to</span> <span class="nv">uppercase</span>, <span class="nv">assuming</span> <span class="nv">ASCII</span> <span class="nv">character</span> <span class="nv">sets</span>
-<span class="nv">are</span> <span class="nv">being</span> <span class="nv">used</span>. <span class="nv">The</span> <span class="nv">quoting</span> <span class="nv">rules</span> <span class="nv">are</span> <span class="nv">the</span> <span class="nv">same</span> <span class="nv">as</span> <span class="k">for</span> <span class="nv">Fortran</span> <span class="nv">source</span>.
-<span class="nv">Either</span> <span class="nv">a</span> <span class="nv">single</span> <span class="nv">or</span> <span class="nv">double</span> <span class="nv">quote</span> <span class="nv">starts</span> <span class="nv">a</span> <span class="nv">quoted</span> <span class="nv">string</span>, <span class="nv">and</span> <span class="nv">a</span> <span class="nv">quote</span>
-<span class="nv">character</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">same</span> <span class="nv">type</span> <span class="nv">is</span> <span class="nv">doubled</span> <span class="nv">when</span> <span class="nv">it</span> <span class="nv">appears</span> <span class="nv">internally</span> <span class="nv">in</span>
-<span class="nv">the</span> <span class="nv">quoted</span> <span class="nv">string</span>. <span class="k">If</span> <span class="nv">a</span> <span class="nv">double</span> <span class="nv">quote</span> <span class="nv">quotes</span> <span class="nv">the</span> <span class="nv">string</span> <span class="nv">single</span> <span class="nv">quotes</span>
-<span class="nv">may</span> <span class="nv">appear</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">quoted</span> <span class="nv">string</span> <span class="nv">as</span> <span class="nv">single</span> <span class="nv">characters</span>, <span class="nv">and</span> <span class="nv">vice</span><span class="o">-</span><span class="nv">versa</span>
-<span class="k">for</span> <span class="nv">single</span> <span class="nv">quotes</span>.
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code>str    string to convert to uppercase
-</code></pre></div>
-
-<h2 id="results">RESULTS</h2>
-<div class="codehilite"><pre><span></span><code>upper  copy of the input string with all unquoted characters converted
-       to uppercase
-</code></pre></div>
-
-<h2 id="example">EXAMPLE</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">Sample</span> <span class="nv">program</span>:
-
- <span class="nv">program</span> <span class="nv">demo_upper_quoted</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">upper_quoted</span>
- <span class="nv">implicit</span> <span class="nv">none</span>
- <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span>  :: <span class="nv">s</span>
- <span class="nv">s</span><span class="o">=</span><span class="s1">&#39;</span><span class="s"> ABCDEFG abcdefg &quot;Double-Quoted&quot; </span><span class="s1">&#39;&#39;</span><span class="s">Single-Quoted</span><span class="s1">&#39;&#39;</span><span class="s"> &quot;with &quot;&quot;&amp;</span>
-    <span class="o">&amp;</span> <span class="nv">Quote</span><span class="s2">&quot;</span><span class="s"> everything else&#39;</span>
-    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">mixed-case input string is ....</span><span class="s1">&#39;</span>,<span class="nv">s</span>
-    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">upper-case output string is ...</span><span class="s1">&#39;</span>,<span class="nv">upper_quoted</span><span class="ss">(</span><span class="nv">s</span><span class="ss">)</span>
-    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(1x,a,*(a:,&quot;+&quot;))</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">upper_quoted(3f) is elemental ==&gt;</span><span class="s1">&#39;</span>, <span class="o">&amp;</span>
-    <span class="o">&amp;</span> <span class="nv">upper_quoted</span><span class="ss">(</span>[<span class="s2">&quot;</span><span class="s">abc</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">def</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">ghi</span><span class="s2">&quot;</span>]<span class="ss">)</span>
- <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_upper_quoted</span>
-
-<span class="nv">Expected</span> <span class="nv">output</span>:
-
- <span class="nv">mixed</span><span class="o">-</span><span class="nv">case</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">is</span> .... <span class="nv">ABCDEFG</span> <span class="nv">abcdefg</span> <span class="s2">&quot;</span><span class="s">Double-Quoted</span><span class="s2">&quot;</span>
- <span class="s1">&#39;</span><span class="s">Single-Quoted</span><span class="s1">&#39;</span> <span class="s2">&quot;</span><span class="s">with </span><span class="s2">&quot;&quot;</span><span class="s"> Quote</span><span class="s2">&quot;</span> <span class="nv">everything</span> <span class="k">else</span>
- <span class="nv">upper</span><span class="o">-</span><span class="nv">case</span> <span class="nv">output</span> <span class="nv">string</span> <span class="nv">is</span> ... <span class="nv">ABCDEFG</span> <span class="nv">ABCDEFG</span> <span class="s2">&quot;</span><span class="s">Double-Quoted</span><span class="s2">&quot;</span>
- <span class="s1">&#39;</span><span class="s">Single-Quoted</span><span class="s1">&#39;</span> <span class="s2">&quot;</span><span class="s">with </span><span class="s2">&quot;&quot;</span><span class="s"> Quote</span><span class="s2">&quot;</span> <span class="nv">EVERYTHING</span> <span class="k">ELSE</span>
- <span class="nv">upper_quoted</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">is</span> <span class="nv">elemental</span> <span class="o">==&gt;</span><span class="nv">ABC</span><span class="o">+</span><span class="nv">DEF</span><span class="o">+</span><span class="nv">GHI</span>
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -298,7 +236,6 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">elemental pure function </span><span class="n">upper_quoted</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="w"></span>
 
-<span class="c">! ident_22=&quot;@(#) M_strings upper_quoted(3f) elemental function converts string to miniscule skipping strings quoted per Fortran syntax rules&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">str</span><span class="w">     </span><span class="c">! The input string</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">str</span><span class="p">))</span><span class="w">        </span><span class="kd">::</span><span class="w"> </span><span class="n">string</span><span class="w">  </span><span class="c">! The output string</span>
@@ -346,7 +283,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

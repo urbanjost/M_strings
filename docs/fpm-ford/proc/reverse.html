@@ -152,49 +152,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>  <span class="nv">reverse</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">EDITING</span>] <span class="k">Return</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">reversed</span>
-  <span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code>elemental pure function reverse(str) result (string)
-
- character(*), intent(in) :: str
- character(len(str))      :: string
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code>  reverse(string) returns a copy of the input string with
-  all characters reversed from right to left.
-</code></pre></div>
-
-<h2 id="example">EXAMPLE</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">Sample</span> <span class="nv">program</span>:
-
-   <span class="nv">program</span> <span class="nv">demo_reverse</span>
-   <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">reverse</span>
-   <span class="nv">implicit</span> <span class="nv">none</span>
-   <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span>  :: <span class="nv">s</span>
-      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">REVERSE STRINGS:</span><span class="s1">&#39;</span>,<span class="nv">reverse</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">Madam, I</span><span class="s1">&#39;&#39;</span><span class="s">m Adam</span><span class="s1">&#39;</span><span class="ss">)</span>
-      <span class="nv">s</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">abcdefghijklmnopqrstuvwxyz</span><span class="s1">&#39;</span>
-      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">original input string is ....</span><span class="s1">&#39;</span>,<span class="nv">s</span>
-      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">reversed output string is ...</span><span class="s1">&#39;</span>,<span class="nv">reverse</span><span class="ss">(</span><span class="nv">s</span><span class="ss">)</span>
-   <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_reverse</span>
-
-<span class="nv">Expected</span> <span class="nv">output</span>
-
-  <span class="nv">original</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">is</span> ....<span class="nv">abcdefghijklmnopqrstuvwxyz</span>
-  <span class="nv">reversed</span> <span class="nv">output</span> <span class="nv">string</span> <span class="nv">is</span> ...<span class="nv">zyxwvutsrqponmlkjihgfedcba</span>
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -279,7 +236,6 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">elemental function </span><span class="n">reverse</span><span class="p">(</span><span class="n">string</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="p">(</span><span class="n">rev</span><span class="p">)</span><span class="w"></span>
 
-<span class="c">! ident_21=&quot;@(#) M_strings reverse(3f) Return a string reversed&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">string</span><span class="w">   </span><span class="c">! string to reverse</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">))</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">rev</span><span class="w">      </span><span class="c">! return value (reversed string)</span>
@@ -310,7 +266,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

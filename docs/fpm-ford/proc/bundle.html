@@ -8,7 +8,7 @@
     <meta name="author" content="John S. Urban" >
     <link rel="icon" href="../favicon.png">
 
-    <title>cc &ndash; M_strings</title>
+    <title>bundle &ndash; M_strings</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -76,7 +76,7 @@
 
     <div class="container">
   <div class="row">
-    <h1>cc
+    <h1>bundle
       <small>Function</small>
       
     </h1>
@@ -99,7 +99,7 @@
         <ol class="breadcrumb in-well text-right">
               <li><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
               <li><a href='../module/m_strings.html'>M_strings</a></li>
-          <li class="active">cc</li>
+          <li class="active">bundle</li>
         </ol>
       </div>
     </div>
@@ -138,7 +138,7 @@
     <div class="panel panel-primary">
       <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
       <div class="list-group">
-        <a class="list-group-item" href="../proc/cc.html#src">cc</a>
+        <a class="list-group-item" href="../proc/bundle.html#src">bundle</a>
       </div>
     </div>
 
@@ -148,68 +148,10 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>public  function cc(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20, len) result(vec)  
+    <h2>public  function bundle(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20, len) result(vec)  
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">cc</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">ARRAY</span>] <span class="k">return</span> <span class="nv">up</span> <span class="nv">to</span> <span class="nv">twenty</span> <span class="nv">strings</span> <span class="nv">of</span> <span class="nv">arbitrary</span> <span class="nv">length</span>
-         <span class="nv">as</span> <span class="nv">an</span> <span class="nv">array</span>
-<span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">cc(str1,str2,...str20,len) result </span><span class="p">(</span>vec<span class="p">)</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w">   </span><span class="p">::</span><span class="w"> </span><span class="n">str1</span><span class="p">,</span><span class="w"> </span><span class="n">str2</span><span class="w"> </span><span class="k">...</span><span class="c"> str20</span><span class="w"></span>
-<span class="w"> </span><span class="n">integer</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w">            </span><span class="p">::</span><span class="w"> </span><span class="n">len</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="n">Given</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">twenty</span><span class="w"> </span><span class="n">strings</span><span class="w"> </span><span class="n">create</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">array</span><span class="o">.</span><span class="w"> </span><span class="n">The</span><span class="w"></span>
-<span class="n">length</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">maximum</span><span class="w"> </span><span class="n">length</span><span class="w"></span>
-<span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="n">strings</span><span class="w"> </span><span class="n">unless</span><span class="w"> </span><span class="n">explicitly</span><span class="w"> </span><span class="n">specified</span><span class="w"> </span><span class="n">via</span><span class="w"> </span><span class="n">LEN</span><span class="o">.</span><span class="w"></span>
-
-<span class="n">This</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">alternative</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">syntax</span><span class="w"></span>
-
-<span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="n">CHARACTER</span><span class="p">(</span><span class="n">LEN</span><span class="o">=</span><span class="n">NN</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">str1</span><span class="p">,</span><span class="w"> </span><span class="n">str2</span><span class="p">,</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="p">]</span><span class="w"></span>
-
-<span class="n">that</span><span class="w"> </span><span class="n">calulates</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">minimum</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">prevent</span><span class="w"> </span><span class="n">truncation</span><span class="w"> </span><span class="n">by</span><span class="w"></span>
-<span class="n">default</span><span class="o">.</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code><span class="n">str1</span><span class="p">,</span><span class="n">str2</span><span class="p">,</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="n">str20</span><span class="w">  </span><span class="n">input</span><span class="w"> </span><span class="n">strings</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">combine</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">vector</span><span class="w"></span>
-<span class="n">len</span><span class="w">   </span><span class="n">length</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">returned</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">variables</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="examples">EXAMPLES</h2>
-<p>Sample Program:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_cc</span>
-<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">cc</span>
-<span class="nv">implicit</span> <span class="nv">none</span>
-   <span class="nv">print</span> <span class="s2">&quot;</span><span class="s">(*(&#39;</span><span class="s2">&quot;&quot;</span><span class="s">&#39;,a,&#39;</span><span class="s2">&quot;&quot;</span><span class="s">&#39;:,&#39;,&#39;,1x))</span><span class="s2">&quot;</span>, <span class="nv">cc</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">one</span><span class="s2">&quot;</span><span class="ss">)</span>
-   <span class="nv">print</span> <span class="s2">&quot;</span><span class="s">(*(&#39;</span><span class="s2">&quot;&quot;</span><span class="s">&#39;,a,&#39;</span><span class="s2">&quot;&quot;</span><span class="s">&#39;:,&#39;,&#39;,1x))</span><span class="s2">&quot;</span>, <span class="nv">cc</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">one</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">two</span><span class="s2">&quot;</span><span class="ss">)</span>
-   <span class="nv">print</span> <span class="s2">&quot;</span><span class="s">(*(&#39;</span><span class="s2">&quot;&quot;</span><span class="s">&#39;,a,&#39;</span><span class="s2">&quot;&quot;</span><span class="s">&#39;:,&#39;,&#39;,1x))</span><span class="s2">&quot;</span>, <span class="nv">cc</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">one</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">two</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">three</span><span class="s2">&quot;</span><span class="ss">)</span>
-   <span class="nv">print</span> <span class="s2">&quot;</span><span class="s">(*(&#39;</span><span class="s2">&quot;&quot;</span><span class="s">&#39;,a,&#39;</span><span class="s2">&quot;&quot;</span><span class="s">&#39;:,&#39;,&#39;,1x))</span><span class="s2">&quot;</span>, <span class="nv">cc</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">one</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">two</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">three</span><span class="s2">&quot;</span>,<span class="o">&amp;</span>
-           <span class="o">&amp;</span> <span class="s2">&quot;</span><span class="s">four</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">five</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">six</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">seven</span><span class="s2">&quot;</span><span class="ss">)</span>
-<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_cc</span>
-</code></pre></div>
-
-<p>Expected output</p>
-<div class="codehilite"><pre><span></span><code>&quot;one&quot;
-&quot;one&quot;, &quot;two&quot;
-&quot;one  &quot;, &quot;two  &quot;, &quot;three&quot;
-&quot;one  &quot;, &quot;two  &quot;, &quot;three&quot;, &quot;four &quot;, &quot;five &quot;, &quot;six  &quot;, &quot;seven&quot;
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -573,7 +515,7 @@
     <div class="panel panel-primary">
       <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
       <div class="list-group">
-        <a class="list-group-item" href="../proc/cc.html#src">cc</a>
+        <a class="list-group-item" href="../proc/bundle.html#src">bundle</a>
       </div>
     </div>
 
@@ -592,8 +534,7 @@
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">cc</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">x3</span><span class="p">,</span><span class="n">x4</span><span class="p">,</span><span class="n">x5</span><span class="p">,</span><span class="n">x6</span><span class="p">,</span><span class="n">x7</span><span class="p">,</span><span class="n">x8</span><span class="p">,</span><span class="n">x9</span><span class="p">,</span><span class="n">x10</span><span class="p">,</span><span class="n">x11</span><span class="p">,</span><span class="n">x12</span><span class="p">,</span><span class="n">x13</span><span class="p">,</span><span class="n">x14</span><span class="p">,</span><span class="n">x15</span><span class="p">,</span><span class="n">x16</span><span class="p">,</span><span class="n">x17</span><span class="p">,</span><span class="n">x18</span><span class="p">,</span><span class="n">x19</span><span class="p">,</span><span class="n">x20</span><span class="p">,</span><span class="nb">len</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span><span class="w"></span>
-<span class="c">! return character array containing present arguments</span>
+    <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">bundle</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">x3</span><span class="p">,</span><span class="n">x4</span><span class="p">,</span><span class="n">x5</span><span class="p">,</span><span class="n">x6</span><span class="p">,</span><span class="n">x7</span><span class="p">,</span><span class="n">x8</span><span class="p">,</span><span class="n">x9</span><span class="p">,</span><span class="n">x10</span><span class="p">,</span><span class="n">x11</span><span class="p">,</span><span class="n">x12</span><span class="p">,</span><span class="n">x13</span><span class="p">,</span><span class="n">x14</span><span class="p">,</span><span class="n">x15</span><span class="p">,</span><span class="n">x16</span><span class="p">,</span><span class="n">x17</span><span class="p">,</span><span class="n">x18</span><span class="p">,</span><span class="n">x19</span><span class="p">,</span><span class="n">x20</span><span class="p">,</span><span class="nb">len</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span><span class="w"></span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">x3</span><span class="p">,</span><span class="n">x4</span><span class="p">,</span><span class="n">x5</span><span class="p">,</span><span class="n">x6</span><span class="p">,</span><span class="n">x7</span><span class="p">,</span><span class="n">x8</span><span class="p">,</span><span class="n">x9</span><span class="p">,</span><span class="n">x10</span><span class="w"></span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">x11</span><span class="p">,</span><span class="n">x12</span><span class="p">,</span><span class="n">x13</span><span class="p">,</span><span class="n">x14</span><span class="p">,</span><span class="n">x15</span><span class="p">,</span><span class="n">x16</span><span class="p">,</span><span class="n">x17</span><span class="p">,</span><span class="n">x18</span><span class="p">,</span><span class="n">x19</span><span class="p">,</span><span class="n">x20</span><span class="w"></span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="nb">len</span>
@@ -665,7 +606,7 @@
 <span class="w">   </span><span class="k">endif</span>
 <span class="k">end subroutine </span><span class="n">set</span><span class="w"></span>
 
-<span class="k">end function </span><span class="n">cc</span><span class="w"></span>
+<span class="k">end function </span><span class="n">bundle</span><span class="w"></span>
 </pre></div>
 
     </section>
@@ -686,7 +627,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

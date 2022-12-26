@@ -341,10 +341,7 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">replace</span><span class="p">(</span><span class="n">targetline</span><span class="p">,</span><span class="n">old</span><span class="p">,</span><span class="n">new</span><span class="p">,</span><span class="n">cmd</span><span class="p">,</span><span class="n">occurrence</span><span class="p">,</span><span class="nb">repeat</span><span class="p">,</span><span class="n">ignorecase</span><span class="p">,</span><span class="n">ierr</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="p">(</span><span class="n">newline</span><span class="p">)</span><span class="w"></span>
 
-<span class="c">! ident_11=&quot;@(#) M_strings replace(3f) replace one substring for another in string&quot;</span>
 
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="c">! parameters</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">targetline</span><span class="w">   </span><span class="c">! input line to be changed</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">old</span><span class="w">          </span><span class="c">! old substring to replace</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">new</span><span class="w">          </span><span class="c">! new substring</span>
@@ -353,11 +350,7 @@
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="nb">repeat</span><span class="w">       </span><span class="c">! how many replacements</span>
 <span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">ignorecase</span><span class="w"></span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">),</span><span class="k">optional</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">ierr</span><span class="w">         </span><span class="c">! error code. if ierr = -1 bad directive, &gt;=0 then ierr changes made</span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="c">! returns</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">newline</span><span class="w">               </span><span class="c">! output string buffer</span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="c">! local</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">new_local</span><span class="p">,</span><span class="w"> </span><span class="n">old_local</span><span class="p">,</span><span class="w"> </span><span class="n">old_local_for_comparison</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                       </span><span class="kd">::</span><span class="w"> </span><span class="n">icount</span><span class="p">,</span><span class="n">ichange</span><span class="p">,</span><span class="n">ier2</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                       </span><span class="kd">::</span><span class="w"> </span><span class="n">original_input_length</span><span class="w"></span>
@@ -372,12 +365,10 @@
 <span class="kt">logical</span><span class="w">                       </span><span class="kd">::</span><span class="w"> </span><span class="n">ignorecase_local</span><span class="w"></span>
 <span class="kt">logical</span><span class="w">                       </span><span class="kd">::</span><span class="w"> </span><span class="n">flip</span><span class="w"></span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">targetline_local</span><span class="w">   </span><span class="c">! input line to be changed</span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">   </span><span class="n">flip</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
 <span class="w">   </span><span class="n">ignorecase_local</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
 <span class="w">   </span><span class="n">original_input_length</span><span class="o">=</span><span class="nb">len_trim</span><span class="p">(</span><span class="n">targetline</span><span class="p">)</span><span class="w">          </span><span class="c">! get non-blank length of input line</span>
 
-<span class="c">!  get old_local and new_local from cmd or old and new</span>
 <span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">cmd</span><span class="p">))</span><span class="k">then</span>
 <span class="k">      call </span><span class="n">crack_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span><span class="n">old_local</span><span class="p">,</span><span class="n">new_local</span><span class="p">,</span><span class="n">ier2</span><span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">ier2</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
@@ -428,16 +419,14 @@
 <span class="w">      </span><span class="k">endif</span>
 <span class="k">   else</span>
 <span class="k">      </span><span class="n">targetline_local</span><span class="o">=</span><span class="n">targetline</span><span class="w"></span>
-<span class="w">   </span><span class="k">endif</span><span class="w"></span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="w">   </span><span class="n">icount</span><span class="o">=</span><span class="mi">0</span><span class="w">                                            </span><span class="c">! initialize error flag/change count</span>
+<span class="w">   </span><span class="k">endif</span>
+<span class="k">   </span><span class="n">icount</span><span class="o">=</span><span class="mi">0</span><span class="w">                                            </span><span class="c">! initialize error flag/change count</span>
 <span class="w">   </span><span class="n">ichange</span><span class="o">=</span><span class="mi">0</span><span class="w">                                           </span><span class="c">! initialize error flag/change count</span>
 <span class="w">   </span><span class="n">len_old</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">old_local</span><span class="p">)</span><span class="w">                              </span><span class="c">! length of old substring to be replaced</span>
 <span class="w">   </span><span class="n">len_new</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">new_local</span><span class="p">)</span><span class="w">                              </span><span class="c">! length of new substring to replace old substring</span>
 <span class="w">   </span><span class="n">left_margin</span><span class="o">=</span><span class="mi">1</span><span class="w">                                       </span><span class="c">! left_margin is left margin of window to change</span>
 <span class="w">   </span><span class="n">right_margin</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">targetline</span><span class="p">)</span><span class="w">                        </span><span class="c">! right_margin is right margin of window to change</span>
 <span class="w">   </span><span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w">                                          </span><span class="c">! begin with a blank line as output string</span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="n">len_old</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="k">then</span><span class="w">                                </span><span class="c">! c//new/ means insert new at beginning of line (or left margin)</span>
 <span class="w">      </span><span class="n">ichr</span><span class="o">=</span><span class="n">len_new</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">original_input_length</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">len_new</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
@@ -449,9 +438,8 @@
 <span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">ierr</span><span class="p">))</span><span class="n">ierr</span><span class="o">=</span><span class="n">ichange</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">flip</span><span class="p">)</span><span class="w"> </span><span class="n">newline</span><span class="o">=</span><span class="n">reverse</span><span class="p">(</span><span class="n">newline</span><span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">return</span>
-<span class="k">   endif</span><span class="w"></span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="w">   </span><span class="n">ichr</span><span class="o">=</span><span class="n">left_margin</span><span class="w">                                    </span><span class="c">! place to put characters into output string</span>
+<span class="k">   endif</span>
+<span class="k">   </span><span class="n">ichr</span><span class="o">=</span><span class="n">left_margin</span><span class="w">                                    </span><span class="c">! place to put characters into output string</span>
 <span class="w">   </span><span class="n">ic</span><span class="o">=</span><span class="n">left_margin</span><span class="w">                                      </span><span class="c">! place looking at in input string</span>
 <span class="w">   </span><span class="n">loop</span><span class="p">:</span><span class="w"> </span><span class="k">do</span><span class="w"></span>
 <span class="w">                                                       </span><span class="c">! try finding start of OLD in remaining part of input in change window</span>
@@ -479,7 +467,6 @@
 <span class="k">      endif</span>
 <span class="k">      </span><span class="n">ic</span><span class="o">=</span><span class="n">ind</span><span class="o">+</span><span class="n">len_old</span><span class="w"></span>
 <span class="w">   </span><span class="k">enddo </span><span class="n">loop</span><span class="w"></span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">   </span><span class="k">select case</span><span class="w"> </span><span class="p">(</span><span class="n">ichange</span><span class="p">)</span><span class="w"></span>
 <span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w">                                            </span><span class="c">! there were no changes made to the window</span>
 <span class="w">      </span><span class="n">newline</span><span class="o">=</span><span class="n">targetline_local</span><span class="w">                         </span><span class="c">! if no changes made output should be input</span>
@@ -490,7 +477,6 @@
 <span class="k">   end select</span>
 <span class="k">   if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">ierr</span><span class="p">))</span><span class="n">ierr</span><span class="o">=</span><span class="n">ichange</span><span class="w"></span>
 <span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="n">flip</span><span class="p">)</span><span class="w"> </span><span class="n">newline</span><span class="o">=</span><span class="n">reverse</span><span class="p">(</span><span class="n">newline</span><span class="p">)</span><span class="w"></span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="k">end function </span><span class="n">replace</span><span class="w"></span>
 </pre></div>
 
@@ -512,7 +498,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

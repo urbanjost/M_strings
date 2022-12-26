@@ -152,53 +152,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>clip(3f) - [M_strings:WHITESPACE] trim leading and trailing blanks from a string
-(LICENSE:PD)
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">clip(strin) result </span><span class="p">(</span>strout<span class="p">)</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="p">::</span><span class="w"> </span><span class="n">strin</span><span class="w"></span>
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">strout</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code>leading and trailing spaces are trimmed from the resulting string.
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code>strin   input string to trim leading and trailing space characters from
-</code></pre></div>
-
-<h2 id="returns">RETURNS</h2>
-<div class="codehilite"><pre><span></span><code>strout  clipped version of input string
-</code></pre></div>
-
-<h2 id="example">EXAMPLE</h2>
-<p>Sample program:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_clip</span>
-<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">clip</span>
-<span class="nv">implicit</span> <span class="nv">none</span>
-<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">20</span><span class="ss">)</span> ::  <span class="nv">untrimmed</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">   ABCDEFG abcdefg  </span><span class="s1">&#39;</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">untrimmed string=[</span><span class="s1">&#39;</span>,<span class="nv">untrimmed</span>,<span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">clipped string=[</span><span class="s1">&#39;</span>,<span class="nv">clip</span><span class="ss">(</span><span class="nv">untrimmed</span><span class="ss">)</span>,<span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
-<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_clip</span>
-</code></pre></div>
-
-<p>Expected output</p>
-<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="n">untrimmed</span><span class="w"> </span><span class="n">string</span><span class="o">=</span><span class="p">[</span><span class="w">   </span><span class="n">ABCDEFG</span><span class="w"> </span><span class="n">abcdefg</span><span class="w">                      </span><span class="p">]</span><span class="w"></span>
-<span class="w">  </span><span class="n">clipped</span><span class="w"> </span><span class="n">string</span><span class="o">=</span><span class="p">[</span><span class="n">ABCDEFG</span><span class="w"> </span><span class="n">abcdefg</span><span class="p">]</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -283,7 +236,6 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">clip</span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">lopped</span><span class="p">)</span><span class="w"></span>
 
-<span class="c">! ident_17=&quot;@(#) M_strings clip(3f) trim leading and trailings spaces from resulting string&quot;</span>
 
 <span class="kt">logical</span><span class="p">,</span><span class="k">parameter</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">T</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.,</span><span class="n">F</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">string</span><span class="w"></span>
@@ -316,7 +268,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

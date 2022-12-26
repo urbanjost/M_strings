@@ -88,7 +88,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title=" 2.4% of total for procedures.">68 statements</a>
+               title=" 2.3% of total for procedures.">68 statements</a>
           </li>
 
             <li id="source-file">
@@ -152,90 +152,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>  string_to_values(3f) - [M_strings:TYPE] read a string representing
-  numbers into a numeric array
-  (LICENSE:PD)
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code>   subroutine string_to_values(line,iread,values,inums,delims,ierr)
-
-    character(len=*) :: line
-    integer          :: iread
-    real             :: values(*)
-    integer          :: inums
-    character(len=*) :: delims
-    integer          :: ierr
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">This</span> <span class="nv">routine</span> <span class="nv">can</span> <span class="nv">take</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">representing</span> <span class="nv">a</span> <span class="nv">series</span> <span class="nv">of</span> <span class="nv">numbers</span> <span class="nv">and</span>
-<span class="nv">convert</span> <span class="nv">it</span> <span class="nv">to</span> <span class="nv">a</span> <span class="nv">numeric</span> <span class="nv">array</span> <span class="nv">and</span> <span class="k">return</span> <span class="nv">how</span> <span class="nv">many</span> <span class="nv">numbers</span> <span class="nv">were</span> <span class="nv">found</span>.
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code>   LINE     Input string containing numbers
-   IREAD    maximum number of values to try to read from input string
-</code></pre></div>
-
-<h2 id="results">RESULTS</h2>
-<div class="codehilite"><pre><span></span><code>   <span class="nv">VALUES</span>   <span class="nv">real</span> <span class="nv">array</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">filled</span> <span class="nv">with</span> <span class="nv">numbers</span>
-   <span class="nv">INUMS</span>    <span class="nv">number</span> <span class="nv">of</span> <span class="nv">values</span> <span class="nv">successfully</span> <span class="nv">read</span> <span class="ss">(</span><span class="nv">before</span> <span class="nv">error</span> <span class="nv">occurs</span>
-            <span class="k">if</span> <span class="nv">one</span> <span class="nv">does</span><span class="ss">)</span>
-   <span class="nv">DELIMS</span>   <span class="nv">delimiter</span> <span class="nv">character</span><span class="ss">(</span><span class="nv">s</span><span class="ss">)</span>, <span class="nv">usually</span> <span class="nv">a</span> <span class="nv">space</span>. <span class="nv">must</span> <span class="nv">not</span> <span class="nv">be</span> <span class="nv">a</span>
-            <span class="nv">null</span> <span class="nv">string</span>. <span class="k">If</span> <span class="nv">more</span> <span class="nv">than</span> <span class="nv">one</span> <span class="nv">character</span>, <span class="nv">a</span> <span class="nv">space</span> <span class="nv">must</span>
-            <span class="nv">not</span> <span class="nv">be</span> <span class="nv">the</span> <span class="nv">last</span> <span class="nv">character</span> <span class="nv">or</span> <span class="nv">it</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">ignored</span>.
-   <span class="nv">IERR</span>     <span class="nv">error</span> <span class="nv">flag</span> <span class="ss">(</span><span class="mi">0</span><span class="o">=</span><span class="nv">no</span> <span class="nv">error</span>, <span class="k">else</span> <span class="nv">column</span> <span class="nv">number</span> <span class="nv">string</span> <span class="nv">starts</span>
-            <span class="nv">at</span> <span class="nv">that</span> <span class="nv">error</span> <span class="nv">occurred</span> <span class="nv">on</span><span class="ss">)</span>.
-</code></pre></div>
-
-<h2 id="example">EXAMPLE</h2>
-<div class="codehilite"><pre><span></span><code><span class="nt">Sample</span><span class="w"> </span><span class="nt">Program</span><span class="o">:</span><span class="w"></span>
-
-<span class="w">  </span><span class="nt">program</span><span class="w"> </span><span class="nt">demo_string_to_values</span><span class="w"></span>
-<span class="w">   </span><span class="nt">use</span><span class="w"> </span><span class="nt">M_strings</span><span class="o">,</span><span class="w"> </span><span class="nt">only</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nt">string_to_values</span><span class="w"></span>
-<span class="w">   </span><span class="nt">implicit</span><span class="w"> </span><span class="nt">none</span><span class="w"></span>
-<span class="w">   </span><span class="nt">character</span><span class="o">(</span><span class="nt">len</span><span class="o">=</span><span class="nt">80</span><span class="o">)</span><span class="w">  </span><span class="o">::</span><span class="w"> </span><span class="nt">s</span><span class="o">=</span><span class="s1">&#39; 10 20e3;3.45 -400.3e-2;1234; 5678 &#39;</span><span class="w"></span>
-<span class="w">   </span><span class="nt">integer</span><span class="o">,</span><span class="nt">parameter</span><span class="w">  </span><span class="o">::</span><span class="w"> </span><span class="nt">isz</span><span class="o">=</span><span class="nt">10</span><span class="w"></span>
-<span class="w">   </span><span class="nt">real</span><span class="w">               </span><span class="o">::</span><span class="w"> </span><span class="nt">array</span><span class="o">(</span><span class="nt">isz</span><span class="o">)</span><span class="w"></span>
-<span class="w">   </span><span class="nt">integer</span><span class="w">            </span><span class="o">::</span><span class="w"> </span><span class="nt">inums</span><span class="o">,</span><span class="w"> </span><span class="nt">ierr</span><span class="o">,</span><span class="w"> </span><span class="nt">ii</span><span class="w"></span>
-
-<span class="w">   </span><span class="nt">call</span><span class="w"> </span><span class="nt">string_to_values</span><span class="o">(</span><span class="nt">s</span><span class="o">,</span><span class="nt">10</span><span class="o">,</span><span class="nt">array</span><span class="o">,</span><span class="nt">inums</span><span class="o">,</span><span class="s1">&#39; ;&#39;</span><span class="o">,</span><span class="nt">ierr</span><span class="o">)</span><span class="w"></span>
-<span class="w">   </span><span class="nt">call</span><span class="w"> </span><span class="nt">reportit</span><span class="o">()</span><span class="w"></span>
-
-<span class="w">   </span><span class="nt">call</span><span class="w"> </span><span class="nt">string_to_values</span><span class="o">(</span><span class="s1">&#39;10;2.3;3.1416&#39;</span><span class="o">,</span><span class="nt">isz</span><span class="o">,</span><span class="nt">array</span><span class="o">,</span><span class="nt">inums</span><span class="o">,</span><span class="s1">&#39; ;&#39;</span><span class="o">,</span><span class="nt">ierr</span><span class="o">)</span><span class="w"></span>
-<span class="w">   </span><span class="nt">call</span><span class="w"> </span><span class="nt">reportit</span><span class="o">()</span><span class="w"></span>
-
-<span class="w">   </span><span class="nt">contains</span><span class="w"></span>
-<span class="w">      </span><span class="nt">subroutine</span><span class="w"> </span><span class="nt">reportit</span><span class="o">()</span><span class="w"></span>
-<span class="w">         </span><span class="nt">write</span><span class="o">(*,*)</span><span class="s1">&#39;string_to_values:&#39;</span><span class="w"></span>
-<span class="w">         </span><span class="nt">write</span><span class="o">(*,*)</span><span class="s1">&#39;input string.............&#39;</span><span class="o">,</span><span class="nt">trim</span><span class="o">(</span><span class="nt">s</span><span class="o">)</span><span class="w"></span>
-<span class="w">         </span><span class="nt">write</span><span class="o">(*,*)</span><span class="s1">&#39;number of values found...&#39;</span><span class="o">,</span><span class="nt">inums</span><span class="w"></span>
-<span class="w">         </span><span class="nt">write</span><span class="o">(*,*)</span><span class="s1">&#39;values...................&#39;</span><span class="o">,(</span><span class="nt">array</span><span class="o">(</span><span class="nt">ii</span><span class="o">),</span><span class="nt">ii</span><span class="o">=</span><span class="nt">1</span><span class="o">,</span><span class="nt">inums</span><span class="o">)</span><span class="w"></span>
-<span class="w">      </span><span class="nt">end</span><span class="w"> </span><span class="nt">subroutine</span><span class="w"> </span><span class="nt">reportit</span><span class="w"></span>
-<span class="w">  </span><span class="nt">end</span><span class="w"> </span><span class="nt">program</span><span class="w"> </span><span class="nt">demo_string_to_values</span><span class="w"></span>
-
-<span class="nt">Expected</span><span class="w"> </span><span class="nt">output</span><span class="w"></span>
-
-<span class="w"> </span><span class="nt">string_to_values</span><span class="o">:</span><span class="w"></span>
-<span class="w"> </span><span class="nt">input</span><span class="w"> </span><span class="nt">string</span><span class="o">.............</span><span class="w"> </span><span class="nt">10</span><span class="w"> </span><span class="nt">20e3</span><span class="o">;</span><span class="nt">3</span><span class="p">.</span><span class="nc">45</span><span class="w"> </span><span class="nt">-400</span><span class="p">.</span><span class="nc">3e-2</span><span class="o">;</span><span class="nt">1234</span><span class="o">;</span><span class="w"> </span><span class="nt">5678</span><span class="w"></span>
-<span class="w"> </span><span class="nt">number</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">values</span><span class="w"> </span><span class="nt">found</span><span class="o">...</span><span class="w">           </span><span class="nt">6</span><span class="w"></span>
-<span class="w"> </span><span class="nt">values</span><span class="o">...................</span><span class="w">   </span><span class="nt">10</span><span class="p">.</span><span class="nc">0000000</span><span class="w">  </span><span class="nt">20000</span><span class="p">.</span><span class="nc">0000</span><span class="w">  </span><span class="nt">3</span><span class="p">.</span><span class="nc">45000005</span><span class="w"></span>
-<span class="w"> </span><span class="nt">-4</span><span class="p">.</span><span class="nc">00299978</span><span class="w">  </span><span class="nt">1234</span><span class="p">.</span><span class="nc">00000</span><span class="w">  </span><span class="nt">5678</span><span class="p">.</span><span class="nc">00000</span><span class="w"></span>
-<span class="w"> </span><span class="nt">string_to_values</span><span class="o">:</span><span class="w"></span>
-<span class="w"> </span><span class="nt">input</span><span class="w"> </span><span class="nt">string</span><span class="o">.............</span><span class="w"> </span><span class="nt">10</span><span class="w"> </span><span class="nt">20e3</span><span class="o">;</span><span class="nt">3</span><span class="p">.</span><span class="nc">45</span><span class="w"> </span><span class="nt">-400</span><span class="p">.</span><span class="nc">3e-2</span><span class="o">;</span><span class="nt">1234</span><span class="o">;</span><span class="w"> </span><span class="nt">5678</span><span class="w"></span>
-<span class="w"> </span><span class="nt">number</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">values</span><span class="w"> </span><span class="nt">found</span><span class="o">...</span><span class="w">           </span><span class="nt">3</span><span class="w"></span>
-<span class="w"> </span><span class="nt">values</span><span class="o">...................</span><span class="w">   </span><span class="nt">10</span><span class="p">.</span><span class="nc">0000000</span><span class="w">  </span><span class="nt">2</span><span class="p">.</span><span class="nc">29999995</span><span class="w">  </span><span class="nt">3</span><span class="p">.</span><span class="nc">14159989</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -387,18 +303,9 @@
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">string_to_values</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="n">iread</span><span class="p">,</span><span class="n">values</span><span class="p">,</span><span class="n">inums</span><span class="p">,</span><span class="n">delims</span><span class="p">,</span><span class="n">ierr</span><span class="p">)</span><span class="w"></span>
-<span class="k">implicit none</span><span class="w"></span>
-<span class="c">!----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="c">!   1989,1997-12-31,2014 John S. Urban</span>
+<span class="k">implicit none</span>
 
-<span class="c">!   given a line of structure , string , string , string process each</span>
-<span class="c">!   string as a numeric value and store into an array.</span>
-<span class="c">!   DELIMS contain the legal delimiters. If a space is an allowed delimiter, it must not appear last in DELIMS.</span>
-<span class="c">!   There is no direct checking for more values than can fit in VALUES.</span>
-<span class="c">!   Quits if encounters any errors in read.</span>
-<span class="c">!----------------------------------------------------------------------------------------------------------------------------------</span>
 
-<span class="c">! ident_59=&quot;@(#) M_strings string_to_values(3f) reads an array of numbers from a numeric string&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">line</span><span class="w">          </span><span class="c">! input string</span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">iread</span><span class="w">         </span><span class="c">! maximum number of values to try to read into values</span>
@@ -406,26 +313,22 @@
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">inums</span><span class="w">         </span><span class="c">! number of values successfully read from string</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">delims</span><span class="w">        </span><span class="c">! allowed delimiters</span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">ierr</span><span class="w">          </span><span class="c">! 0 if no error, else column number undecipherable string starts at</span>
-<span class="c">!----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">delims_local</span><span class="w">        </span><span class="c">! mutable copy of allowed delimiters</span>
 <span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">istart</span><span class="p">,</span><span class="n">iend</span><span class="p">,</span><span class="n">lgth</span><span class="p">,</span><span class="n">icol</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">i10</span><span class="p">,</span><span class="n">i20</span><span class="p">,</span><span class="n">i40</span><span class="w"></span>
 <span class="kt">real</span><span class="w">                         </span><span class="kd">::</span><span class="w"> </span><span class="n">rval</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">ier</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">delimiters_length</span><span class="w"></span>
-<span class="c">!----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">      </span><span class="n">delims_local</span><span class="o">=</span><span class="n">delims</span><span class="w">                                 </span><span class="c">! need a mutable copy of the delimiter list</span>
 <span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">delims_local</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="k">then</span><span class="w">                          </span><span class="c">! if delimiter list is null or all spaces make it a space</span>
 <span class="w">         </span><span class="n">delims_local</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="w">                                 </span><span class="c">! delimiter is a single space</span>
 <span class="w">         </span><span class="n">delimiters_length</span><span class="o">=</span><span class="mi">1</span><span class="w">                        </span><span class="c">! length of delimiter list</span>
 <span class="w">      </span><span class="k">else</span>
 <span class="k">         </span><span class="n">delimiters_length</span><span class="o">=</span><span class="nb">len_trim</span><span class="p">(</span><span class="n">delims</span><span class="p">)</span><span class="w">         </span><span class="c">! length of variable WITH TRAILING WHITESPACE TRIMMED</span>
-<span class="w">      </span><span class="k">endif</span><span class="w"></span>
-<span class="c">!----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="w">      </span><span class="n">ierr</span><span class="o">=</span><span class="mi">0</span><span class="w">                                        </span><span class="c">! initialize error code returned</span>
+<span class="w">      </span><span class="k">endif</span>
+<span class="k">      </span><span class="n">ierr</span><span class="o">=</span><span class="mi">0</span><span class="w">                                        </span><span class="c">! initialize error code returned</span>
 <span class="w">      </span><span class="n">inums</span><span class="o">=</span><span class="mi">0</span><span class="w">                                       </span><span class="c">! initialize count of values successfully returned</span>
 <span class="w">      </span><span class="n">istart</span><span class="o">=</span><span class="mi">0</span><span class="w"></span>
-<span class="c">!----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">      </span><span class="n">lgth</span><span class="o">=</span><span class="mi">0</span><span class="w">                                        </span><span class="c">! lgth will be the position of the right-most non-delimiter in the input line</span>
 <span class="w">      </span><span class="k">do </span><span class="n">i20</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="w">                         </span><span class="c">! loop from end of string to beginning to find right-most non-delimiter</span>
 <span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="nb">index</span><span class="p">(</span><span class="n">delims_local</span><span class="p">(:</span><span class="n">delimiters_length</span><span class="p">),</span><span class="n">line</span><span class="p">(</span><span class="n">i20</span><span class="p">:</span><span class="n">i20</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="k">then</span><span class="w">   </span><span class="c">! found a non-delimiter</span>
@@ -436,12 +339,8 @@
 <span class="k">      if</span><span class="p">(</span><span class="n">lgth</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="k">then</span><span class="w">                             </span><span class="c">! command was totally composed of delimiters</span>
 <span class="w">         </span><span class="k">call </span><span class="n">journal</span><span class="p">(</span><span class="s1">&#39;*string_to_values* blank line passed as a list of numbers&#39;</span><span class="p">)</span><span class="w"></span>
 <span class="w">         </span><span class="k">return</span>
-<span class="k">      endif</span><span class="w"></span>
-<span class="c">!----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="c">!     there is at least one non-delimiter sub-string</span>
-<span class="c">!     lgth is the column position of the last non-delimiter character</span>
-<span class="c">!     now, starting at beginning of string find next non-delimiter</span>
-<span class="w">      </span><span class="n">icol</span><span class="o">=</span><span class="mi">1</span><span class="w">                                                     </span><span class="c">! pointer to beginning of unprocessed part of LINE</span>
+<span class="k">      endif</span>
+<span class="k">      </span><span class="n">icol</span><span class="o">=</span><span class="mi">1</span><span class="w">                                                     </span><span class="c">! pointer to beginning of unprocessed part of LINE</span>
 <span class="w">      </span><span class="n">LOOP</span><span class="p">:</span><span class="w"> </span><span class="k">dO </span><span class="n">i10</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">iread</span><span class="p">,</span><span class="mi">1</span><span class="w">                                     </span><span class="c">! each pass should find a value</span>
 <span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="n">icol</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">lgth</span><span class="p">)</span><span class="w"> </span><span class="k">EXIT </span><span class="n">LOOP</span><span class="w">                              </span><span class="c">! everything is done</span>
 <span class="w">         </span><span class="n">INFINITE</span><span class="p">:</span><span class="w"> </span><span class="k">do</span>
@@ -473,7 +372,6 @@
 <span class="w">            </span><span class="k">endif</span>
 <span class="k">         enddo </span><span class="n">INFINITE</span><span class="w"></span>
 <span class="w">      </span><span class="k">enddo </span><span class="n">LOOP</span><span class="w"></span>
-<span class="c">!     error &gt;&gt;&gt;&gt;&gt; more than iread numbers were in the line.</span>
 <span class="k">end subroutine </span><span class="n">string_to_values</span><span class="w"></span>
 </pre></div>
 
@@ -495,7 +393,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

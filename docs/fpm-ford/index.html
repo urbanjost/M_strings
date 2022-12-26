@@ -92,41 +92,51 @@ author_pic:
 twitter:
 website:
 -->
-<p><img alt="string" src="docs/images/alphabet.gif"></p>
+<p><img alt="string" src="docs/images/strings_small.gif"></p>
 <h1 id="m_stringsf90-and-associated-files">M_strings.f90 and associated files</h1>
 <h2 id="name">NAME</h2>
 <p>M_strings and M_strings_oops - Fortran modules for processing strings</p>
 <h2 id="description">DESCRIPTION</h2>
 <p>The <code>M_strings</code>(3fm) module is a collection of Fortran procedures that
-supplement the built-in intrinsic string routines.  Routines for parsing,
-tokenizing, changing case, substituting new strings for substrings,
+supplement the built-in intrinsic string routines.  Routines for parsing
+tokenizing, changing case, substituting new strings for substrings
 locating strings with simple wildcard expressions, removing tabs and
 line terminators as well as other string manipulations are included.</p>
 <p><code>M_strings_oop</code>(3fm) is a companion module that provides an OOP interface
 to the <code>M_strings</code> module.</p>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>public entities:</p>
-<div class="codehilite"><pre><span></span><code> use M_strings, only : split,delim,chomp
- use M_strings, only : substitute,change,modif,transliterate,reverse,replace,join
- use M_strings, only : upper,lower,upper_quoted
- use M_strings, only : rotate13
- use M_strings, only : adjustc,compact,nospace,indent,crop,unquote,quote
- use M_strings, only : len_white,pad,lpad,rpad,zpad,stretch,lenset,merge_str
- use M_strings, only : switch,s2c,c2s
- use M_strings, only : noesc,notabs,expand,uc,visible
- use M_strings, only : string_to_value,string_to_values,s2v,s2vs,value_to_string,v2s,msg
- use M_strings, only : listout,getvals
- use M_strings, only : matchw
- use M_strings, only : fmt
- use M_strings, only : base, decodebase, codebase
- use M_strings, only : isalnum, isalpha, iscntrl, isdigit, isgraph, islower,
-                       isprint, ispunct, isspace, isupper, isascii, isblank, isxdigit
-</code></pre></div>
-
+<p>use M_strings, only : <a href="https://urbanjost.github.io/M_strings/split.3m_strings">split</a>, <a href="https://urbanjost.github.io/M_strings/sep.3m_strings">sep</a>, <a href="https://urbanjost.github.io/M_strings/delim.3m_strings">delim</a>, <a href="https://urbanjost.github.io/M_strings/chomp.3m_strings">chomp</a>, <a href="https://urbanjost.github.io/M_strings/strtok.3m_strings">strtok</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/split2020.3m_strings">split2020</a>, <a href="https://urbanjost.github.io/M_strings/find_field.3m_strings">find_field</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/substitute.3m_strings">substitute</a>, <a href="https://urbanjost.github.io/M_strings/change.3m_strings">change</a>, <a href="https://urbanjost.github.io/M_strings/modif.3m_strings">modif</a>, <a href="https://urbanjost.github.io/M_strings/transliterate.3m_strings">transliterate</a>, <a href="https://urbanjost.github.io/M_strings/reverse.3m_strings">reverse</a>, <a href="https://urbanjost.github.io/M_strings/squeeze.3m_strings">squeeze</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/replace.3m_strings">replace</a>, <a href="https://urbanjost.github.io/M_strings/join.3m_strings">join</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/upper.3m_strings">upper</a>, <a href="https://urbanjost.github.io/M_strings/lower.3m_strings">lower</a>, <a href="https://urbanjost.github.io/M_strings/upper_quoted.3m_strings">upper_quoted</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/rotate13.3m_strings">rotate13</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/adjustc.3m_strings">adjustc</a>, <a href="https://urbanjost.github.io/M_strings/compact.3m_strings">compact</a>, <a href="https://urbanjost.github.io/M_strings/nospace.3m_strings">nospace</a>, <a href="https://urbanjost.github.io/M_strings/indent.3m_strings">indent</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/crop.3m_strings">crop</a>, <a href="https://urbanjost.github.io/M_strings/clip.3m_strings">clip</a>, <a href="https://urbanjost.github.io/M_strings/unquote.3m_strings">unquote</a>, <a href="https://urbanjost.github.io/M_strings/quote.3m_strings">quote</a>, <a href="https://urbanjost.github.io/M_strings/matching_delimiter.3m_strings">matching_delimiter</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/len_white.3m_strings">len_white</a>, <a href="https://urbanjost.github.io/M_strings/pad.3m_strings">pad</a>, <a href="https://urbanjost.github.io/M_strings/lpad.3m_strings">lpad</a>, <a href="https://urbanjost.github.io/M_strings/cpad.3m_strings">cpad</a>, <a href="https://urbanjost.github.io/M_strings/rpad.3m_strings">rpad</a>, <a href="https://urbanjost.github.io/M_strings/zpad.3m_strings">zpad</a>, <a href="https://urbanjost.github.io/M_strings/stretch.3m_strings">stretch</a>, <a href="https://urbanjost.github.io/M_strings/lenset.3m_strings">lenset</a>, <a href="https://urbanjost.github.io/M_strings/merge_str.3m_strings">merge_str</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/switch.3m_strings">switch</a>, <a href="https://urbanjost.github.io/M_strings/s2c.3m_strings">s2c</a>, <a href="https://urbanjost.github.io/M_strings/c2s.3m_strings">c2s</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/noesc.3m_strings">noesc</a>, <a href="https://urbanjost.github.io/M_strings/notabs.3m_strings">notabs</a>, <a href="https://urbanjost.github.io/M_strings/dilate.3m_strings">dilate</a>, <a href="https://urbanjost.github.io/M_strings/expand.3m_strings">expand</a>, <a href="https://urbanjost.github.io/M_strings/visible.3m_strings">visible</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/longest_common_substring.3m_strings">longest_common_substring</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/string_to_value.3m_strings">string_to_value</a>, <a href="https://urbanjost.github.io/M_strings/string_to_values.3m_strings">string_to_values</a>, <a href="https://urbanjost.github.io/M_strings/s2v.3m_strings">s2v</a>, <a href="https://urbanjost.github.io/M_strings/s2vs.3m_strings">s2vs</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/value_to_string.3m_strings">value_to_string</a>, <a href="https://urbanjost.github.io/M_strings/v2s.3m_strings">v2s</a>, <a href="https://urbanjost.github.io/M_strings/msg.3m_strings">msg</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/listout.3m_strings">listout</a>, <a href="https://urbanjost.github.io/M_strings/getvals.3m_strings">getvals</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/glob.3m_strings">glob</a>, <a href="https://urbanjost.github.io/M_strings/ends_with.3m_strings">ends_with</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/paragraph.3m_strings">paragraph</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/base.3m_strings">base</a>, <a href="https://urbanjost.github.io/M_strings/decodebase.3m_strings">decodebase</a>, <a href="https://urbanjost.github.io/M_strings/codebase.3m_strings">codebase</a>, <a href="https://urbanjost.github.io/M_strings/base2.3m_strings">base2</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/isalnum.3m_strings">isalnum</a>, <a href="https://urbanjost.github.io/M_strings/isalpha.3m_strings">isalpha</a>, <a href="https://urbanjost.github.io/M_strings/iscntrl.3m_strings">iscntrl</a>, <a href="https://urbanjost.github.io/M_strings/isdigit.3m_strings">isdigit</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/isgraph.3m_strings">isgraph</a>, <a href="https://urbanjost.github.io/M_strings/islower.3m_strings">islower</a>, <a href="https://urbanjost.github.io/M_strings/isprint.3m_strings">isprint</a>, <a href="https://urbanjost.github.io/M_strings/ispunct.3m_strings">ispunct</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/isspace.3m_strings">isspace</a>, <a href="https://urbanjost.github.io/M_strings/isupper.3m_strings">isupper</a>, <a href="https://urbanjost.github.io/M_strings/isascii.3m_strings">isascii</a>, <a href="https://urbanjost.github.io/M_strings/isblank.3m_strings">isblank</a>, <a href="https://urbanjost.github.io/M_strings/isxdigit.3m_strings">isxdigit</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/isnumber.3m_strings">isnumber</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/fortran_name.3m_strings">fortran_name</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/describe.3m_strings">describe</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/edit_distance.3m_strings">edit_distance</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/cc.3m_strings">cc</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/int.3m_strings">int</a>, <a href="https://urbanjost.github.io/M_strings/real.3m_strings">real</a>, <a href="https://urbanjost.github.io/M_strings/dble.3m_strings">dble</a>, <a href="https://urbanjost.github.io/M_strings/nint.3m_strings">nint</a>             </p>
 <h2 id="intrinsics">INTRINSICS</h2>
 <p>The M_strings(3fm) module supplements and works in combination with
 the Fortran built-in intrinsics. Standard Fortran lets you access the
-characters in a string using ranges much like they are character arrays,
+characters in a string using ranges much like they are character arrays
 assignment, comparisons with standard operators, supports dynamically
 allocatable strings and supports concatenation using the // operator:</p>
 <div class="codehilite"><pre><span></span><code> <span class="nv">adjustl</span>             <span class="nv">Left</span> <span class="nv">adjust</span> <span class="nv">a</span> <span class="nv">string</span>
@@ -260,15 +270,15 @@ examples are included in the example/ directory.</p>
 		  <div class="col-xs-6 col-sm-3">
               <h3>Procedures</h3>
               <ul>                    <li><a href='./proc/adjustc.html'>adjustc</a></li>
+                    <li><a href='./interface/atleast.html'>atleast</a></li>
                     <li><a href='./proc/base.html'>base</a></li>
                     <li><a href='./proc/base2.html'>base2</a></li>
+                    <li><a href='./proc/bundle.html'>bundle</a></li>
                     <li><a href='./proc/c2s.html'>c2s</a></li>
-                    <li><a href='./proc/cc.html'>cc</a></li>
+                    <li><a href='./interface/cc.html'>cc</a></li>
                     <li><a href='./proc/change.html'>change</a></li>
                     <li><a href='./proc/chomp.html'>chomp</a></li>
                     <li><a href='./proc/clip.html'>clip</a></li>
-                    <li><a href='./proc/codebase.html'>codebase</a></li>
-                    <li><a href='./proc/compact.html'>compact</a></li>
 </ul>
           </div>
 		  <div class="col-xs-6 col-sm-3">
@@ -289,7 +299,7 @@ examples are included in the example/ directory.</p>
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

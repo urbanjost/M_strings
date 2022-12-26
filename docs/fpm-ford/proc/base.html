@@ -152,66 +152,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>base(3f) - [M_strings:BASE] convert whole number string in base [2-36]
-to string in alternate base [2-36]
-(LICENSE:PD)
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<p>logical function base(x,b,y,a)</p>
-<div class="codehilite"><pre><span></span><code>character(len=*),intent(in)  :: x
-character(len=*),intent(out) :: y
-integer,intent(in)           :: b,a
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">Convert</span> <span class="nv">a</span> <span class="nv">numeric</span> <span class="nv">string</span> <span class="nv">from</span> <span class="nv">base</span> <span class="nv">B</span> <span class="nv">to</span> <span class="nv">base</span> <span class="nv">A</span>. <span class="nv">The</span> <span class="nv">function</span> <span class="nv">returns</span>
-<span class="nv">FALSE</span> <span class="k">if</span> <span class="nv">B</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">range</span> [<span class="mi">2</span>..<span class="mi">36</span>] <span class="nv">or</span> <span class="k">if</span> <span class="nv">string</span> <span class="nv">X</span> <span class="nv">contains</span> <span class="nv">invalid</span>
-<span class="nv">characters</span> <span class="nv">in</span> <span class="nv">base</span> <span class="nv">B</span> <span class="nv">or</span> <span class="k">if</span> <span class="nb">result</span> <span class="nv">Y</span> <span class="nv">is</span> <span class="nv">too</span> <span class="nv">big</span>
-
-<span class="nv">The</span> <span class="nv">letters</span> <span class="nv">A</span>,<span class="nv">B</span>,...,<span class="nv">Z</span> <span class="nv">represent</span> <span class="mi">10</span>,<span class="mi">11</span>,...,<span class="mi">36</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">base</span> <span class="o">&gt;</span> <span class="mi">10</span>.
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">x</span>   <span class="nv">input</span> <span class="nv">string</span> <span class="nv">representing</span> <span class="nv">numeric</span> <span class="nv">whole</span> <span class="nv">value</span>
-<span class="nv">b</span>   <span class="nv">assumed</span> <span class="nv">base</span> <span class="nv">of</span> <span class="nv">input</span> <span class="nv">string</span>
-<span class="nv">y</span>   <span class="nv">output</span> <span class="nv">string</span>
-<span class="nv">a</span>   <span class="nv">base</span> <span class="nv">specified</span> <span class="k">for</span> <span class="nv">output</span> <span class="nv">string</span>
-</code></pre></div>
-
-<h2 id="example">EXAMPLE</h2>
-<p>Sample program:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_base</span>
-<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">base</span>
-<span class="nv">implicit</span> <span class="nv">none</span>
-<span class="nv">integer</span>           :: <span class="nv">ba</span>,<span class="nv">bd</span>
-<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">40</span><span class="ss">)</span> :: <span class="nv">x</span>,<span class="nv">y</span>
-
-<span class="nv">print</span> <span class="o">*</span>,<span class="s1">&#39;</span><span class="s"> BASE CONVERSION</span><span class="s1">&#39;</span>
-<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;Start   Base (2 to 36): &quot;)</span><span class="s1">&#39;</span>,<span class="nv">advance</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">no</span><span class="s1">&#39;</span><span class="ss">)</span><span class="c1">; read *, bd</span>
-<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;Arrival Base (2 to 36): &quot;)</span><span class="s1">&#39;</span>,<span class="nv">advance</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">no</span><span class="s1">&#39;</span><span class="ss">)</span><span class="c1">; read *, ba</span>
-<span class="nv">INFINITE</span>: <span class="k">do</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;Enter number in start base (0 to quit): &quot;)</span><span class="s1">&#39;</span>,<span class="nv">advance</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">no</span><span class="s1">&#39;</span><span class="ss">)</span>
-   <span class="nv">read</span> <span class="o">*</span>, <span class="nv">x</span>
-   <span class="k">if</span><span class="ss">(</span><span class="nv">x</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">0</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="k">exit</span> <span class="nv">INFINITE</span>
-   <span class="k">if</span><span class="ss">(</span><span class="nv">base</span><span class="ss">(</span><span class="nv">x</span>,<span class="nv">bd</span>,<span class="nv">y</span>,<span class="nv">ba</span><span class="ss">))</span><span class="k">then</span>
-        <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;In base &quot;,I2,&quot;: &quot;,A20)</span><span class="s1">&#39;</span><span class="ss">)</span>  <span class="nv">ba</span>, <span class="nv">y</span>
-    <span class="k">else</span>
-      <span class="nv">print</span> <span class="o">*</span>,<span class="s1">&#39;</span><span class="s">Error in decoding/encoding number.</span><span class="s1">&#39;</span>
-    <span class="k">endif</span>
- <span class="nv">enddo</span> <span class="nv">INFINITE</span>
-
- <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_base</span>
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -346,7 +286,6 @@ integer,intent(in)           :: b,a
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">temp</span><span class="w"></span>
 
-<span class="c">! ident_75=&quot;@(#) M_strings base(3f) convert whole number string in base [2-36] to string in alternate base [2-36]&quot;</span>
 
 <span class="n">base</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w"></span>
 <span class="k">if</span><span class="p">(</span><span class="n">decodebase</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">temp</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
@@ -381,7 +320,7 @@ integer,intent(in)           :: b,a
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

@@ -164,40 +164,6 @@
     </div>
 
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>  c2s(3f) - [M_strings:ARRAY] convert C string pointer to Fortran
-  character string
-  (LICENSE:PD)
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">c2s(c_string_pointer) result</span><span class="p">(</span>f_string<span class="p">)</span><span class="w"></span>
-
-<span class="w"> </span><span class="nb">type</span><span class="p">(</span><span class="n">c_ptr</span><span class="p">),</span><span class="w"> </span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">       </span><span class="p">::</span><span class="w"> </span><span class="n">c_string_pointer</span><span class="w"></span>
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="w"> </span><span class="n">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">f_string</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">Given</span> <span class="nv">a</span> <span class="nv">C</span> <span class="nv">pointer</span> <span class="nv">to</span> <span class="nv">a</span> <span class="nv">character</span> <span class="nv">string</span> <span class="k">return</span> <span class="nv">a</span> <span class="nv">Fortran</span> <span class="nv">character</span>
-<span class="nv">string</span>.
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code>c_string_pointer  C pointer to convert
-</code></pre></div>
-
-<h2 id="returns">RETURNS</h2>
-<div class="codehilite"><pre><span></span><code><span class="n">f_string</span><span class="w">          </span><span class="n">Fortran</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="k">return</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="example">EXAMPLE</h2>
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -281,11 +247,8 @@
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">c2s</span><span class="p">(</span><span class="n">c_string_pointer</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">f_string</span><span class="p">)</span><span class="w"></span>
-<span class="c">! gets a C string (pointer), and returns the corresponding Fortran string;</span>
-<span class="c">! If the C string is null, it returns &quot;NULL&quot;, similar to C&#39;s &quot;(null)&quot; printed in similar cases:</span>
-<span class="k">use</span><span class="p">,</span><span class="w"> </span><span class="k">intrinsic</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="nb">iso_c_binding</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="kt">c_ptr</span><span class="p">,</span><span class="nb">c_f_pointer</span><span class="p">,</span><span class="kt">c_char</span><span class="p">,</span><span class="nb">c_null_char</span><span class="w"></span>
+<span class="k">use</span><span class="p">,</span><span class="w"> </span><span class="k">intrinsic</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="nb">iso_c_binding</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="kt">c_ptr</span><span class="p">,</span><span class="nb">c_f_pointer</span><span class="p">,</span><span class="kt">c_char</span><span class="p">,</span><span class="nb">c_null_char</span>
 
-<span class="c">! ident_28=&quot;@(#) M_strings c2s(3f) copy pointer to C char array till a null is encountered to a Fortran string up to 4096 characters&quot;</span>
 
 <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">max_length</span><span class="o">=</span><span class="mi">4096</span><span class="w"></span>
 <span class="k">type</span><span class="p">(</span><span class="kt">c_ptr</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                       </span><span class="kd">::</span><span class="w"> </span><span class="n">c_string_pointer</span><span class="w"></span>
@@ -332,7 +295,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

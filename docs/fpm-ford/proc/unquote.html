@@ -88,7 +88,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title=" 2.1% of total for procedures.">59 statements</a>
+               title=" 2.0% of total for procedures.">59 statements</a>
           </li>
 
             <li id="source-file">
@@ -152,89 +152,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code> <span class="nv">unquote</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">QUOTES</span>] <span class="nv">remove</span> <span class="nv">quotes</span> <span class="nv">from</span> <span class="nv">string</span> <span class="nv">as</span> <span class="k">if</span>
- <span class="nv">read</span> <span class="nv">with</span> <span class="nv">list</span><span class="o">-</span><span class="nv">directed</span> <span class="nv">input</span>
- <span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<p>function unquote(quoted_str,esc) result (unquoted_str)</p>
-<div class="codehilite"><pre><span></span><code>character(len=*),intent(in)          :: quoted_str
-character(len=1),optional,intent(in) :: esc
-character(len=:),allocatable         :: unquoted_str
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="n">Remove</span><span class="w"> </span><span class="n">quotes</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">CHARACTER</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">was</span><span class="w"> </span><span class="n">read</span><span class="w"> </span><span class="n">using</span><span class="w"></span>
-<span class="n">list</span><span class="o">-</span><span class="n">directed</span><span class="w"> </span><span class="n">input</span><span class="o">.</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">particularly</span><span class="w"> </span><span class="n">useful</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">processing</span><span class="w"></span>
-<span class="n">tokens</span><span class="w"> </span><span class="n">read</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">CSV</span><span class="w"> </span><span class="n">files</span><span class="o">.</span><span class="w"></span>
-
-<span class="n">Fortran</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="n">read</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">list</span><span class="o">-</span><span class="n">directed</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">internal</span><span class="w"> </span><span class="n">file</span><span class="p">,</span><span class="w"></span>
-<span class="n">which</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="n">quoted</span><span class="w"> </span><span class="n">strings</span><span class="p">,</span><span class="w"> </span><span class="n">but</span><span class="w"> </span><span class="n">list</span><span class="o">-</span><span class="n">directed</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="ow">not</span><span class="w"></span>
-<span class="n">support</span><span class="w"> </span><span class="n">escape</span><span class="w"> </span><span class="n">characters</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">UNQUOTE</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">does</span><span class="o">.</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code><span class="n">quoted_str</span><span class="w">  </span><span class="k">input</span><span class="w"> </span><span class="k">string</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">remove</span><span class="w"> </span><span class="n">quotes</span><span class="w"> </span><span class="n">from</span><span class="p">,</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">rules</span><span class="w"> </span><span class="n">of</span><span class="w"></span>
-<span class="w">            </span><span class="n">list</span><span class="o">-</span><span class="n">directed</span><span class="w"> </span><span class="k">input</span><span class="w"> </span><span class="p">(</span><span class="n">two</span><span class="w"> </span><span class="n">adjacent</span><span class="w"> </span><span class="n">quotes</span><span class="w"> </span><span class="n">inside</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">quoted</span><span class="w"></span>
-<span class="w">            </span><span class="n">region</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">replaced</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">single</span><span class="w"> </span><span class="n">quote</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">single</span><span class="w"> </span><span class="n">quote</span><span class="w"> </span><span class="k">or</span><span class="w"></span>
-<span class="w">            </span><span class="n">double</span><span class="w"> </span><span class="n">quote</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">selected</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">delimiter</span><span class="w"> </span><span class="n">based</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">which</span><span class="w"></span>
-<span class="w">            </span><span class="n">is</span><span class="w"> </span><span class="n">encountered</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="n">going</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span><span class="w"></span>
-<span class="n">esc</span><span class="w">         </span><span class="n">optional</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">protect</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="n">quote</span><span class="w"></span>
-<span class="w">            </span><span class="n">character</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">being</span><span class="w"> </span><span class="n">processed</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">quote</span><span class="p">,</span><span class="w"> </span><span class="n">but</span><span class="w"> </span><span class="n">simply</span><span class="w"> </span><span class="n">as</span><span class="w"></span>
-<span class="w">            </span><span class="n">a</span><span class="w"> </span><span class="n">plain</span><span class="w"> </span><span class="n">character</span><span class="p">.</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="result">RESULT</h2>
-<div class="codehilite"><pre><span></span><code>unquoted_str  The output string, which is based on removing quotes
-              from quoted_str.
-</code></pre></div>
-
-<h2 id="example">EXAMPLE</h2>
-<p>Sample program:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_unquote</span>
-   <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">unquote</span>
-   <span class="nv">implicit</span> <span class="nv">none</span>
-   <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">128</span><span class="ss">)</span>           :: <span class="nv">quoted_str</span>
-   <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">unquoted_str</span>
-   <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">1</span><span class="ss">)</span>,<span class="nv">parameter</span>   :: <span class="nv">esc</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">\</span><span class="s1">&#39;</span>
-   <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">1024</span><span class="ss">)</span>          :: <span class="nv">msg</span>
-   <span class="nv">integer</span>                      :: <span class="nv">ios</span>
-   <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">1024</span><span class="ss">)</span>          :: <span class="nv">dummy</span>
-   <span class="k">do</span>
-      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span>,<span class="nv">advance</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">no</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">Enter test string:</span><span class="s1">&#39;</span>
-      <span class="nv">read</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span>,<span class="nv">iostat</span><span class="o">=</span><span class="nv">ios</span>,<span class="nv">iomsg</span><span class="o">=</span><span class="nv">msg</span><span class="ss">)</span><span class="nv">quoted_str</span>
-      <span class="k">if</span><span class="ss">(</span><span class="nv">ios</span> <span class="o">/=</span> <span class="mi">0</span><span class="ss">)</span><span class="k">then</span>
-         <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">msg</span><span class="ss">)</span>
-         <span class="k">exit</span>
-      <span class="k">endif</span>
-
-      <span class="o">!</span> <span class="nv">the</span> <span class="nv">original</span> <span class="nv">string</span>
-      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">QUOTED       [</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">quoted_str</span><span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
-
-      <span class="o">!</span> <span class="nv">the</span> <span class="nv">string</span> <span class="nv">processed</span> <span class="nv">by</span> <span class="nv">unquote</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>
-      <span class="nv">unquoted_str</span><span class="o">=</span><span class="nv">unquote</span><span class="ss">(</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">quoted_str</span><span class="ss">)</span>,<span class="nv">esc</span><span class="ss">)</span>
-      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">UNQUOTED     [</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">unquoted_str</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
-
-      <span class="o">!</span> <span class="nv">read</span> <span class="nv">the</span> <span class="nv">string</span> <span class="nv">list</span><span class="o">-</span><span class="nv">directed</span> <span class="nv">to</span> <span class="nv">compare</span> <span class="nv">the</span> <span class="nv">results</span>
-      <span class="nv">read</span><span class="ss">(</span><span class="nv">quoted_str</span>,<span class="o">*</span>,<span class="nv">iostat</span><span class="o">=</span><span class="nv">ios</span>,<span class="nv">iomsg</span><span class="o">=</span><span class="nv">msg</span><span class="ss">)</span><span class="nv">dummy</span>
-      <span class="k">if</span><span class="ss">(</span><span class="nv">ios</span> <span class="o">/=</span> <span class="mi">0</span><span class="ss">)</span><span class="k">then</span>
-         <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">msg</span><span class="ss">)</span>
-      <span class="k">else</span>
-         <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">LIST DIRECTED[</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">dummy</span><span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
-      <span class="k">endif</span>
-   <span class="nv">enddo</span>
-<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_unquote</span>
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -346,16 +263,13 @@ character(len=:),allocatable         :: unquoted_str
 <span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">iput</span><span class="w"></span>
 <span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
 <span class="kt">logical</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">inside</span><span class="w"></span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">esc</span><span class="p">))</span><span class="k">then</span><span class="w">                           </span><span class="c">! select escape character as specified character or special value meaning not set</span>
 <span class="w">      </span><span class="n">iesc</span><span class="o">=</span><span class="nb">iachar</span><span class="p">(</span><span class="n">esc</span><span class="p">)</span><span class="w">                            </span><span class="c">! allow for an escape character</span>
 <span class="w">   </span><span class="k">else</span>
 <span class="k">      </span><span class="n">iesc</span><span class="o">=-</span><span class="mi">1</span><span class="w">                                     </span><span class="c">! set to value that matches no character</span>
-<span class="w">   </span><span class="k">endif</span><span class="w"></span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="w">   </span><span class="n">inlen</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">quoted_str</span><span class="p">)</span><span class="w">                          </span><span class="c">! find length of input string</span>
+<span class="w">   </span><span class="k">endif</span>
+<span class="k">   </span><span class="n">inlen</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">quoted_str</span><span class="p">)</span><span class="w">                          </span><span class="c">! find length of input string</span>
 <span class="w">   </span><span class="k">allocate</span><span class="p">(</span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">inlen</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">unquoted_str</span><span class="p">)</span><span class="w"> </span><span class="c">! initially make output string length of input string</span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="n">inlen</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="k">then</span><span class="w">                             </span><span class="c">! double_quote is the default quote unless the first character is single_quote</span>
 <span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">quoted_str</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">single_quote</span><span class="p">)</span><span class="k">then</span>
 <span class="k">         </span><span class="n">quote</span><span class="o">=</span><span class="nb">iachar</span><span class="p">(</span><span class="n">single_quote</span><span class="p">)</span><span class="w"></span>
@@ -364,9 +278,8 @@ character(len=:),allocatable         :: unquoted_str
 <span class="w">      </span><span class="k">endif</span>
 <span class="k">   else</span>
 <span class="k">      </span><span class="n">quote</span><span class="o">=</span><span class="nb">iachar</span><span class="p">(</span><span class="n">double_quote</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="k">endif</span><span class="w"></span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="w">   </span><span class="n">before</span><span class="o">=-</span><span class="mi">2</span><span class="w">                                      </span><span class="c">! initially set previous character to impossible value</span>
+<span class="w">   </span><span class="k">endif</span>
+<span class="k">   </span><span class="n">before</span><span class="o">=-</span><span class="mi">2</span><span class="w">                                      </span><span class="c">! initially set previous character to impossible value</span>
 <span class="w">   </span><span class="n">unquoted_str</span><span class="p">(:)</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w">                             </span><span class="c">! initialize output string to null string</span>
 <span class="w">   </span><span class="n">iput</span><span class="o">=</span><span class="mi">1</span><span class="w"></span>
 <span class="w">   </span><span class="n">inside</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
@@ -393,9 +306,7 @@ character(len=:),allocatable         :: unquoted_str
 <span class="w">         </span><span class="n">before</span><span class="o">=</span><span class="n">current</span><span class="w"></span>
 <span class="w">      </span><span class="k">endif</span>
 <span class="k">   enddo </span><span class="n">STEPTHROUGH</span><span class="w"></span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">   </span><span class="n">unquoted_str</span><span class="o">=</span><span class="n">unquoted_str</span><span class="p">(:</span><span class="n">iput</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="k">end function </span><span class="n">unquote</span><span class="w"></span>
 </pre></div>
 
@@ -417,7 +328,7 @@ character(len=:),allocatable         :: unquoted_str
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

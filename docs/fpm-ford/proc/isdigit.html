@@ -152,60 +152,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code> <span class="nv">isdigit</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">COMPARE</span>] <span class="nv">returns</span> .<span class="nv">true</span>. <span class="k">if</span> <span class="nv">character</span> <span class="nv">is</span> <span class="nv">a</span>
- <span class="nv">digit</span> <span class="ss">(</span><span class="mi">0</span>,<span class="mi">1</span>,...,<span class="mi">9</span><span class="ss">)</span> <span class="nv">and</span> .<span class="nv">false</span>. <span class="nv">otherwise</span>
- <span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code>elemental function isdigit(onechar)
-
- character,intent(in) :: onechar
- logical              :: isdigit
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code> <span class="nv">isdigit</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">returns</span> .<span class="nv">true</span>. <span class="k">if</span> <span class="nv">character</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">digit</span> <span class="ss">(</span><span class="mi">0</span>,<span class="mi">1</span>,...,<span class="mi">9</span><span class="ss">)</span>
- <span class="nv">and</span> .<span class="nv">false</span>. <span class="nv">otherwise</span>
-</code></pre></div>
-
-<h2 id="examples">EXAMPLES</h2>
-<p>Sample Program:</p>
-<div class="codehilite"><pre><span></span><code> <span class="nv">program</span> <span class="nv">demo_isdigit</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">isdigit</span>, <span class="nv">isspace</span>, <span class="nv">switch</span>
- <span class="nv">implicit</span> <span class="nv">none</span>
- <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">10</span><span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">string</span><span class="ss">(</span>:<span class="ss">)</span>
- <span class="nv">integer</span>                       :: <span class="nv">i</span>
-    <span class="nv">string</span><span class="o">=</span>[<span class="o">&amp;</span>
-    <span class="o">&amp;</span> <span class="s1">&#39;</span><span class="s">1 2 3 4 5 </span><span class="s1">&#39;</span> ,<span class="o">&amp;</span>
-    <span class="o">&amp;</span> <span class="s1">&#39;</span><span class="s">letters   </span><span class="s1">&#39;</span> ,<span class="o">&amp;</span>
-    <span class="o">&amp;</span> <span class="s1">&#39;</span><span class="s">1234567890</span><span class="s1">&#39;</span> ,<span class="o">&amp;</span>
-    <span class="o">&amp;</span> <span class="s1">&#39;</span><span class="s">both 8787 </span><span class="s1">&#39;</span> ]
-    <span class="o">!</span> <span class="k">if</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">nothing</span> <span class="nv">but</span> <span class="nv">digits</span> <span class="nv">and</span> <span class="nv">whitespace</span> <span class="k">return</span> .<span class="nv">true</span>.
-    <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">string</span><span class="ss">)</span>
-       <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span>,<span class="nv">advance</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">no</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">For string[</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">string</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
-       <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="o">&amp;</span>
-        <span class="o">&amp;</span> <span class="nv">all</span><span class="ss">(</span><span class="nv">isdigit</span><span class="ss">(</span><span class="nv">switch</span><span class="ss">(</span><span class="nv">string</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)))</span>.<span class="nv">or</span>.<span class="o">&amp;</span>
-        <span class="o">&amp;</span> <span class="nv">isspace</span><span class="ss">(</span><span class="nv">switch</span><span class="ss">(</span><span class="nv">string</span><span class="ss">(</span><span class="nv">i</span><span class="ss">))))</span>
-    <span class="nv">enddo</span>
- <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_isdigit</span>
-</code></pre></div>
-
-<p>Expected output:</p>
-<div class="codehilite"><pre><span></span><code>    <span class="k">For</span> <span class="nv">string</span>[<span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> ] <span class="nv">T</span>
-    <span class="k">For</span> <span class="nv">string</span>[<span class="nv">letters</span>   ] <span class="nv">F</span>
-    <span class="k">For</span> <span class="nv">string</span>[<span class="mi">1234567890</span>] <span class="nv">T</span>
-    <span class="k">For</span> <span class="nv">string</span>[<span class="nv">both</span> <span class="mi">8787</span> ] <span class="nv">F</span>
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code> John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code> Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -290,7 +236,6 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">elemental function </span><span class="n">isdigit</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="w"></span>
 
-<span class="c">! ident_65=&quot;@(#) M_strings isdigit(3f) Returns .true. if ch is a digit (0-9) and .false. otherwise&quot;</span>
 
 <span class="kt">character</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ch</span><span class="w"></span>
 <span class="kt">logical</span><span class="w">              </span><span class="kd">::</span><span class="w"> </span><span class="n">res</span><span class="w"></span>
@@ -321,7 +266,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

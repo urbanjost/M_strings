@@ -56,9 +56,9 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<B>M_strings(3f) </B>- [M_strings::INTRO] Fortran string module
-<B>
-</B></BLOCKQUOTE>
+M_strings(3f) - [M_strings::INTRO] Fortran string module
+<P>
+</BLOCKQUOTE>
 <A name=contents></A><H3>CONTENTS</H3></A>
 <BLOCKQUOTE>
 <A HREF=#1>Description</A><BR>
@@ -74,13 +74,13 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-The <B>M_strings</B>(3fm) module is a collection of Fortran procedures
+The M_strings(3fm) module is a collection of Fortran procedures
 that supplement the built-in intrinsic string routines. Routines
 for parsing, tokenizing, changing case, substituting new strings for
 substrings, locating strings with simple wildcard expressions, removing
 tabs and line terminators and other string manipulations are included.
 <P>
-<B>M_strings_oop</B>(3fm) is a companion module that provides an OOP interface
+M_strings_oop(3fm) is a companion module that provides an OOP interface
 to the M_strings module.
 </BLOCKQUOTE>
 <A name=2>
@@ -89,9 +89,9 @@ to the M_strings module.
 
 </A>
 <BLOCKQUOTE>
-<PRE>
-<B>public</B> entities:
+public entities:
 <P>
+<PRE>
      use M_strings, only : split,sep,delim,chomp,strtok
      use M_strings, only : split2020, find_field
      use M_strings, only : substitute,change,modif,transliterate,reverse,squeeze
@@ -136,7 +136,7 @@ and stores tokens into an array
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>sep</B> </TD><TD valign=bottom>
-function interface to <B>split</B>(3f)
+function interface to split(3f)
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>delim</B> </TD><TD valign=bottom>
@@ -151,7 +151,7 @@ string using specified delimiters
 <TR valign=top><TD colspan=2>
 <B>paragraph</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
 convert a string into a paragraph
-strtok tokenize a string like C <B>strtok</B>(3c) routine
+strtok tokenize a string like C strtok(3c) routine
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=>
@@ -187,7 +187,7 @@ substring with new substring
 <B>replace</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
 function non-recursively globally replaces old
 substring with new substring using allocatable string
-(version of <B>substitute</B>(3f) without limitation on
+(version of substitute(3f) without limitation on
 length of output string)
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
@@ -290,7 +290,7 @@ return a string of at least specified length with suffix
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>merge_str</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-make strings of equal length and then call <B>MERGE</B>(3f)
+make strings of equal length and then call MERGE(3f)
 intrinsic
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
@@ -474,7 +474,7 @@ contain wildcard characters
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>ends_with</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-test whether strings ends with one of the specified suffixs
+test whether strings ends with one of the specified suffixes
 </TD></TR>
 <TR></TR></TABLE><TABLE cellpadding=3>
 <TR valign=top><TD width=3%>
@@ -486,6 +486,7 @@ isalnum returns .true. if character is a letter or digit
 o
 </TD><TD>
 isalpha returns .true. if character is a letter and
+[char46]false. otherwise
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
@@ -536,8 +537,8 @@ isupper returns .true. if character is an uppercase letter (A-Z)
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-isascii returns .true. if the character is in the range <B>char</B>(0)
-to <B>char</B>(127)
+isascii returns .true. if the character is in the range char(0)
+to char(127)
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
@@ -611,7 +612,7 @@ substring of two strings.
 </A>
 <BLOCKQUOTE>
 <P>
-The <B>M_strings</B>(3fm) module supplements and works in combination with
+The M_strings(3fm) module supplements and works in combination with
 the Fortran built-in intrinsics. Stand-alone Fortran lets you access
 the characters in a string using ranges much like they are character
 arrays, assignment, comparisons with standard operators, supports
@@ -648,9 +649,9 @@ operator, as well as a number of intrinsic string routines:
 </A>
 <BLOCKQUOTE>
 <P>
-The <B>M_strings_oop</B>(3fm) module (included with the <B>M_strings</B>(3fm)
+The M_strings_oop(3fm) module (included with the M_strings(3fm)
 module) provides an OOP (Object-Oriented Programming) interface to
-the <B>M_strings</B>(3fm) module.
+the M_strings(3fm) module.
 </BLOCKQUOTE>
 <A name=3>
 
@@ -670,8 +671,8 @@ expression library (M_regex).
 </A>
 <BLOCKQUOTE>
 Each of the procedural functions includes an example program in the
-corresponding <B>man</B>(1) page for the function. The object-oriented
-interface does not have individual <B>man</B>(1) pages, but is instead
+corresponding man(1) page for the function. The object-oriented
+interface does not have individual man(1) pages, but is instead
 demonstrated using the following example program:
 <P>
 <PRE>
@@ -706,8 +707,8 @@ demonstrated using the following example program:
     end program demo_M_strings
 <P>
 </PRE>
-</BLOCKQUOTE>
 Expected output
+</BLOCKQUOTE>
 <A name=5>
 
      <H3>AUTHOR</H3>
@@ -725,7 +726,7 @@ John S. Urban
 Public Domain
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>M_strings (3m_strings)</TD> <TD align=right width=33%><I>December 26, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from c05de742-d768-4cf8-9fd1-fb6a5f451fa1 using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>M_strings (3m_strings)</TD> <TD align=right width=33%><I>December 26, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from dfb8273d-d240-4029-b319-fd0fe50686e5 using man macros.</FONT>
 <br><br><center><img src="images/M_strings.gif"></center>
 </div>
 </div>

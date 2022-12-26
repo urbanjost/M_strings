@@ -152,55 +152,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>nospace(3f) - [M_strings:WHITESPACE] remove all whitespace from
-input string
-(LICENSE:PD)
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">nospace</span><span class="p">(</span>str<span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">remove</span><span class="w"> </span><span class="nb">all</span><span class="w"> </span><span class="n">whitespace</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="nb">input</span><span class="w"> </span><span class="nb">string</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">          </span><span class="p">::</span><span class="w"> </span><span class="n">str</span><span class="w"></span>
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w">         </span><span class="p">::</span><span class="w"> </span><span class="n">nospace</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">nospace</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">removes</span> <span class="nv">space</span>, <span class="nv">tab</span>, <span class="nv">carriage</span> <span class="k">return</span>, <span class="nv">new</span> <span class="nv">line</span>, <span class="nv">vertical</span>
-<span class="nv">tab</span>, <span class="nv">formfeed</span> <span class="nv">and</span> <span class="nv">null</span> <span class="nv">characters</span> <span class="ss">(</span><span class="nv">called</span> <span class="s2">&quot;</span><span class="s">whitespace</span><span class="s2">&quot;</span><span class="ss">)</span>. <span class="nv">The</span> <span class="nv">output</span>
-<span class="nv">is</span> <span class="nv">returned</span> <span class="nv">trimmed</span>.
-</code></pre></div>
-
-<h2 id="examples">EXAMPLES</h2>
-<p>Sample program:</p>
-<div class="codehilite"><pre><span></span><code> <span class="nv">program</span> <span class="nv">demo_nospace</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">nospace</span>
- <span class="nv">implicit</span> <span class="nv">none</span>
- <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span>  :: <span class="nv">s</span>
-    <span class="nv">s</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">  This     is      a     test  </span><span class="s1">&#39;</span>
-    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">original input string is ....</span><span class="s1">&#39;</span>,<span class="nv">s</span>
-    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">processed output string is ...</span><span class="s1">&#39;</span>,<span class="nv">nospace</span><span class="ss">(</span><span class="nv">s</span><span class="ss">)</span>
-    <span class="k">if</span><span class="ss">(</span><span class="nv">nospace</span><span class="ss">(</span><span class="nv">s</span><span class="ss">)</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">Thisisatest</span><span class="s1">&#39;</span><span class="ss">)</span><span class="k">then</span>
-       <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">nospace test passed</span><span class="s1">&#39;</span>
-    <span class="k">else</span>
-       <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">nospace test error</span><span class="s1">&#39;</span>
-    <span class="k">endif</span>
- <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_nospace</span>
-</code></pre></div>
-
-<p>Expected output</p>
-<div class="codehilite"><pre><span></span><code> original input string is ....  This     is      a     test
- processed output string is ...Thisisatest
- nospace test passed
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -285,13 +236,11 @@ input string
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">nospace</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="w"></span>
 
-<span class="c">! ident_35=&quot;@(#) M_strings nospace(3f) remove all whitespace from input string&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w">  </span><span class="n">line</span><span class="w">             </span><span class="c">! remove whitespace from this string and return it</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">   </span><span class="kd">::</span><span class="w">  </span><span class="n">nospace</span><span class="w">          </span><span class="c">! returned string</span>
 <span class="kt">integer</span><span class="w">                        </span><span class="kd">::</span><span class="w">  </span><span class="n">ipos</span><span class="w">             </span><span class="c">! position to place next output character at</span>
 <span class="kt">integer</span><span class="w">                        </span><span class="kd">::</span><span class="w">  </span><span class="n">i</span><span class="w">                </span><span class="c">! counter to increment from beginning to end of input string</span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">   </span><span class="k">allocate</span><span class="p">(</span><span class="n">nospace</span><span class="p">,</span><span class="n">mold</span><span class="o">=</span><span class="n">line</span><span class="p">)</span><span class="w">                      </span><span class="c">! initially make output line length of input line</span>
 <span class="w">   </span><span class="n">nospace</span><span class="p">(:</span><span class="nb">len_trim</span><span class="p">(</span><span class="n">nospace</span><span class="p">))</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="w"></span>
 <span class="w">   </span><span class="n">ipos</span><span class="o">=</span><span class="mi">0</span><span class="w"></span>
@@ -322,7 +271,7 @@ input string
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

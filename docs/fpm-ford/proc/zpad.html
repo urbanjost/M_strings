@@ -152,84 +152,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>zpad(3f) - [M_strings:LENGTH] pad a string on the left with zeros to
-specified length
-(LICENSE:PD)
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">zpad(valuein,length) result</span><span class="p">(</span>strout<span class="p">)</span><span class="w"></span>
-
-<span class="w"> </span><span class="nb">class</span><span class="o">*</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">       </span><span class="p">::</span><span class="w"> </span><span class="n">valuein</span><span class="w"></span>
-<span class="w"> </span><span class="n">integer</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">      </span><span class="p">::</span><span class="w"> </span><span class="nb">length</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">zpad</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">crops</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">or</span> <span class="nv">integer</span> <span class="nv">converted</span> <span class="nv">to</span> <span class="nv">a</span> <span class="nv">string</span>
-<span class="nv">and</span> <span class="k">then</span> <span class="nv">pads</span> <span class="nv">it</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">left</span> <span class="nv">with</span> <span class="nv">zeros</span> <span class="nv">to</span> <span class="nv">at</span> <span class="nv">least</span> <span class="nv">the</span> <span class="nv">specified</span>
-<span class="nv">length</span>. <span class="k">If</span> <span class="nv">the</span> <span class="nv">trimmed</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">longer</span> <span class="nv">than</span> <span class="nv">the</span> <span class="nv">requested</span> <span class="nv">length</span>
-<span class="nv">the</span> <span class="nv">original</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">returned</span> <span class="nv">trimmed</span> <span class="nv">of</span> <span class="nv">leading</span> <span class="nv">and</span> <span class="nv">trailing</span> <span class="nv">spaces</span>.
-
-<span class="k">For</span> <span class="nv">strings</span> <span class="nv">this</span> <span class="nv">is</span> <span class="nv">basically</span> <span class="nv">an</span> <span class="nv">alias</span> <span class="k">for</span>
-
-    <span class="nv">strout</span><span class="o">=</span><span class="nv">pad</span><span class="ss">(</span><span class="nv">str</span>,<span class="nv">length</span>,<span class="s1">&#39;</span><span class="s">0</span><span class="s1">&#39;</span>,<span class="nv">clip</span><span class="o">=</span>.<span class="nv">true</span>.,<span class="nv">right</span><span class="o">=</span>.<span class="nv">false</span>.<span class="ss">)</span>
-
-<span class="k">For</span> <span class="nv">integers</span> <span class="nv">the</span> <span class="nv">same</span> <span class="nv">is</span> <span class="nv">often</span> <span class="nv">done</span> <span class="nv">with</span> <span class="nv">internal</span> <span class="nv">WRITE</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">statements</span>
-
-    <span class="nv">write</span><span class="ss">(</span><span class="nv">strout</span>,<span class="s1">&#39;</span><span class="s">(i5.5)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">ivalue</span>
-
-<span class="nv">but</span> <span class="nv">the</span> <span class="nv">function</span> <span class="k">call</span> <span class="nl">can</span> <span class="nv">be</span> <span class="nv">inlined</span><span class="c1">; if the length is exceeded by</span>
-<span class="nv">the</span> <span class="nv">resulting</span> <span class="nv">input</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">truncated</span><span class="c1">; and the output</span>
-<span class="nv">string</span> <span class="nv">is</span> <span class="nv">cropped</span>.
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">str</span>      <span class="nv">the</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">to</span> <span class="k">return</span> <span class="nv">trimmed</span>, <span class="nv">but</span> <span class="k">then</span> <span class="nv">padded</span> <span class="nv">to</span>
-         <span class="nv">the</span> <span class="nv">specified</span> <span class="nv">length</span> <span class="k">if</span> <span class="nv">shorter</span> <span class="nv">than</span> <span class="nv">length</span>. <span class="k">If</span> <span class="nv">an</span> <span class="nv">integer</span>
-         <span class="nv">is</span> <span class="nv">input</span> <span class="nv">it</span> <span class="nv">is</span> <span class="nv">first</span> <span class="nv">converted</span> <span class="nv">to</span> <span class="nv">a</span> <span class="nv">string</span>.
-<span class="nv">length</span>   <span class="nv">The</span> <span class="nv">minimum</span> <span class="nv">string</span> <span class="nv">length</span> <span class="nv">to</span> <span class="k">return</span>
-</code></pre></div>
-
-<h2 id="returns">RETURNS</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">strout</span>  <span class="nv">The</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">padded</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">requested</span> <span class="nv">length</span> <span class="nv">or</span>
-        <span class="nv">the</span> <span class="nv">trimmed</span> <span class="nv">input</span> <span class="nv">string</span> <span class="k">if</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">is</span>
-        <span class="nv">longer</span> <span class="nv">than</span> <span class="nv">the</span> <span class="nv">requested</span> <span class="nv">length</span>.
-</code></pre></div>
-
-<h2 id="example">EXAMPLE</h2>
-<p>Sample Program:</p>
-<div class="codehilite"><pre><span></span><code>  <span class="nv">program</span> <span class="nv">demo_zpad</span>
-   <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">zpad</span>
-   <span class="nv">implicit</span> <span class="nv">none</span>
-   <span class="nv">integer</span> :: <span class="nv">lun</span>, <span class="nv">i</span>
-      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span> <span class="s1">&#39;</span><span class="s">111</span><span class="s1">&#39;</span>, <span class="mi">5</span><span class="ss">)</span>
-      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span> <span class="s1">&#39;</span><span class="s">123456789</span><span class="s1">&#39;</span>, <span class="mi">5</span><span class="ss">)</span>
-      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span> <span class="s1">&#39;</span><span class="s">  34567  </span><span class="s1">&#39;</span>, <span class="mi">7</span><span class="ss">)</span>
-      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span> <span class="nv">valuein</span><span class="o">=</span><span class="mi">42</span> , <span class="nv">length</span><span class="o">=</span><span class="mi">7</span><span class="ss">)</span>
-
-      <span class="o">!</span> <span class="nv">open</span> <span class="nv">output_00085</span>.<span class="nv">dat</span>
-      <span class="nv">i</span><span class="o">=</span><span class="mi">85</span>
-      <span class="nv">open</span><span class="ss">(</span><span class="nv">newunit</span><span class="o">=</span><span class="nv">lun</span>,<span class="nv">file</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">output_</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">zpad</span><span class="ss">(</span><span class="nv">i</span>,<span class="mi">5</span><span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">.dat</span><span class="s1">&#39;</span><span class="ss">)</span>
-      <span class="nv">close</span><span class="ss">(</span><span class="nv">unit</span><span class="o">=</span><span class="nv">lun</span>,<span class="nv">status</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">delete</span><span class="s1">&#39;</span><span class="ss">)</span>
-
-  <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_zpad</span>
-</code></pre></div>
-
-<p>Results:</p>
-<div class="codehilite"><pre><span></span><code>  [00111]
-  [123456789]
-  [0034567]
-  [0000042]
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -244,7 +166,7 @@ specified length
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-valuein~3"></span>
+              <span class="anchor" id="variable-valuein~4"></span>
               class(*),
             </td>
 <td>intent(in)</td>
@@ -259,7 +181,7 @@ specified length
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-length~14"></span>
+              <span class="anchor" id="variable-length~16"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -277,7 +199,7 @@ specified length
 
       <h3>Return Value
         <small>
-          <span class="anchor" id="variable-strout~8"></span>
+          <span class="anchor" id="variable-strout~9"></span>
           character(len=:), allocatable
         </small>
       </h3>
@@ -329,7 +251,6 @@ specified length
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">zpad</span><span class="p">(</span><span class="n">valuein</span><span class="p">,</span><span class="n">length</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">strout</span><span class="p">)</span><span class="w"></span>
 
-<span class="c">! ident_39=&quot;@(#) M_strings zpad(3f) return string or integer padded to at least specified length&quot;</span>
 
 <span class="k">class</span><span class="p">(</span><span class="o">*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">              </span><span class="kd">::</span><span class="w"> </span><span class="n">valuein</span><span class="w"></span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">length</span><span class="w"></span>
@@ -368,7 +289,7 @@ specified length
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

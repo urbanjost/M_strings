@@ -152,60 +152,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>dilate(3f) - [M_strings:NONALPHA] expand tab characters
-(LICENSE:PD)
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">dilate(INSTR) result</span><span class="p">(</span>OUTSTR<span class="p">)</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">=(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="p">::</span><span class="w"> </span><span class="n">INSTR</span><span class="w"></span>
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w">  </span><span class="p">::</span><span class="w"> </span><span class="n">OUTSTR</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code> dilate() converts tabs in INSTR to spaces in OUTSTR.  It assumes a
- tab is set every 8 characters. Trailing spaces are removed.
-
- In addition, trailing carriage returns and line feeds are removed
- (they are usually a problem created by going to and from MSWindows).
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code> instr     Input line to remove tabs from
-</code></pre></div>
-
-<h2 id="results">RESULTS</h2>
-<div class="codehilite"><pre><span></span><code> outstr    Output string with tabs expanded.
-</code></pre></div>
-
-<h2 id="examples">EXAMPLES</h2>
-<p>Sample program:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_dilate</span>
-
-<span class="o">!</span>  <span class="nv">test</span> <span class="nv">filter</span> <span class="nv">to</span> <span class="nv">remove</span> <span class="nv">tabs</span> <span class="nv">and</span> <span class="nv">trailing</span> <span class="nv">white</span> <span class="nv">space</span> <span class="nv">from</span> <span class="nv">input</span>
-<span class="o">!</span>  <span class="nv">on</span> <span class="nv">files</span> <span class="nv">up</span> <span class="nv">to</span> <span class="mi">1024</span> <span class="nv">characters</span> <span class="nv">wide</span>
-<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">dilate</span>
-<span class="nv">implicit</span> <span class="nv">none</span>
-<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">in</span>
-<span class="nv">integer</span>                      :: <span class="nv">i</span>
-   <span class="nv">in</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">  this is my string  </span><span class="s1">&#39;</span>
-   <span class="o">!</span> <span class="nv">change</span> <span class="nv">spaces</span> <span class="nv">to</span> <span class="nv">tabs</span> <span class="nv">to</span> <span class="nv">make</span> <span class="nv">a</span> <span class="nv">sample</span> <span class="nv">input</span>
-   <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">len</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span>
-      <span class="k">if</span><span class="ss">(</span><span class="nv">in</span><span class="ss">(</span><span class="nv">i</span>:<span class="nv">i</span><span class="ss">)</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s"> </span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">in</span><span class="ss">(</span><span class="nv">i</span>:<span class="nv">i</span><span class="ss">)</span><span class="o">=</span><span class="nv">char</span><span class="ss">(</span><span class="mi">9</span><span class="ss">)</span>
-   <span class="nv">enddo</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">in</span>,<span class="nv">dilate</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span>
-<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_dilate</span>
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code> John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -290,7 +236,6 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">dilate</span><span class="p">(</span><span class="n">INSTR</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">OUTSTR</span><span class="p">)</span><span class="w"></span>
 
-<span class="c">! ident_33=&quot;@(#) M_strings dilate(3f) convert tabs to spaces and trims line removing CRLF chars&quot;</span>
 
 <span class="kt">CHARACTER</span><span class="p">(</span><span class="nb">LEN</span><span class="o">=*</span><span class="p">),</span><span class="k">INTENT</span><span class="p">(</span><span class="n">IN</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">instr</span><span class="w">        </span><span class="c">! input line to scan for tab characters</span>
 <span class="kt">CHARACTER</span><span class="p">(</span><span class="nb">LEN</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">outstr</span><span class="w">       </span><span class="c">! tab-expanded version of INSTR produced</span>
@@ -304,7 +249,6 @@
 <span class="k">   allocate</span><span class="p">(</span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">instr</span><span class="p">)</span><span class="o">+</span><span class="mi">8</span><span class="o">*</span><span class="n">icount</span><span class="p">))</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">outstr</span><span class="p">)</span><span class="w"></span>
 <span class="w">   </span><span class="k">call </span><span class="n">notabs</span><span class="p">(</span><span class="n">instr</span><span class="p">,</span><span class="n">outstr</span><span class="p">,</span><span class="n">lgth</span><span class="p">)</span><span class="w"></span>
 <span class="w">   </span><span class="n">outstr</span><span class="o">=</span><span class="n">outstr</span><span class="p">(:</span><span class="n">lgth</span><span class="p">)</span><span class="w"></span>
-<span class="c">!===================================================================================================================================</span>
 <span class="k">END function </span><span class="n">dilate</span><span class="w"></span>
 </pre></div>
 
@@ -326,7 +270,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>

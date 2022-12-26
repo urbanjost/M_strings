@@ -152,75 +152,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>squeeze(3f) - [M_strings:EDITING] delete adjacent duplicate occurrences
-of a character from a string
-(LICENSE:PD)
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">squeeze(STR,CHAR) result </span><span class="p">(</span>OUTSTR<span class="p">)</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">          </span><span class="p">::</span><span class="w"> </span><span class="n">STR</span><span class="w"></span>
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">CHAR</span><span class="w"></span>
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="n">len</span><span class="p">(</span><span class="n">str</span><span class="p">))</span><span class="w">              </span><span class="p">::</span><span class="w"> </span><span class="n">OUTSTR</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code>squeeze(3f) reduces adjacent duplicates of the specified character to
-a single character
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code>STR     input string in which to reduce adjacent duplicate characters
-        to a single character
-CHAR    The character to remove adjacent duplicates of
-</code></pre></div>
-
-<h2 id="returns">RETURNS</h2>
-<div class="codehilite"><pre><span></span><code>OUTSTR  string with all contiguous adjacent occurrences of CHAR removed
-</code></pre></div>
-
-<h2 id="examples">EXAMPLES</h2>
-<p>Sample Program:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_squeeze</span>
-<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">squeeze</span>
-<span class="nv">implicit</span> <span class="nv">none</span>
-<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">strings</span><span class="ss">(</span>:<span class="ss">)</span>
-
-<span class="nv">strings</span><span class="o">=</span>[ <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">72</span><span class="ss">)</span> :: <span class="o">&amp;</span>
-<span class="s1">&#39;&#39;</span>, <span class="o">&amp;</span>
-<span class="s1">&#39;</span><span class="s">&quot;If I were two-faced, would I be wearing this one?&quot; --- Abraham Lincoln</span><span class="s1">&#39;</span>,  <span class="o">&amp;</span>
-<span class="s1">&#39;</span><span class="s">..1111111111111111111111111111111111111111111111111111111111111117777888</span><span class="s1">&#39;</span>, <span class="o">&amp;</span>
-<span class="s1">&#39;</span><span class="s">I never give </span><span class="s1">&#39;&#39;</span><span class="s">em hell, I just tell the truth, and they think it</span><span class="s1">&#39;&#39;</span><span class="s">s hell.</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
-<span class="s1">&#39;</span><span class="s">                                                    --- Harry S Truman</span><span class="s1">&#39;</span>    <span class="o">&amp;</span>
-]
-   <span class="k">call</span> <span class="nl">printme</span><span class="ss">(</span> <span class="nv">trim</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">(</span><span class="mi">1</span><span class="ss">))</span>, <span class="s1">&#39;</span><span class="s"> </span><span class="s1">&#39;</span> <span class="ss">)</span>
-   <span class="k">call</span> <span class="nl">printme</span><span class="ss">(</span> <span class="nv">strings</span><span class="ss">(</span><span class="mi">2</span>:<span class="mi">4</span><span class="ss">)</span>,     [<span class="s1">&#39;</span><span class="s">-</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">7</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">.</span><span class="s1">&#39;</span>] <span class="ss">)</span>
-   <span class="k">call</span> <span class="nl">printme</span><span class="ss">(</span> <span class="nv">strings</span><span class="ss">(</span><span class="mi">5</span><span class="ss">)</span>,       [<span class="s1">&#39;</span><span class="s"> </span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">-</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">r</span><span class="s1">&#39;</span>] <span class="ss">)</span>
-<span class="nv">contains</span>
-<span class="nv">impure</span> <span class="nv">elemental</span> <span class="nv">subroutine</span> <span class="nv">printme</span><span class="ss">(</span><span class="nv">str</span>,<span class="nv">chr</span><span class="ss">)</span>
-<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">intent</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span> :: <span class="nv">str</span>
-<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">1</span><span class="ss">)</span>,<span class="nv">intent</span><span class="ss">(</span><span class="nv">in</span><span class="ss">)</span> :: <span class="nv">chr</span>
-<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">answer</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">repeat</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="mi">11</span><span class="ss">)</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;IN:   &lt;&lt;&lt;&quot;,g0,&quot;&gt;&gt;&gt;&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">str</span>
-   <span class="nv">answer</span><span class="o">=</span><span class="nv">squeeze</span><span class="ss">(</span><span class="nv">str</span>,<span class="nv">chr</span><span class="ss">)</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;OUT:  &lt;&lt;&lt;&quot;,g0,&quot;&gt;&gt;&gt;&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">answer</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;LENS: &quot;,*(g0,1x))</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s2">&quot;</span><span class="s">from</span><span class="s2">&quot;</span>,<span class="nv">len</span><span class="ss">(</span><span class="nv">str</span><span class="ss">)</span>,<span class="s2">&quot;</span><span class="s">to</span><span class="s2">&quot;</span>,<span class="nv">len</span><span class="ss">(</span><span class="nv">answer</span><span class="ss">)</span>, <span class="o">&amp;</span>
-           <span class="o">&amp;</span> <span class="s2">&quot;</span><span class="s">for a change of</span><span class="s2">&quot;</span>,<span class="nv">len</span><span class="ss">(</span><span class="nv">str</span><span class="ss">)</span><span class="o">-</span><span class="nv">len</span><span class="ss">(</span><span class="nv">answer</span><span class="ss">)</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;CHAR: &quot;,g0)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">chr</span>
-<span class="k">end</span> <span class="nv">subroutine</span> <span class="nv">printme</span>
-<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_squeeze</span>
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -361,7 +292,7 @@ CHAR    The character to remove adjacent duplicates of
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-23 15:47            </p>
+ on 2022-12-26 11:21            </p>
         </div>
       </div>
       <br>
