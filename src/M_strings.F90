@@ -45,6 +45,7 @@
 !!      use M_strings, only : edit_distance
 !!      use M_strings, only : bundle
 !!      use M_strings, only : int, real, dble, nint
+!!      use M_strings, only : atoi, atol
 !!
 !!   TOKENS
 !!
@@ -298,6 +299,7 @@
 !!     use M_strings, only : edit_distance
 !!     use M_strings, only : bundle
 !!     use M_strings, only : int, real, dble, nint
+!!     use M_strings, only : atoi, atol
 !!     end program demo_M_strings
 !!
 !!   Expected output
@@ -402,11 +404,12 @@ public listout         !  expand a list of numbers where  negative numbers denot
 !
 public int, real, dble, nint
 
-interface int;     module procedure int_s2v;           end interface
+interface int;     module procedure atoi;              end interface
 interface real;    module procedure real_s2v;          end interface
 interface dble;    module procedure dble_s2v;          end interface
 interface nint;    module procedure nint_s2v;          end interface
 
+public atoi, atol
 !-----------------------------------------------------------------------------------------------------------------------------------
 !----------------------# BIT ROUTINES
 public setbits8        !  use a string representing a positive binary value to fill the bits of an INTEGER value
@@ -3352,16 +3355,18 @@ end function join
 !!          write(*,*) 'reversed output string is ...',reverse(s)
 !!       end program demo_reverse
 !!
-!!    Expected output
+!!  Results:
 !!
-!!      original input string is ....abcdefghijklmnopqrstuvwxyz
-!!      reversed output string is ...zyxwvutsrqponmlkjihgfedcba
+!!      >  REVERSE STRINGS:madA m'I ,madaM
+!!      >  original input string is ....abcdefghijklmnopqrstuvwxyz
+!!      >  reversed output string is ...zyxwvutsrqponmlkjihgfedcba
+!!
 !!##AUTHOR
 !!    John S. Urban
 !!
 !!##LICENSE
 !!    Public Domain
-elemental function reverse(string ) result (rev)
+elemental function reverse(string) result (rev)
 
 ! ident_21="@(#) M_strings reverse(3f) Return a string reversed"
 
@@ -3370,6 +3375,7 @@ character(len=len(string))     :: rev      ! return value (reversed string)
 integer                        :: length
 integer                        :: i
    length = len(string)
+
    do i = 1,length
       rev(i:i)=string(length-i+1:length-i+1)
    enddo
@@ -5125,20 +5131,42 @@ end function zpad
 !!         & pad('APPENDIX ',i,'.'),                  1235
 !!
 !!         write(*,g)pad('12',5,'0',right=.false.)
+!!
+!!         write(*,g)pad('12345 ',30,'_',right=.false.)
+!!         write(*,g)pad('12345 ',30,'_',right=.false.,clip=.true.)
+!!         write(*,g)pad('12345 ',7,'_',right=.false.)
+!!         write(*,g)pad('12345 ',7,'_',right=.false.,clip=.true.)
+!!         write(*,g)pad('12345 ',6,'_',right=.false.)
+!!         write(*,g)pad('12345 ',6,'_',right=.false.,clip=.true.)
+!!         write(*,g)pad('12345 ',5,'_',right=.false.)
+!!         write(*,g)pad('12345 ',5,'_',right=.false.,clip=.true.)
+!!         write(*,g)pad('12345 ',4,'_',right=.false.)
+!!         write(*,g)pad('12345 ',4,'_',right=.false.,clip=.true.)
 !!    end program demo_pad
 !!
 !!  Results:
 !!
-!!    [abcdefghij]
-!!    [abcdefghij          ]
-!!
-!!     CHAPTER 1 : The beginning .... 1
-!!     CHAPTER 2 : The end .......... 1234
-!!     APPENDIX ..................... 1235
-!!
-!!     CHAPTER 1 : The beginning ....      1
-!!     CHAPTER 2 : The end ..........   1234
-!!     APPENDIX .....................   1235
+!!  > [abcdefghij]
+!!  > [abcdefghij          ]
+!!  >
+!!  >  CHAPTER 1 : The beginning .... 1
+!!  >  CHAPTER 2 : The end .......... 1234
+!!  >  APPENDIX ..................... 1235
+!!  >
+!!  >  CHAPTER 1 : The beginning ....      1
+!!  >  CHAPTER 2 : The end ..........   1234
+!!  >  APPENDIX .....................   1235
+!!  > 00012
+!!  > ________________________12345
+!!  > _________________________12345
+!!  > _12345
+!!  > __12345
+!!  > 12345
+!!  > _12345
+!!  > 12345
+!!  > 12345
+!!  > 12345
+!!  > 12345
 !!
 !!##SEE ALSO
 !!     adjustl(3f), adjustr(3f), repeat(3f), trim(3f), len_trim(3f), len(3f)
@@ -5185,7 +5213,7 @@ else
       strout(:)=local_line//repeat(local_pattern,len(strout)/len(local_pattern)+1)
    else
       strout(:)=repeat(local_pattern, ceiling(real(len(strout))/len(local_pattern)))
-      strout(len(strout)-len(local_line)+1:)=local_line
+      strout(max(0,len(strout)-len(local_line))+1:)=local_line
    endif
 
 endif
@@ -6143,7 +6171,7 @@ end function real_s2v
 !!    impure elemental function int(string)
 !!
 !!     character(len=*) :: string
-!!     integer          :: int
+!!     integer(kind=int32) :: int
 !!
 !!##DESCRIPTION
 !!    int(3f) returns an integer when given a numeric representation of a
@@ -6151,7 +6179,7 @@ end function real_s2v
 !!    arguments assumed to represent a numeric value may be input.
 !!
 !!##OPTIONS
-!!       STRING  input string to be converted to an integer
+!!       STRING  input string to be converted to an INT32 integer
 !!
 !!##RETURNS
 !!       INT  integer represented by input string
@@ -6182,10 +6210,6 @@ end function real_s2v
 !!##LICENSE
 !!    Public Domain
 !===================================================================================================================================
-impure elemental integer function int_s2v(chars)
-character(len=*),intent(in) :: chars
-   int_s2v=int(s2v(chars))
-end function int_s2v
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()())()()()()()()()()()()()()!
 !===================================================================================================================================
@@ -9024,10 +9048,8 @@ pure elemental function isupper(ch) result(res)
 character,intent(in) :: ch
 logical              :: res
    select case(ch)
-   case('A':'Z')
-     res=.true.
-   case default
-     res=.false.
+   case('A':'Z'); res=.true.
+   case default;  res=.false.
    end select
 end function isupper
 !===================================================================================================================================
@@ -9089,10 +9111,8 @@ elemental function islower(ch) result(res)
 character,intent(in) :: ch
 logical              :: res
    select case(ch)
-   case('a':'z')
-     res=.true.
-   case default
-     res=.false.
+   case('a':'z'); res=.true.
+   case default;  res=.false.
    end select
 end function islower
 !===================================================================================================================================
@@ -11331,6 +11351,92 @@ integer :: left, foundat, len_a, i
    enddo
 
 end function longest_common_substring
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+
+pure elemental function atoi (string) result(val)    ! Convert STRING to an integer value
+integer(kind=int32) :: val
+character(len=*), intent(in) :: string
+character(len=1)            :: c
+integer                     :: i
+integer                     :: j
+integer                     :: ilen
+logical                     :: neg
+
+   val = 0
+   neg=.false.
+   i=0
+   c=' '
+
+   ilen=len(string)
+   do i=1, ilen                               ! Pass over any leading spaces
+      c = string(i:i)
+      if (c  /=  ' ') exit
+   enddo
+
+   if (c  ==  '-') then                       ! check for +- as first digit
+      neg = .true.
+      i = i + 1
+   elseif (c  ==  '+') then
+      neg = .false.
+      i = i + 1
+   endif
+
+   do j=i,ilen                                ! Continue as long as its a digit ...
+      c = string(j:j)
+      if (lge(c, '0') .and. lle(c, '9')) then
+         val = 10*val + ichar(c)-48           ! Shift number over and add new digit
+      else
+         exit
+      endif
+   enddo
+
+   if (neg) val = -val                        ! Negate the result if necessary
+
+end function atoi
+
+pure elemental function atol (string) result(val)    ! Convert STRING to an integer value
+integer(kind=int64) :: val
+character(len=*), intent(in) :: string
+character(len=1)            :: c
+integer                     :: i
+integer                     :: j
+integer                     :: ilen
+logical                     :: neg
+
+   val = 0
+   neg=.false.
+   i=0
+   c=' '
+
+   ilen=len(string)
+   do i=1, ilen                               ! Pass over any leading spaces
+      c = string(i:i)
+      if (c  /=  ' ') exit
+   enddo
+
+   if (c  ==  '-') then                       ! check for +- as first digit
+      neg = .true.
+      i = i + 1
+   elseif (c  ==  '+') then
+      neg = .false.
+      i = i + 1
+   endif
+
+   do j=i,ilen                                ! Continue as long as its a digit ...
+      c = string(j:j)
+      if (lge(c, '0') .and. lle(c, '9')) then
+         val = 10*val + ichar(c)-48           ! Shift number over and add new digit
+      else
+         exit
+      endif
+   enddo
+
+   if (neg) val = -val                        ! Negate the result if necessary
+
+end function atol
+
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================

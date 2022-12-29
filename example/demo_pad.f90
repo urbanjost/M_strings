@@ -22,4 +22,15 @@
           & pad('APPENDIX ',i,'.'),                  1235
 
           write(*,g)pad('12',5,'0',right=.false.)
+
+          write(*,g)pad('12345 ',30,'_',right=.false.)
+          write(*,g)pad('12345 ',30,'_',right=.false.,clip=.true.)
+          write(*,g)pad('12345 ',7,'_',right=.false.)
+          write(*,g)pad('12345 ',7,'_',right=.false.,clip=.true.)
+          write(*,g)pad('12345 ',6,'_',right=.false.)
+          write(*,g)pad('12345 ',6,'_',right=.false.,clip=.true.)
+          write(*,g)pad('12345 ',5,'_',right=.false.)
+          write(*,g)pad('12345 ',5,'_',right=.false.,clip=.true.)
+          write(*,g)pad('12345 ',4,'_',right=.false.)
+          write(*,g)pad('12345 ',4,'_',right=.false.,clip=.true.)
      end program demo_pad
