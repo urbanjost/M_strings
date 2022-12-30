@@ -1,5 +1,5 @@
 program bench
-use M_strings, only :: upper
+use M_strings, only : upper
 ! Compares the run-time of the upper function when applied on a long string.
 implicit none
 character(6000000) :: string, aftermath
