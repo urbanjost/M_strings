@@ -48,7 +48,7 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 <div id="Container">
 <div id="Content">
 <CENTER>
-<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>s2vs (3m_strings)</NOBR><HR></H1>
+<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>aton (3m_strings)</NOBR><HR></H1>
 </CENTER>
 <A name=0>
 
@@ -56,8 +56,8 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-s2vs(3f) - [M_strings:TYPE] given a string representing numbers
-return a numeric array
+aton(3f) - [M_strings:TYPE] function returns argument as a numeric
+value from a string
 (LICENSE:PD)
 <P>
 </BLOCKQUOTE>
@@ -66,7 +66,7 @@ return a numeric array
 <A HREF=#1>Synopsis</A><BR>
 <A HREF=#2>Description</A><BR>
 <A HREF=#3>Options</A><BR>
-<A HREF=#4>Results</A><BR>
+<A HREF=#4>Returns</A><BR>
 <A HREF=#5>Example</A><BR>
 <A HREF=#6>Author</A><BR>
 <A HREF=#7>License</A><BR>
@@ -77,11 +77,12 @@ return a numeric array
 
 </A>
 <BLOCKQUOTE>
-function s2vs(line[,delim])
+logical function aton(str,val[,msg])
 <P>
 <PRE>
-       character(len=*) :: line
-       doubleprecision,allocatable :: s2vs(:)
+    character(len=*),intent(in)       :: str
+    type(TYPE(kind=KIND)),intent(out) :: val
+    character(len=:),allocatable,intent(out) :: msg
 <P>
 </PRE>
 </BLOCKQUOTE>
@@ -91,9 +92,7 @@ function s2vs(line[,delim])
 
 </A>
 <BLOCKQUOTE>
-The function S2VS(3f) takes a string representing a series of numbers
-and converts it to a numeric doubleprecision array. The string values
-may be delimited by spaces, semi-colons, and commas by default.
+This function converts a string to a numeric value.
 </BLOCKQUOTE>
 <A name=3>
 
@@ -101,29 +100,31 @@ may be delimited by spaces, semi-colons, and commas by default.
 
 </A>
 <BLOCKQUOTE>
+<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B>LINE</B> </TD><TD valign=bottom>
-Input string containing numbers
+<B>str</B> </TD><TD valign=bottom>
+holds string assumed to represent a numeric value
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>DELIM</B> </TD><TD valign=bottom>
-optional list of delimiter characters. If a space is
-included, it should appear as the left-most character
-in the list. The default is " ;," (spaces, semi-colons,
-and commas).
+<B>val</B> </TD><TD valign=bottom>
+returned value. May be REAL or INTEGER.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>msg</B> </TD><TD valign=bottom>
+message describing error when ATON returns .false.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
 
-     <H3>RESULTS</H3>
+     <H3>RETURNS</H3>
 
 </A>
 <BLOCKQUOTE>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B>S2VS</B> </TD><TD valign=bottom>
-doubleprecision array
+<B>aton</B> </TD><TD valign=bottom>
+[char46]true. if the conversion was successful, .false. otherwise
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=5>
@@ -135,43 +136,40 @@ doubleprecision array
 Sample Program:
 <P>
 <PRE>
-     program demo_s2vs
-     use M_strings, only : s2vs
-     implicit none
-     character(len=80) :: s=&#146; 10 20e3;3.45 -400.3e-2;1234; 5678 &#146;
-     real,allocatable :: values(:)
-     integer,allocatable :: ivalues(:)
-     integer :: ii
+     program demo_aton
 <P>
-     values=s2vs(s)
-     ivalues=int(s2vs(s))
-     call reportit()
+      use M_strings, only: aton
+      implicit none
+      character(len=14),allocatable :: strings(:)
+      doubleprecision               :: dv
+      integer                       :: iv
+      real                          :: rv
+      logical                       :: chk
+      integer                       :: i
 <P>
-     contains
-       subroutine reportit()
-         write(*,*)&#146;S2VS:&#146;
-         write(*,*)&#146;input string&#46;&#46;&#46;..........&#146;,&
-          & trim(s)
-         write(*,*)&#146;number of values found&#46;&#46;&#46;&#146;,&
-          & size(values)
-         write(*,*)&#146;values&#46;&#46;&#46;................&#146;,&
-          & (values(ii),ii=1,size(values))
-         write(*,&#146;(*(g0,1x))&#146;)&#146;ivalues&#46;&#46;&#46;...............&#146;,&
-          & (ivalues(ii),ii=1,size(values))
-       end subroutine reportit
-     end program demo_s2vs
+      ! different strings representing INTEGER, REAL, and DOUBLEPRECISION
+      strings=[&
+      &&#146; 10.345       &#146;,&
+      &&#146;+10           &#146;,&
+      &&#146;    -3        &#146;,&
+      &&#146;    -4.94e-2  &#146;,&
+      &&#146;0.1           &#146;,&
+      &&#146;12345.678910d0&#146;,&
+      &&#146;              &#146;,& ! Note: will return zero without an error message
+      &&#146;1 2 1 2 1 . 0 &#146;,& ! Note: spaces will be ignored
+      &&#146;WHAT?         &#146;]  ! Note: error messages will appear, zero returned
+<P>
+      do i=1,size(strings)
+         write(*,&#146;(a)&#146;,advance=&#146;no&#146;)&#146;STRING:&#146;,strings(i)
+         if(aton(strings(i),iv)) write(*,&#146;(g0)&#146;,advance=&#146;no&#146;)&#146;:INTEGER &#146;,iv
+         if(aton(strings(i),rv)) write(*,&#146;(g0)&#146;,advance=&#146;no&#146;)&#146;:INTEGER &#146;,rv
+         if(aton(strings(i),dv)) write(*,&#146;(g0)&#146;,advance=&#146;no&#146;)&#146;:INTEGER &#146;,dv
+      enddo
+<P>
+      end program demo_aton
+<P>
 <P>
 </PRE>
-Expected output
-<P>
-<PRE>
-    S2VS:
-    input string&#46;&#46;&#46;.......... 10 20e3;3.45 -400.3e-2;1234; 5678
-    number of values found&#46;&#46;&#46;           6
-    values&#46;&#46;&#46;................   10.0000000 20000.0000 3.45000005
-    -4.00299978 1234.00000 5678.00000
-</PRE>
-ivalues&#46;&#46;&#46;............... 10 20000 3 <B>-4</B> 1234 5678
 </BLOCKQUOTE>
 <A name=6>
 
@@ -190,8 +188,8 @@ John S. Urban
 Public Domain
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>s2vs (3m_strings)</TD> <TD align=right width=33%><I>December 29, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 8d0fca1f-f612-4177-801b-a154fba3665f using man macros.</FONT>
-<br><br><center><img src="images/s2vs.gif"></center>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>aton (3m_strings)</TD> <TD align=right width=33%><I>December 29, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 93d35ac0-023a-42a6-b483-23ddf8d32ebb using man macros.</FONT>
+<br><br><center><img src="images/aton.gif"></center>
 </div>
 </div>
 </body>

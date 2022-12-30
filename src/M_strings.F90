@@ -16,36 +16,36 @@
 !!
 !!  public entities:
 !!
-!!      use M_strings, only : split,sep,delim,chomp,strtok
-!!      use M_strings, only : split2020, find_field
-!!      use M_strings, only : substitute,change,modif,transliterate,&
-!!              & reverse,squeeze
-!!      use M_strings, only : replace,join
-!!      use M_strings, only : upper,lower,upper_quoted
-!!      use M_strings, only : rotate13
-!!      use M_strings, only : adjustc,compact,nospace,indent
-!!      use M_strings, only : crop,clip,unquote,quote,matching_delimiter
-!!      use M_strings, only : len_white,pad,lpad,cpad,rpad,zpad,&
-!!              & stretch,lenset,merge_str
-!!      use M_strings, only : switch,s2c,c2s
-!!      use M_strings, only : noesc,notabs,dilate,expand,visible
-!!      use M_strings, only : longest_common_substring
-!!      use M_strings, only : string_to_value,string_to_values,s2v,s2vs
-!!      use M_strings, only : value_to_string,v2s,msg
-!!      use M_strings, only : listout,getvals
-!!      use M_strings, only : glob, ends_with
-!!      use M_strings, only : paragraph
-!!      use M_strings, only : base, decodebase, codebase, base2
-!!      use M_strings, only : isalnum, isalpha, iscntrl, isdigit
-!!      use M_strings, only : isgraph, islower, isprint, ispunct
-!!      use M_strings, only : isspace, isupper, isascii, isblank, isxdigit
-!!      use M_strings, only : isnumber
-!!      use M_strings, only : fortran_name
-!!      use M_strings, only : describe
-!!      use M_strings, only : edit_distance
-!!      use M_strings, only : bundle
-!!      use M_strings, only : int, real, dble, nint
-!!      use M_strings, only : atoi, atol
+!!      use M_strings,only : split, sep, delim, chomp, strtok
+!!      use M_strings,only : split2020, find_field
+!!      use M_strings,only : substitute, change, modif, transliterate, &
+!!              & reverse, squeeze
+!!      use M_strings,only : replace, join
+!!      use M_strings,only : upper, lower, upper_quoted
+!!      use M_strings,only : rotate13
+!!      use M_strings,only : adjustc, compact, nospace, indent
+!!      use M_strings,only : crop, clip, unquote, quote, matching_delimiter
+!!      use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
+!!              & stretch, lenset, merge_str
+!!      use M_strings,only : switch, s2c, c2s
+!!      use M_strings,only : noesc, notabs, dilate, expand, visible
+!!      use M_strings,only : longest_common_substring
+!!      use M_strings,only : string_to_value, string_to_values, s2v, s2vs
+!!      use M_strings,only : int, real, dble, nint
+!!      use M_strings,only : atoi, atol, aton
+!!      use M_strings,only : value_to_string, v2s, msg
+!!      use M_strings,only : listout, getvals
+!!      use M_strings,only : glob, ends_with
+!!      use M_strings,only : paragraph
+!!      use M_strings,only : base, decodebase, codebase, base2
+!!      use M_strings,only : isalnum, isalpha, iscntrl, isdigit
+!!      use M_strings,only : isgraph, islower, isprint, ispunct
+!!      use M_strings,only : isspace, isupper, isascii, isblank, isxdigit
+!!      use M_strings,only : isnumber
+!!      use M_strings,only : fortran_name
+!!      use M_strings,only : describe
+!!      use M_strings,only : edit_distance
+!!      use M_strings,only : bundle
 !!
 !!   TOKENS
 !!
@@ -160,6 +160,11 @@
 !!                         from string
 !!       s2vs              function returns a DOUBLEPRECISION array of numbers
 !!                         from a string
+!!       s2vs              function returns a DOUBLEPRECISION array of numbers
+!!                         from a string
+!!       atoi              function returns INTEGER(kind=int32)  from a string
+!!       atol              function returns INTEGER(kind=int64)  from a string
+!!       aton              changes string to numeric value
 !!       msg               append the values of up to nine values into a string
 !!
 !!       value_to_string   generic subroutine returns string given numeric value
@@ -270,36 +275,36 @@
 !!    demonstrated using the following example program:
 !!
 !!     program demo_M_strings
-!!     use M_strings, only : split,sep,delim,chomp,strtok
-!!     use M_strings, only : split2020, find_field
-!!     use M_strings, only : substitute,change,modif,transliterate,&
-!!             & reverse,squeeze
-!!     use M_strings, only : replace,join
-!!     use M_strings, only : upper,lower,upper_quoted
-!!     use M_strings, only : rotate13
-!!     use M_strings, only : adjustc,compact,nospace,indent
-!!     use M_strings, only : crop,clip,unquote,quote,matching_delimiter
-!!     use M_strings, only : len_white,pad,lpad,cpad,rpad,zpad,&
-!!             & stretch,lenset,merge_str
-!!     use M_strings, only : switch,s2c,c2s
-!!     use M_strings, only : noesc,notabs,dilate,expand,visible
-!!     use M_strings, only : longest_common_substring
-!!     use M_strings, only : string_to_value,string_to_values,s2v,s2vs
-!!     use M_strings, only : value_to_string,v2s,msg
-!!     use M_strings, only : listout,getvals
-!!     use M_strings, only : glob, ends_with
-!!     use M_strings, only : paragraph
-!!     use M_strings, only : base, decodebase, codebase, base2
-!!     use M_strings, only : isalnum, isalpha, iscntrl, isdigit
-!!     use M_strings, only : isgraph, islower, isprint, ispunct
-!!     use M_strings, only : isspace, isupper, isascii, isblank, isxdigit
-!!     use M_strings, only : isnumber
-!!     use M_strings, only : fortran_name
-!!     use M_strings, only : describe
-!!     use M_strings, only : edit_distance
-!!     use M_strings, only : bundle
-!!     use M_strings, only : int, real, dble, nint
-!!     use M_strings, only : atoi, atol
+!!     use M_strings,only : split, sep, delim, chomp, strtok
+!!     use M_strings,only : split2020, find_field
+!!     use M_strings,only : substitute, change, modif, transliterate, &
+!!             & reverse, squeeze
+!!     use M_strings,only : replace, join
+!!     use M_strings,only : upper, lower, upper_quoted
+!!     use M_strings,only : rotate13
+!!     use M_strings,only : adjustc, compact, nospace, indent
+!!     use M_strings,only : crop, clip, unquote, quote, matching_delimiter
+!!     use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
+!!             & stretch, lenset, merge_str
+!!     use M_strings,only : switch, s2c, c2s
+!!     use M_strings,only : noesc, notabs, dilate, expand, visible
+!!     use M_strings,only : longest_common_substring
+!!     use M_strings,only : string_to_value, string_to_values, s2v, s2vs
+!!     use M_strings,only : int, real, dble, nint
+!!     use M_strings,only : atoi, atol, aton
+!!     use M_strings,only : value_to_string, v2s, msg
+!!     use M_strings,only : listout, getvals
+!!     use M_strings,only : glob, ends_with
+!!     use M_strings,only : paragraph
+!!     use M_strings,only : base, decodebase, codebase, base2
+!!     use M_strings,only : isalnum, isalpha, iscntrl, isdigit
+!!     use M_strings,only : isgraph, islower, isprint, ispunct
+!!     use M_strings,only : isspace, isupper, isascii, isblank, isxdigit
+!!     use M_strings,only : isnumber
+!!     use M_strings,only : fortran_name
+!!     use M_strings,only : describe
+!!     use M_strings,only : edit_distance
+!!     use M_strings,only : bundle
 !!     end program demo_M_strings
 !!
 !!   Expected output
@@ -316,7 +321,7 @@ MODULE M_strings !
 use, intrinsic :: iso_fortran_env, only : ERROR_UNIT        ! access computing environment
 use, intrinsic :: iso_fortran_env, only : output_unit, stderr=>error_unit
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
-implicit none    ! change default for every procedure contained in the module
+implicit none
 
 ! ident_1="@(#) M_strings(3f) Fortran module containing routines that deal with character strings"
 
@@ -386,6 +391,10 @@ public string_to_values!  subroutine returns values from a string
 public getvals         !  subroutine returns values from a string
 public s2v             !  function returns doubleprecision value from string
 public s2vs            !  function returns a doubleprecision array of numbers from a string
+                       !  NOT USING INTERNAL READ FOR CONVERSION
+public atoi            !   function returns an INTEGER(kind=int32) value from a string
+public atol            !   function returns an INTEGER(kind=int64) value from a string
+public aton            !   function returns true or false as to whether string converts to numeric value, and numeric value
                        !------------------------------------------------------------------------------------------------------------
 public msg             !  function returns a string representing up to nine scalar intrinsic values
 public value_to_string !  generic subroutine returns string given numeric REAL|DOUBLEPRECISION|INTEGER|LOGICAL value
@@ -394,7 +403,6 @@ public v2s             !  generic function returns string given numeric REAL|DOU
  private r2s           !  function returns string from real value
  private i2s           !  function returns string from integer value
  private l2s           !  function returns string from logical value
-public v2s_bug         !  generic function returns string given numeric REAL|DOUBLEPRECISION|INTEGER value
 public isnumber        !  determine if string represents a number
  private trimzeros_    !  Delete trailing zeros from numeric decimal string
 public listout         !  expand a list of numbers where  negative numbers denote range ends (1 -10 means 1 thru 10)
@@ -409,7 +417,14 @@ interface real;    module procedure real_s2v;          end interface
 interface dble;    module procedure dble_s2v;          end interface
 interface nint;    module procedure nint_s2v;          end interface
 
-public atoi, atol
+interface aton
+module procedure ator_real32
+module procedure ator_real64
+module procedure atoi_int8
+module procedure atoi_int16
+module procedure atoi_int32
+module procedure atoi_int64
+end interface
 !-----------------------------------------------------------------------------------------------------------------------------------
 !----------------------# BIT ROUTINES
 public setbits8        !  use a string representing a positive binary value to fill the bits of an INTEGER value
@@ -3183,7 +3198,6 @@ END FUNCTION transliterate
 !!##LICENSE
 !!    Public Domain
 function rotate13 (input)
-implicit none
 
 ! ident_19="@(#) M_strings rotate13(3f) converts a character to its ROT13 equivalent which is a trivial encryption."
 
@@ -3999,7 +4013,6 @@ end function c2s
 !!##LICENSE
 !!    Public Domain
 function indent(line)
-implicit none
 
 ! ident_29="@(#) M_strings indent(3f) find number of leading spaces in a string"
 
@@ -4177,7 +4190,6 @@ end function visible
 !!    Public Domain
 function expand(line,escape) result(lineout)
 !x!USE ISO_C_BINDING ,ONLY: c_horizontal_tab
-implicit none
 
 ! ident_31="@(#) M_strings expand(3f) return string with escape sequences expanded"
 
@@ -6493,21 +6505,10 @@ end subroutine value_to_string
 !!
 !!##LICENSE
 !!    Public Domain
-! very odd compiler problems in many (but not all) programs using this routine; GNU Fortran (GCC) 5.4.0; 20161030
-function v2s_bug(gval) result(outstr)
-
-! ident_50="@(#) M_strings v2s_bug(3f) function returns string given numeric value"
-
-class(*),intent(in)          :: gval                         ! input value to convert to a string
-character(len=:),allocatable :: outstr                       ! output string to generate
-character(len=80)            :: string
-   call value_to_string(gval,string)
-   outstr=trim(string)
-end function v2s_bug
 !===================================================================================================================================
 function d2s(dvalue,fmt) result(outstr)
 
-! ident_51="@(#) M_strings d2s(3fp) private function returns string given doubleprecision value"
+! ident_50="@(#) M_strings d2s(3fp) private function returns string given doubleprecision value"
 
 doubleprecision,intent(in)   :: dvalue                         ! input value to convert to a string
 character(len=*),intent(in),optional :: fmt
@@ -6523,7 +6524,7 @@ end function d2s
 !===================================================================================================================================
 function r2s(rvalue,fmt) result(outstr)
 
-! ident_52="@(#) M_strings r2s(3fp) private function returns string given real value"
+! ident_51="@(#) M_strings r2s(3fp) private function returns string given real value"
 
 real,intent(in)              :: rvalue                         ! input value to convert to a string
 character(len=*),intent(in),optional :: fmt
@@ -6539,7 +6540,7 @@ end function r2s
 !===================================================================================================================================
 function i2s(ivalue,fmt) result(outstr)
 
-! ident_53="@(#) M_strings i2s(3fp) private function returns string given integer value"
+! ident_52="@(#) M_strings i2s(3fp) private function returns string given integer value"
 
 integer,intent(in)           :: ivalue                         ! input value to convert to a string
 character(len=*),intent(in),optional :: fmt
@@ -6555,7 +6556,7 @@ end function i2s
 !===================================================================================================================================
 function l2s(lvalue,fmt) result(outstr)
 
-! ident_54="@(#) M_strings l2s(3fp) private function returns string given logical value"
+! ident_53="@(#) M_strings l2s(3fp) private function returns string given logical value"
 
 logical,intent(in)           :: lvalue                         ! input value to convert to a string
 character(len=*),intent(in),optional :: fmt
@@ -6697,9 +6698,8 @@ end function l2s
 !!##LICENSE
 !!    Public Domain
 function isNumber(string,msg,verbose)
-implicit none
 
-! ident_55="@(#) M_strings isnumber(3f) Determines if a string is a number of not."
+! ident_54="@(#) M_strings isnumber(3f) Determines if a string is a number of not."
 
 character(len=*),intent(in)    :: string
 character(len=:),intent(out),allocatable,optional :: msg
@@ -6865,7 +6865,7 @@ end function isNumber
 !!    Public Domain
 subroutine trimzeros_(string)
 
-! ident_56="@(#) M_strings trimzeros_(3fp) Delete trailing zeros from numeric decimal string"
+! ident_55="@(#) M_strings trimzeros_(3fp) Delete trailing zeros from numeric decimal string"
 
 ! if zero needs added at end assumes input string has room
 character(len=*)             :: string
@@ -6984,9 +6984,8 @@ end subroutine trimzeros_
 !!##LICENSE
 !!    Public Domain
 subroutine listout(icurve_lists,icurve_expanded,inums_out,ierr)
-implicit none
 
-! ident_57="@(#) M_strings listout(3f) copy icurve_lists to icurve_expanded expanding negative numbers to ranges (1 -10 means 1 thru 10)"
+! ident_56="@(#) M_strings listout(3f) copy icurve_lists to icurve_expanded expanding negative numbers to ranges (1 -10 means 1 thru 10)"
 
 !   Created: 19971231
 integer,intent(in)    :: icurve_lists(:)             ! input array
@@ -7678,7 +7677,7 @@ end function bundle
 !!    Public Domain
 function describe(ch) result (string)
 
-! ident_58="@(#) M_strings describe(3f) return string describing long name of a single character"
+! ident_57="@(#) M_strings describe(3f) return string describing long name of a single character"
 
 character(len=1),intent(in)   :: ch
 character(len=:),allocatable  :: string
@@ -7924,9 +7923,8 @@ end function describe
 !!##LICENSE
 !!    Public Domain
 subroutine getvals(line,values,icount,ierr)
-implicit none
 
-! ident_59="@(#) M_strings getvals(3f) read arbitrary number of values from a character variable"
+! ident_58="@(#) M_strings getvals(3f) read arbitrary number of values from a character variable"
 
 ! JSU 20170831
 
@@ -8062,7 +8060,6 @@ end subroutine getvals
 !!##LICENSE
 !!    Public Domain
 subroutine string_to_values(line,iread,values,inums,delims,ierr)
-implicit none
 !----------------------------------------------------------------------------------------------------------------------------------
 !   1989,1997-12-31,2014 John S. Urban
 
@@ -8073,7 +8070,7 @@ implicit none
 !   Quits if encounters any errors in read.
 !----------------------------------------------------------------------------------------------------------------------------------
 
-! ident_60="@(#) M_strings string_to_values(3f) reads an array of numbers from a numeric string"
+! ident_59="@(#) M_strings string_to_values(3f) reads an array of numbers from a numeric string"
 
 character(len=*),intent(in)  :: line          ! input string
 integer,intent(in)           :: iread         ! maximum number of values to try to read into values
@@ -8227,7 +8224,7 @@ end subroutine string_to_values
 !!    Public Domain
 function s2vs(string,delim) result(darray)
 
-! ident_61="@(#) M_strings s2vs(3f) function returns array of values from a string"
+! ident_60="@(#) M_strings s2vs(3f) function returns array of values from a string"
 
 character(len=*),intent(in)        :: string                       ! keyword to retrieve value for from dictionary
 character(len=*),optional          :: delim                        ! delimiter characters
@@ -8302,7 +8299,7 @@ end function s2vs
 !!     Public Domain
 elemental function isprint(onechar)
 
-! ident_62="@(#) M_strings isprint(3f) indicates if input character is a printable ASCII character"
+! ident_61="@(#) M_strings isprint(3f) indicates if input character is a printable ASCII character"
 
 character,intent(in) :: onechar
 logical              :: isprint
@@ -8363,7 +8360,7 @@ end function isprint
 !!     Public Domain
 elemental function isgraph(onechar)
 
-! ident_63="@(#) M_strings isgraph(3f) indicates if character is printable ASCII character excluding space"
+! ident_62="@(#) M_strings isgraph(3f) indicates if character is printable ASCII character excluding space"
 
 character,intent(in) :: onechar
 logical              :: isgraph
@@ -8426,7 +8423,7 @@ end function isgraph
 !!    Public Domain
 elemental function isalpha(ch) result(res)
 
-! ident_64="@(#) M_strings isalpha(3f) Return .true. if character is a letter and .false. otherwise"
+! ident_63="@(#) M_strings isalpha(3f) Return .true. if character is a letter and .false. otherwise"
 
 character,intent(in) :: ch
 logical              :: res
@@ -8487,7 +8484,7 @@ end function isalpha
 !!     Public Domain
 elemental function isxdigit(ch) result(res)
 
-! ident_65="@(#) M_strings isxdigit(3f) returns .true. if c is a hexadecimal digit (0-9 a-f or A-F)"
+! ident_64="@(#) M_strings isxdigit(3f) returns .true. if c is a hexadecimal digit (0-9 a-f or A-F)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -8557,7 +8554,7 @@ end function isxdigit
 !!     Public Domain
 elemental function isdigit(ch) result(res)
 
-! ident_66="@(#) M_strings isdigit(3f) Returns .true. if ch is a digit (0-9) and .false. otherwise"
+! ident_65="@(#) M_strings isdigit(3f) Returns .true. if ch is a digit (0-9) and .false. otherwise"
 
 character,intent(in) :: ch
 logical              :: res
@@ -8619,7 +8616,7 @@ end function isdigit
 !!     Public Domain
 elemental function isblank(ch) result(res)
 
-! ident_67="@(#) M_strings isblank(3f) returns .true. if character is a blank (space or horizontal tab)"
+! ident_66="@(#) M_strings isblank(3f) returns .true. if character is a blank (space or horizontal tab)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -8693,7 +8690,7 @@ end function isblank
 !!     Public Domain
 elemental function isascii(ch) result(res)
 
-! ident_68="@(#) M_strings isascii(3f) returns .true. if character is in the range char(0) to char(127)"
+! ident_67="@(#) M_strings isascii(3f) returns .true. if character is in the range char(0) to char(127)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -8755,7 +8752,7 @@ end function isascii
 !!     Public Domain
 elemental function isspace(ch) result(res)
 
-! ident_69="@(#) M_strings isspace(3f) true if null space tab return new line vertical tab or formfeed"
+! ident_68="@(#) M_strings isspace(3f) true if null space tab return new line vertical tab or formfeed"
 
 character,intent(in) :: ch
 logical              :: res
@@ -8822,7 +8819,7 @@ end function isspace
 !!     Public Domain
 elemental function iscntrl(ch) result(res)
 
-! ident_70="@(#) M_strings iscntrl(3f) true if a delete or ordinary control character(0x7F or 0x00-0x1F)"
+! ident_69="@(#) M_strings iscntrl(3f) true if a delete or ordinary control character(0x7F or 0x00-0x1F)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -8889,7 +8886,7 @@ end function iscntrl
 !!     Public Domain
 elemental function ispunct(ch) result(res)
 
-! ident_71="@(#) M_strings ispunct(3f) true if a printable punctuation character (isgraph(c)&&!isalnum(c))"
+! ident_70="@(#) M_strings ispunct(3f) true if a printable punctuation character (isgraph(c)&&!isalnum(c))"
 
 character,intent(in) :: ch
 logical              :: res
@@ -8967,7 +8964,7 @@ end function ispunct
 !!      > 12 x@x                  F
 elemental function fortran_name(line) result (lout)
 
-! ident_72="@(#) M_strings fortran_name(3f) Return .true. if name is a valid Fortran name"
+! ident_71="@(#) M_strings fortran_name(3f) Return .true. if name is a valid Fortran name"
 
 ! determine if a string is a valid Fortran name ignoring trailing spaces (but not leading spaces)
 character(len=*),parameter   :: int='0123456789'
@@ -9043,7 +9040,7 @@ end function fortran_name
 !!     Public Domain
 pure elemental function isupper(ch) result(res)
 
-! ident_73="@(#) M_strings isupper(3f) returns true if character is an uppercase letter (A-Z)"
+! ident_72="@(#) M_strings isupper(3f) returns true if character is an uppercase letter (A-Z)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -9106,7 +9103,7 @@ end function isupper
 !!     Public Domain
 elemental function islower(ch) result(res)
 
-! ident_74="@(#) M_strings islower(3f) returns true if character is a miniscule letter (a-z)"
+! ident_73="@(#) M_strings islower(3f) returns true if character is a miniscule letter (a-z)"
 
 character,intent(in) :: ch
 logical              :: res
@@ -9201,7 +9198,7 @@ end function islower
 !!    Public Domain
 elemental function isalnum(ch) result(res)
 
-! ident_75="@(#) M_strings isalnum(3f) returns true if character is a letter (a-z A-Z) or digit(0-9)"
+! ident_74="@(#) M_strings isalnum(3f) returns true if character is a letter (a-z A-Z) or digit(0-9)"
 
 character,intent(in)       :: ch
 logical                    :: res
@@ -9273,13 +9270,12 @@ end function isalnum
 !!##LICENSE
 !!    Public Domain
 logical function base(x,b,y,a)
-implicit none
 character(len=*),intent(in)  :: x
 character(len=*),intent(out) :: y
 integer,intent(in)           :: b,a
 integer                      :: temp
 
-! ident_76="@(#) M_strings base(3f) convert whole number string in base [2-36] to string in alternate base [2-36]"
+! ident_75="@(#) M_strings base(3f) convert whole number string in base [2-36] to string in alternate base [2-36]"
 
 base=.true.
 if(decodebase(x,b,temp)) then
@@ -9500,9 +9496,8 @@ end function base2_c
 !!##LICENSE
 !!    Public Domain
 logical function decodebase(string,basein,out_baseten)
-implicit none
 
-! ident_77="@(#) M_strings decodebase(3f) convert whole number string in base [2-36] to base 10 number"
+! ident_76="@(#) M_strings decodebase(3f) convert whole number string in base [2-36] to base 10 number"
 
 character(len=*),intent(in)  :: string
 integer,intent(in)           :: basein
@@ -9627,9 +9622,8 @@ end function decodebase
 !!##LICENSE
 !!    Public Domain
 logical function codebase(inval10,outbase,answer)
-implicit none
 
-! ident_78="@(#) M_strings codebase(3f) convert whole number in base 10 to string in base [2-36]"
+! ident_77="@(#) M_strings codebase(3f) convert whole number in base 10 to string in base [2-36]"
 
 integer,intent(in)           :: inval10
 integer,intent(in)           :: outbase
@@ -9669,7 +9663,7 @@ end function codebase
 !===================================================================================================================================
 function todecimal(base, instr)
 
-! ident_79="@(#) M_strings todecimal(3f) given string and base return decimal integer"
+! ident_78="@(#) M_strings todecimal(3f) given string and base return decimal integer"
 
 ! based on an example at rosetta code.
 character(len=36),parameter  :: alphanum = "0123456789abcdefghijklmnopqrstuvwxyz"
@@ -9693,7 +9687,7 @@ end function todecimal
 !===================================================================================================================================
 function tobase(base, number)
 
-! ident_80="@(#) M_strings tobase(3f) given integer and base return string"
+! ident_79="@(#) M_strings tobase(3f) given integer and base return string"
 
 ! based on an example at rosetta code.
 character(len=36),parameter  :: alphanum = "0123456789abcdefghijklmnopqrstuvwxyz"
@@ -9829,7 +9823,7 @@ end function tobase
 !!    Public Domain
 function paragraph(source_string,length)
 
-! ident_81="@(#) M_strings paragraph(3f) wrap a long string into a paragraph"
+! ident_80="@(#) M_strings paragraph(3f) wrap a long string into a paragraph"
 
 character(len=*),intent(in)       :: source_string
 integer,intent(in)                :: length
@@ -9886,7 +9880,6 @@ end function paragraph
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()=
 !===================================================================================================================================
 function setbits8(string) result(answer)
-implicit none
 integer(kind=int8)          :: answer
 character(len=8),intent(in) :: string
 integer                     :: pos
@@ -9910,7 +9903,6 @@ integer                     :: lgth
 end function setbits8
 !-----------------------------------------------------------------------------------------------------------------------------------
 function setbits16(string) result(answer)
-implicit none
 integer(kind=int16)          :: answer
 character(len=16),intent(in) :: string
 integer                      :: pos
@@ -9934,7 +9926,6 @@ integer                      :: lgth
 end function setbits16
 !-----------------------------------------------------------------------------------------------------------------------------------
 function setbits32(string) result(answer)
-implicit none
 integer(kind=int32)          :: answer
 character(len=32),intent(in) :: string
 integer                      :: pos
@@ -9958,7 +9949,6 @@ integer                      :: lgth
 end function setbits32
 !-----------------------------------------------------------------------------------------------------------------------------------
 function setbits64(string) result(answer)
-implicit none
 integer(kind=int64)          :: answer
 character(len=64),intent(in) :: string
 integer                      :: pos
@@ -10063,9 +10053,8 @@ end function setbits64
 !!    Public Domain
 !===================================================================================================================================
 function msg_scalar(generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9,sep)
-implicit none
 
-! ident_82="@(#) M_strings msg_scalar(3fp) writes a message to a string composed of any standard scalar types"
+! ident_81="@(#) M_strings msg_scalar(3fp) writes a message to a string composed of any standard scalar types"
 
 class(*),intent(in),optional  :: generic1 ,generic2 ,generic3 ,generic4 ,generic5
 class(*),intent(in),optional  :: generic6 ,generic7 ,generic8 ,generic9
@@ -10121,9 +10110,8 @@ end function msg_scalar
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
 function msg_one(generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9,sep)
-implicit none
 
-! ident_83="@(#) M_strings msg_one(3fp) writes a message to a string composed of any standard one dimensional types"
+! ident_82="@(#) M_strings msg_one(3fp) writes a message to a string composed of any standard one dimensional types"
 
 class(*),intent(in)           :: generic1(:)
 class(*),intent(in),optional  :: generic2(:), generic3(:), generic4(:), generic5(:)
@@ -10888,7 +10876,6 @@ end subroutine set_stdout_lun
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
 subroutine where_write_message_all(where, g0,g1,g2,g3,g4,g5,g6,g7,g8,g9,nospace)
-implicit none
 
 !$(#) M_journal::where_write_message_all(3f): writes a message to a string composed of any standard scalar types
 
@@ -10916,7 +10903,6 @@ end subroutine write_message_only
 function str_scalar(generic0, generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9, &
                   & generica, genericb, genericc, genericd, generice, genericf, genericg, generich, generici, genericj, &
                   & sep)
-implicit none
 class(*),intent(in),optional  :: generic0, generic1, generic2, generic3, generic4
 class(*),intent(in),optional  :: generic5, generic6, generic7, generic8, generic9
 class(*),intent(in),optional  :: generica, genericb, genericc, genericd, generice
@@ -10982,7 +10968,6 @@ end subroutine print_generic
 end function str_scalar
 !===================================================================================================================================
 function str_one(generic0,generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9,sep)
-implicit none
 class(*),intent(in)           :: generic0(:)
 class(*),intent(in),optional  :: generic1(:), generic2(:), generic3(:), generic4(:), generic5(:)
 class(*),intent(in),optional  :: generic6(:), generic7(:), generic8(:), generic9(:)
@@ -11436,7 +11421,559 @@ logical                     :: neg
    if (neg) val = -val                        ! Negate the result if necessary
 
 end function atol
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
+!!    aton(3f) - [M_strings:TYPE] function returns argument as a numeric
+!!    value from a string
+!!    (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!    logical function aton(str,val[,msg])
+!!
+!!     character(len=*),intent(in)       :: str
+!!     type(TYPE(kind=KIND)),intent(out) :: val
+!!     character(len=:),allocatable,intent(out) :: msg
+!!
+!!##DESCRIPTION
+!!    This function converts a string to a numeric value.
+!!
+!!##OPTIONS
+!!
+!!     str      holds string assumed to represent a numeric value
+!!     val      returned value. May be REAL or INTEGER.
+!!     msg      message describing error when ATON returns .false.
+!!
+!!##RETURNS
+!!     aton     .true. if the conversion was successful, .false. otherwise
+!!
+!!##EXAMPLE
+!!
+!!   Sample Program:
+!!
+!!      program demo_aton
+!!
+!!       use M_strings, only: aton
+!!       implicit none
+!!       character(len=14),allocatable :: strings(:)
+!!       doubleprecision               :: dv
+!!       integer                       :: iv
+!!       real                          :: rv
+!!       logical                       :: chk
+!!       integer                       :: i
+!!
+!!       ! different strings representing INTEGER, REAL, and DOUBLEPRECISION
+!!       strings=[&
+!!       &' 10.345       ',&
+!!       &'+10           ',&
+!!       &'    -3        ',&
+!!       &'    -4.94e-2  ',&
+!!       &'0.1           ',&
+!!       &'12345.678910d0',&
+!!       &'              ',& ! Note: will return zero without an error message
+!!       &'1 2 1 2 1 . 0 ',& ! Note: spaces will be ignored
+!!       &'WHAT?         ']  ! Note: error messages will appear, zero returned
+!!
+!!       do i=1,size(strings)
+!!          write(*,'(a)',advance='no')'STRING:',strings(i)
+!!          if(aton(strings(i),iv)) write(*,'(g0)',advance='no')':INTEGER ',iv
+!!          if(aton(strings(i),rv)) write(*,'(g0)',advance='no')':INTEGER ',rv
+!!          if(aton(strings(i),dv)) write(*,'(g0)',advance='no')':INTEGER ',dv
+!!       enddo
+!!
+!!       end program demo_aton
+!!
+!!
+!!##AUTHOR
+!!    John S. Urban
+!!
+!!##LICENSE
+!!    Public Domain
+logical function ator_real32(str,val,msg)
+use iso_fortran_env, only: wp => real32, ip => int64, byte => int8
+! Convert ASCII-text to DP and return .TRUE. if OK
+character(len=*),intent(in) :: str
+real(kind=wp) :: val
+character(len=:),allocatable,optional,intent(out) :: msg
+integer(kind=byte),parameter  :: upper_e=iachar('E'), lower_e=iachar('e'), upper_d=iachar('D'), lower_d=iachar('d')
+integer(kind=byte),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-'), decimal=iachar('.')
+integer(kind=byte),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
+integer(kind=ip)              :: sval(3)
+integer                       :: digit_count(3)
+integer(kind=byte)            :: value(3,len(str))
+real(kind=wp)                 :: whole, fractional
+integer                       :: power
+integer                       :: cnt(6)
+integer(kind=byte)            :: a, part
+integer                       :: i, ipos, ios, too_many_digit_count
 
+   value=0.0_wp
+   cnt=0
+   digit_count=0
+   ipos=0
+   ator_real32 = .false.
+   sval = [1,0,1]
+   part = 1
+   too_many_digit_count=0
+   do i = 1, len(str)
+      a=iachar(str(i:i),kind=byte)
+      ipos=ipos+1
+      select case(a)
+      case(digit_0:digit_9)
+         digit_count(part) = digit_count(part) + 1
+         if(digit_count(part).lt.19)then
+            value(part,digit_count(part)) = a-digit_0
+         else
+            too_many_digit_count=too_many_digit_count+1    ! so many digit_count just use powers of ten after this
+         endif
+      case(decimal)                              ! if more than once should report error
+         if(part.gt.2)cnt(5)=99999               ! decimal in exponent
+         part = 2                                ! starting fractional value
+         cnt(1)=cnt(1)+1
+      case(upper_e,lower_e,upper_d,lower_d)      ! if more than once should report error
+         part = 3
+         cnt(2)=cnt(2)+1                         ! if more than one encountered an error
+         ipos=0
+      case(minus_sign)                           ! sign in non-standard position or duplicated should report error
+         sval(part) = -1
+         if(ipos.ne.1)cnt(6)=99999               ! sign not first character of whole or exponent part
+         cnt(3)=cnt(3)+1                         ! if more than one sign character an error, but caught by not being first
+      case(plus_sign)
+         if(ipos.ne.1)cnt(4)=99999               ! sign not first character of whole or exponent part
+         cnt(3)=cnt(3)+1                         ! if more than one sign character an error, but caught by not being first
+      case(space)                                ! should possibly not ignore all internal spaces
+         ipos=ipos-1
+      case default
+         value(part,:) = 0.0_wp
+         cnt(5)=99999                            ! unknown character
+         !return
+      end select
+   enddo
+   ! is no value after E an error?
+   whole=0.0_wp
+   do i = digit_count(1),1,-1
+      whole=whole+value(1,i)*10**(digit_count(1)-i)
+   enddo
+
+   power=0
+   do i = digit_count(3),1,-1
+      power=power+value(3,i)*10**(digit_count(3)-i)
+   enddo
+
+   fractional=0.0_wp
+   do i = digit_count(2),1,-1
+      fractional=fractional+real(value(2,i),kind=wp)/10.0_wp**i
+   enddo
+
+   associate ( sgn=>sval(1), sexp=>sval(3) )
+   val = sign(whole + fractional,real(sgn,kind=wp))* (10.0_wp**(power*sexp+too_many_digit_count))
+   end associate
+   if(all(cnt.le.1).and.ipos.ne.0)then
+      ator_real32 = .true.
+   else
+      read(str,fmt=*,iostat=ios) val ! use internal read for INF, NAN for now
+      if(ios.eq.0)then
+         ator_real32 = .true.
+      else
+         if(present(msg))then
+            if(cnt(5).ne.0)then
+                  msg='illegal character in value "'//trim(str)//'"'
+               elseif(cnt(5).ne.0)then
+                  msg='decimal in exponent in "'//trim(str)//'"'
+               elseif(cnt(1).ge.2)then
+                  msg='multiple decimals in "'//trim(str)//'"'
+               elseif(cnt(2).ge.2)then
+                  msg='more than one exponent prefix (e,d,E,D) in "'//trim(str)//'"'
+               elseif(cnt(3).ge.2)then
+                  msg='more than one sign character in "'//trim(str)//'"'
+               elseif(cnt(6).ne.0)then
+                  msg='- sign character not first in "'//trim(str)//'"'
+               elseif(cnt(4).ge.2)then
+                  msg='+ sign character not first in "'//trim(str)//'"'
+               else
+                  msg='error in data conversion in "'//trim(str)//'"'
+               endif
+         endif
+         ator_real32 = .false.
+      endif
+   endif
+end function ator_real32
+logical function ator_real64(str,val,msg)
+use iso_fortran_env, only: wp => real64, ip => int64, byte => int8
+! Convert ASCII-text to DP and return .TRUE. if OK
+character(len=*),intent(in) :: str
+real(kind=wp) :: val
+character(len=:),allocatable,optional,intent(out) :: msg
+integer(kind=byte),parameter  :: upper_e=iachar('E'), lower_e=iachar('e'), upper_d=iachar('D'), lower_d=iachar('d')
+integer(kind=byte),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-'), decimal=iachar('.')
+integer(kind=byte),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
+integer(kind=ip)              :: sval(3)
+integer                       :: digit_count(3)
+integer(kind=byte)            :: value(3,len(str))
+real(kind=wp)                 :: whole, fractional
+integer                       :: power
+integer                       :: cnt(6)
+integer(kind=byte)            :: a, part
+integer                       :: i, ipos, ios, too_many_digit_count
+
+   value=0.0_wp
+   cnt=0
+   digit_count=0
+   ipos=0
+   ator_real64 = .false.
+   sval = [1,0,1]
+   part = 1
+   too_many_digit_count=0
+   do i = 1, len(str)
+      a=iachar(str(i:i),kind=byte)
+      ipos=ipos+1
+      select case(a)
+      case(digit_0:digit_9)
+         digit_count(part) = digit_count(part) + 1
+         if(digit_count(part).lt.19)then
+            value(part,digit_count(part)) = a-digit_0
+         else
+            too_many_digit_count=too_many_digit_count+1    ! so many digit_count just use powers of ten after this
+         endif
+      case(decimal)                              ! if more than once should report error
+         if(part.gt.2)cnt(5)=99999               ! decimal in exponent
+         part = 2                                ! starting fractional value
+         cnt(1)=cnt(1)+1
+      case(upper_e,lower_e,upper_d,lower_d)      ! if more than once should report error
+         part = 3
+         cnt(2)=cnt(2)+1                         ! if more than one encountered an error
+         ipos=0
+      case(minus_sign)                           ! sign in non-standard position or duplicated should report error
+         sval(part) = -1
+         if(ipos.ne.1)cnt(6)=99999               ! sign not first character of whole or exponent part
+         cnt(3)=cnt(3)+1                         ! if more than one sign character an error, but caught by not being first
+      case(plus_sign)
+         if(ipos.ne.1)cnt(4)=99999               ! sign not first character of whole or exponent part
+         cnt(3)=cnt(3)+1                         ! if more than one sign character an error, but caught by not being first
+      case(space)                                ! should possibly not ignore all internal spaces
+         ipos=ipos-1
+      case default
+         value(part,:) = 0.0_wp
+         cnt(5)=99999                            ! unknown character
+         !return
+      end select
+   enddo
+   ! is no value after E an error?
+   whole=0.0_wp
+   do i = digit_count(1),1,-1
+      whole=whole+value(1,i)*10**(digit_count(1)-i)
+   enddo
+
+   power=0
+   do i = digit_count(3),1,-1
+      power=power+value(3,i)*10**(digit_count(3)-i)
+   enddo
+
+   fractional=0.0_wp
+   do i = digit_count(2),1,-1
+      fractional=fractional+real(value(2,i),kind=wp)/10.0_wp**i
+   enddo
+
+   associate ( sgn=>sval(1), sexp=>sval(3) )
+   val = sign(whole + fractional,real(sgn,kind=wp))* (10.0_wp**(power*sexp+too_many_digit_count))
+   end associate
+   if(all(cnt.le.1).and.ipos.ne.0)then
+      ator_real64 = .true.
+   else
+      read(str,fmt=*,iostat=ios) val ! use internal read for INF, NAN for now
+      if(ios.eq.0)then
+         ator_real64 = .true.
+      else
+         if(present(msg))then
+            if(cnt(5).ne.0)then
+                  msg='illegal character in value "'//trim(str)//'"'
+               elseif(cnt(5).ne.0)then
+                  msg='decimal in exponent in "'//trim(str)//'"'
+               elseif(cnt(1).ge.2)then
+                  msg='multiple decimals in "'//trim(str)//'"'
+               elseif(cnt(2).ge.2)then
+                  msg='more than one exponent prefix (e,d,E,D) in "'//trim(str)//'"'
+               elseif(cnt(3).ge.2)then
+                  msg='more than one sign character in "'//trim(str)//'"'
+               elseif(cnt(6).ne.0)then
+                  msg='- sign character not first in "'//trim(str)//'"'
+               elseif(cnt(4).ge.2)then
+                  msg='+ sign character not first in "'//trim(str)//'"'
+               else
+                  msg='error in data conversion in "'//trim(str)//'"'
+               endif
+         endif
+         ator_real64 = .false.
+      endif
+   endif
+end function ator_real64
+logical function atoi_int8(str,val,msg)
+use iso_fortran_env, only: ip => int64, byte => int8
+! Convert ASCII-text to REAL and return .TRUE. if OK
+character(len=*),intent(in)   :: str
+integer(kind=int8)         :: val
+character(len=:),allocatable,optional,intent(out) :: msg
+integer(kind=byte),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-')
+integer(kind=byte),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
+integer(kind=ip)              :: value, sval, digit_count
+integer                       :: cnt(6)
+integer(kind=byte)            :: a
+integer                       :: i, ipos, too_many_digit_count
+
+   value=0
+   cnt=0
+   digit_count=0
+   ipos=0
+   sval = 1
+   too_many_digit_count=0
+   do i = 1, len(str)
+      a=iachar(str(i:i),kind=byte)
+      ipos=ipos+1
+      select case(a)
+      case(digit_0:digit_9)
+         if(digit_count.lt.19)then
+            value = value*10 + a-digit_0
+         elseif(real(value*10)+real(a-digit_0).lt.huge(0_ip))then
+            value = value*10 + a-digit_0
+         else
+            too_many_digit_count=too_many_digit_count+1    ! so many digit_count just use powers of ten after this
+         endif
+         digit_count = digit_count + 1
+      case(minus_sign)                         ! sign in non-standard position or duplicated should report error
+         sval = -1
+         if(ipos.ne.1)cnt(6)=99999             ! sign not first character of whole or exponent part
+         cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
+      case(plus_sign)
+         if(ipos.ne.1)cnt(4)=99999             ! sign not first character of whole or exponent part
+         cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
+      case(space)                              ! should possibly not ignore all internal spaces (and maybe ignore commas too?)
+         ipos=ipos-1
+      case default
+         value = 0
+         cnt(5)=99999                          ! unknown character
+      end select
+   enddo
+   val = sign(value,sval)* 10**too_many_digit_count
+   if(all(cnt.le.1).and.ipos.ne.0)then
+      atoi_int8 = .true.
+   else
+      if(present(msg))then
+         if(cnt(5).ne.0)then
+               msg='illegal character in value "'//trim(str)//'"'
+            elseif(cnt(3).ge.2)then
+               msg='more than one sign character in "'//trim(str)//'"'
+            elseif(cnt(6).ne.0)then
+               msg='- sign character not first in "'//trim(str)//'"'
+            elseif(cnt(4).ge.2)then
+               msg='+ sign character not first in "'//trim(str)//'"'
+            else
+               msg='error in data conversion in "'//trim(str)//'"'
+            endif
+      endif
+      atoi_int8 = .false.
+   endif
+end function atoi_int8
+logical function atoi_int16(str,val,msg)
+use iso_fortran_env, only: ip => int64, byte => int8
+! Convert ASCII-text to REAL and return .TRUE. if OK
+character(len=*),intent(in)   :: str
+integer(kind=int16)         :: val
+character(len=:),allocatable,optional,intent(out) :: msg
+integer(kind=byte),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-')
+integer(kind=byte),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
+integer(kind=ip)              :: value, sval, digit_count
+integer                       :: cnt(6)
+integer(kind=byte)            :: a
+integer                       :: i, ipos, too_many_digit_count
+
+   value=0
+   cnt=0
+   digit_count=0
+   ipos=0
+   sval = 1
+   too_many_digit_count=0
+   do i = 1, len(str)
+      a=iachar(str(i:i),kind=byte)
+      ipos=ipos+1
+      select case(a)
+      case(digit_0:digit_9)
+         if(digit_count.lt.19)then
+            value = value*10 + a-digit_0
+         elseif(real(value*10)+real(a-digit_0).lt.huge(0_ip))then
+            value = value*10 + a-digit_0
+         else
+            too_many_digit_count=too_many_digit_count+1    ! so many digit_count just use powers of ten after this
+         endif
+         digit_count = digit_count + 1
+      case(minus_sign)                         ! sign in non-standard position or duplicated should report error
+         sval = -1
+         if(ipos.ne.1)cnt(6)=99999             ! sign not first character of whole or exponent part
+         cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
+      case(plus_sign)
+         if(ipos.ne.1)cnt(4)=99999             ! sign not first character of whole or exponent part
+         cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
+      case(space)                              ! should possibly not ignore all internal spaces (and maybe ignore commas too?)
+         ipos=ipos-1
+      case default
+         value = 0
+         cnt(5)=99999                          ! unknown character
+      end select
+   enddo
+   val = sign(value,sval)* 10**too_many_digit_count
+   if(all(cnt.le.1).and.ipos.ne.0)then
+      atoi_int16 = .true.
+   else
+      if(present(msg))then
+         if(cnt(5).ne.0)then
+               msg='illegal character in value "'//trim(str)//'"'
+            elseif(cnt(3).ge.2)then
+               msg='more than one sign character in "'//trim(str)//'"'
+            elseif(cnt(6).ne.0)then
+               msg='- sign character not first in "'//trim(str)//'"'
+            elseif(cnt(4).ge.2)then
+               msg='+ sign character not first in "'//trim(str)//'"'
+            else
+               msg='error in data conversion in "'//trim(str)//'"'
+            endif
+      endif
+      atoi_int16 = .false.
+   endif
+end function atoi_int16
+logical function atoi_int32(str,val,msg)
+use iso_fortran_env, only: ip => int64, byte => int8
+! Convert ASCII-text to REAL and return .TRUE. if OK
+character(len=*),intent(in)   :: str
+integer(kind=int32)         :: val
+character(len=:),allocatable,optional,intent(out) :: msg
+integer(kind=byte),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-')
+integer(kind=byte),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
+integer(kind=ip)              :: value, sval, digit_count
+integer                       :: cnt(6)
+integer(kind=byte)            :: a
+integer                       :: i, ipos, too_many_digit_count
+
+   value=0
+   cnt=0
+   digit_count=0
+   ipos=0
+   sval = 1
+   too_many_digit_count=0
+   do i = 1, len(str)
+      a=iachar(str(i:i),kind=byte)
+      ipos=ipos+1
+      select case(a)
+      case(digit_0:digit_9)
+         if(digit_count.lt.19)then
+            value = value*10 + a-digit_0
+         elseif(real(value*10)+real(a-digit_0).lt.huge(0_ip))then
+            value = value*10 + a-digit_0
+         else
+            too_many_digit_count=too_many_digit_count+1    ! so many digit_count just use powers of ten after this
+         endif
+         digit_count = digit_count + 1
+      case(minus_sign)                         ! sign in non-standard position or duplicated should report error
+         sval = -1
+         if(ipos.ne.1)cnt(6)=99999             ! sign not first character of whole or exponent part
+         cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
+      case(plus_sign)
+         if(ipos.ne.1)cnt(4)=99999             ! sign not first character of whole or exponent part
+         cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
+      case(space)                              ! should possibly not ignore all internal spaces (and maybe ignore commas too?)
+         ipos=ipos-1
+      case default
+         value = 0
+         cnt(5)=99999                          ! unknown character
+      end select
+   enddo
+   val = sign(value,sval)* 10**too_many_digit_count
+   if(all(cnt.le.1).and.ipos.ne.0)then
+      atoi_int32 = .true.
+   else
+      if(present(msg))then
+         if(cnt(5).ne.0)then
+               msg='illegal character in value "'//trim(str)//'"'
+            elseif(cnt(3).ge.2)then
+               msg='more than one sign character in "'//trim(str)//'"'
+            elseif(cnt(6).ne.0)then
+               msg='- sign character not first in "'//trim(str)//'"'
+            elseif(cnt(4).ge.2)then
+               msg='+ sign character not first in "'//trim(str)//'"'
+            else
+               msg='error in data conversion in "'//trim(str)//'"'
+            endif
+      endif
+      atoi_int32 = .false.
+   endif
+end function atoi_int32
+logical function atoi_int64(str,val,msg)
+use iso_fortran_env, only: ip => int64, byte => int8
+! Convert ASCII-text to REAL and return .TRUE. if OK
+character(len=*),intent(in)   :: str
+integer(kind=int64)         :: val
+character(len=:),allocatable,optional,intent(out) :: msg
+integer(kind=byte),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-')
+integer(kind=byte),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
+integer(kind=ip)              :: value, sval, digit_count
+integer                       :: cnt(6)
+integer(kind=byte)            :: a
+integer                       :: i, ipos, too_many_digit_count
+
+   value=0
+   cnt=0
+   digit_count=0
+   ipos=0
+   sval = 1
+   too_many_digit_count=0
+   do i = 1, len(str)
+      a=iachar(str(i:i),kind=byte)
+      ipos=ipos+1
+      select case(a)
+      case(digit_0:digit_9)
+         if(digit_count.lt.19)then
+            value = value*10 + a-digit_0
+         elseif(real(value*10)+real(a-digit_0).lt.huge(0_ip))then
+            value = value*10 + a-digit_0
+         else
+            too_many_digit_count=too_many_digit_count+1    ! so many digit_count just use powers of ten after this
+         endif
+         digit_count = digit_count + 1
+      case(minus_sign)                         ! sign in non-standard position or duplicated should report error
+         sval = -1
+         if(ipos.ne.1)cnt(6)=99999             ! sign not first character of whole or exponent part
+         cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
+      case(plus_sign)
+         if(ipos.ne.1)cnt(4)=99999             ! sign not first character of whole or exponent part
+         cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
+      case(space)                              ! should possibly not ignore all internal spaces (and maybe ignore commas too?)
+         ipos=ipos-1
+      case default
+         value = 0
+         cnt(5)=99999                          ! unknown character
+      end select
+   enddo
+   val = sign(value,sval)* 10**too_many_digit_count
+   if(all(cnt.le.1).and.ipos.ne.0)then
+      atoi_int64 = .true.
+   else
+      if(present(msg))then
+         if(cnt(5).ne.0)then
+               msg='illegal character in value "'//trim(str)//'"'
+            elseif(cnt(3).ge.2)then
+               msg='more than one sign character in "'//trim(str)//'"'
+            elseif(cnt(6).ne.0)then
+               msg='- sign character not first in "'//trim(str)//'"'
+            elseif(cnt(4).ge.2)then
+               msg='+ sign character not first in "'//trim(str)//'"'
+            else
+               msg='error in data conversion in "'//trim(str)//'"'
+            endif
+      endif
+      atoi_int64 = .false.
+   endif
+end function atoi_int64
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================

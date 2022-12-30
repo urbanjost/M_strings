@@ -2,7 +2,7 @@ program check
 use,intrinsic :: iso_fortran_env, only : compiler_version, compiler_options
 use,intrinsic :: iso_fortran_env, only : stdin=>input_unit, stdout=>output_unit, stderr=>error_unit
 use,intrinsic :: iso_fortran_env, only : ip => int32, int64, wp => real64
-use M_strings, only : int, atoi
+use M_strings, only : int, atoi, aton
 implicit none
 character(len=*),parameter :: g='(*(g0))'
 integer,parameter   :: n = 1000000 !! number of values
@@ -13,6 +13,7 @@ character(len=30),allocatable :: strings(:)
 real                :: run_time
 real(kind=wp)       :: number
 integer(kind=ip),parameter  :: first=0, last=huge(0_ip)
+logical :: ok
 
    write(*,'(a)')'CHECK atoi(3f) for int32'
    write(stdout,'("Compiler version :: ",a)') COMPILER_VERSION()
@@ -54,6 +55,13 @@ integer(kind=ip),parameter  :: first=0, last=huge(0_ip)
    call system_clock(start, count_rate)
    do i = 1, n
       ival_out(i)=atoi(strings(i))
+   enddo
+   call tally()
+
+   write(*,*)'ATON:'
+   call system_clock(start, count_rate)
+   do i = 1, n
+      ok=aton(strings(i),ival_out(i))
    enddo
    call tally()
 

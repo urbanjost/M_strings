@@ -92,36 +92,36 @@ to the M_strings module.
 public entities:
 <P>
 <PRE>
-     use M_strings, only : split,sep,delim,chomp,strtok
-     use M_strings, only : split2020, find_field
-     use M_strings, only : substitute,change,modif,transliterate,&
-             & reverse,squeeze
-     use M_strings, only : replace,join
-     use M_strings, only : upper,lower,upper_quoted
-     use M_strings, only : rotate13
-     use M_strings, only : adjustc,compact,nospace,indent
-     use M_strings, only : crop,clip,unquote,quote,matching_delimiter
-     use M_strings, only : len_white,pad,lpad,cpad,rpad,zpad,&
-             & stretch,lenset,merge_str
-     use M_strings, only : switch,s2c,c2s
-     use M_strings, only : noesc,notabs,dilate,expand,visible
-     use M_strings, only : longest_common_substring
-     use M_strings, only : string_to_value,string_to_values,s2v,s2vs
-     use M_strings, only : value_to_string,v2s,msg
-     use M_strings, only : listout,getvals
-     use M_strings, only : glob, ends_with
-     use M_strings, only : paragraph
-     use M_strings, only : base, decodebase, codebase, base2
-     use M_strings, only : isalnum, isalpha, iscntrl, isdigit
-     use M_strings, only : isgraph, islower, isprint, ispunct
-     use M_strings, only : isspace, isupper, isascii, isblank, isxdigit
-     use M_strings, only : isnumber
-     use M_strings, only : fortran_name
-     use M_strings, only : describe
-     use M_strings, only : edit_distance
-     use M_strings, only : bundle
-     use M_strings, only : int, real, dble, nint
-     use M_strings, only : atoi, atol
+     use M_strings,only : split, sep, delim, chomp, strtok
+     use M_strings,only : split2020, find_field
+     use M_strings,only : substitute, change, modif, transliterate, &
+             & reverse, squeeze
+     use M_strings,only : replace, join
+     use M_strings,only : upper, lower, upper_quoted
+     use M_strings,only : rotate13
+     use M_strings,only : adjustc, compact, nospace, indent
+     use M_strings,only : crop, clip, unquote, quote, matching_delimiter
+     use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
+             & stretch, lenset, merge_str
+     use M_strings,only : switch, s2c, c2s
+     use M_strings,only : noesc, notabs, dilate, expand, visible
+     use M_strings,only : longest_common_substring
+     use M_strings,only : string_to_value, string_to_values, s2v, s2vs
+     use M_strings,only : int, real, dble, nint
+     use M_strings,only : atoi, atol, aton
+     use M_strings,only : value_to_string, v2s, msg
+     use M_strings,only : listout, getvals
+     use M_strings,only : glob, ends_with
+     use M_strings,only : paragraph
+     use M_strings,only : base, decodebase, codebase, base2
+     use M_strings,only : isalnum, isalpha, iscntrl, isdigit
+     use M_strings,only : isgraph, islower, isprint, ispunct
+     use M_strings,only : isspace, isupper, isascii, isblank, isxdigit
+     use M_strings,only : isnumber
+     use M_strings,only : fortran_name
+     use M_strings,only : describe
+     use M_strings,only : edit_distance
+     use M_strings,only : bundle
 <P>
 </PRE>
 </BLOCKQUOTE>
@@ -440,6 +440,23 @@ function returns a DOUBLEPRECISION array of numbers
 from a string
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
+<B>s2vs</B> </TD><TD valign=bottom>
+function returns a DOUBLEPRECISION array of numbers
+from a string
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>atoi</B> </TD><TD valign=bottom>
+function returns INTEGER(kind=int32)  from a string
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>atol</B> </TD><TD valign=bottom>
+function returns INTEGER(kind=int64)  from a string
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>aton</B> </TD><TD valign=bottom>
+changes string to numeric value
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
 <B>msg</B> </TD><TD valign=bottom>
 append the values of up to nine values into a string
 </TD></TR>
@@ -680,36 +697,36 @@ demonstrated using the following example program:
 <P>
 <PRE>
     program demo_M_strings
-    use M_strings, only : split,sep,delim,chomp,strtok
-    use M_strings, only : split2020, find_field
-    use M_strings, only : substitute,change,modif,transliterate,&
-            & reverse,squeeze
-    use M_strings, only : replace,join
-    use M_strings, only : upper,lower,upper_quoted
-    use M_strings, only : rotate13
-    use M_strings, only : adjustc,compact,nospace,indent
-    use M_strings, only : crop,clip,unquote,quote,matching_delimiter
-    use M_strings, only : len_white,pad,lpad,cpad,rpad,zpad,&
-            & stretch,lenset,merge_str
-    use M_strings, only : switch,s2c,c2s
-    use M_strings, only : noesc,notabs,dilate,expand,visible
-    use M_strings, only : longest_common_substring
-    use M_strings, only : string_to_value,string_to_values,s2v,s2vs
-    use M_strings, only : value_to_string,v2s,msg
-    use M_strings, only : listout,getvals
-    use M_strings, only : glob, ends_with
-    use M_strings, only : paragraph
-    use M_strings, only : base, decodebase, codebase, base2
-    use M_strings, only : isalnum, isalpha, iscntrl, isdigit
-    use M_strings, only : isgraph, islower, isprint, ispunct
-    use M_strings, only : isspace, isupper, isascii, isblank, isxdigit
-    use M_strings, only : isnumber
-    use M_strings, only : fortran_name
-    use M_strings, only : describe
-    use M_strings, only : edit_distance
-    use M_strings, only : bundle
-    use M_strings, only : int, real, dble, nint
-    use M_strings, only : atoi, atol
+    use M_strings,only : split, sep, delim, chomp, strtok
+    use M_strings,only : split2020, find_field
+    use M_strings,only : substitute, change, modif, transliterate, &
+            & reverse, squeeze
+    use M_strings,only : replace, join
+    use M_strings,only : upper, lower, upper_quoted
+    use M_strings,only : rotate13
+    use M_strings,only : adjustc, compact, nospace, indent
+    use M_strings,only : crop, clip, unquote, quote, matching_delimiter
+    use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
+            & stretch, lenset, merge_str
+    use M_strings,only : switch, s2c, c2s
+    use M_strings,only : noesc, notabs, dilate, expand, visible
+    use M_strings,only : longest_common_substring
+    use M_strings,only : string_to_value, string_to_values, s2v, s2vs
+    use M_strings,only : int, real, dble, nint
+    use M_strings,only : atoi, atol, aton
+    use M_strings,only : value_to_string, v2s, msg
+    use M_strings,only : listout, getvals
+    use M_strings,only : glob, ends_with
+    use M_strings,only : paragraph
+    use M_strings,only : base, decodebase, codebase, base2
+    use M_strings,only : isalnum, isalpha, iscntrl, isdigit
+    use M_strings,only : isgraph, islower, isprint, ispunct
+    use M_strings,only : isspace, isupper, isascii, isblank, isxdigit
+    use M_strings,only : isnumber
+    use M_strings,only : fortran_name
+    use M_strings,only : describe
+    use M_strings,only : edit_distance
+    use M_strings,only : bundle
     end program demo_M_strings
 <P>
 </PRE>
@@ -732,7 +749,7 @@ John S. Urban
 Public Domain
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>M_strings (3m_strings)</TD> <TD align=right width=33%><I>December 29, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from a0487ec2-d7c8-4f4a-9617-f556ce0cc238 using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>M_strings (3m_strings)</TD> <TD align=right width=33%><I>December 29, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 35e0a846-1f14-478a-860f-9f093890310a using man macros.</FONT>
 <br><br><center><img src="images/M_strings.gif"></center>
 </div>
 </div>

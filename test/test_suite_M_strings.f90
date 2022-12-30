@@ -74,7 +74,6 @@ subroutine test_suite_m_strings()
    call test_unquote()
    call test_upper()
    call test_v2s()
-   !call test_v2s_bug()
    call test_value_to_string()
    call test_visible()
    call test_m_strings()
@@ -1526,24 +1525,6 @@ integer           :: IERRSUM=0
    call unit_check_done('value_to_string')
 !===================================================================================================================================
 end subroutine test_value_to_string
-!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_v2s_bug()
-doubleprecision SUM, SUM2, DELTA
-   SUM2=5.555555555555555555555555555555555d0+5.555555555555555555555555555555555e0+INT(5.555555555555555555555555555555555)
-   DELTA=spacing(0.0d0)+spacing(0.0)
-   call unit_check_start('v2s_bug',' &
-      & -description ''generic function returns string given numeric REAL|DOUBLEPRECISION|INTEGER value'' '//OPTIONS )
-   SUM=s2v(v2s_bug(5.55555555555555555555555555d0))
-   SUM=SUM+REAL(s2v(v2s_bug(5.55555555555555555555555555e0)))
-   SUM=SUM+INT(s2v(v2s_bug(5.55555555555555555555555555e0)))
-   if(unit_check_level > 0)then
-      write(std_err,g) 'v2s_bug: SUM2=', SUM2
-      write(std_err,g) 'v2s_bug: SUM=', SUM
-      write(std_err,g) 'v2s_bug: DELTA=', DELTA
-   endif
-   call unit_check('v2s_bug',sum+delta >= sum2.and.sum-delta <= sum2)
-   call unit_check_done('v2s_bug')
-end subroutine test_v2s_bug
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_v2s()
 !use M_math, only : almost
