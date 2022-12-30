@@ -51,7 +51,7 @@ subroutine test_suite_m_strings()
    call test_lenset()
    call test_listout()
    call test_lower()
-   call test_matchw()
+   call test_glob()
    call test_merge_str()
    call test_modif()
    call test_noesc()
@@ -87,7 +87,7 @@ subroutine test_suite_m_strings()
    call test_match_delimiter()
 end subroutine test_suite_m_strings
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_matchw()
+subroutine test_glob()
 ! This main() routine passes a bunch of test strings into the above code.
 ! In performance comparison mode, it does that over and over.  Otherwise,
 ! it does it just once.  Either way, it outputs a passed/failed result.
@@ -95,7 +95,7 @@ subroutine test_matchw()
 integer :: nReps
 logical :: allpassed
 integer :: i
-   call unit_check_start('matchw',' -description ''match string with a pattern containing * and ? wildcard characters'' '//OPTIONS)
+   call unit_check_start('glob',' -description ''match string with a pattern containing * and ? wildcard characters'' '//OPTIONS)
   allpassed = .true.
 
   nReps = 1000000
@@ -246,7 +246,7 @@ integer :: i
      ! allpassed=test("mississippi", "*issip*PI", .true.) .and. allpassed
   enddo
 
-   call unit_check_done('matchw')
+   call unit_check_done('glob')
 !===================================================================================================================================
    contains
 !===================================================================================================================================
@@ -255,7 +255,7 @@ integer :: i
    ! of two (or more) different wildcard matching routines.
    !
    function test(tame, wild, bExpectedResult) result(bpassed)
-   !x!use M_strings, only : matchw
+   !x!use M_strings, only : glob
       character(len=*) :: tame
       character(len=*) :: wild
       logical          :: bExpectedResult
@@ -263,7 +263,7 @@ integer :: i
       logical          :: bPassed
       bResult = .true.    ! We'll do "&=" cumulative checking.
       bPassed = .false.   ! Assume the worst.
-      bResult = matchw(tame, wild) ! Call a wildcard matching routine.
+      bResult = glob(tame, wild) ! Call a wildcard matching routine.
 
       ! To assist correctness checking, output the two strings in any failing scenarios.
       if (bExpectedResult .eqv. bResult) then
@@ -272,9 +272,9 @@ integer :: i
       else
          !if(nReps == 1) write(std_err,g)"Failed match on ",tame," vs. ", wild
       endif
-      if(i==1)call unit_check('matchw',bExpectedResult.eqv.bResult,'string',tame,'pattern',wild,'expected',bExpectedResult)
+      if(i==1)call unit_check('glob',bExpectedResult.eqv.bResult,'string',tame,'pattern',wild,'expected',bExpectedResult)
    end function test
-end subroutine test_matchw
+end subroutine test_glob
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_replace()
 character(len=:),allocatable :: targetline

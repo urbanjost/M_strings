@@ -36,7 +36,7 @@ PROGFILES = \
  ../example/demo_lenset.f90  \
  ../example/demo_listout.f90  \
  ../example/demo_lower.f90  \
- ../example/demo_matchw.f90  \
+ ../example/demo_glob.f90  \
  ../example/demo_merge_str.f90  \
  ../example/demo_modif.f90  \
  ../example/demo_msg.f90  \
