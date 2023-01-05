@@ -88,7 +88,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="91.3% of total for modules and submodules.">3873 statements</a>
+               title="92.2% of total for modules and submodules.">4381 statements</a>
           </li>
 
             <li id="source-file">
@@ -151,6 +151,7 @@
       <div id="inters-0" class="panel-collapse collapse">
         <div class="list-group">
             <a class="list-group-item" href="../module/m_strings.html#interface-atleast">atleast</a>
+            <a class="list-group-item" href="../module/m_strings.html#interface-aton">aton</a>
             <a class="list-group-item" href="../module/m_strings.html#interface-cc">cc</a>
             <a class="list-group-item" href="../module/m_strings.html#interface-dble">dble</a>
             <a class="list-group-item" href="../module/m_strings.html#interface-ends_with">ends_with</a>
@@ -178,6 +179,8 @@
       <div id="funcs-0" class="panel-collapse collapse">
         <div class="list-group">
             <a class="list-group-item" href="../module/m_strings.html#proc-adjustc">adjustc</a>
+            <a class="list-group-item" href="../module/m_strings.html#proc-atoi">atoi</a>
+            <a class="list-group-item" href="../module/m_strings.html#proc-atol">atol</a>
             <a class="list-group-item" href="../module/m_strings.html#proc-base">base</a>
             <a class="list-group-item" href="../module/m_strings.html#proc-base2">base2</a>
             <a class="list-group-item" href="../module/m_strings.html#proc-bundle">bundle</a>
@@ -242,7 +245,6 @@
             <a class="list-group-item" href="../module/m_strings.html#proc-unquote">unquote</a>
             <a class="list-group-item" href="../module/m_strings.html#proc-upper">upper</a>
             <a class="list-group-item" href="../module/m_strings.html#proc-upper_quoted">upper_quoted</a>
-            <a class="list-group-item" href="../module/m_strings.html#proc-v2s_bug">v2s_bug</a>
             <a class="list-group-item" href="../module/m_strings.html#proc-visible">visible</a>
             <a class="list-group-item" href="../module/m_strings.html#proc-zpad">zpad</a>
         </div>
@@ -303,35 +305,36 @@
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>public entities:</p>
-<div class="codehilite"><pre><span></span><code>  use M_strings, only : split,sep,delim,chomp,strtok
-  use M_strings, only : split2020, find_field
-  use M_strings, only : substitute,change,modif,transliterate,&amp;
-          &amp; reverse,squeeze
-  use M_strings, only : replace,join
-  use M_strings, only : upper,lower,upper_quoted
-  use M_strings, only : rotate13
-  use M_strings, only : adjustc,compact,nospace,indent
-  use M_strings, only : crop,clip,unquote,quote,matching_delimiter
-  use M_strings, only : len_white,pad,lpad,cpad,rpad,zpad,&amp;
-          &amp; stretch,lenset,merge_str
-  use M_strings, only : switch,s2c,c2s
-  use M_strings, only : noesc,notabs,dilate,expand,visible
-  use M_strings, only : longest_common_substring
-  use M_strings, only : string_to_value,string_to_values,s2v,s2vs
-  use M_strings, only : value_to_string,v2s,msg
-  use M_strings, only : listout,getvals
-  use M_strings, only : glob, ends_with
-  use M_strings, only : paragraph
-  use M_strings, only : base, decodebase, codebase, base2
-  use M_strings, only : isalnum, isalpha, iscntrl, isdigit
-  use M_strings, only : isgraph, islower, isprint, ispunct
-  use M_strings, only : isspace, isupper, isascii, isblank, isxdigit
-  use M_strings, only : isnumber
-  use M_strings, only : fortran_name
-  use M_strings, only : describe
-  use M_strings, only : edit_distance
-  use M_strings, only : bundle
-  use M_strings, only : int, real, dble, nint
+<div class="codehilite"><pre><span></span><code>  use M_strings,only : split, sep, delim, chomp, strtok
+  use M_strings,only : split2020, find_field
+  use M_strings,only : substitute, change, modif, transliterate, &amp;
+          &amp; reverse, squeeze
+  use M_strings,only : replace, join
+  use M_strings,only : upper, lower, upper_quoted
+  use M_strings,only : rotate13
+  use M_strings,only : adjustc, compact, nospace, indent
+  use M_strings,only : crop, clip, unquote, quote, matching_delimiter
+  use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &amp;
+          &amp; stretch, lenset, merge_str
+  use M_strings,only : switch, s2c, c2s
+  use M_strings,only : noesc, notabs, dilate, expand, visible
+  use M_strings,only : longest_common_substring
+  use M_strings,only : string_to_value, string_to_values, s2v, s2vs
+  use M_strings,only : int, real, dble, nint
+  use M_strings,only : atoi, atol, aton
+  use M_strings,only : value_to_string, v2s, msg
+  use M_strings,only : listout, getvals
+  use M_strings,only : glob, ends_with
+  use M_strings,only : paragraph
+  use M_strings,only : base, decodebase, codebase, base2
+  use M_strings,only : isalnum, isalpha, iscntrl, isdigit
+  use M_strings,only : isgraph, islower, isprint, ispunct
+  use M_strings,only : isspace, isupper, isascii, isblank, isxdigit
+  use M_strings,only : isnumber
+  use M_strings,only : fortran_name
+  use M_strings,only : describe
+  use M_strings,only : edit_distance
+  use M_strings,only : bundle
 </code></pre></div>
 
 <p>TOKENS</p>
@@ -446,6 +449,11 @@
                      <span class="nv">from</span> <span class="nv">string</span>
    <span class="nv">s2vs</span>              <span class="nv">function</span> <span class="nv">returns</span> <span class="nv">a</span> <span class="nv">DOUBLEPRECISION</span> <span class="nv">array</span> <span class="nv">of</span> <span class="nv">numbers</span>
                      <span class="nv">from</span> <span class="nv">a</span> <span class="nv">string</span>
+   <span class="nv">s2vs</span>              <span class="nv">function</span> <span class="nv">returns</span> <span class="nv">a</span> <span class="nv">DOUBLEPRECISION</span> <span class="nv">array</span> <span class="nv">of</span> <span class="nv">numbers</span>
+                     <span class="nv">from</span> <span class="nv">a</span> <span class="nv">string</span>
+   <span class="nv">atoi</span>              <span class="nv">function</span> <span class="nv">returns</span> <span class="nv">INTEGER</span><span class="ss">(</span><span class="nv">kind</span><span class="o">=</span><span class="nv">int32</span><span class="ss">)</span>  <span class="nv">from</span> <span class="nv">a</span> <span class="nv">string</span>
+   <span class="nv">atol</span>              <span class="nv">function</span> <span class="nv">returns</span> <span class="nv">INTEGER</span><span class="ss">(</span><span class="nv">kind</span><span class="o">=</span><span class="nv">int64</span><span class="ss">)</span>  <span class="nv">from</span> <span class="nv">a</span> <span class="nv">string</span>
+   <span class="nv">aton</span>              <span class="nv">changes</span> <span class="nv">string</span> <span class="nv">to</span> <span class="nv">numeric</span> <span class="nv">value</span>
    <span class="nv">msg</span>               <span class="nv">append</span> <span class="nv">the</span> <span class="nv">values</span> <span class="nv">of</span> <span class="nv">up</span> <span class="nv">to</span> <span class="nv">nine</span> <span class="nv">values</span> <span class="nv">into</span> <span class="nv">a</span> <span class="nv">string</span>
 
    <span class="nv">value_to_string</span>   <span class="nv">generic</span> <span class="nv">subroutine</span> <span class="nv">returns</span> <span class="nv">string</span> <span class="nv">given</span> <span class="nv">numeric</span> <span class="nv">value</span>
@@ -557,35 +565,36 @@ the M_strings(3fm) module.
 <span class="nv">demonstrated</span> <span class="nv">using</span> <span class="nv">the</span> <span class="nv">following</span> <span class="nv">example</span> <span class="nv">program</span>:
 
  <span class="nv">program</span> <span class="nv">demo_M_strings</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">split</span>,<span class="nv">sep</span>,<span class="nv">delim</span>,<span class="nv">chomp</span>,<span class="nv">strtok</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">split2020</span>, <span class="nv">find_field</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">substitute</span>,<span class="nv">change</span>,<span class="nv">modif</span>,<span class="nv">transliterate</span>,<span class="o">&amp;</span>
-         <span class="o">&amp;</span> <span class="nv">reverse</span>,<span class="nv">squeeze</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">replace</span>,<span class="nv">join</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">upper</span>,<span class="nv">lower</span>,<span class="nv">upper_quoted</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">rotate13</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">adjustc</span>,<span class="nv">compact</span>,<span class="nv">nospace</span>,<span class="nv">indent</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">crop</span>,<span class="nv">clip</span>,<span class="nv">unquote</span>,<span class="nv">quote</span>,<span class="nv">matching_delimiter</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">len_white</span>,<span class="nv">pad</span>,<span class="nv">lpad</span>,<span class="nv">cpad</span>,<span class="nv">rpad</span>,<span class="nv">zpad</span>,<span class="o">&amp;</span>
-         <span class="o">&amp;</span> <span class="nv">stretch</span>,<span class="nv">lenset</span>,<span class="nv">merge_str</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">switch</span>,<span class="nv">s2c</span>,<span class="nv">c2s</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">noesc</span>,<span class="nv">notabs</span>,<span class="nv">dilate</span>,<span class="nv">expand</span>,<span class="nv">visible</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">longest_common_substring</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">string_to_value</span>,<span class="nv">string_to_values</span>,<span class="nv">s2v</span>,<span class="nv">s2vs</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">value_to_string</span>,<span class="nv">v2s</span>,<span class="nv">msg</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">listout</span>,<span class="nv">getvals</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">glob</span>, <span class="nv">ends_with</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">paragraph</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">base</span>, <span class="nv">decodebase</span>, <span class="nv">codebase</span>, <span class="nv">base2</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">isalnum</span>, <span class="nv">isalpha</span>, <span class="nv">iscntrl</span>, <span class="nv">isdigit</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">isgraph</span>, <span class="nv">islower</span>, <span class="nv">isprint</span>, <span class="nv">ispunct</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">isspace</span>, <span class="nv">isupper</span>, <span class="nv">isascii</span>, <span class="nv">isblank</span>, <span class="nv">isxdigit</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">isnumber</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">fortran_name</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">describe</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">edit_distance</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">bundle</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">int</span>, <span class="nv">real</span>, <span class="nv">dble</span>, <span class="nv">nint</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">split</span>, <span class="nv">sep</span>, <span class="nv">delim</span>, <span class="nv">chomp</span>, <span class="nv">strtok</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">split2020</span>, <span class="nv">find_field</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">substitute</span>, <span class="nv">change</span>, <span class="nv">modif</span>, <span class="nv">transliterate</span>, <span class="o">&amp;</span>
+         <span class="o">&amp;</span> <span class="nv">reverse</span>, <span class="nv">squeeze</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">replace</span>, <span class="nv">join</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">upper</span>, <span class="nv">lower</span>, <span class="nv">upper_quoted</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">rotate13</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">adjustc</span>, <span class="nv">compact</span>, <span class="nv">nospace</span>, <span class="nv">indent</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">crop</span>, <span class="nv">clip</span>, <span class="nv">unquote</span>, <span class="nv">quote</span>, <span class="nv">matching_delimiter</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">len_white</span>, <span class="nv">pad</span>, <span class="nv">lpad</span>, <span class="nv">cpad</span>, <span class="nv">rpad</span>, <span class="nv">zpad</span>, <span class="o">&amp;</span>
+         <span class="o">&amp;</span> <span class="nv">stretch</span>, <span class="nv">lenset</span>, <span class="nv">merge_str</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">switch</span>, <span class="nv">s2c</span>, <span class="nv">c2s</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">noesc</span>, <span class="nv">notabs</span>, <span class="nv">dilate</span>, <span class="nv">expand</span>, <span class="nv">visible</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">longest_common_substring</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">string_to_value</span>, <span class="nv">string_to_values</span>, <span class="nv">s2v</span>, <span class="nv">s2vs</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">int</span>, <span class="nv">real</span>, <span class="nv">dble</span>, <span class="nv">nint</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">atoi</span>, <span class="nv">atol</span>, <span class="nv">aton</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">value_to_string</span>, <span class="nv">v2s</span>, <span class="nv">msg</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">listout</span>, <span class="nv">getvals</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">glob</span>, <span class="nv">ends_with</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">paragraph</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">base</span>, <span class="nv">decodebase</span>, <span class="nv">codebase</span>, <span class="nv">base2</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">isalnum</span>, <span class="nv">isalpha</span>, <span class="nv">iscntrl</span>, <span class="nv">isdigit</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">isgraph</span>, <span class="nv">islower</span>, <span class="nv">isprint</span>, <span class="nv">ispunct</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">isspace</span>, <span class="nv">isupper</span>, <span class="nv">isascii</span>, <span class="nv">isblank</span>, <span class="nv">isxdigit</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">isnumber</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">fortran_name</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">describe</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">edit_distance</span>
+ <span class="nv">use</span> <span class="nv">M_strings</span>,<span class="nv">only</span> : <span class="nv">bundle</span>
  <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_M_strings</span>
 </code></pre></div>
 
@@ -651,6 +660,7 @@ the M_strings(3fm) module.
       <div id="inters-1" class="panel-collapse collapse">
         <div class="list-group">
             <a class="list-group-item" href="../module/m_strings.html#interface-atleast">atleast</a>
+            <a class="list-group-item" href="../module/m_strings.html#interface-aton">aton</a>
             <a class="list-group-item" href="../module/m_strings.html#interface-cc">cc</a>
             <a class="list-group-item" href="../module/m_strings.html#interface-dble">dble</a>
             <a class="list-group-item" href="../module/m_strings.html#interface-ends_with">ends_with</a>
@@ -678,6 +688,8 @@ the M_strings(3fm) module.
       <div id="funcs-1" class="panel-collapse collapse">
         <div class="list-group">
             <a class="list-group-item" href="../module/m_strings.html#proc-adjustc">adjustc</a>
+            <a class="list-group-item" href="../module/m_strings.html#proc-atoi">atoi</a>
+            <a class="list-group-item" href="../module/m_strings.html#proc-atol">atol</a>
             <a class="list-group-item" href="../module/m_strings.html#proc-base">base</a>
             <a class="list-group-item" href="../module/m_strings.html#proc-base2">base2</a>
             <a class="list-group-item" href="../module/m_strings.html#proc-bundle">bundle</a>
@@ -742,7 +754,6 @@ the M_strings(3fm) module.
             <a class="list-group-item" href="../module/m_strings.html#proc-unquote">unquote</a>
             <a class="list-group-item" href="../module/m_strings.html#proc-upper">upper</a>
             <a class="list-group-item" href="../module/m_strings.html#proc-upper_quoted">upper_quoted</a>
-            <a class="list-group-item" href="../module/m_strings.html#proc-v2s_bug">v2s_bug</a>
             <a class="list-group-item" href="../module/m_strings.html#proc-visible">visible</a>
             <a class="list-group-item" href="../module/m_strings.html#proc-zpad">zpad</a>
         </div>
@@ -1012,22 +1023,42 @@ logical,intent(in),optional                :: clip
      <span class="o">&amp;</span> <span class="n">pad</span><span class="p">(</span><span class="s">&#39;APPENDIX &#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s">&#39;.&#39;</span><span class="p">),</span>                  <span class="mi">1235</span>
 
      <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12&#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s">&#39;0&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span>
+
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.,</span><span class="n">clip</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.,</span><span class="n">clip</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.,</span><span class="n">clip</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.,</span><span class="n">clip</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.,</span><span class="n">clip</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
 <span class="n">end</span> <span class="n">program</span> <span class="n">demo_pad</span>
 </code></pre></div>
 
 <p>Results:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">[abcdefghij]</span><span class="w"></span>
-<span class="k">[abcdefghij          ]</span><span class="w"></span>
-
-<span class="w"> </span><span class="na">CHAPTER 1 : The beginning .... 1</span><span class="w"></span>
-<span class="w"> </span><span class="na">CHAPTER 2 : The end .......... 1234</span><span class="w"></span>
-<span class="w"> </span><span class="na">APPENDIX ..................... 1235</span><span class="w"></span>
-
-<span class="w"> </span><span class="na">CHAPTER 1 : The beginning ....      1</span><span class="w"></span>
-<span class="w"> </span><span class="na">CHAPTER 2 : The end ..........   1234</span><span class="w"></span>
-<span class="w"> </span><span class="na">APPENDIX .....................   1235</span><span class="w"></span>
-</code></pre></div>
-
+<blockquote>
+<p>[abcdefghij]
+[abcdefghij          ]</p>
+<p>CHAPTER 1 : The beginning .... 1
+ CHAPTER 2 : The end .......... 1234
+ APPENDIX ..................... 1235</p>
+<p>CHAPTER 1 : The beginning ....      1
+ CHAPTER 2 : The end ..........   1234
+ APPENDIX .....................   1235
+00012
+<strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>12345
+</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong>_12345
+_12345
+__12345
+12345
+_12345
+12345
+12345
+12345
+12345</p>
+</blockquote>
 <h2 id="see-also">SEE ALSO</h2>
 <div class="codehilite"><pre><span></span><code> adjustl(3f), adjustr(3f), repeat(3f), trim(3f), len_trim(3f), len(3f)
 
@@ -1134,6 +1165,523 @@ logical,intent(in),optional                :: clip
     <h4>
     Return Value
     <small>character(len=:), allocatable</small>
+    </h4>
+    
+
+          </li>
+    </ul>
+  </div>
+
+       <div class="panel panel-default">
+    <div class="panel-heading codesum">
+      <span class="anchor" id="interface-aton"></span>
+      <h3>public        interface <a href='../interface/aton.html'>aton</a> 
+      </h3>
+    </div>
+    <ul class="list-group">
+          <li class="list-group-item">
+                <h3>
+    private  function ator_real32(str, val, msg)  
+
+    </h3>
+  <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>aton(3f) - [M_strings:TYPE] function returns argument as a numeric
+value from a string
+(LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>logical function aton(str,val[,msg])
+
+ character(len=*),intent(in)       :: str
+ type(TYPE(kind=KIND)),intent(out) :: val
+ character(len=:),allocatable,intent(out) :: msg
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code>This function converts a string to a numeric value.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> str      holds string assumed to represent a numeric value
+ val      returned value. May be REAL or INTEGER.
+ msg      message describing error when ATON returns .false.
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">aton</span>     .<span class="nv">true</span>. <span class="k">if</span> <span class="nv">the</span> <span class="nv">conversion</span> <span class="nv">was</span> <span class="nv">successful</span>, .<span class="nv">false</span>. <span class="nv">otherwise</span>
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<p>Sample Program:</p>
+<div class="codehilite"><pre><span></span><code>  <span class="nv">program</span> <span class="nv">demo_aton</span>
+
+   <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">aton</span>
+   <span class="nv">implicit</span> <span class="nv">none</span>
+   <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">14</span><span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">strings</span><span class="ss">(</span>:<span class="ss">)</span>
+   <span class="nv">doubleprecision</span>               :: <span class="nv">dv</span>
+   <span class="nv">integer</span>                       :: <span class="nv">iv</span>
+   <span class="nv">real</span>                          :: <span class="nv">rv</span>
+   <span class="nv">logical</span>                       :: <span class="nv">chk</span>
+   <span class="nv">integer</span>                       :: <span class="nv">i</span>
+
+   <span class="o">!</span> <span class="nv">different</span> <span class="nv">strings</span> <span class="nv">representing</span> <span class="nv">INTEGER</span>, <span class="nv">REAL</span>, <span class="nv">and</span> <span class="nv">DOUBLEPRECISION</span>
+   <span class="nv">strings</span><span class="o">=</span>[<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s"> 10.345       </span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">+10           </span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">    -3        </span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">    -4.94e-2  </span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">0.1           </span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">12345.678910d0</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">              </span><span class="s1">&#39;</span>,<span class="o">&amp;</span> <span class="o">!</span> <span class="nv">Note</span>: <span class="nv">will</span> <span class="k">return</span> <span class="nv">zero</span> <span class="nv">without</span> <span class="nv">an</span> <span class="nv">error</span> <span class="nv">message</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">1 2 1 2 1 . 0 </span><span class="s1">&#39;</span>,<span class="o">&amp;</span> <span class="o">!</span> <span class="nv">Note</span>: <span class="nv">spaces</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">ignored</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">WHAT?         </span><span class="s1">&#39;</span>]  <span class="o">!</span> <span class="nv">Note</span>: <span class="nv">error</span> <span class="nv">messages</span> <span class="nv">will</span> <span class="nv">appear</span>, <span class="nv">zero</span> <span class="nv">returned</span>
+
+   <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span>,<span class="nv">advance</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">no</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">STRING:</span><span class="s1">&#39;</span>,<span class="nv">strings</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>
+      <span class="k">if</span><span class="ss">(</span><span class="nv">aton</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">iv</span><span class="ss">))</span> <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(g0)</span><span class="s1">&#39;</span>,<span class="nv">advance</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">no</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">:INTEGER </span><span class="s1">&#39;</span>,<span class="nv">iv</span>
+      <span class="k">if</span><span class="ss">(</span><span class="nv">aton</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">rv</span><span class="ss">))</span> <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(g0)</span><span class="s1">&#39;</span>,<span class="nv">advance</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">no</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">:INTEGER </span><span class="s1">&#39;</span>,<span class="nv">rv</span>
+      <span class="k">if</span><span class="ss">(</span><span class="nv">aton</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">dv</span><span class="ss">))</span> <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(g0)</span><span class="s1">&#39;</span>,<span class="nv">advance</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">no</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">:INTEGER </span><span class="s1">&#39;</span>,<span class="nv">dv</span>
+   <span class="nv">enddo</span>
+
+   <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_aton</span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>str</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>val</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td>optional,</td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>msg</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+          </li>
+          <li class="list-group-item">
+                <h3>
+    private  function ator_real64(str, val, msg)  
+
+    </h3>
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>str</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>val</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td>optional,</td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>msg</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+          </li>
+          <li class="list-group-item">
+                <h3>
+    private  function atoi_int8(str, val, msg)  
+
+    </h3>
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>str</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=int8)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>val</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td>optional,</td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>msg</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+          </li>
+          <li class="list-group-item">
+                <h3>
+    private  function atoi_int16(str, val, msg)  
+
+    </h3>
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>str</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=int16)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>val</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td>optional,</td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>msg</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+          </li>
+          <li class="list-group-item">
+                <h3>
+    private  function atoi_int32(str, val, msg)  
+
+    </h3>
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>str</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=int32)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>val</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td>optional,</td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>msg</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+          </li>
+          <li class="list-group-item">
+                <h3>
+    private  function atoi_int64(str, val, msg)  
+
+    </h3>
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>str</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=int64)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>val</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td>optional,</td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>msg</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
     </h4>
     
 
@@ -1849,62 +2397,11 @@ logical,intent(in),optional                :: clip
     <ul class="list-group">
           <li class="list-group-item">
                 <h3>
-    private impure elemental function int_s2v(chars)  
+    public pure elemental function <a href='../proc/atoi.html'>atoi</a>(string) result(val)  
 
     </h3>
-  <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="nb nb-Type">int</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="n">M_strings</span><span class="p">:</span><span class="n">TYPE</span><span class="p">]</span><span class="w"> </span><span class="n">overloads</span><span class="w"> </span><span class="n">INT</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">arguments</span><span class="w"></span>
-<span class="w">  </span><span class="p">(</span><span class="n">LICENSE</span><span class="p">:</span><span class="n">PD</span><span class="p">)</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code>impure elemental function int(string)
-
- character(len=*) :: string
- integer          :: int
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nb nb-Type">int</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numeric</span><span class="w"> </span><span class="n">representation</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"></span>
-<span class="n">numeric</span><span class="w"> </span><span class="n">value</span><span class="o">.</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">overloads</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">INT</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">intrinsic</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">CHARACTER</span><span class="w"></span>
-<span class="n">arguments</span><span class="w"> </span><span class="n">assumed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">represent</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numeric</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">input</span><span class="o">.</span><span class="w"></span>
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code>   STRING  input string to be converted to an integer
-</code></pre></div>
-
-<h2 id="returns">RETURNS</h2>
-<div class="codehilite"><pre><span></span><code>   INT  integer represented by input string
-</code></pre></div>
-
-<h2 id="example">EXAMPLE</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">Sample</span> <span class="nv">program</span>:
-
-  <span class="nv">program</span> <span class="nv">demo_int</span>
-  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">int</span>
-  <span class="nv">implicit</span> <span class="nv">none</span>
-  <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">80</span><span class="ss">)</span> :: <span class="nv">string</span>
-  <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="nv">int</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">100</span><span class="s1">&#39;</span><span class="ss">)</span>,<span class="nv">int</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">20.4</span><span class="s1">&#39;</span><span class="ss">)</span>
-  <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">int still works</span><span class="s1">&#39;</span>,<span class="nv">int</span><span class="ss">(</span><span class="mi">20</span>.<span class="mi">4</span><span class="ss">)</span>
-  <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">elemental</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
-  <span class="o">&amp;</span> <span class="nv">int</span><span class="ss">(</span>[<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">23</span><span class="ss">)</span> :: <span class="s1">&#39;</span><span class="s">10</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">20.3</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">20.5</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">20.6</span><span class="s1">&#39;</span>]<span class="ss">)</span>
-  <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_int</span>
-</code></pre></div>
-
-<p>Results:</p>
-<div class="codehilite"><pre><span></span><code>  &gt;          100          20
-  &gt;  int still works          20
-  &gt;  elemental          10          20          20          20
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
+    
+  
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -1927,9 +2424,9 @@ logical,intent(in),optional                :: clip
               
             </td>
             <td>::</td>
-            <td><strong>chars</strong></td>
+            <td><strong>string</strong></td>
             <td>
-                
+
             </td>
         </tr>
     </tbody>
@@ -1937,7 +2434,7 @@ logical,intent(in),optional                :: clip
 
     <h4>
     Return Value
-    <small>integer</small>
+    <small>integer(kind=int32)</small>
     </h4>
     
 
@@ -2733,32 +3230,86 @@ logical,intent(in),optional                :: clip
 
     </h3>
   <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="n">nint</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="n">M_strings</span><span class="p">:</span><span class="n">TYPE</span><span class="p">]</span><span class="w"> </span><span class="n">overloads</span><span class="w"> </span><span class="n">NINT</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">arguments</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="nb nb-Type">int</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="n">M_strings</span><span class="p">:</span><span class="n">TYPE</span><span class="p">]</span><span class="w"> </span><span class="n">overloads</span><span class="w"> </span><span class="n">INT</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">arguments</span><span class="w"></span>
 <span class="w">  </span><span class="p">(</span><span class="n">LICENSE</span><span class="p">:</span><span class="n">PD</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 
 <h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>impure elemental function int(string)
+
+ character(len=*) :: string
+ integer(kind=int32) :: int
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nb nb-Type">int</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numeric</span><span class="w"> </span><span class="n">representation</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"></span>
+<span class="n">numeric</span><span class="w"> </span><span class="n">value</span><span class="o">.</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">overloads</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">INT</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">intrinsic</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">CHARACTER</span><span class="w"></span>
+<span class="n">arguments</span><span class="w"> </span><span class="n">assumed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">represent</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numeric</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">input</span><span class="o">.</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code>   STRING  input string to be converted to an INT32 integer
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code>   INT  integer represented by input string
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">Sample</span> <span class="nv">program</span>:
+
+  <span class="nv">program</span> <span class="nv">demo_int</span>
+  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">int</span>
+  <span class="nv">implicit</span> <span class="nv">none</span>
+  <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">80</span><span class="ss">)</span> :: <span class="nv">string</span>
+  <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="nv">int</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">100</span><span class="s1">&#39;</span><span class="ss">)</span>,<span class="nv">int</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">20.4</span><span class="s1">&#39;</span><span class="ss">)</span>
+  <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">int still works</span><span class="s1">&#39;</span>,<span class="nv">int</span><span class="ss">(</span><span class="mi">20</span>.<span class="mi">4</span><span class="ss">)</span>
+  <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">elemental</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+  <span class="o">&amp;</span> <span class="nv">int</span><span class="ss">(</span>[<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">23</span><span class="ss">)</span> :: <span class="s1">&#39;</span><span class="s">10</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">20.3</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">20.5</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">20.6</span><span class="s1">&#39;</span>]<span class="ss">)</span>
+  <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_int</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code>  &gt;          100          20
+  &gt;  int still works          20
+  &gt;  elemental          10          20          20          20
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
+
+<h2 id="name_1">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="n">nint</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="n">M_strings</span><span class="p">:</span><span class="n">TYPE</span><span class="p">]</span><span class="w"> </span><span class="n">overloads</span><span class="w"> </span><span class="n">NINT</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">arguments</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="n">LICENSE</span><span class="p">:</span><span class="n">PD</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="synopsis_1">SYNOPSIS</h2>
 <div class="codehilite"><pre><span></span><code>impure elemental function nint(string)
 
  character(len=*) :: string
  integer          :: nint
 </code></pre></div>
 
-<h2 id="description">DESCRIPTION</h2>
+<h2 id="description_1">DESCRIPTION</h2>
 <div class="codehilite"><pre><span></span><code><span class="n">nint</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numeric</span><span class="w"> </span><span class="n">representation</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"></span>
 <span class="n">numeric</span><span class="w"> </span><span class="n">value</span><span class="o">.</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">overloads</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">NINT</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">intrinsic</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">CHARACTER</span><span class="w"></span>
 <span class="n">arguments</span><span class="w"> </span><span class="n">assumed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">represent</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numeric</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">input</span><span class="o">.</span><span class="w"></span>
 </code></pre></div>
 
-<h2 id="options">OPTIONS</h2>
+<h2 id="options_1">OPTIONS</h2>
 <div class="codehilite"><pre><span></span><code>   STRING  input string to be converted to an integer
 </code></pre></div>
 
-<h2 id="returns">RETURNS</h2>
+<h2 id="returns_1">RETURNS</h2>
 <div class="codehilite"><pre><span></span><code>   NINT  integer represented by input string
 </code></pre></div>
 
-<h2 id="example">EXAMPLE</h2>
+<h2 id="example_1">EXAMPLE</h2>
 <div class="codehilite"><pre><span></span><code><span class="nv">Sample</span> <span class="nv">program</span>:
 
   <span class="nv">program</span> <span class="nv">demo_nint</span>
@@ -2778,11 +3329,11 @@ logical,intent(in),optional                :: clip
   &gt;  elemental          10          20          21          21
 </code></pre></div>
 
-<h2 id="author">AUTHOR</h2>
+<h2 id="author_1">AUTHOR</h2>
 <div class="codehilite"><pre><span></span><code>John S. Urban
 </code></pre></div>
 
-<h2 id="license">LICENSE</h2>
+<h2 id="license_1">LICENSE</h2>
 <div class="codehilite"><pre><span></span><code>Public Domain
 </code></pre></div>
 
@@ -3881,7 +4432,64 @@ supersede these routines.
     private  function d2s(dvalue, fmt) result(outstr)  
 
     </h3>
-  
+  <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>  <span class="nv">v2s</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">TYPE</span>] <span class="k">return</span> <span class="nv">numeric</span> <span class="nv">string</span> <span class="nv">from</span> <span class="nv">a</span> <span class="nv">numeric</span> <span class="nv">value</span>
+  <span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code><span class="w">   </span><span class="k">function</span><span class="w"> </span><span class="nf">v2s(value) result</span><span class="p">(</span>outstr<span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">integer</span><span class="o">|</span><span class="nb">real</span><span class="o">|</span><span class="n">doubleprecision</span><span class="o">|</span><span class="nb">logical</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">value</span><span class="w"></span>
+<span class="w">    </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">outstr</span><span class="w"></span>
+<span class="w">    </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">optional</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">fmt</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code>v2s(3f) returns a representation of a numeric value as a
+string when given a numeric value of type REAL, DOUBLEPRECISION,
+INTEGER or LOGICAL. It creates the strings using internal WRITE()
+statements. Trailing zeros are removed from non-zero values, and the
+string is left-justified.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code>VALUE   input value to be converted to a string
+FMT     format can be explicitly given, but is limited to
+        generating a string of eighty or less characters.
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code>OUTSTR  returned string representing input value,
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<p>Sample Program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_v2s</span>
+<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">v2s</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">The value of 3.0/4.0 is [</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">v2s</span><span class="ss">(</span><span class="mi">3</span>.<span class="mi">0</span><span class="o">/</span><span class="mi">4</span>.<span class="mi">0</span><span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">The value of 1234    is [</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">v2s</span><span class="ss">(</span><span class="mi">1234</span><span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">The value of 0d0     is [</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">v2s</span><span class="ss">(</span><span class="mi">0</span><span class="nv">d0</span><span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">The value of .false. is [</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">v2s</span><span class="ss">(</span>.<span class="nv">false</span>.<span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">The value of .true. is  [</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">v2s</span><span class="ss">(</span>.<span class="nv">true</span>.<span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_v2s</span>
+</code></pre></div>
+
+<p>Expected output</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mf">3.0</span><span class="o">/</span><span class="mf">4.0</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">[</span><span class="n">0.75</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">1234</span><span class="w">    </span><span class="k">is</span><span class="w"> </span><span class="o">[</span><span class="n">1234</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">0</span><span class="n">d0</span><span class="w">     </span><span class="k">is</span><span class="w"> </span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="p">.</span><span class="k">false</span><span class="p">.</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">[</span><span class="n">F</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="p">.</span><span class="k">true</span><span class="p">.</span><span class="w"> </span><span class="k">is</span><span class="w">  </span><span class="o">[</span><span class="n">T</span><span class="o">]</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -4174,6 +4782,96 @@ supersede these routines.
     <h4>
     Return Value
     <small>character(len=:), allocatable</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+      <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-atoi"></span><h3>public pure elemental function <a href='../proc/atoi.html'>atoi</a>(string) result(val)  
+</h3></div>
+    <div class="panel-body">
+          
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>string</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer(kind=int32)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+      <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-atol"></span><h3>public pure elemental function <a href='../proc/atol.html'>atol</a>(string) result(val)  
+</h3></div>
+    <div class="panel-body">
+          
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>string</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer(kind=int64)</small>
     </h4>
     
 
@@ -7162,7 +7860,7 @@ supersede these routines.
 </h3></div>
     <div class="panel-body">
           
-  <a href="../proc/reverse.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  <p>Results:</p><a href="../proc/reverse.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -8325,51 +9023,6 @@ supersede these routines.
     <h4>
     Return Value
     <small>character(len=len)</small>
-    </h4>
-    
-
-    </div>
-  </div>
-
-      <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-v2s_bug"></span><h3>public  function <a href='../proc/v2s_bug.html'>v2s_bug</a>(gval) result(outstr)  
-</h3></div>
-    <div class="panel-body">
-          
-  <p>Sample Program:</p><a href="../proc/v2s_bug.html" class="pull-right"><emph>Read more&hellip;</emph></a>
-
-  <h4>Arguments</h4>
-      <table class="table table-striped varlist">
-    <thead>
-      <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-              <span class="anchor" ></span>
-              class(*),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>gval</strong></td>
-            <td>
-
-            </td>
-        </tr>
-    </tbody>
-  </table>
-
-    <h4>
-    Return Value
-    <small>character(len=:), allocatable</small>
     </h4>
     
 
@@ -9650,7 +10303,7 @@ supersede these routines.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 14:17            </p>
+ on 2022-12-31 22:31            </p>
         </div>
       </div>
       <br>

@@ -4793,25 +4793,39 @@ function rpad(valuein,length) result(strout)
 ! ident_37="@(#) M_strings rpad(3f) return value padded to at least specified length"
 
 class(*),intent(in)              :: valuein
-integer,intent(in)               :: length
+integer,intent(in),optional      :: length
 character(len=:),allocatable     :: strout
-character(len=4096)              :: line
+
+character(len=96)                :: line
+integer                          :: local_length
+
    select type(valuein)
-      type is (integer(kind=int8));     write(line,'(i0)') valuein
-      type is (integer(kind=int16));    write(line,'(i0)') valuein
-      type is (integer(kind=int32));    write(line,'(i0)') valuein
-      type is (integer(kind=int64));    write(line,'(i0)') valuein
-      type is (real(kind=real32));      write(line,'(1pg0)') valuein
-      type is (real(kind=real64));      write(line,'(1pg0)') valuein
-      type is (logical);                write(line,'(l1)') valuein
-      type is (complex);                write(line,'("(",1pg0,",",1pg0,")")') valuein
+      type is (integer(kind=int8));    write(line,'(i0)') valuein
+      type is (integer(kind=int16));   write(line,'(i0)') valuein
+      type is (integer(kind=int32));   write(line,'(i0)') valuein
+      type is (integer(kind=int64));   write(line,'(i0)') valuein
+      type is (real(kind=real32));     write(line,'(1pg0)') valuein
+      type is (real(kind=real64));     write(line,'(1pg0)') valuein
+      type is (logical);               write(line,'(l1)') valuein
+      type is (complex);               write(line,'("(",1pg0,",",1pg0,")")') valuein
       type is (character(len=*))
-         strout= pad(valuein,length,' ',clip=.true.)
+         if(present(length))then
+            local_length = length
+         else
+            local_length = len(valuein)
+         endif
+         strout = pad(valuein,local_length,' ',clip=.true.)
          return
       class default
-              stop '<ERROR>*rpad* unknown type'
+         stop '<ERROR>*rpad* unknown type'
    end select
-         strout= pad(line,length,' ',clip=.true.)
+
+   if(present(length))then
+      strout = pad( line, length, ' ', clip=.true. )
+   else
+      strout = crop( line )
+   endif
+
 end function rpad
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -4870,29 +4884,46 @@ end function rpad
 !!    Public Domain
 function cpad(valuein,length) result(strout)
 
-! ident_38="@(#) M_strings cpad(3f) convert value to string padded on left to at least specified length"
+! ident_38="@(#) M_strings cpad(3f) convert value to string center-padded to at least specified length"
 
 class(*),intent(in)              :: valuein
-integer,intent(in)               :: length
+integer,intent(in),optional      :: length
 character(len=:),allocatable     :: strout
-character(len=4096)              :: line
+
+character(len=96)                :: line
+integer                          :: local_length
+
    select type(valuein)
-      type is (integer(kind=int8));     write(line,'(i0)') valuein
-      type is (integer(kind=int16));    write(line,'(i0)') valuein
-      type is (integer(kind=int32));    write(line,'(i0)') valuein
-      type is (integer(kind=int64));    write(line,'(i0)') valuein
-      type is (real(kind=real32));      write(line,'(1pg0)') valuein
-      type is (real(kind=real64));      write(line,'(1pg0)') valuein
-      type is (logical);                write(line,'(l1)') valuein
-      type is (complex);                write(line,'("(",1pg0,",",1pg0,")")') valuein
-      type is (character(len=*));       line=valuein
+      type is (integer(kind=int8));    write( line, '(i0)' ) valuein
+      type is (integer(kind=int16));   write( line, '(i0)' ) valuein
+      type is (integer(kind=int32));   write( line, '(i0)' ) valuein
+      type is (integer(kind=int64));   write( line, '(i0)' ) valuein
+      type is (real(kind=real32));     write( line, '(1pg0)' ) valuein
+      type is (real(kind=real64));     write( line, '(1pg0)' ) valuein
+      type is (logical);               write( line, '(l1)' ) valuein
+      type is (complex);               write( line, '("(",1pg0,",",1pg0,")")' ) valuein
+      type is (character(len = *))
+         if(present( length ) )then
+            local_length = length
+         else
+            local_length = len(valuein)
+         endif
+         strout = adjustc( crop(valuein), local_length )
+         return
       class default
          stop '<ERROR>*cpad* unknown type'
    end select
-   strout= adjustc(crop(line),length)
+
+   if(present(length))then
+      strout = adjustc( crop(line), length )
+   else
+      strout = crop( line )
+   endif
+
 end function cpad
 !===================================================================================================================================
 !>
+!!
 !!##NAME
 !!    lpad(3f) - [M_strings:LENGTH] convert to a cropped string and then
 !!    blank-pad on the left to requested length
@@ -4956,25 +4987,39 @@ function lpad(valuein,length) result(strout)
 ! ident_39="@(#) M_strings lpad(3f) convert value to string padded on left to at least specified length"
 
 class(*),intent(in)              :: valuein
-integer,intent(in)               :: length
+integer,intent(in),optional      :: length
 character(len=:),allocatable     :: strout
-character(len=4096)              :: line
+
+character(len=96)                :: line
+integer                          :: local_length
+
    select type(valuein)
-      type is (integer(kind=int8));     write(line,'(i0)') valuein
-      type is (integer(kind=int16));    write(line,'(i0)') valuein
-      type is (integer(kind=int32));    write(line,'(i0)') valuein
-      type is (integer(kind=int64));    write(line,'(i0)') valuein
-      type is (real(kind=real32));      write(line,'(1pg0)') valuein
-      type is (real(kind=real64));      write(line,'(1pg0)') valuein
-      type is (logical);                write(line,'(l1)') valuein
-      type is (complex);                write(line,'("(",1pg0,",",1pg0,")")') valuein
+      type is (integer(kind=int8));    write(line,'(i0)') valuein
+      type is (integer(kind=int16));   write(line,'(i0)') valuein
+      type is (integer(kind=int32));   write(line,'(i0)') valuein
+      type is (integer(kind=int64));   write(line,'(i0)') valuein
+      type is (real(kind=real32));     write(line,'(1pg0)') valuein
+      type is (real(kind=real64));     write(line,'(1pg0)') valuein
+      type is (logical);               write(line,'(l1)') valuein
+      type is (complex);               write(line,'("(",1pg0,",",1pg0,")")') valuein
       type is (character(len=*))
-         strout= pad(valuein,length,' ',right=.false.,clip=.true.)
+         if(present( length ))then
+            local_length=length
+         else
+            local_length=len( valuein )
+         endif
+         strout = pad( valuein, local_length, ' ', right=.false., clip=.true. )
          return
       class default
          stop '<ERROR>*lpad* unknown type'
    end select
-   strout= pad(line,length,' ',clip=.true.,right=.false.)
+
+   if(present(length))then
+      strout = pad( line, length, ' ', clip=.true., right=.false. )
+   else
+      strout = crop( line )
+   endif
+
 end function lpad
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -6091,7 +6136,6 @@ end function s2v
 !!      program demo_dble
 !!      use M_strings, only: dble
 !!      implicit none
-!!      character(len=80) :: string
 !!      write(*,*)dble('100'),dble('20.4')
 !!      write(*,*)'dble still works',dble(20),dble(20.4)
 !!      write(*,*)'elemental',&
@@ -6147,7 +6191,6 @@ end function dble_s2v
 !!      program demo_real
 !!      use M_strings, only: real
 !!      implicit none
-!!      character(len=80) :: string
 !!      write(*,*)real('100'),real('20.4')
 !!      write(*,*)'real still works',real(20)
 !!      write(*,*)'elemental',&
@@ -6203,7 +6246,6 @@ end function real_s2v
 !!      program demo_int
 !!      use M_strings, only: int
 !!      implicit none
-!!      character(len=80) :: string
 !!      write(*,*)int('100'),int('20.4')
 !!      write(*,*)'int still works',int(20.4)
 !!      write(*,*)'elemental',&
@@ -6255,7 +6297,6 @@ end function real_s2v
 !!      program demo_nint
 !!      use M_strings, only: nint
 !!      implicit none
-!!      character(len=80) :: string
 !!      write(*,*)nint('100'),nint('20.4')
 !!      write(*,*)'nint still works',nint(20.4)
 !!      write(*,*)'elemental',&
@@ -11462,7 +11503,6 @@ end function atol
 !!       doubleprecision               :: dv
 !!       integer                       :: iv
 !!       real                          :: rv
-!!       logical                       :: chk
 !!       integer                       :: i
 !!
 !!       ! different strings representing INTEGER, REAL, and DOUBLEPRECISION

@@ -126,11 +126,11 @@
 !!       str3=string('   12.345678901234567e1        ')
 !!       str3=string('Four score and seven years ago')
 !!       write(*,101)'str3%str ................... ',str3%str
-!!       ! calls M_strings procedure MATCHW
+!!       ! calls M_strings procedure GLOB
 !!       write(*,*)'match("Fo*") ............... ', str3%match("Fo*")
-!!       ! calls M_strings procedure MATCHW
+!!       ! calls M_strings procedure GLOB
 !!       write(*,*)'match("and") ............... ', str3%match("and")
-!!       ! calls M_strings procedure MATCHW
+!!       ! calls M_strings procedure GLOB
 !!       write(*,*)'match("*and*") ............. ', str3%match("*and*")
 !!
 !!       101 format(1x,a,"[",a,"]")
@@ -291,7 +291,7 @@ use M_strings, only : reverse
 use M_strings, only : notabs, noesc, expand
 use M_strings, only : substitute, transliterate
 use M_strings, only : string_to_value, switch, v2s, s2v
-use M_strings, only : switch, split, matchw
+use M_strings, only : switch, split, glob
 implicit none
 private
 integer,parameter,private :: dp=kind(0.0d0)
@@ -324,7 +324,7 @@ contains
    procedure  ::  cpad           =>  oop_cpad
    procedure  ::  rpad           =>  oop_rpad
    procedure  ::  zpad           =>  oop_zpad
-   procedure  ::  match          =>  oop_matchw
+   procedure  ::  match          =>  oop_glob
    procedure  ::  lower          =>  oop_lower
    procedure  ::  noesc          =>  oop_noesc
    procedure  ::  notabs         =>  oop_notabs
@@ -712,15 +712,15 @@ end function oop_lenset
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
-function oop_matchw(self,pattern) result (answer)
+function oop_glob(self,pattern) result (answer)
 
-! ident_27="@(#) M_strings oop_matchw(3f) test if wildcard pattern matches string"
+! ident_27="@(#) M_strings oop_glob(3f) test if wildcard pattern matches string"
 
 class(string),intent(in)     :: self
 character(len=*),intent(in)  :: pattern
 logical                      :: answer
-   answer=matchw(self%str,pattern)
-end function oop_matchw
+   answer=glob(self%str,pattern)
+end function oop_glob
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================

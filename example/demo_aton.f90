@@ -6,7 +6,6 @@
         doubleprecision               :: dv
         integer                       :: iv
         real                          :: rv
-        logical                       :: chk
         integer                       :: i
 
         ! different strings representing INTEGER, REAL, and DOUBLEPRECISION

@@ -1,7 +1,6 @@
        program demo_int
        use M_strings, only: int
        implicit none
-       character(len=80) :: string
        write(*,*)int('100'),int('20.4')
        write(*,*)'int still works',int(20.4)
        write(*,*)'elemental',&

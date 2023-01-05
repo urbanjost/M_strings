@@ -11,7 +11,7 @@ jobs:
         os: [ubuntu-latest ]
         include:
         - os: ubuntu-latest
-          gcc_v: 10
+          gcc_v: 12
 
     env:
       FC: gfortran
@@ -35,22 +35,28 @@ jobs:
            uname -a
            wget https://raw.githubusercontent.com/urbanjost/index/main/bootstrap/fpm.F90
            mkdir -p /home/runner/.local/bin
-           gfortran fpm.F90 -o /home/runner/.local/bin/fpm
+           ulimit -c unlimited -d unlimited -f unlimited -m unlimited -s unlimited -t unlimited -v unlimited -x unlimited
+           gfortran fpm.F90 -static -o /home/runner/.local/bin/fpm
            ls -l
 
     - name: Display environment
       run: |
         #make -k -p -fNOTTHERE
         echo "end" > foo.f90
+        ulimit -c unlimited -d unlimited -f unlimited -m unlimited -s unlimited -t unlimited -v unlimited -x unlimited
         gfortran -cpp -E -dM foo.f90
         gfortran --version
         fpm --version
 
     - name: ubuntu with gfortran (debug)
-      run: fpm test --profile debug
+      run: |
+           ulimit -c unlimited -d unlimited -f unlimited -m unlimited -s unlimited -t unlimited -v unlimited -x unlimited
+           fpm test --profile debug --verbose
 
     - name: ubuntu with gfortran (release)
-      run: fpm test --profile release
+      run: |
+           ulimit -c unlimited -d unlimited -f unlimited -m unlimited -s unlimited -t unlimited -v unlimited -x unlimited
+           fpm test --profile release 
 
 #    - name: Run demo programs (fpm run)
 #      run: fpm run --profile release

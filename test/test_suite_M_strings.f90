@@ -2,6 +2,7 @@ module M_testsuite_M_strings
 use,intrinsic :: iso_fortran_env,only : std_in=>input_unit,std_out=>output_unit,std_err=>error_unit
 use M_verify
 use M_strings
+implicit none
 character(len=*),parameter :: options=' -section 3 -library libGPF -filename `pwd`/M_strings.FF &
 & -documentation y -ufpp   y -ccall  n -archive  GPF.a '
 character(len=*),parameter :: g='(*(g0,1x))'
@@ -665,7 +666,6 @@ subroutine test_m_strings
 !-!use M_strings, only: lower
 !-!use M_strings, only: switch
 !-!use M_strings, only: isgraph,isprint
-implicit none
 character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 character(len=1)            :: chars(36)
@@ -733,7 +733,6 @@ end subroutine test_chomp
 !-----------------------------------------------------------------------------------------------------------------------------------
 subroutine test_substitute
 !-!use M_strings, only : substitute
-implicit none
 character(len=:),allocatable    :: targetline   ! input line to be changed
 character(len=:),allocatable    :: old          ! old substring to replace
 character(len=:),allocatable    :: new          ! new substring
@@ -935,7 +934,6 @@ end subroutine test_crop
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_transliterate
 !-!use M_strings, only: transliterate
-implicit none
 character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
    call unit_check_start('transliterate',' &
@@ -957,7 +955,6 @@ end subroutine test_rotate13
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_reverse
 !-!use M_strings, only: reverse
-implicit none
 character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 !-----------------------------------------------------------------------------------------------------------------------------------
    call unit_check_start('reverse',' -description ''elemental function reverses character order in a string'' '//OPTIONS )
@@ -976,7 +973,6 @@ end subroutine test_reverse
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_upper
 !-!use M_strings, only: upper
-implicit none
 character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -988,7 +984,6 @@ end subroutine test_upper
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_lower
 !-!use M_strings, only: lower
-implicit none
 character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -1001,7 +996,6 @@ end subroutine test_lower
 subroutine test_switch
 !-!use M_switch, only: reverse
 !-!use M_switch, only: switch
-implicit none
 character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 character(len=1)            :: chars(36)
@@ -1207,7 +1201,6 @@ end subroutine test_adjustc
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_nospace
 !-!use M_strings, only: nospace
-implicit none
    character(len=:),allocatable :: string
    string='  This     is      a     test  '
    string=nospace(string)
@@ -1302,7 +1295,6 @@ end subroutine test_merge_str
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_compact
 !-!use M_strings, only: compact
-implicit none
    call unit_check_start('compact',' &
       & -description ''left justify string and replace duplicate whitespace with single characters or nothing'' '//OPTIONS )
    if (compact('  This  is     a    test  ')  /=  'This is a test')then
@@ -1463,7 +1455,6 @@ end subroutine test_s2v
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_value_to_string
 !-!use M_strings, only: value_to_string
-implicit none
 CHARACTER(LEN=80) :: STRING
 doubleprecision   :: DVALUE
 real              :: RVALUE
@@ -1545,7 +1536,6 @@ end subroutine test_v2s
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isnumber
 !-!use M_strings, only: isnumber
-implicit none
    call unit_check_start('isnumber',' '//OPTIONS )
    call unit_check('isnumber',isnumber(' 123 ')                                            ==  1,  'integer string')
    call unit_check('isnumber',isnumber(' -123. ')                                          ==  2,  'whole number string')
@@ -1639,7 +1629,6 @@ end subroutine test_unquote
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_describe
 !-!use M_strings, only: describe
-implicit none
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: char
 integer                       :: i
@@ -1739,7 +1728,6 @@ integer,allocatable         :: ivalues(:)
 end subroutine test_edit_distance
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_bundle()
-integer,allocatable         :: ivalues(:)
    call unit_check_start('bundle',' -description ''return array from list of strings'''//OPTIONS)
    call unit_check('bundle',all(bundle('kittens','sit','three') == ["kittens","sit    ","three  "]), &
                                                                   &"'kittens','sit    ','three  '")
@@ -1748,7 +1736,6 @@ end subroutine test_bundle
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isprint
 !-!use M_strings, only: isprint
-implicit none
 integer :: i
    call unit_check_start('isprint',' &
       & -description ''elemental function determines if CHR is an ASCII printable character'' '//OPTIONS )
@@ -1773,7 +1760,6 @@ end subroutine test_isprint
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isgraph
 !-!use M_strings, only: isgraph
-implicit none
 integer :: i
    call unit_check_start('isgraph',' &
       & -description ''elemental function true if CHR is an ASCII printable character except considers a space non-printable'' '&
@@ -1799,7 +1785,6 @@ end subroutine test_isgraph
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isalpha
 !-!use M_strings, only: isalpha
-implicit none
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
@@ -1827,7 +1812,6 @@ end subroutine test_isalpha
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isxdigit
 !-!use M_strings, only: isxdigit
-implicit none
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
@@ -1856,7 +1840,6 @@ end subroutine test_isxdigit
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isdigit
 !-!use M_strings, only: isdigit
-implicit none
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: char
 integer                       :: i
@@ -1883,7 +1866,6 @@ end subroutine test_isdigit
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isblank
 !-!use M_strings, only: isblank
-implicit none
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: char
 integer                       :: i
@@ -1910,7 +1892,6 @@ end subroutine test_isblank
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isascii
 !-!use M_strings, only: isascii
-implicit none
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: char
 integer                       :: i
@@ -1938,7 +1919,6 @@ end subroutine test_isascii
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isspace
 !-!use M_strings, only: isspace
-implicit none
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: char
 integer                       :: i
@@ -1967,7 +1947,6 @@ end subroutine test_isspace
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_iscntrl
 !-!use M_strings, only: iscntrl
-implicit none
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: char
 integer                       :: i
@@ -1995,7 +1974,6 @@ end subroutine test_iscntrl
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_ispunct
 !-!use M_strings, only: ispunct
-implicit none
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: char
 integer                       :: i
@@ -2023,7 +2001,6 @@ end subroutine test_ispunct
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isupper
 !-!use M_strings, only: isupper
-implicit none
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
@@ -2052,7 +2029,6 @@ end subroutine test_isupper
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_islower
 !-!use M_strings, only: islower
-implicit none
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
@@ -2081,7 +2057,6 @@ end subroutine test_islower
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isalnum
 !-!use M_strings, only: isalnum
-implicit none
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
@@ -2168,6 +2143,7 @@ program runtest
 use M_msg
 use M_verify, only : unit_check_command, unit_check_keep_going, unit_check_level, unit_check_stop
 use M_testsuite_M_strings
+implicit none
    unit_check_command=''
    unit_check_keep_going=.true.
 !  unit_check_level=1

@@ -1,7 +1,6 @@
        program demo_real
        use M_strings, only: real
        implicit none
-       character(len=80) :: string
        write(*,*)real('100'),real('20.4')
        write(*,*)'real still works',real(20)
        write(*,*)'elemental',&

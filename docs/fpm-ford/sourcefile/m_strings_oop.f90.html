@@ -88,7 +88,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title=" 8.7% of total for source files.">369 statements</a>
+               title=" 7.8% of total for source files.">369 statements</a>
           </li>
 
             <li id="source-file">
@@ -333,11 +333,11 @@
 <a id="ln-126" name="ln-126" href="#ln-126"></a><span class="c">!!       str3=string(&#39;   12.345678901234567e1        &#39;)</span>
 <a id="ln-127" name="ln-127" href="#ln-127"></a><span class="c">!!       str3=string(&#39;Four score and seven years ago&#39;)</span>
 <a id="ln-128" name="ln-128" href="#ln-128"></a><span class="c">!!       write(*,101)&#39;str3%str ................... &#39;,str3%str</span>
-<a id="ln-129" name="ln-129" href="#ln-129"></a><span class="c">!!       ! calls M_strings procedure MATCHW</span>
+<a id="ln-129" name="ln-129" href="#ln-129"></a><span class="c">!!       ! calls M_strings procedure GLOB</span>
 <a id="ln-130" name="ln-130" href="#ln-130"></a><span class="c">!!       write(*,*)&#39;match(&quot;Fo*&quot;) ............... &#39;, str3%match(&quot;Fo*&quot;)</span>
-<a id="ln-131" name="ln-131" href="#ln-131"></a><span class="c">!!       ! calls M_strings procedure MATCHW</span>
+<a id="ln-131" name="ln-131" href="#ln-131"></a><span class="c">!!       ! calls M_strings procedure GLOB</span>
 <a id="ln-132" name="ln-132" href="#ln-132"></a><span class="c">!!       write(*,*)&#39;match(&quot;and&quot;) ............... &#39;, str3%match(&quot;and&quot;)</span>
-<a id="ln-133" name="ln-133" href="#ln-133"></a><span class="c">!!       ! calls M_strings procedure MATCHW</span>
+<a id="ln-133" name="ln-133" href="#ln-133"></a><span class="c">!!       ! calls M_strings procedure GLOB</span>
 <a id="ln-134" name="ln-134" href="#ln-134"></a><span class="c">!!       write(*,*)&#39;match(&quot;*and*&quot;) ............. &#39;, str3%match(&quot;*and*&quot;)</span>
 <a id="ln-135" name="ln-135" href="#ln-135"></a><span class="c">!!</span>
 <a id="ln-136" name="ln-136" href="#ln-136"></a><span class="c">!!       101 format(1x,a,&quot;[&quot;,a,&quot;]&quot;)</span>
@@ -498,7 +498,7 @@
 <a id="ln-291" name="ln-291" href="#ln-291"></a><span class="k">use </span><span class="n">M_strings</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">notabs</span><span class="p">,</span><span class="w"> </span><span class="n">noesc</span><span class="p">,</span><span class="w"> </span><span class="n">expand</span><span class="w"></span>
 <a id="ln-292" name="ln-292" href="#ln-292"></a><span class="k">use </span><span class="n">M_strings</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">substitute</span><span class="p">,</span><span class="w"> </span><span class="n">transliterate</span><span class="w"></span>
 <a id="ln-293" name="ln-293" href="#ln-293"></a><span class="k">use </span><span class="n">M_strings</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">string_to_value</span><span class="p">,</span><span class="w"> </span><span class="n">switch</span><span class="p">,</span><span class="w"> </span><span class="n">v2s</span><span class="p">,</span><span class="w"> </span><span class="n">s2v</span><span class="w"></span>
-<a id="ln-294" name="ln-294" href="#ln-294"></a><span class="k">use </span><span class="n">M_strings</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">switch</span><span class="p">,</span><span class="w"> </span><span class="n">split</span><span class="p">,</span><span class="w"> </span><span class="n">matchw</span><span class="w"></span>
+<a id="ln-294" name="ln-294" href="#ln-294"></a><span class="k">use </span><span class="n">M_strings</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">switch</span><span class="p">,</span><span class="w"> </span><span class="n">split</span><span class="p">,</span><span class="w"> </span><span class="n">glob</span><span class="w"></span>
 <a id="ln-295" name="ln-295" href="#ln-295"></a><span class="k">implicit none</span>
 <a id="ln-296" name="ln-296" href="#ln-296"></a><span class="k">private</span>
 <a id="ln-297" name="ln-297" href="#ln-297"></a><span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span><span class="p">,</span><span class="k">private</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dp</span><span class="o">=</span><span class="nb">kind</span><span class="p">(</span><span class="mf">0.0d0</span><span class="p">)</span><span class="w"></span>
@@ -531,7 +531,7 @@
 <a id="ln-324" name="ln-324" href="#ln-324"></a><span class="w">   </span><span class="k">procedure</span><span class="w">  </span><span class="kd">::</span><span class="w">  </span><span class="n">cpad</span><span class="w">           </span><span class="o">=&gt;</span><span class="w">  </span><span class="n">oop_cpad</span><span class="w"></span>
 <a id="ln-325" name="ln-325" href="#ln-325"></a><span class="w">   </span><span class="k">procedure</span><span class="w">  </span><span class="kd">::</span><span class="w">  </span><span class="n">rpad</span><span class="w">           </span><span class="o">=&gt;</span><span class="w">  </span><span class="n">oop_rpad</span><span class="w"></span>
 <a id="ln-326" name="ln-326" href="#ln-326"></a><span class="w">   </span><span class="k">procedure</span><span class="w">  </span><span class="kd">::</span><span class="w">  </span><span class="n">zpad</span><span class="w">           </span><span class="o">=&gt;</span><span class="w">  </span><span class="n">oop_zpad</span><span class="w"></span>
-<a id="ln-327" name="ln-327" href="#ln-327"></a><span class="w">   </span><span class="k">procedure</span><span class="w">  </span><span class="kd">::</span><span class="w">  </span><span class="n">match</span><span class="w">          </span><span class="o">=&gt;</span><span class="w">  </span><span class="n">oop_matchw</span><span class="w"></span>
+<a id="ln-327" name="ln-327" href="#ln-327"></a><span class="w">   </span><span class="k">procedure</span><span class="w">  </span><span class="kd">::</span><span class="w">  </span><span class="n">match</span><span class="w">          </span><span class="o">=&gt;</span><span class="w">  </span><span class="n">oop_glob</span><span class="w"></span>
 <a id="ln-328" name="ln-328" href="#ln-328"></a><span class="w">   </span><span class="k">procedure</span><span class="w">  </span><span class="kd">::</span><span class="w">  </span><span class="n">lower</span><span class="w">          </span><span class="o">=&gt;</span><span class="w">  </span><span class="n">oop_lower</span><span class="w"></span>
 <a id="ln-329" name="ln-329" href="#ln-329"></a><span class="w">   </span><span class="k">procedure</span><span class="w">  </span><span class="kd">::</span><span class="w">  </span><span class="n">noesc</span><span class="w">          </span><span class="o">=&gt;</span><span class="w">  </span><span class="n">oop_noesc</span><span class="w"></span>
 <a id="ln-330" name="ln-330" href="#ln-330"></a><span class="w">   </span><span class="k">procedure</span><span class="w">  </span><span class="kd">::</span><span class="w">  </span><span class="n">notabs</span><span class="w">         </span><span class="o">=&gt;</span><span class="w">  </span><span class="n">oop_notabs</span><span class="w"></span>
@@ -919,15 +919,15 @@
 <a id="ln-712" name="ln-712" href="#ln-712"></a><span class="c">!===================================================================================================================================</span>
 <a id="ln-713" name="ln-713" href="#ln-713"></a><span class="c">!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!</span>
 <a id="ln-714" name="ln-714" href="#ln-714"></a><span class="c">!===================================================================================================================================</span>
-<a id="ln-715" name="ln-715" href="#ln-715"></a><span class="k">function </span><span class="n">oop_matchw</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="n">pattern</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="p">(</span><span class="n">answer</span><span class="p">)</span><span class="w"></span>
+<a id="ln-715" name="ln-715" href="#ln-715"></a><span class="k">function </span><span class="n">oop_glob</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="n">pattern</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="p">(</span><span class="n">answer</span><span class="p">)</span><span class="w"></span>
 <a id="ln-716" name="ln-716" href="#ln-716"></a>
-<a id="ln-717" name="ln-717" href="#ln-717"></a><span class="c">! ident_27=&quot;@(#) M_strings oop_matchw(3f) test if wildcard pattern matches string&quot;</span>
+<a id="ln-717" name="ln-717" href="#ln-717"></a><span class="c">! ident_27=&quot;@(#) M_strings oop_glob(3f) test if wildcard pattern matches string&quot;</span>
 <a id="ln-718" name="ln-718" href="#ln-718"></a>
 <a id="ln-719" name="ln-719" href="#ln-719"></a><span class="k">class</span><span class="p">(</span><span class="n">string</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">self</span><span class="w"></span>
 <a id="ln-720" name="ln-720" href="#ln-720"></a><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">pattern</span><span class="w"></span>
 <a id="ln-721" name="ln-721" href="#ln-721"></a><span class="kt">logical</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">answer</span><span class="w"></span>
-<a id="ln-722" name="ln-722" href="#ln-722"></a><span class="w">   </span><span class="n">answer</span><span class="o">=</span><span class="n">matchw</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">str</span><span class="p">,</span><span class="n">pattern</span><span class="p">)</span><span class="w"></span>
-<a id="ln-723" name="ln-723" href="#ln-723"></a><span class="k">end function </span><span class="n">oop_matchw</span><span class="w"></span>
+<a id="ln-722" name="ln-722" href="#ln-722"></a><span class="w">   </span><span class="n">answer</span><span class="o">=</span><span class="n">glob</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">str</span><span class="p">,</span><span class="n">pattern</span><span class="p">)</span><span class="w"></span>
+<a id="ln-723" name="ln-723" href="#ln-723"></a><span class="k">end function </span><span class="n">oop_glob</span><span class="w"></span>
 <a id="ln-724" name="ln-724" href="#ln-724"></a><span class="c">!===================================================================================================================================</span>
 <a id="ln-725" name="ln-725" href="#ln-725"></a><span class="c">!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!</span>
 <a id="ln-726" name="ln-726" href="#ln-726"></a><span class="c">!===================================================================================================================================</span>
@@ -1114,7 +1114,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 14:17            </p>
+ on 2022-12-31 22:31            </p>
         </div>
       </div>
       <br>

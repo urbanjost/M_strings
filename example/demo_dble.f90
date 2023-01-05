@@ -1,7 +1,6 @@
        program demo_dble
        use M_strings, only: dble
        implicit none
-       character(len=80) :: string
        write(*,*)dble('100'),dble('20.4')
        write(*,*)'dble still works',dble(20),dble(20.4)
        write(*,*)'elemental',&

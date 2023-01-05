@@ -209,22 +209,42 @@ logical,intent(in),optional                :: clip
      <span class="o">&amp;</span> <span class="n">pad</span><span class="p">(</span><span class="s">&#39;APPENDIX &#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s">&#39;.&#39;</span><span class="p">),</span>                  <span class="mi">1235</span>
 
      <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12&#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s">&#39;0&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span>
+
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.,</span><span class="n">clip</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.,</span><span class="n">clip</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.,</span><span class="n">clip</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.,</span><span class="n">clip</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span>
+     <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">pad</span><span class="p">(</span><span class="s">&#39;12345 &#39;</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="s">&#39;_&#39;</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.,</span><span class="n">clip</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
 <span class="n">end</span> <span class="n">program</span> <span class="n">demo_pad</span>
 </code></pre></div>
 
 <p>Results:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">[abcdefghij]</span><span class="w"></span>
-<span class="k">[abcdefghij          ]</span><span class="w"></span>
-
-<span class="w"> </span><span class="na">CHAPTER 1 : The beginning .... 1</span><span class="w"></span>
-<span class="w"> </span><span class="na">CHAPTER 2 : The end .......... 1234</span><span class="w"></span>
-<span class="w"> </span><span class="na">APPENDIX ..................... 1235</span><span class="w"></span>
-
-<span class="w"> </span><span class="na">CHAPTER 1 : The beginning ....      1</span><span class="w"></span>
-<span class="w"> </span><span class="na">CHAPTER 2 : The end ..........   1234</span><span class="w"></span>
-<span class="w"> </span><span class="na">APPENDIX .....................   1235</span><span class="w"></span>
-</code></pre></div>
-
+<blockquote>
+<p>[abcdefghij]
+[abcdefghij          ]</p>
+<p>CHAPTER 1 : The beginning .... 1
+ CHAPTER 2 : The end .......... 1234
+ APPENDIX ..................... 1235</p>
+<p>CHAPTER 1 : The beginning ....      1
+ CHAPTER 2 : The end ..........   1234
+ APPENDIX .....................   1235
+00012
+<strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>12345
+</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong>_12345
+_12345
+__12345
+12345
+_12345
+12345
+12345
+12345
+12345</p>
+</blockquote>
 <h2 id="see-also">SEE ALSO</h2>
 <div class="codehilite"><pre><span></span><code> adjustl(3f), adjustr(3f), repeat(3f), trim(3f), len_trim(3f), len(3f)
 
@@ -415,7 +435,7 @@ logical,intent(in),optional                :: clip
 <span class="k">      </span><span class="n">strout</span><span class="p">(:)</span><span class="o">=</span><span class="n">local_line</span><span class="o">//</span><span class="nb">repeat</span><span class="p">(</span><span class="n">local_pattern</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">strout</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">local_pattern</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
 <span class="w">   </span><span class="k">else</span>
 <span class="k">      </span><span class="n">strout</span><span class="p">(:)</span><span class="o">=</span><span class="nb">repeat</span><span class="p">(</span><span class="n">local_pattern</span><span class="p">,</span><span class="w"> </span><span class="nb">ceiling</span><span class="p">(</span><span class="kt">real</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">strout</span><span class="p">))</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">local_pattern</span><span class="p">)))</span><span class="w"></span>
-<span class="w">      </span><span class="n">strout</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">strout</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">local_line</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">:)</span><span class="o">=</span><span class="n">local_line</span><span class="w"></span>
+<span class="w">      </span><span class="n">strout</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">strout</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">local_line</span><span class="p">))</span><span class="o">+</span><span class="mi">1</span><span class="p">:)</span><span class="o">=</span><span class="n">local_line</span><span class="w"></span>
 <span class="w">   </span><span class="k">endif</span>
 
 <span class="k">endif</span>
@@ -440,7 +460,7 @@ logical,intent(in),optional                :: clip
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 14:17            </p>
+ on 2022-12-31 22:31            </p>
         </div>
       </div>
       <br>

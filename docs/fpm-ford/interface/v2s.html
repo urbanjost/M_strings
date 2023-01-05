@@ -88,7 +88,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="<p> 0.1% of total for procedures.</p>Including implementation: 51 statements,  1.8% of total for procedures.">3 statements</a>
+               title="<p> 0.1% of total for procedures.</p>Including implementation: 51 statements,  1.7% of total for procedures.">3 statements</a>
           </li>
 
             <li id="source-file">
@@ -208,7 +208,64 @@
     <div class="panel-heading codesum"><span class="anchor" id="proc-d2s"></span><h3>private  function d2s(dvalue, fmt) result(outstr)  
 </h3></div>
     <div class="panel-body">
-        
+        <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>  <span class="nv">v2s</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">TYPE</span>] <span class="k">return</span> <span class="nv">numeric</span> <span class="nv">string</span> <span class="nv">from</span> <span class="nv">a</span> <span class="nv">numeric</span> <span class="nv">value</span>
+  <span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code><span class="w">   </span><span class="k">function</span><span class="w"> </span><span class="nf">v2s(value) result</span><span class="p">(</span>outstr<span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">integer</span><span class="o">|</span><span class="nb">real</span><span class="o">|</span><span class="n">doubleprecision</span><span class="o">|</span><span class="nb">logical</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">value</span><span class="w"></span>
+<span class="w">    </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">outstr</span><span class="w"></span>
+<span class="w">    </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">optional</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">fmt</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code>v2s(3f) returns a representation of a numeric value as a
+string when given a numeric value of type REAL, DOUBLEPRECISION,
+INTEGER or LOGICAL. It creates the strings using internal WRITE()
+statements. Trailing zeros are removed from non-zero values, and the
+string is left-justified.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code>VALUE   input value to be converted to a string
+FMT     format can be explicitly given, but is limited to
+        generating a string of eighty or less characters.
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code>OUTSTR  returned string representing input value,
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<p>Sample Program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_v2s</span>
+<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">v2s</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">The value of 3.0/4.0 is [</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">v2s</span><span class="ss">(</span><span class="mi">3</span>.<span class="mi">0</span><span class="o">/</span><span class="mi">4</span>.<span class="mi">0</span><span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">The value of 1234    is [</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">v2s</span><span class="ss">(</span><span class="mi">1234</span><span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">The value of 0d0     is [</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">v2s</span><span class="ss">(</span><span class="mi">0</span><span class="nv">d0</span><span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">The value of .false. is [</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">v2s</span><span class="ss">(</span>.<span class="nv">false</span>.<span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">The value of .true. is  [</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">v2s</span><span class="ss">(</span>.<span class="nv">true</span>.<span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_v2s</span>
+</code></pre></div>
+
+<p>Expected output</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mf">3.0</span><span class="o">/</span><span class="mf">4.0</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">[</span><span class="n">0.75</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">1234</span><span class="w">    </span><span class="k">is</span><span class="w"> </span><span class="o">[</span><span class="n">1234</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">0</span><span class="n">d0</span><span class="w">     </span><span class="k">is</span><span class="w"> </span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="p">.</span><span class="k">false</span><span class="p">.</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">[</span><span class="n">F</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="p">.</span><span class="k">true</span><span class="p">.</span><span class="w"> </span><span class="k">is</span><span class="w">  </span><span class="o">[</span><span class="n">T</span><span class="o">]</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -456,7 +513,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 14:17            </p>
+ on 2022-12-31 22:31            </p>
         </div>
       </div>
       <br>

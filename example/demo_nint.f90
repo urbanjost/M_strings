@@ -1,7 +1,6 @@
        program demo_nint
        use M_strings, only: nint
        implicit none
-       character(len=80) :: string
        write(*,*)nint('100'),nint('20.4')
        write(*,*)'nint still works',nint(20.4)
        write(*,*)'elemental',&

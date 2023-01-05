@@ -95,11 +95,11 @@
         str3=string('   12.345678901234567e1        ')
         str3=string('Four score and seven years ago')
         write(*,101)'str3%str ................... ',str3%str
-        ! calls M_strings procedure MATCHW
+        ! calls M_strings procedure GLOB
         write(*,*)'match("Fo*") ............... ', str3%match("Fo*")
-        ! calls M_strings procedure MATCHW
+        ! calls M_strings procedure GLOB
         write(*,*)'match("and") ............... ', str3%match("and")
-        ! calls M_strings procedure MATCHW
+        ! calls M_strings procedure GLOB
         write(*,*)'match("*and*") ............. ', str3%match("*and*")
 
         101 format(1x,a,"[",a,"]")

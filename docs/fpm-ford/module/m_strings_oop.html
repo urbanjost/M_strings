@@ -88,7 +88,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title=" 8.7% of total for modules and submodules.">369 statements</a>
+               title=" 7.8% of total for modules and submodules.">369 statements</a>
           </li>
 
             <li id="source-file">
@@ -306,11 +306,11 @@
 <span class="w">   </span><span class="n">str3</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;   12.345678901234567e1        &#39;</span><span class="p">)</span><span class="w"></span>
 <span class="w">   </span><span class="n">str3</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;Four score and seven years ago&#39;</span><span class="p">)</span><span class="w"></span>
 <span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str3</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str3</span><span class="o">%</span><span class="nb">str</span><span class="w"></span>
-<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">calls</span><span class="w"> </span><span class="n">M_strings</span><span class="w"> </span><span class="n">procedure</span><span class="w"> </span><span class="n">MATCHW</span><span class="w"></span>
+<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">calls</span><span class="w"> </span><span class="n">M_strings</span><span class="w"> </span><span class="n">procedure</span><span class="w"> </span><span class="n">GLOB</span><span class="w"></span>
 <span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;match(&quot;Fo*&quot;) ............... &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">str3</span><span class="o">%</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;Fo*&quot;</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">calls</span><span class="w"> </span><span class="n">M_strings</span><span class="w"> </span><span class="n">procedure</span><span class="w"> </span><span class="n">MATCHW</span><span class="w"></span>
+<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">calls</span><span class="w"> </span><span class="n">M_strings</span><span class="w"> </span><span class="n">procedure</span><span class="w"> </span><span class="n">GLOB</span><span class="w"></span>
 <span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;match(&quot;and&quot;) ............... &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">str3</span><span class="o">%</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;and&quot;</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">calls</span><span class="w"> </span><span class="n">M_strings</span><span class="w"> </span><span class="n">procedure</span><span class="w"> </span><span class="n">MATCHW</span><span class="w"></span>
+<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">calls</span><span class="w"> </span><span class="n">M_strings</span><span class="w"> </span><span class="n">procedure</span><span class="w"> </span><span class="n">GLOB</span><span class="w"></span>
 <span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;match(&quot;*and*&quot;) ............. &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">str3</span><span class="o">%</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;*and*&quot;</span><span class="p">)</span><span class="w"></span>
 
 <span class="w">   </span><span class="mi">101</span><span class="w"> </span><span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="s2">&quot;[&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="s2">&quot;]&quot;</span><span class="p">)</span><span class="w"></span>
@@ -868,7 +868,7 @@
                     ,                  public
                   :: <strong><a href='../type/string.html#boundprocedure-match'>match</a></strong>
  =>
-                    oop_matchw
+                    oop_glob
 <small>Function</small>                </td>
                 <td></td>
               </tr>
@@ -1159,7 +1159,7 @@ generic,
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 14:17            </p>
+ on 2022-12-31 22:31            </p>
         </div>
       </div>
       <br>

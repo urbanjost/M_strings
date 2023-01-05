@@ -203,32 +203,86 @@
 </h3></div>
     <div class="panel-body">
         <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="n">nint</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="n">M_strings</span><span class="p">:</span><span class="n">TYPE</span><span class="p">]</span><span class="w"> </span><span class="n">overloads</span><span class="w"> </span><span class="n">NINT</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">arguments</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="nb nb-Type">int</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="n">M_strings</span><span class="p">:</span><span class="n">TYPE</span><span class="p">]</span><span class="w"> </span><span class="n">overloads</span><span class="w"> </span><span class="n">INT</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">arguments</span><span class="w"></span>
 <span class="w">  </span><span class="p">(</span><span class="n">LICENSE</span><span class="p">:</span><span class="n">PD</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 
 <h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>impure elemental function int(string)
+
+ character(len=*) :: string
+ integer(kind=int32) :: int
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nb nb-Type">int</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numeric</span><span class="w"> </span><span class="n">representation</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"></span>
+<span class="n">numeric</span><span class="w"> </span><span class="n">value</span><span class="o">.</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">overloads</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">INT</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">intrinsic</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">CHARACTER</span><span class="w"></span>
+<span class="n">arguments</span><span class="w"> </span><span class="n">assumed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">represent</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numeric</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">input</span><span class="o">.</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code>   STRING  input string to be converted to an INT32 integer
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code>   INT  integer represented by input string
+</code></pre></div>
+
+<h2 id="example">EXAMPLE</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">Sample</span> <span class="nv">program</span>:
+
+  <span class="nv">program</span> <span class="nv">demo_int</span>
+  <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">int</span>
+  <span class="nv">implicit</span> <span class="nv">none</span>
+  <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">80</span><span class="ss">)</span> :: <span class="nv">string</span>
+  <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="nv">int</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">100</span><span class="s1">&#39;</span><span class="ss">)</span>,<span class="nv">int</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">20.4</span><span class="s1">&#39;</span><span class="ss">)</span>
+  <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">int still works</span><span class="s1">&#39;</span>,<span class="nv">int</span><span class="ss">(</span><span class="mi">20</span>.<span class="mi">4</span><span class="ss">)</span>
+  <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">elemental</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+  <span class="o">&amp;</span> <span class="nv">int</span><span class="ss">(</span>[<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">23</span><span class="ss">)</span> :: <span class="s1">&#39;</span><span class="s">10</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">20.3</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">20.5</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">20.6</span><span class="s1">&#39;</span>]<span class="ss">)</span>
+  <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_int</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code>  &gt;          100          20
+  &gt;  int still works          20
+  &gt;  elemental          10          20          20          20
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
+
+<h2 id="name_1">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="n">nint</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="n">M_strings</span><span class="p">:</span><span class="n">TYPE</span><span class="p">]</span><span class="w"> </span><span class="n">overloads</span><span class="w"> </span><span class="n">NINT</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">arguments</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="n">LICENSE</span><span class="p">:</span><span class="n">PD</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="synopsis_1">SYNOPSIS</h2>
 <div class="codehilite"><pre><span></span><code>impure elemental function nint(string)
 
  character(len=*) :: string
  integer          :: nint
 </code></pre></div>
 
-<h2 id="description">DESCRIPTION</h2>
+<h2 id="description_1">DESCRIPTION</h2>
 <div class="codehilite"><pre><span></span><code><span class="n">nint</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numeric</span><span class="w"> </span><span class="n">representation</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"></span>
 <span class="n">numeric</span><span class="w"> </span><span class="n">value</span><span class="o">.</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">overloads</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">NINT</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">intrinsic</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">CHARACTER</span><span class="w"></span>
 <span class="n">arguments</span><span class="w"> </span><span class="n">assumed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">represent</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numeric</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">input</span><span class="o">.</span><span class="w"></span>
 </code></pre></div>
 
-<h2 id="options">OPTIONS</h2>
+<h2 id="options_1">OPTIONS</h2>
 <div class="codehilite"><pre><span></span><code>   STRING  input string to be converted to an integer
 </code></pre></div>
 
-<h2 id="returns">RETURNS</h2>
+<h2 id="returns_1">RETURNS</h2>
 <div class="codehilite"><pre><span></span><code>   NINT  integer represented by input string
 </code></pre></div>
 
-<h2 id="example">EXAMPLE</h2>
+<h2 id="example_1">EXAMPLE</h2>
 <div class="codehilite"><pre><span></span><code><span class="nv">Sample</span> <span class="nv">program</span>:
 
   <span class="nv">program</span> <span class="nv">demo_nint</span>
@@ -248,11 +302,11 @@
   &gt;  elemental          10          20          21          21
 </code></pre></div>
 
-<h2 id="author">AUTHOR</h2>
+<h2 id="author_1">AUTHOR</h2>
 <div class="codehilite"><pre><span></span><code>John S. Urban
 </code></pre></div>
 
-<h2 id="license">LICENSE</h2>
+<h2 id="license_1">LICENSE</h2>
 <div class="codehilite"><pre><span></span><code>Public Domain
 </code></pre></div>
 
@@ -310,7 +364,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-12-26 14:17            </p>
+ on 2022-12-31 22:31            </p>
         </div>
       </div>
       <br>
