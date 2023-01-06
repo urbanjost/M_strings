@@ -6,6 +6,12 @@
            write(*,'("[",a,"]")') zpad( '123456789', 5)
            write(*,'("[",a,"]")') zpad( '  34567  ', 7)
            write(*,'("[",a,"]")') zpad( valuein=42 , length=7)
+           write(*,'("[",a,"]")') zpad( '  +34567  ', 7)
+           write(*,'("[",a,"]")') zpad( '  -34567  ', 7)
+           write(*,'("[",a,"]")') zpad(1234)
+           write(*,'("[",a,"]")') zpad(-1234)
+           write(*,'("[",a,"]")') zpad(1234,8)
+           write(*,'("[",a,"]")') zpad(-1234,8)
 
            ! open output_00085.dat
            i=85

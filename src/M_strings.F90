@@ -5043,7 +5043,7 @@ end function lpad
 !!    length. If the trimmed input string is longer than the requested length
 !!    the original string is returned trimmed of leading and trailing spaces.
 !!
-!!    For strings this is basically an alias for
+!!    For strings representing unsigned numbers this is basically an alias for
 !!
 !!        strout=pad(str,length,'0',clip=.true.,right=.false.)
 !!
@@ -5056,9 +5056,10 @@ end function lpad
 !!    string is cropped.
 !!
 !!##OPTIONS
-!!    str      the input string to return trimmed, but then padded to
-!!             the specified length if shorter than length. If an integer
-!!             is input it is first converted to a string.
+!!    str      May be a string or integer. The input string to return
+!!             trimmed, but then padded to the specified length if shorter
+!!             than length. If an integer is input it is first converted
+!!             to a string.
 !!    length   The minimum string length to return
 !!
 !!##RETURNS
@@ -5078,6 +5079,12 @@ end function lpad
 !!          write(*,'("[",a,"]")') zpad( '123456789', 5)
 !!          write(*,'("[",a,"]")') zpad( '  34567  ', 7)
 !!          write(*,'("[",a,"]")') zpad( valuein=42 , length=7)
+!!          write(*,'("[",a,"]")') zpad( '  +34567  ', 7)
+!!          write(*,'("[",a,"]")') zpad( '  -34567  ', 7)
+!!          write(*,'("[",a,"]")') zpad(1234)
+!!          write(*,'("[",a,"]")') zpad(-1234)
+!!          write(*,'("[",a,"]")') zpad(1234,8)
+!!          write(*,'("[",a,"]")') zpad(-1234,8)
 !!
 !!          ! open output_00085.dat
 !!          i=85
@@ -5088,10 +5095,16 @@ end function lpad
 !!
 !!  Results:
 !!
-!!      [00111]
-!!      [123456789]
-!!      [0034567]
-!!      [0000042]
+!!       [00111]
+!!       [123456789]
+!!       [0034567]
+!!       [0000042]
+!!       [+0034567]
+!!       [-0034567]
+!!       [1234]
+!!       [-1234]
+!!       [00001234]
+!!       [-00001234]
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -5103,9 +5116,15 @@ function zpad(valuein,length) result(strout)
 ! ident_40="@(#) M_strings zpad(3f) return string or integer padded to at least specified length"
 
 class(*),intent(in)              :: valuein
-integer,intent(in)               :: length
+integer,intent(in),optional      :: length
 character(len=:),allocatable     :: strout
 character(len=4096)              :: line
+integer                          :: local_length
+   if(present(length))then
+      local_length=length
+   else
+      local_length=-1
+   endif
    select type(valuein)
       type is (integer(kind=int8));     write(line,'(i0)') valuein
       type is (integer(kind=int16));    write(line,'(i0)') valuein
@@ -5115,9 +5134,19 @@ character(len=4096)              :: line
       type is (real(kind=real64));      write(line,'(1pg0)') valuein
       type is (logical);                write(line,'(l1)') valuein
       type is (character(len=*));       line=valuein
+         if(local_length==-1)local_length=len(valuein)
       type is (complex);                write(line,'("(",1pg0,",",1pg0,")")') valuein
    end select
-   strout= pad(trim(line),length,'0',clip=.true.,right=.false.)
+   if(local_length == -1)then
+     strout=clip(line)
+   else
+      line=clip(line)//'  '
+      if(scan(line(1:1),'+-') == 1)then
+         strout= line(1:1)//pad(line(2:),local_length,'0',clip=.true.,right=.false.)
+      else
+         strout= pad(line,local_length,'0',clip=.true.,right=.false.)
+      endif
+   endif
 end function zpad
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -5254,7 +5283,7 @@ if(  present(right)    )then;  local_right=right;      else;  local_right=.true.
 if(  present(clip)     )then;  local_clip=clip;        else;  local_clip=.false.;  endif
 if(  present(pattern)  )then;  local_pattern=pattern;  else;  local_pattern=' ';   endif
 
-if(len(local_pattern).eq.0)then
+if(len(local_pattern) == 0)then
    strout=line
 else
 
@@ -11321,7 +11350,6 @@ end subroutine matching_delimiter
 !!    character(len=*),intent(in) :: a, b, answer
 !!    character(len=:),allocatable :: match
 !!    character(len=*),parameter :: g='(*(g0))'
-!!    integer :: i
 !!       match=longest_common_substring(a,b)
 !!       write(*,g) 'comparing "',a,'" and "',b,'"'
 !!       write(*,g) merge('(PASSED) "','(FAILED) "',answer == match), &
@@ -11564,13 +11592,13 @@ integer                       :: i, ipos, ios, too_many_digit_count
       select case(a)
       case(digit_0:digit_9)
          digit_count(part) = digit_count(part) + 1
-         if(digit_count(part).lt.19)then
+         if(digit_count(part) < 19)then
             value(part,digit_count(part)) = a-digit_0
          else
             too_many_digit_count=too_many_digit_count+1    ! so many digit_count just use powers of ten after this
          endif
       case(decimal)                              ! if more than once should report error
-         if(part.gt.2)cnt(5)=99999               ! decimal in exponent
+         if(part > 2)cnt(5)=99999               ! decimal in exponent
          part = 2                                ! starting fractional value
          cnt(1)=cnt(1)+1
       case(upper_e,lower_e,upper_d,lower_d)      ! if more than once should report error
@@ -11579,10 +11607,10 @@ integer                       :: i, ipos, ios, too_many_digit_count
          ipos=0
       case(minus_sign)                           ! sign in non-standard position or duplicated should report error
          sval(part) = -1
-         if(ipos.ne.1)cnt(6)=99999               ! sign not first character of whole or exponent part
+         if(ipos /= 1)cnt(6)=99999               ! sign not first character of whole or exponent part
          cnt(3)=cnt(3)+1                         ! if more than one sign character an error, but caught by not being first
       case(plus_sign)
-         if(ipos.ne.1)cnt(4)=99999               ! sign not first character of whole or exponent part
+         if(ipos /= 1)cnt(4)=99999               ! sign not first character of whole or exponent part
          cnt(3)=cnt(3)+1                         ! if more than one sign character an error, but caught by not being first
       case(space)                                ! should possibly not ignore all internal spaces
          ipos=ipos-1
@@ -11611,27 +11639,27 @@ integer                       :: i, ipos, ios, too_many_digit_count
    associate ( sgn=>sval(1), sexp=>sval(3) )
    val = sign(whole + fractional,real(sgn,kind=wp))* (10.0_wp**(power*sexp+too_many_digit_count))
    end associate
-   if(all(cnt.le.1).and.ipos.ne.0)then
+   if(all(cnt <= 1).and.ipos /= 0)then
       ator_real32 = .true.
    else
       read(str,fmt=*,iostat=ios) val ! use internal read for INF, NAN for now
-      if(ios.eq.0)then
+      if(ios == 0)then
          ator_real32 = .true.
       else
          if(present(msg))then
-            if(cnt(5).ne.0)then
+            if(cnt(5) /= 0)then
                   msg='illegal character in value "'//trim(str)//'"'
-               elseif(cnt(5).ne.0)then
+               elseif(cnt(5) /= 0)then
                   msg='decimal in exponent in "'//trim(str)//'"'
-               elseif(cnt(1).ge.2)then
+               elseif(cnt(1) >= 2)then
                   msg='multiple decimals in "'//trim(str)//'"'
-               elseif(cnt(2).ge.2)then
+               elseif(cnt(2) >= 2)then
                   msg='more than one exponent prefix (e,d,E,D) in "'//trim(str)//'"'
-               elseif(cnt(3).ge.2)then
+               elseif(cnt(3) >= 2)then
                   msg='more than one sign character in "'//trim(str)//'"'
-               elseif(cnt(6).ne.0)then
+               elseif(cnt(6) /= 0)then
                   msg='- sign character not first in "'//trim(str)//'"'
-               elseif(cnt(4).ge.2)then
+               elseif(cnt(4) >= 2)then
                   msg='+ sign character not first in "'//trim(str)//'"'
                else
                   msg='error in data conversion in "'//trim(str)//'"'
@@ -11673,13 +11701,13 @@ integer                       :: i, ipos, ios, too_many_digit_count
       select case(a)
       case(digit_0:digit_9)
          digit_count(part) = digit_count(part) + 1
-         if(digit_count(part).lt.19)then
+         if(digit_count(part) < 19)then
             value(part,digit_count(part)) = a-digit_0
          else
             too_many_digit_count=too_many_digit_count+1    ! so many digit_count just use powers of ten after this
          endif
       case(decimal)                              ! if more than once should report error
-         if(part.gt.2)cnt(5)=99999               ! decimal in exponent
+         if(part > 2)cnt(5)=99999               ! decimal in exponent
          part = 2                                ! starting fractional value
          cnt(1)=cnt(1)+1
       case(upper_e,lower_e,upper_d,lower_d)      ! if more than once should report error
@@ -11688,10 +11716,10 @@ integer                       :: i, ipos, ios, too_many_digit_count
          ipos=0
       case(minus_sign)                           ! sign in non-standard position or duplicated should report error
          sval(part) = -1
-         if(ipos.ne.1)cnt(6)=99999               ! sign not first character of whole or exponent part
+         if(ipos /= 1)cnt(6)=99999               ! sign not first character of whole or exponent part
          cnt(3)=cnt(3)+1                         ! if more than one sign character an error, but caught by not being first
       case(plus_sign)
-         if(ipos.ne.1)cnt(4)=99999               ! sign not first character of whole or exponent part
+         if(ipos /= 1)cnt(4)=99999               ! sign not first character of whole or exponent part
          cnt(3)=cnt(3)+1                         ! if more than one sign character an error, but caught by not being first
       case(space)                                ! should possibly not ignore all internal spaces
          ipos=ipos-1
@@ -11720,27 +11748,27 @@ integer                       :: i, ipos, ios, too_many_digit_count
    associate ( sgn=>sval(1), sexp=>sval(3) )
    val = sign(whole + fractional,real(sgn,kind=wp))* (10.0_wp**(power*sexp+too_many_digit_count))
    end associate
-   if(all(cnt.le.1).and.ipos.ne.0)then
+   if(all(cnt <= 1).and.ipos /= 0)then
       ator_real64 = .true.
    else
       read(str,fmt=*,iostat=ios) val ! use internal read for INF, NAN for now
-      if(ios.eq.0)then
+      if(ios == 0)then
          ator_real64 = .true.
       else
          if(present(msg))then
-            if(cnt(5).ne.0)then
+            if(cnt(5) /= 0)then
                   msg='illegal character in value "'//trim(str)//'"'
-               elseif(cnt(5).ne.0)then
+               elseif(cnt(5) /= 0)then
                   msg='decimal in exponent in "'//trim(str)//'"'
-               elseif(cnt(1).ge.2)then
+               elseif(cnt(1) >= 2)then
                   msg='multiple decimals in "'//trim(str)//'"'
-               elseif(cnt(2).ge.2)then
+               elseif(cnt(2) >= 2)then
                   msg='more than one exponent prefix (e,d,E,D) in "'//trim(str)//'"'
-               elseif(cnt(3).ge.2)then
+               elseif(cnt(3) >= 2)then
                   msg='more than one sign character in "'//trim(str)//'"'
-               elseif(cnt(6).ne.0)then
+               elseif(cnt(6) /= 0)then
                   msg='- sign character not first in "'//trim(str)//'"'
-               elseif(cnt(4).ge.2)then
+               elseif(cnt(4) >= 2)then
                   msg='+ sign character not first in "'//trim(str)//'"'
                else
                   msg='error in data conversion in "'//trim(str)//'"'
@@ -11774,9 +11802,9 @@ integer                       :: i, ipos, too_many_digit_count
       ipos=ipos+1
       select case(a)
       case(digit_0:digit_9)
-         if(digit_count.lt.19)then
+         if(digit_count < 19)then
             value = value*10 + a-digit_0
-         elseif(real(value*10)+real(a-digit_0).lt.huge(0_ip))then
+         elseif(real(value*10)+real(a-digit_0) < huge(0_ip))then
             value = value*10 + a-digit_0
          else
             too_many_digit_count=too_many_digit_count+1    ! so many digit_count just use powers of ten after this
@@ -11784,10 +11812,10 @@ integer                       :: i, ipos, too_many_digit_count
          digit_count = digit_count + 1
       case(minus_sign)                         ! sign in non-standard position or duplicated should report error
          sval = -1
-         if(ipos.ne.1)cnt(6)=99999             ! sign not first character of whole or exponent part
+         if(ipos /= 1)cnt(6)=99999             ! sign not first character of whole or exponent part
          cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
       case(plus_sign)
-         if(ipos.ne.1)cnt(4)=99999             ! sign not first character of whole or exponent part
+         if(ipos /= 1)cnt(4)=99999             ! sign not first character of whole or exponent part
          cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
       case(space)                              ! should possibly not ignore all internal spaces (and maybe ignore commas too?)
          ipos=ipos-1
@@ -11797,17 +11825,17 @@ integer                       :: i, ipos, too_many_digit_count
       end select
    enddo
    val = sign(value,sval)* 10**too_many_digit_count
-   if(all(cnt.le.1).and.ipos.ne.0)then
+   if(all(cnt <= 1).and.ipos /= 0)then
       atoi_int8 = .true.
    else
       if(present(msg))then
-         if(cnt(5).ne.0)then
+         if(cnt(5) /= 0)then
                msg='illegal character in value "'//trim(str)//'"'
-            elseif(cnt(3).ge.2)then
+            elseif(cnt(3) >= 2)then
                msg='more than one sign character in "'//trim(str)//'"'
-            elseif(cnt(6).ne.0)then
+            elseif(cnt(6) /= 0)then
                msg='- sign character not first in "'//trim(str)//'"'
-            elseif(cnt(4).ge.2)then
+            elseif(cnt(4) >= 2)then
                msg='+ sign character not first in "'//trim(str)//'"'
             else
                msg='error in data conversion in "'//trim(str)//'"'
@@ -11840,9 +11868,9 @@ integer                       :: i, ipos, too_many_digit_count
       ipos=ipos+1
       select case(a)
       case(digit_0:digit_9)
-         if(digit_count.lt.19)then
+         if(digit_count < 19)then
             value = value*10 + a-digit_0
-         elseif(real(value*10)+real(a-digit_0).lt.huge(0_ip))then
+         elseif(real(value*10)+real(a-digit_0) < huge(0_ip))then
             value = value*10 + a-digit_0
          else
             too_many_digit_count=too_many_digit_count+1    ! so many digit_count just use powers of ten after this
@@ -11850,10 +11878,10 @@ integer                       :: i, ipos, too_many_digit_count
          digit_count = digit_count + 1
       case(minus_sign)                         ! sign in non-standard position or duplicated should report error
          sval = -1
-         if(ipos.ne.1)cnt(6)=99999             ! sign not first character of whole or exponent part
+         if(ipos /= 1)cnt(6)=99999             ! sign not first character of whole or exponent part
          cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
       case(plus_sign)
-         if(ipos.ne.1)cnt(4)=99999             ! sign not first character of whole or exponent part
+         if(ipos /= 1)cnt(4)=99999             ! sign not first character of whole or exponent part
          cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
       case(space)                              ! should possibly not ignore all internal spaces (and maybe ignore commas too?)
          ipos=ipos-1
@@ -11863,17 +11891,17 @@ integer                       :: i, ipos, too_many_digit_count
       end select
    enddo
    val = sign(value,sval)* 10**too_many_digit_count
-   if(all(cnt.le.1).and.ipos.ne.0)then
+   if(all(cnt <= 1).and.ipos /= 0)then
       atoi_int16 = .true.
    else
       if(present(msg))then
-         if(cnt(5).ne.0)then
+         if(cnt(5) /= 0)then
                msg='illegal character in value "'//trim(str)//'"'
-            elseif(cnt(3).ge.2)then
+            elseif(cnt(3) >= 2)then
                msg='more than one sign character in "'//trim(str)//'"'
-            elseif(cnt(6).ne.0)then
+            elseif(cnt(6) /= 0)then
                msg='- sign character not first in "'//trim(str)//'"'
-            elseif(cnt(4).ge.2)then
+            elseif(cnt(4) >= 2)then
                msg='+ sign character not first in "'//trim(str)//'"'
             else
                msg='error in data conversion in "'//trim(str)//'"'
@@ -11906,9 +11934,9 @@ integer                       :: i, ipos, too_many_digit_count
       ipos=ipos+1
       select case(a)
       case(digit_0:digit_9)
-         if(digit_count.lt.19)then
+         if(digit_count < 19)then
             value = value*10 + a-digit_0
-         elseif(real(value*10)+real(a-digit_0).lt.huge(0_ip))then
+         elseif(real(value*10)+real(a-digit_0) < huge(0_ip))then
             value = value*10 + a-digit_0
          else
             too_many_digit_count=too_many_digit_count+1    ! so many digit_count just use powers of ten after this
@@ -11916,10 +11944,10 @@ integer                       :: i, ipos, too_many_digit_count
          digit_count = digit_count + 1
       case(minus_sign)                         ! sign in non-standard position or duplicated should report error
          sval = -1
-         if(ipos.ne.1)cnt(6)=99999             ! sign not first character of whole or exponent part
+         if(ipos /= 1)cnt(6)=99999             ! sign not first character of whole or exponent part
          cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
       case(plus_sign)
-         if(ipos.ne.1)cnt(4)=99999             ! sign not first character of whole or exponent part
+         if(ipos /= 1)cnt(4)=99999             ! sign not first character of whole or exponent part
          cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
       case(space)                              ! should possibly not ignore all internal spaces (and maybe ignore commas too?)
          ipos=ipos-1
@@ -11929,17 +11957,17 @@ integer                       :: i, ipos, too_many_digit_count
       end select
    enddo
    val = sign(value,sval)* 10**too_many_digit_count
-   if(all(cnt.le.1).and.ipos.ne.0)then
+   if(all(cnt <= 1).and.ipos /= 0)then
       atoi_int32 = .true.
    else
       if(present(msg))then
-         if(cnt(5).ne.0)then
+         if(cnt(5) /= 0)then
                msg='illegal character in value "'//trim(str)//'"'
-            elseif(cnt(3).ge.2)then
+            elseif(cnt(3) >= 2)then
                msg='more than one sign character in "'//trim(str)//'"'
-            elseif(cnt(6).ne.0)then
+            elseif(cnt(6) /= 0)then
                msg='- sign character not first in "'//trim(str)//'"'
-            elseif(cnt(4).ge.2)then
+            elseif(cnt(4) >= 2)then
                msg='+ sign character not first in "'//trim(str)//'"'
             else
                msg='error in data conversion in "'//trim(str)//'"'
@@ -11972,9 +12000,9 @@ integer                       :: i, ipos, too_many_digit_count
       ipos=ipos+1
       select case(a)
       case(digit_0:digit_9)
-         if(digit_count.lt.19)then
+         if(digit_count < 19)then
             value = value*10 + a-digit_0
-         elseif(real(value*10)+real(a-digit_0).lt.huge(0_ip))then
+         elseif(real(value*10)+real(a-digit_0) < huge(0_ip))then
             value = value*10 + a-digit_0
          else
             too_many_digit_count=too_many_digit_count+1    ! so many digit_count just use powers of ten after this
@@ -11982,10 +12010,10 @@ integer                       :: i, ipos, too_many_digit_count
          digit_count = digit_count + 1
       case(minus_sign)                         ! sign in non-standard position or duplicated should report error
          sval = -1
-         if(ipos.ne.1)cnt(6)=99999             ! sign not first character of whole or exponent part
+         if(ipos /= 1)cnt(6)=99999             ! sign not first character of whole or exponent part
          cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
       case(plus_sign)
-         if(ipos.ne.1)cnt(4)=99999             ! sign not first character of whole or exponent part
+         if(ipos /= 1)cnt(4)=99999             ! sign not first character of whole or exponent part
          cnt(3)=cnt(3)+1                       ! if more than one sign character an error, but caught by not being first
       case(space)                              ! should possibly not ignore all internal spaces (and maybe ignore commas too?)
          ipos=ipos-1
@@ -11995,17 +12023,17 @@ integer                       :: i, ipos, too_many_digit_count
       end select
    enddo
    val = sign(value,sval)* 10**too_many_digit_count
-   if(all(cnt.le.1).and.ipos.ne.0)then
+   if(all(cnt <= 1).and.ipos /= 0)then
       atoi_int64 = .true.
    else
       if(present(msg))then
-         if(cnt(5).ne.0)then
+         if(cnt(5) /= 0)then
                msg='illegal character in value "'//trim(str)//'"'
-            elseif(cnt(3).ge.2)then
+            elseif(cnt(3) >= 2)then
                msg='more than one sign character in "'//trim(str)//'"'
-            elseif(cnt(6).ne.0)then
+            elseif(cnt(6) /= 0)then
                msg='- sign character not first in "'//trim(str)//'"'
-            elseif(cnt(4).ge.2)then
+            elseif(cnt(4) >= 2)then
                msg='+ sign character not first in "'//trim(str)//'"'
             else
                msg='error in data conversion in "'//trim(str)//'"'
