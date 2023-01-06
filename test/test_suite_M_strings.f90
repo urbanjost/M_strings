@@ -1246,6 +1246,7 @@ subroutine test_lpad()
    call unit_check('lpad',lpad(4,4) == '   4',lpad(4,4),'vs','   4')
    call unit_check('lpad',lpad(4,4) == '   4',lpad(4,4),'vs','   4')
    call unit_check('lpad',lpad(' 123 ',4) == ' 123 ',lpad(' 123 ',4),'vs',' 123')
+   call unit_check('lpad',all(lpad([1,12,123,1234]) == ['   1','  12',' 123','1234']),'["   1","  12"," 123","1234"]')
    call unit_check_done('lpad',msg='tests completed')
 end subroutine test_lpad
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
@@ -1253,6 +1254,7 @@ subroutine test_cpad()
    call unit_check_start('cpad',' -description ''return a left-padded string'' '//OPTIONS )
    call unit_check('cpad',cpad(4,3) == ' 4 ',cpad(4,3),'vs',' 4 ')
    call unit_check('cpad',cpad('123',8) == '  123   ',cpad('123',8),'vs','  123   ')
+   call unit_check('cpad',all(cpad([1,12,123,1234]) == [' 1  ',' 12 ','123 ','1234']),'[" 1  "," 12 ","123 ","1234"]')
    call unit_check_done('cpad',msg='tests completed')
 end subroutine test_cpad
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
@@ -1261,6 +1263,7 @@ subroutine test_rpad()
    call unit_check('rpad',rpad(4,4) == '4   ',rpad(4,2),'vs','4   ')
    call unit_check('rpad',rpad(-4,4) == '-4   ',rpad(-4,2),'vs','-4  ')
    call unit_check('rpad','['//rpad(' 123 ',4)//']' == '['//'123 '//']','['//rpad(' 123 ',4)//']','vs [','123 '//']')
+   call unit_check('rpad',all(rpad([1,12,123,1234]) == ['1   ','12  ','123 ','1234']),'["1   ","12  ","123 ","1234"]')
    call unit_check_done('rpad',msg='tests completed')
 end subroutine test_rpad
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
