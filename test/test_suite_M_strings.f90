@@ -1237,6 +1237,7 @@ subroutine test_zpad()
    call unit_check('zpad',zpad(4,4) == '0004',zpad(4,4),'vs','0004')
    call unit_check('zpad',zpad(4,4) == '0004',zpad(4,4),'vs','0004')
    call unit_check('zpad',zpad(' 123 ',4) == '0123',zpad(' 123 ',4),'vs','0123')
+   call unit_check('zpad',all(zpad([1,12,123,1234]) == ['0001','0012','0123','1234']),'["0001","0012","0123","1234"]')
    call unit_check_done('zpad',msg='tests completed')
 end subroutine test_zpad
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
