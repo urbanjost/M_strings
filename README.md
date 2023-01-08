@@ -157,7 +157,7 @@ Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.co
     + [manpages.tgz](https://urbanjost.github.io/M_strings/manpages.tgz)
  - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
 
-### DEVELOPER (__experimental__)
+### DEVELOPER 
 
  - The code was run through [ford(1)](https://politicalphysicist.github.io/ford-fortran-documentation.html)
    to produce a [developers' document](https://urbanjost.github.io/M_strings/fpm-ford/index.html).

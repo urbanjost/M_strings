@@ -651,7 +651,7 @@ character(len=10)               :: nulls(3)=['ignore    ', 'return    ', 'ignore
    integer :: i
    if(unit_check_level > 0)then
       write(std_err,'(80("="))')
-      write(std_err,'(A)')'parsing ['//TRIM(line)//']'//'with delimiters set to ['//dlm//'] and order '//trim(order)//''
+      write(std_err,'(A)')'parsing ['//TRIM(line)//']'//'with delimiters set to ['//dlm//'] and order '//trim(order)
    endif
    CALL split(line,array,dlm,order)
    if(unit_check_level > 0)then
@@ -1060,13 +1060,13 @@ character(len=1024) :: in
    call unit_check_start('indent',' -description ''count number of leading spaces'' ' //OPTIONS )
 
    in='    should be four'
-   call unit_check('indent',indent(in) == 4,msg=trim(in))
+   call unit_check('indent',indent(in) == 4,msg=in)
 
    in='should be zero'
-   call unit_check('indent',indent(in) == 0,msg=trim(in))
+   call unit_check('indent',indent(in) == 0,msg=in)
 
    in='   should be three'
-   call unit_check('indent',indent(trim(in)) == 3,msg=trim(in))
+   call unit_check('indent',indent(in) == 3,msg=in)
 
    call unit_check_done('indent')
 end subroutine test_indent
@@ -1592,7 +1592,7 @@ character(len=:),allocatable :: test_out(:)
          write(std_err,'(a)')'ORIGINAL ['//test_in(i)//']'
          write(std_err,'(a)')'QUOTED   ['//quote(test_in(i))//']'
       endif
-      call unit_check('quote',quote(test_in(i)) == test_out(i),quote(test_in(i)),'==>',trim(test_out(i)))
+      call unit_check('quote',quote(test_in(i)) == test_out(i),quote(test_in(i)),'==>',test_out(i))
    enddo
    call unit_check_done('quote')
 end subroutine test_quote
