@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="string operations">
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="./favicon.png">
+
+    <title> M_strings </title>
+
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/pygments.css" rel="stylesheet">
+    <link href="./css/font-awesome.min.css" rel="stylesheet">
+    <link href="./css/local.css" rel="stylesheet">
+    <link  href="./tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="./js/jquery-2.1.3.min.js"></script>
+    <script src="./js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./index.html">M_strings </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="./lists/files.html">Source Files</a></li>
+            <li><a href="./lists/modules.html">Modules</a></li>
+            <li><a href="./lists/procedures.html">Procedures</a></li>
+                   <li><a href="./lists/types.html">Derived Types</a></li>
+       
+            </ul>
+        
+            </li>
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/files.html">Source Files</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/modules.html">Modules</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/procedures.html">Procedures</a></li>
+                             <li class="visible-xs hidden-sm visible-lg"><a href="./lists/types.html">Derived Types</a></li>
+          </ul>
+        <form action="./search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <p>string operations</p>
+	<p> Find us on&hellip;</p>
+        <p>
+          <a class="btn btn-lg btn-primary" href="https://github.com/urbanjost/M_strings" role="button">GitHub</a>
+        </p>
+      </div>
+
+      <div class="row" id='text'>
+        <div class="col-md-8">
+          <h1>M_strings</h1>
+          <!--
+author_pic:
+twitter:
+website:
+-->
+<p><img alt="string" src="docs/images/strings_small.gif"></p>
+<h1 id="m_stringsf90-and-associated-files">M_strings.f90 and associated files</h1>
+<h2 id="name">NAME</h2>
+<p>M_strings and M_strings_oops - Fortran modules for processing strings</p>
+<h2 id="description">DESCRIPTION</h2>
+<p>The <code>M_strings</code>(3fm) module is a collection of Fortran procedures that
+supplement the built-in intrinsic string routines.  Routines for parsing
+tokenizing, changing case, substituting new strings for substrings
+locating strings with simple wildcard expressions, removing tabs and
+line terminators as well as other string manipulations are included.</p>
+<p><code>M_strings_oop</code>(3fm) is a companion module that provides an OOP interface
+to the <code>M_strings</code> module.</p>
+<p>There are procedures with overlapping function that are all gathered here
+that have varying performance and robustness that may be consolidated at
+some point.</p>
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>public entities:</p>
+<p>use M_strings, only : <a href="https://urbanjost.github.io/M_strings/split.3m_strings">split</a>, <a href="https://urbanjost.github.io/M_strings/sep.3m_strings">sep</a>, <a href="https://urbanjost.github.io/M_strings/delim.3m_strings">delim</a>, <a href="https://urbanjost.github.io/M_strings/chomp.3m_strings">chomp</a>, <a href="https://urbanjost.github.io/M_strings/strtok.3m_strings">strtok</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/split2020.3m_strings">split2020</a>, <a href="https://urbanjost.github.io/M_strings/find_field.3m_strings">find_field</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/substitute.3m_strings">substitute</a>, <a href="https://urbanjost.github.io/M_strings/change.3m_strings">change</a>, <a href="https://urbanjost.github.io/M_strings/modif.3m_strings">modif</a>, <a href="https://urbanjost.github.io/M_strings/transliterate.3m_strings">transliterate</a>, <a href="https://urbanjost.github.io/M_strings/reverse.3m_strings">reverse</a>, <a href="https://urbanjost.github.io/M_strings/squeeze.3m_strings">squeeze</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/replace.3m_strings">replace</a>, <a href="https://urbanjost.github.io/M_strings/join.3m_strings">join</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/upper.3m_strings">upper</a>, <a href="https://urbanjost.github.io/M_strings/lower.3m_strings">lower</a>, <a href="https://urbanjost.github.io/M_strings/upper_quoted.3m_strings">upper_quoted</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/rotate13.3m_strings">rotate13</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/adjustc.3m_strings">adjustc</a>, <a href="https://urbanjost.github.io/M_strings/compact.3m_strings">compact</a>, <a href="https://urbanjost.github.io/M_strings/nospace.3m_strings">nospace</a>, <a href="https://urbanjost.github.io/M_strings/indent.3m_strings">indent</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/crop.3m_strings">crop</a>, <a href="https://urbanjost.github.io/M_strings/clip.3m_strings">clip</a>, <a href="https://urbanjost.github.io/M_strings/unquote.3m_strings">unquote</a>, <a href="https://urbanjost.github.io/M_strings/quote.3m_strings">quote</a>, <a href="https://urbanjost.github.io/M_strings/matching_delimiter.3m_strings">matching_delimiter</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/len_white.3m_strings">len_white</a>, <a href="https://urbanjost.github.io/M_strings/pad.3m_strings">pad</a>, <a href="https://urbanjost.github.io/M_strings/lpad.3m_strings">lpad</a>, <a href="https://urbanjost.github.io/M_strings/cpad.3m_strings">cpad</a>, <a href="https://urbanjost.github.io/M_strings/rpad.3m_strings">rpad</a>, <a href="https://urbanjost.github.io/M_strings/zpad.3m_strings">zpad</a>, <a href="https://urbanjost.github.io/M_strings/stretch.3m_strings">stretch</a>, <a href="https://urbanjost.github.io/M_strings/lenset.3m_strings">lenset</a>, <a href="https://urbanjost.github.io/M_strings/merge_str.3m_strings">merge_str</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/switch.3m_strings">switch</a>, <a href="https://urbanjost.github.io/M_strings/s2c.3m_strings">s2c</a>, <a href="https://urbanjost.github.io/M_strings/c2s.3m_strings">c2s</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/noesc.3m_strings">noesc</a>, <a href="https://urbanjost.github.io/M_strings/notabs.3m_strings">notabs</a>, <a href="https://urbanjost.github.io/M_strings/dilate.3m_strings">dilate</a>, <a href="https://urbanjost.github.io/M_strings/expand.3m_strings">expand</a>, <a href="https://urbanjost.github.io/M_strings/visible.3m_strings">visible</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/longest_common_substring.3m_strings">longest_common_substring</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/string_to_value.3m_strings">string_to_value</a>, <a href="https://urbanjost.github.io/M_strings/string_to_values.3m_strings">string_to_values</a>, <a href="https://urbanjost.github.io/M_strings/s2v.3m_strings">s2v</a>, <a href="https://urbanjost.github.io/M_strings/s2vs.3m_strings">s2vs</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/value_to_string.3m_strings">value_to_string</a>, <a href="https://urbanjost.github.io/M_strings/v2s.3m_strings">v2s</a>, <a href="https://urbanjost.github.io/M_strings/msg.3m_strings">msg</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/listout.3m_strings">listout</a>, <a href="https://urbanjost.github.io/M_strings/getvals.3m_strings">getvals</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/glob.3m_strings">glob</a>, <a href="https://urbanjost.github.io/M_strings/ends_with.3m_strings">ends_with</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/paragraph.3m_strings">paragraph</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/base.3m_strings">base</a>, <a href="https://urbanjost.github.io/M_strings/decodebase.3m_strings">decodebase</a>, <a href="https://urbanjost.github.io/M_strings/codebase.3m_strings">codebase</a>, <a href="https://urbanjost.github.io/M_strings/base2.3m_strings">base2</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/isalnum.3m_strings">isalnum</a>, <a href="https://urbanjost.github.io/M_strings/isalpha.3m_strings">isalpha</a>, <a href="https://urbanjost.github.io/M_strings/iscntrl.3m_strings">iscntrl</a>, <a href="https://urbanjost.github.io/M_strings/isdigit.3m_strings">isdigit</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/isgraph.3m_strings">isgraph</a>, <a href="https://urbanjost.github.io/M_strings/islower.3m_strings">islower</a>, <a href="https://urbanjost.github.io/M_strings/isprint.3m_strings">isprint</a>, <a href="https://urbanjost.github.io/M_strings/ispunct.3m_strings">ispunct</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/isspace.3m_strings">isspace</a>, <a href="https://urbanjost.github.io/M_strings/isupper.3m_strings">isupper</a>, <a href="https://urbanjost.github.io/M_strings/isascii.3m_strings">isascii</a>, <a href="https://urbanjost.github.io/M_strings/isblank.3m_strings">isblank</a>, <a href="https://urbanjost.github.io/M_strings/isxdigit.3m_strings">isxdigit</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/isnumber.3m_strings">isnumber</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/fortran_name.3m_strings">fortran_name</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/describe.3m_strings">describe</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/edit_distance.3m_strings">edit_distance</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/cc.3m_strings">cc</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/int.3m_strings">int</a>, <a href="https://urbanjost.github.io/M_strings/real.3m_strings">real</a>, <a href="https://urbanjost.github.io/M_strings/dble.3m_strings">dble</a>, <a href="https://urbanjost.github.io/M_strings/nint.3m_strings">nint</a>           <br>
+   use M_strings, only : <a href="https://urbanjost.github.io/M_strings/atoi.3m_strings">int</a>, <a href="https://urbanjost.github.io/M_strings/atol.3m_strings">real</a>, <a href="https://urbanjost.github.io/M_strings/ato.3m_strings">dble</a></p>
+<h2 id="intrinsics">INTRINSICS</h2>
+<p>The M_strings(3fm) module supplements and works in combination with
+the Fortran built-in intrinsics. Standard Fortran lets you access the
+characters in a string using ranges much like they are character arrays
+assignment, comparisons with standard operators, supports dynamically
+allocatable strings and supports concatenation using the // operator:</p>
+<div class="codehilite"><pre><span></span><code> <span class="nv">adjustl</span>             <span class="nv">Left</span> <span class="nv">adjust</span> <span class="nv">a</span> <span class="nv">string</span>
+ <span class="nv">adjustr</span>             <span class="nv">Right</span> <span class="nv">adjust</span> <span class="nv">a</span> <span class="nv">string</span>
+ <span class="nv">index</span>               <span class="nv">Position</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">substring</span> <span class="nv">within</span> <span class="nv">a</span> <span class="nv">string</span>
+ <span class="nv">repeat</span>              <span class="nv">Repeated</span> <span class="nv">string</span> <span class="nv">concatenation</span>
+ <span class="nv">scan</span>                <span class="nv">Scan</span> <span class="nv">a</span> <span class="nv">string</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">presence</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">set</span> <span class="nv">of</span> <span class="nv">characters</span>
+ <span class="nv">trim</span>                <span class="nv">Remove</span> <span class="nv">trailing</span> <span class="nv">blank</span> <span class="nv">characters</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">string</span>
+ <span class="nv">verify</span>              <span class="nv">Scan</span> <span class="nv">a</span> <span class="nv">string</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">absence</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">set</span> <span class="nv">of</span> <span class="nv">characters</span>
+ <span class="nv">len</span>                 <span class="nv">It</span> <span class="nv">returns</span> <span class="nv">the</span> <span class="nv">length</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">character</span> <span class="nv">string</span>
+ <span class="nv">achar</span>               <span class="nv">converts</span> <span class="nv">an</span> <span class="nv">integer</span> <span class="nv">into</span> <span class="nv">a</span> <span class="nv">character</span>
+ <span class="nv">iachar</span>              <span class="nv">converts</span> <span class="nv">a</span> <span class="nv">character</span> <span class="nv">into</span> <span class="nv">an</span> <span class="nv">integer</span>
+ <span class="nv">len_trim</span>            <span class="nv">finds</span> <span class="nv">length</span> <span class="nv">of</span> <span class="nv">string</span> <span class="nv">with</span> <span class="nv">trailing</span> <span class="nv">spaces</span> <span class="nv">ignored</span>
+ <span class="nv">new_line</span>            <span class="nv">Newline</span> <span class="nv">character</span>
+ <span class="nv">selected_char_kind</span>  <span class="nv">Choose</span> <span class="nv">character</span> <span class="nv">kind</span>
+ <span class="nv">lge</span>                 <span class="nv">Lexical</span> <span class="nv">greater</span> <span class="nv">than</span> <span class="nv">or</span> <span class="nv">equal</span>
+ <span class="nv">lgt</span>                 <span class="nv">Lexical</span> <span class="nv">greater</span> <span class="nv">than</span>
+ <span class="nv">lle</span>                 <span class="nv">Lexical</span> <span class="nv">less</span> <span class="nv">than</span> <span class="nv">or</span> <span class="nv">equal</span>
+ <span class="nv">llt</span>                 <span class="nv">Lexical</span> <span class="nv">less</span> <span class="nv">than</span>
+</code></pre></div>
+
+<hr>
+<h2 id="_1"><img alt="gmake" src="docs/images/gnu.gif"></h2>
+<h2 id="download-and-build-with-make1">DOWNLOAD and BUILD with make(1)</h2>
+<p>Just download the github repository, enter the src/ directory and run make:</p>
+<div class="codehilite"><pre><span></span><code> <span class="nv">git</span> <span class="nv">clone</span> <span class="nv">https</span>:<span class="o">//</span><span class="nv">github</span>.<span class="nv">com</span><span class="o">/</span><span class="nv">urbanjost</span><span class="o">/</span><span class="nv">M_strings</span>.<span class="nv">git</span>
+ <span class="nv">cd</span> <span class="nv">M_strings</span><span class="o">/</span><span class="nv">src</span>
+ # <span class="nv">change</span> <span class="nv">Makefile</span> <span class="k">if</span> <span class="nv">not</span> <span class="nv">using</span> <span class="nv">one</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">listed</span> <span class="nv">compilers</span>
+
+ # <span class="k">for</span> <span class="nv">gfortran</span>
+ <span class="nv">make</span> <span class="nv">clean</span>
+ <span class="nv">make</span> <span class="nv">F90</span><span class="o">=</span><span class="nv">gfortran</span> <span class="nv">gfortran</span>
+
+ # <span class="k">for</span> <span class="nv">ifort</span>
+ <span class="nv">make</span> <span class="nv">clean</span>
+ <span class="nv">make</span> <span class="nv">F90</span><span class="o">=</span><span class="nv">ifort</span> <span class="nv">ifort</span>
+
+ # <span class="k">for</span> <span class="nv">nvfortran</span>
+ <span class="nv">make</span> <span class="nv">clean</span>
+ <span class="nv">make</span> <span class="nv">F90</span><span class="o">=</span><span class="nv">nvfortran</span> <span class="nv">nvfortran</span>
+
+ # <span class="nv">optionally</span>
+ <span class="nv">make</span> <span class="nv">test</span> # <span class="nv">run</span> <span class="nv">the</span> <span class="nv">unit</span> <span class="nv">tests</span>
+ <span class="nv">make</span> <span class="nv">run</span>  # <span class="nv">run</span> <span class="nv">all</span> <span class="nv">the</span> <span class="nv">demo</span> <span class="nv">programs</span> <span class="nv">from</span> <span class="nv">the</span> <span class="nv">man</span><span class="o">-</span><span class="nv">pages</span>
+ <span class="nv">make</span> <span class="nv">help</span> # <span class="nv">see</span> <span class="nv">other</span> <span class="nv">developer</span> <span class="nv">options</span>
+</code></pre></div>
+
+<p>This will compile the M_strings(3f) module and optionally build all the
+example programs from the document pages in the example/ sub-directory
+and run the unit tests.</p>
+<hr>
+<h2 id="_2"><img alt="fpm" src="docs/images/fpm_logo.gif"></h2>
+<h2 id="download-and-build-with-fpm1">DOWNLOAD AND BUILD WITH FPM(1)</h2>
+<p>Alternatively, download the github repository and build it with
+fpm ( as described at <a href="https://github.com/fortran-lang/fpm">Fortran Package Manager</a> )</p>
+<div class="codehilite"><pre><span></span><code>     git clone https://github.com/urbanjost/M_strings.git
+     <span class="nb">cd</span> M_strings
+     fpm build
+     fpm <span class="nb">test</span>  <span class="c1"># run unit tests</span>
+</code></pre></div>
+
+<p>or just list it as a dependency in your fpm.toml project file.</p>
+<div class="codehilite"><pre><span></span><code><span class="w">     </span><span class="k">[dependencies]</span><span class="w"></span>
+<span class="w">     </span><span class="n">M_strings</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://github.com/urbanjost/M_strings.git&quot;</span><span class="w"> </span><span class="p">,</span><span class="n">tag</span><span class="o">=</span><span class="s">&quot;v1.0.1&quot;</span><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+
+<p>Note that M_strings.f90 is registered at the <a href="https://github.com/fortran-lang/fpm-registry">fpm(1) registry</a></p>
+<hr>
+<h2 id="_3"><img alt="docs" src="docs/images/docs.gif"></h2>
+<h2 id="documentation">DOCUMENTATION</h2>
+<h3 id="user">USER</h3>
+<p>In addition to a <a href="docs/HIGHLIGHTS.md">markdown document</a>  with links to
+   some of the most commonly used procedures, there are HTML documents for each
+   subprogram in the style of man-pages:</p>
+<ul>
+<li>
+<p>An <a href="https://urbanjost.github.io/M_strings/man3.html">index</a> to the HTML versions
+   of the man-pages.</p>
+</li>
+<li>
+<p>A single page (that uses javascript) combining all the HTML descriptions of the man-pages
+   for easy searching and printing:
+   <a href="https://urbanjost.github.io/M_strings/BOOK_M_strings.html">BOOK_M_strings</a>.</p>
+</li>
+<li>
+<p><img alt="man-pages" src="docs/images/manpages.gif"> man-page archives for use on GNU/Linux, Unix and CygWin platforms:</p>
+<ul>
+<li><a href="https://urbanjost.github.io/M_strings/manpages.zip">manpages.zip</a></li>
+<li><a href="https://urbanjost.github.io/M_strings/manpages.tgz">manpages.tgz</a></li>
+</ul>
+</li>
+<li><a href="docs/CHANGELOG.md">CHANGELOG</a> provides a history of significant changes</li>
+</ul>
+<h3 id="developer">DEVELOPER</h3>
+<ul>
+<li>The code was run through <a href="https://politicalphysicist.github.io/ford-fortran-documentation.html">ford(1)</a>
+   to produce a <a href="https://urbanjost.github.io/M_strings/fpm-ford/index.html">developers&rsquo; document</a>.</li>
+<li><a href="docs/STATUS.md">github action status</a></li>
+</ul>
+<hr>
+<h2 id="_4"><img alt="demos" src="docs/images/demo.gif"></h2>
+<h2 id="demo-programs">DEMO PROGRAMS</h2>
+<p>Each man-page includes a working example program. These and additional
+examples are included in the example/ directory.</p>
+<hr>
+        </div>
+        <div class="col-md-4">
+	  <div class="well">
+          <h2>Developer Info</h2>
+          <h4>John S. Urban</h4>
+          
+            <div class="text-center"><div class="btn-group" role="group">
+              <a class="btn btn-lg btn-primary" href="https://github.com/urbanjost/M_strings"><i class="fa fa-github fa-lg"></i></a>
+            </div></div>
+       </div>
+       </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-3">
+              <h3>Source Files</h3>
+              <ul>                    <li><a href='./sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
+                    <li><a href='./sourcefile/m_strings_oop.f90.html'>M_strings_oop.f90</a></li>
+</ul>
+          </div>
+		  <div class="col-xs-6 col-sm-3">
+              <h3>Modules</h3>
+              <ul>                    <li><a href='./module/m_strings.html'>M_strings</a></li>
+                    <li><a href='./module/m_strings_oop.html'>M_strings_oop</a></li>
+</ul>
+          </div>
+		  <div class="col-xs-6 col-sm-3">
+              <h3>Procedures</h3>
+              <ul>                    <li><a href='./proc/adjustc.html'>adjustc</a></li>
+                    <li><a href='./interface/atleast.html'>atleast</a></li>
+                    <li><a href='./proc/atoi.html'>atoi</a></li>
+                    <li><a href='./proc/atol.html'>atol</a></li>
+                    <li><a href='./interface/aton.html'>aton</a></li>
+                    <li><a href='./proc/base.html'>base</a></li>
+                    <li><a href='./proc/base2.html'>base2</a></li>
+                    <li><a href='./proc/bundle.html'>bundle</a></li>
+                    <li><a href='./proc/c2s.html'>c2s</a></li>
+                    <li><a href='./interface/cc.html'>cc</a></li>
+</ul>
+          </div>
+		  <div class="col-xs-6 col-sm-3">
+              <h3>Derived Types</h3>
+              <ul>                    <li><a href='./type/string.html'>string</a></li>
+</ul>
+          </div>
+      </div>
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-6"><p>M_strings was developed by John S. Urban<br>&copy; 2023 
+</p>
+        </div>
+        <div class="col-xs-6 col-md-6">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2023-01-08 21:09            </p>
+        </div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="./js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script src="./tipuesearch/tipuesearch_content.js"></script>
+    <script src="./tipuesearch/tipuesearch_set.js"></script>
+    <script src="./tipuesearch/tipuesearch.js"></script>
+    
+  </body>
+</html>

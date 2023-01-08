@@ -1,0 +1,77 @@
+#734f96
+makeobj 1111
+page -40 40 -40-S 40-S
+mapcolor 6 115 79 150
+circleprecision 112
+set S=-3
+set B=2
+polyfill TRUE
+color 6
+circle 0 0-S 40
+color 0
+circle 0 0-S 40-3
+color 7
+parcel P
+rect  0-B-A-1   10   B-A+1    12
+rect  0-B-A     10   B-A     -10
+rect  0-B-A-1  -10   B-A+1   -12
+post
+
+color 6
+execute P A=0 
+execute P A=9 
+execute P A=2*A 
+execute P A=-9 
+execute P A=2*A 
+color 7
+
+polyfill FALSE
+set C=22
+rect  0-C      -12  0+C      -14
+rect  0-C-1.5  -14  0+C+1.5  -16
+rect  0-C-3    -16  0+C+3    -18
+
+rect  0-C   12   0+C   16
+move2 0-C-2 16
+draw2 0+C+2 16
+draw2 0+C+2 18
+draw2 0     18+12
+draw2 0-C-2 18
+draw2 0-C-2 16
+
+polyfill TRUE
+circle 0   18+4 3
+circle 0-7 18+4 1
+circle 0+7 18+4 1
+color 0
+circle 0 18+6 2
+
+color 7
+linewidth 150
+textsize 11 10
+centertext TRUE
+move2 0 34
+drawstr fpm
+
+move2 0 -24
+drawstr registry
+closeobj
+
+hcopy canvas -obj 1111 -f bank.html
+hcopy p6 -obj 1111 -f bank.p6
+hcopy svg -obj 1111 -f bank.svg
+
+#makeobj 1234  # URBAN ART
+#   page 0 5.5 0 7
+#   polyfill 1
+#   color 4; rect 0 0 5.5  7 # Sky and Water
+#   color 3; rect 1 1 2 7    # Sol Sun
+#   color 2		   # Green Plant Soil Earth
+#   rect 3 0 5.5 1
+#   rect 3 1 4.5 3
+#   rect 3 4 4.5 6
+#   rect 4 3 5.5 4
+#   rect 4 6 5.5 7
+#closeobj			   # Life
+#rm -f life.html
+#hcopy canvas -obj 1234 -f life.html

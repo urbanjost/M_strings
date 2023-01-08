@@ -1,0 +1,42 @@
+sz 700 700
+makeobj 1234  # URBAN ART
+   page -100 100 -100 100
+   circleprecision 60
+   linewidth 200
+   color 7
+   color 4
+   polyfill TRUE
+   circle 0 0 80
+
+   polyfill FALSE
+   color 7
+   linewidth 350
+   arc xcenter=0 ycenter=-45 radius=90 start_deg=90-25     end_deg=90+25
+   arc xcenter=0 ycenter=45  radius=90 start_deg=180+90-25 end_deg=180+90+25
+
+   set x=0 y=45   r=90 deg=180+90-25 xe=x+r*cosd(deg) ye=y+r*sind(deg)
+   move2 xe ye;rdraw2  10  3
+
+   set x=0 y=45   r=90 deg=180+90+25 xe=x+r*cosd(deg) ye=y+r*sind(deg)
+   move2 xe ye;rdraw2 -10  3
+
+   set x=0 y=-45  r=90 deg=90-25 xe=x+r*cosd(deg) ye=y+r*sind(deg)
+   move2 xe ye;rdraw2 -10 -3
+
+   set x=0 y=-45  r=90 deg=90+25 xe=x+r*cosd(deg) ye=y+r*sind(deg)
+   move2 xe ye;rdraw2  10 -3
+                
+   textsize 80 60
+   centertext TRUE
+   move2 -50 0 ;drawstr A
+   move2  50 0 ;drawstr Z
+
+   move2 -20  10; draw2  20  10;rdraw2 -10  6
+   move2  20 -10; draw2 -20 -10;rdraw2  10 -6
+
+closeobj
+rm -f strings.p6
+hcopy p6 -obj 1234 -f strings.p6 -sz 550 550
+hcopy p6 -obj 1234 -sz 50*10 50*10 -f |ppmtogif >strings.gif
+page
+callobj 1234
