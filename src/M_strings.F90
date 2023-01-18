@@ -11695,21 +11695,21 @@ end function atol
 !!##LICENSE
 !!    Public Domain
 logical function ator_real32(str,val,msg)
-use iso_fortran_env, only: wp => real32, ip => int64, byte => int8
+use iso_fortran_env, only: wp => real32, ip => int64, int8
 ! Convert ASCII-text to DP and return .TRUE. if OK
 character(len=*),intent(in) :: str
 real(kind=wp) :: val
 character(len=:),allocatable,optional,intent(out) :: msg
-integer(kind=byte),parameter  :: upper_e=iachar('E'), lower_e=iachar('e'), upper_d=iachar('D'), lower_d=iachar('d')
-integer(kind=byte),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-'), decimal=iachar('.')
-integer(kind=byte),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
+integer(kind=int8),parameter  :: upper_e=iachar('E'), lower_e=iachar('e'), upper_d=iachar('D'), lower_d=iachar('d')
+integer(kind=int8),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-'), decimal=iachar('.')
+integer(kind=int8),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
 integer(kind=ip)              :: sval(3)
 integer                       :: digit_count(3)
-integer(kind=byte)            :: value(3,len(str))
+integer(kind=int8)            :: value(3,len(str))
 real(kind=wp)                 :: whole, fractional
 integer                       :: power
 integer                       :: cnt(6)
-integer(kind=byte)            :: a, part
+integer(kind=int8)            :: a, part
 integer                       :: i, ipos, ios, too_many_digit_count
 
    value=0.0_wp
@@ -11721,7 +11721,7 @@ integer                       :: i, ipos, ios, too_many_digit_count
    part = 1
    too_many_digit_count=0
    do i = 1, len(str)
-      a=iachar(str(i:i),kind=byte)
+      a=iachar(str(i:i),kind=int8)
       ipos=ipos+1
       select case(a)
       case(digit_0:digit_9)
@@ -11804,21 +11804,21 @@ integer                       :: i, ipos, ios, too_many_digit_count
    endif
 end function ator_real32
 logical function ator_real64(str,val,msg)
-use iso_fortran_env, only: wp => real64, ip => int64, byte => int8
+use iso_fortran_env, only: wp => real64, ip => int64, int8
 ! Convert ASCII-text to DP and return .TRUE. if OK
 character(len=*),intent(in) :: str
 real(kind=wp) :: val
 character(len=:),allocatable,optional,intent(out) :: msg
-integer(kind=byte),parameter  :: upper_e=iachar('E'), lower_e=iachar('e'), upper_d=iachar('D'), lower_d=iachar('d')
-integer(kind=byte),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-'), decimal=iachar('.')
-integer(kind=byte),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
+integer(kind=int8),parameter  :: upper_e=iachar('E'), lower_e=iachar('e'), upper_d=iachar('D'), lower_d=iachar('d')
+integer(kind=int8),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-'), decimal=iachar('.')
+integer(kind=int8),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
 integer(kind=ip)              :: sval(3)
 integer                       :: digit_count(3)
-integer(kind=byte)            :: value(3,len(str))
+integer(kind=int8)            :: value(3,len(str))
 real(kind=wp)                 :: whole, fractional
 integer                       :: power
 integer                       :: cnt(6)
-integer(kind=byte)            :: a, part
+integer(kind=int8)            :: a, part
 integer                       :: i, ipos, ios, too_many_digit_count
 
    value=0.0_wp
@@ -11830,7 +11830,7 @@ integer                       :: i, ipos, ios, too_many_digit_count
    part = 1
    too_many_digit_count=0
    do i = 1, len(str)
-      a=iachar(str(i:i),kind=byte)
+      a=iachar(str(i:i),kind=int8)
       ipos=ipos+1
       select case(a)
       case(digit_0:digit_9)
@@ -11913,16 +11913,16 @@ integer                       :: i, ipos, ios, too_many_digit_count
    endif
 end function ator_real64
 logical function atoi_int8(str,val,msg)
-use iso_fortran_env, only: ip => int64, byte => int8
+use iso_fortran_env, only: ip => int64, int8
 ! Convert ASCII-text to REAL and return .TRUE. if OK
 character(len=*),intent(in)   :: str
 integer(kind=int8)         :: val
 character(len=:),allocatable,optional,intent(out) :: msg
-integer(kind=byte),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-')
-integer(kind=byte),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
+integer(kind=int8),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-')
+integer(kind=int8),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
 integer(kind=ip)              :: value, sval, digit_count
 integer                       :: cnt(6)
-integer(kind=byte)            :: a
+integer(kind=int8)            :: a
 integer                       :: i, ipos, too_many_digit_count
 
    value=0
@@ -11932,7 +11932,7 @@ integer                       :: i, ipos, too_many_digit_count
    sval = 1
    too_many_digit_count=0
    do i = 1, len(str)
-      a=iachar(str(i:i),kind=byte)
+      a=iachar(str(i:i),kind=int8)
       ipos=ipos+1
       select case(a)
       case(digit_0:digit_9)
@@ -11979,16 +11979,16 @@ integer                       :: i, ipos, too_many_digit_count
    endif
 end function atoi_int8
 logical function atoi_int16(str,val,msg)
-use iso_fortran_env, only: ip => int64, byte => int8
+use iso_fortran_env, only: ip => int64, int8
 ! Convert ASCII-text to REAL and return .TRUE. if OK
 character(len=*),intent(in)   :: str
 integer(kind=int16)         :: val
 character(len=:),allocatable,optional,intent(out) :: msg
-integer(kind=byte),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-')
-integer(kind=byte),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
+integer(kind=int8),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-')
+integer(kind=int8),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
 integer(kind=ip)              :: value, sval, digit_count
 integer                       :: cnt(6)
-integer(kind=byte)            :: a
+integer(kind=int8)            :: a
 integer                       :: i, ipos, too_many_digit_count
 
    value=0
@@ -11998,7 +11998,7 @@ integer                       :: i, ipos, too_many_digit_count
    sval = 1
    too_many_digit_count=0
    do i = 1, len(str)
-      a=iachar(str(i:i),kind=byte)
+      a=iachar(str(i:i),kind=int8)
       ipos=ipos+1
       select case(a)
       case(digit_0:digit_9)
@@ -12045,16 +12045,16 @@ integer                       :: i, ipos, too_many_digit_count
    endif
 end function atoi_int16
 logical function atoi_int32(str,val,msg)
-use iso_fortran_env, only: ip => int64, byte => int8
+use iso_fortran_env, only: ip => int64, int8
 ! Convert ASCII-text to REAL and return .TRUE. if OK
 character(len=*),intent(in)   :: str
 integer(kind=int32)         :: val
 character(len=:),allocatable,optional,intent(out) :: msg
-integer(kind=byte),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-')
-integer(kind=byte),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
+integer(kind=int8),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-')
+integer(kind=int8),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
 integer(kind=ip)              :: value, sval, digit_count
 integer                       :: cnt(6)
-integer(kind=byte)            :: a
+integer(kind=int8)            :: a
 integer                       :: i, ipos, too_many_digit_count
 
    value=0
@@ -12064,7 +12064,7 @@ integer                       :: i, ipos, too_many_digit_count
    sval = 1
    too_many_digit_count=0
    do i = 1, len(str)
-      a=iachar(str(i:i),kind=byte)
+      a=iachar(str(i:i),kind=int8)
       ipos=ipos+1
       select case(a)
       case(digit_0:digit_9)
@@ -12111,16 +12111,16 @@ integer                       :: i, ipos, too_many_digit_count
    endif
 end function atoi_int32
 logical function atoi_int64(str,val,msg)
-use iso_fortran_env, only: ip => int64, byte => int8
+use iso_fortran_env, only: ip => int64, int8
 ! Convert ASCII-text to REAL and return .TRUE. if OK
 character(len=*),intent(in)   :: str
 integer(kind=int64)         :: val
 character(len=:),allocatable,optional,intent(out) :: msg
-integer(kind=byte),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-')
-integer(kind=byte),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
+integer(kind=int8),parameter  :: plus_sign=iachar('+'), minus_sign=iachar('-')
+integer(kind=int8),parameter  :: space=iachar(' '), digit_0=iachar('0'), digit_9=iachar('9')
 integer(kind=ip)              :: value, sval, digit_count
 integer                       :: cnt(6)
-integer(kind=byte)            :: a
+integer(kind=int8)            :: a
 integer                       :: i, ipos, too_many_digit_count
 
    value=0
@@ -12130,7 +12130,7 @@ integer                       :: i, ipos, too_many_digit_count
    sval = 1
    too_many_digit_count=0
    do i = 1, len(str)
-      a=iachar(str(i:i),kind=byte)
+      a=iachar(str(i:i),kind=int8)
       ipos=ipos+1
       select case(a)
       case(digit_0:digit_9)

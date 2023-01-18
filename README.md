@@ -1,10 +1,10 @@
 ![string](docs/images/strings_small.gif)
 # M_strings.f90 and associated files
 
-## NAME
+## Name
    M_strings and M_strings_oops - Fortran modules for processing strings
 
-## DESCRIPTION
+## Description
 The `M_strings`(3fm) module is a collection of Fortran procedures that
 supplement the built-in intrinsic string routines.  Routines for parsing
 tokenizing, changing case, substituting new strings for substrings
@@ -18,7 +18,7 @@ There are procedures with overlapping function that are all gathered here
 that have varying performance and robustness that may be consolidated at
 some point.
 
-## SYNOPSIS
+## Synopsis
 public entities:
 
    use M_strings, only : [split](https://urbanjost.github.io/M_strings/split.3m_strings), [sep](https://urbanjost.github.io/M_strings/sep.3m_strings), [delim](https://urbanjost.github.io/M_strings/delim.3m_strings), [chomp](https://urbanjost.github.io/M_strings/chomp.3m_strings), [strtok](https://urbanjost.github.io/M_strings/strtok.3m_strings)             
@@ -50,7 +50,7 @@ public entities:
    use M_strings, only : [int](https://urbanjost.github.io/M_strings/int.3m_strings), [real](https://urbanjost.github.io/M_strings/real.3m_strings), [dble](https://urbanjost.github.io/M_strings/dble.3m_strings), [nint](https://urbanjost.github.io/M_strings/nint.3m_strings)             
    use M_strings, only : [int](https://urbanjost.github.io/M_strings/atoi.3m_strings), [real](https://urbanjost.github.io/M_strings/atol.3m_strings), [dble](https://urbanjost.github.io/M_strings/ato.3m_strings)
 
-## INTRINSICS
+## Intrinsics
 
 The M_strings(3fm) module supplements and works in combination with
 the Fortran built-in intrinsics. Standard Fortran lets you access the
@@ -80,7 +80,7 @@ allocatable strings and supports concatenation using the // operator:
 ![gmake](docs/images/gnu.gif)
 ---
 
-## DOWNLOAD and BUILD with make(1)
+## Download and Build with make(1)
 Just download the github repository, enter the src/ directory and run make:
 
      git clone https://github.com/urbanjost/M_strings.git
@@ -112,7 +112,7 @@ and run the unit tests.
 ![fpm](docs/images/fpm_logo.gif)
 ---
 
-## DOWNLOAD AND BUILD WITH FPM(1)
+## Download and Build with fpm(1)
 
 Alternatively, download the github repository and build it with
 fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/fpm) )
@@ -137,9 +137,9 @@ Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.co
 ![docs](docs/images/docs.gif)
 ---
 
-## DOCUMENTATION
+## Documentation
 
-### USER
+### User
 
    In addition to a [markdown document](docs/HIGHLIGHTS.md)  with links to
    some of the most commonly used procedures, there are HTML documents for each
@@ -157,7 +157,7 @@ Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.co
     + [manpages.tgz](https://urbanjost.github.io/M_strings/manpages.tgz)
  - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
 
-### DEVELOPER 
+### Developer 
 
  - The code was run through [ford(1)](https://politicalphysicist.github.io/ford-fortran-documentation.html)
    to produce a [developers' document](https://urbanjost.github.io/M_strings/fpm-ford/index.html).
@@ -167,7 +167,7 @@ Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.co
 ![demos](docs/images/demo.gif)
 ---
 
-## DEMO PROGRAMS
+## Demo Programs
 
 Each man-page includes a working example program. These and additional
-examples are included in the example/ directory.
+examples are included in the [example/](example/) directory.
