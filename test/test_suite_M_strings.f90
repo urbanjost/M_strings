@@ -949,7 +949,8 @@ character(len=:),allocatable  :: e
    call unit_check_start('rotate13',' -description ''apply trivial encryption algorithm ROT13 to a string'' '//OPTIONS )
    s='United we stand, divided we fall.'
    e='Havgrq jr fgnaq, qvivqrq jr snyy.'
-   call unit_check('rotate13',rotate13(s) == e,  s,'==>',rotate13(s))
+   ! add //'' to change function call to expression to avoid gfortran bug
+   call unit_check('rotate13',rotate13(s) == e,  s,'==>',rotate13(s)//'') 
    call unit_check_done('rotate13',msg='')
 end subroutine test_rotate13
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
@@ -1092,7 +1093,8 @@ character(len=2) :: controls(0:31)
       enddo
    endif
    do i=32,126
-      call unit_check('visible',char(i) == visible(char(i)),i,visible(char(i)),char(i))
+      ! add //'' to change function call to expression to avoid gfortran-11 bug
+      call unit_check('visible',char(i) == visible(char(i)),i,visible(char(i))//'',char(i)//'')
    enddo
    call unit_check_done('visible')
 end subroutine test_visible
