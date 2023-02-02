@@ -533,7 +533,6 @@ interface journal
    module procedure flush_trail               ! journal()                ! no options
    module procedure write_message_only        ! journal(c)               ! must have one string
    module procedure where_write_message_all   ! journal(where,[g1-g9])   ! must have two strings
-   module procedure set_stdout_lun            ! journal(i)               ! first is not a string
 end interface journal
 
 interface str
@@ -9546,16 +9545,6 @@ end function base
 !!    John S. Urban
 !!##LICENSE
 !!    Public Domain
-! 0 in binary: 0
-! 42 in binary: 101010
-! huge(int) in binary: 1111111111111111111111111111111
-! 032 in binary is 100000
-! itimes=10000000
-!      G_TRICK=base2_f(32)   <BASE2_F  >Processor Time =  0.766 seconds.
-!      G_TRICK=base2_fdo(32) <BASE2_FDO>Processor Time =  0.958 seconds.
-!      G_TRICK=base2_a(32)   <BASE2_A  >Processor Time =  1.022 seconds.
-!      G_TRICK=base2_c(32)   <BASE2_C  >Processor Time =  7.208 seconds.
-!      G_TRICK=empty(32)     <EMPTY    >Processor Time =  0.132 seconds.
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
@@ -9571,57 +9560,6 @@ character(len=max(1,bit_size(x)-leadz(x))) :: str
       end do
     end associate
 end function base2
-!===================================================================================================================================
-!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
-!===================================================================================================================================
-function base2_fdo(x) result(str)
-!  return string representing number as a binary number.  Fixed-length string: do concurrent
-integer, intent(in) :: x
-character(len=max(1,bit_size(x)-leadz(x))) :: str
-
-integer :: n, i
-
-    if (x == 0) then
-      str(1:1) = '0'
-      return
-    endif
-    n = len(str)
-    str = repeat('0',n)
-    do concurrent (i = 0:n-1, btest(x,i))
-      str(n-i:n-i) = '1'
-    end do
-end function base2_fdo
-!===================================================================================================================================
-!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
-!===================================================================================================================================
-function base2_a(x) result(str)
-!  return string representing number as a binary number. Allocatable-length string:
-integer, intent(in) :: x
-character(len=:), allocatable :: str
-
-integer :: n, i
-
-    n = max(1,bit_size(x)-leadz(x))
-    allocate(character(len=n) :: str)
-    if (x == 0) then
-      str(1:1) = '0'
-      return
-    endif
-
-    str = repeat('0',n)
-    do concurrent (i = 0:n-1, btest(x,i))
-      str(n-i:n-i) = '1'
-    end do
-end function base2_a
-!===================================================================================================================================
-!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
-!===================================================================================================================================
-function base2_c(x) result(str)
-! internal write
-integer, intent(in) :: x
-character(len=max(1,bit_size(x)-leadz(x))) :: str
-    write( str, fmt="(b0)" ) x
-end function base2_c
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
@@ -11072,13 +11010,6 @@ end subroutine flush_trail
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
-subroutine set_stdout_lun(iounit)
-integer,intent(in)                   :: iounit
-   stdout=iounit
-end subroutine set_stdout_lun
-!===================================================================================================================================
-!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
-!===================================================================================================================================
 subroutine where_write_message_all(where, g0,g1,g2,g3,g4,g5,g6,g7,g8,g9,nospace)
 
 !$(#) M_journal::where_write_message_all(3f): writes a message to a string composed of any standard scalar types
@@ -11230,86 +11161,6 @@ end function str_one
 !===================================================================================================================================
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
-!===================================================================================================================================
-function lowercase(str) result(lcstr)
-
-! convert string to lower case leaving quoted strings as is
-
-character (len=*):: str
-character (len=len_trim(str)):: lcstr
-integer :: lgth
-integer :: ioffset
-integer :: iquote
-integer :: i
-integer :: iav
-integer :: iqc
-
-lgth=len_trim(str)
-ioffset=iachar('A')-iachar('a')
-iquote=0
-lcstr=str
-do i=1,lgth
-  iav=iachar(str(i:i))
-  if(iquote==0 .and. (iav==34 .or.iav==39)) then
-    iquote=1
-    iqc=iav
-    cycle
-  endif
-  if(iquote==1 .and. iav==iqc) then
-    iquote=0
-    cycle
-  endif
-  if (iquote==1) cycle
-  if(iav >= iachar('A') .and. iav <= iachar('Z')) then
-    lcstr(i:i)=achar(iav-ioffset)
-  else
-    lcstr(i:i)=str(i:i)
-  endif
-enddo
-
-end function lowercase
-!===================================================================================================================================
-!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
-!===================================================================================================================================
-function uppercase(str) result(ucstr)
-
-! convert string to upper case leaving quoted strings as is
-
-character (len=*):: str
-character (len=len_trim(str)):: ucstr
-integer :: lgth
-integer :: ioffset
-integer :: iquote
-integer :: i
-integer :: iav
-integer :: iqc
-
-lgth=len_trim(str)
-ioffset=iachar('A')-iachar('a')
-iquote=0
-ucstr=str
-do i=1,lgth
-  iav=iachar(str(i:i))
-  if(iquote==0 .and. (iav==34 .or.iav==39)) then
-    iquote=1
-    iqc=iav
-    cycle
-  endif
-  if(iquote==1 .and. iav==iqc) then
-    iquote=0
-    cycle
-  endif
-  if (iquote==1) cycle
-  if(iav >= iachar('a') .and. iav <= iachar('z')) then
-    ucstr(i:i)=achar(iav+ioffset)
-  else
-    ucstr(i:i)=str(i:i)
-  endif
-enddo
-
-end function uppercase
-!===================================================================================================================================
-!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()=
 !===================================================================================================================================
 !>
 !!##NAME
