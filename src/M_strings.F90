@@ -7951,7 +7951,8 @@ character(len=:),allocatable  :: string
    case(    61  ); STRING="= equals"
    case(    62  ); STRING="> greater than"
    case(    63  ); STRING="? question mark"
-   case(    64  ); STRING="@ at sign"
+   case(    64  ); STRING="@ at (at cost of, at sign, each at, commercial at, commat, rollmop, monkey|pigs|elephant tail,&
+                   & snail, arroba, strudel, asperand, ampersat, rose, cabbage, swirl, whorl)"
    case(    65  ); STRING="A majuscule A"
    case(    66  ); STRING="B majuscule B"
    case(    67  ); STRING="C majuscule C"

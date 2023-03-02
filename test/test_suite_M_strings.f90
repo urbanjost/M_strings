@@ -1638,6 +1638,8 @@ subroutine test_describe
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: char
 integer                       :: i
+character(len=*),parameter    :: at='@ at (at cost of, at sign, each at, commercial at, commat, &
+&rollmop, monkey|pigs|elephant tail, snail, arroba, strudel, asperand, ampersat, rose, cabbage, swirl, whorl)'
 !-----------------------------------------------------------------------------------------------------------------------------------
 ! initialize database description of routine
    call unit_check_start('describe',' -description ''returns a string describing character'' '//OPTIONS )
@@ -1656,7 +1658,7 @@ call unit_check('describe', &
    'describe exclamation point')
 call unit_check('describe', describe(char( 52) )  ==   '4 four'                                 , 'describe four')
 call unit_check('describe', describe(char( 63) )  ==   '? question mark'                        , 'describe question mark')
-call unit_check('describe', describe(char( 64) )  ==   '@ at sign'                              , 'describe at sign')
+call unit_check('describe', describe(char( 64) )  ==   at                                       , 'describe at sign')
 call unit_check('describe', describe(char( 74) )  ==   'J majuscule J'                          , 'describe J')
 call unit_check('describe', describe(char( 117))  ==   'u miniscule u'                          , 'describe u')
 call unit_check('describe', describe(char( 126))  ==   '~ tilde'                                , 'describe tilde')
