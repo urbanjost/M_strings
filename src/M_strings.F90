@@ -5148,9 +5148,9 @@ end function lpad_vector
 !!             a sign character it is moved to the left-most position of
 !!             the output.
 !!    length   The minimum string length to return. If not present, the
-!!             length of the input parameter STR is used. If the input value
-!!             STR is an integer no zero padding occurs if LENGTH is not
-!!             supplied.
+!!             length of the input parameter VALUEIN is used. If the input
+!!             value VALUEIN is an integer no zero padding occurs if LENGTH
+!!             is not supplied.
 !!
 !!##RETURNS
 !!    strout  A trimmed string padded on the left with zeros to
