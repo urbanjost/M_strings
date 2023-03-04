@@ -5123,13 +5123,14 @@ end function lpad_vector
 !!
 !!##DESCRIPTION
 !!    zpad(3f) crops the input string (or integer, which will be converted
-!!    to a string) and then pads it on the left with zeros to
-!!    the specified length.
+!!    to a string) and then pads it on the left with zeros to the specified
+!!    length.
 !!
-!!    Note that if the trimmed input string is already as long or longer than
-!!    the requested length the trimmed original string is returned.
+!!    Note that if the trimmed input string is already as long or longer
+!!    than the requested length the trimmed original string is returned.
 !!
-!!    For strings representing unsigned numbers this is basically an alias for
+!!    For strings representing unsigned numbers this is basically an
+!!    alias for
 !!
 !!        strout=pad(str,length,'0',clip=.true.,right=.false.)
 !!
@@ -5142,18 +5143,17 @@ end function lpad_vector
 !!    or passed as a procedure argument.
 !!
 !!##OPTIONS
-!!    str      The input string to left-pad. May be a scalor or vector
-!!             string or integer. If an integer is input it is first
-!!             converted to a string. If the leftmost non-blank character
-!!             is a sign character it is moved to the left-most position
-!!             of the output.
+!!    valuein  The input value to left-pad. May be a scalar or vector
+!!             string or integer. If the leftmost non-blank character is
+!!             a sign character it is moved to the left-most position of
+!!             the output.
 !!    length   The minimum string length to return. If not present, the
 !!             length of the input parameter STR is used. If the input value
 !!             STR is an integer no zero padding occurs if LENGTH is not
 !!             supplied.
 !!
 !!##RETURNS
-!!    strout  The trimmed input string padded on the left with zeros to
+!!    strout  A trimmed string padded on the left with zeros to
 !!            the requested length
 !!
 !!##EXAMPLE
@@ -5179,7 +5179,7 @@ end function lpad_vector
 !!          print boxed, zpad('0'),'but blanks are used for default length'
 !!          print boxed, zpad('0    ')
 !!          print boxed, zpad('     ')
-!!          print *, 'elemental:'
+!!          print *, 'input value may be an array:'
 !!          print '("[",a,"]")', zpad([1,10,100,1000,10000,100000],8)
 !!
 !!          ! example usage:
@@ -5206,7 +5206,7 @@ end function lpad_vector
 !!     > [0]but blanks are used for default length
 !!     > [00000]
 !!     > [00000]
-!!     >  elemental:
+!!     >  input value may be an array:
 !!     > [00000001]
 !!     > [00000010]
 !!     > [00000100]

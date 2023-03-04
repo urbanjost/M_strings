@@ -17,7 +17,7 @@
            print boxed, zpad('0'),'but blanks are used for default length'
            print boxed, zpad('0    ')
            print boxed, zpad('     ')
-           print *, 'elemental:'
+           print *, 'input value may be an array:'
            print '("[",a,"]")', zpad([1,10,100,1000,10000,100000],8)
 
            ! example usage:
