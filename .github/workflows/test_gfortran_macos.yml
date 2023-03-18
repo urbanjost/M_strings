@@ -30,9 +30,14 @@ jobs:
 
     - name: Install fpm
       run: |
+           echo $PATH
+           pwd
+           uname -a
            wget https://raw.githubusercontent.com/urbanjost/index/main/bootstrap/fpm.F90
-           mkdir -p /Users/runner/bin
-           gfortran fpm.F90 -o /Users/runner/bin/fpm
+           mkdir -p /Users/runner/bin tmp
+           ulimit -c unlimited -d unlimited -f unlimited -m unlimited -t unlimited -v unlimited
+           gfortran fpm.F90 -Jtmp -Itmp -o /Users/runner/bin/fpm
+           rm -f tmp/*.mod
            ls -l
 
     - name: Display environment

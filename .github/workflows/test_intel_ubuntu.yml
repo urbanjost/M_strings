@@ -52,8 +52,9 @@ jobs:
            pwd
            uname -a
            wget https://raw.githubusercontent.com/urbanjost/index/main/bootstrap/fpm.F90
-           mkdir -p /home/runner/.local/bin
-           ifort fpm.F90 -o /home/runner/.local/bin/fpm
+           mkdir -p /home/runner/.local/bin tmp
+           ulimit -c unlimited -d unlimited -f unlimited -m unlimited -s unlimited -t unlimited -v unlimited -x unlimited
+           ifort fpm.F90 -Itmp -Jtmp -o /home/runner/.local/bin/fpm
            ls -l
 
     - name: Run Intel unit tests on Linux
@@ -61,6 +62,7 @@ jobs:
         printenv TZ
         printenv FPM_COMPILER
         printenv OMP_NUM_THREADS
+        ulimit -c unlimited -d unlimited -f unlimited -m unlimited -s unlimited -t unlimited -v unlimited -x unlimited
         fpm test --profile release --compiler ifort
       env:
         OMP_NUM_THREADS: 2,1

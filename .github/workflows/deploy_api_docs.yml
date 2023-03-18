@@ -23,6 +23,7 @@ jobs:
 
       - name: Build docs
         run: |
+              ford --version
               ford ford.md
               ls
               tree
