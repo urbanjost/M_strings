@@ -27,6 +27,9 @@ jobs:
           ln -f -s /usr/local/bin/gfortran-${GCC_V} /usr/local/bin/gfortran
           which gfortran-${GCC_V}
           which gfortran
+          ## Alternative:
+          #conda create -n gf gfortran
+          #conda activate gf
 
     - name: Install fpm
       run: |

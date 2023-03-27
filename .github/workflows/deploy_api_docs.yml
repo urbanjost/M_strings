@@ -1,5 +1,5 @@
 #name: Build FORD docs & deploy to gh-pages
-name: FORD docs deployed to gh-pages
+name: FORD docs deployed to master
 on:
   push:
     branches:

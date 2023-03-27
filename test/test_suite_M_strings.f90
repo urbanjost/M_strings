@@ -976,9 +976,11 @@ subroutine test_upper
 !-!use M_strings, only: upper
 character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+character(len=36),parameter :: rnge='abcdefghIJKLMNopqrstuvwxyz0123456789'
 !-----------------------------------------------------------------------------------------------------------------------------------
    call unit_check_start('upper',' -description ''elemental function converts string to uppercase'' '//OPTIONS )
-   call unit_check('upper',upper(lc) == uc)
+   call unit_check('upper',upper(lc) == uc,upper(lc))
+   call unit_check('upper',upper(lc,9,14) == rnge,'range',upper(lc,9,14),'expected',rnge)
    call unit_check_done('upper')
 !-----------------------------------------------------------------------------------------------------------------------------------
 end subroutine test_upper
@@ -987,18 +989,20 @@ subroutine test_lower
 !-!use M_strings, only: lower
 character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+character(len=36),parameter :: rnge='ABCDEFGHijklmnOPQRSTUVWXYZ0123456789'
 !-----------------------------------------------------------------------------------------------------------------------------------
    call unit_check_start('lower',' -description ''elemental function converts string to miniscule'' '//OPTIONS )
-   call unit_check('lower',lower(uc) == lc,'lower')
+   call unit_check('lower',lower(uc) == lc,'lower',lower(uc),'expected',lc)
+   call unit_check('upper',lower(uc,9,14) == rnge,'range',lower(uc,9,14),'expected',rnge)
    call unit_check_done('lower')
 !-----------------------------------------------------------------------------------------------------------------------------------
 end subroutine test_lower
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_switch
-!-!use M_switch, only: reverse
-!-!use M_switch, only: switch
+!-!use m_switch, only: reverse
+!-!use m_switch, only: switch
 character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
-character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+character(len=36),parameter :: uc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=1)            :: chars(36)
 integer :: i
 !-----------------------------------------------------------------------------------------------------------------------------------
