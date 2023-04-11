@@ -10,6 +10,14 @@ categories = ["strings"]
 keywords = ["fortran", "strings"]
 homepage = "https://github.com/urbanjost/M_strings.git"
 
+[build]
+
+#># pre-version8 compatibility
+#>[fortran]
+#>implicit-typing = true
+#>implicit-external = true
+#>source-form = "default"
+
 # demo programs
 [install]
 library=true
