@@ -1,6 +1,6 @@
 module M_testsuite_M_strings
 use,intrinsic :: iso_fortran_env,only : std_in=>input_unit,std_out=>output_unit,std_err=>error_unit
-use M_verify
+use M_framework__verify
 use M_strings
 implicit none
 character(len=*),parameter :: options=' -section 3 -library libGPF -filename `pwd`/M_strings.FF &
@@ -2152,8 +2152,8 @@ end subroutine test_match_delimiter
 end module M_testsuite_M_strings
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 program runtest
-use M_msg
-use M_verify, only : unit_check_command, unit_check_keep_going, unit_check_level, unit_check_stop
+use M_framework
+use M_framework__verify, only : unit_check_command, unit_check_keep_going, unit_check_level, unit_check_stop
 use M_testsuite_M_strings
 implicit none
    unit_check_command=''

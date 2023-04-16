@@ -1,4 +1,4 @@
-# TOML file for fpm as described at https://github.com/fortran-lang/fpm/blob/master/manifest-reference.md
+# TOML file for fpm as described at https://fpm.fortran-lang.org/en/spec/manifest.html
 name = "M_strings"
 version = "2.0.0"
 license = "Public Domain"
@@ -11,12 +11,23 @@ keywords = ["fortran", "strings"]
 homepage = "https://github.com/urbanjost/M_strings.git"
 
 [build]
+auto-executables = true
+auto-tests = true
+auto-examples = true
+# new force module naming rules to avoid collisions with other packages
+#module-naming = true
+# traditional where user can use any module name
+module-naming = false
 
-#># pre-version8 compatibility
-#>[fortran]
-#>implicit-typing = true
-#>implicit-external = true
-#>source-form = "default"
+# new
+[fortran]
+implicit-typing = false
+implicit-external = false
+source-form = "free"
+# traditional pre-version8 compatibility
+#implicit-typing = true
+#implicit-external = true
+#source-form = "default"
 
 # demo programs
 [install]
@@ -27,4 +38,4 @@ name="test_suite"
 source-dir="test"
 main="test_suite_M_strings.f90"
 [test.dependencies]
-M_msg          = { git = "https://github.com/urbanjost/M_msg.git" }
+M_framework          = { git = "https://github.com/urbanjost/M_framework.git" }
