@@ -1,10 +1,10 @@
 !>
 !!##NAME
-!!    M_strings_oop(3f) - [M_strings::INTRO::OOPS] OOP Fortran string module
+!!    M_strings__oop(3f) - [M_strings::INTRO::OOPS] OOP Fortran string module
 !!
 !!##SYNOPSIS
 !!
-!!    use M_strings_oop
+!!    use M_strings__oop
 !!
 !!##DESCRIPTION
 !!    The M_strings(3fm) module is a collection of Fortran procedures
@@ -13,7 +13,7 @@
 !!    substrings, locating strings with simple wildcard expressions, removing
 !!    tabs and line terminators and other string manipulations are included.
 !!
-!!    M_strings_oop(3fm) is a companion module that provides an OOP interface
+!!    M_strings__oop(3fm) is a companion module that provides an OOP interface
 !!    to the M_strings module.
 !!
 !!##SEE ALSO
@@ -29,14 +29,14 @@
 !!    object-oriented interface does not have individual man(1) pages,
 !!    but is instead demonstrated using the following example program:
 !!
-!!     program demo_M_strings_oop
+!!     program demo_M_strings__oop
 !!     !
 !!     ! This is an example using the object-oriented class/type model
-!!     ! defined in M_strings_oop
+!!     ! defined in M_strings__oop
 !!     ! This is essentially the same functionality as the procedures
 !!     ! combined with several Fortran intrinsics and overloaded operators
 !!     !
-!!     use M_strings_oop,only : string, p
+!!     use M_strings__oop,only : string, p
 !!     implicit none
 !!     TYPE(string) :: str1
 !!     TYPE(string) :: str2
@@ -188,7 +188,7 @@
 !!
 !!       write(*,*)repeat('=',68)
 !!
-!!     end program demo_M_strings_oop
+!!     end program demo_M_strings__oop
 !!
 !! Expected output
 !!
@@ -277,7 +277,7 @@
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
-module M_strings_oop
+module M_strings__oop
 !
 ! Define an OOP (Object-Oriented Programming) interface for the M_strings module.
 !
@@ -885,7 +885,7 @@ end function ne
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
-end module M_strings_oop
+end module M_strings__oop
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================

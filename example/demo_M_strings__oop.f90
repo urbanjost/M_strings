@@ -1,11 +1,11 @@
-      program demo_M_strings_oop
+      program demo_M_strings__oop
       !
       ! This is an example using the object-oriented class/type model
-      ! defined in M_strings_oop
+      ! defined in M_strings__oop
       ! This is essentially the same functionality as the procedures
       ! combined with several Fortran intrinsics and overloaded operators
       !
-      use M_strings_oop,only : string, p
+      use M_strings__oop,only : string, p
       implicit none
       TYPE(string) :: str1
       TYPE(string) :: str2
@@ -157,4 +157,4 @@
 
         write(*,*)repeat('=',68)
 
-      end program demo_M_strings_oop
+      end program demo_M_strings__oop

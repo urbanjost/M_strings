@@ -9,7 +9,7 @@
 !!    substrings, locating strings with simple wildcard expressions, removing
 !!    tabs and line terminators and other string manipulations are included.
 !!
-!!    M_strings_oop(3fm) is a companion module that provides an OOP interface
+!!    M_strings__oop(3fm) is a companion module that provides an OOP interface
 !!    to the M_strings module.
 !!
 !!##SYNOPSIS
@@ -257,7 +257,7 @@
 !!
 !!   OOPS INTERFACE
 !!
-!!    The M_strings_oop(3fm) module (included with the M_strings(3fm)
+!!    The M_strings__oop(3fm) module (included with the M_strings(3fm)
 !!    module) provides an OOP (Object-Oriented Programming) interface to
 !!    the M_strings(3fm) module.
 !!

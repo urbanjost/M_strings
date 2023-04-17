@@ -1,6 +1,6 @@
 function loadthem(){
 append("M_strings.3m_strings.html");
-append("M_strings_oop.3m_strings.html");
+append("M_strings__oop.3m_strings.html");
 append("adjustc.3m_strings.html");
 append("aton.3m_strings.html");
 append("base.3m_strings.html");
