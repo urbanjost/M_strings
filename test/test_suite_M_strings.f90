@@ -2153,11 +2153,9 @@ end module M_testsuite_M_strings
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 program runtest
 use M_framework
-use M_framework__verify, only : unit_check_command, unit_check_keep_going, unit_check_level, unit_check_stop
+use M_framework__verify, only : unit_check_level, unit_check_stop
 use M_testsuite_M_strings
 implicit none
-   unit_check_command=''
-   unit_check_keep_going=.true.
 !  unit_check_level=1
    unit_check_level=0
    call test_suite_M_strings()
