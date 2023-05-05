@@ -1,6 +1,6 @@
 module M_testsuite_M_strings
 use,intrinsic :: iso_fortran_env,only : std_in=>input_unit,std_out=>output_unit,std_err=>error_unit
-use M_framework,  only : unit_test_level,  unit_test_stop,  &
+use M_framework,  only : unit_test_level,  unit_test_stop, unit_test_msg, &
                        & unit_test_start, unit_test,  &
                        & unit_test_end, unit_test_bad, unit_test_good, unit_test_stop
 use M_strings
@@ -98,7 +98,7 @@ subroutine test_glob()
 integer :: nReps
 logical :: allpassed
 integer :: i
-   call unit_test_start('glob',' match string with a pattern containing * and ? wildcard characters')
+   call unit_test_start('glob','[COMPARE] match string with a pattern containing * and ? wildcard characters')
    allpassed = .true.
 
    nReps = 1000000
@@ -282,7 +282,7 @@ end subroutine test_glob
 subroutine test_replace()
 character(len=:),allocatable :: targetline
 
-   call unit_test_start('replace')
+   call unit_test_start('replace','[EDITING] function replaces one substring for another in string')
    targetline='this is the input string'
 
    call testit('th','TH','THis is THe input string')
@@ -785,7 +785,7 @@ integer                         :: ier          ! error code. if ier = -1 bad di
       ml=1
       mr=len(targetline)
       call substitute(targetline,old,new,ier,ml,mr) 
-      call unit_test('substitute',targetline.eq.expected,string)
+      call unit_test('substitute',targetline == expected,string)
    end subroutine tryit
 
 end subroutine test_substitute
@@ -880,7 +880,7 @@ subroutine test_len_white()
 end subroutine test_len_white
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_clip()
-   call unit_test_start('clip','function trims leading and trailing spaces')
+   call unit_test_start('clip','[WHITESPACE] trim leading and trailing blanks from a string')
    call unit_test('clip',clip('    A B CC D      ') == 'A B CC D',msg='clip string test 1')
    call unit_test('clip',clip('A B CC D') == 'A B CC D',msg='clip string test 2')
    call unit_test('clip',clip('A B CC D    ') == 'A B CC D',msg='clip string test 3')
@@ -889,7 +889,7 @@ subroutine test_clip()
 end subroutine test_clip
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_crop()
-   call unit_test_start('crop','function trims leading and trailing spaces')
+   call unit_test_start('crop','[WHITESPACE] trim leading and trailing blanks and control characters from a string')
    call unit_test('crop',crop('    A B CC D      ') == 'A B CC D',msg='crop string test 1')
    call unit_test('crop',crop('A B CC D') == 'A B CC D',msg='crop string test 2')
    call unit_test('crop',crop('A B CC D    ') == 'A B CC D',msg='crop string test 3')
@@ -919,21 +919,22 @@ character(len=:),allocatable  :: e
 end subroutine test_rotate13
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_reverse
-!-!use M_strings, only: reverse
+
 character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
-!-----------------------------------------------------------------------------------------------------------------------------------
+
    call unit_test_start('reverse','elemental function reverses character order in a string')
-if(reverse(lc) == '9876543210zyxwvutsrqponmlkjihgfedcba')then
-   call unit_test_good('reverse')
-else
-   if(unit_test_level > 0)then
-      write(std_err,g)'error: reverse '
-      write(std_err,g)'iN:  ['//lc//']'
-      write(std_err,g)'OUT: ['//reverse(lc)//']'
+   if(reverse(lc) == '9876543210zyxwvutsrqponmlkjihgfedcba')then
+      call unit_test('reverse',.true.)
+   else
+      if(unit_test_level > 0)then
+         write(std_err,g)'error: reverse '
+         write(std_err,g)'iN:  ['//lc//']'
+         write(std_err,g)'OUT: ['//reverse(lc)//']'
+      endif
+      call unit_test('reverse',.false.)
    endif
-   call unit_test_bad('reverse')
-endif
-!-----------------------------------------------------------------------------------------------------------------------------------
+   call unit_test_end('reverse')
+
 end subroutine test_reverse
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_upper
@@ -955,7 +956,7 @@ character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 character(len=36),parameter :: rnge='ABCDEFGHijklmnOPQRSTUVWXYZ0123456789'
 !-----------------------------------------------------------------------------------------------------------------------------------
-   call unit_test_start('lower','elemental function converts string to miniscule')
+   call unit_test_start('lower','[CASE] changes a string to lowercase over specified range')
    call unit_test('lower',lower(uc) == lc,'lower',lower(uc),'expected',lc)
    call unit_test('upper',lower(uc,9,14) == rnge,'range',lower(uc,9,14),'expected',rnge)
    call unit_test_end('lower')
@@ -1021,7 +1022,7 @@ end subroutine test_c2s
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_indent()
 character(len=1024) :: in
-   call unit_test_start('indent','count number of leading spaces' )
+   call unit_test_start('indent','[WHITESPACE] count number of leading spaces in a string')
 
    in='    should be four'
    call unit_test('indent',indent(in) == 4,msg=in)
@@ -1038,7 +1039,7 @@ end subroutine test_indent
 subroutine test_visible()
 integer :: i
 character(len=2) :: controls(0:31)
-   call unit_test_start('visible' )
+   call unit_test_start('visible','[NONALPHA] expand a string to control and meta-control representations')
    do i=32,126
       call unit_test('visible',visible(char(i)) == char(i),i,visible(char(i)))
    enddo
@@ -1068,7 +1069,7 @@ subroutine test_expand()
 
 integer :: i
 character(len=80) :: line
-   call unit_test_start('expand','expand escape sequences in a string' )
+   call unit_test_start('expand','[NONALPHA] expand C-like escape sequences')
    call unit_test('expand',expand('\e\d0912J') == char(27)//'[2J','a vt102 sequence to clear the screen')
    call unit_test('expand',expand('this is a test') == 'this is a test',msg='test plain text')
 
@@ -1095,7 +1096,7 @@ character(len=:),allocatable :: inline
 character(len=:),allocatable :: expected
 character(len=1024)          :: outline
 integer                      :: iout
-   call unit_test_start('notabs','convert tabs to spaces while maintaining columns, assuming a tab is set every 8 characters' )
+   call unit_test_start('notabs','[NONALPHA] convert tabs to spaces while maintaining columns, assuming tab is set every 8 chars' )
    inline= 'one '//char(9)//'and'//repeat(char(9),3)//'two'
    expected='one     and                     two'
    call notabs(inline,outline,iout)
@@ -1166,7 +1167,7 @@ subroutine test_nospace
    character(len=:),allocatable :: string
    string='  This     is      a     test  '
    string=nospace(string)
-   call unit_test_start('nospace','function replaces whitespace with nothing' )
+   call unit_test_start('nospace','[WHITESPACE] remove all whitespace from input string')
    if (string  /=  'Thisisatest')then
       call unit_test_bad('nospace')
    endif
@@ -1260,35 +1261,22 @@ end subroutine test_merge_str
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_compact
 !-!use M_strings, only: compact
-   call unit_test_start('compact','left justify string and replace duplicate whitespace with single characters or nothing' )
-   if (compact('  This  is     a    test  ')  /=  'This is a test')then
-      call unit_test_bad('compact')
-      stop 1
-   endif
-   if (compact('This is a test')  /=  'This is a test')then
-      call unit_test_bad('compact')
-      stop 2
-   endif
-   if (compact('This-is-a-test')  /=  'This-is-a-test')then
-      call unit_test_bad('compact')
-      stop 3
-   endif
-   if (compact('  This  is     a    test  ',char='')  /=  'Thisisatest')then
-      call unit_test_bad('compact')
-      stop 4
-   endif
-   if (compact('  This  is     a    test  ',char='t')  /=  'Thististattest')then
-      call unit_test_bad('compact')
-      stop 5
-   endif
-   call unit_test_good('compact')
+   call unit_test_start('compact','[WHITESPACE] converts contiguous whitespace to a single character (or nothing)')
+   call unit_test('compact',compact('  This  is     a    test  ') == 'This is a test','reduce to single spaces')
+   call unit_test('compact',compact('This is a test') == 'This is a test','input has no adjacent whitespace characters')
+   call unit_test('compact',compact('This-is-a-test') == 'This-is-a-test','input has no whitespace characters')
+   call unit_test('compact',compact('  This  is     a    test  ',char='') == 'Thisisatest','remove all whitespace')
+   call unit_test('compact',compact('  This  is     a    test  ',char='t') == 'Thististattest','replace blank ranges with "t"')
+   call unit_test_end('compact')
 end subroutine test_compact
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_noesc  ! test noesc
 !-!use M_strings, only : noesc
 character(len=23) :: in,out,clr
 integer           :: i10
+logical           :: goodbad
   ! Use goodbad(1) to indicate the test sequence was begun
+   goodbad=.true.
    call unit_test_start('noesc')
    do i10=0,127
       write(in, '(i3.3,1x,4a)')i10,char(i10),char(i10),char(i10),' eol'
@@ -1301,17 +1289,17 @@ integer           :: i10
       SELECT CASE (i10)
       CASE (:31,127)
         if(out /= clr)then
-           write(std_err,g)'Error: noesc did not replace a string with blanks that it should have'
-           call unit_test_bad('noesc')
+           goodbad=.false.
+           call unit_test_msg('noesc','Error: noesc did not replace a string with blanks that it should have')
         endif
       CASE DEFAULT
         if(in /= out)then
-           write(std_err,g)'Error: noesc changed a string it should not have'
-           call unit_test_bad('noesc')
+           call unit_test_msg('noesc','Error: noesc changed a string it should not have')
+           goodbad=.false.
         endif
       END SELECT
    enddo
-   call unit_test_good('noesc')
+   call unit_test('noesc',goodbad)
 end subroutine test_noesc
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_string_to_value
@@ -1324,7 +1312,7 @@ integer           :: IVALUE
 integer           :: GOOD
 integer           :: ierr
 !===================================================================================================================================
-   call unit_test_start('string_to_value','generic subroutine returns REAL|DOUBLEPRECISION|INTEGER value from string (a2d,a2r,a2i)')
+   call unit_test_start('string_to_value','[TYPE] subroutine returns numeric value of specified type from string')
 !===================================================================================================================================
    STRING=' -40.5e-2 '
    CALL string_to_value(STRING,RVALUE,IERR)
@@ -1426,7 +1414,7 @@ integer           :: ILEN
 integer           :: IERR
 integer           :: IERRSUM=0
 !===================================================================================================================================
-   call unit_test_start('value_to_string','generic subroutine returns string given numeric REAL|DOUBLEPRECISION|INTEGER value')
+   call unit_test_start('value_to_string','[TYPE] return numeric string from a numeric value')
    DVALUE=5.5555555555555555555555d0
    call value_to_string(DVALUE,STRING,ILEN,IERR)
    if(unit_test_level > 0)then
@@ -1483,7 +1471,7 @@ subroutine test_v2s()
 !use M_math, only : almost
 real            :: SUM
 doubleprecision :: SUM2
-   call unit_test_start('v2s','generic function returns string given numeric REAL|DOUBLEPRECISION|INTEGER value')
+   call unit_test_start('v2s','[TYPE] return numeric string from a numeric value')
 
    SUM2=5.555555555555555555555555555555555d0
    SUM=5.555555555555555555555555555555555e0
@@ -1491,7 +1479,7 @@ doubleprecision :: SUM2
 !   call unit_test('v2s',almost(s2v(v2s(SUM2)),SUM2,15),'doubleprecision',SUM2,s2v(v2s(SUM)))
    call unit_test('v2s',v2s(1234) == '1234','integer',1234)
    call unit_test('v2s',v2s(.true.) == 'T','logical',v2s(.true.))
-   call unit_test('v2s',v2s(.false.) == 'F','logical',v2s(.false.))
+   call unit_test('v2s',v2s(.false.) == 'F','logical',v2s(.false.)  )
    call unit_test_end('v2s')
 end subroutine test_v2s
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
@@ -1513,12 +1501,12 @@ subroutine test_trimzeros_()
 end subroutine test_trimzeros_
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_listout()
-integer,allocatable :: icurve_lists(:)        ! icurve_lists is input array
-integer :: icurve_expanded(1000)  ! icurve_expanded is output array
-integer :: inums                  ! number of icurve_lists values on input, number of icurve_expanded numbers on output
+integer,allocatable :: icurve_lists(:) ! icurve_lists is input array
+integer :: icurve_expanded(1000)       ! icurve_expanded is output array
+integer :: inums                       ! number of icurve_lists values on input, number of icurve_expanded numbers on output
 integer :: i
 integer :: ierr
-   call unit_test_start('listout','copy ICURVE() to ICURVE_EXPANDED() expanding negative numbers to ranges (1-10 means 1 thru 10)')
+   call unit_test_start('listout','[NUMERIC] expand list of numbers where negative numbers denote range ends (1 -10 => 1 thru 10)')
    icurve_lists=[1, 20, -30, 101, 100, 99, 100, -120, 222, -200]
    inums=size(icurve_lists)
    call listout(icurve_lists,icurve_expanded,inums,ierr)
@@ -1626,7 +1614,7 @@ real               :: rvalues(longest_line/2+1)
 integer            :: ivalues(longest_line/2+1)
 doubleprecision    :: dvalues(longest_line/2+1)
 integer            :: icount,ierr
-   call unit_test_start('getvals' )
+   call unit_test_start('getvals','[TYPE] read REAL values from character variable up to size of VALUES() array')
 
    call getvals('11,,,22,33,-44, 55 , ,66  ',ivalues,icount,ierr)
    call unit_test('getvals',all(ivalues(:icount) == [11,22,33,-44,55,66]),msg='integer test')
@@ -1650,7 +1638,7 @@ integer,parameter  :: isz=10
 real               :: array(isz)
 integer            :: ierr
 integer            :: inums
-   call unit_test_start('string_to_values','subroutine returns values from a string')
+   call unit_test_start('string_to_values','[TYPE] read a string representing numbers into a numeric array')
 
    call string_to_values(s,10,array,inums,' ;',ierr)
    call unit_test('string_to_values',all(array(:inums) == [10.0,20e3,3.45,-400.3e-2,1234.0,5678.0]),s)
@@ -1985,21 +1973,11 @@ integer                       :: i
    do i=0,number_of_chars-1
       ch=char(i)
       SELECT CASE (ch)
-      CASE ('a':'z')
-         if (islower(ch) .eqv. .false.)then
-            write(std_err,g)'islower: failed on character ',i,islower(ch)
-            call unit_test_bad('islower')
-            stop 1
-         endif
-      CASE DEFAULT
-         if (islower(ch) .eqv. .true.)then
-            write(std_err,g)'islower: failed on character ',i,islower(ch)
-            call unit_test_bad('islower')
-            stop 2
-         endif
+      CASE ('a':'z'); call unit_test ('islower',islower(ch) .eqv. .true.,'testing character ',i,islower(ch))
+      CASE DEFAULT;   call unit_test ('islower',islower(ch) .eqv. .false., 'testing character ',i,islower(ch))
       END SELECT
    enddo
-   call unit_test_good('islower')
+   call unit_test_end('islower')
 end subroutine test_islower
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isalnum
@@ -2013,20 +1991,12 @@ integer                       :: i
       ch=char(i)
       SELECT CASE (ch)
       CASE ('a':'z','A':'Z','0':'9')
-         if (isalnum(char(i)) .eqv. .false.)then
-            write(std_err,g)'isalnum: failed on character ',i,isalnum(char(i))
-            call unit_test_bad('isalnum')
-            stop 1
-         endif
+         call unit_test ('isalnum',isalnum(char(i)) .eqv. .true.,'testing character',i,isalnum(char(i)))
       CASE DEFAULT
-         if (isalnum(char(i)) .eqv. .true.)then
-            write(std_err,g)'isalnum: failed on character ',i,isalnum(char(i))
-            call unit_test_bad('isalnum')
-            stop 2
-         endif
+         call unit_test ('isalnum',isalnum(char(i)) .eqv. .false., 'testing character',i,isalnum(char(i)))
       END SELECT
    enddo
-   call unit_test_good('isalnum')
+   call unit_test_end('isalnum')
 end subroutine test_isalnum
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_nint()
@@ -2096,3 +2066,69 @@ implicit none
    call unit_test_stop()
 end program runtest
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+!call unit_test_start('c2s','[ARRAY] convert C string pointer to Fortran character string')
+!call unit_test_start('s2c','[ARRAY] convert character variable to array of characters with last element set to null')
+!call unit_test_start('switch','[ARRAY] converts between CHARACTER scalar and array of single characters')
+!call unit_test_start('bundle','[ARRAY] return up to twenty strings of arbitrary length as an array')
+!call unit_test_start('base','[BASE] convert whole number string in base [2-36] to string in alternate base [2-36]')
+!call unit_test_start('base2','[BASE] convert whole number to string in base 2')
+!call unit_test_start('codebase','[BASE] convert whole number in base 10 to string in base [2-36]')
+!call unit_test_start('decodebase','[BASE] convert whole number string in base [2-36] to base 10 number')
+!call unit_test_start('upper','[CASE] changes a string to uppercase')
+!call unit_test_start('upper_quoted','[CASE] elemental function converts string to miniscule skipping strings quoted per Fortran syntax rules')
+!call unit_test_start('longest_common_substring','[COMPARE] function that returns the longest common substring of two strings.
+!call unit_test_start('isalpha','[COMPARE] returns .true. if character is a letter and .false. otherwise')
+!call unit_test_start('isascii','[COMPARE] returns .true. if the character is in the range char(0) to char(256)')
+!call unit_test_start('isblank','[COMPARE] returns .true. if character is a blank character (space or horizontal tab).')
+!call unit_test_start('iscntrl','[COMPARE] returns .true. if character is a delete character or ordinary control character')
+!call unit_test_start('isdigit','[COMPARE] returns .true. if character is a digit (0, 1, ..., 9) and .false. otherwise')
+!call unit_test_start('isgraph','[COMPARE] returns .true. if character is a printable character except a space is considered non-printable')
+!call unit_test_start('islower','[COMPARE] returns .true. if character is a miniscule letter (a-z)')
+!call unit_test_start('isprint','[COMPARE] returns .true. if character is an ASCII printable character')
+!call unit_test_start('ispunct','[COMPARE] returns .true. if character is a printable punctuation character')
+!call unit_test_start('isspace','[COMPARE] returns .true. if character is a null, space, tab, carriage return, new line, vertical tab, or formfeed')
+!call unit_test_start('isupper','[COMPARE] returns .true. if character is an uppercase letter (A-Z)')
+!call unit_test_start('isxdigit','[COMPARE] returns .true. if character is a hexadecimal digit (0-9, a-f, or A-F).')
+!call unit_test_start('ends_with','[COMPARE] test if string ends with specified suffix(es)')
+!call unit_test_start('fortran_name','[COMPARE] test if string meets criteria for being a fortran name
+!call unit_test_start('isalnum','[COMPARE] test membership in subsets of ASCII set')
+!call unit_test_start('describe','[DESCRIBE] returns a string describing the name of a single character')
+!call unit_test_start('edit_distance','[DESCRIBE] returns a naive edit distance using the Levenshtein distance algorithm')
+!call unit_test_start('join','[EDITING] append CHARACTER variable array into a single CHARACTER variable with specified separator')
+!call unit_test_start('change','[EDITING] change old string to new string with a directive like a line editor')
+!call unit_test_start('squeeze','[EDITING] delete adjacent duplicate occurrences of a character from a string')
+!call unit_test_start('modif','[EDITING] emulate the MODIFY command from the line editor XEDIT')
+!call unit_test_start('transliterate','[EDITING] replace characters from old set with new set')
+!call unit_test_start('substitute','[EDITING] subroutine globally substitutes one substring for another in string')
+!call unit_test_start('rotate13','[ENCODE] apply trivial ROT13 encryption to a string')
+!call unit_test_start('cpad','[LENGTH] convert to a cropped string and then centers the string to specified length')
+!call unit_test_start('lpad','[LENGTH] convert to a cropped string and then blank-pad on the left to requested length')
+!call unit_test_start('rpad','[LENGTH] convert to a string and pad on the right to requested length')
+!call unit_test_start('len_white','[LENGTH] get length of string trimmed of whitespace.')
+!call unit_test_start('zpad','[LENGTH] pad a string on the left with zeros to specified length')
+!call unit_test_start('merge_str','[LENGTH] pads strings to same length and then calls MERGE(3f)')
+!call unit_test_start('lenset','[LENGTH] return string trimmed or padded to specified length')
+!call unit_test_start('pad','[LENGTH] return string padded to at least specified length')
+!call unit_test_start('stretch','[LENGTH] return string padded to at least specified length')
+!call unit_test_start('noesc','[NONALPHA] convert non-printable characters to a space')
+!call unit_test_start('dilate','[NONALPHA] expand tab characters')
+!call unit_test_start('quote','[QUOTES] add quotes to string as if written with list-directed input')
+!call unit_test_start('matching_delimiter','[QUOTES] find position of matching delimiter')
+!call unit_test_start('unquote','[QUOTES] remove quotes from string as if read with list-directed input')
+!call unit_test_start('paragraph','[TOKENS] break a long line into a paragraph')
+!call unit_test_start('sep','[TOKENS] function to parse string into an array using specified delimiters')
+!call unit_test_start('delim','[TOKENS] parse a string and store tokens into an array')
+!call unit_test_start('find_field','[TOKENS] parse a string into tokens')
+!call unit_test_start('split','[TOKENS] parse string into an array using specified delimiters')
+!call unit_test_start('split2020','[TOKENS] parse a string into tokens using proposed f2023 method')
+!call unit_test_start('chomp','[TOKENS] Tokenize a string, consuming it one token per call')
+!call unit_test_start('strtok','[TOKENS] Tokenize a string')
+!call unit_test_start('msg','[TYPE] converts any standard scalar type to a string')
+!call unit_test_start('isnumber','[TYPE] determine if a string represents a number')
+!call unit_test_start('aton','[TYPE] function returns argument as a numeric value from a string')
+!call unit_test_start('s2v','[TYPE] function returns doubleprecision numeric value from a string')
+!call unit_test_start('s2vs','[TYPE] given a string representing numbers return a numeric array')
+!call unit_test_start('dble','[TYPE] overloads DBLE(3f) so it can handle character arguments')
+!call unit_test_start('int','[TYPE] overloads INT(3f) so it can handle character arguments')
+!call unit_test_start('nint','[TYPE] overloads NINT(3f) so it can handle character arguments')
+!call unit_test_start('real','[TYPE] overloads REAL(3f) so it can handle character arguments')
