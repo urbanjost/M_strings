@@ -1,13 +1,13 @@
 module M_testsuite_M_strings
 use,intrinsic :: iso_fortran_env,only : std_in=>input_unit,std_out=>output_unit,std_err=>error_unit
-use M_framework,  only : unit_test_level,  unit_test_stop, unit_test_msg, &
-                       & unit_test_start, unit_test,  &
-                       & unit_test_end, unit_test_bad, unit_test_good, unit_test_stop
+use M_framework,  only : unit_test_level,  unit_test_stop, unit_test_msg, str, &
+                       & unit_test_start, unit_test,  unit_test_end, unit_test_stop
 use M_strings
 implicit none
 character(len=*),parameter :: options=' -section 3 -library libGPF -filename `pwd`/M_strings.FF &
 & -documentation y -prep y -ccall  n -archive GPF.a '
 character(len=*),parameter :: g='(*(g0,1x))'
+logical,parameter :: T=.true., F=.false.
 contains
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_suite_m_strings()
@@ -335,7 +335,7 @@ end subroutine test_replace
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_join()
 character(len=:),allocatable  :: s(:)
-   call unit_test_start('join','append an array of character variables with specified separator into a single CHARACTER variable')
+   call unit_test_start('join','[EDITING] append CHARACTER variable array into a single CHARACTER with specified separator')
    s=[character(len=10) :: 'United',' we',' stand,',' divided',' we fall.']
 
    call testit( join(s),                            'United we stand, divided we fall.')
@@ -371,7 +371,7 @@ end subroutine test_join
 subroutine test_base()
    character(len=:),allocatable :: in(:)
    character(len=:),allocatable :: expected(:)
-   call unit_test_start('base','convert numbers between bases')
+   call unit_test_start('base','[BASE] convert whole number string in base [2-36] to string in alternate base [2-36]')
 
    ! convert base2 values to base10 in brief mode
    in=[character(len=32) :: '10','1010','101010','10101010','1010101010','101010101010']
@@ -412,9 +412,9 @@ integer                      :: i
    do i=1,size(in)
       if(base(in(i),inbase,answer,outbase))then
            call unit_test('base',answer == answers(i), &
-              'converting '//trim(in(i))//' got '//trim(answers(i))//' expected '//trim(answer) )
+              'converting '//trim(in(i))//' got '//trim(answers(i))//' expected '//trim(answer),wordy=F )
        else
-          call unit_test_bad('base',msg='Error in decoding/encoding number.')
+          call unit_test('base',F,msg='Error in decoding/encoding number.')
        endif
    enddo
 end subroutine checkit
@@ -423,7 +423,7 @@ end subroutine test_base
 subroutine test_decodebase()
 character(len=:),allocatable :: in(:)
 integer,allocatable          :: expected(:)
-   call unit_test_start('decodebase')
+   call unit_test_start('decodebase','[BASE] convert whole number string in base [2-36] to base 10 number')
 
    ! convert base2 values to base10 in brief mode
    in=[character(len=32) :: '10','1010','101010','10101010','1010101010','101010101010']
@@ -447,10 +447,9 @@ integer                      :: answer
 integer                      :: i
    do i=1,size(in)
       if(decodebase(in(i),inbase,answer))then
-           call unit_test('decodebase',answer == answers(i), &
-              'converting '//trim(in(i)) )
+           call unit_test('decodebase',answer == answers(i),'converting '//trim(in(i)) ,wordy=F)
        else
-          call unit_test_bad('decodebase',msg='Error in decoding/encoding number.')
+          call unit_test('decodebase',F,msg='Error in decoding/encoding number.')
        endif
    enddo
 end subroutine checkit
@@ -459,7 +458,7 @@ end subroutine test_decodebase
 subroutine test_base2()
 character(len=:),allocatable :: in(:)
 integer,allocatable          :: expected(:)
-   call unit_test_start('base2')
+   call unit_test_start('base2','[BASE] convert whole number to string in base 2')
 
    ! convert base10 values to base2 strings
    in=[character(len=32) :: '10','1010','101010','10101010','1010101010','101010101010']
@@ -483,7 +482,7 @@ end subroutine test_base2
 subroutine test_codebase()
 character(len=:),allocatable :: in(:)
 integer,allocatable          :: expected(:)
-   call unit_test_start('codebase')
+   call unit_test_start('codebase','[BASE] convert whole number in base 10 to string in base [2-36]')
 
    ! convert base10 values to base2 strings
    in=[character(len=32) :: '10','1010','101010','10101010','1010101010','101010101010']
@@ -508,9 +507,9 @@ integer                      :: i
    do i=1,size(answer)
       if(codebase(values(i),outbase,out) )then
            call unit_test('codebase',out == answer(i), &
-              'checking for '//trim(answer(i))//' in base '//v2s(outbase)//' from value '//v2s(values(i)) )
+              'checking for '//trim(answer(i))//' in base '//v2s(outbase)//' from value '//v2s(values(i)),wordy=F )
        else
-          call unit_test_bad('codebase',msg='Error answer decoding/encoding number.')
+          call unit_test('codebase',F,msg='Error answer decoding/encoding number.')
        endif
    enddo
 end subroutine checkit
@@ -524,7 +523,7 @@ character(len=20) :: array(n)=' '
 integer           :: ibegin(n),iterm(n)
 integer           :: icount
 integer           :: ilen
-   call unit_test_start('delim','subroutine parses string using delimiters and stores tokens into array')
+   call unit_test_start('delim','[TOKENS] parse a string and store tokens into an array')
    line=' first  second 10.3 words_of_stuff  '
    dlm=' '
 
@@ -575,9 +574,6 @@ end subroutine testit
 end subroutine test_delim
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_split
-!-!  split: parse a string using specified delimiter characters and store tokens into an array
-!-!$SYSTEM  goodbad split start -library libGPF -filename `pwd`/M_strings.FF --section 3
-!-!   USE M_strings, ONLY: split
 INTRINSIC SIZE
 CHARACTER(LEN=:),ALLOCATABLE    :: line
 CHARACTER(LEN=:),ALLOCATABLE    :: order
@@ -587,7 +583,7 @@ character(len=10)               :: orders(3)=['sequential', '          ', 'rever
 ! return strings composed of delimiters or not IGNORE|RETURN|IGNOREEND
 character(len=10)               :: nulls(3)=['ignore    ', 'return    ', 'ignoreend ' ]
 !-----------------------------------------------------------------------------------------------------------------------------------
-   call unit_test_start('split','subroutine parses string on delimiters and store tokens into an array')
+   call unit_test_start('split','[TOKENS] parse string into an array using specified delimiters')
 
    dlm=''
    LINE='abcdef ghijklmnop qrstuvwxyz  1:2  333333 a b cc    '
@@ -660,10 +656,6 @@ character(len=10)               :: nulls(3)=['ignore    ', 'return    ', 'ignore
 end subroutine test_split
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_m_strings
-!-!use M_strings, only: reverse
-!-!use M_strings, only: lower
-!-!use M_strings, only: switch
-!-!use M_strings, only: isgraph,isprint
 character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 character(len=1)            :: chars(36)
@@ -696,12 +688,11 @@ call unit_test_end('combined')
 end subroutine test_m_strings
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_chomp()
-!-!use M_strings, only : chomp
 character(len=:),allocatable  :: str
 character(len=:),allocatable  :: token
 character(len=66),allocatable :: delimiters
 integer                       :: ipass
-   call unit_test_start('chomp','function consumes input line and returns next token using delimiters')
+   call unit_test_start('chomp','[TOKENS] Tokenize a string, consuming it one token per call')
 
    str = 'a b ccc ddd x12#$)$*#@Z1!( ab cd ef'
    delimiters=' #@$)*!('
@@ -729,7 +720,6 @@ end subroutine test_chomp
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 !-----------------------------------------------------------------------------------------------------------------------------------
 subroutine test_substitute
-!-!use M_strings, only : substitute
 character(len=80),allocatable   :: targetline   ! input line to be changed, MUST BE LONG ENOUGH TO HOLD CHANGES
 character(len=:),allocatable    :: old          ! old substring to replace
 character(len=:),allocatable    :: new          ! new substring
@@ -740,7 +730,7 @@ integer                         :: ml           ! ml sets the left  margin
 integer                         :: mr           ! mr sets the right margin
 integer                         :: ier          ! error code. if ier = -1 bad directive, >= 0then ier changes made
 !-----------------------------------------------------------------------------------------------------------------------------------
-   call unit_test_start('substitute','subroutine globally replaces old substring with new string')
+   call unit_test_start('substitute','[EDITING] subroutine globally substitutes one substring for another in string')
    targetline='This an that and any other '
    old='an'
    new='##'
@@ -791,7 +781,6 @@ integer                         :: ier          ! error code. if ier = -1 bad di
 end subroutine test_substitute
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_change
-!-!use M_strings, only : change
 !character(len=132) :: direc
 character(len=132)  :: line=' The rain in Spain falls mainly on the plain. '
 integer             :: ier
@@ -799,7 +788,7 @@ integer             :: ier
       write(std_err,g)' LINE='//trim(line)
    endif
    ! indicate test of change(3f) has begun
-   call unit_test_start('change','replace substring with new string with a directive like line editor')
+   call unit_test_start('change','[EDITING] change old string to new string with a directive like a line editor')
 
    call change(line, 'c/ain/AIN'     ,ier)
    call unit_test('change',ier == 4,'without trailing slash,expect ier==4, ier=',ier)
@@ -835,7 +824,7 @@ character(len=:),allocatable  :: words_expected(:)
 character(len=*),parameter    :: delimiters=' ;,'
 integer                       :: is,ie
 integer                       :: itoken
-   call unit_test_start('strtok')
+   call unit_test_start('strtok','[TOKENS] Tokenize a string')
    istart_expected=[ 2,  7,  10,  12,  17,  20,  28,  32,  35 ]
    iend_expected=[ 5,  8,  10,  15,  18,  25,  30,  32,  35 ]
    words_expected=[ character(len=10) :: 'this', 'is', 'a', 'test', 'of', 'strtok', 'A:B', ':', 'C']
@@ -862,7 +851,7 @@ end subroutine test_strtok
 subroutine test_modif()
 character(len=256)           :: line
 character(len=:),allocatable :: COMMAND_LINE
-   call unit_test_start('modif','change string using a directive similar to XEDIT editor MODIFY command')
+   call unit_test_start('modif','[EDITING] emulate the MODIFY command from the line editor XEDIT')
    line='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
    command_line='###%aaaa# 1 2 3&  ^up'
    call unit_test('modif',line == 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',msg=line)
@@ -874,9 +863,9 @@ character(len=:),allocatable :: COMMAND_LINE
 end subroutine test_modif
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_len_white()
-   call unit_test_start('len_white','find location of last non-whitespace character')
+   call unit_test_start('len_white','[LENGTH] get length of string trimmed of whitespace.')
    call unit_test('len_white',len_white('A b c  '//char(9)//char(10)//char(11)//char(12)//char(13)) == 5,msg='')
-   call unit_test_end('len_white',msg='len_white(3f) tests completed')
+   call unit_test_end('len_white',msg='')
 end subroutine test_len_white
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_clip()
@@ -898,19 +887,18 @@ subroutine test_crop()
 end subroutine test_crop
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_transliterate
-!-!use M_strings, only: transliterate
 character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-   call unit_test_start('transliterate','when characters in set one are found replace them with characters from set two')
-call unit_test('transliterate',transliterate('AbCDefgHiJklmnoPQRStUvwxyZ',lc,uc) == uc(1:26),msg='transliterate to uppercase')
-call unit_test('transliterate',transliterate('AbCDefgHiJklmnoPQRStUvwxyZ',uc,lc) == lc(1:26),msg='transliterate to lowercase')
-call unit_test_end('transliterate')
+   call unit_test_start('transliterate','[EDITING] replace characters from old set with characters from new set')
+   call unit_test('transliterate',transliterate('AbCDefgHiJklmnoPQRStUvwxyZ',lc,uc) == uc(1:26),msg='transliterate to uppercase')
+   call unit_test('transliterate',transliterate('AbCDefgHiJklmnoPQRStUvwxyZ',uc,lc) == lc(1:26),msg='transliterate to lowercase')
+   call unit_test_end('transliterate')
 end subroutine test_transliterate
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_rotate13()
 character(len=:),allocatable  :: s
 character(len=:),allocatable  :: e
-   call unit_test_start('rotate13','apply trivial encryption algorithm ROT13 to a string')
+   call unit_test_start('rotate13','[ENCODE] apply trivial ROT13 encryption to a string')
    s='United we stand, divided we fall.'
    e='Havgrq jr fgnaq, qvivqrq jr snyy.'
    ! add //'' to change function call to expression to avoid gfortran bug
@@ -938,86 +926,62 @@ character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 end subroutine test_reverse
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_upper
-!-!use M_strings, only: upper
 character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 character(len=36),parameter :: rnge='abcdefghIJKLMNopqrstuvwxyz0123456789'
-!-----------------------------------------------------------------------------------------------------------------------------------
-   call unit_test_start('upper','elemental function converts string to uppercase')
+
+   call unit_test_start('upper','[CASE] changes a string to uppercase')
    call unit_test('upper',upper(lc) == uc,upper(lc))
    call unit_test('upper',upper(lc,9,14) == rnge,'range',upper(lc,9,14),'expected',rnge)
    call unit_test_end('upper')
-!-----------------------------------------------------------------------------------------------------------------------------------
+
 end subroutine test_upper
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_lower
-!-!use M_strings, only: lower
 character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 character(len=36),parameter :: rnge='ABCDEFGHijklmnOPQRSTUVWXYZ0123456789'
-!-----------------------------------------------------------------------------------------------------------------------------------
+
    call unit_test_start('lower','[CASE] changes a string to lowercase over specified range')
    call unit_test('lower',lower(uc) == lc,'lower',lower(uc),'expected',lc)
-   call unit_test('upper',lower(uc,9,14) == rnge,'range',lower(uc,9,14),'expected',rnge)
+   call unit_test('lower',lower(uc,9,14) == rnge,'range',lower(uc,9,14),'expected',rnge)
    call unit_test_end('lower')
-!-----------------------------------------------------------------------------------------------------------------------------------
+
 end subroutine test_lower
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_switch
-!-!use m_switch, only: reverse
-!-!use m_switch, only: switch
 character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=36),parameter :: uc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=1)            :: chars(36)
 integer :: i
-!-----------------------------------------------------------------------------------------------------------------------------------
-if(unit_test_level > 0)then
-   write(std_err,g)'switch:' ! switch: switch between single string and an array of single characters; generic name for {a2s,s2a}
-   write(std_err,g)'switch LC string to an array'
-   write(std_err,'(i0,1x,*(a,1x))') size(switch(lc)),switch(lc)
-   write(std_err,g)'switch UC string to an array'
-   write(std_err,'(i0,1x,*(a,1x))') size(switch(uc)),switch(uc)
-endif
-   call unit_test_start('switch','generic switch between a string and an array of single characters (a2s,s2a)')
-if(size(switch(uc)) /= 36)then
-   call unit_test_bad('switch')
-endif
-chars=switch(uc)
-do i=1,size(chars)
-   if(chars(i) /= uc(i:i))then
-      call unit_test_bad('switch')
-   endif
-enddo
 
-if(unit_test_level > 0)then
-   write(std_err,g)'put string UC into array CHARS'
-endif
+call unit_test_start('switch','[ARRAY] converts between CHARACTER scalar and array of single characters')
+call unit_test('switch',size(switch(uc)).eq.36,' expected 36 characters, got',switch(switch(uc)))
 chars=switch(uc)
-if(unit_test_level > 0)then
-   write(std_err,g)'put CHARS array into CHARS array in reverse order like reverse'
-endif
+call unit_test('switch',all([(chars(i) == uc(i:i),i=1,size(chars))]),'check chars are same as string')
+call unit_test_msg('switch', 'put string UC into array CHARS',if=unit_test_level > 0)
+chars=switch(uc)
+call unit_test_msg('switch', 'put CHARS array into CHARS array in reverse order like reverse',if=unit_test_level > 0)
 chars=chars(36:1:-1)
-if(unit_test_level > 0)then
-   write(std_err,g)'put CHARS array into string reversed and compare to original UC string'
-endif
-if( uc  /=  switch(chars(36:1:-1)) )then
-   if(unit_test_level > 0)then
-      write(std_err,g)switch(chars(36:1:-1))
-   endif
-   call unit_test_bad('switch')
-endif
-call unit_test_good('switch')
-!-----------------------------------------------------------------------------------------------------------------------------------
+call unit_test_msg('switch', 'put CHARS array into string reversed and compare to original UC string',if=unit_test_level > 0)
+call unit_test('switch', uc  ==  switch(chars(36:1:-1)), switch(chars(36:1:-1)))
+call unit_test_end('switch')
 end subroutine test_switch
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_s2c()
-   call unit_test_start('s2c','convert character variable to array of character(len=1) with null terminator for C compatibility')
-   call unit_test_end('s2c',msg='UNTESTED')
+character(len=*),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
+integer :: i
+   call unit_test_start('s2c','[ARRAY] convert character variable to array of characters with null terminator for C compatibility')
+   call unit_test('s2c', all([(lc(i:i),i=1,len(lc)),char(0)].eq.s2c(lc)), 'compare s2c(lc) to expected letters')
+   call unit_test_end('s2c',msg='')
 end subroutine test_s2c
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_c2s()
-   call unit_test_start('c2s','convert null-terminated array of character(len=1) to string for strings returned by C' )
-   call unit_test_end('c2s',msg='UNTESTED')
+character(len=*),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
+integer :: i
+   call unit_test_start('c2s','[ARRAY] convert C string pointer to Fortran character string')
+   !call unit_test('c2s', c2s([(lc(i:i),i=1,len(lc)),char(0)]) .eq.lc,'compare s2c(lets) to expected letters')
+   call unit_test_end('c2s',msg='')
 end subroutine test_c2s
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_indent()
@@ -1038,34 +1002,26 @@ end subroutine test_indent
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_visible()
 integer :: i
-character(len=2) :: controls(0:31)
+character(len=2),parameter :: controls(0:31) =[ &
+& '^@  ', '^A  ', '^B  ', '^C  ', '^D  ', '^E  ', '^F  ', '^G  ', '^H  ', '^I  ', &
+& '^J  ', '^K  ', '^L  ', '^M  ', '^N  ', '^O  ', '^P  ', '^Q  ', '^R  ', '^S  ', &
+& '^T  ', '^U  ', '^V  ', '^W  ', '^X  ', '^Y  ', '^Z  ', '^[  ', '^\  ', '^]  ', &
+& '^^  ', '^_  ']
+logical :: show
+   show=merge(T,F,unit_test_level>0)
    call unit_test_start('visible','[NONALPHA] expand a string to control and meta-control representations')
-   do i=32,126
-      call unit_test('visible',visible(char(i)) == char(i),i,visible(char(i)))
-   enddo
-   controls=['^@  ', '^A  ', '^B  ', '^C  ', '^D  ', '^E  ', '^F  ', '^G  ', '^H  ', '^I  ', &
-             '^J  ', '^K  ', '^L  ', '^M  ', '^N  ', '^O  ', '^P  ', '^Q  ', '^R  ', '^S  ', &
-             '^T  ', '^U  ', '^V  ', '^W  ', '^X  ', '^Y  ', '^Z  ', '^[  ', '^\  ', '^]  ', &
-             '^^  ', '^_  ']
-   do i=0,31
-      call unit_test('visible',visible(char(i)) == controls(i),i,visible(char(i)))
-   enddo
-   call unit_test('visible',visible(char(127)) == '^?',127,visible(char(i)))
-   if(unit_test_level > 0)then
-      do i=0,255
-         write(std_err,'(i0,1x,a,1x,i0)')i,visible(char(i)),i
-      enddo
-   endif
-   do i=32,126
-      ! add //'' to change function call to expression to avoid gfortran-11 bug
-      call unit_test('visible',char(i) == visible(char(i)),i,visible(char(i))//'',char(i)//'')
+   do i=0,127
+      select case(i)
+      case(32:126); call unit_test('visible',visible(char(i)) == char(i),i,    'testing',visible(char(i)),wordy=show)
+      case(0:31);   call unit_test('visible',visible(char(i)) == controls(i),i,'testing',visible(char(i)),wordy=show)
+      case(127);    call unit_test('visible',visible(char(127)) == '^?',127,   'testing',visible(char(i)),wordy=show)
+      end select
    enddo
    call unit_test_end('visible')
+   ! add //'' to change function call to expression to avoid gfortran-11 bug
 end subroutine test_visible
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_expand()
-
-! ident_73="@(#)M_strings::test_expand(3f): test filter to expand escape sequences in input lines"
 
 integer :: i
 character(len=80) :: line
@@ -1076,18 +1032,18 @@ character(len=80) :: line
    !check all ASCII values
    do i=0,127
        write(line,'("%d",i3.3)')i
-       call unit_test('expand',expand(line,'%') == char(i),msg='check all valid decimal values')
+       call unit_test('expand',expand(line,'%') == char(i),'check decimal value',line,wordy=F)
        write(line,'("%o",o3.3)')i
-       call unit_test('expand',expand(line,'%') == char(i),msg='check all valid octal values')
+       call unit_test('expand',expand(line,'%') == char(i),'check octal value',line,wordy=F)
        write(line,'("%x",z2.2)')i
-       call unit_test('expand',expand(line,'%') == char(i),msg='check all hexadecimal values')
+       call unit_test('expand',expand(line,'%') == char(i),'check hexadecimal value',line,wordy=F)
    enddo
 
    call unit_test('expand',expand('%d008%d027%d013%d011%d007%d009','%') ==  &
            char(8)//char(27)//char(13)//char(11)//char(7)//char(9),msg='test decimal escape characters')
    call unit_test('expand',expand('%b%e%r%v%a%t','%') ==  &
            char(8)//char(27)//char(13)//char(11)//char(7)//char(9),msg='test escape characters')
-   call unit_test_end('expand')
+   call unit_test_end('expand','checked BOZ values plus tests shown')
 
 end subroutine test_expand
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
@@ -1163,86 +1119,86 @@ integer                       :: i
 end subroutine test_adjustc
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_nospace
-!-!use M_strings, only: nospace
-   character(len=:),allocatable :: string
-   string='  This     is      a     test  '
-   string=nospace(string)
+   character(len=:),allocatable :: stringin
+   character(len=:),allocatable :: stringout
    call unit_test_start('nospace','[WHITESPACE] remove all whitespace from input string')
-   if (string  /=  'Thisisatest')then
-      call unit_test_bad('nospace')
-   endif
-   call unit_test_good('nospace')
+   stringin='  This     is      a     test  '
+   stringout=nospace(stringin)
+   call unit_test('nospace', stringout  ==  'Thisisatest','input=',stringin,'output=',stringout )
+   call unit_test('nospace', len(nospace('')) == 0,       'null input got length',len(nospace(''))+0) ! +0 to avoid gfortrah-11 bug
+   call unit_test('nospace', nospace('ABCD') == 'ABCD',   'input with no spaces',nospace('ABCD')//'') ! // to avoid gfortran-11 bug
+   call unit_test('nospace', len(nospace('    ')) == 0,   'input all spaces',nospace('    ')//'')
+   call unit_test_end('nospace')
 end subroutine test_nospace
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_stretch()
-   call unit_test_start('stretch','return a string of at least specified length' )
+   call unit_test_start('stretch','[LENGTH] return string padded to at least specified length')
    call unit_test('stretch',stretch('Hello World',20)//'!' == 'Hello World         !',msg='check if padded')
    call unit_test('stretch',len(stretch('Hello World',20)) == 20,msg='check padded length')
    call unit_test('stretch',len(stretch('Hello World',2)) == 11 &
-           .and.stretch('Hello World',2) == 'Hello World', &
-           msg='check not truncated')
-   call unit_test_end('stretch',msg='tests completed')
+     & .and.stretch('Hello World',2) == 'Hello World', &
+     & msg='check not truncated')
+   call unit_test_end('stretch',msg='')
 end subroutine test_stretch
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_pad()
-   call unit_test_start('pad','return a string of at least specified length' )
+   call unit_test_start('pad','[LENGTH] return string padded to at least specified length')
    call unit_test('pad',pad('Hello World',20)//'!' == 'Hello World         !',msg='check if padded')
    call unit_test('pad',len(pad('Hello World',20)) == 20,msg='check padded length')
    call unit_test('pad',len(pad('Hello World',2)) == 11 &
-           .and.pad('Hello World',2) == 'Hello World', &
-           msg='check not truncated')
-   call unit_test_end('pad',msg='tests completed')
+       & .and.pad('Hello World',2) == 'Hello World', &
+       & msg='check not truncated')
+   call unit_test_end('pad',msg='')
 end subroutine test_pad
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_zpad()
-   call unit_test_start('zpad','return a string left-padded with zeros')
+   call unit_test_start('zpad','[LENGTH] pad a string on the left with zeros to specified length')
    call unit_test('zpad',zpad(4,4) == '0004',zpad(4,4),'vs','0004')
    call unit_test('zpad',zpad(4,4) == '0004',zpad(4,4),'vs','0004')
    call unit_test('zpad',zpad(' 123 ',4) == '0123',zpad(' 123 ',4),'vs','0123')
    call unit_test('zpad',all(zpad([1,12,123,1234]) == ['0001','0012','0123','1234']),'["0001","0012","0123","1234"]')
-   call unit_test_end('zpad',msg='tests completed')
+   call unit_test_end('zpad',msg='')
 end subroutine test_zpad
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_lpad()
-   call unit_test_start('lpad','return a left-padded string')
+   call unit_test_start('lpad','[LENGTH] convert to a cropped string and then blank-pad on the left to requested length')
    call unit_test('lpad',lpad(4,4) == '   4',lpad(4,4),'vs','   4')
    call unit_test('lpad',lpad(4,4) == '   4',lpad(4,4),'vs','   4')
    call unit_test('lpad',lpad(' 123 ',4) == ' 123 ',lpad(' 123 ',4),'vs',' 123')
    call unit_test('lpad',all(lpad([1,12,123,1234]) == ['   1','  12',' 123','1234']),'["   1","  12"," 123","1234"]')
-   call unit_test_end('lpad',msg='tests completed')
+   call unit_test_end('lpad',msg='')
 end subroutine test_lpad
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_cpad()
-   call unit_test_start('cpad',' return a left-padded string')
+   call unit_test_start('cpad','[LENGTH] convert to a cropped string and then centers the string to specified length')
    call unit_test('cpad',cpad(4,3) == ' 4 ',cpad(4,3),'vs',' 4 ')
    call unit_test('cpad',cpad('123',8) == '  123   ',cpad('123',8),'vs','  123   ')
    call unit_test('cpad',all(cpad([1,12,123,1234]) == [' 1  ',' 12 ','123 ','1234']),'[" 1  "," 12 ","123 ","1234"]')
-   call unit_test_end('cpad',msg='tests completed')
+   call unit_test_end('cpad',msg='')
 end subroutine test_cpad
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_rpad()
-   call unit_test_start('rpad','return a right-padded string')
+   call unit_test_start('rpad','[LENGTH] convert to a string and pad on the right to requested length')
    call unit_test('rpad',rpad(4,4) == '4   ',rpad(4,2),'vs','4   ')
    call unit_test('rpad',rpad(-4,4) == '-4   ',rpad(-4,2),'vs','-4  ')
    call unit_test('rpad','['//rpad(' 123 ',4)//']' == '['//'123 '//']','['//rpad(' 123 ',4)//']','vs [','123 '//']')
    call unit_test('rpad',all(rpad([1,12,123,1234]) == ['1   ','12  ','123 ','1234']),'["1   ","12  ","123 ","1234"]')
-   call unit_test_end('rpad',msg='tests completed')
+   call unit_test_end('rpad',msg='')
 end subroutine test_rpad
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_lenset()
 character(len=10)            :: string='abcdefghij'
-   call unit_test_start('lenset','return a string as specified length' )
-
-        call unit_test('lenset',len(lenset(string, 5)) == 5)
-        call unit_test('lenset',len(lenset(string,20)) == 20)
-        call unit_test('lenset',lenset(string,20) == 'abcdefghij')
-        call unit_test('lenset',lenset(string, 5) == 'abcde')
+   call unit_test_start('lenset','[LENGTH] return string trimmed or padded to specified length')
+   call unit_test('lenset',len(lenset(string, 5)) == 5)
+   call unit_test('lenset',len(lenset(string,20)) == 20)
+   call unit_test('lenset',lenset(string,20) == 'abcdefghij')
+   call unit_test('lenset',lenset(string, 5) == 'abcde')
    call unit_test_end('lenset')
 end subroutine test_lenset
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_merge_str()
 character(len=:), allocatable :: answer
-   call unit_test_start('merge_str','make strings of equal length and then call MERGE(3f) intrinsic')
+   call unit_test_start('merge_str','[LENGTH] pads strings to same length and then calls MERGE(3f)')
 
    answer=merge_str('first string', 'second string is longer',10 == 10)
    if(unit_test_level > 0)then
@@ -1260,7 +1216,6 @@ character(len=:), allocatable :: answer
 end subroutine test_merge_str
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_compact
-!-!use M_strings, only: compact
    call unit_test_start('compact','[WHITESPACE] converts contiguous whitespace to a single character (or nothing)')
    call unit_test('compact',compact('  This  is     a    test  ') == 'This is a test','reduce to single spaces')
    call unit_test('compact',compact('This is a test') == 'This is a test','input has no adjacent whitespace characters')
@@ -1271,13 +1226,12 @@ subroutine test_compact
 end subroutine test_compact
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_noesc  ! test noesc
-!-!use M_strings, only : noesc
 character(len=23) :: in,out,clr
 integer           :: i10
 logical           :: goodbad
   ! Use goodbad(1) to indicate the test sequence was begun
    goodbad=.true.
-   call unit_test_start('noesc')
+   call unit_test_start('noesc','[NONALPHA] convert non-printable characters to a space')
    do i10=0,127
       write(in, '(i3.3,1x,4a)')i10,char(i10),char(i10),char(i10),' eol'
       write(clr,'(i3.3,1x,"    eol")')i10
@@ -1303,7 +1257,6 @@ logical           :: goodbad
 end subroutine test_noesc
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_string_to_value
-!-!use M_strings, only: string_to_value, s2v, v2s
 CHARACTER(len=80) :: STRING
 real              :: RVALUE
 doubleprecision   :: DVALUE
@@ -1366,24 +1319,10 @@ integer           :: ierr
       write(std_err,g) 'string_to_value: SUM2=', SUM2
       write(std_err,g) 'string_to_value: DELTA=', DELTA
    endif
-   if(sum == sum2)then
-      good=good*10+1
-      if(unit_test_level > 0)then
-      write(std_err,g)'string_to_value: good ',good
-      endif
-   else
-      call unit_test_bad('string_to_value')
-   endif
-   if(sum+delta >= sum2.and.sum-delta <= sum2)then
-      good=good*10+1
-      if(unit_test_level > 0)then
-      write(std_err,g)'string_to_value: good ',good
-      endif
-   else
-      call unit_test_bad('string_to_value')
-   endif
+   call unit_test('string_to_value',sum == sum2,'with no tolerance expected',sum2,'got',sum)
+   call unit_test('string_to_value', sum+delta >= sum2.and.sum-delta <= sum2 ,'expected',sum2,'got',sum)
 !===================================================================================================================================
-   call unit_test_good('string_to_value')
+   call unit_test_end('string_to_value')
 !===================================================================================================================================
 end subroutine test_string_to_value
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
@@ -1392,7 +1331,7 @@ doubleprecision SUM, SUM2, DELTA
    SUM2=5.555555555555555555555555555555555d0+5.555555555555555555555555555555555e0+INT(5.555555555555555555555555555555555)
    DELTA=spacing(0.0d0)+spacing(0.0)
 
-   call unit_test_start('s2v','function returns doubleprecision value from string')
+   call unit_test_start('s2v','[TYPE] function returns doubleprecision value from string')
 
    SUM=s2v('5.55555555555555555555555555e0')+REAL(s2v('5.55555555555555555555555555d0'))+INT(s2v('5.55555555555555555555555555'))
    if(unit_test_level > 0)then
@@ -1405,7 +1344,6 @@ doubleprecision SUM, SUM2, DELTA
 end subroutine test_s2v
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_value_to_string
-!-!use M_strings, only: value_to_string
 CHARACTER(LEN=80) :: STRING
 doubleprecision   :: DVALUE
 real              :: RVALUE
@@ -1484,8 +1422,7 @@ doubleprecision :: SUM2
 end subroutine test_v2s
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isnumber
-!-!use M_strings, only: isnumber
-   call unit_test_start('isnumber')
+   call unit_test_start('isnumber','[TYPE] determine if a string represents a number')
    call unit_test('isnumber',isnumber(' 123 ')                                            ==  1,  'integer string')
    call unit_test('isnumber',isnumber(' -123. ')                                          ==  2,  'whole number string')
    call unit_test('isnumber',isnumber(' -123.0')                                          ==  3,  'real string')
@@ -1496,8 +1433,11 @@ subroutine test_isnumber
 end subroutine test_isnumber
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_trimzeros_()
+character(len=*),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789', uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+character(len=:),allocatable  :: str1, str2
+character(len=1),allocatable  :: char1(:), char2(:)
    call unit_test_start('trimzeros_')
-   call unit_test_end('trimzeros_',msg='UNTESTED')
+   call unit_test_end('trimzeros_','currently internal')
 end subroutine test_trimzeros_
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_listout()
@@ -1529,7 +1469,7 @@ character(len=:),allocatable :: test_out(:)
     '"this is a test"',                         &
     '"test a ""quote"" around a string"' ]
 
-   call unit_test_start('quote')
+   call unit_test_start('quote','[QUOTES] add quotes to string as if written with list-directed input')
 
    do i=1,size(test_in)
       if(unit_test_level > 0)then
@@ -1556,7 +1496,7 @@ character(len=:),allocatable :: tests(:)
       '"this is a test"',                         &
       '"test a ""quote"" around a string"' ]
 
-   call unit_test_start('unquote')
+   call unit_test_start('unquote','[QUOTES] remove quotes from string as if read with list-directed input')
    do i=1,size(tests)
       quoted_str=tests(i)
       unquoted_str=unquote(trim(quoted_str),esc)                    ! the string processed by unquote(3f)
@@ -1576,35 +1516,33 @@ character(len=:),allocatable :: tests(:)
 end subroutine test_unquote
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_describe
-!-!use M_strings, only: describe
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: char
 integer                       :: i
 character(len=*),parameter    :: at='@ at (at cost of, at sign, each at, commercial at, commat, &
 &rollmop, monkey|pigs|elephant tail, snail, arroba, strudel, asperand, ampersat, rose, cabbage, swirl, whorl)'
 !-----------------------------------------------------------------------------------------------------------------------------------
-! initialize database description of routine
-   call unit_test_start('describe','returns a string describing character' )
+   ! initialize database description of routine
+   call unit_test_start('describe','[DESCRIBE] returns a string describing the name of a single character')
+   ! call all descriptions to exercise procedure
+   if(unit_test_level > 0)then
+      do i=0,number_of_chars-1
+         write(std_err,g)i,char(i),' ',describe(char(i))
+      enddo
+   endif
 
-! call all descriptions to exercise procedure
-if(unit_test_level > 0)then
-   do i=0,number_of_chars-1
-      write(std_err,g)i,char(i),' ',describe(char(i))
-   enddo
-endif
-
-! unit tests
-call unit_test('describe', describe(char( 23) )  ==   'ctrl-W (ETB) end of transmission block' , 'describe ctrl-W')
-call unit_test('describe', &
-   describe(char( 33) )  ==   '! exclamation point (screamer, gasper, slammer, startler, bang, shriek, pling)' , &
-   'describe exclamation point')
-call unit_test('describe', describe(char( 52) )  ==   '4 four'                                 , 'describe four')
-call unit_test('describe', describe(char( 63) )  ==   '? question mark'                        , 'describe question mark')
-call unit_test('describe', describe(char( 64) )  ==   at                                       , 'describe at sign')
-call unit_test('describe', describe(char( 74) )  ==   'J majuscule J'                          , 'describe J')
-call unit_test('describe', describe(char( 117))  ==   'u miniscule u'                          , 'describe u')
-call unit_test('describe', describe(char( 126))  ==   '~ tilde'                                , 'describe tilde')
-call unit_test_end('describe')
+   ! unit tests
+   call unit_test('describe', describe(char( 23) )  ==   'ctrl-W (ETB) end of transmission block' , 'describe ctrl-W')
+   call unit_test('describe', &
+      describe(char( 33) )  ==   '! exclamation point (screamer, gasper, slammer, startler, bang, shriek, pling)' , &
+      'describe exclamation point')
+   call unit_test('describe', describe(char( 52) )  ==   '4 four'                                 , 'describe four')
+   call unit_test('describe', describe(char( 63) )  ==   '? question mark'                        , 'describe question mark')
+   call unit_test('describe', describe(char( 64) )  ==   at                                       , 'describe at sign')
+   call unit_test('describe', describe(char( 74) )  ==   'J majuscule J'                          , 'describe J')
+   call unit_test('describe', describe(char( 117))  ==   'u miniscule u'                          , 'describe u')
+   call unit_test('describe', describe(char( 126))  ==   '~ tilde'                                , 'describe tilde')
+   call unit_test_end('describe')
 
 end subroutine test_describe
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
@@ -1652,8 +1590,7 @@ subroutine test_s2vs()
 character(len=80)           :: s=' 10 20e3;3.45 -400.3e-2;1234; 5678 '
 doubleprecision,allocatable :: values(:)
 integer,allocatable         :: ivalues(:)
-   call unit_test_start('s2vs','function returns a doubleprecision array of numbers from a string')
-
+   call unit_test_start('s2vs','[TYPE] function returns a doubleprecision array of numbers from a string')
    values=s2vs(s)
    ivalues=int(s2vs(s))
    call unit_test('s2vs',size(values) == 6, msg='number of values')
@@ -1662,7 +1599,7 @@ integer,allocatable         :: ivalues(:)
 end subroutine test_s2vs
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_squeeze()
-   call unit_test_start('squeeze','remove duplicate adjacent characters from strings')
+   call unit_test_start('squeeze','[EDITING] delete adjacent duplicate occurrences of a character from a string')
    call unit_test('squeeze',all( &
    & [ character(len=10) :: squeeze('abEeedeeee1','e'),squeeze('geek','e'),squeeze('a  b  c de    A',' ')] ==  &
    & [ character(len=10) :: 'abEede1','gek','a b c de A'] ) )
@@ -1671,336 +1608,220 @@ end subroutine test_squeeze
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_edit_distance()
 integer,allocatable         :: ivalues(:)
-   call unit_test_start('edit_distance','return naive edit distance using Levenshtein algorithm')
+   call unit_test_start('edit_distance','[DESCRIBE] returns a naive edit distance using the Levenshtein distance algorithm')
    ivalues=[ edit_distance('kittens','sitting'),edit_distance('geek','gesek'),edit_distance('Saturday','Sunday')]
    call unit_test('edit_distance',all(ivalues == [3,1,3]))
    call unit_test_end('edit_distance')
 end subroutine test_edit_distance
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_bundle()
-   call unit_test_start('bundle','return array from list of strings')
+   call unit_test_start('bundle','[ARRAY] return up to twenty strings of arbitrary length as an array')
    call unit_test('bundle',all(bundle('kittens','sit','three') == ["kittens","sit    ","three  "]), &
                                                                   &"'kittens','sit    ','three  '")
    call unit_test_end('bundle')
 end subroutine test_bundle
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isprint
-!-!use M_strings, only: isprint
-integer :: i
-   call unit_test_start('isprint','elemental function determines if CHR is an ASCII printable character')
-   do i=1,255
+integer,parameter             :: number_of_chars=256
+character(len=1)              :: ch
+integer                       :: i
+   call unit_test_start('isprint','[COMPARE] returns .true. if character is an ASCII printable character')
+   do i=0,number_of_chars-1
+      ch=char(i)
       SELECT CASE (i)
-      CASE (32:126)
-         if (isprint(char(i)) .eqv. .false.)then
-            write(std_err,g)'   ',i,isprint(char(i))
-            call unit_test_bad('isprint')
-            stop 2
-         endif
-      CASE DEFAULT
-         if (isprint(char(i)) .eqv. .true.)then
-            write(std_err,g)'   ',i,isprint(char(i))
-            call unit_test_bad('isprint')
-            stop 3
-         endif
+      ! isgraph(ch).eqv.T instead of isgraph(ch) to avoid gfortran-11 bug
+      CASE (32:126) ; call unit_test('isprint',isprint(ch),     'testing character',i,isprint(ch).eqv.T,wordy=F)
+      CASE DEFAULT  ; call unit_test('isprint',.not.isprint(ch),'testing character',i,isprint(ch).eqv.T,wordy=F)
       END SELECT
    enddo
-call unit_test_good('isprint')
+call unit_test_end('isprint')
 end subroutine test_isprint
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isgraph
-!-!use M_strings, only: isgraph
-integer :: i
-   call unit_test_start('isgraph','true if CHR is an ASCII printable character except considers a space non-printable')
-   do i=1,255
+integer,parameter             :: number_of_chars=256
+character(len=1)              :: ch
+integer                       :: i
+   call unit_test_start('isgraph','[COMPARE] true if a printable character except a space is considered non-printable')
+   do i=0,number_of_chars-1
+      ch=char(i)
       SELECT CASE (i)
-      CASE (33:126)
-         if (isgraph(char(i)) .eqv. .false.)then
-            write(std_err,g)'   ',i,isgraph(char(i))
-            call unit_test_bad('isgraph')
-            stop 2
-         endif
-      CASE DEFAULT
-         if (isgraph(char(i)) .eqv. .true.)then
-            write(std_err,g)'   ',i,isgraph(char(i))
-            call unit_test_bad('isgraph')
-            stop 3
-         endif
+      ! isgraph(ch).eqv.T instead of isgraph(ch) to avoid gfortran-11 bug
+      CASE (33:126) ; call unit_test('isgraph',isgraph(ch),     'testing character',i,isgraph(ch).eqv. T,wordy=F)
+      CASE DEFAULT  ; call unit_test('isgraph',.not.isgraph(ch),'testing character',i,isgraph(ch).eqv. T,wordy=F)
       END SELECT
    enddo
-   call unit_test_good('isgraph')
+   call unit_test_end('isgraph')
 end subroutine test_isgraph
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isalpha
-!-!use M_strings, only: isalpha
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
-   call unit_test_start('isalpha','returns .true. if CHR is a letter and .false. otherwise')
+   call unit_test_start('isalpha','[COMPARE] returns .true. if character is a letter and .false. otherwise')
    do i=0,number_of_chars-1
       ch=char(i)
       SELECT CASE (ch)
-      CASE ('a':'z','A':'Z')
-         if (isalpha(ch) .eqv. .false.)then
-            write(std_err,g)'isalpha: failed on character ',i,isalpha(ch)
-            call unit_test_bad('isalpha')
-            stop 1
-         endif
-      CASE DEFAULT
-         if (isalpha(ch) .eqv. .true.)then
-            write(std_err,g)'isalpha: failed on character ',i,isalpha(ch)
-            call unit_test_bad('isalpha')
-            stop 2
-         endif
+      CASE ('a':'z','A':'Z'); call unit_test('isalpha',isalpha(ch),'testing character',i,isalpha(ch),wordy=F)
+      CASE DEFAULT;           call unit_test('isalpha',.not.isalpha(ch),'testing character',i,isalpha(ch),wordy=F)
       END SELECT
    enddo
-   call unit_test_good('isalpha')
+   call unit_test_end('isalpha')
 end subroutine test_isalpha
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isxdigit
-!-!use M_strings, only: isxdigit
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
-!-----------------------------------------------------------------------------------------------------------------------------------
-   call unit_test_start('isxdigit','elemental function returns .true. if CHR is a hexadecimal digit (0-9, a-f, or A-F)' )
+   call unit_test_start('isxdigit','[COMPARE] returns .true. if character is a hexadecimal digit (0-9, a-f, or A-F).')
    do i=0,number_of_chars-1
       ch=char(i)
       SELECT CASE (ch)
-      CASE ('a':'f','A':'F','0':'9')
-         if (isxdigit(char(i)) .eqv. .false.)then
-            write(std_err,g)'isxdigit: failed on character ',i,isxdigit(char(i))
-            call unit_test_bad('isxdigit')
-            stop 1
-         endif
-      CASE DEFAULT
-         if (isxdigit(char(i)) .eqv. .true.)then
-            write(std_err,g)'isxdigit: failed on character ',i,isxdigit(char(i))
-            call unit_test_bad('isxdigit')
-            stop 2
-         endif
+      CASE ('a':'f','A':'F','0':'9') ; call unit_test('isxdigit',isxdigit(ch),'testing character',i,isxdigit(ch),wordy=F)
+      CASE DEFAULT ;                   call unit_test('isxdigit',.not.isxdigit(ch),'testing character',i,isxdigit(ch),wordy=F)
       END SELECT
    enddo
-   call unit_test_good('isxdigit')
+   call unit_test_end('isxdigit')
 end subroutine test_isxdigit
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isdigit
-!-!use M_strings, only: isdigit
 integer,parameter             :: number_of_chars=128
-character(len=1)              :: char
+character(len=1)              :: ch
 integer                       :: i
-   call unit_test_start('isdigit','elemental function returns .true. if CHR is a digit (0,1,...,9) and .false. otherwise' )
+   call unit_test_start('isdigit','[COMPARE] returns .true. if character is a digit (0, 1, ..., 9) and .false. otherwise')
    do i=0,number_of_chars-1
+      ch=char(i)
       SELECT CASE (i)
-      CASE (48:57)
-         if (isdigit(char(i)) .eqv. .false.)then
-            write(std_err,g)'isdigit: failed on character ',i,isdigit(char(i))
-            call unit_test_bad('isdigit')
-            stop 1
-         endif
-      CASE DEFAULT
-         if (isdigit(char(i)) .eqv. .true.)then
-            write(std_err,g)'isdigit: failed on character ',i,isdigit(char(i))
-            call unit_test_bad('isdigit')
-            stop 2
-         endif
+      CASE (48:57) ; call unit_test('isdigit',isdigit(ch),'testing character',i,isdigit(ch),wordy=F)
+      CASE DEFAULT ; call unit_test('isdigit',.not.isdigit(ch),'testing character',i,isdigit(ch),wordy=F)
       END SELECT
    enddo
-   call unit_test_good('isdigit')
+   call unit_test_end('isdigit')
 end subroutine test_isdigit
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isblank
-!-!use M_strings, only: isblank
 integer,parameter             :: number_of_chars=128
-character(len=1)              :: char
+character(len=1)              :: ch
 integer                       :: i
-   call unit_test_start('isblank','elemental function returns .true. if CHR is a blank character (space or horizontal tab.' )
+   call unit_test_start('isblank','[COMPARE] returns .true. if character is a blank character (space or horizontal tab).')
    do i=0,number_of_chars-1
+      ch=char(i)
       select case (i)
-      case (9,32)
-         if (isblank(char(i)) .eqv. .false.)then
-            write(std_err,g)'isblank: failed on character ',i,isblank(char(i))
-            call unit_test_bad('isblank')
-            stop 1
-         endif
-      case default
-         if (isblank(char(i)) .eqv. .true.)then
-            write(std_err,g)'isblank: failed on character ',i,isblank(char(i))
-            call unit_test_bad('isblank')
-            stop 2
-         endif
+      case (9,32)  ; call unit_test('isblank',isblank(ch),     'testing character',i,isblank(ch),wordy=F)
+      case default ; call unit_test('isblank',.not.isblank(ch),'testing character',i,isblank(ch),wordy=F)
       end select
    enddo
-   call unit_test_good('isblank')
+   call unit_test_end('isblank')
 end subroutine test_isblank
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isascii
-!-!use M_strings, only: isascii
 integer,parameter             :: number_of_chars=128
-character(len=1)              :: char
+character(len=1)              :: ch
 integer                       :: i
-   call unit_test_start('isascii','returns .true. if the low order byte of c is in the range char(0) to char(127)')
+   call unit_test_start('isascii','[COMPARE] returns .true. if the character is in the range char(0) to char(256)')
    do i=0,number_of_chars-1
+      ch=char(i)
       SELECT CASE (i)
-      CASE (0:127)
-         if (isascii(char(i)) .eqv. .false.)then
-            write(std_err,g)'isascii: failed on character ',i,isascii(char(i))
-            call unit_test_bad('isascii')
-            stop 1
-         endif
-      CASE DEFAULT
-         if (isascii(char(i)) .eqv. .true.)then
-            write(std_err,g)'isascii: failed on character ',i,isascii(char(i))
-            call unit_test_bad('isascii')
-            stop 2
-         endif
+      CASE (0:127) ; call unit_test('isascii',isascii(ch),     'testing character',i,isascii(ch),wordy=F)
+      CASE DEFAULT ; call unit_test('isascii',.not.isascii(ch),'testing character',i,isascii(ch),wordy=F)
       END SELECT
    enddo
-   call unit_test_good('isascii')
+   call unit_test_end('isascii')
 end subroutine test_isascii
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isspace
-!-!use M_strings, only: isspace
 integer,parameter             :: number_of_chars=128
-character(len=1)              :: char
+character(len=1)              :: ch
 integer                       :: i
-!-----------------------------------------------------------------------------------------------------------------------------------
-   call unit_test_start('isspace','true if CHR is null, space, tab, carriage return, new line, vertical tab, or formfeed')
+   call unit_test_start('isspace','[COMPARE] true if is a null,space,tab,carriage return, new line, vertical tab, or formfeed')
    do i=0,number_of_chars-1
+      ch=char(i)
       SELECT CASE (i)
-      CASE (0,9:13,32)
-         if (isspace(char(i)) .eqv. .false.)then
-            write(std_err,g)'isspace: failed on character ',i,isspace(char(i))
-            call unit_test_bad('isspace')
-            stop 1
-         endif
-      CASE DEFAULT
-         if (isspace(char(i)) .eqv. .true.)then
-            write(std_err,g)'isspace: failed on character ',i,isspace(char(i))
-            call unit_test_bad('isspace')
-            stop 2
-         endif
+      CASE (0,9:13,32) ; call unit_test('isspace',isspace(ch),     'testing character',i,isspace(ch),wordy=F)
+      CASE DEFAULT     ; call unit_test('isspace',.not.isspace(ch),'testing character',i,isspace(ch),wordy=F)
       END SELECT
    enddo
-   call unit_test_good('isspace')
+   call unit_test_end('isspace')
 end subroutine test_isspace
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_iscntrl
-!-!use M_strings, only: iscntrl
 integer,parameter             :: number_of_chars=128
-character(len=1)              :: char
+character(len=1)              :: ch
 integer                       :: i
-!-----------------------------------------------------------------------------------------------------------------------------------
-   call unit_test_start('iscntrl','elemental function returns .true. if CHR is a delete character or ordinary control character')
+   call unit_test_start('iscntrl','[COMPARE] returns .true. if character is a delete character or ordinary control character')
    do i=0,number_of_chars-1
+      ch=char(i)
       SELECT CASE (i)
-      CASE (0:31,127)
-         if (iscntrl(char(i)) .eqv. .false.)then
-            write(std_err,g)'iscntrl: failed on character ',i,iscntrl(char(i))
-            call unit_test_bad('iscntrl')
-            stop 1
-         endif
-      CASE DEFAULT
-         if (iscntrl(char(i)) .eqv. .true.)then
-            write(std_err,g)'iscntrl: failed on character ',i,iscntrl(char(i))
-            call unit_test_bad('iscntrl')
-            stop 2
-         endif
+      CASE (0:31,127) ; call unit_test('iscntrl',iscntrl(ch),     'testing character',i,iscntrl(ch),wordy=F)
+      CASE DEFAULT    ; call unit_test('iscntrl',.not.iscntrl(ch),'testing character',i,iscntrl(ch),wordy=F)
       END SELECT
    enddo
-   call unit_test_good('iscntrl')
+   call unit_test_end('iscntrl')
 end subroutine test_iscntrl
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_ispunct
-!-!use M_strings, only: ispunct
 integer,parameter             :: number_of_chars=128
-character(len=1)              :: char
+character(len=1)              :: ch
 integer                       :: i
-!-----------------------------------------------------------------------------------------------------------------------------------
-   call unit_test_start('ispunct','elemental function returns .true. if CHR is a printable punctuation character')
+   call unit_test_start('ispunct','[COMPARE] returns .true. if character is a printable punctuation character')
    do i=0,number_of_chars-1
+      ch=char(i)
       SELECT CASE (i)
-      CASE (33:47, 58:64, 91:96, 123:126)
-         if (ispunct(char(i)) .eqv. .false.)then
-            write(std_err,g)'ispunct: failed on character ',i,ispunct(char(i))
-            call unit_test_bad('ispunct')
-            stop 1
-         endif
-      CASE DEFAULT
-         if (ispunct(char(i)) .eqv. .true.)then
-            write(std_err,g)'ispunct: failed on character ',i,ispunct(char(i))
-            call unit_test_bad('ispunct')
-            stop 2
-         endif
+      CASE (33:47, 58:64, 91:96, 123:126) ; call unit_test('ispunct',ispunct(ch),     'testing character',i,ispunct(ch),wordy=F)
+      CASE DEFAULT ;                        call unit_test('ispunct',.not.ispunct(ch),'testing character',i,ispunct(ch),wordy=F)
       END SELECT
    enddo
-   call unit_test_good('ispunct')
+   call unit_test_end('ispunct')
 end subroutine test_ispunct
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isupper
-!-!use M_strings, only: isupper
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
-!-----------------------------------------------------------------------------------------------------------------------------------
-   call unit_test_start('isupper','elemental function returns .true. if CHR is an uppercase letter (A-Z)')
+   call unit_test_start('isupper','[COMPARE] returns .true. if character is an uppercase letter (A-Z)')
    do i=0,number_of_chars-1
       ch=char(i)
       SELECT CASE (ch)
-      CASE ('A':'Z')
-         if (isupper(ch) .eqv. .false.)then
-            write(std_err,g)'isupper: failed on character ',i,isupper(ch)
-            call unit_test_bad('isupper')
-            stop 1
-         endif
-      CASE DEFAULT
-         if (isupper(ch) .eqv. .true.)then
-            write(std_err,g)'isupper: failed on character ',i,isupper(ch)
-            call unit_test_bad('isupper')
-            stop 2
-         endif
+      CASE ('A':'Z') ; call unit_test('isupper',isupper(ch),     'testing character',i,isupper(ch),wordy=F)
+      CASE DEFAULT ;   call unit_test('isupper',.not.isupper(ch),'testing character',i,isupper(ch),wordy=F)
       END SELECT
    enddo
-   call unit_test_good('isupper')
+   call unit_test_end('isupper')
 end subroutine test_isupper
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_islower
-!-!use M_strings, only: islower
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
-!-----------------------------------------------------------------------------------------------------------------------------------
-   call unit_test_start('islower','elemental function returns .true. if CHR is a miniscule letter (a-z)' )
+   call unit_test_start('islower','[COMPARE] returns .true. if character is a miniscule letter (a-z)')
    do i=0,number_of_chars-1
       ch=char(i)
       SELECT CASE (ch)
-      CASE ('a':'z'); call unit_test ('islower',islower(ch) .eqv. .true.,'testing character ',i,islower(ch))
-      CASE DEFAULT;   call unit_test ('islower',islower(ch) .eqv. .false., 'testing character ',i,islower(ch))
+      CASE ('a':'z'); call unit_test ('islower',islower(ch) ,    'testing character',i,islower(ch),wordy=F)
+      CASE DEFAULT;   call unit_test ('islower',.not.islower(ch),'testing character',i,islower(ch),wordy=F)
       END SELECT
    enddo
    call unit_test_end('islower')
 end subroutine test_islower
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_isalnum
-!-!use M_strings, only: isalnum
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
-!-----------------------------------------------------------------------------------------------------------------------------------
-   call unit_test_start('isalnum','elemental function returns .true. if CHR is a letter or digit')
+   call unit_test_start('isalnum','[COMPARE] elemental function returns .true. if CHR is a letter or digit')
    do i=0,number_of_chars-1
       ch=char(i)
       SELECT CASE (ch)
       CASE ('a':'z','A':'Z','0':'9')
-         call unit_test ('isalnum',isalnum(char(i)) .eqv. .true.,'testing character',i,isalnum(char(i)))
+         call unit_test ('isalnum',isalnum(char(i)) .eqv. .true.,'testing character',i,isalnum(char(i)),wordy=F)
       CASE DEFAULT
-         call unit_test ('isalnum',isalnum(char(i)) .eqv. .false., 'testing character',i,isalnum(char(i)))
+         call unit_test ('isalnum',isalnum(char(i)) .eqv. .false., 'testing character',i,isalnum(char(i)),wordy=F)
       END SELECT
    enddo
    call unit_test_end('isalnum')
 end subroutine test_isalnum
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_nint()
-   call unit_test_start('nint')
+   call unit_test_start('nint','[TYPE] overloads NINT(3f) so it can handle character arguments')
    call unit_test('nint',nint('1234.4') == 1234,msg='test string to integer for overloaded NINT("1234.4")')
    call unit_test('nint',nint('1234.5') == 1235,msg='test string to integer for overloaded NINT("1234.5")')
    call unit_test('nint',nint('1234.6') == 1235,msg='test string to integer for overloaded NINT("1234.6")')
@@ -2008,19 +1829,19 @@ subroutine test_nint()
 end subroutine test_nint
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_int()
-   call unit_test_start('int')
+   call unit_test_start('int','[TYPE] overloads INT(3f) so it can handle character arguments')
    call unit_test('int',int('1234') == 1234,msg='test string to integer for overloaded INT()')
    call unit_test_end('int',msg=' overload of INT()')
 end subroutine test_int
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_real()
-   call unit_test_start('real')
+   call unit_test_start('real','[TYPE] overloads REAL(3f) so it can handle character arguments')
    call unit_test('real', real('3.0d0') == 3.0d0,msg='test string to real for overloaded REAL()')
    call unit_test_end('real',msg='overload of REAL(3f)')
 end subroutine test_real
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_dble()
-   call unit_test_start('dble')
+  call unit_test_start('dble','[TYPE] overloads DBLE(3f) so it can handle character arguments')
    call unit_test('dble', dble('3.0d0') == 3.0d0,msg='test string to double for overloaded DBLE()')
    call unit_test_end('dble',msg='overload of DBLE(3f)')
 end subroutine test_dble
@@ -2036,7 +1857,7 @@ subroutine test_setbits()
    !call unit_test('setbits',setbits(string) == 0,setbits(string))
    !string='1111111111111111111111111111111111111111111111111111111111111111'
    !call unit_test('setbits',setbits(string) == 0,setbits(string))
-   call unit_test_end('setbits',msg='setbits(3f) tests completed')
+   call unit_test_end('setbits',msg='')
 end subroutine test_setbits
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_match_delimiter()
@@ -2050,7 +1871,7 @@ subroutine test_match_delimiter()
    !call unit_test('match_delimiter',match_delimiter(string) == 0,match_delimiter(string))
    !string='1111111111111111111111111111111111111111111111111111111111111111'
    !call unit_test('match_delimiter',match_delimiter(string) == 0,match_delimiter(string))
-   call unit_test_end('match_delimiter',msg='match_delimiter(3f) tests completed')
+   call unit_test_end('match_delimiter',msg='')
 end subroutine test_match_delimiter
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 end module M_testsuite_M_strings
@@ -2063,72 +1884,33 @@ implicit none
 !  unit_test_level=1
    unit_test_level=0
    call test_suite_M_strings()
+
+   ! untested
+   call unit_test_start('aton','[TYPE] function returns argument as a numeric value from a string')
+   call unit_test_end('aton')
+   call unit_test_start('dilate','[NONALPHA] expand tab characters')
+   call unit_test_end('dilate')
+   call unit_test_start('ends_with','[COMPARE] test if string ends with specified suffix(es)')
+   call unit_test_end('ends_with')
+   call unit_test_start('find_field','[TOKENS] parse a string into tokens')
+   call unit_test_end('find_field')
+   call unit_test_start('fortran_name','[COMPARE] test if string meets criteria for being a fortran name')
+   call unit_test_end('fortran_name')
+   call unit_test_start('longest_common_substring','[COMPARE] function that returns the longest common substring of two strings')
+   call unit_test_end('longest_common_substring')
+   call unit_test_start('matching_delimiter','[QUOTES] find position of matching delimiter')
+   call unit_test_end('matching_delimiter')
+   call unit_test_start('msg','[TYPE] converts any standard scalar type to a string')
+   call unit_test_end('msg')
+   call unit_test_start('paragraph','[TOKENS] break a long line into a paragraph')
+   call unit_test_end('paragraph')
+   call unit_test_start('sep','[TOKENS] function to parse string into an array using specified delimiters')
+   call unit_test_end('sep')
+   call unit_test_start('split2020','[TOKENS] parse a string into tokens using proposed f2023 method')
+   call unit_test_end('split2020')
+   call unit_test_start('upper_quoted','[CASE] converts string to miniscule skipping strings quoted per Fortran syntax rules')
+   call unit_test_end('upper_quoted')
+
    call unit_test_stop()
 end program runtest
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-!call unit_test_start('c2s','[ARRAY] convert C string pointer to Fortran character string')
-!call unit_test_start('s2c','[ARRAY] convert character variable to array of characters with last element set to null')
-!call unit_test_start('switch','[ARRAY] converts between CHARACTER scalar and array of single characters')
-!call unit_test_start('bundle','[ARRAY] return up to twenty strings of arbitrary length as an array')
-!call unit_test_start('base','[BASE] convert whole number string in base [2-36] to string in alternate base [2-36]')
-!call unit_test_start('base2','[BASE] convert whole number to string in base 2')
-!call unit_test_start('codebase','[BASE] convert whole number in base 10 to string in base [2-36]')
-!call unit_test_start('decodebase','[BASE] convert whole number string in base [2-36] to base 10 number')
-!call unit_test_start('upper','[CASE] changes a string to uppercase')
-!call unit_test_start('upper_quoted','[CASE] elemental function converts string to miniscule skipping strings quoted per Fortran syntax rules')
-!call unit_test_start('longest_common_substring','[COMPARE] function that returns the longest common substring of two strings.
-!call unit_test_start('isalpha','[COMPARE] returns .true. if character is a letter and .false. otherwise')
-!call unit_test_start('isascii','[COMPARE] returns .true. if the character is in the range char(0) to char(256)')
-!call unit_test_start('isblank','[COMPARE] returns .true. if character is a blank character (space or horizontal tab).')
-!call unit_test_start('iscntrl','[COMPARE] returns .true. if character is a delete character or ordinary control character')
-!call unit_test_start('isdigit','[COMPARE] returns .true. if character is a digit (0, 1, ..., 9) and .false. otherwise')
-!call unit_test_start('isgraph','[COMPARE] returns .true. if character is a printable character except a space is considered non-printable')
-!call unit_test_start('islower','[COMPARE] returns .true. if character is a miniscule letter (a-z)')
-!call unit_test_start('isprint','[COMPARE] returns .true. if character is an ASCII printable character')
-!call unit_test_start('ispunct','[COMPARE] returns .true. if character is a printable punctuation character')
-!call unit_test_start('isspace','[COMPARE] returns .true. if character is a null, space, tab, carriage return, new line, vertical tab, or formfeed')
-!call unit_test_start('isupper','[COMPARE] returns .true. if character is an uppercase letter (A-Z)')
-!call unit_test_start('isxdigit','[COMPARE] returns .true. if character is a hexadecimal digit (0-9, a-f, or A-F).')
-!call unit_test_start('ends_with','[COMPARE] test if string ends with specified suffix(es)')
-!call unit_test_start('fortran_name','[COMPARE] test if string meets criteria for being a fortran name
-!call unit_test_start('isalnum','[COMPARE] test membership in subsets of ASCII set')
-!call unit_test_start('describe','[DESCRIBE] returns a string describing the name of a single character')
-!call unit_test_start('edit_distance','[DESCRIBE] returns a naive edit distance using the Levenshtein distance algorithm')
-!call unit_test_start('join','[EDITING] append CHARACTER variable array into a single CHARACTER variable with specified separator')
-!call unit_test_start('change','[EDITING] change old string to new string with a directive like a line editor')
-!call unit_test_start('squeeze','[EDITING] delete adjacent duplicate occurrences of a character from a string')
-!call unit_test_start('modif','[EDITING] emulate the MODIFY command from the line editor XEDIT')
-!call unit_test_start('transliterate','[EDITING] replace characters from old set with new set')
-!call unit_test_start('substitute','[EDITING] subroutine globally substitutes one substring for another in string')
-!call unit_test_start('rotate13','[ENCODE] apply trivial ROT13 encryption to a string')
-!call unit_test_start('cpad','[LENGTH] convert to a cropped string and then centers the string to specified length')
-!call unit_test_start('lpad','[LENGTH] convert to a cropped string and then blank-pad on the left to requested length')
-!call unit_test_start('rpad','[LENGTH] convert to a string and pad on the right to requested length')
-!call unit_test_start('len_white','[LENGTH] get length of string trimmed of whitespace.')
-!call unit_test_start('zpad','[LENGTH] pad a string on the left with zeros to specified length')
-!call unit_test_start('merge_str','[LENGTH] pads strings to same length and then calls MERGE(3f)')
-!call unit_test_start('lenset','[LENGTH] return string trimmed or padded to specified length')
-!call unit_test_start('pad','[LENGTH] return string padded to at least specified length')
-!call unit_test_start('stretch','[LENGTH] return string padded to at least specified length')
-!call unit_test_start('noesc','[NONALPHA] convert non-printable characters to a space')
-!call unit_test_start('dilate','[NONALPHA] expand tab characters')
-!call unit_test_start('quote','[QUOTES] add quotes to string as if written with list-directed input')
-!call unit_test_start('matching_delimiter','[QUOTES] find position of matching delimiter')
-!call unit_test_start('unquote','[QUOTES] remove quotes from string as if read with list-directed input')
-!call unit_test_start('paragraph','[TOKENS] break a long line into a paragraph')
-!call unit_test_start('sep','[TOKENS] function to parse string into an array using specified delimiters')
-!call unit_test_start('delim','[TOKENS] parse a string and store tokens into an array')
-!call unit_test_start('find_field','[TOKENS] parse a string into tokens')
-!call unit_test_start('split','[TOKENS] parse string into an array using specified delimiters')
-!call unit_test_start('split2020','[TOKENS] parse a string into tokens using proposed f2023 method')
-!call unit_test_start('chomp','[TOKENS] Tokenize a string, consuming it one token per call')
-!call unit_test_start('strtok','[TOKENS] Tokenize a string')
-!call unit_test_start('msg','[TYPE] converts any standard scalar type to a string')
-!call unit_test_start('isnumber','[TYPE] determine if a string represents a number')
-!call unit_test_start('aton','[TYPE] function returns argument as a numeric value from a string')
-!call unit_test_start('s2v','[TYPE] function returns doubleprecision numeric value from a string')
-!call unit_test_start('s2vs','[TYPE] given a string representing numbers return a numeric array')
-!call unit_test_start('dble','[TYPE] overloads DBLE(3f) so it can handle character arguments')
-!call unit_test_start('int','[TYPE] overloads INT(3f) so it can handle character arguments')
-!call unit_test_start('nint','[TYPE] overloads NINT(3f) so it can handle character arguments')
-!call unit_test_start('real','[TYPE] overloads REAL(3f) so it can handle character arguments')

@@ -9447,7 +9447,7 @@ end function isalnum
 !!
 !!##SYNOPSIS
 !!
-!!   logical function base(x,b,y,a)
+!!   elemental impure logical function base(x,b,y,a)
 !!
 !!    character(len=*),intent(in)  :: x
 !!    character(len=*),intent(out) :: y
@@ -9496,25 +9496,25 @@ end function isalnum
 !!    John S. Urban
 !!##LICENSE
 !!    Public Domain
-logical function base(x,b,y,a)
-character(len=*),intent(in)  :: x
-character(len=*),intent(out) :: y
-integer,intent(in)           :: b,a
-integer                      :: temp
+elemental impure logical function base(x, b, y, a)
+character(len=*), intent(in)  :: x
+character(len=*), intent(out) :: y
+integer, intent(in)           :: b, a
+integer                       :: temp
 
 ! ident_80="@(#) M_strings base(3f) convert whole number string in base [2-36] to string in alternate base [2-36]"
 
-base=.true.
-if(decodebase(x,b,temp)) then
-   if(codebase(temp,a,y)) then
+   base = .true.
+   if (decodebase(x, b, temp)) then
+      if (codebase(temp, a, y)) then
+      else
+         print *, 'Error in coding number.'
+         base = .false.
+      endif
    else
-      print *,'Error in coding number.'
-      base=.false.
+      print *, 'Error in decoding number.'
+      base = .false.
    endif
-else
-   print *,'Error in decoding number.'
-   base=.false.
-endif
 
 end function base
 !===================================================================================================================================
