@@ -8,6 +8,8 @@ character(len=*),parameter :: options=' -section 3 -library libGPF -filename `pw
 & -documentation y -prep y -ccall  n -archive GPF.a '
 character(len=*),parameter :: g='(*(g0,1x))'
 logical,parameter :: T=.true., F=.false.
+character(len=*),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
+character(len=*),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 contains
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_suite_m_strings()
@@ -316,20 +318,15 @@ character(len=:),allocatable :: targetline
 contains
 subroutine testit(old,new,expected)
 character(len=*),intent(in) :: old,new,expected
-
-   if(unit_test_level > 0)then
-      write(std_err,g)repeat('=',79)
-      write(std_err,g)'STARTED ['//targetline//']'
-      write(std_err,g)'OLD['//old//']', ' NEW['//new//']'
-   endif
-
+character(len=:),allocatable :: info, original
+   original=targetline
    targetline=replace(targetline,old,new)
-
    if(unit_test_level > 0)then
-      write(std_err,g)'GOT     ['//targetline//']'
-      write(std_err,g)'EXPECTED['//expected//']'
+      info=str('GIVEN[',original,']OLD[',old,']NEW['//new//']GOT[',targetline,']EXPECTED['//expected,']',sep='')
+   else
+      info=''
    endif
-   call unit_test('replace',targetline == expected,msg='')
+   call unit_test('replace',targetline == expected,info)
 end subroutine testit
 end subroutine test_replace
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
@@ -582,7 +579,7 @@ CHARACTER(LEN=:),ALLOCATABLE    :: array(:)
 character(len=10)               :: orders(3)=['sequential', '          ', 'reverse   ' ]
 ! return strings composed of delimiters or not IGNORE|RETURN|IGNOREEND
 character(len=10)               :: nulls(3)=['ignore    ', 'return    ', 'ignoreend ' ]
-!-----------------------------------------------------------------------------------------------------------------------------------
+!
    call unit_test_start('split','[TOKENS] parse string into an array using specified delimiters')
 
    dlm=''
@@ -603,22 +600,22 @@ character(len=10)               :: nulls(3)=['ignore    ', 'return    ', 'ignore
    if(unit_test_level > 0)then
       write(std_err,g)size(array)
    endif
-!-----------------------------------------------------------------------------------------------------------------------------------
+!
    LINE=' abcdef ghijklmnop qrstuvwxyz  1:2  333333 a b cc    '
    CALL testit()
-!-----------------------------------------------------------------------------------------------------------------------------------
+!
    LINE='        abcdef ghijklmnop qrstuvwxyz  1:2  333333 a b cc    '
    CALL testit()
-!-----------------------------------------------------------------------------------------------------------------------------------
+!
    LINE=' aABCDEF  ; b;;c d e;  ;  '
    CALL testit()
-!-----------------------------------------------------------------------------------------------------------------------------------
+!
    dlm=';'
    CALL testit()
-!-----------------------------------------------------------------------------------------------------------------------------------
+!
    dlm='; '
    CALL testit()
-!-----------------------------------------------------------------------------------------------------------------------------------
+!
    dlm=';'
    LINE=';;;abcdef;ghijklmnop;qrstuvwxyz;;1:2;;333333;a;b;cc;;'
    CALL testit()
@@ -628,19 +625,18 @@ character(len=10)               :: nulls(3)=['ignore    ', 'return    ', 'ignore
    CALL testit()
    LINE='abcdef;ghijklmnop;qrstuvwxyz;;1:2;;333333;a;b;cc'
    CALL testit()
-!-----------------------------------------------------------------------------------------------------------------------------------
+!
    line='a b c d e f g h i j k l m n o p q r s t u v w x y z'
    CALL split(line,array)
    call unit_test('split',size(array) == 26,msg='test delimiter')
-!-----------------------------------------------------------------------------------------------------------------------------------
+!
    dlm=' '
    CALL split(line,array,dlm)
    call unit_test('split',size(array) == 26,msg='test delimiter')
-!-----------------------------------------------------------------------------------------------------------------------------------
+!
    call unit_test_end('split')
-!-----------------------------------------------------------------------------------------------------------------------------------
+!
    CONTAINS
-!-----------------------------------------------------------------------------------------------------------------------------------
    SUBROUTINE testit()
    integer :: i
    if(unit_test_level > 0)then
@@ -656,16 +652,12 @@ character(len=10)               :: nulls(3)=['ignore    ', 'return    ', 'ignore
 end subroutine test_split
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_m_strings
-character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
-character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 character(len=1)            :: chars(36)
 call unit_test_start('combined')
-!-----------------------------------------------------------------------------------------------------------------------------------
 ! COMBINED TESTS
 chars=switch(uc)     ! convert string to character array
 chars=chars(36:1:-1) ! reverse order of characters
 call unit_test('combined',lower(reverse(switch(chars))) == lc,msg='combined lower(),reverse(),switch()')
-!-----------------------------------------------------------------------------------------------------------------------------------
 if(unit_test_level > 0)then
    write(std_err,g)'isprint'
    write(std_err,g)'   letter a      ',isprint('a')
@@ -674,7 +666,6 @@ if(unit_test_level > 0)then
    write(std_err,g)'   array of letters',isprint(switch(uc))
    write(std_err,g)'   array of letters',isprint(uc)
 endif
-!-----------------------------------------------------------------------------------------------------------------------------------
 if(unit_test_level > 0)then
    write(std_err,g)'isgraph'
    write(std_err,g)'   letter a      ',isgraph('a')
@@ -683,7 +674,6 @@ if(unit_test_level > 0)then
    write(std_err,g)'   array of letters',isgraph(switch(uc))
    write(std_err,g)'   array of letters',isgraph(uc)
 endif
-!-----------------------------------------------------------------------------------------------------------------------------------
 call unit_test_end('combined')
 end subroutine test_m_strings
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
@@ -718,7 +708,6 @@ integer                       :: ipass
    call unit_test_end('chomp')
 end subroutine test_chomp
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-!-----------------------------------------------------------------------------------------------------------------------------------
 subroutine test_substitute
 character(len=80),allocatable   :: targetline   ! input line to be changed, MUST BE LONG ENOUGH TO HOLD CHANGES
 character(len=:),allocatable    :: old          ! old substring to replace
@@ -729,7 +718,6 @@ character(len=:),allocatable    :: string
 integer                         :: ml           ! ml sets the left  margin
 integer                         :: mr           ! mr sets the right margin
 integer                         :: ier          ! error code. if ier = -1 bad directive, >= 0then ier changes made
-!-----------------------------------------------------------------------------------------------------------------------------------
    call unit_test_start('substitute','[EDITING] subroutine globally substitutes one substring for another in string')
    targetline='This an that and any other '
    old='an'
@@ -740,7 +728,6 @@ integer                         :: ier          ! error code. if ier = -1 bad di
    call substitute(targetline,old,new,ier,ml,mr) !Globally substitute one substring for another in string
    call unit_test('substitute',ier ==3,'test if ier is 3, ier=',ier,'targetline=',targetline)
    call unit_test('substitute',targetline == 'This ## that ##d ##y other ','checking en to ##')
-!-----------------------------------------------------------------------------------------------------------------------------------
    ! NOTE: with one targetline all tests pass or get red herrings
    targetline=' This an that and any other '
 
@@ -887,8 +874,6 @@ subroutine test_crop()
 end subroutine test_crop
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_transliterate
-character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
-character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
    call unit_test_start('transliterate','[EDITING] replace characters from old set with characters from new set')
    call unit_test('transliterate',transliterate('AbCDefgHiJklmnoPQRStUvwxyZ',lc,uc) == uc(1:26),msg='transliterate to uppercase')
    call unit_test('transliterate',transliterate('AbCDefgHiJklmnoPQRStUvwxyZ',uc,lc) == lc(1:26),msg='transliterate to lowercase')
@@ -907,9 +892,6 @@ character(len=:),allocatable  :: e
 end subroutine test_rotate13
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_reverse
-
-character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
-
    call unit_test_start('reverse','elemental function reverses character order in a string')
    if(reverse(lc) == '9876543210zyxwvutsrqponmlkjihgfedcba')then
       call unit_test('reverse',.true.)
@@ -926,8 +908,6 @@ character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 end subroutine test_reverse
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_upper
-character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
-character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 character(len=36),parameter :: rnge='abcdefghIJKLMNopqrstuvwxyz0123456789'
 
    call unit_test_start('upper','[CASE] changes a string to uppercase')
@@ -938,8 +918,6 @@ character(len=36),parameter :: rnge='abcdefghIJKLMNopqrstuvwxyz0123456789'
 end subroutine test_upper
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_lower
-character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
-character(len=36),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 character(len=36),parameter :: rnge='ABCDEFGHijklmnOPQRSTUVWXYZ0123456789'
 
    call unit_test_start('lower','[CASE] changes a string to lowercase over specified range')
@@ -950,8 +928,6 @@ character(len=36),parameter :: rnge='ABCDEFGHijklmnOPQRSTUVWXYZ0123456789'
 end subroutine test_lower
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_switch
-character(len=36),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
-character(len=36),parameter :: uc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=1)            :: chars(36)
 integer :: i
 
@@ -969,7 +945,6 @@ call unit_test_end('switch')
 end subroutine test_switch
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_s2c()
-character(len=*),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 integer :: i
    call unit_test_start('s2c','[ARRAY] convert character variable to array of characters with null terminator for C compatibility')
    call unit_test('s2c', all([(lc(i:i),i=1,len(lc)),char(0)].eq.s2c(lc)), 'compare s2c(lc) to expected letters')
@@ -977,7 +952,6 @@ integer :: i
 end subroutine test_s2c
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_c2s()
-character(len=*),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 integer :: i
    call unit_test_start('c2s','[ARRAY] convert C string pointer to Fortran character string')
    !call unit_test('c2s', c2s([(lc(i:i),i=1,len(lc)),char(0)]) .eq.lc,'compare s2c(lets) to expected letters')
@@ -1002,19 +976,21 @@ end subroutine test_indent
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_visible()
 integer :: i
+character(len=1) :: ch
 character(len=2),parameter :: controls(0:31) =[ &
-& '^@  ', '^A  ', '^B  ', '^C  ', '^D  ', '^E  ', '^F  ', '^G  ', '^H  ', '^I  ', &
-& '^J  ', '^K  ', '^L  ', '^M  ', '^N  ', '^O  ', '^P  ', '^Q  ', '^R  ', '^S  ', &
-& '^T  ', '^U  ', '^V  ', '^W  ', '^X  ', '^Y  ', '^Z  ', '^[  ', '^\  ', '^]  ', &
-& '^^  ', '^_  ']
+& '^@', '^A', '^B', '^C', '^D', '^E', '^F', '^G', '^H', '^I', &
+& '^J', '^K', '^L', '^M', '^N', '^O', '^P', '^Q', '^R', '^S', &
+& '^T', '^U', '^V', '^W', '^X', '^Y', '^Z', '^[', '^\', '^]', &
+& '^^', '^_']
 logical :: show
    show=merge(T,F,unit_test_level>0)
    call unit_test_start('visible','[NONALPHA] expand a string to control and meta-control representations')
    do i=0,127
+      ch=char(i)
       select case(i)
-      case(32:126); call unit_test('visible',visible(char(i)) == char(i),i,    'testing',visible(char(i)),wordy=show)
-      case(0:31);   call unit_test('visible',visible(char(i)) == controls(i),i,'testing',visible(char(i)),wordy=show)
-      case(127);    call unit_test('visible',visible(char(127)) == '^?',127,   'testing',visible(char(i)),wordy=show)
+      case(32:126); call unit_test('visible',visible(ch) == ch,i,    'testing',visible(ch),wordy=show)
+      case(0:31);   call unit_test('visible',visible(ch) == controls(i),i,'testing',visible(ch),wordy=show)
+      case(127);    call unit_test('visible',visible(char(127)) == '^?',127,   'testing',visible(ch),wordy=show)
       end select
    enddo
    call unit_test_end('visible')
@@ -1433,7 +1409,6 @@ subroutine test_isnumber
 end subroutine test_isnumber
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_trimzeros_()
-character(len=*),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789', uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 character(len=:),allocatable  :: str1, str2
 character(len=1),allocatable  :: char1(:), char2(:)
    call unit_test_start('trimzeros_')
@@ -1521,7 +1496,7 @@ character(len=1)              :: char
 integer                       :: i
 character(len=*),parameter    :: at='@ at (at cost of, at sign, each at, commercial at, commat, &
 &rollmop, monkey|pigs|elephant tail, snail, arroba, strudel, asperand, ampersat, rose, cabbage, swirl, whorl)'
-!-----------------------------------------------------------------------------------------------------------------------------------
+!
    ! initialize database description of routine
    call unit_test_start('describe','[DESCRIBE] returns a string describing the name of a single character')
    ! call all descriptions to exercise procedure
@@ -1552,6 +1527,7 @@ real               :: rvalues(longest_line/2+1)
 integer            :: ivalues(longest_line/2+1)
 doubleprecision    :: dvalues(longest_line/2+1)
 integer            :: icount,ierr
+character(len=:),allocatable :: given
    call unit_test_start('getvals','[TYPE] read REAL values from character variable up to size of VALUES() array')
 
    call getvals('11,,,22,33,-44, 55 , ,66  ',ivalues,icount,ierr)
@@ -1560,11 +1536,9 @@ integer            :: icount,ierr
    call getvals('1234.56 3.3333, 5.5555',rvalues,icount,ierr)
    call unit_test('getvals',all(rvalues(:icount) == [1234.56,3.3333,5.5555]),msg='real test')
 
-   call getvals('1234.56d0 3.3333d0, 5.5555d0',dvalues,icount,ierr)
-   if(unit_test_level > 0)then
-      write(std_err,g)dvalues(:icount)
-      write(std_err,g)[1234.56d0,3.3333d0,5.5555d0]
-   endif
+   given='1234.56d0 3.3333d0, 5.5555d0'
+   call getvals(given,dvalues,icount,ierr)
+   call unit_test_msg('getvals','got',str(dvalues(:icount))//'','given',given,if=unit_test_level>0)
    call unit_test('getvals',all(dvalues(:icount) == [1234.56d0,3.3333d0,5.5555d0]),msg='double test')
 
    call unit_test_end('getvals')
