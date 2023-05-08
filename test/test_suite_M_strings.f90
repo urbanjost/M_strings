@@ -31,6 +31,7 @@ subroutine test_suite_m_strings()
    call test_describe()
    call test_edit_distance()
    call test_expand()
+   call test_fortran_name()
    call test_getvals()
    call test_glob()
    call test_indent()
@@ -1848,6 +1849,32 @@ subroutine test_match_delimiter()
    call unit_test_end('match_delimiter',msg='')
 end subroutine test_match_delimiter
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_fortran_name()
+integer :: i
+logical,parameter :: expect(*)= [F, T, T, F, T, T, F, F, F, F, F, F, T, F]
+character(len=80),parameter :: names(*)=[character(len=80) ::  &
+'_name',               &
+'long_variable_name',  &
+'name_',               &
+'12L',                 &
+'a__b__c',             &
+'PropertyOfGas',       &
+'3%3',                 &
+'one two ',            &
+'$NAME',               &
+' ',                   &
+'Variable-name',       &
+'1234567890123456789012345678901234567890123456789012345678901234567890',       &
+'A',                   &
+'x@x'                  ]
+   call unit_test_start('fortran_name','check if string is a valid Fortran variable name')
+   call unit_test('fortran_name',all(fortran_name(names).eqv.expect),'elemental test')
+   do i=1,size(names)
+      call unit_test('fortran_name',fortran_name(names(i)).eqv.expect(i),names(i),'expected',expect(i))
+   enddo
+   call unit_test_end('fortran_name')
+end subroutine test_fortran_name
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 end module M_testsuite_M_strings
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 program runtest
@@ -1868,8 +1895,6 @@ implicit none
    call unit_test_end('ends_with')
    call unit_test_start('find_field','[TOKENS] parse a string into tokens')
    call unit_test_end('find_field')
-   call unit_test_start('fortran_name','[COMPARE] test if string meets criteria for being a fortran name')
-   call unit_test_end('fortran_name')
    call unit_test_start('longest_common_substring','[COMPARE] function that returns the longest common substring of two strings')
    call unit_test_end('longest_common_substring')
    call unit_test_start('matching_delimiter','[QUOTES] find position of matching delimiter')
