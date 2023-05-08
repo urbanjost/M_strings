@@ -355,7 +355,7 @@ public c2s             !  convert null-terminated array of character(len=1) to s
 public upper           !  elemental function converts string to uppercase
 interface upper;    module procedure upper_all, upper_range;  end interface
 public lower           !  elemental function converts string to miniscule
-public upper_quoted    !  elemental function converts string to miniscule skipping strings quoted per Fortran syntax rules
+public upper_quoted    !  elemental function converts string to uppercase skipping strings quoted per Fortran syntax rules
 !----------------------# WHITE SPACE
 public adjustc         !  elemental function centers string within the length of the input string
 public compact         !  left justify string and replace duplicate whitespace with single characters or nothing
@@ -3404,7 +3404,7 @@ end function reverse
 !>
 !!##NAME
 !! upper_quoted(3f) - [M_strings:CASE] elemental function converts string to
-!!                miniscule skipping strings quoted per Fortran syntax rules
+!!                uppercase skipping strings quoted per Fortran syntax rules
 !! (LICENSE:PD)
 !!
 !!##SYNOPSIS
@@ -3462,7 +3462,7 @@ end function reverse
 !!    Public Domain
 elemental pure function upper_quoted(str) result (string)
 
-! ident_22="@(#) M_strings upper_quoted(3f) elemental function converts string to miniscule skipping strings quoted per Fortran syntax rules"
+! ident_22="@(#) M_strings upper_quoted(3f) elemental function converts string to uppercase skipping strings quoted per Fortran syntax rules"
 
 character(len=*), intent(in)   :: str     ! The input string
 character(len=len(str))        :: string  ! The output string
@@ -10191,7 +10191,8 @@ end function setbits64
 !!
 !!        ! create a format on the fly
 !!        biggest=huge(0)
-!!        frmt=msg('(*(i',int(log10(real(biggest))),':,1x))',sep='')
+!!        ! +0 for gfortran-11 bug
+!!        frmt=msg('(*(i',int(log10(real(biggest)))+0,':,1x))',sep='')
 !!        write(*,*)'format=',frmt
 !!
 !!        ! although it will often work, using msg(3f) in an I/O statement

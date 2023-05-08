@@ -1941,7 +1941,17 @@ subroutine test_split2020()
 end subroutine test_split2020
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_upper_quoted()
-   call unit_test_start('upper_quoted','[CASE] converts string to miniscule skipping strings quoted per Fortran syntax rules')
+character(len=:),allocatable  :: s
+   call unit_test_start('upper_quoted','[CASE] convert string to uppercase skipping strings quoted per Fortran syntax rules')
+   s=' ABCDEFG abcdefg "Double-Quoted" ''Single-Quoted'' "with "" Quote" everything else'
+   call unit_test('upper_quoted',&
+   & upper_quoted(s).eq.' ABCDEFG ABCDEFG "Double-Quoted" ''Single-Quoted'' "with "" Quote" EVERYTHING ELSE',&
+   &'complex string')
+   if(unit_test_level.gt.0)then
+      call unit_test_msg('upper_quoted','input is  ['//s//']')
+      call unit_test_msg('upper_quoted','result is ['//upper_quoted(s)//']')
+   endif
+   call unit_test('upper_quoted',all(upper_quoted(["a'b'c",'d"e"f',"ghijk"]).eq.["A'b'C",'D"e"F',"GHIJK"]),'elemental test')
    call unit_test_end('upper_quoted')
 end subroutine test_upper_quoted
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
