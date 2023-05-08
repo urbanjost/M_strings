@@ -14,6 +14,7 @@ contains
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_suite_m_strings()
    call test_adjustc()
+   call test_aton()
    call test_base()
    call test_base2()
    call test_bundle()
@@ -29,8 +30,11 @@ subroutine test_suite_m_strings()
    call test_decodebase()
    call test_delim()
    call test_describe()
+   call test_dilate()
    call test_edit_distance()
+   call test_ends_with()
    call test_expand()
+   call test_find_field()
    call test_fortran_name()
    call test_getvals()
    call test_glob()
@@ -54,17 +58,21 @@ subroutine test_suite_m_strings()
    call test_lenset()
    call test_len_white()
    call test_listout()
+   call test_longest_common_substring()
    call test_lower()
    call test_lpad()
    call test_match_delimiter()
+   call test_matching_delimiter()
    call test_merge_str()
    call test_modif()
+   call test_msg()
    call test_m_strings()
    call test_nint()
    call test_noesc()
    call test_nospace()
    call test_notabs()
    call test_pad()
+   call test_paragraph()
    call test_quote()
    call test_real()
    call test_replace()
@@ -74,8 +82,10 @@ subroutine test_suite_m_strings()
    call test_s2c()
    call test_s2v()
    call test_s2vs()
+   call test_sep()
    call test_setbits()
    call test_split()
+   call test_split2020()
    call test_squeeze()
    call test_stretch()
    call test_string_to_value()
@@ -87,6 +97,7 @@ subroutine test_suite_m_strings()
    call test_trimzeros_()
    call test_unquote()
    call test_upper()
+   call test_upper_quoted()
    call test_v2s()
    call test_value_to_string()
    call test_visible()
@@ -714,8 +725,8 @@ character(len=80),allocatable   :: targetline   ! input line to be changed, MUST
 character(len=:),allocatable    :: old          ! old substring to replace
 character(len=:),allocatable    :: new          ! new substring
 character(len=:),allocatable    :: result
-character(len=:),allocatable    :: expected 
-character(len=:),allocatable    :: string   
+character(len=:),allocatable    :: expected
+character(len=:),allocatable    :: string
 integer                         :: ml           ! ml sets the left  margin
 integer                         :: mr           ! mr sets the right margin
 integer                         :: ier          ! error code. if ier = -1 bad directive, >= 0then ier changes made
@@ -759,10 +770,10 @@ integer                         :: ier          ! error code. if ier = -1 bad di
    subroutine tryit()
       string='OLD:'//old//' NEW:'//new
       if(unit_test_level > 0) string=string //' ORIGINAL: '//targetline
-      !call substitute(targetline,old,new) 
+      !call substitute(targetline,old,new)
       ml=1
       mr=len(targetline)
-      call substitute(targetline,old,new,ier,ml,mr) 
+      call substitute(targetline,old,new,ier,ml,mr)
       call unit_test('substitute',targetline == expected,string)
    end subroutine tryit
 
@@ -1875,6 +1886,65 @@ character(len=80),parameter :: names(*)=[character(len=80) ::  &
    call unit_test_end('fortran_name')
 end subroutine test_fortran_name
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_ends_with()
+call unit_test_start('ends_with', '[COMPARE] test if string ends with specified suffix(es)')
+call unit_test('ends_with',.not.ends_with('prog.a',['.o','.i','.s']),'test prog.a with [.o,.i,.s]')
+call unit_test('ends_with',ends_with('prog.f90',['.F90','.f90','.f  ','.F  ']),'test prog.f90 with .F90, .f90, .f, .F')
+call unit_test('ends_with',ends_with('prog.pdf','.pdf'),'test prog.pdf with .pdf')
+call unit_test('ends_with',.not.ends_with('prog.doc','.txt'),'test prog.doc with .txt')
+call unit_test_end('ends_with')
+end subroutine test_ends_with
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_aton()
+   call unit_test_start('aton','[TYPE] function returns argument as a numeric value from a string')
+   call unit_test_end('aton')
+end subroutine test_aton
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_dilate()
+   call unit_test_start('dilate','[NONALPHA] expand tab characters')
+   call unit_test_end('dilate')
+end subroutine test_dilate
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_find_field()
+   call unit_test_start('find_field','[TOKENS] parse a string into tokens')
+   call unit_test_end('find_field')
+end subroutine test_find_field
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_longest_common_substring()
+   call unit_test_start('longest_common_substring','[COMPARE] function that returns the longest common substring of two strings')
+   call unit_test_end('longest_common_substring')
+end subroutine test_longest_common_substring
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_matching_delimiter()
+   call unit_test_start('matching_delimiter','[QUOTES] find position of matching delimiter')
+   call unit_test_end('matching_delimiter')
+end subroutine test_matching_delimiter
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_msg()
+   call unit_test_start('msg','[TYPE] converts any standard scalar type to a string')
+   call unit_test_end('msg')
+end subroutine test_msg
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_paragraph()
+   call unit_test_start('paragraph','[TOKENS] break a long line into a paragraph')
+   call unit_test_end('paragraph')
+end subroutine test_paragraph
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_sep()
+   call unit_test_start('sep','[TOKENS] function to parse string into an array using specified delimiters')
+   call unit_test_end('sep')
+end subroutine test_sep
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_split2020()
+   call unit_test_start('split2020','[TOKENS] parse a string into tokens using proposed f2023 method')
+   call unit_test_end('split2020')
+end subroutine test_split2020
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_upper_quoted()
+   call unit_test_start('upper_quoted','[CASE] converts string to miniscule skipping strings quoted per Fortran syntax rules')
+   call unit_test_end('upper_quoted')
+end subroutine test_upper_quoted
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 end module M_testsuite_M_strings
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 program runtest
@@ -1887,29 +1957,6 @@ implicit none
    call test_suite_M_strings()
 
    ! untested
-   call unit_test_start('aton','[TYPE] function returns argument as a numeric value from a string')
-   call unit_test_end('aton')
-   call unit_test_start('dilate','[NONALPHA] expand tab characters')
-   call unit_test_end('dilate')
-   call unit_test_start('ends_with','[COMPARE] test if string ends with specified suffix(es)')
-   call unit_test_end('ends_with')
-   call unit_test_start('find_field','[TOKENS] parse a string into tokens')
-   call unit_test_end('find_field')
-   call unit_test_start('longest_common_substring','[COMPARE] function that returns the longest common substring of two strings')
-   call unit_test_end('longest_common_substring')
-   call unit_test_start('matching_delimiter','[QUOTES] find position of matching delimiter')
-   call unit_test_end('matching_delimiter')
-   call unit_test_start('msg','[TYPE] converts any standard scalar type to a string')
-   call unit_test_end('msg')
-   call unit_test_start('paragraph','[TOKENS] break a long line into a paragraph')
-   call unit_test_end('paragraph')
-   call unit_test_start('sep','[TOKENS] function to parse string into an array using specified delimiters')
-   call unit_test_end('sep')
-   call unit_test_start('split2020','[TOKENS] parse a string into tokens using proposed f2023 method')
-   call unit_test_end('split2020')
-   call unit_test_start('upper_quoted','[CASE] converts string to miniscule skipping strings quoted per Fortran syntax rules')
-   call unit_test_end('upper_quoted')
-
    call unit_test_stop()
 end program runtest
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
