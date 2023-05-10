@@ -1901,7 +1901,17 @@ subroutine test_aton()
 end subroutine test_aton
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_dilate()
+character(len=:),allocatable :: in
+character(len=:),allocatable :: expected
+integer                      :: i
    call unit_test_start('dilate','[NONALPHA] expand tab characters')
+        in='  this is my string  '
+        ! change spaces to tabs to make a sample input
+        do i=1,len(in)
+           if(in(i:i) == ' ')in(i:i)=char(9)
+        enddo
+        expected="                this    is      my      string"
+        call unit_test('dilate',dilate(in).eq.expected,'expected',expected,'got',dilate(in))
    call unit_test_end('dilate')
 end subroutine test_dilate
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
