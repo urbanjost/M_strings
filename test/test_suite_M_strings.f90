@@ -61,7 +61,6 @@ subroutine test_suite_m_strings()
    call test_longest_common_substring()
    call test_lower()
    call test_lpad()
-   call test_match_delimiter()
    call test_matching_delimiter()
    call test_merge_str()
    call test_modif()
@@ -1846,20 +1845,6 @@ subroutine test_setbits()
    call unit_test_end('setbits',msg='')
 end subroutine test_setbits
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_match_delimiter()
-   !character(len=:),allocatable :: string
-   call unit_test_start('match_delimiter','find matching delimiter')
-   !string='11111111'
-   !call unit_test('match_delimiter',match_delimiter(string) == 0,match_delimiter(string))
-   !string='1111111111111111'
-   !call unit_test('match_delimiter',match_delimiter(string) == 0,match_delimiter(string))
-   !string='11111111111111111111111111111111'
-   !call unit_test('match_delimiter',match_delimiter(string) == 0,match_delimiter(string))
-   !string='1111111111111111111111111111111111111111111111111111111111111111'
-   !call unit_test('match_delimiter',match_delimiter(string) == 0,match_delimiter(string))
-   call unit_test_end('match_delimiter',msg='')
-end subroutine test_match_delimiter
-!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_fortran_name()
 integer :: i
 logical,parameter :: expect(*)= [F, T, T, F, T, T, F, F, F, F, F, F, T, F]
@@ -1922,12 +1907,51 @@ end subroutine test_find_field
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_longest_common_substring()
    call unit_test_start('longest_common_substring','[COMPARE] function that returns the longest common substring of two strings')
+   call compare('testing123testingthing','thisis',             'thi')
+   call compare('testing',             'sting',              'sting')
+   call compare('thisisatest_stinger','testing123testingthing','sting')
+   call compare('thisisatest_stinger', 'thisis',            'thisis')
+   call compare('thisisatest',         'testing123testing',   'test')
+   call compare('thisisatest',      'thisisatest',     'thisisatest')
    call unit_test_end('longest_common_substring')
+   contains
+
+subroutine compare(a,b,answer)
+character(len=*),intent(in) :: a, b, answer
+character(len=:),allocatable :: match
+   match=longest_common_substring(a,b)
+   call unit_test('longest_common_substring',answer == match, &
+   & 'comparing',quote(a),'and',quote(b),'got',quote(match),'expected',quote(answer) )
+end subroutine compare
+
 end subroutine test_longest_common_substring
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_matching_delimiter()
+use M_strings, only : matching_delimiter
+character(len=128)  :: str
+integer             :: imatch
    call unit_test_start('matching_delimiter','[QUOTES] find position of matching delimiter')
+!  Allowable delimiters are (), [], {}, <>.
+   str=' a [[[[b] and ] then ] finally ]'
+   call unit_test('matching_delimiter',getval(1)  ==  0 ,'test get zero for invalid delimiter')
+   call unit_test('matching_delimiter',getval(4)  == 32 ,'expect 32, got',getval(4)+0) ! +0 for gfortran-11 bug
+   call unit_test('matching_delimiter',getval(5)  == 22 ,'expect 22, got',getval(5)+0)
+   call unit_test('matching_delimiter',getval(6)  == 15 ,'expect 15, got',getval(6)+0)
+   call unit_test('matching_delimiter',getval(7)  ==  9 ,'expect 9, got',getval(7)+0)
+   call unit_test('matching_delimiter',getval(32) ==  4 ,'expect 4, got',getval(32)+0)
+   str=' a (<[{b} and ] then > finally )'
+   call unit_test('matching_delimiter',getval(4)  == 32 ,'expect 32, got',getval(4)+0) ! +0 for gfortran-11 bug
+   call unit_test('matching_delimiter',getval(5)  == 22 ,'expect 22, got',getval(5)+0)
+   call unit_test('matching_delimiter',getval(6)  == 15 ,'expect 15, got',getval(6)+0)
+   call unit_test('matching_delimiter',getval(7)  ==  9 ,'expect 9, got',getval(7)+0)
+   call unit_test('matching_delimiter',getval(32) ==  4 ,'expect 4, got',getval(32)+0)
    call unit_test_end('matching_delimiter')
+contains
+function getval(ipos)
+integer,intent(in) :: ipos
+integer :: getval
+   call matching_delimiter(str,ipos,getval)
+end function 
 end subroutine test_matching_delimiter
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_msg()
