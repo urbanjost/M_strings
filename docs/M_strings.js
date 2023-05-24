@@ -59,6 +59,7 @@ append("nospace.3m_strings.html");
 append("notabs.3m_strings.html");
 append("pad.3m_strings.html");
 append("paragraph.3m_strings.html");
+append("percent_encode.3m_strings.html");
 append("quote.3m_strings.html");
 append("real.3m_strings.html");
 append("replace.3m_strings.html");

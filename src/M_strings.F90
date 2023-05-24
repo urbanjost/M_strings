@@ -22,7 +22,7 @@
 !!              & reverse, squeeze
 !!      use M_strings,only : replace, join
 !!      use M_strings,only : upper, lower, upper_quoted
-!!      use M_strings,only : rotate13
+!!      use M_strings,only : rotate13, percent_encode
 !!      use M_strings,only : adjustc, compact, nospace, indent
 !!      use M_strings,only : crop, clip, unquote, quote, matching_delimiter
 !!      use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
@@ -84,6 +84,7 @@
 !!       join           join an array of CHARACTER variables with specified
 !!                      separator
 !!       rotate13       apply trivial encryption algorithm ROT13 to a string
+!!       percent_encode apply percent-encryption (aka. URL encryption) to characters
 !!       squeeze        delete adjacent duplicate characters from a string
 !!
 !!   CASE
@@ -282,6 +283,7 @@
 !!     use M_strings,only : replace, join
 !!     use M_strings,only : upper, lower, upper_quoted
 !!     use M_strings,only : rotate13
+!!     use M_strings,only : percent_encode
 !!     use M_strings,only : adjustc, compact, nospace, indent
 !!     use M_strings,only : crop, clip, unquote, quote, matching_delimiter
 !!     use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
@@ -345,6 +347,8 @@ public reverse         !  elemental function reverses character order in a strin
 public join            !  append an array of character variables with specified separator into a single CHARACTER variable
 public squeeze         !  delete adjacent duplicate characters from a string
 public rotate13        !  apply trivial encryption algorithm ROT13 to string
+public percent_encode  !  percent-encode characters or a string
+interface percent_encode;    module procedure percent_encode_string, percent_encode_characters;  end interface
 !----------------------# CHARACTER ARRAY VERSUS STRING
 public switch          !  generic switch between a string and an array of single characters (a2s,s2a)
 private a2s            !  function to copy char array to string
@@ -3227,6 +3231,109 @@ end function rotate13
 !==================================================================================================================================!
 !>
 !!##NAME
+!!    percent_encode(3f) - [M_strings:COMPARE] percent-encode strings and
+!!    character arrays
+!!    (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!     function percent_encode(text)
+!!     character(len=1),intent(in)  :: text(:)
+!!     character(len=;),allocatable :: percent_encode
+!!
+!!     or
+!!
+!!     function percent_encode(text)
+!!     character(len=*),intent(in)  :: text
+!!     character(len=;),allocatable :: percent_encode
+!!
+!!##DESCRIPTION
+!!
+!!    This function percent-encodes ASCII strings or ASCII character arrays.
+!!    "Reserved" characters are encoded.
+!!
+!!    URI containing spaces or most other non-alphanumeric characters must
+!!    be encoded using percent encoding (aka. URL encoding).
+!!
+!!    The characters allowed in a URI are either reserved or unreserved
+!!    (or a percent character as part of a percent-encoding). Reserved
+!!    characters are those characters that sometimes have special meaning,
+!!    while unreserved characters have no such meaning. Using percent-encoding,
+!!    characters which otherwise would not be allowed are represented using
+!!    allowed characters. The sets of reserved and unreserved characters and
+!!    the circumstances under which certain reserved characters have special
+!!    meaning have changed slightly with each revision of specifications that
+!!    govern URIs and URI schemes.
+!!
+!!    According to RFC 3986, the characters in a URL have to be taken from
+!!    a defined set of unreserved and reserved ASCII characters. Any other
+!!    characters are not allowed in a URL.
+!!
+!!    The unreserved characters can be encoded, but should not be. The
+!!    unreserved characters are:
+!!
+!!        ABCDEFGHIJKLMNOPQRSTUVWXYZ
+!!        abcdefghijklmnopqrstuvwxyz
+!!        0123456789-_.~
+!!
+!!    The reserved characters have to be encoded only under certain
+!!    circumstances. The reserved characters are:
+!!
+!!        * ' ( ) ; : @ & = + $ , / ? % # [ ]
+!!
+!!##OPTIONS
+!!     SOURCE_STRING   string or character array to encode
+!!
+!!##RETURNS
+!!     percent_encode  a string holding a percent-encoded copy of the input
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_percent_encode
+!!    use M_strings, only : percent_encode
+!!    use, intrinsic :: iso_fortran_env, only : stdout=>output_unit
+!!    implicit none
+!!    write(*,*)percent_encode('[this is a string]')
+!!    end program demo_percent_encode
+!!
+!!   Results:
+!!
+!!
+!!##AUTHOR
+!!    John S. Urban
+
+function percent_encode_string(text)
+character(len=*),intent(in)  :: text
+character(len=:),allocatable :: percent_encode_string
+   percent_encode_string=percent_encode_characters(switch(text))
+end function percent_encode_string
+
+function percent_encode_characters(text)
+character(len=1),intent(in) :: text(:)
+character(len=:),allocatable :: percent_encode_characters
+integer :: i,pos
+allocate(character(len=3*size(text)) :: percent_encode_characters )
+percent_encode_characters(:)=repeat(' ',len(percent_encode_characters))
+   pos=1
+   do i=1,size(text)
+      select case(text(i))
+      case('a':'z','A':'Z','0':'9','-','_','.','~')
+         percent_encode_characters(pos:pos)=text(i)
+         pos=pos+1
+      case default
+         write(percent_encode_characters(pos:pos+2),'(a1,z2.2)')'%',text(i)
+         pos=pos+3
+      end select
+   enddo
+   percent_encode_characters=trim(percent_encode_characters)
+end function percent_encode_characters
+!==================================================================================================================================!
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!==================================================================================================================================!
+!>
+!!##NAME
 !!    join(3f) - [M_strings:EDITING] append CHARACTER variable array into
 !!    a single CHARACTER variable with specified separator
 !!    (LICENSE:PD)
@@ -3878,22 +3985,31 @@ end function s2a
 !!
 !!##EXAMPLES
 !!
+!!
+!! character(len=3),allocatable :: array(:)
+!! integer                      :: i
+!!    ! put one character into each 3-character element of array
+!!    array = [(string(i:i),i=1,len(string))]
+!!    ! write array with ASCII Decimal Equivalent below it except show
+!!    ! unprintable characters like NULL as "XXX"
+!!    write(*,g) merge('XXX',array,iachar(array(:)(1:1)) < 32)
+!!    write(*,g) iachar(array(:)(1:1))
+!!
 !!    Sample Program:
 !!
 !!     program demo_s2c
 !!     use M_strings, only : s2c
 !!     implicit none
 !!     character(len=*),parameter   :: string="single string"
+!!     character(len=*),parameter   :: g= '(1x,*("[",g3.3,"]":))'
 !!     character(len=3),allocatable :: array(:)
 !!        write(*,*)'INPUT STRING ',trim(string)
 !!        ! put one character into each 3-character element of array
 !!        array=s2c(string)
 !!        ! write array with ASCII Decimal Equivalent below it except show
 !!        ! unprintable characters like NULL as "XXX"
-!!        write(*,'(1x,*("[",a3,"]":))')&
-!!             & merge('XXX',array,iachar(array(:)(1:1)) < 32)
-!!        write(*,'(1x,*("[",i3,"]":))')&
-!!             & iachar(array(:)(1:1))
+!!        write(*,g) merge('XXX',array,iachar(array(:)(1:1)) < 32)
+!!        write(*,g) iachar(array(:)(1:1))
 !!     end program demo_s2c
 !!
 !!   Expected output:
@@ -11655,25 +11771,26 @@ integer                       :: i, ipos, ios, too_many_digit_count
       read(str,fmt=*,iostat=ios) val ! use internal read for INF, NAN for now
       if(ios == 0)then
          ator_real32 = .true.
+         if(present(msg)) msg=''
       else
          if(present(msg))then
             if(cnt(5) /= 0)then
-                  msg='illegal character in value "'//trim(str)//'"'
-               elseif(cnt(5) /= 0)then
-                  msg='decimal in exponent in "'//trim(str)//'"'
-               elseif(cnt(1) >= 2)then
-                  msg='multiple decimals in "'//trim(str)//'"'
-               elseif(cnt(2) >= 2)then
-                  msg='more than one exponent prefix (e,d,E,D) in "'//trim(str)//'"'
-               elseif(cnt(3) >= 2)then
-                  msg='more than one sign character in "'//trim(str)//'"'
-               elseif(cnt(6) /= 0)then
-                  msg='- sign character not first in "'//trim(str)//'"'
-               elseif(cnt(4) >= 2)then
-                  msg='+ sign character not first in "'//trim(str)//'"'
-               else
-                  msg='error in data conversion in "'//trim(str)//'"'
-               endif
+               msg='illegal character in value "'//trim(str)//'"'
+            elseif(cnt(5) /= 0)then
+               msg='decimal in exponent in "'//trim(str)//'"'
+            elseif(cnt(1) >= 2)then
+               msg='multiple decimals in "'//trim(str)//'"'
+            elseif(cnt(2) >= 2)then
+               msg='more than one exponent prefix (e,d,E,D) in "'//trim(str)//'"'
+            elseif(cnt(3) >= 2)then
+               msg='more than one sign character in "'//trim(str)//'"'
+            elseif(cnt(6) /= 0)then
+               msg='- sign character not first in "'//trim(str)//'"'
+            elseif(cnt(4) >= 2)then
+               msg='+ sign character not first in "'//trim(str)//'"'
+            else
+               msg='error in data conversion in "'//trim(str)//'"'
+            endif
          endif
          ator_real32 = .false.
       endif
@@ -11764,25 +11881,26 @@ integer                       :: i, ipos, ios, too_many_digit_count
       read(str,fmt=*,iostat=ios) val ! use internal read for INF, NAN for now
       if(ios == 0)then
          ator_real64 = .true.
+         if(present(msg)) msg=''
       else
          if(present(msg))then
             if(cnt(5) /= 0)then
-                  msg='illegal character in value "'//trim(str)//'"'
-               elseif(cnt(5) /= 0)then
-                  msg='decimal in exponent in "'//trim(str)//'"'
-               elseif(cnt(1) >= 2)then
-                  msg='multiple decimals in "'//trim(str)//'"'
-               elseif(cnt(2) >= 2)then
-                  msg='more than one exponent prefix (e,d,E,D) in "'//trim(str)//'"'
-               elseif(cnt(3) >= 2)then
-                  msg='more than one sign character in "'//trim(str)//'"'
-               elseif(cnt(6) /= 0)then
-                  msg='- sign character not first in "'//trim(str)//'"'
-               elseif(cnt(4) >= 2)then
-                  msg='+ sign character not first in "'//trim(str)//'"'
-               else
-                  msg='error in data conversion in "'//trim(str)//'"'
-               endif
+               msg='illegal character in value "'//trim(str)//'"'
+            elseif(cnt(5) /= 0)then
+               msg='decimal in exponent in "'//trim(str)//'"'
+            elseif(cnt(1) >= 2)then
+               msg='multiple decimals in "'//trim(str)//'"'
+            elseif(cnt(2) >= 2)then
+               msg='more than one exponent prefix (e,d,E,D) in "'//trim(str)//'"'
+            elseif(cnt(3) >= 2)then
+               msg='more than one sign character in "'//trim(str)//'"'
+            elseif(cnt(6) /= 0)then
+               msg='- sign character not first in "'//trim(str)//'"'
+            elseif(cnt(4) >= 2)then
+               msg='+ sign character not first in "'//trim(str)//'"'
+            else
+               msg='error in data conversion in "'//trim(str)//'"'
+            endif
          endif
          ator_real64 = .false.
       endif
@@ -11837,6 +11955,7 @@ integer                       :: i, ipos, too_many_digit_count
    val = sign(value,sval)* 10**too_many_digit_count
    if(all(cnt <= 1).and.ipos /= 0)then
       atoi_int8 = .true.
+      if(present(msg)) msg=''
    else
       if(present(msg))then
          if(cnt(5) /= 0)then
@@ -11903,6 +12022,7 @@ integer                       :: i, ipos, too_many_digit_count
    val = sign(value,sval)* 10**too_many_digit_count
    if(all(cnt <= 1).and.ipos /= 0)then
       atoi_int16 = .true.
+      if(present(msg)) msg=''
    else
       if(present(msg))then
          if(cnt(5) /= 0)then
@@ -11969,6 +12089,7 @@ integer                       :: i, ipos, too_many_digit_count
    val = sign(value,sval)* 10**too_many_digit_count
    if(all(cnt <= 1).and.ipos /= 0)then
       atoi_int32 = .true.
+      if(present(msg)) msg=''
    else
       if(present(msg))then
          if(cnt(5) /= 0)then
@@ -12035,6 +12156,7 @@ integer                       :: i, ipos, too_many_digit_count
    val = sign(value,sval)* 10**too_many_digit_count
    if(all(cnt <= 1).and.ipos /= 0)then
       atoi_int64 = .true.
+      if(present(msg)) msg=''
    else
       if(present(msg))then
          if(cnt(5) /= 0)then
