@@ -1,23 +1,22 @@
 [![string](docs/images/strings_small.gif)](https://urbanjost.github.io/M_strings/man3.html)
 # [M_strings.f90 and associated files](https://urbanjost.github.io/M_strings/man3.html)
-(https://urbanjost.github.io/M_strings/man3.html)
 
 ## Name
    M_strings and M_strings_oops - Fortran modules for processing strings
 
 ## Description
 The `M_strings`(3fm) module is a collection of Fortran procedures that
-supplement the built-in intrinsic string routines.  Routines for parsing
-tokenizing, changing case, substituting new strings for substrings
+supplement the built-in intrinsic string routines.  Routines for parsing,
+tokenizing, changing case, substituting new strings for substrings,
 locating strings with simple wildcard expressions, removing tabs and
 line terminators as well as other string manipulations are included.
 
 `M_strings_oop`(3fm) is a companion module that provides an OOP interface
 to the `M_strings` module.
 
-There are procedures with overlapping function that are all gathered here
-that have varying performance and robustness that may be consolidated at
-some point.
+Note there are some procedures with overlapping function that were all
+initially gathered here that have varying performance and robustness
+that may be consolidated at some point.
 
 ## Synopsis
 public entities:
@@ -28,6 +27,7 @@ public entities:
    use M_strings, only : [replace](https://urbanjost.github.io/M_strings/replace.3m_strings), [join](https://urbanjost.github.io/M_strings/join.3m_strings)             
    use M_strings, only : [upper](https://urbanjost.github.io/M_strings/upper.3m_strings), [lower](https://urbanjost.github.io/M_strings/lower.3m_strings), [upper_quoted](https://urbanjost.github.io/M_strings/upper_quoted.3m_strings)             
    use M_strings, only : [rotate13](https://urbanjost.github.io/M_strings/rotate13.3m_strings)             
+   use M_strings, only : [percent_encode](https://urbanjost.github.io/M_strings/percent_encode.3m_strings)             
    use M_strings, only : [adjustc](https://urbanjost.github.io/M_strings/adjustc.3m_strings), [compact](https://urbanjost.github.io/M_strings/compact.3m_strings), [nospace](https://urbanjost.github.io/M_strings/nospace.3m_strings), [indent](https://urbanjost.github.io/M_strings/indent.3m_strings)             
    use M_strings, only : [crop](https://urbanjost.github.io/M_strings/crop.3m_strings), [clip](https://urbanjost.github.io/M_strings/clip.3m_strings), [unquote](https://urbanjost.github.io/M_strings/unquote.3m_strings), [quote](https://urbanjost.github.io/M_strings/quote.3m_strings), [matching_delimiter](https://urbanjost.github.io/M_strings/matching_delimiter.3m_strings)             
    use M_strings, only : [len_white](https://urbanjost.github.io/M_strings/len_white.3m_strings), [pad](https://urbanjost.github.io/M_strings/pad.3m_strings), [lpad](https://urbanjost.github.io/M_strings/lpad.3m_strings), [cpad](https://urbanjost.github.io/M_strings/cpad.3m_strings), [rpad](https://urbanjost.github.io/M_strings/rpad.3m_strings), [zpad](https://urbanjost.github.io/M_strings/zpad.3m_strings), [stretch](https://urbanjost.github.io/M_strings/stretch.3m_strings), [lenset](https://urbanjost.github.io/M_strings/lenset.3m_strings), [merge_str](https://urbanjost.github.io/M_strings/merge_str.3m_strings)             

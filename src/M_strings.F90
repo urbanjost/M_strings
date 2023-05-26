@@ -3231,7 +3231,7 @@ end function rotate13
 !==================================================================================================================================!
 !>
 !!##NAME
-!!    percent_encode(3f) - [M_strings:COMPARE] percent-encode strings and
+!!    percent_encode(3f) - [M_strings:ENCODE] percent-encode strings and
 !!    character arrays
 !!    (LICENSE:PD)
 !!
