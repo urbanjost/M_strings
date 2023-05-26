@@ -22,6 +22,11 @@ checked ...
    - [x] registered in fpm(1) repository
 
 ---
+**2023-05-25**  John S. Urban  <https://github.com/urbanjost>
+
+### :green_circle: ADD:
+       + Added percent_encode(3f) for use with URI/URLs
+---
 **2022-12-24**  John S. Urban  <https://github.com/urbanjost>
 
 ### :orange: DIFF:
