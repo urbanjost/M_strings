@@ -1,5 +1,6 @@
-![string](docs/images/strings_small.gif)
-# M_strings.f90 and associated files
+[![string](docs/images/strings_small.gif)](https://urbanjost.github.io/M_strings/man3.html)
+# [M_strings.f90 and associated files](https://urbanjost.github.io/M_strings/man3.html)
+(https://urbanjost.github.io/M_strings/man3.html)
 
 ## Name
    M_strings and M_strings_oops - Fortran modules for processing strings
