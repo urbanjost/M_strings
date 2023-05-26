@@ -2,7 +2,7 @@
 # [M_strings and associated files](https://urbanjost.github.io/M_strings/man3.html)
 
 ## Name
-   M_strings and M_strings_oops - Fortran modules for processing strings
+   M_strings and M_strings__oop - Fortran modules for processing strings
 
 ## Description
 The `M_strings`(3fm) module is a collection of Fortran procedures that

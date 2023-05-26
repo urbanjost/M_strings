@@ -26,6 +26,8 @@ checked ...
 
 ### :green_circle: ADD:
        + Added percent_encode(3f) for use with URI/URLs
+       + renamed M_strings_oops to M_strings__oop per beta fpm(1)
+         repository requirements
 ---
 **2022-12-24**  John S. Urban  <https://github.com/urbanjost>
 
