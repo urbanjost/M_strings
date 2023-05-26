@@ -3237,15 +3237,18 @@ end function rotate13
 !!
 !!##SYNOPSIS
 !!
+!!
 !!     function percent_encode(text)
-!!     character(len=1),intent(in)  :: text(:)
-!!     character(len=;),allocatable :: percent_encode
+!!
+!!      character(len=1),intent(in)  :: text(:)
+!!      character(len=;),allocatable :: percent_encode
 !!
 !!     or
 !!
 !!     function percent_encode(text)
-!!     character(len=*),intent(in)  :: text
-!!     character(len=;),allocatable :: percent_encode
+!!
+!!      character(len=*),intent(in)  :: text
+!!      character(len=;),allocatable :: percent_encode
 !!
 !!##DESCRIPTION
 !!
@@ -3272,14 +3275,14 @@ end function rotate13
 !!    The unreserved characters can be encoded, but should not be. The
 !!    unreserved characters are:
 !!
-!!        ABCDEFGHIJKLMNOPQRSTUVWXYZ
-!!        abcdefghijklmnopqrstuvwxyz
-!!        0123456789-_.~
+!!       > ABCDEFGHIJKLMNOPQRSTUVWXYZ
+!!       > abcdefghijklmnopqrstuvwxyz
+!!       > 0123456789-_.~
 !!
 !!    The reserved characters have to be encoded only under certain
 !!    circumstances. The reserved characters are:
 !!
-!!        * ' ( ) ; : @ & = + $ , / ? % # [ ]
+!!       >  * ' ( ) ; : @ & = + $ , / ? % # [ ]
 !!
 !!##OPTIONS
 !!     SOURCE_STRING   string or character array to encode
@@ -3295,11 +3298,12 @@ end function rotate13
 !!    use M_strings, only : percent_encode
 !!    use, intrinsic :: iso_fortran_env, only : stdout=>output_unit
 !!    implicit none
-!!    write(*,*)percent_encode('[this is a string]')
+!!       write(*,*)percent_encode('[this is a string]')
 !!    end program demo_percent_encode
 !!
-!!   Results:
+!! Results:
 !!
+!!  >  %5Bthis%20is%20a%20string%5D
 !!
 !!##AUTHOR
 !!    John S. Urban
