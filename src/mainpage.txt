@@ -4,11 +4,11 @@
 
          @section Introduction
 
-     M_strings and M_strings__oops - Fortran modules for processing strings
+     M_strings and M_strings__oop - Fortran modules for processing strings
 
      This package consists of two modules that supplement the
      Fortran string intrinsics. M_strings.f90 is procedural, and
-     M_strings__oops.f90 is an OOP interface to most of the commonly used
+     M_strings__oop.f90 is an OOP interface to most of the commonly used
      functions in M_strings.f90.
 
          @image html html/images/yarnball.gif
