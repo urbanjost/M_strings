@@ -4,7 +4,7 @@ output_dir: docs/fpm-ford
 project: M_strings
 summary: string operations
 project_github: https://github.com/urbanjost/M_strings
-project_download:
+project_download: https://github.com/urbanjost/M_strings/archive/refs/heads/master.zip
 author: John S. Urban
 author_email: urbanjost@comcast.net
 github: https://github.com/urbanjost/M_strings
