@@ -4662,10 +4662,10 @@ pure function adjustc(string,length)
 ! ident_35="@(#) M_strings adjustc(3f) center text"
 
 !>
-!! PROCEDURE   adjustc(3f)
-!! DESCRIPTION center text using implicit or explicit length
-!!##VERSION     2.0, 20160711
-!! AUTHOR      John S. Urban
+!! PROCEDURE:   adjustc(3f)
+!! DESCRIPTION: center text using implicit or explicit length
+!!##VERSION:     2.0, 20160711
+!! AUTHOR:      John S. Urban
 !-----------------------------------------------------------------------------------------------------------------------------------
 character(len=*),intent(in)  :: string         ! input string to trim and center
 integer,intent(in),optional  :: length         ! line length to center text in

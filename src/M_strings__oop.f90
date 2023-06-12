@@ -33,92 +33,88 @@
 !!     !
 !!     ! This is an example using the object-oriented class/type model
 !!     ! defined in M_strings__oop
+!!     !
 !!     ! This is essentially the same functionality as the procedures
 !!     ! combined with several Fortran intrinsics and overloaded operators
 !!     !
 !!     use M_strings__oop,only : string, p
 !!     implicit none
-!!     TYPE(string) :: str1
-!!     TYPE(string) :: str2
-!!     TYPE(string) :: str3
-!!     TYPE(string) :: str4
-!!     !====================================================================
-!!       write(*,*)'exercise the M_STRING_OOP module interface'
-!!       ! draw a break line in the output
-!!       write(*,*)repeat('=',68)
+!!     TYPE(string) :: str1, str2, str3, str4
+!!
 !!       write(*,*)'Call methods of type(STRING)'
+!!
 !!       ! define TYPE(STRING) with constructor
 !!       str2=string('   This  is  a  String!       ')
 !!       str4=string(' a  String ')
-!!       write(*,*)repeat('=',68)
-!!       ! print members of type
-!!       write(*,101)'str2%str is ................ ',str2%str
-!!       ! same as intrinsic LEN()
-!!       write(*,202)'len ........................ ',str2%len()
-!!       ! same as intrinsic LEN_TRIM()
-!!       write(*,202)'len_trim ................... ',str2%len_trim()
-!!       ! same as intrinsic INDEX()
-!!       write(*,202)'index("is")................. ',str2%index("is")
-!!       ! same as intrinsic INDEX()
-!!       write(*,202)'index("is",back=.T.) ....... ',str2%index("is",back=.TRUE.)
-!!       ! output TYPE(STRING) with %str all uppercase
-!!       write(*,101)'upper ...................... ',p(str2%upper())
-!!       ! output TYPE(STRING) with %str all miniscule
-!!       write(*,101)'lower ...................... ',p(str2%lower())
-!!       ! output TYPE(STRING) with %str reversed
-!!       write(*,101)'reverse .................... ',p(str2%reverse())
-!!       ! same as intrinsic ADJUSTL()
-!!       write(*,101)'adjustl .................... ',p(str2%adjustl())
-!!       ! same as intrinsic ADJUSTR()
-!!       write(*,101)'adjustr .................... ',p(str2%adjustr())
-!!       ! center string in current string length
-!!       write(*,101)'adjustc .................... ',p(str2%adjustc())
-!!       ! center string in string length of NN
-!!       write(*,101)'adjustc(40) ................ ',p(str2%adjustc(40))
-!!       ! force %str to be NN characters long
-!!       write(*,101)'lenset(40) ................. ',p(str2%lenset(40))
-!!       ! same as intrinsic TRIM()
-!!       write(*,101)'trim ....................... ',p(str2%trim())
-!!       ! trim leading and trailing spaces
-!!       write(*,101)'crop ....................... ',p(str2%crop())
-!!       ! calls M_strings procedure SUBSTITUTE()
-!!       write(*,101)'substitute("This","Here") .. ',&
-!!               & p(str2%substitute("This","Here"))
-!!       ! calls M_strings procedure COMPACT()
-!!       write(*,101)'compact .................... ',p(str2%compact())
-!!       write(*,101)'compact("") ................ ',p(str2%compact(""))
-!!       write(*,101)'compact(":") ............... ',p(str2%compact(":"))
-!!       ! calls M_strings procedure TRANSLITERATE()
-!!       write(*,101)'transliterate("aei","VWX") . ',&
-!!               & p(str2%transliterate("aei","VWX"))
-!!       write(*,101)'transliterate("aeiou"," ") . ',&
-!!               & p(str2%transliterate("aeiou"," "))
-!!       write(*,101)'transliterate("aeiou","") .. ',&
-!!               & p(str2%transliterate("aeiou",""))
-!!       write(*,101)'transliterate(" aeiou","") . ',&
-!!               & p(str2%transliterate(" aeiou",""))
-!!       ! calls M_strings procedure SWITCH()
-!!       write(*,404)'chars .................... . ',str4%chars()
 !!
-!!       write(*,*)repeat('=',68)
+!!       write(*,101)'str2%str is ................ ', &
+!!        & str2%str                      ! print string member of type
+!!       write(*,202)'len ........................ ', &
+!!        & str2%len()                    ! same as intrinsic LEN()
+!!       write(*,202)'len_trim ................... ', &
+!!        & str2%len_trim()               ! same as intrinsic LEN_TRIM()
+!!       write(*,202)'index("is")................. ', &
+!!        & str2%index("is")              ! same as intrinsic INDEX()
+!!       write(*,202)'index("is",back=.T.) ....... ', &
+!!        & str2%index("is",back=.TRUE.)  ! same as intrinsic INDEX()
+!!       write(*,101)'upper ...................... ', &
+!!        & p(str2%upper())               ! call upper()
+!!       write(*,101)'lower ...................... ', &
+!!        & p(str2%lower())               ! call lower()
+!!       write(*,101)'reverse .................... ', &
+!!        & p(str2%reverse())             ! call reverse()
+!!       write(*,101)'adjustl .................... ', &
+!!        & p(str2%adjustl())             ! same as intrinsic ADJUSTL()
+!!       write(*,101)'adjustr .................... ', &
+!!        & p(str2%adjustr())             ! same as intrinsic ADJUSTR()
+!!       write(*,101)'adjustc .................... ', &
+!!        & p(str2%adjustc())             ! center string in current string length
+!!       write(*,101)'adjustc(40) ................ ', &
+!!        & p(str2%adjustc(40))           ! center string in string length of NN
+!!       write(*,101)'lenset(40) ................. ', &
+!!        & p(str2%lenset(40))            ! call pad() to force minimal string length
+!!       write(*,101)'trim ....................... ', &
+!!        & p(str2%trim())                ! same as intrinsic TRIM()
+!!       write(*,101)'crop ....................... ', &
+!!        & p(str2%crop())                ! trim leading and trailing spaces
+!!       write(*,101)'substitute("This","Here") .. ', &
+!!        & p(str2%substitute("This","Here")) ! call SUBSTITUTE()
+!!       write(*,101)'compact .................... ', &
+!!        & p(str2%compact())                 ! call COMPACT()
+!!       write(*,101)'compact("") ................ ', &
+!!        & p(str2%compact(""))
+!!       write(*,101)'compact(":") ............... ', &
+!!        & p(str2%compact(":"))
+!!       ! calls M_strings procedure TRANSLITERATE()
+!!       write(*,101)'transliterate("aei","VWX") . ', &
+!!        & p(str2%transliterate("aei","VWX"))
+!!       write(*,101)'transliterate("aeiou"," ") . ', &
+!!        & p(str2%transliterate("aeiou"," "))
+!!       write(*,101)'transliterate("aeiou","") .. ', &
+!!        & p(str2%transliterate("aeiou",""))
+!!       write(*,101)'transliterate(" aeiou","") . ', &
+!!        & p(str2%transliterate(" aeiou",""))
+!!       write(*,404)'chars .................... . ', &
+!!        & str4%chars()                   ! call SWITCH()
+!!
 !!       str2%str='\t\tSome tabs\t   x\bX '
 !!       write(*,101)'str2%str ................... ',str2%str
-!!       write(*,101)'expand ..................... ',p(str2%expand())
+!!       write(*,101)'expand ..................... ', &
+!!        & p(str2%expand())
 !!       str2=str2%expand()
-!!       ! calls M_strings procedure NOTABS()
-!!       write(*,101)'notabs ..................... ',p(str2%notabs())
-!!       ! calls M_strings procedure NOESC()
-!!       write(*,101)'noesc ...................... ',p(str2%noesc())
+!!       write(*,101)'notabs ..................... ', &
+!!        & p(str2%notabs())               ! calls NOTABS()
+!!       write(*,101)'noesc ...................... ', &
+!!        & p(str2%noesc())                ! calls NOESC()
 !!
 !!       write(*,*)repeat('=',68)
 !!       write(*,*)'Casting to numeric variables'
 !!       str3=string('   12.345678901234567e1        ')
 !!       write(*,101)'str3%str ................... ',str3%str
-!!       ! calls M_strings procedure STRING_TO_VALUE()
+!!       ! calls to M_strings procedure STRING_TO_VALUE()
 !!       write(*,*)'int  ....................... ', str3%int()
-!!       ! calls M_strings procedure STRING_TO_VALUE()
+!!       write(*,*)'nint ....................... ', str3%nint()
 !!       write(*,*)'real ....................... ', str3%real()
-!!       ! calls M_strings procedure STRING_TO_VALUE()
 !!       write(*,*)'dble ....................... ', str3%dble()
 !!
 !!       write(*,*)repeat('=',68)
@@ -126,11 +122,9 @@
 !!       str3=string('   12.345678901234567e1        ')
 !!       str3=string('Four score and seven years ago')
 !!       write(*,101)'str3%str ................... ',str3%str
-!!       ! calls M_strings procedure GLOB
+!!       ! %match calls M_strings procedure GLOB
 !!       write(*,*)'match("Fo*") ............... ', str3%match("Fo*")
-!!       ! calls M_strings procedure GLOB
 !!       write(*,*)'match("and") ............... ', str3%match("and")
-!!       ! calls M_strings procedure GLOB
 !!       write(*,*)'match("*and*") ............. ', str3%match("*and*")
 !!
 !!       101 format(1x,a,"[",a,"]")
@@ -312,6 +306,7 @@ contains
    procedure  ::  compact        =>  oop_compact
    procedure  ::  crop           =>  oop_crop
    procedure  ::  dble           =>  oop_dble
+   procedure  ::  nint           =>  oop_nint
    procedure  ::  expand         =>  oop_expand
    procedure  ::  index          =>  oop_index
    procedure  ::  init           =>  init_string
@@ -572,9 +567,23 @@ end function oop_int
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
+function oop_nint(self) result (value)
+
+! ident_16="@(#) M_strings oop_nint(3f) string to nearest integer"
+
+class(string),intent(in)     :: self
+real                         :: valueout
+integer                      :: value
+integer                      :: ierr
+   call string_to_value(self%str,valueout,ierr)
+   value=nint(valueout)
+end function oop_nint
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
 function oop_real(self) result (value)
 
-! ident_16="@(#) M_strings oop_real(3f) string to real"
+! ident_17="@(#) M_strings oop_real(3f) string to real"
 
 class(string),intent(in)     :: self
 real                         :: value
@@ -586,7 +595,7 @@ end function oop_real
 !===================================================================================================================================
 function oop_dble(self) result (value)
 
-! ident_17="@(#) M_strings oop_dble(3f) string to double"
+! ident_18="@(#) M_strings oop_dble(3f) string to double"
 
 class(string),intent(in)     :: self
 doubleprecision              :: value
@@ -598,7 +607,7 @@ end function oop_dble
 !===================================================================================================================================
 function oop_compact(self,char) result (string_out)
 
-! ident_18="@(#) M_strings oop_compact(3f) adjust string to center"
+! ident_19="@(#) M_strings oop_compact(3f) adjust string to center"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -615,7 +624,7 @@ end function oop_compact
 !===================================================================================================================================
 function oop_substitute(self,old,new) result (string_out)
 
-! ident_19="@(#) M_strings oop_substitute(3f) change all occurrences of oldstring to newstring non-recursively"
+! ident_20="@(#) M_strings oop_substitute(3f) change all occurrences of oldstring to newstring non-recursively"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -629,7 +638,7 @@ end function oop_substitute
 !===================================================================================================================================
 function oop_transliterate(self,old,new) result (string_out)
 
-! ident_20="@(#) M_strings oop_transliterate(3f) change all occurrences of oldstring to newstring non-recursively"
+! ident_21="@(#) M_strings oop_transliterate(3f) change all occurrences of oldstring to newstring non-recursively"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -642,7 +651,7 @@ end function oop_transliterate
 !===================================================================================================================================
 function oop_pad(self,length) result (string_out)
 
-! ident_21="@(#) M_strings oop_pad(3f) set string to at least specified length"
+! ident_22="@(#) M_strings oop_pad(3f) set string to at least specified length"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -654,7 +663,7 @@ end function oop_pad
 !===================================================================================================================================
 function oop_zpad(self,length) result (string_out)
 
-! ident_22="@(#) M_strings oop_zpad(3f) set string to at least specified length"
+! ident_23="@(#) M_strings oop_zpad(3f) set string to at least specified length"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -666,7 +675,7 @@ end function oop_zpad
 !===================================================================================================================================
 function oop_cpad(self,length) result (string_out)
 
-! ident_23="@(#) M_strings oop_cpad(3f) set string to at least specified length"
+! ident_24="@(#) M_strings oop_cpad(3f) set string to at least specified length"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -678,7 +687,7 @@ end function oop_cpad
 !===================================================================================================================================
 function oop_lpad(self,length) result (string_out)
 
-! ident_24="@(#) M_strings oop_lpad(3f) set string to at least specified length"
+! ident_25="@(#) M_strings oop_lpad(3f) set string to at least specified length"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -690,7 +699,7 @@ end function oop_lpad
 !===================================================================================================================================
 function oop_rpad(self,length) result (string_out)
 
-! ident_25="@(#) M_strings oop_rpad(3f) set string to at least specified length"
+! ident_26="@(#) M_strings oop_rpad(3f) set string to at least specified length"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -702,7 +711,7 @@ end function oop_rpad
 !===================================================================================================================================
 function oop_lenset(self,length) result (string_out)
 
-! ident_26="@(#) M_strings oop_lenset(3f) set string to specific length"
+! ident_27="@(#) M_strings oop_lenset(3f) set string to specific length"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -714,7 +723,7 @@ end function oop_lenset
 !===================================================================================================================================
 function oop_glob(self,pattern) result (answer)
 
-! ident_27="@(#) M_strings oop_glob(3f) test if wildcard pattern matches string"
+! ident_28="@(#) M_strings oop_glob(3f) test if wildcard pattern matches string"
 
 class(string),intent(in)     :: self
 character(len=*),intent(in)  :: pattern
@@ -726,7 +735,7 @@ end function oop_glob
 !===================================================================================================================================
 function oop_notabs(self) result (string_out)
 
-! ident_28="@(#) M_strings oop_notabs(3f) expand tab characters assuming tab stops every eight(8) characters"
+! ident_29="@(#) M_strings oop_notabs(3f) expand tab characters assuming tab stops every eight(8) characters"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -740,7 +749,7 @@ end function oop_notabs
 !===================================================================================================================================
 function oop_noesc(self) result (string_out)
 
-! ident_29="@(#) M_strings oop_noesc(3f) replace non-printable characters with spaces"
+! ident_30="@(#) M_strings oop_noesc(3f) replace non-printable characters with spaces"
 
 class(string),intent(in)     :: self
 type(string)                 :: string_out
@@ -751,7 +760,7 @@ end function oop_noesc
 !===================================================================================================================================
 function p(self) result (string_out)
 
-! ident_30="@(#) M_strings oop_p(3f) return CHARACTER string from TYPE(STRING)"
+! ident_31="@(#) M_strings oop_p(3f) return CHARACTER string from TYPE(STRING)"
 
 class(string),intent(in)     :: self
 character(len=len(self%str)) :: string_out
@@ -765,7 +774,7 @@ subroutine init_string(self)
 ! allow for TYPE(STRING) object to be initialized.
 !
 
-! ident_31="@(#) M_strings init_dt(3f) initialize TYPE(STRING)"
+! ident_32="@(#) M_strings init_dt(3f) initialize TYPE(STRING)"
 
 class(string)                        :: self
    self%str=''
@@ -777,7 +786,7 @@ end subroutine init_string
 !===================================================================================================================================
 function string_plus_value(self,value) result (other)
 
-! ident_32="@(#) M_strings string_plus_value(3f) add value to TYPE(STRING)"
+! ident_33="@(#) M_strings string_plus_value(3f) add value to TYPE(STRING)"
 
 class(string),intent(in)      :: self
 type(string)                  :: other
@@ -795,7 +804,7 @@ end function string_plus_value
 !===================================================================================================================================
 function string_minus_value(self,value) result (other)
 
-! ident_33="@(#) M_strings string_minus_value(3f) subtract value from TYPE(STRING)"
+! ident_34="@(#) M_strings string_minus_value(3f) subtract value from TYPE(STRING)"
 
 class(string),intent(in)      :: self
 type(string)                  :: other
@@ -817,7 +826,7 @@ end function string_minus_value
 !===================================================================================================================================
 function string_append_value(self,value) result (other)
 
-! ident_34="@(#) M_strings string_append_value(3f) append value to TYPE(STRING)"
+! ident_35="@(#) M_strings string_append_value(3f) append value to TYPE(STRING)"
 
 class(string),intent(in)      :: self
 type(string)                  :: other
@@ -835,7 +844,7 @@ end function string_append_value
 !===================================================================================================================================
 function string_multiply_value(self,value) result (other)
 
-! ident_35="@(#) M_strings string_multiply_value(3f) multiply TYPE(STRING) value times"
+! ident_36="@(#) M_strings string_multiply_value(3f) multiply TYPE(STRING) value times"
 
 class(string),intent(in)      :: self
 type(string)                  :: other
@@ -851,7 +860,7 @@ end function string_multiply_value
 !===================================================================================================================================
 logical function eq(self,other)
 
-! ident_36="@(#) M_strings eq(3f) compare derived type string objects (eq lt gt le ge ne)"
+! ident_37="@(#) M_strings eq(3f) compare derived type string objects (eq lt gt le ge ne)"
 
    class(string),intent(in) :: self
    type(string),intent(in)  :: other

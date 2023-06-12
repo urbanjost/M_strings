@@ -118,92 +118,88 @@ but is instead demonstrated using the following example program:
     !
     ! This is an example using the object-oriented class/type model
     ! defined in M_strings__oop
+    !
     ! This is essentially the same functionality as the procedures
     ! combined with several Fortran intrinsics and overloaded operators
     !
     use M_strings__oop,only : string, p
     implicit none
-    TYPE(string) :: str1
-    TYPE(string) :: str2
-    TYPE(string) :: str3
-    TYPE(string) :: str4
-    !====================================================================
-      write(*,*)&#146;exercise the M_STRING_OOP module interface&#146;
-      ! draw a break line in the output
-      write(*,*)repeat(&#146;=&#146;,68)
+    TYPE(string) :: str1, str2, str3, str4
+<P>
       write(*,*)&#146;Call methods of type(STRING)&#146;
+<P>
       ! define TYPE(STRING) with constructor
       str2=string(&#146;   This  is  a  String!       &#146;)
       str4=string(&#146; a  String &#146;)
-      write(*,*)repeat(&#146;=&#146;,68)
-      ! print members of type
-      write(*,101)&#146;str2%str is &#46;&#46;&#46;............. &#146;,str2%str
-      ! same as intrinsic LEN()
-      write(*,202)&#146;len &#46;&#46;&#46;..................... &#146;,str2%len()
-      ! same as intrinsic LEN_TRIM()
-      write(*,202)&#146;len_trim &#46;&#46;&#46;................ &#146;,str2%len_trim()
-      ! same as intrinsic INDEX()
-      write(*,202)&#146;index("is")&#46;&#46;&#46;.............. &#146;,str2%index("is")
-      ! same as intrinsic INDEX()
-      write(*,202)&#146;index("is",back=.T.) &#46;&#46;&#46;.... &#146;,str2%index("is",back=.TRUE.)
-      ! output TYPE(STRING) with %str all uppercase
-      write(*,101)&#146;upper &#46;&#46;&#46;................... &#146;,p(str2%upper())
-      ! output TYPE(STRING) with %str all miniscule
-      write(*,101)&#146;lower &#46;&#46;&#46;................... &#146;,p(str2%lower())
-      ! output TYPE(STRING) with %str reversed
-      write(*,101)&#146;reverse &#46;&#46;&#46;................. &#146;,p(str2%reverse())
-      ! same as intrinsic ADJUSTL()
-      write(*,101)&#146;adjustl &#46;&#46;&#46;................. &#146;,p(str2%adjustl())
-      ! same as intrinsic ADJUSTR()
-      write(*,101)&#146;adjustr &#46;&#46;&#46;................. &#146;,p(str2%adjustr())
-      ! center string in current string length
-      write(*,101)&#146;adjustc &#46;&#46;&#46;................. &#146;,p(str2%adjustc())
-      ! center string in string length of NN
-      write(*,101)&#146;adjustc(40) &#46;&#46;&#46;............. &#146;,p(str2%adjustc(40))
-      ! force %str to be NN characters long
-      write(*,101)&#146;lenset(40) &#46;&#46;&#46;.............. &#146;,p(str2%lenset(40))
-      ! same as intrinsic TRIM()
-      write(*,101)&#146;trim &#46;&#46;&#46;.................... &#146;,p(str2%trim())
-      ! trim leading and trailing spaces
-      write(*,101)&#146;crop &#46;&#46;&#46;.................... &#146;,p(str2%crop())
-      ! calls M_strings procedure SUBSTITUTE()
-      write(*,101)&#146;substitute("This","Here") .. &#146;,&
-              & p(str2%substitute("This","Here"))
-      ! calls M_strings procedure COMPACT()
-      write(*,101)&#146;compact &#46;&#46;&#46;................. &#146;,p(str2%compact())
-      write(*,101)&#146;compact("") &#46;&#46;&#46;............. &#146;,p(str2%compact(""))
-      write(*,101)&#146;compact(":") &#46;&#46;&#46;............ &#146;,p(str2%compact(":"))
-      ! calls M_strings procedure TRANSLITERATE()
-      write(*,101)&#146;transliterate("aei","VWX") . &#146;,&
-              & p(str2%transliterate("aei","VWX"))
-      write(*,101)&#146;transliterate("aeiou"," ") . &#146;,&
-              & p(str2%transliterate("aeiou"," "))
-      write(*,101)&#146;transliterate("aeiou","") .. &#146;,&
-              & p(str2%transliterate("aeiou",""))
-      write(*,101)&#146;transliterate(" aeiou","") . &#146;,&
-              & p(str2%transliterate(" aeiou",""))
-      ! calls M_strings procedure SWITCH()
-      write(*,404)&#146;chars &#46;&#46;&#46;................. . &#146;,str4%chars()
 <P>
-      write(*,*)repeat(&#146;=&#146;,68)
+      write(*,101)&#146;str2%str is &#46;&#46;&#46;............. &#146;, &
+       & str2%str                      ! print string member of type
+      write(*,202)&#146;len &#46;&#46;&#46;..................... &#146;, &
+       & str2%len()                    ! same as intrinsic LEN()
+      write(*,202)&#146;len_trim &#46;&#46;&#46;................ &#146;, &
+       & str2%len_trim()               ! same as intrinsic LEN_TRIM()
+      write(*,202)&#146;index("is")&#46;&#46;&#46;.............. &#146;, &
+       & str2%index("is")              ! same as intrinsic INDEX()
+      write(*,202)&#146;index("is",back=.T.) &#46;&#46;&#46;.... &#146;, &
+       & str2%index("is",back=.TRUE.)  ! same as intrinsic INDEX()
+      write(*,101)&#146;upper &#46;&#46;&#46;................... &#146;, &
+       & p(str2%upper())               ! call upper()
+      write(*,101)&#146;lower &#46;&#46;&#46;................... &#146;, &
+       & p(str2%lower())               ! call lower()
+      write(*,101)&#146;reverse &#46;&#46;&#46;................. &#146;, &
+       & p(str2%reverse())             ! call reverse()
+      write(*,101)&#146;adjustl &#46;&#46;&#46;................. &#146;, &
+       & p(str2%adjustl())             ! same as intrinsic ADJUSTL()
+      write(*,101)&#146;adjustr &#46;&#46;&#46;................. &#146;, &
+       & p(str2%adjustr())             ! same as intrinsic ADJUSTR()
+      write(*,101)&#146;adjustc &#46;&#46;&#46;................. &#146;, &
+       & p(str2%adjustc())             ! center string in current string length
+      write(*,101)&#146;adjustc(40) &#46;&#46;&#46;............. &#146;, &
+       & p(str2%adjustc(40))           ! center string in string length of NN
+      write(*,101)&#146;lenset(40) &#46;&#46;&#46;.............. &#146;, &
+       & p(str2%lenset(40))            ! call pad() to force minimal string length
+      write(*,101)&#146;trim &#46;&#46;&#46;.................... &#146;, &
+       & p(str2%trim())                ! same as intrinsic TRIM()
+      write(*,101)&#146;crop &#46;&#46;&#46;.................... &#146;, &
+       & p(str2%crop())                ! trim leading and trailing spaces
+      write(*,101)&#146;substitute("This","Here") .. &#146;, &
+       & p(str2%substitute("This","Here")) ! call SUBSTITUTE()
+      write(*,101)&#146;compact &#46;&#46;&#46;................. &#146;, &
+       & p(str2%compact())                 ! call COMPACT()
+      write(*,101)&#146;compact("") &#46;&#46;&#46;............. &#146;, &
+       & p(str2%compact(""))
+      write(*,101)&#146;compact(":") &#46;&#46;&#46;............ &#146;, &
+       & p(str2%compact(":"))
+      ! calls M_strings procedure TRANSLITERATE()
+      write(*,101)&#146;transliterate("aei","VWX") . &#146;, &
+       & p(str2%transliterate("aei","VWX"))
+      write(*,101)&#146;transliterate("aeiou"," ") . &#146;, &
+       & p(str2%transliterate("aeiou"," "))
+      write(*,101)&#146;transliterate("aeiou","") .. &#146;, &
+       & p(str2%transliterate("aeiou",""))
+      write(*,101)&#146;transliterate(" aeiou","") . &#146;, &
+       & p(str2%transliterate(" aeiou",""))
+      write(*,404)&#146;chars &#46;&#46;&#46;................. . &#146;, &
+       & str4%chars()                   ! call SWITCH()
+<P>
       str2%str=&#146;\t\tSome tabs\t   x\bX &#146;
       write(*,101)&#146;str2%str &#46;&#46;&#46;................ &#146;,str2%str
-      write(*,101)&#146;expand &#46;&#46;&#46;.................. &#146;,p(str2%expand())
+      write(*,101)&#146;expand &#46;&#46;&#46;.................. &#146;, &
+       & p(str2%expand())
       str2=str2%expand()
-      ! calls M_strings procedure NOTABS()
-      write(*,101)&#146;notabs &#46;&#46;&#46;.................. &#146;,p(str2%notabs())
-      ! calls M_strings procedure NOESC()
-      write(*,101)&#146;noesc &#46;&#46;&#46;................... &#146;,p(str2%noesc())
+      write(*,101)&#146;notabs &#46;&#46;&#46;.................. &#146;, &
+       & p(str2%notabs())               ! calls NOTABS()
+      write(*,101)&#146;noesc &#46;&#46;&#46;................... &#146;, &
+       & p(str2%noesc())                ! calls NOESC()
 <P>
       write(*,*)repeat(&#146;=&#146;,68)
       write(*,*)&#146;Casting to numeric variables&#146;
       str3=string(&#146;   12.345678901234567e1        &#146;)
       write(*,101)&#146;str3%str &#46;&#46;&#46;................ &#146;,str3%str
-      ! calls M_strings procedure STRING_TO_VALUE()
+      ! calls to M_strings procedure STRING_TO_VALUE()
       write(*,*)&#146;int  &#46;&#46;&#46;.................... &#146;, str3%int()
-      ! calls M_strings procedure STRING_TO_VALUE()
+      write(*,*)&#146;nint &#46;&#46;&#46;.................... &#146;, str3%nint()
       write(*,*)&#146;real &#46;&#46;&#46;.................... &#146;, str3%real()
-      ! calls M_strings procedure STRING_TO_VALUE()
       write(*,*)&#146;dble &#46;&#46;&#46;.................... &#146;, str3%dble()
 <P>
       write(*,*)repeat(&#146;=&#146;,68)
@@ -211,11 +207,9 @@ but is instead demonstrated using the following example program:
       str3=string(&#146;   12.345678901234567e1        &#146;)
       str3=string(&#146;Four score and seven years ago&#146;)
       write(*,101)&#146;str3%str &#46;&#46;&#46;................ &#146;,str3%str
-      ! calls M_strings procedure GLOB
+      ! %match calls M_strings procedure GLOB
       write(*,*)&#146;match("Fo*") &#46;&#46;&#46;............ &#146;, str3%match("Fo*")
-      ! calls M_strings procedure GLOB
       write(*,*)&#146;match("and") &#46;&#46;&#46;............ &#146;, str3%match("and")
-      ! calls M_strings procedure GLOB
       write(*,*)&#146;match("*and*") &#46;&#46;&#46;.......... &#146;, str3%match("*and*")
 <P>
       101 format(1x,a,"[",a,"]")
@@ -375,7 +369,7 @@ John S. Urban
 Public Domain
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>M_strings__oop (3m_strings)</TD> <TD align=right width=33%><I>May 26, 2023</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 4a56f582-704a-4540-9aa4-d42b90c9d163 using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>M_strings__oop (3m_strings)</TD> <TD align=right width=33%><I>June 12, 2023</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 47c40286-9976-439a-9f20-676ebc7faa8c using man macros.</FONT>
 <br><br><center><img src="images/M_strings__oop.gif"></center>
 </div>
 </div>
