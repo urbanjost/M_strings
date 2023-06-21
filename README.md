@@ -141,9 +141,7 @@ Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.co
 
 ### User
 
-   In addition to a [markdown document](docs/HIGHLIGHTS.md)  with links to
-   some of the most commonly used procedures, there are HTML documents for each
-   subprogram in the style of man-pages:
+   There are descriptions of each procedures in the style of man-pages in three formats:
 
  - An [index](https://urbanjost.github.io/M_strings/man3.html) to the HTML versions
    of the man-pages.
@@ -152,7 +150,7 @@ Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.co
    for easy searching and printing:
    [BOOK_M_strings](https://urbanjost.github.io/M_strings/BOOK_M_strings.html).
 
- - ![man-pages](docs/images/manpages.gif) man-page archives for use on GNU/Linux, Unix and CygWin platforms:
+ - ![man-pages](docs/images/manpages.gif) man-page archives for installation on GNU/Linux, Unix and CygWin platforms:
     + [manpages.zip](https://urbanjost.github.io/M_strings/manpages.zip)
     + [manpages.tgz](https://urbanjost.github.io/M_strings/manpages.tgz)
  - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
