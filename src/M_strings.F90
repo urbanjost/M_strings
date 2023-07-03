@@ -9,8 +9,8 @@
 !!    substrings, locating strings with simple wildcard expressions, removing
 !!    tabs and line terminators and other string manipulations are included.
 !!
-!!    M_strings__oop(3fm) is a companion module that provides an OOP interface
-!!    to the M_strings module.
+!!    M_strings__oop(3fm) is a companion module that provides an OOP
+!!    interface to the M_strings module.
 !!
 !!##SYNOPSIS
 !!
@@ -219,8 +219,10 @@
 !!
 !!   MISCELLANEOUS
 !!
-!!       bundle     return up to twenty strings of arbitrary length as an array
-!!       describe   returns a string describing the name of a single character
+!!       bundle         return up to twenty strings of arbitrary length as
+!!                      an array
+!!       describe       returns a string describing the name of a single
+!!                      character
 !!       edit_distance  returns a naive edit distance using the Levenshtein
 !!                      distance algorithm
 !!       longest_common_substring  function that returns the longest common
@@ -270,46 +272,8 @@
 !!
 !!##EXAMPLES
 !!
-!!    Each of the procedural functions includes an example program in the
-!!    corresponding man(1) page for the function. The object-oriented
-!!    interface does not have individual man(1) pages, but is instead
-!!    demonstrated using the following example program:
-!!
-!!     program demo_M_strings
-!!     use M_strings,only : split, sep, delim, chomp, strtok
-!!     use M_strings,only : split2020, find_field
-!!     use M_strings,only : substitute, change, modif, transliterate, &
-!!             & reverse, squeeze
-!!     use M_strings,only : replace, join
-!!     use M_strings,only : upper, lower, upper_quoted
-!!     use M_strings,only : rotate13
-!!     use M_strings,only : percent_encode
-!!     use M_strings,only : adjustc, compact, nospace, indent
-!!     use M_strings,only : crop, clip, unquote, quote, matching_delimiter
-!!     use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
-!!             & stretch, lenset, merge_str
-!!     use M_strings,only : switch, s2c, c2s
-!!     use M_strings,only : noesc, notabs, dilate, expand, visible
-!!     use M_strings,only : longest_common_substring
-!!     use M_strings,only : string_to_value, string_to_values, s2v, s2vs
-!!     use M_strings,only : int, real, dble, nint
-!!     use M_strings,only : atoi, atol, aton
-!!     use M_strings,only : value_to_string, v2s, msg
-!!     use M_strings,only : listout, getvals
-!!     use M_strings,only : glob, ends_with
-!!     use M_strings,only : paragraph
-!!     use M_strings,only : base, decodebase, codebase, base2
-!!     use M_strings,only : isalnum, isalpha, iscntrl, isdigit
-!!     use M_strings,only : isgraph, islower, isprint, ispunct
-!!     use M_strings,only : isspace, isupper, isascii, isblank, isxdigit
-!!     use M_strings,only : isnumber
-!!     use M_strings,only : fortran_name
-!!     use M_strings,only : describe
-!!     use M_strings,only : edit_distance
-!!     use M_strings,only : bundle
-!!     end program demo_M_strings
-!!
-!!   Expected output
+!!    Each of the procedures includes an [example](example/) program in
+!!    the corresponding man(1) page for the function.
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -4560,9 +4524,7 @@ end subroutine notabs
 !!
 !!    program demo_dilate
 !!
-!!    !  test filter to remove tabs and trailing white space from input
-!!    !  on files up to 1024 characters wide
-!!    use M_strings, only : dilate
+!!    use M_strings, only : dilate, visible
 !!    implicit none
 !!    character(len=:),allocatable :: in
 !!    integer                      :: i
@@ -4571,8 +4533,14 @@ end subroutine notabs
 !!       do i=1,len(in)
 !!          if(in(i:i) == ' ')in(i:i)=char(9)
 !!       enddo
-!!       write(*,'(a)')in,dilate(in)
+!!       write(*,'("[",a,"]")')visible(in)
+!!       write(*,'("[",a,"]")')visible(dilate(in))
 !!    end program demo_dilate
+!!
+!!   Results:
+!!
+!!    > [^I^Ithis^Iis^Imy^Istring^I^I]
+!!    > [                this    is      my      string]
 !!
 !!##AUTHOR
 !!     John S. Urban
@@ -4595,7 +4563,7 @@ integer                       :: lgth
    allocate(character(len=(len(instr)+8*icount)) :: outstr)
    call notabs(instr,outstr,lgth)
    outstr=outstr(:lgth)
-!===================================================================================================================================
+
 END function dilate
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
