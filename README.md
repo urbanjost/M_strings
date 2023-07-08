@@ -1,4 +1,4 @@
-[![string](docs/images/strings_small.gif)](https://urbanjost.github.io/M_strings/man3.html)
+[![string](docs/images/strings_small.gif)](https://urbanjost.github.io/M_strings/fpm-ford/index.html)
 # [M_strings and associated files](https://urbanjost.github.io/M_strings/man3.html)
 
 ## Name
