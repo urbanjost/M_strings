@@ -1,13 +1,12 @@
-      program demo_expand
-      !  test filter to expand escape sequences in input lines
-      use M_strings, only : expand
-      character(len=1024) :: line
-      integer             :: ios
-         READFILE: block
-            do
-               read(*,'(A)',iostat=ios)line
-               if(ios /= 0) exit READFILE
-               write(*,'(a)')trim(expand(line))
-            enddo
-         endblock READFILE
-      end program demo_expand
+     program demo_expand
+        use M_strings, only : expand
+        integer,parameter     :: iwidth=1024
+        integer               :: i
+        character(len=iwidth),parameter :: input(5)=[ character(len=iwidth) :: &
+           '\e[H\e[2J',&
+           '\tABC\tabc',&
+           '\tA\a',&
+           '\nONE\nTWO\nTHREE',&
+           '\\']
+           write(*,'(a)')(trim(expand(input(i))),i=1,size(input))
+     end program demo_expand

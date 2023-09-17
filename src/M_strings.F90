@@ -3819,8 +3819,8 @@ end function lower
 !!
 !!    pure function switch(string) result (array)
 !!
-!!     character(len=1),intent(in) :: array(:)
-!!     character(len=SIZE(array))  :: string
+!!     character(len=*),intent(in) :: string
+!!     character(len=1)            :: array(len(string))
 !!
 !!##DESCRIPTION
 !!    SWITCH(3f): generic function that switches CHARACTER string to an array
@@ -4269,28 +4269,30 @@ end function visible
 !!
 !!##EXAMPLES
 !!
-!!    Sample Program:
+!!   Sample Program:
 !!
-!!     program demo_expand
-!!     !  test filter to expand escape sequences in input lines
-!!     use M_strings, only : expand
-!!     character(len=1024) :: line
-!!     integer             :: ios
-!!        READFILE: block
-!!           do
-!!              read(*,'(A)',iostat=ios)line
-!!              if(ios /= 0) exit READFILE
-!!              write(*,'(a)')trim(expand(line))
-!!           enddo
-!!        endblock READFILE
-!!     end program demo_expand
+!!    program demo_expand
+!!       use M_strings, only : expand
+!!       integer,parameter     :: iwidth=1024
+!!       integer               :: i
+!!       character(len=iwidth),parameter :: input(5)=[ character(len=iwidth) :: &
+!!          '\e[H\e[2J',&
+!!          '\tABC\tabc',&
+!!          '\tA\a',&
+!!          '\nONE\nTWO\nTHREE',&
+!!          '\\']
+!!          write(*,'(a)')(trim(expand(input(i))),i=1,size(input))
+!!    end program demo_expand
 !!
-!!    Sample input:
-!!
-!!      \e[2J
-!!      \tABC\tabc
-!!      \tA\a
-!!      \nONE\nTWO\nTHREE
+!! Results (with nonprintable characters shown visible):
+!!  > ^[[H^[[2J
+!!  > ^IABC^Iabc
+!!  > ^IA^G
+!!  >
+!!  > ONE
+!!  > TWO
+!!  > THREE
+!!  > \
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -6517,19 +6519,21 @@ end function real_s2v
 !!    Sample program:
 !!
 !!      program demo_int
+!!      use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64
 !!      use M_strings, only: int
 !!      implicit none
-!!      write(*,*)int('100'),int('20.4')
-!!      write(*,*)'int still works',int(20.4)
-!!      write(*,*)'elemental',&
-!!      & int([character(len=23) :: '10','20.3','20.5','20.6'])
+!!      character(len=*),parameter :: g='(*(g0,1x))'
+!!         write(*,g)int('100'),int('20.4')
+!!         write(*,g)'intrinsic int(3f) still works',int(20,int32)
+!!         write(*,g)'elemental',&
+!!         & int([character(len=23) :: '10','20.3','20.5','20.6'])
 !!      end program demo_int
 !!
 !! Results:
 !!
-!!      >          100          20
-!!      >  int still works          20
-!!      >  elemental          10          20          20          20
+!!     > 100 20
+!!     > intrinsic int(3f) still works 20
+!!     > elemental 10 20 20 20
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -6568,19 +6572,21 @@ end function real_s2v
 !!    Sample program:
 !!
 !!      program demo_nint
+!!      use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64
 !!      use M_strings, only: nint
 !!      implicit none
-!!      write(*,*)nint('100'),nint('20.4')
-!!      write(*,*)'nint still works',nint(20.4)
-!!      write(*,*)'elemental',&
-!!      & nint([character(len=23) :: '10','20.3','20.5','20.6'])
+!!      character(len=*),parameter :: g='(*(g0,1x))'
+!!         write(*,g)nint('100'),nint('20.4')
+!!         write(*,g)'intrinsic nint(3f) still works',nint(20.4)
+!!         write(*,g)'elemental',&
+!!         & nint([character(len=23) :: '10','20.3','20.5','20.6'])
 !!      end program demo_nint
 !!
 !! Results:
 !!
-!!      >          100          20
-!!      >  nint still works          20
-!!      >  elemental          10          20          21          21
+!!     > 100 20
+!!     > intrinsic nint(3f) still works 20
+!!     > elemental 10 20 21 21
 !!
 !!##AUTHOR
 !!    John S. Urban
