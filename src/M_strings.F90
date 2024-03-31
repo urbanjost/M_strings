@@ -1200,6 +1200,55 @@ end function sep
 !!    end subroutine printme
 !!    end program demo_split
 !!
+!! Results:
+!!
+!!  > INPUT LINE:
+!!  > [  aBcdef   ghijklmnop qrstuvwxyz  1:|:2     333|333 a B cc    ]
+!!  > typical call: ========================================================
+!!  > 1 ==> aBcdef
+!!  > 2 ==> ghijklmnop
+!!  > 3 ==> qrstuvwxyz
+!!  > 4 ==> 1:|:2
+!!  > 5 ==> 333|333
+!!  > 6 ==> a
+!!  > 7 ==> B
+!!  > 8 ==> cc
+!!  >  SIZE:           8
+!!  > custom delimiters=":|" : =============================================
+!!  > 1 ==>   aBcdef   ghijklmnop qrstuvwxyz  1
+!!  > 2 ==> 2     333
+!!  > 3 ==> 333 a B cc
+!!  >  SIZE:           3
+!!  > delimiters=":|",reverse array order and count null fields:============
+!!  > 1 ==> 333 a B cc
+!!  > 2 ==> 2     333
+!!  > 3 ==>
+!!  > 4 ==>
+!!  > 5 ==>   aBcdef   ghijklmnop qrstuvwxyz  1
+!!  >  SIZE:           5
+!!  > default delimiters, reverse array order and return null fields:=======
+!!  > 1 ==>
+!!  > 2 ==>
+!!  > 3 ==>
+!!  > 4 ==> cc
+!!  > 5 ==> B
+!!  > 6 ==> a
+!!  > 7 ==> 333|333
+!!  > 8 ==>
+!!  > 9 ==>
+!!  > 10 ==>
+!!  > 11 ==>
+!!  > 12 ==> 1:|:2
+!!  > 13 ==>
+!!  > 14 ==> qrstuvwxyz
+!!  > 15 ==> ghijklmnop
+!!  > 16 ==>
+!!  > 17 ==>
+!!  > 18 ==> aBcdef
+!!  > 19 ==>
+!!  > 20 ==>
+!!  >  SIZE:          20
+!!
 !!##AUTHOR
 !!    John S. Urban
 !!
@@ -1342,6 +1391,60 @@ end subroutine split
 !!        write(*,'(*(g0,1x))')'SIZE:',size(ibegin)
 !!     end subroutine printme
 !!     end program demo_slice
+!!
+!! Results:
+!!
+!!  > INPUT LINE:
+!!  > [  aBcdef   ghijklmnop qrstuvwxyz  1:|:2     333|333 a B cc    ]
+!!  > typical call: ========================================================
+!!  >
+!!  >    [aBcdef]
+!!  >    [ghijklmnop]
+!!  >    [qrstuvwxyz]
+!!  >    [1:|:2]
+!!  >    [333|333]
+!!  >    [a]
+!!  >    [B]
+!!  >    [cc]
+!!  > SIZE: 8
+!!  > custom list of delimiters=":|" : =====================================
+!!  >
+!!  >    [  aBcdef   ghijklmnop qrstuvwxyz  1]
+!!  >    [2     333]
+!!  >    [333 a B cc    ]
+!!  > SIZE: 3
+!!  > delimiters=":|", and count null fields: ==============================
+!!  >
+!!  >    [  aBcdef   ghijklmnop qrstuvwxyz  1]
+!!  >    []
+!!  >    []
+!!  >    [2     333]
+!!  >    [333 a B cc    ]
+!!  > SIZE: 5
+!!  > default delimiters and return null fields: ===========================
+!!  >
+!!  >    []
+!!  >    []
+!!  >    [aBcdef]
+!!  >    []
+!!  >    []
+!!  >    [ghijklmnop]
+!!  >    [qrstuvwxyz]
+!!  >    []
+!!  >    [1:|:2]
+!!  >    []
+!!  >    []
+!!  >    []
+!!  >    []
+!!  >    [333|333]
+!!  >    [a]
+!!  >    [B]
+!!  >    [cc]
+!!  >    []
+!!  >    []
+!!  >    []
+!!  > SIZE: 20
+!! ======================================================================
 !!
 !!##AUTHOR
 !!    John S. Urban
