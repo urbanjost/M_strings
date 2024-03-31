@@ -11,31 +11,33 @@ keywords = ["fortran", "strings"]
 homepage = "https://github.com/urbanjost/M_strings.git"
 
 [build]
-auto-executables = true
-auto-tests = true
-auto-examples = true
-# new force module naming rules to avoid collisions with other packages
-module-naming = true
-# traditional where user can use any module name
-#module-naming = false
+   auto-executables = true
+   auto-tests = true
+   auto-examples = true
+
+   # new force module naming rules to avoid collisions with other packages
+   module-naming = true
+   # traditional where user can use any module name
+   #module-naming = false
 
 # new
 #[fortran]
-#implicit-typing = false
-#implicit-external = false
-#source-form = "free"
-# traditional pre-version8 compatibility
-#implicit-typing = true
-#implicit-external = true
-#source-form = "default"
+   #implicit-typing = false
+   #implicit-external = false
+   #source-form = "free"
+   #
+   # traditional pre-version8 compatibility
+   #implicit-typing = true
+   #implicit-external = true
+   #source-form = "default"
 
 # demo programs
 [install]
-library=true
+   library=true
 
 [[test]]
-name="test_suite"
-source-dir="test"
-main="test_suite_M_strings.f90"
-[test.dependencies]
-M_framework          = { git = "https://github.com/urbanjost/M_framework.git" }
+   name="test_suite"
+   source-dir="test"
+   main="test_suite_M_strings.f90"
+   [test.dependencies]
+   M_framework          = { git = "https://github.com/urbanjost/M_framework.git" }

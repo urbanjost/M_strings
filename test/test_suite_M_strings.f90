@@ -86,6 +86,7 @@ subroutine test_suite_m_strings()
    call test_setbits()
    call test_split()
    call test_split2020()
+   call test_slice()
    call test_squeeze()
    call test_stretch()
    call test_string_to_value()
@@ -581,6 +582,76 @@ integer                 :: i10
    endif
 end subroutine testit
 end subroutine test_delim
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_slice
+INTRINSIC SIZE
+CHARACTER(LEN=:),ALLOCATABLE    :: line
+CHARACTER(LEN=:),ALLOCATABLE    :: dlm
+CHARACTER(LEN=:),ALLOCATABLE    :: array(:)
+! return strings composed of delimiters or not IGNORE|RETURN|IGNOREEND
+character(len=10)               :: nulls(3)=['ignore    ', 'return    ', 'ignoreend ' ]
+integer,allocatable             :: ibegin(:)
+integer,allocatable             :: iend(:)
+!
+   call unit_test_start('slice','[TOKENS] parse string into an array using specified delimiters')
+
+   dlm=''
+   LINE='abcdef ghijklmnop qrstuvwxyz  1:2  333333 a b cc    '
+   CALL testit()
+   CALL slice(line,ibegin,iend,dlm,nulls(1))
+   if(unit_test_level > 0)then
+      write(std_err,g)size(ibegin)
+   endif
+!
+   LINE=' abcdef ghijklmnop qrstuvwxyz  1:2  333333 a b cc    '
+   CALL testit()
+!
+   LINE='        abcdef ghijklmnop qrstuvwxyz  1:2  333333 a b cc    '
+   CALL testit()
+!
+   LINE=' aABCDEF  ; b;;c d e;  ;  '
+   CALL testit()
+!
+   dlm=';'
+   CALL testit()
+!
+   dlm='; '
+   CALL testit()
+!
+   dlm=';'
+   LINE=';;;abcdef;ghijklmnop;qrstuvwxyz;;1:2;;333333;a;b;cc;;'
+   CALL testit()
+   LINE=';;abcdef;ghijklmnop;qrstuvwxyz;;1:2;;333333;a;b;cc;'
+   CALL testit()
+   LINE=';abcdef;ghijklmnop;qrstuvwxyz;;1:2;;333333;a;b;cc;'
+   CALL testit()
+   LINE='abcdef;ghijklmnop;qrstuvwxyz;;1:2;;333333;a;b;cc'
+   CALL testit()
+!
+   line='a b c d e f g h i j k l m n o p q r s t u v w x y z'
+   CALL slice(line,ibegin,iend)
+   call unit_test('slice',size(ibegin) == 26,msg='test delimiter')
+!
+   dlm=' '
+   CALL slice(line,ibegin,iend,dlm)
+   call unit_test('slice',size(ibegin) == 26,msg='test delimiter')
+!
+   call unit_test_end('slice')
+!
+   CONTAINS
+   SUBROUTINE testit()
+   integer :: i
+   if(unit_test_level > 0)then
+      write(std_err,'(80("="))')
+      write(std_err,'(A)')'parsing ['//TRIM(line)//']'//'with delimiters set to ['//dlm//']'
+   endif
+   CALL slice(line,ibegin,iend,dlm)
+   if(unit_test_level > 0)then
+      write(std_err,'("number of tokens found=",i0)')SIZE(ibegin)
+      write(std_err,'(I0,T10,g0)')(i,ibegin(i),i=1,SIZE(ibegin))
+   endif
+   END SUBROUTINE testit
+end subroutine test_slice
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_split
 INTRINSIC SIZE
@@ -1609,7 +1680,8 @@ integer,allocatable         :: ivalues(:)
    values=s2vs(s)
    ivalues=int(s2vs(s))
    call unit_test('s2vs',size(values) == 6, msg='number of values')
-   call unit_test('s2vs',all(ivalues == [10, 20000, 3, -4,1234,5678]))
+   call unit_test('s2vs',all(ivalues == [10, 20000, 3, -4,1234,5678]),&
+           & ivalues(1),ivalues(2),ivalues(3),ivalues(4),ivalues(5),ivalues(6),'expected ')
    call unit_test_end('s2vs')
 end subroutine test_s2vs
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT

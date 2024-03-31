@@ -2,7 +2,7 @@
         use M_strings, only : expand
         integer,parameter     :: iwidth=1024
         integer               :: i
-        character(len=iwidth),parameter :: input(5)=[ character(len=iwidth) :: &
+        character(len=iwidth),parameter :: input(*)=[ character(len=iwidth) :: &
            '\e[H\e[2J',&
            '\tABC\tabc',&
            '\tA\a',&

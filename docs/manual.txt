@@ -69,6 +69,7 @@ s2c (3m_strings)     - [M_strings:ARRAY] convert character variable to array of 
 s2v (3m_strings)     - [M_strings:TYPE] function returns doubleprecision numeric value from a string (LICENSE:PD)
 s2vs (3m_strings)    - [M_strings:TYPE] given a string representing numbers return a numeric array (LICENSE:PD)
 sep (3m_strings)     - [M_strings:TOKENS] function to parse string into an array using specified delimiters (LICENSE:PD)
+slice (3m_strings)   - [M_strings:TOKENS] parse string into an array using specified delimiters (LICENSE:PD)
 split (3m_strings)   - [M_strings:TOKENS] parse string into an array using specified delimiters (LICENSE:PD)
 split2020 (3m_strings) - [M_strings:TOKENS] parse a string into tokens using proposed f2023 method (LICENSE:PD)
 squeeze (3m_strings) - [M_strings:EDITING] delete adjacent duplicate occurrences of a character from a string (LICENSE:PD)
@@ -153,7 +154,7 @@ LICENSE
 
 
 
-			      September 17, 2023	   adjustc(3m_strings)
+				March 31, 2024		   adjustc(3m_strings)
 M_strings__oop(3m_strings)			    M_strings__oop(3m_strings)
 
 
@@ -430,7 +431,7 @@ LICENSE
 
 
 
-			      September 17, 2023    M_strings__oop(3m_strings)
+				March 31, 2024	    M_strings__oop(3m_strings)
 M_strings(3m_strings)					 M_strings(3m_strings)
 
 
@@ -452,7 +453,7 @@ DESCRIPTION
 SYNOPSIS
   public entities:
 
-       use M_strings,only : split, sep, delim, chomp, strtok
+       use M_strings,only : split, slice, sep, delim, chomp, strtok
        use M_strings,only : split2020, find_field
        use M_strings,only : substitute, change, modif, transliterate, &
 	       & reverse, squeeze
@@ -492,17 +493,23 @@ SYNOPSIS
   sep
     function interface to split(3f)
 
+  slice
+    subroutine parses string using specified delimiter characters and stores
+    beginning and ending positions in arrays
+
   delim
     subroutine parses string using specified delimiter characters and store
-    tokens into an array
+    tokens into an array and records beginning and end
 
   chomp
     function consumes input line as it returns next token in a string using
     specified delimiters
 
   paragraph
-    convert a string into a paragraph strtok tokenize a string like C
-    strtok(3c) routine
+    convert a string into a paragraph
+
+  strtok
+    tokenize a string like C strtok(3c) routine
 
    CONTRIBUTIONS
   split2020
@@ -817,297 +824,7 @@ LICENSE
 
 
 
-			      September 17, 2023	 M_strings(3m_strings)
-dble(3m_strings)					      dble(3m_strings)
-
-
-
-NAME
-  dble(3f) - [M_strings:TYPE] overloads DBLE(3f) so it can handle character
-  arguments (LICENSE:PD)
-
-
-SYNOPSIS
-  impure elemental function dble(string)
-
-      character(len=*) :: string
-      integer	       :: dble
-
-
-DESCRIPTION
-  dble(3f) returns a DOUBLE value when given a numeric representation of a
-  numeric value. This overloads the DBLE(3f) intrinsic so that CHARACTER
-  arguments assumed to represent a numeric value may be input.
-
-OPTIONS
-  STRING
-    input string to be converted to a dble value
-
-RETURNS
-  DBLE
-    double precision value represented by input string
-
-EXAMPLE
-  Sample program:
-
-       program demo_dble
-       use M_strings, only: dble
-       implicit none
-       write(*,*)dble('100'),dble('20.4')
-       write(*,*)'dble still works',dble(20),dble(20.4)
-       write(*,*)'elemental',&
-       & dble([character(len=23) :: '10','20.3','20.5','20.6'])
-       end program demo_dble
-
-  Results:
-
-       >    100.00000000000000	      20.399999999999999
-       >  dble still works   20.000000000000000 20.399999618530273
-       >  elemental   10.00000000000000  20.30000000000000
-       >  20.50000000000000 20.60000000000000
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	      dble(3m_strings)
-decodebase(3m_strings)					decodebase(3m_strings)
-
-
-
-NAME
-  decodebase(3f) - [M_strings:BASE] convert whole number string in base [2-36]
-  to base 10 number (LICENSE:PD)
-
-
-SYNOPSIS
-  logical function decodebase(string,basein,out10)
-
-     character(len=*),intent(in)  :: string
-     integer,intent(in) 	  :: basein
-     integer,intent(out)	  :: out10
-
-DESCRIPTION
-  Convert a numeric string representing a whole number in base BASEIN to base
-  10. The function returns FALSE if BASEIN is not in the range [2..36] or if
-  string STRING contains invalid characters in base BASEIN or if result OUT10
-  is too big
-
-  The letters A,B,...,Z represent 10,11,...,36 in the base > 10.
-
-OPTIONS
-  string
-    input string. It represents a whole number in the base specified by BASEIN
-    unless BASEIN is set to zero. When BASEIN is zero STRING is assumed to be
-    of the form BASE#VALUE where BASE represents the function normally
-    provided by BASEIN.
-
-  basein
-    base of input string; either 0 or from 2 to 36.
-
-  out10
-    output value in base 10
-
-EXAMPLE
-  Sample program:
-
-     program demo_decodebase
-     use M_strings, only : codebase, decodebase
-     implicit none
-     integer	       :: ba,bd
-     character(len=40) :: x,y
-     integer	       :: r
-
-     print *,' BASE CONVERSION'
-     write(*,'("Start	Base (2 to 36): ")',advance='no'); read *, bd
-     write(*,'("Arrival Base (2 to 36): ")',advance='no'); read *, ba
-     INFINITE: do
-	print *,''
-	write(*,'("Enter number in start base: ")',advance='no'); read *, x
-	if(x == '0') exit INFINITE
-	if(decodebase(x,bd,r)) then
-	   if(codebase(r,ba,y)) then
-	     write(*,'("In base ",I2,": ",A20)')  ba, y
-	   else
-	     print *,'Error in coding number.'
-	   endif
-	else
-	   print *,'Error in decoding number.'
-	endif
-     enddo INFINITE
-
-     end program demo_decodebase
-
-
-AUTHOR
-  John S. Urban
-
-	Ref.: "Math matiques en Turbo-Pascal by
-	       M. Ducamp and A. Reverchon (2),
-	       Eyrolles, Paris, 1988".
-
-  based on a F90 Version By J-P Moreau (www.jpmoreau.fr)
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	decodebase(3m_strings)
-delim(3m_strings)					     delim(3m_strings)
-
-
-
-NAME
-  delim(3f) - [M_strings:TOKENS] parse a string and store tokens into an array
-  (LICENSE:PD)
-
-
-SYNOPSIS
-  subroutine delim(line,array,n,icount,ibegin,iterm,lgth,dlim)
-
-      character(len=*),intent(in)  :: line
-      integer,integer(in)	   :: n
-      integer,intent(out)	   :: icount
-      character(len=*)		   :: array(n)
-      integer,intent(out)	   :: ibegin(n)
-      integer,intent(out)	   :: iterm(n)
-      integer,intent(out)	   :: lgth
-      character(len=*)		   :: dlim
-
-
-DESCRIPTION
-  Given a LINE of structure " par1 par2 par3 ... parn " store each par(n) into
-  a separate variable in ARRAY (UNLESS ARRAY(1) == '#N#')
-
-  Also set ICOUNT to number of elements of array initialized, and return
-  beginning and ending positions for each element in IBEGIN(N) and ITERM(N).
-
-  Return position of last non-blank character (even if more than N elements
-  were found) in lgth
-
-  No quoting or escaping of delimiter is allowed, so the delimiter character
-  can not be placed in a token.
-
-  No checking for more than N parameters; If any more they are ignored.
-
-OPTIONS
-  LINE
-    input string to parse into tokens
-
-  ARRAY(N)
-    array that receives tokens
-
-  N size of arrays ARRAY, IBEGIN, ITERM
-
-  ICOUNT
-    number of tokens found IBEGIN(N) starting columns of tokens found
-
-  ITERM(N)
-    ending columns of tokens found
-
-  LGTH
-    position of last non-blank character in input string LINE
-
-  DLIM
-    delimiter characters
-
-EXAMPLES
-  Sample program:
-
-      program demo_delim
-
-      use M_strings, only: delim
-      implicit none
-      character(len=80) :: line
-      character(len=80) :: dlm
-      integer,parameter :: n=10
-      character(len=20) :: array(n)=' '
-      integer		:: ibegin(n),iterm(n)
-      integer		:: i20, icount, lgth, i10
-      line=' first  second 10.3 words_of_stuff	'
-      do i20=1,4
-	 ! change delimiter list and what is calculated or parsed
-	 if(i20 == 1)dlm=' '
-	 if(i20 == 2)dlm='o'
-	 if(i20 == 3)dlm=' aeiou'    ! NOTE SPACE IS FIRST
-	 if(i20 == 3)ARRAY(1)='#N#'  ! QUIT RETURNING STRING ARRAY
-	 if(i20 == 4)line='AAAaBBBBBBbIIIIIi  J K L'
-
-	 ! write out a break line composed of =========== ..
-	 write(*,'(57("="))')
-	 ! show line being parsed
-	 write(*,'(a)')'PARSING=['//trim(line)//'] on '//trim(dlm)
-	 ! call parsing procedure
-	 call delim(line,array,n,icount,ibegin,iterm,lgth,dlm)
-	 write(*,*)'number of tokens found=',icount
-	 write(*,*)'last character in column ',lgth
-	 if(icount > 0)then
-	    if(lgth /= iterm(icount))then
-	       write(*,*)'ignored from column ',iterm(icount)+1,' to ',lgth
-	    endif
-	    do i10=1,icount
-	       ! check flag to see if ARRAY() was set
-	       if(array(1) /= '#N#')then
-		  ! from returned array
-		  write(*,'(a,a,a)',advance='no')&
-		  &'[',array(i10)(:iterm(i10)-ibegin(i10)+1),']'
-	       endif
-	    enddo
-	    ! using start and end positions in IBEGIN() and ITERM()
-	    write(*,*)
-	    do i10=1,icount
-	       ! from positions in original line
-	       write(*,'(a,a,a)',advance='no')&
-	       &'[',line(ibegin(i10):iterm(i10)),']'
-	    enddo
-	    write(*,*)
-	 endif
-      enddo
-      end program demo_delim
-
-  Results:
-
-     =========================================================
-     PARSING=[ first  second 10.3 words_of_stuff] on
-      number of tokens found=		4
-      last character in column		 34
-     [first][second][10.3][words_of_stuff]
-     [first][second][10.3][words_of_stuff]
-     =========================================================
-     PARSING=[ first  second 10.3 words_of_stuff] on o
-      number of tokens found=		4
-      last character in column		 34
-     [ first  sec][nd 10.3 w][rds_][f_stuff]
-     [ first  sec][nd 10.3 w][rds_][f_stuff]
-     =========================================================
-     PARSING=[ first  second 10.3 words_of_stuff] on  aeiou
-      number of tokens found=	       10
-      last character in column		 34
-
-     [f][rst][s][c][nd][10.3][w][rds_][f_st][ff]
-     =========================================================
-     PARSING=[AAAaBBBBBBbIIIIIi  J K L] on  aeiou
-      number of tokens found=		5
-      last character in column		 24
-
-     [AAA][BBBBBBbIIIII][J][K][L]
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	     delim(3m_strings)
+				March 31, 2024		 M_strings(3m_strings)
 glob(3m_strings)					      glob(3m_strings)
 
 
@@ -1381,7 +1098,233 @@ LICENSE
 
 
 
-			      September 17, 2023	      glob(3m_strings)
+				March 31, 2024		      glob(3m_strings)
+isblank(3m_strings)					   isblank(3m_strings)
+
+
+
+NAME
+  isblank(3f) - [M_strings:COMPARE] returns .true. if character is a blank
+  character (space or horizontal tab).	(LICENSE:PD)
+
+
+SYNOPSIS
+  elemental function isblank(onechar)
+
+      character,intent(in) :: onechar
+      logical		   :: isblank
+
+
+DESCRIPTION
+  isblank(3f) returns .true. if character is a blank character (space or
+  horizontal tab).
+
+OPTIONS
+  onechar
+    character to test
+
+RETURNS
+  isblank
+    logical value returns true if character is a "blank"
+
+    ( an ASCII
+      space or horizontal tab character).
+
+EXAMPLE
+  Sample program:
+
+      program demo_isblank
+      use M_strings, only : isblank
+      implicit none
+      integer			 :: i
+      character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
+	 write(*,'(*(g0,1x))')'ISXBLANK: ',&
+	 & iachar(pack( string, isblank(string) ))
+      end program demo_isblank
+
+  Results:
+
+     ISXBLANK:	9 32
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		   isblank(3m_strings)
+iscntrl(3m_strings)					   iscntrl(3m_strings)
+
+
+
+NAME
+  iscntrl(3f) - [M_strings:COMPARE] returns .true. if character is a delete
+  character or ordinary control character (LICENSE:PD)
+
+
+SYNOPSIS
+  elemental function iscntrl(onechar)
+
+      character,intent(in) :: onechar
+      logical		   :: iscntrl
+
+
+DESCRIPTION
+  iscntrl(3f) returns .true. if character is a delete character or ordinary
+  control character
+
+OPTIONS
+  onechar
+    character to test
+
+RETURNS
+  iscntrl
+    logical value returns true if character is a control character
+
+EXAMPLE
+  Sample program
+
+      program demo_iscntrl
+      use M_strings, only : iscntrl
+      implicit none
+      integer			 :: i
+      character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
+	 write(*,'(20(g0,1x))')'ISCNTRL: ', &
+	 & iachar(pack( string, iscntrl(string) ))
+      end program demo_iscntrl
+
+  Results:
+
+     ISCNTRL:  0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+     20 21 22 23 24 25 26 27 28 29 30 31 127
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		   iscntrl(3m_strings)
+isdigit(3m_strings)					   isdigit(3m_strings)
+
+
+
+NAME
+  isdigit(3f) - [M_strings:COMPARE] returns .true. if character is a digit
+  (0,1,...,9) and .false. otherwise (LICENSE:PD)
+
+
+SYNOPSIS
+  elemental function isdigit(onechar)
+
+      character,intent(in) :: onechar
+      logical		   :: isdigit
+
+
+DESCRIPTION
+  isdigit(3f) returns .true. if character is a digit (0,1,...,9) and .false.
+  otherwise
+
+EXAMPLES
+  Sample Program:
+
+      program demo_isdigit
+      use M_strings, only : isdigit, isspace, switch
+      implicit none
+      character(len=10),allocatable :: string(:)
+      integer			    :: i
+	 string=[&
+	 & '1 2 3 4 5 ' ,&
+	 & 'letters   ' ,&
+	 & '1234567890' ,&
+	 & 'both 8787 ' ]
+	 ! if string is nothing but digits and whitespace return .true.
+	 do i=1,size(string)
+	    write(*,'(a)',advance='no')'For string['//string(i)//']'
+	    write(*,*) &
+	     & all(isdigit(switch(string(i))).or.&
+	     & isspace(switch(string(i))))
+	 enddo
+      end program demo_isdigit
+
+  Expected output:
+
+	 For string[1 2 3 4 5 ] T
+	 For string[letters   ] F
+	 For string[1234567890] T
+	 For string[both 8787 ] F
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		   isdigit(3m_strings)
+isgraph(3m_strings)					   isgraph(3m_strings)
+
+
+
+NAME
+  isgraph(3f) - [M_strings:COMPARE] returns .true. if character is a printable
+  character except a space is considered non-printable (LICENSE:PD)
+
+
+SYNOPSIS
+  elemental function isgraph(onechar)
+
+      character,intent(in) :: onechar
+      logical		   :: isgraph
+
+
+DESCRIPTION
+  isgraph(3f) returns .true. if character is a printable character except a
+  space is considered non-printable
+
+OPTIONS
+  onechar
+    character to test
+
+RETURNS
+  isgraph
+    logical value returns true if character is a printable non-space character
+
+EXAMPLE
+  Sample Program:
+
+     program demo_isgraph
+     use M_strings, only : isgraph
+     implicit none
+     integer			:: i
+     character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
+	write(*,'(40(a))')'ISGRAPH: ',pack( string, isgraph(string) )
+     end program demo_isgraph
+
+  Results:
+
+     ISGRAPH: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFG
+     HIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno
+     pqrstuvwxyz{|}~
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		   isgraph(3m_strings)
 c2s(3m_strings) 					       c2s(3m_strings)
 
 
@@ -1418,7 +1361,7 @@ LICENSE
 
 
 
-			      September 17, 2023	       c2s(3m_strings)
+				March 31, 2024		       c2s(3m_strings)
 change(3m_strings)					    change(3m_strings)
 
 
@@ -1503,338 +1446,7 @@ LICENSE
 
 
 
-			      September 17, 2023	    change(3m_strings)
-islower(3m_strings)					   islower(3m_strings)
-
-
-
-NAME
-  islower(3f) - [M_strings:COMPARE] returns .true. if character is a miniscule
-  letter (a-z) (LICENSE:PD)
-
-
-SYNOPSIS
-  elemental function islower(onechar)
-
-      character,intent(in) :: onechar
-      logical		   :: islower
-
-
-DESCRIPTION
-  islower(3f) returns .true. if character is a miniscule letter (a-z)
-
-OPTIONS
-  onechar
-    character to test
-
-RETURNS
-  islower
-    logical value returns true if character is a lowercase ASCII character
-    else false.
-
-EXAMPLE
-  Sample program
-
-      program demo_islower
-      use M_strings, only : islower
-      implicit none
-      integer			 :: i
-      character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-	 write(*,'(15(g0,1x))')'ISLOWER: ', &
-	 & iachar(pack( string, islower(string) ))
-	 write(*,'(15(g0,1x))')'ISLOWER: ', &
-	 & pack( string, islower(string) )
-      end program demo_islower
-  Results:
-
-     ISLOWER:  97 98 99 100 101 102 103 104 105 106 107 108 109 110
-     111 112 113 114 115 116 117 118 119 120 121 122
-     ISLOWER:  a b c d e f g h i j k l m n
-     o p q r s t u v w x y z
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	   islower(3m_strings)
-isprint(3m_strings)					   isprint(3m_strings)
-
-
-
-NAME
-  isprint(3f) - [M_strings:COMPARE] returns .true. if character is an ASCII
-  printable character (LICENSE:PD)
-
-
-SYNOPSIS
-  elemental function isprint(onechar)
-
-      character,intent(in) :: onechar
-      logical		   :: isprint
-
-
-DESCRIPTION
-  isprint(3f) returns .true. if character is an ASCII printable character
-
-OPTIONS
-  onechar
-    character to test
-
-RETURNS
-  isprint
-    logical value returns true if character is a printable ASCII character
-    else false.
-
-EXAMPLE
-  Sample Program:
-
-     program demo_isprint
-     use M_strings, only : isprint
-     implicit none
-     integer			:: i
-     character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-	write(*,'(40(a))')'ISPRINT: ',pack( string, isprint(string) )
-     end program demo_isprint
-
-  Results:
-
-     ISPRINT:  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEF
-     GHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmn
-     opqrstuvwxyz{|}~
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	   isprint(3m_strings)
-isnumber(3m_strings)					  isnumber(3m_strings)
-
-
-
-NAME
-  isnumber(3f) - [M_strings:TYPE] determine if a string represents a number
-  (LICENSE:PD)
-
-
-SYNOPSIS
-  function isnumber(str,msg)
-
-      character(len=*),intent(in)  :: str
-      character(len=:),intent(out),allocatable,optional  :: msg
-
-
-DESCRIPTION
-  ISNUMBER(3f) returns a value greater than zero if the string represents a
-  number, and a number less than or equal to zero if it is a bad number.
-  Blank characters are ignored.
-
-OPTIONS
-  str
-    the string to evaluate as to whether it represents a numeric value or not
-
-  msg
-    An optional message describing the string
-
-RETURNS
-  isnumber
-    the following values are returned
-
-    1 for an integer
-      [-+]NNNNN
-
-    2 for a whole number
-      [-+]NNNNN.
-
-    3 for a real value
-      [-+]NNNNN.MMMM
-
-    4 for a exponential value
-      [-+]NNNNN.MMMM[-+]LLLL [-+]NNNNN.MMMM[ed][-+]LLLL
-
-  values less than 1 represent an error
-
-EXAMPLES
-  As the example shows, you can use an internal READ(3f) along with the
-  IOSTAT= parameter to check (and read) a string as well.
-
-      program demo_isnumber
-      use M_strings, only : isnumber
-      implicit none
-      character(len=256) :: line
-      real		 :: value
-      integer		 :: ios1, ios2
-      integer		 :: answer
-      character(len=256) :: message
-      character(len=:),allocatable :: description
-	 write(*,*)'Begin entering values, one per line'
-	 do
-	    read(*,'(a)',iostat=ios1)line
-	    !
-	    ! try string as number using list-directed input
-	    line=''
-	    read(line,*,iostat=ios2,iomsg=message) value
-	    if(ios2 == 0)then
-	       write(*,*)'VALUE=',value
-	    elseif( is_iostat_end(ios1) ) then
-	       stop 'end of file'
-	    else
-	       write(*,*)'ERROR:',ios2,trim(message)
-	    endif
-	    !
-	    ! try string using isnumber(3f)
-	    answer=isnumber(line,msg=description)
-	    if(answer > 0)then
-	       write(*,*) &
-	       & ' for ',trim(line),' ',answer,':',description
-	    else
-	       write(*,*) &
-	       & ' ERROR for ',trim(line),' ',answer,':',description
-	    endif
-	    !
-	 enddo
-      end program demo_isnumber
-
-  Example run
-
-     > Begin entering values
-     > ERROR:	       -1 End of file
-     >	ERROR for	     -1 :null string
-     >10
-     > VALUE=	10.0000000
-     >	for 10		  1 :integer
-     >20
-     > VALUE=	20.0000000
-     >	for 20		  1 :integer
-     >20.
-     > VALUE=	20.0000000
-     >	for 20. 	   2 :whole number
-     >30.1
-     > VALUE=	30.1000004
-     >	for 30.1	    3 :real number
-     >3e1
-     > VALUE=	30.0000000
-     >	for 3e1 	   4 :value with exponent
-     >1-2
-     > VALUE=	9.99999978E-03
-     >	for 1-2 	   4 :value with exponent
-     >100.22d-4
-     > VALUE=	1.00220004E-02
-     >	for 100.22d-4		 4 :value with exponent
-     >1--2
-     > ERROR:	     5010 Bad real number in item 1 of list input
-     >	ERROR for 1--2		 -5 :bad number
-     >e
-     > ERROR:	     5010 Bad real number in item 1 of list input
-     >	ERROR for e	      -6 :missing leading value before exponent
-     >e1
-     > ERROR:	     5010 Bad real number in item 1 of list input
-     >	ERROR for e1	       -6 :missing leading value before exponent
-     >1e
-     > ERROR:	     5010 Bad real number in item 1 of list input
-     >	ERROR for 1e	       -3 :missing exponent
-     >1e+
-     > ERROR:	     5010 Bad real number in item 1 of list input
-     >	ERROR for 1e+		-4 :missing exponent after sign
-     >1e+2.0
-     > ERROR:	     5010 Bad real number in item 1 of list input
-     >	ERROR for 1e+2.0	   -5 :bad number
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	  isnumber(3m_strings)
-merge_str(3m_strings)					 merge_str(3m_strings)
-
-
-
-NAME
-  merge_str(3f) - [M_strings:LENGTH] pads strings to same length and then
-  calls MERGE(3f) (LICENSE:PD)
-
-
-SYNOPSIS
-  function merge_str(str1,str2,expr) result(strout)
-
-      character(len=*),intent(in),optional :: str1
-      character(len=*),intent(in),optional :: str2
-      logical,intent(in)	      :: expr
-      character(len=:),allocatable    :: strout
-
-
-DESCRIPTION
-  merge_str(3f) pads the shorter of str1 and str2 to the longest length of
-  str1 and str2 and then calls MERGE(padded_str1,padded_str2,expr).  It trims
-  trailing spaces off the result and returns the trimmed string. This makes it
-  easier to call MERGE(3f) with strings, as MERGE(3f) requires the strings to
-  be the same length.
-
-  NOTE: STR1 and STR2 are always required even though declared optional.  this
-  is so the call "STR_MERGE(A,B,present(A))" is a valid call.  The parameters
-  STR1 and STR2 when they are optional parameters can be passed to a procedure
-  if the options are optional on the called procedure.
-
-OPTIONS
-  STR1
-    string to return if the logical expression EXPR is true
-
-  STR2
-    string to return if the logical expression EXPR is false
-
-  EXPR
-    logical expression to evaluate to determine whether to return STR1 when
-    true, and STR2 when false.
-
-RESULT
-  MERGE_STR
-    a trimmed string is returned that is otherwise the value of STR1 or STR2,
-    depending on the logical expression EXPR.
-
-EXAMPLES
-  Sample Program:
-
-      program demo_merge_str
-      use M_strings, only : merge_str
-      implicit none
-      character(len=:), allocatable :: answer
-	 answer=merge_str('first string', &
-	  & 'second string is longer',10 == 10)
-	 write(*,'("[",a,"]")') answer
-	 answer=merge_str('first string', &
-	  & 'second string is longer',10 /= 10)
-	 write(*,'("[",a,"]")') answer
-      end program demo_merge_str
-
-  Expected output
-
-      [first string]
-      [second string is longer]
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	 merge_str(3m_strings)
+				March 31, 2024		    change(3m_strings)
 modif(3m_strings)					     modif(3m_strings)
 
 
@@ -1927,7 +1539,7 @@ LICENSE
 
 
 
-			      September 17, 2023	     modif(3m_strings)
+				March 31, 2024		     modif(3m_strings)
 msg(3m_strings) 					       msg(3m_strings)
 
 
@@ -2015,7 +1627,7 @@ LICENSE
 
 
 
-			      September 17, 2023	       msg(3m_strings)
+				March 31, 2024		       msg(3m_strings)
 nint(3m_strings)					      nint(3m_strings)
 
 
@@ -2074,75 +1686,50 @@ LICENSE
 
 
 
-			      September 17, 2023	      nint(3m_strings)
-aton(3m_strings)					      aton(3m_strings)
+				March 31, 2024		      nint(3m_strings)
+nospace(3m_strings)					   nospace(3m_strings)
 
 
 
 NAME
-  aton(3f) - [M_strings:TYPE] function returns argument as a numeric value
-  from a string (LICENSE:PD)
+  nospace(3f) - [M_strings:WHITESPACE] remove all whitespace from input string
+  (LICENSE:PD)
 
 
 SYNOPSIS
-  logical function aton(str,val[,msg])
+  function nospace(str) - remove all whitespace from input string
 
-      character(len=*),intent(in)	:: str
-      type(TYPE(kind=KIND)),intent(out) :: val
-      character(len=:),allocatable,intent(out) :: msg
+      character(len=*),intent(in)	   :: str
+      character(len=:),allocatable	   :: nospace
 
 
 DESCRIPTION
-  This function converts a string to a numeric value.
+  nospace(3f) removes space, tab, carriage return, new line, vertical tab,
+  formfeed and null characters (called "whitespace"). The output is returned
+  trimmed.
 
-OPTIONS
-  str
-    holds string assumed to represent a numeric value
+EXAMPLES
+  Sample program:
 
-  val
-    returned value. May be REAL or INTEGER.
+      program demo_nospace
+      use M_strings, only: nospace
+      implicit none
+      character(len=:),allocatable  :: s
+	 s='  This     is      a     test  '
+	 write(*,*) 'original input string is ....',s
+	 write(*,*) 'processed output string is ...',nospace(s)
+	 if(nospace(s) == 'Thisisatest')then
+	    write(*,*)'nospace test passed'
+	 else
+	    write(*,*)'nospace test error'
+	 endif
+      end program demo_nospace
 
-  msg
-    message describing error when ATON returns .false.
+  Expected output
 
-RETURNS
-  aton
-    .true. if the conversion was successful, .false. otherwise
-
-EXAMPLE
-  Sample Program:
-
-       program demo_aton
-
-	use M_strings, only: aton
-	implicit none
-	character(len=14),allocatable :: strings(:)
-	doubleprecision 	      :: dv
-	integer 		      :: iv
-	real			      :: rv
-	integer 		      :: i
-
-	! different strings representing INTEGER, REAL, and DOUBLEPRECISION
-	strings=[&
-	&' 10.345	',&
-	&'+10		',&
-	&'    -3	',&
-	&'    -4.94e-2	',&
-	&'0.1		',&
-	&'12345.678910d0',&
-	&'		',& ! Note: will return zero without an error message
-	&'1 2 1 2 1 . 0 ',& ! Note: spaces will be ignored
-	&'WHAT? 	']  ! Note: error messages will appear, zero returned
-
-	do i=1,size(strings)
-	   write(*,'(a)',advance='no')'STRING:',strings(i)
-	   if(aton(strings(i),iv)) write(*,'(g0)',advance='no')':INTEGER ',iv
-	   if(aton(strings(i),rv)) write(*,'(g0)',advance='no')':INTEGER ',rv
-	   if(aton(strings(i),dv)) write(*,'(g0)',advance='no')':INTEGER ',dv
-	enddo
-
-	end program demo_aton
-
+      original input string is ....  This     is      a     test
+      processed output string is ...Thisisatest
+      nospace test passed
 
 
 AUTHOR
@@ -2153,7 +1740,121 @@ LICENSE
 
 
 
-			      September 17, 2023	      aton(3m_strings)
+				March 31, 2024		   nospace(3m_strings)
+noesc(3m_strings)					     noesc(3m_strings)
+
+
+
+NAME
+  noesc(3f) - [M_strings:NONALPHA] convert non-printable characters to a space
+  (LICENSE:PD)
+
+
+SYNOPSIS
+  elemental function noesc(INSTR)
+
+      character(len=*),intent(in) :: INSTR
+      character(len=len(instr))   :: noesc
+
+
+DESCRIPTION
+  Convert non-printable characters to a space.
+
+EXAMPLES
+  Sample Program:
+
+     program demo_noesc
+
+      use M_strings, only : noesc
+      implicit none
+      character(len=128) :: ascii
+      character(len=128) :: cleared
+      integer		 :: i
+      ! fill variable with base ASCII character set
+      do i=1,128
+	 ascii(i:i)=char(i-1)
+      enddo
+      cleared=noesc(ascii)
+      write(*,*)'characters and their ADE (ASCII Decimal Equivalent)'
+      call ade(ascii)
+      write(*,*)'Cleared of non-printable characters'
+      call ade(cleared)
+      write(*,*)'Cleared string:'
+      write(*,*)cleared
+      contains
+	subroutine ade(string)
+	implicit none
+	! the string to print
+	character(len=*),intent(in) :: string
+	! number of characters in string to print
+	integer :: lgth
+	! counter used to step thru string
+	integer :: i
+	   ! get trimmed length of input string
+	   lgth=len_trim(string(:len(string)))
+
+	   ! replace lower unprintable characters with spaces
+	   write(*,101)(merge(string(i:i),' ',&
+	   & iachar(string(i:i)) >= 32	      &
+	   & .and.			      &
+	   & iachar(string(i:i)) <= 126)      &
+	   & ,i=1,lgth)
+
+	   ! print ADE value of character underneath it
+	   write(*,202)     (iachar(string(i:i))/100,	 i=1,lgth)
+	   write(*,202)(mod( iachar(string(i:i)),100)/10,i=1,lgth)
+	   write(*,202)(mod((iachar(string(i:i))),10),	 i=1,lgth)
+	! format for printing string characters
+	101   format(*(a1:))
+	! format for printing ADE values
+	202   format(*(i1:))
+	end subroutine ade
+      end program demo_noesc
+
+     Expected output
+
+     The string is printed with the ADE value vertically beneath.
+     The original string has all the ADEs from 000 to 127. After
+     NOESC(3f) is called on the string all the "non-printable"
+     characters are replaced with a space (ADE of 032).
+
+  characters and their ADE (ASCII Decimal Equivalent)
+
+     >				       !"#$%&'()*+,-./0123456789
+     :;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+     >0000000000000000000000000000000000000000000000000000000000
+     0000000000000000000000000000000000000000001111111111111111111111111111
+     >00000000001111111111222222222233333333334444444444555555555566666666
+     667777777777888888888899999999990000000000111111111122222222
+     >012345678901234567890123456789012345678901234567890123456789012345678
+     90123456789012345678901234567890123456789012345678901234567
+
+  Cleared of non-printable characters
+
+     >				       !"#$%&'()*+,-./0123456789
+     :;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+     >0000000000000000000000000000000000000000000000000000000000
+     000000000000000000000000000000000000000000111111111111111111111111111
+     >3333333333333333333333333333333333333333444444444455555555
+     556666666666777777777788888888889999999999000000000011111111112222222
+     >2222222222222222222222222222222223456789012345678901234567
+     890123456789012345678901234567890123456789012345678901234567890123456
+
+  Cleared string:
+
+     >					!"#$%&'()*+,-./0123456789:;<=>?@
+     ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		     noesc(3m_strings)
 notabs(3m_strings)					    notabs(3m_strings)
 
 
@@ -2225,7 +1926,7 @@ LICENSE
 
 
 
-			      September 17, 2023	    notabs(3m_strings)
+				March 31, 2024		    notabs(3m_strings)
 pad(3m_strings) 					       pad(3m_strings)
 
 
@@ -2348,7 +2049,86 @@ LICENSE
 
 
 
-			      September 17, 2023	       pad(3m_strings)
+				March 31, 2024		       pad(3m_strings)
+aton(3m_strings)					      aton(3m_strings)
+
+
+
+NAME
+  aton(3f) - [M_strings:TYPE] function returns argument as a numeric value
+  from a string (LICENSE:PD)
+
+
+SYNOPSIS
+  logical function aton(str,val[,msg])
+
+      character(len=*),intent(in)	:: str
+      type(TYPE(kind=KIND)),intent(out) :: val
+      character(len=:),allocatable,intent(out) :: msg
+
+
+DESCRIPTION
+  This function converts a string to a numeric value.
+
+OPTIONS
+  str
+    holds string assumed to represent a numeric value
+
+  val
+    returned value. May be REAL or INTEGER.
+
+  msg
+    message describing error when ATON returns .false.
+
+RETURNS
+  aton
+    .true. if the conversion was successful, .false. otherwise
+
+EXAMPLE
+  Sample Program:
+
+       program demo_aton
+
+	use M_strings, only: aton
+	implicit none
+	character(len=14),allocatable :: strings(:)
+	doubleprecision 	      :: dv
+	integer 		      :: iv
+	real			      :: rv
+	integer 		      :: i
+
+	! different strings representing INTEGER, REAL, and DOUBLEPRECISION
+	strings=[&
+	&' 10.345	',&
+	&'+10		',&
+	&'    -3	',&
+	&'    -4.94e-2	',&
+	&'0.1		',&
+	&'12345.678910d0',&
+	&'		',& ! Note: will return zero without an error message
+	&'1 2 1 2 1 . 0 ',& ! Note: spaces will be ignored
+	&'WHAT? 	']  ! Note: error messages will appear, zero returned
+
+	do i=1,size(strings)
+	   write(*,'(a)',advance='no')'STRING:',strings(i)
+	   if(aton(strings(i),iv)) write(*,'(g0)',advance='no')':INTEGER ',iv
+	   if(aton(strings(i),rv)) write(*,'(g0)',advance='no')':INTEGER ',rv
+	   if(aton(strings(i),dv)) write(*,'(g0)',advance='no')':INTEGER ',dv
+	enddo
+
+	end program demo_aton
+
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		      aton(3m_strings)
 paragraph(3m_strings)					 paragraph(3m_strings)
 
 
@@ -2436,7 +2216,7 @@ LICENSE
 
 
 
-			      September 17, 2023	 paragraph(3m_strings)
+				March 31, 2024		 paragraph(3m_strings)
 percent_encode(3m_strings)			    percent_encode(3m_strings)
 
 
@@ -2521,7 +2301,151 @@ AUTHOR
 
 
 
-			      September 17, 2023    percent_encode(3m_strings)
+				March 31, 2024	    percent_encode(3m_strings)
+quote(3m_strings)					     quote(3m_strings)
+
+
+
+NAME
+  quote(3f) - [M_strings:QUOTES] add quotes to string as if written with list-
+  directed input (LICENSE:PD)
+
+
+SYNOPSIS
+  function quote(str,mode,clip) result (quoted_str)
+
+     character(len=*),intent(in)	  :: str
+     character(len=*),optional,intent(in) :: mode
+     logical,optional,intent(in)	  :: clip
+     character(len=:),allocatable	  :: quoted_str
+
+
+DESCRIPTION
+  Add quotes to a CHARACTER variable as if it was written using list-directed
+  input. This is particularly useful for processing strings to add to CSV
+  files.
+
+OPTIONS
+  str
+    input string to add quotes to, using the rules of list-directed input
+    (single quotes are replaced by two adjacent quotes)
+
+  mode
+    alternate quoting methods are supported:
+
+	      DOUBLE   default. replace quote with double quotes
+	      ESCAPE   replace quotes with backslash-quote instead of
+		       double quotes
+
+
+  clip
+    default is to trim leading and trailing spaces from the string. If CLIP is
+    .FALSE. spaces are not trimmed
+
+RESULT
+  quoted_str
+    The output string, which is based on adding quotes to STR.
+
+EXAMPLE
+  Sample program:
+
+     program demo_quote
+     use M_strings, only : quote
+     implicit none
+     character(len=:),allocatable :: str
+     character(len=1024)	  :: msg
+     integer			  :: ios
+     character(len=80)		  :: inline
+	do
+	   write(*,'(a)',advance='no')'Enter test string:'
+	   read(*,'(a)',iostat=ios,iomsg=msg)inline
+	   if(ios /= 0)then
+	      write(*,*)trim(inline)
+	      exit
+	   endif
+
+	   ! the original string
+	   write(*,'(a)')'ORIGINAL     ['//trim(inline)//']'
+
+	   ! the string processed by quote(3f)
+	   str=quote(inline)
+	   write(*,'(a)')'QUOTED     ['//str//']'
+
+	   ! write the string list-directed to compare the results
+	   write(*,'(a)',iostat=ios,iomsg=msg) 'LIST DIRECTED:'
+	   write(*,*,iostat=ios,iomsg=msg,delim='none') inline
+	   write(*,*,iostat=ios,iomsg=msg,delim='quote') inline
+	   write(*,*,iostat=ios,iomsg=msg,delim='apostrophe') inline
+	enddo
+     end program demo_quote
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		     quote(3m_strings)
+real(3m_strings)					      real(3m_strings)
+
+
+
+NAME
+  real(3f) - [M_strings:TYPE] overloads REAL(3f) so it can handle character
+  arguments (LICENSE:PD)
+
+
+SYNOPSIS
+  impure elemental function real(string)
+
+      character(len=*) :: string
+      integer	       :: real
+
+
+DESCRIPTION
+  real(3f) returns a REAL value when given a numeric representation of a
+  numeric value. This overloads the REAL(3f) intrinsic so that CHARACTER
+  arguments assumed to represent a numeric value may be input.
+
+OPTIONS
+  STRING
+    input string to be converted to a real value
+
+RETURNS
+  REAL
+    real value represented by input string
+
+EXAMPLE
+  Sample program:
+
+       program demo_real
+       use M_strings, only: real
+       implicit none
+       write(*,*)real('100'),real('20.4')
+       write(*,*)'real still works',real(20)
+       write(*,*)'elemental',&
+       & real([character(len=23) :: '10','20.3','20.5','20.6'])
+       end program demo_real
+
+  Results:
+
+       >    100.000000	     20.3999996
+       >  real still works   20.0000000
+       >  elemental   10.0000000  20.2999992  20.5000000  20.6000004
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		      real(3m_strings)
 chomp(3m_strings)					     chomp(3m_strings)
 
 
@@ -2615,7 +2539,7 @@ LICENSE
 
 
 
-			      September 17, 2023	     chomp(3m_strings)
+				March 31, 2024		     chomp(3m_strings)
 clip(3m_strings)					      clip(3m_strings)
 
 
@@ -2668,7 +2592,7 @@ LICENSE
 
 
 
-			      September 17, 2023	      clip(3m_strings)
+				March 31, 2024		      clip(3m_strings)
 base(3m_strings)					      base(3m_strings)
 
 
@@ -2735,7 +2659,7 @@ LICENSE
 
 
 
-			      September 17, 2023	      base(3m_strings)
+				March 31, 2024		      base(3m_strings)
 base2(3m_strings)					     base2(3m_strings)
 
 
@@ -2795,7 +2719,7 @@ LICENSE
 
 
 
-			      September 17, 2023	     base2(3m_strings)
+				March 31, 2024		     base2(3m_strings)
 codebase(3m_strings)					  codebase(3m_strings)
 
 
@@ -2851,7 +2775,7 @@ LICENSE
 
 
 
-			      September 17, 2023	  codebase(3m_strings)
+				March 31, 2024		  codebase(3m_strings)
 compact(3m_strings)					   compact(3m_strings)
 
 
@@ -2924,7 +2848,7 @@ LICENSE
 
 
 
-			      September 17, 2023	   compact(3m_strings)
+				March 31, 2024		   compact(3m_strings)
 replace(3m_strings)					   replace(3m_strings)
 
 
@@ -3050,7 +2974,7 @@ LICENSE
 
 
 
-			      September 17, 2023	   replace(3m_strings)
+				March 31, 2024		   replace(3m_strings)
 reverse(3m_strings)					   reverse(3m_strings)
 
 
@@ -3098,7 +3022,7 @@ LICENSE
 
 
 
-			      September 17, 2023	   reverse(3m_strings)
+				March 31, 2024		   reverse(3m_strings)
 rotate13(3m_strings)					  rotate13(3m_strings)
 
 
@@ -3197,7 +3121,7 @@ LICENSE
 
 
 
-			      September 17, 2023	  rotate13(3m_strings)
+				March 31, 2024		  rotate13(3m_strings)
 rpad(3m_strings)					      rpad(3m_strings)
 
 
@@ -3266,7 +3190,7 @@ LICENSE
 
 
 
-			      September 17, 2023	      rpad(3m_strings)
+				March 31, 2024		      rpad(3m_strings)
 bundle(3m_strings)					    bundle(3m_strings)
 
 
@@ -3331,7 +3255,7 @@ LICENSE
 
 
 
-			      September 17, 2023	    bundle(3m_strings)
+				March 31, 2024		    bundle(3m_strings)
 s2c(3m_strings) 					       s2c(3m_strings)
 
 
@@ -3395,7 +3319,7 @@ LICENSE
 
 
 
-			      September 17, 2023	       s2c(3m_strings)
+				March 31, 2024		       s2c(3m_strings)
 s2vs(3m_strings)					      s2vs(3m_strings)
 
 
@@ -3476,7 +3400,7 @@ LICENSE
 
 
 
-			      September 17, 2023	      s2vs(3m_strings)
+				March 31, 2024		      s2vs(3m_strings)
 s2v(3m_strings) 					       s2v(3m_strings)
 
 
@@ -3602,7 +3526,7 @@ LICENSE
 
 
 
-			      September 17, 2023	       s2v(3m_strings)
+				March 31, 2024		       s2v(3m_strings)
 sep(3m_strings) 					       sep(3m_strings)
 
 
@@ -3703,7 +3627,203 @@ LICENSE
 
 
 
-			      September 17, 2023	       sep(3m_strings)
+				March 31, 2024		       sep(3m_strings)
+slice(3m_strings)					     slice(3m_strings)
+
+
+
+NAME
+  slice(3f) - [M_strings:TOKENS] parse string into an array using specified
+  delimiters (LICENSE:PD)
+
+
+SYNOPSIS
+  subroutine slice(input_line,ibegin,iend,delimiters,nulls)
+
+      character(len=*),intent(in)	       :: input_line
+      integer,allocatable,intent(out)	       :: ibegin(:),iend(:)
+      character(len=*),optional,intent(in)     :: delimiters
+      character(len=*),optional,intent(in)     :: nulls
+
+
+DESCRIPTION
+  slice(3f) parses a string using specified delimiter characters and store
+  token beginning and ending positions into allocatable arrays
+
+OPTIONS
+  INPUT_LINE
+    Input string to tokenize
+
+  IBEGIN,IEND
+    arrays containing start and end positions of tokens.  IEND(I)<IBEGIN(I)
+    designates a null token.
+
+  DELIMITERS
+    List of delimiter characters.  The default delimiters are the "whitespace"
+    characters (space, tab,new line, vertical tab, formfeed, carriage return,
+    and null). You may specify an alternate set of delimiter characters.
+
+    Multi-character delimiters are not supported (Each character in the
+    DELIMITERS list is considered to be a delimiter).
+
+    Quoting of delimiter characters is not supported.
+
+  NULLS="IGNORE"|"RETURN"|"IGNOREEND"
+    Treatment of null fields.  By default adjacent delimiters in the input
+    string do not create an empty string in the output array. if
+    NULLS='return' adjacent delimiters create an empty element in the output
+    ARRAY. If NULLS='ignoreend' then only trailing delimiters at the right of
+    the string are ignored.
+
+EXAMPLES
+  Sample program:
+
+      program demo_slice
+      use M_strings, only: slice
+      implicit none
+      integer :: i
+      character(len=*),parameter     :: &
+      & line='	aBcdef	 ghijklmnop qrstuvwxyz	1:|:2	  333|333 a B cc    '
+      integer,allocatable :: ibegin(:), iend(:) ! output arrays of positions
+      character(len=*),parameter :: title='(80("="),t1,a)'
+	 write(*,*)'INPUT LINE:['//line//']'
+	 !
+	 write(*,title)'typical call: '
+	 call slice(line,ibegin,iend)
+	 call printme()
+	 !
+	 write(*,title)'custom list of delimiters=":|" : '
+	 call slice(line,ibegin,iend,delimiters=':|',nulls='ignore')
+	 call printme()
+	 !
+	 write(*,title)'delimiters=":|", and count null fields: '
+	 call slice(line,ibegin,iend,delimiters=':|',nulls='return')
+	 call printme()
+	 !
+	 write(*,title)'default delimiters and return null fields: '
+	 call slice(line,ibegin,iend,delimiters='',nulls='return')
+	 call printme()
+      contains
+      subroutine printme()
+	 write(*,'((*(:/,3x,"[",g0,"]")))')&
+		 & (line(ibegin(i):iend(i)),i=1,size(ibegin))
+	 write(*,'(*(g0,1x))')'SIZE:',size(ibegin)
+      end subroutine printme
+      end program demo_slice
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		     slice(3m_strings)
+split(3m_strings)					     split(3m_strings)
+
+
+
+NAME
+  split(3f) - [M_strings:TOKENS] parse string into an array using specified
+  delimiters (LICENSE:PD)
+
+
+SYNOPSIS
+  subroutine split(input_line,array,delimiters,order,nulls)
+
+      character(len=*),intent(in)	       :: input_line
+      character(len=:),allocatable,intent(out) :: array(:)
+      character(len=*),optional,intent(in)     :: delimiters
+      character(len=*),optional,intent(in)     :: order
+      character(len=*),optional,intent(in)     :: nulls
+
+
+DESCRIPTION
+  SPLIT(3f) parses a string using specified delimiter characters and store
+  tokens into an allocatable array
+
+OPTIONS
+  INPUT_LINE
+    Input string to tokenize
+
+  ARRAY
+    Output array of tokens
+
+  DELIMITERS
+    List of delimiter characters.  The default delimiters are the "whitespace"
+    characters (space, tab,new line, vertical tab, formfeed, carriage return,
+    and null). You may specify an alternate set of delimiter characters.
+
+    Multi-character delimiters are not supported (Each character in the
+    DELIMITERS list is considered to be a delimiter).
+
+    Quoting of delimiter characters is not supported.
+
+  ORDER SEQUENTIAL|REVERSE|RIGHT
+    Order of output array.  By default ARRAY contains the tokens having parsed
+    the INPUT_LINE from left to right. If ORDER='RIGHT' or ORDER='REVERSE' the
+    parsing goes from right to left.  (This can be accomplished with array
+    syntax in modern Fortran, but was more useful pre-fortran90).
+
+  NULLS=IGNORE|RETURN|IGNOREEND
+    Treatment of null fields.  By default adjacent delimiters in the input
+    string do not create an empty string in the output array. if
+    NULLS='return' adjacent delimiters create an empty element in the output
+    ARRAY. If NULLS='ignoreend' then only trailing delimiters at the right of
+    the string are ignored.
+
+EXAMPLES
+  Sample program:
+
+     program demo_split
+     use M_strings, only: split
+     implicit none
+     integer :: i
+     character(len=*),parameter :: title='(80("="),t1,a)'
+     character(len=*),parameter     :: line=&
+     '	aBcdef	 ghijklmnop qrstuvwxyz	1:|:2	  333|333 a B cc    '
+     character(len=:),allocatable :: array(:) ! output array of tokens
+	write(*,*)'INPUT LINE:['//line//']'
+	!
+	write(*,title)'typical call: '
+	call split(line,array)
+	call printme()
+	!
+	write(*,title)'custom delimiters=":|" : '
+	call split(line,array,delimiters=':|',&
+	& order='sequential',nulls='ignore')
+	call printme()
+	!
+	write(*,title)&
+	'delimiters=":|",reverse array order and count null fields:'
+	call split(line,array,delimiters=':|',&
+	& order='reverse',nulls='return')
+	call printme()
+	!
+	write(*,title)&
+	'default delimiters, reverse array order and return null fields:'
+	call split(line,array,delimiters='',&
+	& order='reverse',nulls='return')
+	call printme()
+     contains
+     subroutine printme()
+	write(*,'(i0," ==> ",a)')(i,trim(array(i)),i=1,size(array))
+	write(*,*)'SIZE:',size(array)
+     end subroutine printme
+     end program demo_split
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		     split(3m_strings)
 squeeze(3m_strings)					   squeeze(3m_strings)
 
 
@@ -3783,164 +3903,7 @@ LICENSE
 
 
 
-			      September 17, 2023	   squeeze(3m_strings)
-split(3m_strings)					     split(3m_strings)
-
-
-
-NAME
-  split(3f) - [M_strings:TOKENS] parse string into an array using specified
-  delimiters (LICENSE:PD)
-
-
-SYNOPSIS
-  subroutine split(input_line,array,delimiters,order,nulls)
-
-      character(len=*),intent(in)	       :: input_line
-      character(len=:),allocatable,intent(out) :: array(:)
-      character(len=*),optional,intent(in)     :: delimiters
-      character(len=*),optional,intent(in)     :: order
-      character(len=*),optional,intent(in)     :: nulls
-
-
-DESCRIPTION
-  SPLIT(3f) parses a string using specified delimiter characters and store
-  tokens into an allocatable array
-
-OPTIONS
-  INPUT_LINE
-    Input string to tokenize
-
-  ARRAY
-    Output array of tokens
-
-  DELIMITERS
-    List of delimiter characters.  The default delimiters are the "whitespace"
-    characters (space, tab,new line, vertical tab, formfeed, carriage return,
-    and null). You may specify an alternate set of delimiter characters.
-
-    Multi-character delimiters are not supported (Each character in the
-    DELIMITERS list is considered to be a delimiter).
-
-    Quoting of delimiter characters is not supported.
-
-  ORDER SEQUENTIAL|REVERSE|RIGHT
-    Order of output array.  By default ARRAY contains the tokens having parsed
-    the INPUT_LINE from left to right. If ORDER='RIGHT' or ORDER='REVERSE' the
-    parsing goes from right to left.  (This can be accomplished with array
-    syntax in modern Fortran, but was more useful pre-fortran90).
-
-  NULLS=IGNORE|RETURN|IGNOREEND
-    Treatment of null fields.  By default adjacent delimiters in the input
-    string do not create an empty string in the output array. if
-    NULLS='return' adjacent delimiters create an empty element in the output
-    ARRAY. If NULLS='ignoreend' then only trailing delimiters at the right of
-    the string are ignored.
-
-EXAMPLES
-  Sample program:
-
-     program demo_split
-     use M_strings, only: split
-     implicit none
-     integer :: i
-     character(len=*),parameter     :: line=&
-     '	aBcdef	 ghijklmnop qrstuvwxyz	1:|:2	  333|333 a B cc    '
-     character(len=:),allocatable :: array(:) ! output array of tokens
-	write(*,*)'INPUT LINE:['//line//']'
-	write(*,'(70("="))')
-	write(*,*)'typical call:'
-	call split(line,array)
-	write(*,'(i0," ==> ",a)')(i,trim(array(i)),i=1,size(array))
-	write(*,*)'SIZE:',size(array)
-	write(*,'(70("-"))')
-	write(*,*)'custom list of delimiters (colon and vertical line):'
-	call split(line,array,delimiters=':|',&
-	& order='sequential',nulls='ignore')
-	write(*,'(i0," ==> ",a)')(i,trim(array(i)),i=1,size(array))
-	write(*,*)'SIZE:',size(array)
-	write(*,'(70("-"))')
-	write(*,*) 'custom list of delimiters, &
-	&reverse array order and count null fields:'
-	call split(line,array,delimiters=':|',&
-	&order='reverse',nulls='return')
-	write(*,'(i0," ==> ",a)')(i,trim(array(i)),i=1,size(array))
-	write(*,*)'SIZE:',size(array)
-	write(*,'(70("-"))')
-	write(*,*)'INPUT LINE:['//line//']'
-	write(*,*) 'default delimiters and reverse array order &
-	&and return null fields:'
-	call split(line,array,delimiters='',order='reverse',nulls='return')
-	write(*,'(i0," ==> ",a)')(i,trim(array(i)),i=1,size(array))
-	write(*,*)'SIZE:',size(array)
-     end program demo_split
-
-  Output
-
-    >INPUT LINE:[  aBcdef   ghijklmnop qrstuvwxyz  1:|:2     333|
-    333 a B cc	  ]
-    >=================================================================
-    > typical call:
-    >1 ==> aBcdef
-    >2 ==> ghijklmnop
-    >3 ==> qrstuvwxyz
-    >4 ==> 1:|:2
-    >5 ==> 333|333
-    >6 ==> a
-    >7 ==> B
-    >8 ==> cc
-    > SIZE:	      8
-    >----------------------------------------------------------------
-    > custom list of delimiters (colon and vertical line):
-    >1 ==>   aBcdef   ghijklmnop qrstuvwxyz  1
-    >2 ==> 2	 333
-    >3 ==> 333 a B cc
-    > SIZE:	      3
-    >----------------------------------------------------------------
-    > custom list of delimiters, reverse array order and
-    return null fields:
-    >1 ==> 333 a B cc
-    >2 ==> 2	 333
-    >3 ==>
-    >4 ==>
-    >5 ==>   aBcdef   ghijklmnop qrstuvwxyz  1
-    > SIZE:	      5
-    >----------------------------------------------------------------
-    > INPUT LINE:[  aBcdef   ghijklmnop qrstuvwxyz  1:|:2     333|
-    333 a B cc	  ]
-    > default delimiters and reverse array order and count null fields:
-    >1 ==>
-    >2 ==>
-    >3 ==>
-    >4 ==> cc
-    >5 ==> B
-    >6 ==> a
-    >7 ==> 333|333
-    >8 ==>
-    >9 ==>
-    >10 ==>
-    >11 ==>
-    >12 ==> 1:|:2
-    >13 ==>
-    >14 ==> qrstuvwxyz
-    >15 ==> ghijklmnop
-    >16 ==>
-    >17 ==>
-    >18 ==> aBcdef
-    >19 ==>
-    >20 ==>
-    > SIZE:	     20
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	     split(3m_strings)
+				March 31, 2024		   squeeze(3m_strings)
 cpad(3m_strings)					      cpad(3m_strings)
 
 
@@ -4002,7 +3965,7 @@ LICENSE
 
 
 
-			      September 17, 2023	      cpad(3m_strings)
+				March 31, 2024		      cpad(3m_strings)
 crop(3m_strings)					      crop(3m_strings)
 
 
@@ -4058,7 +4021,7 @@ LICENSE
 
 
 
-			      September 17, 2023	      crop(3m_strings)
+				March 31, 2024		      crop(3m_strings)
 split2020(3m_strings)					 split2020(3m_strings)
 
 
@@ -4218,14 +4181,14 @@ EXAMPLES
       block
 	character (len=:), allocatable :: string
 	character (len=*),parameter :: set = " ,"
-	integer :: p, istart, iend
+	integer :: p, ibegin, iend
 	string = " one,   last	example  "
 	do while (p < len(string))
-	  istart = p + 1
+	  ibegin = p + 1
 	  call split2020 (string, set, p)
 	  iend=p-1
-	  if(iend > istart)then
-	     print '(t3,a,1x,i0,1x,i0)', string (istart:iend),istart,iend
+	  if(iend > ibegin)then
+	     print '(t3,a,1x,i0,1x,i0)', string (ibegin:iend),ibegin,iend
 	  endif
 	enddo
       endblock
@@ -4259,7 +4222,7 @@ VERSION
 
 
 
-			      September 17, 2023	 split2020(3m_strings)
+				March 31, 2024		 split2020(3m_strings)
 stretch(3m_strings)					   stretch(3m_strings)
 
 
@@ -4362,7 +4325,7 @@ LICENSE
 
 
 
-			      September 17, 2023	   stretch(3m_strings)
+				March 31, 2024		   stretch(3m_strings)
 string_to_value(3m_strings)			   string_to_value(3m_strings)
 
 
@@ -4427,7 +4390,7 @@ LICENSE
 
 
 
-			      September 17, 2023   string_to_value(3m_strings)
+				March 31, 2024	   string_to_value(3m_strings)
 string_to_values(3m_strings)			  string_to_values(3m_strings)
 
 
@@ -4522,7 +4485,7 @@ LICENSE
 
 
 
-			      September 17, 2023  string_to_values(3m_strings)
+				March 31, 2024	  string_to_values(3m_strings)
 strtok(3m_strings)					    strtok(3m_strings)
 
 
@@ -4587,7 +4550,7 @@ EXAMPLES
       implicit none
       character(len=264)	  :: inline
       character(len=*),parameter  :: delimiters=' ;,'
-      integer			  :: ios, itoken, istart, iend
+      integer			  :: ios, itoken, ibegin, iend
 	 do ! read lines from stdin until end-of-file or error
 	    read (unit=*,fmt="(a)",iostat=ios) inline
 	    if(ios /= 0)stop
@@ -4595,9 +4558,9 @@ EXAMPLES
 	    ! on a new string.
 	    itoken=0
 	    do while &
-	    &( strtok(inline,itoken,istart,iend,delimiters) )
+	    &( strtok(inline,itoken,ibegin,iend,delimiters) )
 	       print *, itoken,&
-	       & 'TOKEN=['//(inline(istart:iend))//']',istart,iend
+	       & 'TOKEN=['//(inline(ibegin:iend))//']',ibegin,iend
 	    enddo
 	 enddo
       end program demo_strtok
@@ -4627,7 +4590,7 @@ LICENSE
 
 
 
-			      September 17, 2023	    strtok(3m_strings)
+				March 31, 2024		    strtok(3m_strings)
 substitute(3m_strings)					substitute(3m_strings)
 
 
@@ -4714,7 +4677,7 @@ LICENSE
 
 
 
-			      September 17, 2023	substitute(3m_strings)
+				March 31, 2024		substitute(3m_strings)
 switch(3m_strings)					    switch(3m_strings)
 
 
@@ -4822,7 +4785,148 @@ LICENSE
 
 
 
-			      September 17, 2023	    switch(3m_strings)
+				March 31, 2024		    switch(3m_strings)
+dble(3m_strings)					      dble(3m_strings)
+
+
+
+NAME
+  dble(3f) - [M_strings:TYPE] overloads DBLE(3f) so it can handle character
+  arguments (LICENSE:PD)
+
+
+SYNOPSIS
+  impure elemental function dble(string)
+
+      character(len=*) :: string
+      integer	       :: dble
+
+
+DESCRIPTION
+  dble(3f) returns a DOUBLE value when given a numeric representation of a
+  numeric value. This overloads the DBLE(3f) intrinsic so that CHARACTER
+  arguments assumed to represent a numeric value may be input.
+
+OPTIONS
+  STRING
+    input string to be converted to a dble value
+
+RETURNS
+  DBLE
+    double precision value represented by input string
+
+EXAMPLE
+  Sample program:
+
+       program demo_dble
+       use M_strings, only: dble
+       implicit none
+       write(*,*)dble('100'),dble('20.4')
+       write(*,*)'dble still works',dble(20),dble(20.4)
+       write(*,*)'elemental',&
+       & dble([character(len=23) :: '10','20.3','20.5','20.6'])
+       end program demo_dble
+
+  Results:
+
+       >    100.00000000000000	      20.399999999999999
+       >  dble still works   20.000000000000000 20.399999618530273
+       >  elemental   10.00000000000000  20.30000000000000
+       >  20.50000000000000 20.60000000000000
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		      dble(3m_strings)
+decodebase(3m_strings)					decodebase(3m_strings)
+
+
+
+NAME
+  decodebase(3f) - [M_strings:BASE] convert whole number string in base [2-36]
+  to base 10 number (LICENSE:PD)
+
+
+SYNOPSIS
+  logical function decodebase(string,basein,out10)
+
+     character(len=*),intent(in)  :: string
+     integer,intent(in) 	  :: basein
+     integer,intent(out)	  :: out10
+
+DESCRIPTION
+  Convert a numeric string representing a whole number in base BASEIN to base
+  10. The function returns FALSE if BASEIN is not in the range [2..36] or if
+  string STRING contains invalid characters in base BASEIN or if result OUT10
+  is too big
+
+  The letters A,B,...,Z represent 10,11,...,36 in the base > 10.
+
+OPTIONS
+  string
+    input string. It represents a whole number in the base specified by BASEIN
+    unless BASEIN is set to zero. When BASEIN is zero STRING is assumed to be
+    of the form BASE#VALUE where BASE represents the function normally
+    provided by BASEIN.
+
+  basein
+    base of input string; either 0 or from 2 to 36.
+
+  out10
+    output value in base 10
+
+EXAMPLE
+  Sample program:
+
+     program demo_decodebase
+     use M_strings, only : codebase, decodebase
+     implicit none
+     integer	       :: ba,bd
+     character(len=40) :: x,y
+     integer	       :: r
+
+     print *,' BASE CONVERSION'
+     write(*,'("Start	Base (2 to 36): ")',advance='no'); read *, bd
+     write(*,'("Arrival Base (2 to 36): ")',advance='no'); read *, ba
+     INFINITE: do
+	print *,''
+	write(*,'("Enter number in start base: ")',advance='no'); read *, x
+	if(x == '0') exit INFINITE
+	if(decodebase(x,bd,r)) then
+	   if(codebase(r,ba,y)) then
+	     write(*,'("In base ",I2,": ",A20)')  ba, y
+	   else
+	     print *,'Error in coding number.'
+	   endif
+	else
+	   print *,'Error in decoding number.'
+	endif
+     enddo INFINITE
+
+     end program demo_decodebase
+
+
+AUTHOR
+  John S. Urban
+
+	Ref.: "Math matiques en Turbo-Pascal by
+	       M. Ducamp and A. Reverchon (2),
+	       Eyrolles, Paris, 1988".
+
+  based on a F90 Version By J-P Moreau (www.jpmoreau.fr)
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		decodebase(3m_strings)
 describe(3m_strings)					  describe(3m_strings)
 
 
@@ -4994,7 +5098,7 @@ LICENSE
 
 
 
-			      September 17, 2023	  describe(3m_strings)
+				March 31, 2024		  describe(3m_strings)
 dilate(3m_strings)					    dilate(3m_strings)
 
 
@@ -5057,7 +5161,7 @@ LICENSE
 
 
 
-			      September 17, 2023	    dilate(3m_strings)
+				March 31, 2024		    dilate(3m_strings)
 edit_distance(3m_strings)			     edit_distance(3m_strings)
 
 
@@ -5101,7 +5205,7 @@ LICENSE
 
 
 
-			      September 17, 2023     edit_distance(3m_strings)
+				March 31, 2024	     edit_distance(3m_strings)
 ends_with(3m_strings)					 ends_with(3m_strings)
 
 
@@ -5163,7 +5267,7 @@ LICENSE
 
 
 
-			      September 17, 2023	 ends_with(3m_strings)
+				March 31, 2024		 ends_with(3m_strings)
 expand(3m_strings)					    expand(3m_strings)
 
 
@@ -5226,7 +5330,7 @@ EXAMPLES
 	use M_strings, only : expand
 	integer,parameter     :: iwidth=1024
 	integer 	      :: i
-	character(len=iwidth),parameter :: input(5)=[ character(len=iwidth) :: &
+	character(len=iwidth),parameter :: input(*)=[ character(len=iwidth) :: &
 	   '\e[H\e[2J',&
 	   '\tABC\tabc',&
 	   '\tA\a',&
@@ -5246,7 +5350,7 @@ LICENSE
 
 
 
-			      September 17, 2023	    expand(3m_strings)
+				March 31, 2024		    expand(3m_strings)
 fortran_name(3m_strings)			      fortran_name(3m_strings)
 
 
@@ -5311,7 +5415,7 @@ EXAMPLE
 
 
 
-			      September 17, 2023      fortran_name(3m_strings)
+				March 31, 2024	      fortran_name(3m_strings)
 getvals(3m_strings)					   getvals(3m_strings)
 
 
@@ -5428,7 +5532,175 @@ LICENSE
 
 
 
-			      September 17, 2023	   getvals(3m_strings)
+				March 31, 2024		   getvals(3m_strings)
+delim(3m_strings)					     delim(3m_strings)
+
+
+
+NAME
+  delim(3f) - [M_strings:TOKENS] parse a string and store tokens into an array
+  (LICENSE:PD)
+
+
+SYNOPSIS
+  subroutine delim(line,array,n,icount,ibegin,iterm,lgth,dlim)
+
+      character(len=*),intent(in)  :: line
+      integer,integer(in)	   :: n
+      integer,intent(out)	   :: icount
+      character(len=*)		   :: array(n)
+      integer,intent(out)	   :: ibegin(n)
+      integer,intent(out)	   :: iterm(n)
+      integer,intent(out)	   :: lgth
+      character(len=*)		   :: dlim
+
+
+DESCRIPTION
+  Given a LINE of structure " par1 par2 par3 ... parn " store each par(n) into
+  a separate variable in ARRAY (UNLESS ARRAY(1) == '#N#')
+
+  Also set ICOUNT to number of elements of array initialized, and return
+  beginning and ending positions for each element in IBEGIN(N) and ITERM(N).
+
+  Return position of last non-blank character (even if more than N elements
+  were found) in lgth
+
+  No quoting or escaping of delimiter is allowed, so the delimiter character
+  can not be placed in a token.
+
+  No checking for more than N parameters; If any more they are ignored.
+
+  This routine originates pre-Fortran90. A version using optional parameters
+  and allocatable arrays is on the TODO list.
+
+OPTIONS
+  LINE
+    input string to parse into tokens
+
+  ARRAY(N)
+    array that receives tokens
+
+  N size of arrays ARRAY, IBEGIN, ITERM
+
+  ICOUNT
+    number of tokens found
+
+  IBEGIN(N)
+    starting columns of tokens found
+
+  ITERM(N)
+    ending columns of tokens found
+
+  LGTH
+    position of last non-blank character in input string LINE
+
+  DLIM
+    delimiter characters
+
+EXAMPLES
+  Sample program:
+
+      program demo_delim
+
+      use M_strings, only: delim
+      implicit none
+      character(len=80) :: line
+      character(len=80) :: dlm
+      integer,parameter :: n=80
+      character(len=20) :: array(n)=' '
+      integer		:: ibegin(n),iterm(n)
+      integer		:: i20, icount, lgth, i10,i30
+      line=' first  second 10.3 words_of_stuff	'
+      do i20=1,4
+	 ! change delimiter list and what is calculated or parsed
+	 if(i20 == 1)dlm=' '
+	 if(i20 == 2)dlm='o'
+	 if(i20 == 3)dlm=' aeiou'    ! NOTE SPACE IS FIRST
+	 if(i20 == 3)ARRAY(1)='#N#'  ! QUIT RETURNING STRING ARRAY
+	 if(i20 == 4)line='AAAaBBBBBBbIIIIIi  J K L'
+
+	 ! write out a break line composed of =========== ..
+	 write(*,'(57("="))')
+	 ! show line being parsed
+	 write(*,'(a)')'PARSING=['//trim(line)//'] on '//trim(dlm)
+	 ! call parsing procedure
+	 call delim(line,array,n,icount,ibegin,iterm,lgth,dlm)
+	 write(*,*)'number of tokens found=',icount
+	 write(*,*)'last character in column ',lgth
+	 if(icount > 0)then
+	    if(lgth /= iterm(icount))then
+	       write(*,*)'ignored from column ',iterm(icount)+1,' to ',lgth
+	    endif
+	    do i10=1,icount
+	       ! check flag to see if ARRAY() was set
+	       if(array(1) /= '#N#')then
+		  ! from returned array
+		  write(*,'(a,a,a)',advance='no')&
+		  &'[',array(i10)(:iterm(i10)-ibegin(i10)+1),']'
+	       endif
+	    enddo
+	    ! using start and end positions in IBEGIN() and ITERM()
+	    write(*,*)
+	    do i10=1,icount
+	       ! from positions in original line
+	       write(*,'(a,a,a)',advance='no')&
+	       &'[',line(ibegin(i10):iterm(i10)),']'
+	    enddo
+	    write(*,*)
+	 endif
+      enddo
+	 line='four    score and   seven  years ago'
+	 call delim(line,["#N#"],n,icount,ibegin,iterm,lgth,' ')
+	 do i30=1,icount
+	    write(*,*)ibegin(i30),iterm(i30),&
+	    & '['//line(ibegin(i30):iterm(i30))//']'
+	 enddo
+
+      end program demo_delim
+
+  Results:
+
+   > =========================================================
+   > PARSING=[ first  second 10.3 words_of_stuff] on
+   >  number of tokens found=		4
+   >  last character in column		 34
+   > [first][second][10.3][words_of_stuff]
+   > [first][second][10.3][words_of_stuff]
+   > =========================================================
+   > PARSING=[ first  second 10.3 words_of_stuff] on o
+   >  number of tokens found=		4
+   >  last character in column		 34
+   > [ first  sec][nd 10.3 w][rds_][f_stuff]
+   > [ first  sec][nd 10.3 w][rds_][f_stuff]
+   > =========================================================
+   > PARSING=[ first  second 10.3 words_of_stuff] on  aeiou
+   >  number of tokens found=	       10
+   >  last character in column		 34
+   >
+   > [f][rst][s][c][nd][10.3][w][rds_][f_st][ff]
+   > =========================================================
+   > PARSING=[AAAaBBBBBBbIIIIIi  J K L] on  aeiou
+   >  number of tokens found=		5
+   >  last character in column		 24
+   >
+   > [AAA][BBBBBBbIIIII][J][K][L]
+   >		1	    4 [four]
+   >		9	   13 [score]
+   >	       15	   17 [and]
+   >	       21	   25 [seven]
+   >	       28	   32 [years]
+   >	       34	   36 [ago]
+  ================================================================================
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		     delim(3m_strings)
 indent(3m_strings)					    indent(3m_strings)
 
 
@@ -5479,66 +5751,7 @@ LICENSE
 
 
 
-			      September 17, 2023	    indent(3m_strings)
-int(3m_strings) 					       int(3m_strings)
-
-
-
-NAME
-  int(3f) - [M_strings:TYPE] overloads INT(3f) so it can handle character
-  arguments (LICENSE:PD)
-
-
-SYNOPSIS
-  impure elemental function int(string)
-
-      character(len=*) :: string
-      integer(kind=int32) :: int
-
-
-DESCRIPTION
-  int(3f) returns an integer when given a numeric representation of a numeric
-  value. This overloads the INT(3f) intrinsic so that CHARACTER arguments
-  assumed to represent a numeric value may be input.
-
-OPTIONS
-  STRING
-    input string to be converted to an INT32 integer
-
-RETURNS
-  INT
-    integer represented by input string
-
-EXAMPLE
-  Sample program:
-
-       program demo_int
-       use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64
-       use M_strings, only: int
-       implicit none
-       character(len=*),parameter :: g='(*(g0,1x))'
-	  write(*,g)int('100'),int('20.4')
-	  write(*,g)'intrinsic int(3f) still works',int(20,int32)
-	  write(*,g)'elemental',&
-	  & int([character(len=23) :: '10','20.3','20.5','20.6'])
-       end program demo_int
-
-  Results:
-
-      > 100 20
-      > intrinsic int(3f) still works 20
-      > elemental 10 20 20 20
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	       int(3m_strings)
+				March 31, 2024		    indent(3m_strings)
 find_field(3m_strings)					find_field(3m_strings)
 
 
@@ -5665,7 +5878,66 @@ VERSION
 
 
 
-			      September 17, 2023	find_field(3m_strings)
+				March 31, 2024		find_field(3m_strings)
+int(3m_strings) 					       int(3m_strings)
+
+
+
+NAME
+  int(3f) - [M_strings:TYPE] overloads INT(3f) so it can handle character
+  arguments (LICENSE:PD)
+
+
+SYNOPSIS
+  impure elemental function int(string)
+
+      character(len=*) :: string
+      integer(kind=int32) :: int
+
+
+DESCRIPTION
+  int(3f) returns an integer when given a numeric representation of a numeric
+  value. This overloads the INT(3f) intrinsic so that CHARACTER arguments
+  assumed to represent a numeric value may be input.
+
+OPTIONS
+  STRING
+    input string to be converted to an INT32 integer
+
+RETURNS
+  INT
+    integer represented by input string
+
+EXAMPLE
+  Sample program:
+
+       program demo_int
+       use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64
+       use M_strings, only: int
+       implicit none
+       character(len=*),parameter :: g='(*(g0,1x))'
+	  write(*,g)int('100'),int('20.4')
+	  write(*,g)'intrinsic int(3f) still works',int(20,int32)
+	  write(*,g)'elemental',&
+	  & int([character(len=23) :: '10','20.3','20.5','20.6'])
+       end program demo_int
+
+  Results:
+
+      > 100 20
+      > intrinsic int(3f) still works 20
+      > elemental 10 20 20 20
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		       int(3m_strings)
 isalnum(3m_strings)					   isalnum(3m_strings)
 
 
@@ -5770,239 +6042,7 @@ LICENSE
 
 
 
-			      September 17, 2023	   isalnum(3m_strings)
-isalpha(3m_strings)					   isalpha(3m_strings)
-
-
-
-NAME
-  isalpha(3f) - [M_strings:COMPARE] returns .true. if character is a letter
-  and .false. otherwise (LICENSE:PD)
-
-
-SYNOPSIS
-  elemental function isalpha(onechar)
-
-     character,intent(in) :: onechar
-     logical		  :: isalpha
-
-
-DESCRIPTION
-  isalpha(3f) returns .true. if character is a letter and .false. otherwise
-
-OPTIONS
-  onechar
-    character to test
-
-RETURNS
-  isalpha
-    logical value returns .true. if character is a ASCII letter or false
-    otherwise.
-
-EXAMPLE
-  Sample program
-
-      program demo_isalpha
-      use M_strings, only : isalpha
-      implicit none
-      integer			 :: i
-      character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-	 write(*,'(40(a))')'ISGRAPH: ',pack( string, isalpha(string) )
-      end program demo_isalpha
-
-  Results:
-
-     ISGRAPH: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm
-     nopqrstuvwxyz
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	   isalpha(3m_strings)
-isascii(3m_strings)					   isascii(3m_strings)
-
-
-
-NAME
-  isascii(3f) - [M_strings:COMPARE] returns .true. if the character is in the
-  range char(0) to char(256) (LICENSE:PD)
-
-
-SYNOPSIS
-  elemental function isascii(onechar)
-
-      character,intent(in) :: onechar
-      logical		   :: isascii
-
-
-DESCRIPTION
-  isascii(3f) returns .true. if the character is in the range char(0) to
-  char(127)
-
-OPTIONS
-  onechar
-    character to test
-
-RETURNS
-  isupper
-    logical value returns true if character is an ASCII character.
-
-EXAMPLE
-  Sample program
-
-      program demo_isascii
-      use M_strings, only : isascii
-      implicit none
-      integer			 :: i
-      character(len=1),parameter :: string(*)=[(char(i),i=0,255)]
-	 write(*,'(10(g0,1x))')'ISASCII: ', &
-	 & iachar(pack( string, isascii(string) ))
-      end program demo_isascii
-
-  Results:
-
-     ISASCII:  0 1 2 3 4 5 6 7 8
-     9 10 11 12 13 14 15 16 17 18
-     19 20 21 22 23 24 25 26 27 28
-     29 30 31 32 33 34 35 36 37 38
-     39 40 41 42 43 44 45 46 47 48
-     49 50 51 52 53 54 55 56 57 58
-     59 60 61 62 63 64 65 66 67 68
-     69 70 71 72 73 74 75 76 77 78
-     79 80 81 82 83 84 85 86 87 88
-     89 90 91 92 93 94 95 96 97 98
-     99 100 101 102 103 104 105 106 107 108
-     109 110 111 112 113 114 115 116 117 118
-     119 120 121 122 123 124 125 126 127
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	   isascii(3m_strings)
-isblank(3m_strings)					   isblank(3m_strings)
-
-
-
-NAME
-  isblank(3f) - [M_strings:COMPARE] returns .true. if character is a blank
-  character (space or horizontal tab).	(LICENSE:PD)
-
-
-SYNOPSIS
-  elemental function isblank(onechar)
-
-      character,intent(in) :: onechar
-      logical		   :: isblank
-
-
-DESCRIPTION
-  isblank(3f) returns .true. if character is a blank character (space or
-  horizontal tab).
-
-OPTIONS
-  onechar
-    character to test
-
-RETURNS
-  isblank
-    logical value returns true if character is a "blank"
-
-    ( an ASCII
-      space or horizontal tab character).
-
-EXAMPLE
-  Sample program:
-
-      program demo_isblank
-      use M_strings, only : isblank
-      implicit none
-      integer			 :: i
-      character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-	 write(*,'(*(g0,1x))')'ISXBLANK: ',&
-	 & iachar(pack( string, isblank(string) ))
-      end program demo_isblank
-
-  Results:
-
-     ISXBLANK:	9 32
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	   isblank(3m_strings)
-iscntrl(3m_strings)					   iscntrl(3m_strings)
-
-
-
-NAME
-  iscntrl(3f) - [M_strings:COMPARE] returns .true. if character is a delete
-  character or ordinary control character (LICENSE:PD)
-
-
-SYNOPSIS
-  elemental function iscntrl(onechar)
-
-      character,intent(in) :: onechar
-      logical		   :: iscntrl
-
-
-DESCRIPTION
-  iscntrl(3f) returns .true. if character is a delete character or ordinary
-  control character
-
-OPTIONS
-  onechar
-    character to test
-
-RETURNS
-  iscntrl
-    logical value returns true if character is a control character
-
-EXAMPLE
-  Sample program
-
-      program demo_iscntrl
-      use M_strings, only : iscntrl
-      implicit none
-      integer			 :: i
-      character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-	 write(*,'(20(g0,1x))')'ISCNTRL: ', &
-	 & iachar(pack( string, iscntrl(string) ))
-      end program demo_iscntrl
-
-  Results:
-
-     ISCNTRL:  0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
-     20 21 22 23 24 25 26 27 28 29 30 31 127
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	   iscntrl(3m_strings)
+				March 31, 2024		   isalnum(3m_strings)
 transliterate(3m_strings)			     transliterate(3m_strings)
 
 
@@ -6092,7 +6132,7 @@ LICENSE
 
 
 
-			      September 17, 2023     transliterate(3m_strings)
+				March 31, 2024	     transliterate(3m_strings)
 unquote(3m_strings)					   unquote(3m_strings)
 
 
@@ -6180,7 +6220,7 @@ LICENSE
 
 
 
-			      September 17, 2023	   unquote(3m_strings)
+				March 31, 2024		   unquote(3m_strings)
 upper(3m_strings)					     upper(3m_strings)
 
 
@@ -6260,7 +6300,7 @@ LICENSE
 
 
 
-			      September 17, 2023	     upper(3m_strings)
+				March 31, 2024		     upper(3m_strings)
 upper_quoted(3m_strings)			      upper_quoted(3m_strings)
 
 
@@ -6327,110 +6367,50 @@ LICENSE
 
 
 
-			      September 17, 2023      upper_quoted(3m_strings)
-isdigit(3m_strings)					   isdigit(3m_strings)
+				March 31, 2024	      upper_quoted(3m_strings)
+isalpha(3m_strings)					   isalpha(3m_strings)
 
 
 
 NAME
-  isdigit(3f) - [M_strings:COMPARE] returns .true. if character is a digit
-  (0,1,...,9) and .false. otherwise (LICENSE:PD)
+  isalpha(3f) - [M_strings:COMPARE] returns .true. if character is a letter
+  and .false. otherwise (LICENSE:PD)
 
 
 SYNOPSIS
-  elemental function isdigit(onechar)
+  elemental function isalpha(onechar)
 
-      character,intent(in) :: onechar
-      logical		   :: isdigit
-
-
-DESCRIPTION
-  isdigit(3f) returns .true. if character is a digit (0,1,...,9) and .false.
-  otherwise
-
-EXAMPLES
-  Sample Program:
-
-      program demo_isdigit
-      use M_strings, only : isdigit, isspace, switch
-      implicit none
-      character(len=10),allocatable :: string(:)
-      integer			    :: i
-	 string=[&
-	 & '1 2 3 4 5 ' ,&
-	 & 'letters   ' ,&
-	 & '1234567890' ,&
-	 & 'both 8787 ' ]
-	 ! if string is nothing but digits and whitespace return .true.
-	 do i=1,size(string)
-	    write(*,'(a)',advance='no')'For string['//string(i)//']'
-	    write(*,*) &
-	     & all(isdigit(switch(string(i))).or.&
-	     & isspace(switch(string(i))))
-	 enddo
-      end program demo_isdigit
-
-  Expected output:
-
-	 For string[1 2 3 4 5 ] T
-	 For string[letters   ] F
-	 For string[1234567890] T
-	 For string[both 8787 ] F
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	   isdigit(3m_strings)
-isgraph(3m_strings)					   isgraph(3m_strings)
-
-
-
-NAME
-  isgraph(3f) - [M_strings:COMPARE] returns .true. if character is a printable
-  character except a space is considered non-printable (LICENSE:PD)
-
-
-SYNOPSIS
-  elemental function isgraph(onechar)
-
-      character,intent(in) :: onechar
-      logical		   :: isgraph
+     character,intent(in) :: onechar
+     logical		  :: isalpha
 
 
 DESCRIPTION
-  isgraph(3f) returns .true. if character is a printable character except a
-  space is considered non-printable
+  isalpha(3f) returns .true. if character is a letter and .false. otherwise
 
 OPTIONS
   onechar
     character to test
 
 RETURNS
-  isgraph
-    logical value returns true if character is a printable non-space character
+  isalpha
+    logical value returns .true. if character is a ASCII letter or false
+    otherwise.
 
 EXAMPLE
-  Sample Program:
+  Sample program
 
-     program demo_isgraph
-     use M_strings, only : isgraph
-     implicit none
-     integer			:: i
-     character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-	write(*,'(40(a))')'ISGRAPH: ',pack( string, isgraph(string) )
-     end program demo_isgraph
+      program demo_isalpha
+      use M_strings, only : isalpha
+      implicit none
+      integer			 :: i
+      character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
+	 write(*,'(40(a))')'ISGRAPH: ',pack( string, isalpha(string) )
+      end program demo_isalpha
 
   Results:
 
-     ISGRAPH: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFG
-     HIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno
-     pqrstuvwxyz{|}~
+     ISGRAPH: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm
+     nopqrstuvwxyz
 
 
 AUTHOR
@@ -6441,7 +6421,73 @@ LICENSE
 
 
 
-			      September 17, 2023	   isgraph(3m_strings)
+				March 31, 2024		   isalpha(3m_strings)
+isascii(3m_strings)					   isascii(3m_strings)
+
+
+
+NAME
+  isascii(3f) - [M_strings:COMPARE] returns .true. if the character is in the
+  range char(0) to char(256) (LICENSE:PD)
+
+
+SYNOPSIS
+  elemental function isascii(onechar)
+
+      character,intent(in) :: onechar
+      logical		   :: isascii
+
+
+DESCRIPTION
+  isascii(3f) returns .true. if the character is in the range char(0) to
+  char(127)
+
+OPTIONS
+  onechar
+    character to test
+
+RETURNS
+  isupper
+    logical value returns true if character is an ASCII character.
+
+EXAMPLE
+  Sample program
+
+      program demo_isascii
+      use M_strings, only : isascii
+      implicit none
+      integer			 :: i
+      character(len=1),parameter :: string(*)=[(char(i),i=0,255)]
+	 write(*,'(10(g0,1x))')'ISASCII: ', &
+	 & iachar(pack( string, isascii(string) ))
+      end program demo_isascii
+
+  Results:
+
+     ISASCII:  0 1 2 3 4 5 6 7 8
+     9 10 11 12 13 14 15 16 17 18
+     19 20 21 22 23 24 25 26 27 28
+     29 30 31 32 33 34 35 36 37 38
+     39 40 41 42 43 44 45 46 47 48
+     49 50 51 52 53 54 55 56 57 58
+     59 60 61 62 63 64 65 66 67 68
+     69 70 71 72 73 74 75 76 77 78
+     79 80 81 82 83 84 85 86 87 88
+     89 90 91 92 93 94 95 96 97 98
+     99 100 101 102 103 104 105 106 107 108
+     109 110 111 112 113 114 115 116 117 118
+     119 120 121 122 123 124 125 126 127
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		   isascii(3m_strings)
 v2s(3m_strings) 					       v2s(3m_strings)
 
 
@@ -6506,7 +6552,7 @@ LICENSE
 
 
 
-			      September 17, 2023	       v2s(3m_strings)
+				March 31, 2024		       v2s(3m_strings)
 value_to_string(3m_strings)			   value_to_string(3m_strings)
 
 
@@ -6607,7 +6653,7 @@ LICENSE
 
 
 
-			      September 17, 2023   value_to_string(3m_strings)
+				March 31, 2024	   value_to_string(3m_strings)
 visible(3m_strings)					   visible(3m_strings)
 
 
@@ -6651,7 +6697,7 @@ LICENSE
 
 
 
-			      September 17, 2023	   visible(3m_strings)
+				March 31, 2024		   visible(3m_strings)
 zpad(3m_strings)					      zpad(3m_strings)
 
 
@@ -6768,7 +6814,262 @@ LICENSE
 
 
 
-			      September 17, 2023	      zpad(3m_strings)
+				March 31, 2024		      zpad(3m_strings)
+islower(3m_strings)					   islower(3m_strings)
+
+
+
+NAME
+  islower(3f) - [M_strings:COMPARE] returns .true. if character is a miniscule
+  letter (a-z) (LICENSE:PD)
+
+
+SYNOPSIS
+  elemental function islower(onechar)
+
+      character,intent(in) :: onechar
+      logical		   :: islower
+
+
+DESCRIPTION
+  islower(3f) returns .true. if character is a miniscule letter (a-z)
+
+OPTIONS
+  onechar
+    character to test
+
+RETURNS
+  islower
+    logical value returns true if character is a lowercase ASCII character
+    else false.
+
+EXAMPLE
+  Sample program
+
+      program demo_islower
+      use M_strings, only : islower
+      implicit none
+      integer			 :: i
+      character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
+	 write(*,'(15(g0,1x))')'ISLOWER: ', &
+	 & iachar(pack( string, islower(string) ))
+	 write(*,'(15(g0,1x))')'ISLOWER: ', &
+	 & pack( string, islower(string) )
+      end program demo_islower
+  Results:
+
+     ISLOWER:  97 98 99 100 101 102 103 104 105 106 107 108 109 110
+     111 112 113 114 115 116 117 118 119 120 121 122
+     ISLOWER:  a b c d e f g h i j k l m n
+     o p q r s t u v w x y z
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		   islower(3m_strings)
+isnumber(3m_strings)					  isnumber(3m_strings)
+
+
+
+NAME
+  isnumber(3f) - [M_strings:TYPE] determine if a string represents a number
+  (LICENSE:PD)
+
+
+SYNOPSIS
+  function isnumber(str,msg)
+
+      character(len=*),intent(in)  :: str
+      character(len=:),intent(out),allocatable,optional  :: msg
+
+
+DESCRIPTION
+  ISNUMBER(3f) returns a value greater than zero if the string represents a
+  number, and a number less than or equal to zero if it is a bad number.
+  Blank characters are ignored.
+
+OPTIONS
+  str
+    the string to evaluate as to whether it represents a numeric value or not
+
+  msg
+    An optional message describing the string
+
+RETURNS
+  isnumber
+    the following values are returned
+
+    1 for an integer
+      [-+]NNNNN
+
+    2 for a whole number
+      [-+]NNNNN.
+
+    3 for a real value
+      [-+]NNNNN.MMMM
+
+    4 for a exponential value
+      [-+]NNNNN.MMMM[-+]LLLL [-+]NNNNN.MMMM[ed][-+]LLLL
+
+  values less than 1 represent an error
+
+EXAMPLES
+  As the example shows, you can use an internal READ(3f) along with the
+  IOSTAT= parameter to check (and read) a string as well.
+
+      program demo_isnumber
+      use M_strings, only : isnumber
+      implicit none
+      character(len=256) :: line
+      real		 :: value
+      integer		 :: ios1, ios2
+      integer		 :: answer
+      character(len=256) :: message
+      character(len=:),allocatable :: description
+	 write(*,*)'Begin entering values, one per line'
+	 do
+	    read(*,'(a)',iostat=ios1)line
+	    !
+	    ! try string as number using list-directed input
+	    line=''
+	    read(line,*,iostat=ios2,iomsg=message) value
+	    if(ios2 == 0)then
+	       write(*,*)'VALUE=',value
+	    elseif( is_iostat_end(ios1) ) then
+	       stop 'end of file'
+	    else
+	       write(*,*)'ERROR:',ios2,trim(message)
+	    endif
+	    !
+	    ! try string using isnumber(3f)
+	    answer=isnumber(line,msg=description)
+	    if(answer > 0)then
+	       write(*,*) &
+	       & ' for ',trim(line),' ',answer,':',description
+	    else
+	       write(*,*) &
+	       & ' ERROR for ',trim(line),' ',answer,':',description
+	    endif
+	    !
+	 enddo
+      end program demo_isnumber
+
+  Example run
+
+     > Begin entering values
+     > ERROR:	       -1 End of file
+     >	ERROR for	     -1 :null string
+     >10
+     > VALUE=	10.0000000
+     >	for 10		  1 :integer
+     >20
+     > VALUE=	20.0000000
+     >	for 20		  1 :integer
+     >20.
+     > VALUE=	20.0000000
+     >	for 20. 	   2 :whole number
+     >30.1
+     > VALUE=	30.1000004
+     >	for 30.1	    3 :real number
+     >3e1
+     > VALUE=	30.0000000
+     >	for 3e1 	   4 :value with exponent
+     >1-2
+     > VALUE=	9.99999978E-03
+     >	for 1-2 	   4 :value with exponent
+     >100.22d-4
+     > VALUE=	1.00220004E-02
+     >	for 100.22d-4		 4 :value with exponent
+     >1--2
+     > ERROR:	     5010 Bad real number in item 1 of list input
+     >	ERROR for 1--2		 -5 :bad number
+     >e
+     > ERROR:	     5010 Bad real number in item 1 of list input
+     >	ERROR for e	      -6 :missing leading value before exponent
+     >e1
+     > ERROR:	     5010 Bad real number in item 1 of list input
+     >	ERROR for e1	       -6 :missing leading value before exponent
+     >1e
+     > ERROR:	     5010 Bad real number in item 1 of list input
+     >	ERROR for 1e	       -3 :missing exponent
+     >1e+
+     > ERROR:	     5010 Bad real number in item 1 of list input
+     >	ERROR for 1e+		-4 :missing exponent after sign
+     >1e+2.0
+     > ERROR:	     5010 Bad real number in item 1 of list input
+     >	ERROR for 1e+2.0	   -5 :bad number
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		  isnumber(3m_strings)
+isprint(3m_strings)					   isprint(3m_strings)
+
+
+
+NAME
+  isprint(3f) - [M_strings:COMPARE] returns .true. if character is an ASCII
+  printable character (LICENSE:PD)
+
+
+SYNOPSIS
+  elemental function isprint(onechar)
+
+      character,intent(in) :: onechar
+      logical		   :: isprint
+
+
+DESCRIPTION
+  isprint(3f) returns .true. if character is an ASCII printable character
+
+OPTIONS
+  onechar
+    character to test
+
+RETURNS
+  isprint
+    logical value returns true if character is a printable ASCII character
+    else false.
+
+EXAMPLE
+  Sample Program:
+
+     program demo_isprint
+     use M_strings, only : isprint
+     implicit none
+     integer			:: i
+     character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
+	write(*,'(40(a))')'ISPRINT: ',pack( string, isprint(string) )
+     end program demo_isprint
+
+  Results:
+
+     ISPRINT:  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEF
+     GHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmn
+     opqrstuvwxyz{|}~
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				March 31, 2024		   isprint(3m_strings)
 ispunct(3m_strings)					   ispunct(3m_strings)
 
 
@@ -6826,7 +7127,7 @@ LICENSE
 
 
 
-			      September 17, 2023	   ispunct(3m_strings)
+				March 31, 2024		   ispunct(3m_strings)
 isspace(3m_strings)					   isspace(3m_strings)
 
 
@@ -6881,7 +7182,7 @@ LICENSE
 
 
 
-			      September 17, 2023	   isspace(3m_strings)
+				March 31, 2024		   isspace(3m_strings)
 isupper(3m_strings)					   isupper(3m_strings)
 
 
@@ -6941,7 +7242,7 @@ LICENSE
 
 
 
-			      September 17, 2023	   isupper(3m_strings)
+				March 31, 2024		   isupper(3m_strings)
 isxdigit(3m_strings)					  isxdigit(3m_strings)
 
 
@@ -6994,7 +7295,7 @@ LICENSE
 
 
 
-			      September 17, 2023	  isxdigit(3m_strings)
+				March 31, 2024		  isxdigit(3m_strings)
 join(3m_strings)					      join(3m_strings)
 
 
@@ -7093,7 +7394,7 @@ LICENSE
 
 
 
-			      September 17, 2023	      join(3m_strings)
+				March 31, 2024		      join(3m_strings)
 len_white(3m_strings)					 len_white(3m_strings)
 
 
@@ -7189,7 +7490,7 @@ LICENSE
 
 
 
-			      September 17, 2023	 len_white(3m_strings)
+				March 31, 2024		 len_white(3m_strings)
 lenset(3m_strings)					    lenset(3m_strings)
 
 
@@ -7250,7 +7551,7 @@ LICENSE
 
 
 
-			      September 17, 2023	    lenset(3m_strings)
+				March 31, 2024		    lenset(3m_strings)
 listout(3m_strings)					   listout(3m_strings)
 
 
@@ -7337,7 +7638,7 @@ LICENSE
 
 
 
-			      September 17, 2023	   listout(3m_strings)
+				March 31, 2024		   listout(3m_strings)
 longest_common_substring(3m_strings)	  longest_common_substring(3m_strings)
 
 
@@ -7414,7 +7715,7 @@ EXAMPLE
 
 
 
-			      September 17longest_common_substring(3m_strings)
+				March 31, longest_common_substring(3m_strings)
 lower(3m_strings)					     lower(3m_strings)
 
 
@@ -7489,7 +7790,7 @@ LICENSE
 
 
 
-			      September 17, 2023	     lower(3m_strings)
+				March 31, 2024		     lower(3m_strings)
 lpad(3m_strings)					      lpad(3m_strings)
 
 
@@ -7558,7 +7859,7 @@ LICENSE
 
 
 
-			      September 17, 2023	      lpad(3m_strings)
+				March 31, 2024		      lpad(3m_strings)
 matching_delimiter(3m_strings)			matching_delimiter(3m_strings)
 
 
@@ -7626,164 +7927,72 @@ LICENSE
 
 
 
-			      September 17, 2023matching_delimiter(3m_strings)
-nospace(3m_strings)					   nospace(3m_strings)
+				March 31, 2024	matching_delimiter(3m_strings)
+merge_str(3m_strings)					 merge_str(3m_strings)
 
 
 
 NAME
-  nospace(3f) - [M_strings:WHITESPACE] remove all whitespace from input string
-  (LICENSE:PD)
+  merge_str(3f) - [M_strings:LENGTH] pads strings to same length and then
+  calls MERGE(3f) (LICENSE:PD)
 
 
 SYNOPSIS
-  function nospace(str) - remove all whitespace from input string
+  function merge_str(str1,str2,expr) result(strout)
 
-      character(len=*),intent(in)	   :: str
-      character(len=:),allocatable	   :: nospace
-
-
-DESCRIPTION
-  nospace(3f) removes space, tab, carriage return, new line, vertical tab,
-  formfeed and null characters (called "whitespace"). The output is returned
-  trimmed.
-
-EXAMPLES
-  Sample program:
-
-      program demo_nospace
-      use M_strings, only: nospace
-      implicit none
-      character(len=:),allocatable  :: s
-	 s='  This     is      a     test  '
-	 write(*,*) 'original input string is ....',s
-	 write(*,*) 'processed output string is ...',nospace(s)
-	 if(nospace(s) == 'Thisisatest')then
-	    write(*,*)'nospace test passed'
-	 else
-	    write(*,*)'nospace test error'
-	 endif
-      end program demo_nospace
-
-  Expected output
-
-      original input string is ....  This     is      a     test
-      processed output string is ...Thisisatest
-      nospace test passed
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	   nospace(3m_strings)
-noesc(3m_strings)					     noesc(3m_strings)
-
-
-
-NAME
-  noesc(3f) - [M_strings:NONALPHA] convert non-printable characters to a space
-  (LICENSE:PD)
-
-
-SYNOPSIS
-  elemental function noesc(INSTR)
-
-      character(len=*),intent(in) :: INSTR
-      character(len=len(instr))   :: noesc
+      character(len=*),intent(in),optional :: str1
+      character(len=*),intent(in),optional :: str2
+      logical,intent(in)	      :: expr
+      character(len=:),allocatable    :: strout
 
 
 DESCRIPTION
-  Convert non-printable characters to a space.
+  merge_str(3f) pads the shorter of str1 and str2 to the longest length of
+  str1 and str2 and then calls MERGE(padded_str1,padded_str2,expr).  It trims
+  trailing spaces off the result and returns the trimmed string. This makes it
+  easier to call MERGE(3f) with strings, as MERGE(3f) requires the strings to
+  be the same length.
+
+  NOTE: STR1 and STR2 are always required even though declared optional.  this
+  is so the call "STR_MERGE(A,B,present(A))" is a valid call.  The parameters
+  STR1 and STR2 when they are optional parameters can be passed to a procedure
+  if the options are optional on the called procedure.
+
+OPTIONS
+  STR1
+    string to return if the logical expression EXPR is true
+
+  STR2
+    string to return if the logical expression EXPR is false
+
+  EXPR
+    logical expression to evaluate to determine whether to return STR1 when
+    true, and STR2 when false.
+
+RESULT
+  MERGE_STR
+    a trimmed string is returned that is otherwise the value of STR1 or STR2,
+    depending on the logical expression EXPR.
 
 EXAMPLES
   Sample Program:
 
-     program demo_noesc
-
-      use M_strings, only : noesc
+      program demo_merge_str
+      use M_strings, only : merge_str
       implicit none
-      character(len=128) :: ascii
-      character(len=128) :: cleared
-      integer		 :: i
-      ! fill variable with base ASCII character set
-      do i=1,128
-	 ascii(i:i)=char(i-1)
-      enddo
-      cleared=noesc(ascii)
-      write(*,*)'characters and their ADE (ASCII Decimal Equivalent)'
-      call ade(ascii)
-      write(*,*)'Cleared of non-printable characters'
-      call ade(cleared)
-      write(*,*)'Cleared string:'
-      write(*,*)cleared
-      contains
-	subroutine ade(string)
-	implicit none
-	! the string to print
-	character(len=*),intent(in) :: string
-	! number of characters in string to print
-	integer :: lgth
-	! counter used to step thru string
-	integer :: i
-	   ! get trimmed length of input string
-	   lgth=len_trim(string(:len(string)))
+      character(len=:), allocatable :: answer
+	 answer=merge_str('first string', &
+	  & 'second string is longer',10 == 10)
+	 write(*,'("[",a,"]")') answer
+	 answer=merge_str('first string', &
+	  & 'second string is longer',10 /= 10)
+	 write(*,'("[",a,"]")') answer
+      end program demo_merge_str
 
-	   ! replace lower unprintable characters with spaces
-	   write(*,101)(merge(string(i:i),' ',&
-	   & iachar(string(i:i)) >= 32	      &
-	   & .and.			      &
-	   & iachar(string(i:i)) <= 126)      &
-	   & ,i=1,lgth)
+  Expected output
 
-	   ! print ADE value of character underneath it
-	   write(*,202)     (iachar(string(i:i))/100,	 i=1,lgth)
-	   write(*,202)(mod( iachar(string(i:i)),100)/10,i=1,lgth)
-	   write(*,202)(mod((iachar(string(i:i))),10),	 i=1,lgth)
-	! format for printing string characters
-	101   format(*(a1:))
-	! format for printing ADE values
-	202   format(*(i1:))
-	end subroutine ade
-      end program demo_noesc
-
-     Expected output
-
-     The string is printed with the ADE value vertically beneath.
-     The original string has all the ADEs from 000 to 127. After
-     NOESC(3f) is called on the string all the "non-printable"
-     characters are replaced with a space (ADE of 032).
-
-  characters and their ADE (ASCII Decimal Equivalent)
-
-     >				       !"#$%&'()*+,-./0123456789
-     :;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
-     >0000000000000000000000000000000000000000000000000000000000
-     0000000000000000000000000000000000000000001111111111111111111111111111
-     >00000000001111111111222222222233333333334444444444555555555566666666
-     667777777777888888888899999999990000000000111111111122222222
-     >012345678901234567890123456789012345678901234567890123456789012345678
-     90123456789012345678901234567890123456789012345678901234567
-
-  Cleared of non-printable characters
-
-     >				       !"#$%&'()*+,-./0123456789
-     :;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
-     >0000000000000000000000000000000000000000000000000000000000
-     000000000000000000000000000000000000000000111111111111111111111111111
-     >3333333333333333333333333333333333333333444444444455555555
-     556666666666777777777788888888889999999999000000000011111111112222222
-     >2222222222222222222222222222222223456789012345678901234567
-     890123456789012345678901234567890123456789012345678901234567890123456
-
-  Cleared string:
-
-     >					!"#$%&'()*+,-./0123456789:;<=>?@
-     ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+      [first string]
+      [second string is longer]
 
 
 AUTHOR
@@ -7794,148 +8003,4 @@ LICENSE
 
 
 
-			      September 17, 2023	     noesc(3m_strings)
-quote(3m_strings)					     quote(3m_strings)
-
-
-
-NAME
-  quote(3f) - [M_strings:QUOTES] add quotes to string as if written with list-
-  directed input (LICENSE:PD)
-
-
-SYNOPSIS
-  function quote(str,mode,clip) result (quoted_str)
-
-     character(len=*),intent(in)	  :: str
-     character(len=*),optional,intent(in) :: mode
-     logical,optional,intent(in)	  :: clip
-     character(len=:),allocatable	  :: quoted_str
-
-
-DESCRIPTION
-  Add quotes to a CHARACTER variable as if it was written using list-directed
-  input. This is particularly useful for processing strings to add to CSV
-  files.
-
-OPTIONS
-  str
-    input string to add quotes to, using the rules of list-directed input
-    (single quotes are replaced by two adjacent quotes)
-
-  mode
-    alternate quoting methods are supported:
-
-	      DOUBLE   default. replace quote with double quotes
-	      ESCAPE   replace quotes with backslash-quote instead of
-		       double quotes
-
-
-  clip
-    default is to trim leading and trailing spaces from the string. If CLIP is
-    .FALSE. spaces are not trimmed
-
-RESULT
-  quoted_str
-    The output string, which is based on adding quotes to STR.
-
-EXAMPLE
-  Sample program:
-
-     program demo_quote
-     use M_strings, only : quote
-     implicit none
-     character(len=:),allocatable :: str
-     character(len=1024)	  :: msg
-     integer			  :: ios
-     character(len=80)		  :: inline
-	do
-	   write(*,'(a)',advance='no')'Enter test string:'
-	   read(*,'(a)',iostat=ios,iomsg=msg)inline
-	   if(ios /= 0)then
-	      write(*,*)trim(inline)
-	      exit
-	   endif
-
-	   ! the original string
-	   write(*,'(a)')'ORIGINAL     ['//trim(inline)//']'
-
-	   ! the string processed by quote(3f)
-	   str=quote(inline)
-	   write(*,'(a)')'QUOTED     ['//str//']'
-
-	   ! write the string list-directed to compare the results
-	   write(*,'(a)',iostat=ios,iomsg=msg) 'LIST DIRECTED:'
-	   write(*,*,iostat=ios,iomsg=msg,delim='none') inline
-	   write(*,*,iostat=ios,iomsg=msg,delim='quote') inline
-	   write(*,*,iostat=ios,iomsg=msg,delim='apostrophe') inline
-	enddo
-     end program demo_quote
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	     quote(3m_strings)
-real(3m_strings)					      real(3m_strings)
-
-
-
-NAME
-  real(3f) - [M_strings:TYPE] overloads REAL(3f) so it can handle character
-  arguments (LICENSE:PD)
-
-
-SYNOPSIS
-  impure elemental function real(string)
-
-      character(len=*) :: string
-      integer	       :: real
-
-
-DESCRIPTION
-  real(3f) returns a REAL value when given a numeric representation of a
-  numeric value. This overloads the REAL(3f) intrinsic so that CHARACTER
-  arguments assumed to represent a numeric value may be input.
-
-OPTIONS
-  STRING
-    input string to be converted to a real value
-
-RETURNS
-  REAL
-    real value represented by input string
-
-EXAMPLE
-  Sample program:
-
-       program demo_real
-       use M_strings, only: real
-       implicit none
-       write(*,*)real('100'),real('20.4')
-       write(*,*)'real still works',real(20)
-       write(*,*)'elemental',&
-       & real([character(len=23) :: '10','20.3','20.5','20.6'])
-       end program demo_real
-
-  Results:
-
-       >    100.000000	     20.3999996
-       >  real still works   20.0000000
-       >  elemental   10.0000000  20.2999992  20.5000000  20.6000004
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-			      September 17, 2023	      real(3m_strings)
+				March 31, 2024		 merge_str(3m_strings)

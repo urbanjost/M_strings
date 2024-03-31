@@ -70,6 +70,7 @@ append("s2c.3m_strings.html");
 append("s2v.3m_strings.html");
 append("s2vs.3m_strings.html");
 append("sep.3m_strings.html");
+append("slice.3m_strings.html");
 append("split.3m_strings.html");
 append("split2020.3m_strings.html");
 append("squeeze.3m_strings.html");
