@@ -587,7 +587,6 @@ subroutine test_slice
 INTRINSIC SIZE
 CHARACTER(LEN=:),ALLOCATABLE    :: line
 CHARACTER(LEN=:),ALLOCATABLE    :: dlm
-CHARACTER(LEN=:),ALLOCATABLE    :: array(:)
 ! return strings composed of delimiters or not IGNORE|RETURN|IGNOREEND
 character(len=10)               :: nulls(3)=['ignore    ', 'return    ', 'ignoreend ' ]
 integer,allocatable             :: ibegin(:)
@@ -795,7 +794,6 @@ subroutine test_substitute
 character(len=80),allocatable   :: targetline   ! input line to be changed, MUST BE LONG ENOUGH TO HOLD CHANGES
 character(len=:),allocatable    :: old          ! old substring to replace
 character(len=:),allocatable    :: new          ! new substring
-character(len=:),allocatable    :: result
 character(len=:),allocatable    :: expected
 character(len=:),allocatable    :: string
 integer                         :: ml           ! ml sets the left  margin
@@ -1064,7 +1062,6 @@ integer :: i
 end subroutine test_s2c
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_c2s()
-integer :: i
    call unit_test_start('c2s','[ARRAY] convert C string pointer to Fortran character string')
    !call unit_test('c2s', c2s([(lc(i:i),i=1,len(lc)),char(0)]) .eq.lc,'compare s2c(lets) to expected letters')
    call unit_test_end('c2s',msg='')
@@ -1521,8 +1518,6 @@ subroutine test_isnumber
 end subroutine test_isnumber
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_trimzeros_()
-character(len=:),allocatable  :: str1, str2
-character(len=1),allocatable  :: char1(:), char2(:)
    call unit_test_start('trimzeros_')
    call unit_test_end('trimzeros_','currently internal')
 end subroutine test_trimzeros_
@@ -2031,7 +2026,6 @@ end subroutine test_longest_common_substring
 subroutine test_matching_delimiter()
 use M_strings, only : matching_delimiter
 character(len=128)  :: str
-integer             :: imatch
    call unit_test_start('matching_delimiter','[QUOTES] find position of matching delimiter')
 !  Allowable delimiters are (), [], {}, <>.
    str=' a [[[[b] and ] then ] finally ]'

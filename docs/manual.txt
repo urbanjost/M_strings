@@ -154,7 +154,7 @@ LICENSE
 
 
 
-				March 31, 2024		   adjustc(3m_strings)
+				April 26, 2024		   adjustc(3m_strings)
 M_strings__oop(3m_strings)			    M_strings__oop(3m_strings)
 
 
@@ -431,7 +431,7 @@ LICENSE
 
 
 
-				March 31, 2024	    M_strings__oop(3m_strings)
+				April 26, 2024	    M_strings__oop(3m_strings)
 M_strings(3m_strings)					 M_strings(3m_strings)
 
 
@@ -824,7 +824,7 @@ LICENSE
 
 
 
-				March 31, 2024		 M_strings(3m_strings)
+				April 26, 2024		 M_strings(3m_strings)
 glob(3m_strings)					      glob(3m_strings)
 
 
@@ -1098,7 +1098,7 @@ LICENSE
 
 
 
-				March 31, 2024		      glob(3m_strings)
+				April 26, 2024		      glob(3m_strings)
 isblank(3m_strings)					   isblank(3m_strings)
 
 
@@ -1155,7 +1155,7 @@ LICENSE
 
 
 
-				March 31, 2024		   isblank(3m_strings)
+				April 26, 2024		   isblank(3m_strings)
 iscntrl(3m_strings)					   iscntrl(3m_strings)
 
 
@@ -1210,7 +1210,7 @@ LICENSE
 
 
 
-				March 31, 2024		   iscntrl(3m_strings)
+				April 26, 2024		   iscntrl(3m_strings)
 isdigit(3m_strings)					   isdigit(3m_strings)
 
 
@@ -1269,7 +1269,7 @@ LICENSE
 
 
 
-				March 31, 2024		   isdigit(3m_strings)
+				April 26, 2024		   isdigit(3m_strings)
 isgraph(3m_strings)					   isgraph(3m_strings)
 
 
@@ -1324,7 +1324,7 @@ LICENSE
 
 
 
-				March 31, 2024		   isgraph(3m_strings)
+				April 26, 2024		   isgraph(3m_strings)
 c2s(3m_strings) 					       c2s(3m_strings)
 
 
@@ -1361,7 +1361,7 @@ LICENSE
 
 
 
-				March 31, 2024		       c2s(3m_strings)
+				April 26, 2024		       c2s(3m_strings)
 change(3m_strings)					    change(3m_strings)
 
 
@@ -1446,7 +1446,7 @@ LICENSE
 
 
 
-				March 31, 2024		    change(3m_strings)
+				April 26, 2024		    change(3m_strings)
 modif(3m_strings)					     modif(3m_strings)
 
 
@@ -1539,7 +1539,7 @@ LICENSE
 
 
 
-				March 31, 2024		     modif(3m_strings)
+				April 26, 2024		     modif(3m_strings)
 msg(3m_strings) 					       msg(3m_strings)
 
 
@@ -1627,7 +1627,7 @@ LICENSE
 
 
 
-				March 31, 2024		       msg(3m_strings)
+				April 26, 2024		       msg(3m_strings)
 nint(3m_strings)					      nint(3m_strings)
 
 
@@ -1686,7 +1686,7 @@ LICENSE
 
 
 
-				March 31, 2024		      nint(3m_strings)
+				April 26, 2024		      nint(3m_strings)
 nospace(3m_strings)					   nospace(3m_strings)
 
 
@@ -1740,7 +1740,7 @@ LICENSE
 
 
 
-				March 31, 2024		   nospace(3m_strings)
+				April 26, 2024		   nospace(3m_strings)
 noesc(3m_strings)					     noesc(3m_strings)
 
 
@@ -1854,7 +1854,7 @@ LICENSE
 
 
 
-				March 31, 2024		     noesc(3m_strings)
+				April 26, 2024		     noesc(3m_strings)
 notabs(3m_strings)					    notabs(3m_strings)
 
 
@@ -1926,7 +1926,7 @@ LICENSE
 
 
 
-				March 31, 2024		    notabs(3m_strings)
+				April 26, 2024		    notabs(3m_strings)
 pad(3m_strings) 					       pad(3m_strings)
 
 
@@ -2049,7 +2049,7 @@ LICENSE
 
 
 
-				March 31, 2024		       pad(3m_strings)
+				April 26, 2024		       pad(3m_strings)
 aton(3m_strings)					      aton(3m_strings)
 
 
@@ -2128,7 +2128,7 @@ LICENSE
 
 
 
-				March 31, 2024		      aton(3m_strings)
+				April 26, 2024		      aton(3m_strings)
 paragraph(3m_strings)					 paragraph(3m_strings)
 
 
@@ -2216,7 +2216,7 @@ LICENSE
 
 
 
-				March 31, 2024		 paragraph(3m_strings)
+				April 26, 2024		 paragraph(3m_strings)
 percent_encode(3m_strings)			    percent_encode(3m_strings)
 
 
@@ -2301,7 +2301,7 @@ AUTHOR
 
 
 
-				March 31, 2024	    percent_encode(3m_strings)
+				April 26, 2024	    percent_encode(3m_strings)
 quote(3m_strings)					     quote(3m_strings)
 
 
@@ -2388,7 +2388,7 @@ LICENSE
 
 
 
-				March 31, 2024		     quote(3m_strings)
+				April 26, 2024		     quote(3m_strings)
 real(3m_strings)					      real(3m_strings)
 
 
@@ -2445,7 +2445,7 @@ LICENSE
 
 
 
-				March 31, 2024		      real(3m_strings)
+				April 26, 2024		      real(3m_strings)
 chomp(3m_strings)					     chomp(3m_strings)
 
 
@@ -2539,7 +2539,7 @@ LICENSE
 
 
 
-				March 31, 2024		     chomp(3m_strings)
+				April 26, 2024		     chomp(3m_strings)
 clip(3m_strings)					      clip(3m_strings)
 
 
@@ -2592,7 +2592,7 @@ LICENSE
 
 
 
-				March 31, 2024		      clip(3m_strings)
+				April 26, 2024		      clip(3m_strings)
 base(3m_strings)					      base(3m_strings)
 
 
@@ -2659,7 +2659,7 @@ LICENSE
 
 
 
-				March 31, 2024		      base(3m_strings)
+				April 26, 2024		      base(3m_strings)
 base2(3m_strings)					     base2(3m_strings)
 
 
@@ -2719,7 +2719,7 @@ LICENSE
 
 
 
-				March 31, 2024		     base2(3m_strings)
+				April 26, 2024		     base2(3m_strings)
 codebase(3m_strings)					  codebase(3m_strings)
 
 
@@ -2775,7 +2775,7 @@ LICENSE
 
 
 
-				March 31, 2024		  codebase(3m_strings)
+				April 26, 2024		  codebase(3m_strings)
 compact(3m_strings)					   compact(3m_strings)
 
 
@@ -2848,7 +2848,7 @@ LICENSE
 
 
 
-				March 31, 2024		   compact(3m_strings)
+				April 26, 2024		   compact(3m_strings)
 replace(3m_strings)					   replace(3m_strings)
 
 
@@ -2974,7 +2974,7 @@ LICENSE
 
 
 
-				March 31, 2024		   replace(3m_strings)
+				April 26, 2024		   replace(3m_strings)
 reverse(3m_strings)					   reverse(3m_strings)
 
 
@@ -3022,7 +3022,7 @@ LICENSE
 
 
 
-				March 31, 2024		   reverse(3m_strings)
+				April 26, 2024		   reverse(3m_strings)
 rotate13(3m_strings)					  rotate13(3m_strings)
 
 
@@ -3121,7 +3121,7 @@ LICENSE
 
 
 
-				March 31, 2024		  rotate13(3m_strings)
+				April 26, 2024		  rotate13(3m_strings)
 rpad(3m_strings)					      rpad(3m_strings)
 
 
@@ -3190,7 +3190,7 @@ LICENSE
 
 
 
-				March 31, 2024		      rpad(3m_strings)
+				April 26, 2024		      rpad(3m_strings)
 bundle(3m_strings)					    bundle(3m_strings)
 
 
@@ -3255,7 +3255,7 @@ LICENSE
 
 
 
-				March 31, 2024		    bundle(3m_strings)
+				April 26, 2024		    bundle(3m_strings)
 s2c(3m_strings) 					       s2c(3m_strings)
 
 
@@ -3319,7 +3319,7 @@ LICENSE
 
 
 
-				March 31, 2024		       s2c(3m_strings)
+				April 26, 2024		       s2c(3m_strings)
 s2vs(3m_strings)					      s2vs(3m_strings)
 
 
@@ -3400,7 +3400,7 @@ LICENSE
 
 
 
-				March 31, 2024		      s2vs(3m_strings)
+				April 26, 2024		      s2vs(3m_strings)
 s2v(3m_strings) 					       s2v(3m_strings)
 
 
@@ -3526,7 +3526,7 @@ LICENSE
 
 
 
-				March 31, 2024		       s2v(3m_strings)
+				April 26, 2024		       s2v(3m_strings)
 sep(3m_strings) 					       sep(3m_strings)
 
 
@@ -3627,7 +3627,7 @@ LICENSE
 
 
 
-				March 31, 2024		       sep(3m_strings)
+				April 26, 2024		       sep(3m_strings)
 squeeze(3m_strings)					   squeeze(3m_strings)
 
 
@@ -3707,7 +3707,7 @@ LICENSE
 
 
 
-				March 31, 2024		   squeeze(3m_strings)
+				April 26, 2024		   squeeze(3m_strings)
 slice(3m_strings)					     slice(3m_strings)
 
 
@@ -3853,7 +3853,7 @@ LICENSE
 
 
 
-				March 31, 2024		     slice(3m_strings)
+				April 26, 2024		     slice(3m_strings)
 cpad(3m_strings)					      cpad(3m_strings)
 
 
@@ -3915,7 +3915,7 @@ LICENSE
 
 
 
-				March 31, 2024		      cpad(3m_strings)
+				April 26, 2024		      cpad(3m_strings)
 crop(3m_strings)					      crop(3m_strings)
 
 
@@ -3971,7 +3971,7 @@ LICENSE
 
 
 
-				March 31, 2024		      crop(3m_strings)
+				April 26, 2024		      crop(3m_strings)
 split(3m_strings)					     split(3m_strings)
 
 
@@ -4123,7 +4123,7 @@ LICENSE
 
 
 
-				March 31, 2024		     split(3m_strings)
+				April 26, 2024		     split(3m_strings)
 split2020(3m_strings)					 split2020(3m_strings)
 
 
@@ -4324,7 +4324,7 @@ VERSION
 
 
 
-				March 31, 2024		 split2020(3m_strings)
+				April 26, 2024		 split2020(3m_strings)
 stretch(3m_strings)					   stretch(3m_strings)
 
 
@@ -4427,7 +4427,7 @@ LICENSE
 
 
 
-				March 31, 2024		   stretch(3m_strings)
+				April 26, 2024		   stretch(3m_strings)
 string_to_value(3m_strings)			   string_to_value(3m_strings)
 
 
@@ -4492,7 +4492,7 @@ LICENSE
 
 
 
-				March 31, 2024	   string_to_value(3m_strings)
+				April 26, 2024	   string_to_value(3m_strings)
 string_to_values(3m_strings)			  string_to_values(3m_strings)
 
 
@@ -4587,7 +4587,7 @@ LICENSE
 
 
 
-				March 31, 2024	  string_to_values(3m_strings)
+				April 26, 2024	  string_to_values(3m_strings)
 strtok(3m_strings)					    strtok(3m_strings)
 
 
@@ -4692,7 +4692,7 @@ LICENSE
 
 
 
-				March 31, 2024		    strtok(3m_strings)
+				April 26, 2024		    strtok(3m_strings)
 dble(3m_strings)					      dble(3m_strings)
 
 
@@ -4750,7 +4750,7 @@ LICENSE
 
 
 
-				March 31, 2024		      dble(3m_strings)
+				April 26, 2024		      dble(3m_strings)
 decodebase(3m_strings)					decodebase(3m_strings)
 
 
@@ -4833,7 +4833,7 @@ LICENSE
 
 
 
-				March 31, 2024		decodebase(3m_strings)
+				April 26, 2024		decodebase(3m_strings)
 describe(3m_strings)					  describe(3m_strings)
 
 
@@ -5005,7 +5005,7 @@ LICENSE
 
 
 
-				March 31, 2024		  describe(3m_strings)
+				April 26, 2024		  describe(3m_strings)
 dilate(3m_strings)					    dilate(3m_strings)
 
 
@@ -5068,7 +5068,7 @@ LICENSE
 
 
 
-				March 31, 2024		    dilate(3m_strings)
+				April 26, 2024		    dilate(3m_strings)
 edit_distance(3m_strings)			     edit_distance(3m_strings)
 
 
@@ -5112,7 +5112,7 @@ LICENSE
 
 
 
-				March 31, 2024	     edit_distance(3m_strings)
+				April 26, 2024	     edit_distance(3m_strings)
 ends_with(3m_strings)					 ends_with(3m_strings)
 
 
@@ -5174,7 +5174,7 @@ LICENSE
 
 
 
-				March 31, 2024		 ends_with(3m_strings)
+				April 26, 2024		 ends_with(3m_strings)
 expand(3m_strings)					    expand(3m_strings)
 
 
@@ -5257,7 +5257,7 @@ LICENSE
 
 
 
-				March 31, 2024		    expand(3m_strings)
+				April 26, 2024		    expand(3m_strings)
 fortran_name(3m_strings)			      fortran_name(3m_strings)
 
 
@@ -5322,7 +5322,7 @@ EXAMPLE
 
 
 
-				March 31, 2024	      fortran_name(3m_strings)
+				April 26, 2024	      fortran_name(3m_strings)
 getvals(3m_strings)					   getvals(3m_strings)
 
 
@@ -5439,7 +5439,7 @@ LICENSE
 
 
 
-				March 31, 2024		   getvals(3m_strings)
+				April 26, 2024		   getvals(3m_strings)
 delim(3m_strings)					     delim(3m_strings)
 
 
@@ -5607,7 +5607,7 @@ LICENSE
 
 
 
-				March 31, 2024		     delim(3m_strings)
+				April 26, 2024		     delim(3m_strings)
 indent(3m_strings)					    indent(3m_strings)
 
 
@@ -5658,7 +5658,7 @@ LICENSE
 
 
 
-				March 31, 2024		    indent(3m_strings)
+				April 26, 2024		    indent(3m_strings)
 find_field(3m_strings)					find_field(3m_strings)
 
 
@@ -5785,7 +5785,7 @@ VERSION
 
 
 
-				March 31, 2024		find_field(3m_strings)
+				April 26, 2024		find_field(3m_strings)
 int(3m_strings) 					       int(3m_strings)
 
 
@@ -5844,7 +5844,7 @@ LICENSE
 
 
 
-				March 31, 2024		       int(3m_strings)
+				April 26, 2024		       int(3m_strings)
 isalnum(3m_strings)					   isalnum(3m_strings)
 
 
@@ -5949,7 +5949,7 @@ LICENSE
 
 
 
-				March 31, 2024		   isalnum(3m_strings)
+				April 26, 2024		   isalnum(3m_strings)
 substitute(3m_strings)					substitute(3m_strings)
 
 
@@ -6036,7 +6036,7 @@ LICENSE
 
 
 
-				March 31, 2024		substitute(3m_strings)
+				April 26, 2024		substitute(3m_strings)
 switch(3m_strings)					    switch(3m_strings)
 
 
@@ -6144,7 +6144,7 @@ LICENSE
 
 
 
-				March 31, 2024		    switch(3m_strings)
+				April 26, 2024		    switch(3m_strings)
 transliterate(3m_strings)			     transliterate(3m_strings)
 
 
@@ -6234,7 +6234,7 @@ LICENSE
 
 
 
-				March 31, 2024	     transliterate(3m_strings)
+				April 26, 2024	     transliterate(3m_strings)
 unquote(3m_strings)					   unquote(3m_strings)
 
 
@@ -6322,7 +6322,7 @@ LICENSE
 
 
 
-				March 31, 2024		   unquote(3m_strings)
+				April 26, 2024		   unquote(3m_strings)
 isalpha(3m_strings)					   isalpha(3m_strings)
 
 
@@ -6376,7 +6376,7 @@ LICENSE
 
 
 
-				March 31, 2024		   isalpha(3m_strings)
+				April 26, 2024		   isalpha(3m_strings)
 isascii(3m_strings)					   isascii(3m_strings)
 
 
@@ -6442,7 +6442,7 @@ LICENSE
 
 
 
-				March 31, 2024		   isascii(3m_strings)
+				April 26, 2024		   isascii(3m_strings)
 upper(3m_strings)					     upper(3m_strings)
 
 
@@ -6522,7 +6522,7 @@ LICENSE
 
 
 
-				March 31, 2024		     upper(3m_strings)
+				April 26, 2024		     upper(3m_strings)
 upper_quoted(3m_strings)			      upper_quoted(3m_strings)
 
 
@@ -6589,7 +6589,7 @@ LICENSE
 
 
 
-				March 31, 2024	      upper_quoted(3m_strings)
+				April 26, 2024	      upper_quoted(3m_strings)
 v2s(3m_strings) 					       v2s(3m_strings)
 
 
@@ -6654,7 +6654,7 @@ LICENSE
 
 
 
-				March 31, 2024		       v2s(3m_strings)
+				April 26, 2024		       v2s(3m_strings)
 value_to_string(3m_strings)			   value_to_string(3m_strings)
 
 
@@ -6755,7 +6755,7 @@ LICENSE
 
 
 
-				March 31, 2024	   value_to_string(3m_strings)
+				April 26, 2024	   value_to_string(3m_strings)
 islower(3m_strings)					   islower(3m_strings)
 
 
@@ -6813,7 +6813,7 @@ LICENSE
 
 
 
-				March 31, 2024		   islower(3m_strings)
+				April 26, 2024		   islower(3m_strings)
 isnumber(3m_strings)					  isnumber(3m_strings)
 
 
@@ -6955,7 +6955,7 @@ LICENSE
 
 
 
-				March 31, 2024		  isnumber(3m_strings)
+				April 26, 2024		  isnumber(3m_strings)
 isprint(3m_strings)					   isprint(3m_strings)
 
 
@@ -7010,7 +7010,7 @@ LICENSE
 
 
 
-				March 31, 2024		   isprint(3m_strings)
+				April 26, 2024		   isprint(3m_strings)
 ispunct(3m_strings)					   ispunct(3m_strings)
 
 
@@ -7068,7 +7068,7 @@ LICENSE
 
 
 
-				March 31, 2024		   ispunct(3m_strings)
+				April 26, 2024		   ispunct(3m_strings)
 isspace(3m_strings)					   isspace(3m_strings)
 
 
@@ -7123,7 +7123,7 @@ LICENSE
 
 
 
-				March 31, 2024		   isspace(3m_strings)
+				April 26, 2024		   isspace(3m_strings)
 isupper(3m_strings)					   isupper(3m_strings)
 
 
@@ -7183,7 +7183,7 @@ LICENSE
 
 
 
-				March 31, 2024		   isupper(3m_strings)
+				April 26, 2024		   isupper(3m_strings)
 isxdigit(3m_strings)					  isxdigit(3m_strings)
 
 
@@ -7236,7 +7236,7 @@ LICENSE
 
 
 
-				March 31, 2024		  isxdigit(3m_strings)
+				April 26, 2024		  isxdigit(3m_strings)
 join(3m_strings)					      join(3m_strings)
 
 
@@ -7335,7 +7335,7 @@ LICENSE
 
 
 
-				March 31, 2024		      join(3m_strings)
+				April 26, 2024		      join(3m_strings)
 len_white(3m_strings)					 len_white(3m_strings)
 
 
@@ -7431,7 +7431,7 @@ LICENSE
 
 
 
-				March 31, 2024		 len_white(3m_strings)
+				April 26, 2024		 len_white(3m_strings)
 lenset(3m_strings)					    lenset(3m_strings)
 
 
@@ -7492,7 +7492,7 @@ LICENSE
 
 
 
-				March 31, 2024		    lenset(3m_strings)
+				April 26, 2024		    lenset(3m_strings)
 listout(3m_strings)					   listout(3m_strings)
 
 
@@ -7579,7 +7579,7 @@ LICENSE
 
 
 
-				March 31, 2024		   listout(3m_strings)
+				April 26, 2024		   listout(3m_strings)
 longest_common_substring(3m_strings)	  longest_common_substring(3m_strings)
 
 
@@ -7656,7 +7656,7 @@ EXAMPLE
 
 
 
-				March 31, longest_common_substring(3m_strings)
+				April 26, longest_common_substring(3m_strings)
 lower(3m_strings)					     lower(3m_strings)
 
 
@@ -7731,7 +7731,7 @@ LICENSE
 
 
 
-				March 31, 2024		     lower(3m_strings)
+				April 26, 2024		     lower(3m_strings)
 lpad(3m_strings)					      lpad(3m_strings)
 
 
@@ -7800,7 +7800,7 @@ LICENSE
 
 
 
-				March 31, 2024		      lpad(3m_strings)
+				April 26, 2024		      lpad(3m_strings)
 matching_delimiter(3m_strings)			matching_delimiter(3m_strings)
 
 
@@ -7868,7 +7868,7 @@ LICENSE
 
 
 
-				March 31, 2024	matching_delimiter(3m_strings)
+				April 26, 2024	matching_delimiter(3m_strings)
 merge_str(3m_strings)					 merge_str(3m_strings)
 
 
@@ -7944,7 +7944,7 @@ LICENSE
 
 
 
-				March 31, 2024		 merge_str(3m_strings)
+				April 26, 2024		 merge_str(3m_strings)
 visible(3m_strings)					   visible(3m_strings)
 
 
@@ -7988,7 +7988,7 @@ LICENSE
 
 
 
-				March 31, 2024		   visible(3m_strings)
+				April 26, 2024		   visible(3m_strings)
 zpad(3m_strings)					      zpad(3m_strings)
 
 
@@ -8105,4 +8105,4 @@ LICENSE
 
 
 
-				March 31, 2024		      zpad(3m_strings)
+				April 26, 2024		      zpad(3m_strings)

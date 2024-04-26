@@ -1,7 +1,7 @@
 # TOML file for fpm as described at https://fpm.fortran-lang.org/en/spec/manifest.html
 name = "M_strings"
 version = "2.0.0"
-license = "Public Domain"
+license = "CC0-1.0"
 author = "John S. Urban"
 maintainer = "urbanjost@comcast.net"
 copyright = "2020 John S. Urban"
@@ -21,10 +21,10 @@ homepage = "https://github.com/urbanjost/M_strings.git"
    #module-naming = false
 
 # new
-#[fortran]
-   #implicit-typing = false
-   #implicit-external = false
-   #source-form = "free"
+[fortran]
+   implicit-typing = false
+   implicit-external = false
+   source-form = "free"
    #
    # traditional pre-version8 compatibility
    #implicit-typing = true

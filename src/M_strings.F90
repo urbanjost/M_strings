@@ -286,7 +286,6 @@
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
 MODULE M_strings !
-use, intrinsic :: iso_fortran_env, only : ERROR_UNIT        ! access computing environment
 use, intrinsic :: iso_fortran_env, only : output_unit, stderr=>error_unit
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
@@ -6575,7 +6574,7 @@ class(*),intent(in),optional :: onerr
       ierr=ierr_local
       s2v=valu
    elseif(ierr_local /= 0)then
-      write(*,*)'*s2v* stopped while reading '//trim(chars)
+      write(stderr,*)'*s2v* stopped while reading '//trim(chars)
       stop 1
    else
       s2v=valu
@@ -6969,7 +6968,7 @@ character(len=1024)                      :: msg
       err=err_local
    elseif(err_local /= 0)then
        ! cannot currently do I/O from a function being called from I/O
-       !write(ERROR_UNIT,'(a)')'*value_to_string* WARNING:['//trim(msg)//']'
+       !write(stderr,'(a)')'*value_to_string* WARNING:['//trim(msg)//']'
       chars=chars//' *value_to_string* WARNING:['//trim(msg)//']'
    endif
 
@@ -8492,14 +8491,14 @@ integer                      :: ios, i, ierr_local,isize
          icount=icount+1
       else
          ierr_local=ios
-         write(ERROR_UNIT,*)'*getvals* WARNING:['//trim(words(i))//'] is not a number of specified type'
+         write(stderr,*)'*getvals* WARNING:['//trim(words(i))//'] is not a number of specified type'
       endif
    enddo
 
    if(present(ierr))then
       ierr=ierr_local
    elseif(ierr_local /= 0)then        ! error occurred and not returning error to main program to print message and stop program
-      write(ERROR_UNIT,*)'*getval* error reading line ['//trim(line)//']'
+      write(stderr,*)'*getval* error reading line ['//trim(line)//']'
       stop 2
    endif
 
@@ -9808,11 +9807,11 @@ integer                       :: temp
    if (decodebase(x, b, temp)) then
       if (codebase(temp, a, y)) then
       else
-         print *, 'Error in coding number.'
+         write(stderr,*) 'Error in coding number.'
          base = .false.
       endif
    else
-      print *, 'Error in decoding number.'
+      write(stderr,*) 'Error in decoding number.'
       base = .false.
    endif
 
@@ -10001,7 +10000,7 @@ integer           :: ierr
   out_baseten=0
   y=0.0
   ALL: if(basein_local<2.or.basein_local>36) then
-    print *,'(*decodebase* ERROR: Base must be between 2 and 36. base=',basein_local
+    write(stderr,*) '(*decodebase* ERROR: Base must be between 2 and 36. base=',basein_local
   else ALL
      out_baseten=0;y=0.0; mult=1.0
      long=LEN_TRIM(string_local)
@@ -10013,7 +10012,7 @@ integer           :: ierr
            cycle
         endif
         if(ch<'0'.or.ch>'Z'.or.(ch>'9'.and.ch<'A'))then
-           write(*,*)'*decodebase* ERROR: invalid character ',ch
+           write(stderr,*)'*decodebase* ERROR: invalid character ',ch
            exit ALL
         endif
         if(ch<='9') then
@@ -10103,7 +10102,7 @@ integer                      :: in_sign
   inval10_local=abs(inval10)
   outbase_local=abs(outbase)
   if(outbase_local<2.or.outbase_local>36) then
-    print *,'*codebase* ERROR: base must be between 2 and 36. base was',outbase_local
+    write(stderr,*) '*codebase* ERROR: base must be between 2 and 36. base was',outbase_local
     codebase=.false.
   else
      do while(inval10_local>0.0 )
@@ -11589,11 +11588,11 @@ select case(delim1)
       iend=1
       inc=-1
    case default
-      write(*,*) delim1,' is not a valid delimiter'
+      write(stderr,*) '*matching_delimiter*',delim1,' is not a valid delimiter'
       return
 end select
 if(ibegin < 1 .or. ibegin > lenstr) then
-   write(*,*) delim1,' has no matching delimiter'
+   write(stderr,*) '*matching_delimiter*',delim1,' has no matching delimiter'
    return
 endif
 delim2=achar(idelim2) ! matching delimiter
@@ -11607,7 +11606,7 @@ do i=ibegin,iend,inc
    if(isum == 0) exit
 enddo
 if(isum /= 0) then
-   write(*,*) delim1,' has no matching delimiter'
+   write(stderr,*) '*matching_delimiter*',delim1,' has no matching delimiter'
    return
 endif
 imatch=i
