@@ -130,7 +130,7 @@
 !!
 !!       matching_delimiter  find position of matching delimiter
 !!       unquote  remove quotes from string as if read with list-directed input
-!!       quote    add quotes to string as if written with list-directed input
+!!       quote    add quotes to string as if written with list-directed output
 !!
 !!
 !!   CHARACTER ARRAY VERSUS STRING
@@ -295,92 +295,92 @@ implicit none
 !-----------------------------------------------------------------------------------------------------------------------------------
 private
 
-!----------------------# TOKENS
-public split           !  subroutine parses a string using specified delimiter characters and store tokens into an allocatable array
-public slice           !  subroutine parses a string using specified delimiter characters and stores positions into arrays
-public sep             !  function interface to split
-public chomp           !  function consumes input line as it returns next token in a string using specified delimiters
-public delim           !  subroutine parses a string using specified delimiter characters and store tokens into an array
-public strtok          !  gets next token. Used by change(3f)
-public paragraph       !  convert a long string into a paragraph
-!----------------------# EDITING
-public substitute      !  subroutine non-recursively globally replaces old substring with new substring in string
-public replace         !  function non-recursively globally replaces old substring with new substring in string
-public change          !  replaces old substring with new substring in string with a directive like a line editor
-public modif           !  change string using a directive using rules similar to XEDIT line editor MODIFY command
-public transliterate   !  when characters in set one are found replace them with characters from set two
-public reverse         !  elemental function reverses character order in a string
-public join            !  append an array of character variables with specified separator into a single CHARACTER variable
-public squeeze         !  delete adjacent duplicate characters from a string
-public rotate13        !  apply trivial encryption algorithm ROT13 to string
-public percent_encode  !  percent-encode characters or a string
+!-------------------------# TOKENS
+public split              !  subroutine parses a string on specified delimiter characters and store tokens into an allocatable array
+public slice              !  subroutine parses a string on specified delimiter characters and stores positions into arrays
+public sep                !  function interface to split
+public chomp              !  function consumes input line as it returns next token in a string using specified delimiters
+public delim              !  subroutine parses a string using specified delimiter characters and store tokens into an array
+public strtok             !  gets next token. Used by change(3f)
+public paragraph          !  convert a long string into a paragraph
+!-------------------------# EDITING
+public substitute         !  subroutine non-recursively globally replaces old substring with new substring in string
+public replace            !  function non-recursively globally replaces old substring with new substring in string
+public change             !  replaces old substring with new substring in string with a directive like a line editor
+public modif              !  change string using a directive using rules similar to XEDIT line editor MODIFY command
+public transliterate      !  when characters in set one are found replace them with characters from set two
+public reverse            !  elemental function reverses character order in a string
+public join               !  append an array of character variables with specified separator into a single CHARACTER variable
+public squeeze            !  delete adjacent duplicate characters from a string
+public rotate13           !  apply trivial encryption algorithm ROT13 to string
+public percent_encode     !  percent-encode characters or a string
 interface percent_encode;    module procedure percent_encode_string, percent_encode_characters;  end interface
-!----------------------# CHARACTER ARRAY VERSUS STRING
-public switch          !  generic switch between a string and an array of single characters (a2s,s2a)
-private a2s            !  function to copy char array to string
-private s2a            !  function to copy string(1:Clen(string)) to char array
-public s2c             !  convert character variable to array of character(len=1) with null terminator for C compatibility
-public c2s             !  convert null-terminated array of character(len=1) to string for strings returned by C
-!----------------------# CASE
-public upper           !  elemental function converts string to uppercase
+!-------------------------# CHARACTER ARRAY VERSUS STRING
+public switch             !  generic switch between a string and an array of single characters (a2s,s2a)
+private a2s               !  function to copy char array to string
+private s2a               !  function to copy string(1:Clen(string)) to char array
+public s2c                !  convert character variable to array of character(len=1) with null terminator for C compatibility
+public c2s                !  convert null-terminated array of character(len=1) to string for strings returned by C
+!-------------------------# CASE
+public upper              !  elemental function converts string to uppercase
 interface upper;    module procedure upper_all, upper_range;  end interface
-public lower           !  elemental function converts string to miniscule
-public upper_quoted    !  elemental function converts string to uppercase skipping strings quoted per Fortran syntax rules
-!----------------------# WHITE SPACE
-public adjustc         !  elemental function centers string within the length of the input string
-public compact         !  left justify string and replace duplicate whitespace with single characters or nothing
-public nospace         !  function replaces whitespace with nothing
-public indent          !  count number of leading spaces
-public crop            !  function trims leading and trailing spaces and control characters
-public clip            !  function trims leading and trailing spaces
-!----------------------# QUOTES
+public lower              !  elemental function converts string to miniscule
+public upper_quoted       !  elemental function converts string to uppercase skipping strings quoted per Fortran syntax rules
+!-------------------------# WHITE SPACE
+public adjustc            !  elemental function centers string within the length of the input string
+public compact            !  left justify string and replace duplicate whitespace with single characters or nothing
+public nospace            !  function replaces whitespace with nothing
+public indent             !  count number of leading spaces
+public crop               !  function trims leading and trailing spaces and control characters
+public clip               !  function trims leading and trailing spaces
+!-------------------------# QUOTES
 public matching_delimiter !  find position of matching delimiter
-public unquote         !  remove quotes from string as if read with list-directed input
-public quote           !  add quotes to string as if written with list-directed input
-!----------------------# STRING LENGTH
-public lenset          !  return a string as specified length
-public pad             !  return a string of at least specified length
-public zpad            !  return a string of at least specified length padded on left with zeros
+public unquote            !  remove quotes from string as if read with list-directed input
+public quote              !  add quotes to string as if written with list-directed output
+!-------------------------# STRING LENGTH
+public lenset             !  return a string as specified length
+public pad                !  return a string of at least specified length
+public zpad               !  return a string of at least specified length padded on left with zeros
 interface zpad;    module procedure zpad_scalar, zpad_vector;  end interface
-public lpad            !  convert value to a string of at least specified length padded on left with zeros
+public lpad               !  convert value to a string of at least specified length padded on left with zeros
 interface lpad;    module procedure lpad_scalar, lpad_vector;  end interface
-public cpad            !  convert value to a centered string of at least specified length
+public cpad               !  convert value to a centered string of at least specified length
 interface cpad;    module procedure cpad_scalar, cpad_vector;  end interface
-public rpad            !  convert value to a string of at least specified length padded on right with zeros
+public rpad               !  convert value to a string of at least specified length padded on right with zeros
 interface rpad;    module procedure rpad_scalar, rpad_vector;  end interface
-public stretch         !  return a string of at least specified length with suffix
-public merge_str       !  make strings of equal length and then call MERGE(3f) intrinsic
-public len_white       !  find location of last non-whitespace character
-!----------------------# NONALPHA
-public noesc           !  elemental function converts non-printable ASCII8 characters to a space
-public notabs          !  convert tabs to spaces in output while maintaining columns, assuming a tab is set every 8 characters
-public dilate          !  convert tabs to spaces in output while maintaining columns, assuming a tab is set every 8 characters
-public expand          !  expand escape sequences in a string
-public visible         !  expand escape sequences in a string to control and meta-control representations
-!----------------------# NUMERIC STRINGS
-public string_to_value !  generic subroutine returns REAL|DOUBLEPRECISION|INTEGER value from string (a2d,a2r,a2i)
- private a2d           !  subroutine returns double value from string
- private a2r           !  subroutine returns real value from string
- private a2i           !  subroutine returns integer value from string
-public string_to_values!  subroutine returns values from a string
-public getvals         !  subroutine returns values from a string
-public s2v             !  function returns doubleprecision value from string
-public s2vs            !  function returns a doubleprecision array of numbers from a string
-                       !  NOT USING INTERNAL READ FOR CONVERSION
-public atoi            !   function returns an INTEGER(kind=int32) value from a string
-public atol            !   function returns an INTEGER(kind=int64) value from a string
-public aton            !   function returns true or false as to whether string converts to numeric value, and numeric value
-                       !------------------------------------------------------------------------------------------------------------
-public msg             !  function returns a string representing up to nine scalar intrinsic values
-public value_to_string !  generic subroutine returns string given numeric REAL|DOUBLEPRECISION|INTEGER|LOGICAL value
-public v2s             !  generic function returns string given numeric REAL|DOUBLEPRECISION|INTEGER|LOGICAL value
- private d2s           !  function returns string from doubleprecision value
- private r2s           !  function returns string from real value
- private i2s           !  function returns string from integer value
- private l2s           !  function returns string from logical value
-public isnumber        !  determine if string represents a number
- private trimzeros_    !  Delete trailing zeros from numeric decimal string
-public listout         !  expand a list of numbers where  negative numbers denote range ends (1 -10 means 1 thru 10)
+public stretch            !  return a string of at least specified length with suffix
+public merge_str          !  make strings of equal length and then call MERGE(3f) intrinsic
+public len_white          !  find location of last non-whitespace character
+!-------------------------# NONALPHA
+public noesc              !  elemental function converts non-printable ASCII8 characters to a space
+public notabs             !  convert tabs to spaces in output while maintaining columns, assuming a tab is set every 8 characters
+public dilate             !  convert tabs to spaces in output while maintaining columns, assuming a tab is set every 8 characters
+public expand             !  expand escape sequences in a string
+public visible            !  expand escape sequences in a string to control and meta-control representations
+!-------------------------# NUMERIC STRINGS
+public string_to_value    !  generic subroutine returns REAL|DOUBLEPRECISION|INTEGER value from string (a2d,a2r,a2i)
+ private a2d              !  subroutine returns double value from string
+ private a2r              !  subroutine returns real value from string
+ private a2i              !  subroutine returns integer value from string
+public string_to_values   !  subroutine returns values from a string
+public getvals            !  subroutine returns values from a string
+public s2v                !  function returns doubleprecision value from string
+public s2vs               !  function returns a doubleprecision array of numbers from a string
+                          !  NOT USING INTERNAL READ FOR CONVERSION
+public atoi               !   function returns an INTEGER(kind=int32) value from a string
+public atol               !   function returns an INTEGER(kind=int64) value from a string
+public aton               !   function returns true or false as to whether string converts to numeric value, and numeric value
+!------------------------------------------------------------------------------------------------------------
+public msg                !  function returns a string representing up to nine scalar intrinsic values
+public value_to_string    !  generic subroutine returns string given numeric REAL|DOUBLEPRECISION|INTEGER|LOGICAL value
+public v2s                !  generic function returns string given numeric REAL|DOUBLEPRECISION|INTEGER|LOGICAL value
+ private d2s              !  function returns string from doubleprecision value
+ private r2s              !  function returns string from real value
+ private i2s              !  function returns string from integer value
+ private l2s              !  function returns string from logical value
+public isnumber           !  determine if string represents a number
+ private trimzeros_       !  Delete trailing zeros from numeric decimal string
+public listout            !  expand a list of numbers where  negative numbers denote range ends (1 -10 means 1 thru 10)
 !-----------------------------------------------------------------------------------------------------------------------------------
 !
 ! extend intrinsics to accept CHARACTER values
@@ -7579,7 +7579,7 @@ end subroutine listout
 !>
 !!##NAME
 !!     quote(3f) - [M_strings:QUOTES] add quotes to string as if written
-!!     with list-directed input
+!!     with list-directed output
 !!     (LICENSE:PD)
 !!
 !!##SYNOPSIS
@@ -7593,12 +7593,12 @@ end subroutine listout
 !!
 !!##DESCRIPTION
 !!    Add quotes to a CHARACTER variable as if it was written using
-!!    list-directed input. This is particularly useful for processing
+!!    list-directed output. This is particularly useful for processing
 !!    strings to add to CSV files.
 !!
 !!##OPTIONS
 !!    str    input string to add quotes to, using the rules of
-!!           list-directed input (single quotes are replaced by two
+!!           list-directed output (single quotes are replaced by two
 !!           adjacent quotes)
 !!    mode   alternate quoting methods are supported:
 !!
@@ -7619,32 +7619,39 @@ end subroutine listout
 !!    program demo_quote
 !!    use M_strings, only : quote
 !!    implicit none
+!!    integer                      :: i
+!!    character(len=*),parameter   :: f='(*(g0))'
 !!    character(len=:),allocatable :: str
-!!    character(len=1024)          :: msg
-!!    integer                      :: ios
-!!    character(len=80)            :: inline
-!!       do
-!!          write(*,'(a)',advance='no')'Enter test string:'
-!!          read(*,'(a)',iostat=ios,iomsg=msg)inline
-!!          if(ios /= 0)then
-!!             write(*,*)trim(inline)
-!!             exit
-!!          endif
-!!
+!!    character(len=80),parameter  :: data(3)=[character(len=80)::&
+!!       'test string',&
+!!       'quote="',&
+!!       '"word1" "word2"']
+!!       do i=1,size(data)
 !!          ! the original string
-!!          write(*,'(a)')'ORIGINAL     ['//trim(inline)//']'
+!!          write(*,'(a)')'ORIGINAL      '//trim(data(i))
 !!
 !!          ! the string processed by quote(3f)
-!!          str=quote(inline)
-!!          write(*,'(a)')'QUOTED     ['//str//']'
+!!          str=quote(data(i))
+!!          write(*,'(a)')'QUOTED        '//str
 !!
 !!          ! write the string list-directed to compare the results
-!!          write(*,'(a)',iostat=ios,iomsg=msg) 'LIST DIRECTED:'
-!!          write(*,*,iostat=ios,iomsg=msg,delim='none') inline
-!!          write(*,*,iostat=ios,iomsg=msg,delim='quote') inline
-!!          write(*,*,iostat=ios,iomsg=msg,delim='apostrophe') inline
+!!          write(*,f,advance='no') 'LIST DIRECTED'
+!!          ! default is often NONE or APOSTROPHE
+!!          write(*,*,delim='quote') trim(data(i))
 !!       enddo
 !!    end program demo_quote
+!!
+!! Results:
+!!
+!!  > ORIGINAL      test string
+!!  > QUOTED        "test string"
+!!  > LIST DIRECTED "test string"
+!!  > ORIGINAL      quote="
+!!  > QUOTED        "quote="""
+!!  > LIST DIRECTED "quote="""
+!!  > ORIGINAL      "word1" "word2"
+!!  > QUOTED        """word1"" ""word2"""
+!!  > LIST DIRECTED """word1"" ""word2"""
 !!
 !!##AUTHOR
 !!    John S. Urban
