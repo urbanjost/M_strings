@@ -4317,9 +4317,9 @@ end function c2s
 !!
 !! Results:
 !!
-!!      3   a b c
-!!      0a b c
-!!      6      a b c
+!!      > 3   a b c
+!!      > 0a b c
+!!      > 6      a b c
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -4455,6 +4455,7 @@ end function visible
 !!     sequences or control characters. By default ...
 !!
 !!     Escape sequences
+!!
 !!       \      backslash
 !!       a      alert (BEL) -- g is an alias for a
 !!       b      backspace
@@ -4490,14 +4491,15 @@ end function visible
 !!    end program demo_expand
 !!
 !! Results (with nonprintable characters shown visible):
-!!  > ^[[H^[[2J
-!!  > ^IABC^Iabc
-!!  > ^IA^G
-!!  >
-!!  > ONE
-!!  > TWO
-!!  > THREE
-!!  > \
+!!
+!!     > ^[[H^[[2J
+!!     > ^IABC^Iabc
+!!     > ^IA^G
+!!     >
+!!     > ONE
+!!     > TWO
+!!     > THREE
+!!     > \
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -10680,7 +10682,7 @@ end function msg_one
 !!    information is in the argument descriptions. Note that most of the
 !!    arguments are optional.
 !!
-!!        from comp.lang.fortran @ Richard Maine
+!!    from comp.lang.fortran @ Richard Maine
 !!
 !!##OPTIONS
 !!    STRING     The string input.
@@ -10744,31 +10746,31 @@ end function msg_one
 !!        write(*,'(*(g0))')repeat('=',70)
 !!
 !!        end program demo_find_field
-!! ```
+!!
 !! Results:
-!! ```text
-!!  > [a,b,[ccc,ddd],and more]
-!!  > <>
-!!  > <a>
-!!  > <b>
-!!  > <>
-!!  > <ccc>
-!!  > <ddd>
-!!  > <>
-!!  > <and more>
-!!  > <>
-!!  > ======================================================================
-!!  > [a,b,[ccc,ddd],and more]
-!!  > <>2 [
-!!  > <a>4 ,
-!!  > <b>6 ,
-!!  > <>7 [
-!!  > <ccc>11 ,
-!!  > <ddd>15 ]
-!!  > <>16 ,
-!!  > <and>20
-!!  > <more>257 ]
-!!  > ======================================================================
+!!
+!!     > [a,b,[ccc,ddd],and more]
+!!     > <>
+!!     > <a>
+!!     > <b>
+!!     > <>
+!!     > <ccc>
+!!     > <ddd>
+!!     > <>
+!!     > <and more>
+!!     > <>
+!!     > ==================================================================
+!!     > [a,b,[ccc,ddd],and more]
+!!     > <>2 [
+!!     > <a>4 ,
+!!     > <b>6 ,
+!!     > <>7 [
+!!     > <ccc>11 ,
+!!     > <ddd>15 ]
+!!     > <>16 ,
+!!     > <and>20
+!!     > <more>257 ]
+!!     > ==================================================================
 !!
 !!##AUTHOR
 !!    Richard Maine
