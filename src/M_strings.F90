@@ -788,7 +788,7 @@ CONTAINS
 !!##AUTHOR
 !!   John S. Urban
 !!
-!!##REFERENCE
+!!##REFERENCES
 !!   The article "Matching Wildcards: An Empirical Way to Tame an Algorithm"
 !!   in Dr Dobb's Journal, By Kirk J. Krauss, October 07, 2014
 !!
@@ -936,10 +936,10 @@ end function glob
 !!
 !!   Results:
 !!
-!!     F
-!!     T
-!!     T
-!!     F
+!!     > F
+!!     > T
+!!     > T
+!!     > F
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -2626,7 +2626,7 @@ end subroutine change
 !!     itoken         token count should be set to zero for a new string
 !!     delimiters     characters used to determine the end of tokens
 !!
-!!##RETURN
+!!##RETURNS
 !!     token_start    beginning position in SOURCE_STRING where token was found
 !!     token_end      ending position in SOURCE_STRING where token was found
 !!     strtok_status
@@ -2953,7 +2953,7 @@ end subroutine modif                     !RETURN
 !!##RETURNS
 !!      len_white  the number of characters in the trimmed string
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample Program:
 !!
@@ -3068,7 +3068,7 @@ end function len_white
 !!##RETURNS
 !!    strout  cropped version of input string
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample program:
 !!
@@ -3122,7 +3122,7 @@ end function crop
 !!##RETURNS
 !!    strout  clipped version of input string
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample program:
 !!
@@ -3347,7 +3347,7 @@ END FUNCTION transliterate
 !!##REFERENCES
 !!    Wikipedia, the free encyclopedia
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample program
 !!
@@ -3541,12 +3541,12 @@ end function percent_encode_characters
 !!      TRM     option to trim each element of STR of trailing
 !!              spaces. Defaults to .TRUE.
 !!
-!!##RESULT
+!!##RETURNS
 !!      STRING  CHARACTER variable composed of all of the elements of STR()
 !!              appended together with the optional separator SEP placed
 !!              between the elements.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!  Sample program:
 !!
@@ -3639,7 +3639,7 @@ end function join
 !!      reverse(string) returns a copy of the input string with
 !!      all characters reversed from right to left.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!    Sample program:
 !!
@@ -3707,11 +3707,11 @@ end function reverse
 !!##OPTIONS
 !!    str    string to convert to uppercase
 !!
-!!##RESULTS
+!!##RETURNS
 !!    upper  copy of the input string with all unquoted characters converted
 !!           to uppercase
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!    Sample program:
 !!
@@ -3799,7 +3799,7 @@ end function upper_quoted
 !!    end    optional ending position in "str" to stop converting to
 !!           uppercase
 !!
-!!##RESULTS
+!!##RETURNS
 !!    upper  copy of the input string with all characters converted to
 !!           uppercase over optionally specified range.
 !!
@@ -3813,7 +3813,7 @@ end function upper_quoted
 !!    lower cases of the work bench. The less often needed, capitalized,
 !!    majuscule letters, ended up in the harder to reach upper cases.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!    Sample program:
 !!
@@ -3935,7 +3935,7 @@ end function upper_range
 !!    end    optional ending position in "str" to stop converting to
 !!           miniscule
 !!
-!!##RESULTS
+!!##RETURNS
 !!    lower  copy of the input string with all characters converted to
 !!           miniscule over optionally specified range.
 !!
@@ -3949,7 +3949,7 @@ end function upper_range
 !!    lower cases of the work bench. The less often needed, capitalized,
 !!    majuscule letters, ended up in the harder to reach upper cases.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!    Sample program:
 !!
@@ -4088,20 +4088,20 @@ end function lower
 !!
 !!  Expected output
 !!
-!!     F T T T T T
-!!     T
-!!     F
-!!     DASHES is all dashes
-!!     F
-!!     F
-!!     T
-!!     This is a string
-!!     [T][h][i][s][ ][i][s][ ][a][ ][s][t][r][i][n][g]
-!!      F  T  T  T  F  T  T  F  T  F  T  T  T  T  T  T
-!!     LINE=Thisisastring
-!!     F T T T T T T T T T T T T
-!!     F
-!!     T
+!!     > F T T T T T
+!!     > T
+!!     > F
+!!     > DASHES is all dashes
+!!     > F
+!!     > F
+!!     > T
+!!     > This is a string
+!!     > [T][h][i][s][ ][i][s][ ][a][ ][s][t][r][i][n][g]
+!!     >  F  T  T  T  F  T  T  F  T  F  T  T  T  T  T  T
+!!     > LINE=Thisisastring
+!!     > F T T T T T T T T T T T T
+!!     > F
+!!     > T
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -4238,7 +4238,7 @@ end function s2c
 !!##RETURNS
 !!    f_string          Fortran character variable to return
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!
 !!##AUTHOR
@@ -4622,7 +4622,7 @@ end function expand
 !!##OPTIONS
 !!     instr     Input line to remove tabs from
 !!
-!!##RESULTS
+!!##RETURNS
 !!     outstr    Output string with tabs expanded. Assumed to be of sufficient
 !!               length
 !!     lgth      Significant length of returned string
@@ -4724,7 +4724,7 @@ end subroutine notabs
 !!##OPTIONS
 !!     instr     Input line to remove tabs from
 !!
-!!##RESULTS
+!!##RETURNS
 !!     outstr    Output string with tabs expanded.
 !!
 !!##EXAMPLES
@@ -4973,7 +4973,7 @@ end function nospace
 !!            the trimmed input string if the input string is
 !!            longer than the requested length.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!  Sample Program:
 !!
@@ -5082,7 +5082,7 @@ end function stretch
 !!    strout  The input string padded to the requested length
 !!            on the right with spaces.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!  Sample Program:
 !!
@@ -5211,7 +5211,7 @@ end function rpad_vector
 !!    strout  The input string center-padded to the requested length
 !!            with spaces.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!  Sample Program:
 !!
@@ -5330,7 +5330,7 @@ end function cpad_vector
 !!    strout  The input string padded to the requested length
 !!            on the left with spaces.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!  Sample Program:
 !!
@@ -5475,7 +5475,7 @@ end function lpad_vector
 !!    strout  A trimmed string padded on the left with zeros to
 !!            the requested length
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!  Sample Program:
 !!
@@ -5642,7 +5642,7 @@ end function zpad_vector
 !!           the trimmed input string if the input string is
 !!           longer than the requested length.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!  Sample Program:
 !!
@@ -5782,10 +5782,10 @@ end function pad
 !!    str     input string
 !!    length  output string length
 !!
-!!##RESULTS
+!!##RETURNS
 !!    strout  output string
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!    Sample Program:
 !!
@@ -5855,7 +5855,7 @@ end function lenset
 !!    STR2    string to return if the logical expression EXPR is false
 !!    EXPR    logical expression to evaluate to determine whether to return
 !!            STR1 when true, and STR2 when false.
-!!##RESULT
+!!##RETURNS
 !!     MERGE_STR  a trimmed string is returned that is otherwise the value
 !!                of STR1 or STR2, depending on the logical expression EXPR.
 !!
@@ -6289,7 +6289,7 @@ end function noesc
 !!              DOUBLEPRECISION.
 !!    IERR   error flag (0 == no error)
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample Program:
 !!
@@ -6468,7 +6468,7 @@ end subroutine a2d
 !!##RETURNS
 !!     s2v      numeric value read from string
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample Program:
 !!
@@ -6611,7 +6611,7 @@ end function s2v
 !!##RETURNS
 !!    DBLE  double precision value represented by input string
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!    Sample program:
 !!
@@ -6666,7 +6666,7 @@ end function dble_s2v
 !!##RETURNS
 !!       REAL  real value represented by input string
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!    Sample program:
 !!
@@ -6721,7 +6721,7 @@ end function real_s2v
 !!##RETURNS
 !!       INT  integer represented by input string
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!    Sample program:
 !!
@@ -6774,7 +6774,7 @@ end function real_s2v
 !!##RETURNS
 !!       NINT  integer represented by input string
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!    Sample program:
 !!
@@ -6855,7 +6855,7 @@ end function nint_s2v
 !!               optional.
 !!       IERR    If not zero, error occurred; optional.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!    Sample program:
 !!
@@ -7006,7 +7006,7 @@ end subroutine value_to_string
 !!##RETURNS
 !!    OUTSTR  returned string representing input value,
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample Program:
 !!
@@ -7463,7 +7463,7 @@ end subroutine trimzeros_
 !!    inums                number of icurve_expanded numbers on output
 !!    ierr                 zero if no error occurred
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample program:
 !!
@@ -7611,10 +7611,10 @@ end subroutine listout
 !!    clip   default is to trim leading and trailing spaces from the
 !!           string. If CLIP is .FALSE. spaces are not trimmed
 !!
-!!##RESULT
+!!##RETURNS
 !!    quoted_str  The output string, which is based on adding quotes to STR.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample program:
 !!
@@ -7728,11 +7728,11 @@ end function quote
 !!                character from being processed as a quote, but simply as
 !!                a plain character.
 !!
-!!##RESULT
+!!##RETURNS
 !!    unquoted_str  The output string, which is based on removing quotes
 !!                  from quoted_str.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample program:
 !!
@@ -7874,9 +7874,9 @@ end function unquote
 !!
 !!   Expected output
 !!
-!!     T
-!!     T
-!!     T
+!!     > T
+!!     > T
+!!     > T
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -8540,7 +8540,7 @@ end subroutine getvals
 !!       LINE     Input string containing numbers
 !!       IREAD    maximum number of values to try to read from input string
 !!
-!!##RESULTS
+!!##RETURNS
 !!       VALUES   real array to be filled with numbers
 !!       INUMS    number of values successfully read (before error occurs
 !!                if one does)
@@ -8550,7 +8550,7 @@ end subroutine getvals
 !!       IERR     error flag (0=no error, else column number string starts
 !!                at that error occurred on).
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!    Sample Program:
 !!
@@ -8710,10 +8710,10 @@ end subroutine string_to_values
 !!              in the list. The default is " ;," (spaces, semi-colons,
 !!              and commas).
 !!
-!!##RESULTS
+!!##RETURNS
 !!       S2VS   doubleprecision array
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample Program:
 !!
@@ -8809,7 +8809,7 @@ end function s2vs
 !!##RETURNS
 !!    isprint  logical value returns true if character is a
 !!             printable ASCII character else false.
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample Program:
 !!
@@ -8870,7 +8870,7 @@ end function isprint
 !!##RETURNS
 !!    isgraph   logical value returns true if character is a printable
 !!              non-space character
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample Program:
 !!
@@ -8933,7 +8933,7 @@ end function isgraph
 !!##RETURNS
 !!    isalpha  logical value returns .true. if character is a ASCII letter
 !!             or false otherwise.
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!
 !!   Sample program
@@ -8996,7 +8996,7 @@ end function isalpha
 !!##RETURNS
 !!    isxdigit  logical value returns true if character is a hexadecimal digit
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample program
 !!
@@ -9127,7 +9127,7 @@ end function isdigit
 !!##RETURNS
 !!    isblank  logical value returns true if character is a "blank"
 !!             ( an ASCII  space or horizontal tab character).
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample program:
 !!
@@ -9189,7 +9189,7 @@ end function isblank
 !!##RETURNS
 !!    isupper  logical value returns true if character is an ASCII
 !!             character.
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!  Sample program
 !!
@@ -9263,7 +9263,7 @@ end function isascii
 !!##RETURNS
 !!    isspace  returns true if character is ASCII white space
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!  Sample program:
 !!
@@ -9329,7 +9329,7 @@ end function isspace
 !!##RETURNS
 !!    iscntrl  logical value returns true if character is a control character
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!  Sample program
 !!
@@ -9393,7 +9393,7 @@ end function iscntrl
 !!    ispunct  logical value returns true if character is a printable
 !!             punctuation character.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!  Sample program:
 !!
@@ -9466,7 +9466,7 @@ end function ispunct
 !!     LOUT   a logical value indicating if the input string passed or failed
 !!            the test to see if it is a valid Fortran name or not.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!    Sample program
 !!
@@ -9544,7 +9544,7 @@ end function fortran_name
 !!##RETURNS
 !!    isupper  logical value returns true if character is an uppercase
 !!             ASCII character else false.
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!  Sample program:
 !!
@@ -9561,12 +9561,12 @@ end function fortran_name
 !!
 !!  Results:
 !!
-!!    ISUPPER:  65 66 67 68 69 70 71 72 73
-!!    74 75 76 77 78 79 80 81 82 83
-!!    84 85 86 87 88 89 90
-!!    ISUPPER:  A B C D E F G H I
-!!    J K L M N O P Q R S
-!!    T U V W X Y Z
+!!     > ISUPPER:  65 66 67 68 69 70 71 72 73
+!!     > 74 75 76 77 78 79 80 81 82 83
+!!     > 84 85 86 87 88 89 90
+!!     > ISUPPER:  A B C D E F G H I
+!!     > J K L M N O P Q R S
+!!     > T U V W X Y Z
 !!
 !!##AUTHOR
 !!     John S. Urban
@@ -9610,7 +9610,7 @@ end function isupper
 !!##RETURNS
 !!    islower  logical value returns true if character is a lowercase
 !!             ASCII character else false.
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!  Sample program
 !!
@@ -9774,7 +9774,7 @@ end function isalnum
 !!    y   output string
 !!    a   base specified for output string
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample program:
 !!
@@ -9852,7 +9852,7 @@ end function base
 !!    int   input string representing numeric whole value
 !!##RETURNS
 !!    base2   string representing input value in base 2
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample program:
 !!
@@ -9927,7 +9927,7 @@ end function base2
 !!    basein   base of input string; either 0 or from 2 to 36.
 !!    out10    output value in base 10
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample program:
 !!
@@ -10066,7 +10066,7 @@ end function decodebase
 !!
 !!    The letters A,B,...,Z represent 10,11,...,36 in the base > 10.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample program:
 !!
@@ -10229,7 +10229,7 @@ end function tobase
 !!     PARAGRAPH  character array filled with data from source_string
 !!                broken at spaces into variables of length LENGTH.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!  sample program
 !!
@@ -11518,7 +11518,7 @@ end function str_one
 !!    imatch  location of matching delimiter. If no match is found, zero (0)
 !!            is returned.
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample program:
 !!
@@ -11649,7 +11649,7 @@ end subroutine matching_delimiter
 !!    a,b  strings to search for the longest common substring.
 !!##RETURNS
 !!    longest_common_substring  the longest common substring found
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!  Sample program
 !!
@@ -11837,7 +11837,7 @@ end function atol
 !!##RETURNS
 !!     aton     .true. if the conversion was successful, .false. otherwise
 !!
-!!##EXAMPLE
+!!##EXAMPLES
 !!
 !!   Sample Program:
 !!

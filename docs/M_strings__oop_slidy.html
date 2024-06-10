@@ -99,7 +99,7 @@ message describing error when ATON returns .false.</p></li>
 <li><strong>aton</strong><br />
 �true. if the conversion was successful, .false. otherwise</li>
 </ul>
-<h2 id="example">EXAMPLE</h2>
+<h2 id="examples-1">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>     program demo_aton
 
@@ -159,7 +159,7 @@ input string representing numeric whole value</li>
 <li><strong>base2</strong><br />
 string representing input value in base 2</li>
 </ul>
-<h2 id="example-1">EXAMPLE</h2>
+<h2 id="examples-2">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>     program demo_base2
      use M_strings, only : base2
@@ -206,7 +206,7 @@ output string</p></li>
 <li><p><strong>a</strong><br />
 base specified for output string</p></li>
 </ul>
-<h2 id="example-2">EXAMPLE</h2>
+<h2 id="examples-3">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_base
    use M_strings, only : base
@@ -256,7 +256,7 @@ input strings to combine into a vector</p></li>
 <li><p><strong>len</strong><br />
 length of returned array variables</p></li>
 </ul>
-<h2 id="examples-1">EXAMPLES</h2>
+<h2 id="examples-4">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_bundle
    use M_strings, only: bundle
@@ -299,7 +299,7 @@ C pointer to convert</li>
 <li><strong>f_string</strong><br />
 Fortran character variable to return</li>
 </ul>
-<h2 id="example-3">EXAMPLE</h2>
+<h2 id="examples-5">EXAMPLES</h2>
 <h2 id="author-5">AUTHOR</h2>
 <p>John S. Urban</p>
 <h2 id="license-5">LICENSE</h2>
@@ -334,7 +334,7 @@ error code.</p>
 <li><p>&gt;0 count of changes made</p></li>
 </ul></li>
 </ul>
-<h2 id="examples-2">EXAMPLES</h2>
+<h2 id="examples-6">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_change
 
@@ -391,7 +391,7 @@ returned token</p></li>
 <li><p><strong>CHOMP</strong><br />
 status flag. 0 = success, <strong>-1</strong> = no tokens remain</p></li>
 </ul>
-<h2 id="examples-3">EXAMPLES</h2>
+<h2 id="examples-7">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_chomp
 
@@ -458,7 +458,7 @@ input string to trim leading and trailing space characters from</li>
 <li><strong>strout</strong><br />
 clipped version of input string</li>
 </ul>
-<h2 id="example-4">EXAMPLE</h2>
+<h2 id="examples-8">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_clip
    use M_strings, only: clip
@@ -489,7 +489,7 @@ clipped version of input string</li>
 <h2 id="description-9">DESCRIPTION</h2>
 <p>Convert a number from base 10 to base OUT_BASE. The function returns �FALSE. if OUT_BASE is not in [2..36] or if number IN_BASE10 is too big.</p>
 <p>The letters A,B,```,Z represent 10,11,...,36 in the base &gt; 10.</p>
-<h2 id="example-5">EXAMPLE</h2>
+<h2 id="examples-9">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_codebase
    use M_strings, only : codebase
@@ -538,7 +538,7 @@ By default the character that replaces adjacent whitespace is a space. If the op
 <li><strong>OUTSTR</strong><br />
 string of same length as input string but with all contiguous whitespace reduced to a single space and leading whitespace removed</li>
 </ul>
-<h2 id="examples-4">EXAMPLES</h2>
+<h2 id="examples-10">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_compact
     use M_strings, only : compact
@@ -590,7 +590,7 @@ The minimum string length to return</p></li>
 <li><strong>strout</strong><br />
 The input string center-padded to the requested length with spaces.</li>
 </ul>
-<h2 id="example-6">EXAMPLE</h2>
+<h2 id="examples-11">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>     program demo_cpad
       use M_strings, only : cpad
@@ -629,7 +629,7 @@ input string to trim leading and trailing space and control characters from</li>
 <li><strong>strout</strong><br />
 cropped version of input string</li>
 </ul>
-<h2 id="example-7">EXAMPLE</h2>
+<h2 id="examples-12">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_crop
    use M_strings, only: crop
@@ -668,7 +668,7 @@ input string to be converted to a dble value</li>
 <li><strong>DBLE</strong><br />
 double precision value represented by input string</li>
 </ul>
-<h2 id="example-8">EXAMPLE</h2>
+<h2 id="examples-13">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>     program demo_dble
      use M_strings, only: dble
@@ -711,7 +711,7 @@ base of input string; either 0 or from 2 to 36.</p></li>
 <li><p><strong>out10</strong><br />
 output value in base 10</p></li>
 </ul>
-<h2 id="example-9">EXAMPLE</h2>
+<h2 id="examples-14">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_decodebase
    use M_strings, only : codebase, decodebase
@@ -790,7 +790,7 @@ position of last non-blank character in input string LINE</p></li>
 <li><p><strong>DLIM</strong><br />
 delimiter characters</p></li>
 </ul>
-<h2 id="examples-5">EXAMPLES</h2>
+<h2 id="examples-15">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_delim
 
@@ -898,7 +898,7 @@ delimiter characters</p></li>
 </code></pre>
 <h2 id="description-16">DESCRIPTION</h2>
 <p>describe(3f) returns a string describing long name of a single character</p>
-<h2 id="examples-6">EXAMPLES</h2>
+<h2 id="examples-16">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_describe
     use M_strings, only : describe
@@ -1063,12 +1063,12 @@ It assumes a tab is set every 8 characters. Trailing spaces are removed.</li>
 <li><strong>instr</strong><br />
 Input line to remove tabs from</li>
 </ul>
-<h2 id="results">RESULTS</h2>
+<h2 id="returns-10">RETURNS</h2>
 <ul>
 <li><strong>outstr</strong><br />
 Output string with tabs expanded.</li>
 </ul>
-<h2 id="examples-7">EXAMPLES</h2>
+<h2 id="examples-17">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_dilate
 
@@ -1104,7 +1104,7 @@ Output string with tabs expanded.</li>
 </code></pre>
 <h2 id="description-18">DESCRIPTION</h2>
 <p>The Levenshtein distance function returns how many edits (deletions, insertions, transposition) are required to turn one string into another.</p>
-<h2 id="examples-8">EXAMPLES</h2>
+<h2 id="examples-18">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_edit_distance
    use M_strings, only : edit_distance
@@ -1114,9 +1114,10 @@ Output string with tabs expanded.</li>
    end program demo_edit_distance
 </code></pre>
 <p>Expected output</p>
-<h3 id="t">T</h3>
-<h3 id="t-1">T</h3>
-<h3 id="t-2">T</h3>
+<pre><code>    &gt; T
+    &gt; T
+    &gt; T
+</code></pre>
 <h2 id="author-18">AUTHOR</h2>
 <p>John S. Urban</p>
 <h2 id="license-18">LICENSE</h2>
@@ -1142,12 +1143,12 @@ string to tokenize</p></li>
 <li><p><strong>SUFFIX</strong><br />
 list of separator strings. May be scalar or an array. Trailing spaces are ignored.</p></li>
 </ul>
-<h2 id="returns-10">RETURNS</h2>
+<h2 id="returns-11">RETURNS</h2>
 <ul>
 <li><strong>ENDS_WITH</strong><br />
 returns .TRUE. if one of the suffix match the end of SOURCE_STRING.</li>
 </ul>
-<h2 id="examples-9">EXAMPLES</h2>
+<h2 id="examples-19">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_ends_with
    use M_strings, only : ends_with
@@ -1160,10 +1161,11 @@ returns .TRUE. if one of the suffix match the end of SOURCE_STRING.</li>
    end program demo_ends_with
 </code></pre>
 <p>Results:</p>
-<h3 id="f">F</h3>
-<h3 id="t-3">T</h3>
-<h3 id="t-4">T</h3>
-<h3 id="f-1">F</h3>
+<pre><code>    &gt; F
+    &gt; T
+    &gt; T
+    &gt; F
+</code></pre>
 <h2 id="author-19">AUTHOR</h2>
 <p>John S. Urban</p>
 <h2 id="license-19">LICENSE</h2>
@@ -1196,7 +1198,7 @@ returns .TRUE. if one of the suffix match the end of SOURCE_STRING.</li>
       xHH    byte with hexadecimal value HH (2 digits) -- h is an alias for x
 </code></pre>
 <p>The default escape character is the backslash, but this may be changed using the optional parameter ESCAPE.</p>
-<h2 id="examples-10">EXAMPLES</h2>
+<h2 id="examples-20">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_expand
       use M_strings, only : expand
@@ -1264,7 +1266,7 @@ Returns the actual delimiter that terminated the field. Returns char(0) if the f
 <li><p><strong>FOUND</strong><br />
 True if a field was found.</p></li>
 </ul>
-<h2 id="examples-11">EXAMPLES</h2>
+<h2 id="examples-21">EXAMPLES</h2>
 <p>Sample of uses</p>
 <pre><code>       program demo_find_field
        use M_strings, only : find_field
@@ -1347,12 +1349,12 @@ True if a field was found.</p></li>
 <li><strong>LINE</strong><br />
 input string to test. Leading spaces are significant but trailing spaces are ignored.</li>
 </ul>
-<h2 id="returns-11">RETURNS</h2>
+<h2 id="returns-12">RETURNS</h2>
 <ul>
 <li><strong>LOUT</strong><br />
 a logical value indicating if the input string passed or failed the test to see if it is a valid Fortran name or not.</li>
 </ul>
-<h2 id="example-10">EXAMPLE</h2>
+<h2 id="examples-22">EXAMPLES</h2>
 <p>Sample program</p>
 <pre><code>     program demo_fortran_name
      use M_strings, only : fortran_name
@@ -1411,7 +1413,7 @@ a logical value indicating if the input string passed or failed the test to see 
 <li><strong>LINE</strong><br />
 A character variable containing the characters representing a list of numbers</li>
 </ul>
-<h2 id="returns-12">RETURNS</h2>
+<h2 id="returns-13">RETURNS</h2>
 <ul>
 <li><p><strong>VALUES()</strong><br />
 array holding numbers read from string. May be of type INTEGER, REAL, DOUBLEPRECISION, or CHARACTER. If CHARACTER the strings are returned as simple words instead of numeric values.</p></li>
@@ -1420,7 +1422,7 @@ number of defined numbers in VALUES(). If ICOUNT reaches the size of the VALUES(
 <li><p><strong>IERR</strong><br />
 zero if no error occurred in reading numbers. Optional. If not present and an error occurs the program is terminated.</p></li>
 </ul>
-<h2 id="examples-12">EXAMPLES</h2>
+<h2 id="examples-23">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>      program demo_getvals
       use M_strings, only: getvals
@@ -1494,7 +1496,7 @@ the following simple globbing options are available</p>
 <li><p>There is no escape character, so matching strings with literal question mark and asterisk is problematic.</p></li>
 </ul></li>
 </ul>
-<h2 id="examples-13">EXAMPLES</h2>
+<h2 id="examples-24">EXAMPLES</h2>
 <p>Example program</p>
 <pre><code>   program demo_glob
    implicit none
@@ -1710,7 +1712,7 @@ the following simple globbing options are available</p>
 <p>Expected output</p>
 <h2 id="author-23">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="reference">REFERENCE</h2>
+<h2 id="references">REFERENCES</h2>
 <p>The article "Matching Wildcards: An Empirical Way to Tame an Algorithm" in Dr Dobb's Journal, By Kirk J. Krauss, October 07, 2014</p>
 <h2 id="license-23">LICENSE</h2>
 <p>Public Domain</p>
@@ -1725,7 +1727,7 @@ the following simple globbing options are available</p>
 </code></pre>
 <h2 id="description-25">DESCRIPTION</h2>
 <p>Count number of leading spaces in a CHARACTER variable.</p>
-<h2 id="examples-14">EXAMPLES</h2>
+<h2 id="examples-25">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_indent
    !  test filter to count leading spaces in a character variable
@@ -1766,12 +1768,12 @@ the following simple globbing options are available</p>
 <li><strong>STRING</strong><br />
 input string to be converted to an INT32 integer</li>
 </ul>
-<h2 id="returns-13">RETURNS</h2>
+<h2 id="returns-14">RETURNS</h2>
 <ul>
 <li><strong>INT</strong><br />
 integer represented by input string</li>
 </ul>
-<h2 id="example-11">EXAMPLE</h2>
+<h2 id="examples-26">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>     program demo_int
      use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64
@@ -1833,7 +1835,7 @@ returns .true. if character is an uppercase letter (A-Z)</p></li>
 <li><p><strong>isxdigit</strong><br />
 returns .true. if character is a hexadecimal digit (0-9, a-f, or A-F).</p></li>
 </ul>
-<h2 id="examples-15">EXAMPLES</h2>
+<h2 id="examples-27">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_isdigit
 
@@ -1882,12 +1884,12 @@ returns .true. if character is a hexadecimal digit (0-9, a-f, or A-F).</p></li>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-14">RETURNS</h2>
+<h2 id="returns-15">RETURNS</h2>
 <ul>
 <li><strong>isalpha</strong><br />
 logical value returns .true. if character is a ASCII letter or false otherwise.</li>
 </ul>
-<h2 id="example-12">EXAMPLE</h2>
+<h2 id="examples-28">EXAMPLES</h2>
 <p>Sample program</p>
 <pre><code>    program demo_isalpha
     use M_strings, only : isalpha
@@ -1921,12 +1923,12 @@ logical value returns .true. if character is a ASCII letter or false otherwise.<
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-15">RETURNS</h2>
+<h2 id="returns-16">RETURNS</h2>
 <ul>
 <li><strong>isupper</strong><br />
 logical value returns true if character is an ASCII character.</li>
 </ul>
-<h2 id="example-13">EXAMPLE</h2>
+<h2 id="examples-29">EXAMPLES</h2>
 <p>Sample program</p>
 <pre><code>    program demo_isascii
     use M_strings, only : isascii
@@ -1972,7 +1974,7 @@ logical value returns true if character is an ASCII character.</li>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-16">RETURNS</h2>
+<h2 id="returns-17">RETURNS</h2>
 <ul>
 <li><p><strong>isblank</strong><br />
 logical value returns true if character is a "blank"</p>
@@ -1981,7 +1983,7 @@ logical value returns true if character is a "blank"</p>
 space or horizontal tab character).</li>
 </ul></li>
 </ul>
-<h2 id="example-14">EXAMPLE</h2>
+<h2 id="examples-30">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_isblank
     use M_strings, only : isblank
@@ -2015,12 +2017,12 @@ space or horizontal tab character).</li>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-17">RETURNS</h2>
+<h2 id="returns-18">RETURNS</h2>
 <ul>
 <li><strong>iscntrl</strong><br />
 logical value returns true if character is a control character</li>
 </ul>
-<h2 id="example-15">EXAMPLE</h2>
+<h2 id="examples-31">EXAMPLES</h2>
 <p>Sample program</p>
 <pre><code>    program demo_iscntrl
     use M_strings, only : iscntrl
@@ -2050,7 +2052,7 @@ logical value returns true if character is a control character</li>
 </code></pre>
 <h2 id="description-32">DESCRIPTION</h2>
 <p>isdigit(3f) returns .true. if character is a digit (0,1,```,9) and .false. otherwise</p>
-<h2 id="examples-16">EXAMPLES</h2>
+<h2 id="examples-32">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>    program demo_isdigit
     use M_strings, only : isdigit, isspace, switch
@@ -2097,12 +2099,12 @@ logical value returns true if character is a control character</li>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-18">RETURNS</h2>
+<h2 id="returns-19">RETURNS</h2>
 <ul>
 <li><strong>isgraph</strong><br />
 logical value returns true if character is a printable non-space character</li>
 </ul>
-<h2 id="example-16">EXAMPLE</h2>
+<h2 id="examples-33">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_isgraph
    use M_strings, only : isgraph
@@ -2137,12 +2139,12 @@ logical value returns true if character is a printable non-space character</li>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-19">RETURNS</h2>
+<h2 id="returns-20">RETURNS</h2>
 <ul>
 <li><strong>islower</strong><br />
 logical value returns true if character is a lowercase ASCII character else false.</li>
 </ul>
-<h2 id="example-17">EXAMPLE</h2>
+<h2 id="examples-34">EXAMPLES</h2>
 <p>Sample program</p>
 <pre><code>    program demo_islower
     use M_strings, only : islower
@@ -2183,7 +2185,7 @@ the string to evaluate as to whether it represents a numeric value or not</p></l
 <li><p><strong>msg</strong><br />
 An optional message describing the string</p></li>
 </ul>
-<h2 id="returns-20">RETURNS</h2>
+<h2 id="returns-21">RETURNS</h2>
 <ul>
 <li><p><strong>isnumber</strong><br />
 the following values are returned</p>
@@ -2199,7 +2201,7 @@ the following values are returned</p>
 </ul></li>
 </ul>
 <p>values less than 1 represent an error</p>
-<h2 id="examples-17">EXAMPLES</h2>
+<h2 id="examples-35">EXAMPLES</h2>
 <p>As the example shows, you can use an internal READ(3f) along with the IOSTAT= parameter to check (and read) a string as well.</p>
 <pre><code>    program demo_isnumber
     use M_strings, only : isnumber
@@ -2302,12 +2304,12 @@ the following values are returned</p>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-21">RETURNS</h2>
+<h2 id="returns-22">RETURNS</h2>
 <ul>
 <li><strong>isprint</strong><br />
 logical value returns true if character is a printable ASCII character else false.</li>
 </ul>
-<h2 id="example-18">EXAMPLE</h2>
+<h2 id="examples-36">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_isprint
    use M_strings, only : isprint
@@ -2342,12 +2344,12 @@ logical value returns true if character is a printable ASCII character else fals
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-22">RETURNS</h2>
+<h2 id="returns-23">RETURNS</h2>
 <ul>
 <li><strong>ispunct</strong><br />
 logical value returns true if character is a printable punctuation character.</li>
 </ul>
-<h2 id="example-19">EXAMPLE</h2>
+<h2 id="examples-37">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_ispunct
     use M_strings, only : ispunct
@@ -2386,12 +2388,12 @@ logical value returns true if character is a printable punctuation character.</l
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-23">RETURNS</h2>
+<h2 id="returns-24">RETURNS</h2>
 <ul>
 <li><strong>isspace</strong><br />
 returns true if character is ASCII white space</li>
 </ul>
-<h2 id="example-20">EXAMPLE</h2>
+<h2 id="examples-38">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_isspace
     use M_strings, only : isspace
@@ -2425,12 +2427,12 @@ returns true if character is ASCII white space</li>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-24">RETURNS</h2>
+<h2 id="returns-25">RETURNS</h2>
 <ul>
 <li><strong>isupper</strong><br />
 logical value returns true if character is an uppercase ASCII character else false.</li>
 </ul>
-<h2 id="example-21">EXAMPLE</h2>
+<h2 id="examples-39">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_isupper
     use M_strings, only : isupper
@@ -2444,13 +2446,13 @@ logical value returns true if character is an uppercase ASCII character else fal
     end program demo_isupper
 </code></pre>
 <p>Results:</p>
-<pre><code>   ISUPPER:  65 66 67 68 69 70 71 72 73
-   74 75 76 77 78 79 80 81 82 83
-   84 85 86 87 88 89 90
-   ISUPPER:  A B C D E F G H I
+<pre><code>    &gt; ISUPPER:  65 66 67 68 69 70 71 72 73
+    &gt; 74 75 76 77 78 79 80 81 82 83
+    &gt; 84 85 86 87 88 89 90
+    &gt; ISUPPER:  A B C D E F G H I
+    &gt; J K L M N O P Q R S
+    &gt; T U V W X Y Z
 </code></pre>
-<h3 id="j-k-l-m-n-o-p-q-r-s">J K L M N O P Q R S</h3>
-<h3 id="t-u-v-w-x-y-z">T U V W X Y Z</h3>
 <h2 id="author-38">AUTHOR</h2>
 <p>John S. Urban</p>
 <h2 id="license-38">LICENSE</h2>
@@ -2471,12 +2473,12 @@ logical value returns true if character is an uppercase ASCII character else fal
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-25">RETURNS</h2>
+<h2 id="returns-26">RETURNS</h2>
 <ul>
 <li><strong>isxdigit</strong><br />
 logical value returns true if character is a hexadecimal digit</li>
 </ul>
-<h2 id="example-22">EXAMPLE</h2>
+<h2 id="examples-40">EXAMPLES</h2>
 <p>Sample program</p>
 <pre><code>    program demo_isxdigit
     use M_strings, only : isxdigit
@@ -2527,12 +2529,12 @@ suffix string</p></li>
 <li><p><strong>TRM</strong><br />
 option to trim each element of STR of trailing spaces. Defaults to .TRUE.</p></li>
 </ul>
-<h2 id="result">RESULT</h2>
+<h2 id="returns-27">RETURNS</h2>
 <ul>
 <li><strong>STRING</strong><br />
 CHARACTER variable composed of all of the elements of STR() appended together with the optional separator SEP placed between the elements.</li>
 </ul>
-<h2 id="example-23">EXAMPLE</h2>
+<h2 id="examples-41">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>  program demo_join
   use M_strings, only: join
@@ -2586,12 +2588,12 @@ input string</p></li>
 <li><p><strong>length</strong><br />
 output string length</p></li>
 </ul>
-<h2 id="results-1">RESULTS</h2>
+<h2 id="returns-28">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 output string</li>
 </ul>
-<h2 id="example-24">EXAMPLE</h2>
+<h2 id="examples-42">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>    program demo_lenset
      use M_strings, only : lenset
@@ -2628,12 +2630,12 @@ output string</li>
 <li><strong>string</strong><br />
 input string whose trimmed length is being calculated ignoring all trailing whitespace characters.</li>
 </ul>
-<h2 id="returns-26">RETURNS</h2>
+<h2 id="returns-29">RETURNS</h2>
 <ul>
 <li><strong>len_white</strong><br />
 the number of characters in the trimmed string</li>
 </ul>
-<h2 id="example-25">EXAMPLE</h2>
+<h2 id="examples-43">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_len_white
 
@@ -2708,7 +2710,7 @@ the number of characters in the trimmed string</li>
 <li><strong>icurve_lists(:)</strong><br />
 input array</li>
 </ul>
-<h2 id="returns-27">RETURNS</h2>
+<h2 id="returns-30">RETURNS</h2>
 <ul>
 <li><p><strong>icurve_expanded(:)</strong><br />
 output array; assumed large enough to hold returned list</p></li>
@@ -2717,7 +2719,7 @@ number of icurve_expanded numbers on output</p></li>
 <li><p><strong>ierr</strong><br />
 zero if no error occurred</p></li>
 </ul>
-<h2 id="example-26">EXAMPLE</h2>
+<h2 id="examples-44">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_listout
     use M_strings, only : listout
@@ -2778,12 +2780,12 @@ zero if no error occurred</p></li>
 <li><strong>a,b</strong><br />
 strings to search for the longest common substring.</li>
 </ul>
-<h2 id="returns-28">RETURNS</h2>
+<h2 id="returns-31">RETURNS</h2>
 <ul>
 <li><strong>longest_common_substring</strong><br />
 the longest common substring found</li>
 </ul>
-<h2 id="example-27">EXAMPLE</h2>
+<h2 id="examples-45">EXAMPLES</h2>
 <p>Sample program</p>
 <pre><code>   program demo_longest_common_substring
    use M_strings, only : longest_common_substring
@@ -2843,14 +2845,14 @@ optional starting position in "str" to begin converting to miniscule</p></li>
 <li><p><strong>end</strong><br />
 optional ending position in "str" to stop converting to miniscule</p></li>
 </ul>
-<h2 id="results-2">RESULTS</h2>
+<h2 id="returns-32">RETURNS</h2>
 <ul>
 <li><strong>lower</strong><br />
 copy of the input string with all characters converted to miniscule over optionally specified range.</li>
 </ul>
 <h2 id="trivia">TRIVIA</h2>
 <p>The terms "uppercase" and "lowercase" date back to the early days of the mechanical printing press. Individual metal alloy casts of each needed letter, or punctuation symbol, were meticulously added to a press block, by hand, before rolling out copies of a page. These metal casts were stored and organized in wooden cases. The more often needed miniscule letters were placed closer to hand, in the lower cases of the work bench. The less often needed, capitalized, majuscule letters, ended up in the harder to reach upper cases.</p>
-<h2 id="example-28">EXAMPLE</h2>
+<h2 id="examples-46">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>      program demo_lower
       use M_strings, only: lower
@@ -2887,12 +2889,12 @@ The input may be scalar or a vector. the input value to return as a string, padd
 <li><p><strong>length</strong><br />
 The minimum string length to return</p></li>
 </ul>
-<h2 id="returns-29">RETURNS</h2>
+<h2 id="returns-33">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 The input string padded to the requested length on the left with spaces.</li>
 </ul>
-<h2 id="example-29">EXAMPLE</h2>
+<h2 id="examples-47">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>     program demo_lpad
       use M_strings, only : lpad
@@ -2938,7 +2940,7 @@ position of delimiter to find match for</p></li>
 <li><p><strong>imatch</strong><br />
 location of matching delimiter. If no match is found, zero (0) is returned.</p></li>
 </ul>
-<h2 id="example-30">EXAMPLE</h2>
+<h2 id="examples-48">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_matching_delimiter
       use M_strings, only : matching_delimiter
@@ -2990,12 +2992,12 @@ string to return if the logical expression EXPR is false</p></li>
 <li><p><strong>EXPR</strong><br />
 logical expression to evaluate to determine whether to return STR1 when true, and STR2 when false.</p></li>
 </ul>
-<h2 id="result-1">RESULT</h2>
+<h2 id="returns-34">RETURNS</h2>
 <ul>
 <li><strong>MERGE_STR</strong><br />
 a trimmed string is returned that is otherwise the value of STR1 or STR2, depending on the logical expression EXPR.</li>
 </ul>
-<h2 id="examples-18">EXAMPLES</h2>
+<h2 id="examples-49">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>    program demo_merge_str
     use M_strings, only : merge_str
@@ -3043,7 +3045,7 @@ Replaces the character above it with a space.</p></li>
 A space below a character leaves it unchanged.</p></li>
 </ul>
 <p>Any other character replaces the character above it.</p>
-<h2 id="examples-19">EXAMPLES</h2>
+<h2 id="examples-50">EXAMPLES</h2>
 <p>Example input/output:</p>
 <pre><code>   THE INPUT LINE```..... 10 THIS STRING  TO BE MORTIFD
    THE DIRECTIVES LINE```        ^ IS THE#        D#  ^IE
@@ -3101,12 +3103,12 @@ optional value to print the value of after the message. May be of type INTEGER, 
 <li><p><strong>sep</strong><br />
 separator between values. Defaults to a space</p></li>
 </ul>
-<h2 id="returns-30">RETURNS</h2>
+<h2 id="returns-35">RETURNS</h2>
 <ul>
 <li><strong>msg</strong><br />
 description to print</li>
 </ul>
-<h2 id="examples-20">EXAMPLES</h2>
+<h2 id="examples-51">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>       program demo_msg
        use M_strings, only : msg
@@ -3425,7 +3427,7 @@ function that returns the longest common substring of two strings.</p></li>
 <p>The M_strings__oop(3fm) module (included with the M_strings(3fm) module) provides an OOP (Object-Oriented Programming) interface to the M_strings(3fm) module.</p>
 <h2 id="see-also">SEE ALSO</h2>
 <p>There are additional routines in other GPF modules for working with expressions (M_calculator), time strings (M_time), random strings (M_random, M_uuid), lists (M_list), and interfacing with the C regular expression library (M_regex).</p>
-<h2 id="examples-21">EXAMPLES</h2>
+<h2 id="examples-52">EXAMPLES</h2>
 <p>Each of the procedures includes an [example](example/) program in the corresponding man(1) page for the function.</p>
 <h2 id="author-50">AUTHOR</h2>
 <p>John S. Urban</p>
@@ -3442,7 +3444,7 @@ function that returns the longest common substring of two strings.</p></li>
 <p>M_strings__oop(3fm) is a companion module that provides an OOP interface to the M_strings module.</p>
 <h2 id="see-also-1">SEE ALSO</h2>
 <p>There are additional routines in other GPF modules for working with expressions (M_calculator), time strings (M_time), random strings (M_random, M_uuid), lists (M_list), and interfacing with the C regular expression library (M_regex).</p>
-<h2 id="examples-22">EXAMPLES</h2>
+<h2 id="examples-53">EXAMPLES</h2>
 <p>Each of the procedural functions in M_strings(3fm) includes an example program in the corresponding man(1) page for the function. The object-oriented interface does not have individual man(1) pages, but is instead demonstrated using the following example program:</p>
 <pre><code>    program demo_M_strings__oop
     !
@@ -3697,12 +3699,12 @@ function that returns the longest common substring of two strings.</p></li>
 <li><strong>STRING</strong><br />
 input string to be converted to an integer</li>
 </ul>
-<h2 id="returns-31">RETURNS</h2>
+<h2 id="returns-36">RETURNS</h2>
 <ul>
 <li><strong>NINT</strong><br />
 integer represented by input string</li>
 </ul>
-<h2 id="example-31">EXAMPLE</h2>
+<h2 id="examples-54">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>     program demo_nint
      use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64
@@ -3735,7 +3737,7 @@ integer represented by input string</li>
 </code></pre>
 <h2 id="description-55">DESCRIPTION</h2>
 <p>Convert non-printable characters to a space.</p>
-<h2 id="examples-23">EXAMPLES</h2>
+<h2 id="examples-55">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_noesc
 
@@ -3831,7 +3833,7 @@ integer represented by input string</li>
 </code></pre>
 <h2 id="description-56">DESCRIPTION</h2>
 <p>nospace(3f) removes space, tab, carriage return, new line, vertical tab, formfeed and null characters (called "whitespace"). The output is returned trimmed.</p>
-<h2 id="examples-24">EXAMPLES</h2>
+<h2 id="examples-56">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_nospace
     use M_strings, only: nospace
@@ -3875,14 +3877,14 @@ integer represented by input string</li>
 <li><strong>instr</strong><br />
 Input line to remove tabs from</li>
 </ul>
-<h2 id="results-3">RESULTS</h2>
+<h2 id="returns-37">RETURNS</h2>
 <ul>
 <li><p><strong>outstr</strong><br />
 Output string with tabs expanded. Assumed to be of sufficient length</p></li>
 <li><p><strong>lgth</strong><br />
 Significant length of returned string</p></li>
 </ul>
-<h2 id="examples-25">EXAMPLES</h2>
+<h2 id="examples-57">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_notabs
 
@@ -3933,12 +3935,12 @@ if true pads string on the right, else on the left</p></li>
 <li><p><strong>clip</strong><br />
 trim spaces from input string but otherwise retain length. Except for simple cases you typically would trim the input yourself.</p></li>
 </ul>
-<h2 id="returns-32">RETURNS</h2>
+<h2 id="returns-38">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 The input string padded to the requested length or the trimmed input string if the input string is longer than the requested length.</li>
 </ul>
-<h2 id="example-32">EXAMPLE</h2>
+<h2 id="examples-58">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_pad
     use M_strings, only : pad
@@ -4022,12 +4024,12 @@ input string to break into an array of shorter strings on blank delimiters</p></
 <li><p><strong>LENGTH</strong><br />
 length of lines to break the string into.</p></li>
 </ul>
-<h2 id="returns-33">RETURNS</h2>
+<h2 id="returns-39">RETURNS</h2>
 <ul>
 <li><strong>PARAGRAPH</strong><br />
 character array filled with data from source_string broken at spaces into variables of length LENGTH.</li>
 </ul>
-<h2 id="example-33">EXAMPLE</h2>
+<h2 id="examples-59">EXAMPLES</h2>
 <p>sample program</p>
 <pre><code>   program demo_paragraph
    use M_strings, only : paragraph
@@ -4099,12 +4101,12 @@ character array filled with data from source_string broken at spaces into variab
 <li><strong>SOURCE_STRING</strong><br />
 string or character array to encode</li>
 </ul>
-<h2 id="returns-34">RETURNS</h2>
+<h2 id="returns-40">RETURNS</h2>
 <ul>
 <li><strong>percent_encode</strong><br />
 a string holding a percent-encoded copy of the input</li>
 </ul>
-<h2 id="examples-26">EXAMPLES</h2>
+<h2 id="examples-60">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_percent_encode
    use M_strings, only : percent_encode
@@ -4148,12 +4150,12 @@ alternate quoting methods are supported:</p></li>
 <li><strong>clip</strong><br />
 default is to trim leading and trailing spaces from the string. If CLIP is .FALSE. spaces are not trimmed</li>
 </ul>
-<h2 id="result-2">RESULT</h2>
+<h2 id="returns-41">RETURNS</h2>
 <ul>
 <li><strong>quoted_str</strong><br />
 The output string, which is based on adding quotes to STR.</li>
 </ul>
-<h2 id="example-34">EXAMPLE</h2>
+<h2 id="examples-61">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_quote
    use M_strings, only : quote
@@ -4211,12 +4213,12 @@ The output string, which is based on adding quotes to STR.</li>
 <li><strong>STRING</strong><br />
 input string to be converted to a real value</li>
 </ul>
-<h2 id="returns-35">RETURNS</h2>
+<h2 id="returns-42">RETURNS</h2>
 <ul>
 <li><strong>REAL</strong><br />
 real value represented by input string</li>
 </ul>
-<h2 id="example-35">EXAMPLE</h2>
+<h2 id="examples-62">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>     program demo_real
      use M_strings, only: real
@@ -4276,14 +4278,14 @@ number of replacements to perform. Defaults to a global replacement.</p></li>
 <li><p><strong>ignorecase</strong><br />
 whether to ignore ASCII case or not. Defaults to .false. .</p></li>
 </ul>
-<h2 id="returns-36">RETURNS</h2>
+<h2 id="returns-43">RETURNS</h2>
 <ul>
 <li><p><strong>newline</strong><br />
 allocatable string returned</p></li>
 <li><p><strong>ierr</strong><br />
 error code. iF ier = <strong>-1</strong> bad directive, &gt;= 0 then count of changes made.</p></li>
 </ul>
-<h2 id="examples-27">EXAMPLES</h2>
+<h2 id="examples-63">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_replace
    use M_strings, only : replace
@@ -4349,7 +4351,7 @@ error code. iF ier = <strong>-1</strong> bad directive, &gt;= 0 then count of ch
 </code></pre>
 <h2 id="description-64">DESCRIPTION</h2>
 <p>reverse(string) returns a copy of the input string with all characters reversed from right to left.</p>
-<h2 id="example-36">EXAMPLE</h2>
+<h2 id="examples-64">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>      program demo_reverse
       use M_strings, only: reverse
@@ -4395,9 +4397,9 @@ error code. iF ier = <strong>-1</strong> bad directive, &gt;= 0 then count of ch
 <h3 id="trivial-security">TRIVIAL SECURITY</h3>
 <p>The use of a constant shift means that the encryption effectively has no key, and decryption requires no more knowledge than the fact that ROT13 is in use. Even without this knowledge, the algorithm is easily broken through frequency analysis.</p>
 <p>In encrypted normal English-language text of any significant size, ROT13 is recognizable from some letter/word patterns. The words "n", "V" (capitalized only), and "gur" (ROT13 for "a", "I", and "the"), and words ending in "yl" ("ly") are examples.</p>
-<h2 id="references">REFERENCES</h2>
+<h2 id="references-1">REFERENCES</h2>
 <p>Wikipedia, the free encyclopedia</p>
-<h2 id="example-37">EXAMPLE</h2>
+<h2 id="examples-65">EXAMPLES</h2>
 <p>Sample program</p>
 <pre><code>   program demo_rotate13
    use M_strings, only : rotate13
@@ -4438,12 +4440,12 @@ The input may be scalar or a vector. the input value to return as a string, padd
 <li><p><strong>length</strong><br />
 The minimum string length to return</p></li>
 </ul>
-<h2 id="returns-37">RETURNS</h2>
+<h2 id="returns-44">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 The input string padded to the requested length on the right with spaces.</li>
 </ul>
-<h2 id="example-38">EXAMPLE</h2>
+<h2 id="examples-66">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>     program demo_rpad
       use M_strings, only : rpad
@@ -4479,7 +4481,7 @@ The input string padded to the requested length on the right with spaces.</li>
 </code></pre>
 <h2 id="description-67">DESCRIPTION</h2>
 <p>Given a character variable convert it to an array of single-character character variables with the last element set to a null character. This is generally used to pass character variables to C procedures.</p>
-<h2 id="examples-28">EXAMPLES</h2>
+<h2 id="examples-67">EXAMPLES</h2>
 <p>character(len=3),allocatable :: array(:)</p>
 <ul>
 <li><p><strong>integer</strong><br />
@@ -4533,12 +4535,12 @@ If an error occurs the program is stopped if the optional parameter IERR is not 
 <li><p><strong>onerr</strong><br />
 The value to return on error. A value of NaN is returned on error by default.</p></li>
 </ul>
-<h2 id="returns-38">RETURNS</h2>
+<h2 id="returns-45">RETURNS</h2>
 <ul>
 <li><strong>s2v</strong><br />
 numeric value read from string</li>
 </ul>
-<h2 id="example-39">EXAMPLE</h2>
+<h2 id="examples-68">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_s2v
 
@@ -4635,12 +4637,12 @@ Input string containing numbers</p></li>
 <li><p><strong>DELIM</strong><br />
 optional list of delimiter characters. If a space is included, it should appear as the left-most character in the list. The default is " ;," (spaces, semi-colons, and commas).</p></li>
 </ul>
-<h2 id="results-4">RESULTS</h2>
+<h2 id="returns-46">RETURNS</h2>
 <ul>
 <li><strong>S2VS</strong><br />
 doubleprecision array</li>
 </ul>
-<h2 id="example-40">EXAMPLE</h2>
+<h2 id="examples-69">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>     program demo_s2vs
      use M_strings, only : s2vs
@@ -4706,12 +4708,12 @@ Treatment of null fields. By default adjacent delimiters in the input string do 
 <li><p><strong>ORDER='ASCENDING'|'DESCENDING'</strong><br />
 by default the tokens are returned from last to first; order='ASCENDING' returns them from first to last (left to right).</p></li>
 </ul>
-<h2 id="returns-39">RETURNS</h2>
+<h2 id="returns-47">RETURNS</h2>
 <ul>
 <li><strong>SEP</strong><br />
 Output array of tokens</li>
 </ul>
-<h2 id="examples-29">EXAMPLES</h2>
+<h2 id="examples-70">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_sep
    use M_strings, only: sep
@@ -4779,7 +4781,7 @@ List of delimiter characters. The default delimiters are the "whitespace" charac
 <li><p><strong>NULLS="IGNORE"|"RETURN"|"IGNOREEND"</strong><br />
 Treatment of null fields. By default adjacent delimiters in the input string do not create an empty string in the output array. if NULLS='return' adjacent delimiters create an empty element in the output ARRAY. If NULLS='ignoreend' then only trailing delimiters at the right of the string are ignored.</p></li>
 </ul>
-<h2 id="examples-30">EXAMPLES</h2>
+<h2 id="examples-71">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_slice
     use M_strings, only: slice
@@ -4930,7 +4932,7 @@ POS LEN (STRING).</p></li>
 <li><p><strong>BACK</strong><br />
 shall be a logical scalar. It is an INTENT (IN) argument. If POS does not appear and BACK is present with the value true, STRING is scanned backwards for tokens starting from the end. If POS does not appear and BACK is absent or present with the value false, STRING is scanned forwards for tokens starting from the beginning.</p></li>
 </ul>
-<h2 id="examples-31">EXAMPLES</h2>
+<h2 id="examples-72">EXAMPLES</h2>
 <p>Sample of uses</p>
 <pre><code>   program demo_sort2020
    use M_strings, only : split2020
@@ -5033,7 +5035,7 @@ Order of output array. By default ARRAY contains the tokens having parsed the IN
 <li><p><strong>NULLS=IGNORE|RETURN|IGNOREEND</strong><br />
 Treatment of null fields. By default adjacent delimiters in the input string do not create an empty string in the output array. if NULLS='return' adjacent delimiters create an empty element in the output ARRAY. If NULLS='ignoreend' then only trailing delimiters at the right of the string are ignored.</p></li>
 </ul>
-<h2 id="examples-32">EXAMPLES</h2>
+<h2 id="examples-73">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_split
    use M_strings, only: split
@@ -5143,12 +5145,12 @@ input string in which to reduce adjacent duplicate characters to a single charac
 <li><p><strong>CHAR</strong><br />
 The character to remove adjacent duplicates of</p></li>
 </ul>
-<h2 id="returns-40">RETURNS</h2>
+<h2 id="returns-48">RETURNS</h2>
 <ul>
 <li><strong>OUTSTR</strong><br />
 string with all contiguous adjacent occurrences of CHAR removed</li>
 </ul>
-<h2 id="examples-33">EXAMPLES</h2>
+<h2 id="examples-74">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_squeeze
    use M_strings, only : squeeze
@@ -5213,12 +5215,12 @@ optional string to use as padding. Defaults to a space.</p></li>
 <li><p><strong>suffix</strong><br />
 optional string to append to output string</p></li>
 </ul>
-<h2 id="returns-41">RETURNS</h2>
+<h2 id="returns-49">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 The input string padded to the requested length or the trimmed input string if the input string is longer than the requested length.</li>
 </ul>
-<h2 id="example-41">EXAMPLE</h2>
+<h2 id="examples-75">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>  program demo_stretch
    use M_strings, only : stretch
@@ -5290,14 +5292,14 @@ The input string padded to the requested length or the trimmed input string if t
 <li><strong>CHARS</strong><br />
 input string to read numeric value from</li>
 </ul>
-<h2 id="returns-42">RETURNS</h2>
+<h2 id="returns-50">RETURNS</h2>
 <ul>
 <li><p><strong>VALU</strong><br />
 numeric value returned. May be INTEGER, REAL, or DOUBLEPRECISION.</p></li>
 <li><p><strong>IERR</strong><br />
 error flag (0 == no error)</p></li>
 </ul>
-<h2 id="example-42">EXAMPLE</h2>
+<h2 id="examples-76">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_string_to_value
     use M_strings, only: string_to_value
@@ -5336,7 +5338,7 @@ Input string containing numbers</p></li>
 <li><p><strong>IREAD</strong><br />
 maximum number of values to try to read from input string</p></li>
 </ul>
-<h2 id="results-5">RESULTS</h2>
+<h2 id="returns-51">RETURNS</h2>
 <ul>
 <li><p><strong>VALUES</strong><br />
 real array to be filled with numbers</p></li>
@@ -5347,7 +5349,7 @@ delimiter character(s), usually a space. must not be a null string. If more than
 <li><p><strong>IERR</strong><br />
 error flag (0=no error, else column number string starts at that error occurred on).</p></li>
 </ul>
-<h2 id="example-43">EXAMPLE</h2>
+<h2 id="examples-77">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>     program demo_string_to_values
       use M_strings, only : string_to_values
@@ -5422,14 +5424,14 @@ token count should be set to zero for a new string</p></li>
 <li><p><strong>delimiters</strong><br />
 characters used to determine the end of tokens</p></li>
 </ul>
-<h2 id="return">RETURN</h2>
+<h2 id="returns-52">RETURNS</h2>
 <ul>
 <li><p><strong>token_start</strong><br />
 beginning position in SOURCE_STRING where token was found</p></li>
 <li><p><strong>token_end</strong><br />
 ending position in SOURCE_STRING where token was found strtok_status</p></li>
 </ul>
-<h2 id="examples-34">EXAMPLES</h2>
+<h2 id="examples-78">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_strtok
     use M_strings, only : strtok
@@ -5501,7 +5503,7 @@ sets the left margin to be scanned for OLD in TARGETLINE.</p></li>
 <li><p><strong>END</strong><br />
 sets the right margin to be scanned for OLD in TARGETLINE.</p></li>
 </ul>
-<h2 id="examples-35">EXAMPLES</h2>
+<h2 id="examples-79">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_substitute
    use M_strings, only : substitute
@@ -5555,7 +5557,7 @@ sets the right margin to be scanned for OLD in TARGETLINE.</p></li>
 </code></pre>
 <h2 id="description-80">DESCRIPTION</h2>
 <p>SWITCH(3f): generic function that switches CHARACTER string to an array of single characters or an array of single characters to a CHARACTER string. Useful in passing strings to C. New Fortran features may supersede these routines.</p>
-<h2 id="examples-36">EXAMPLES</h2>
+<h2 id="examples-80">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_switch
    use M_strings, only : switch, isalpha, islower, nospace
@@ -5607,19 +5609,21 @@ sets the right margin to be scanned for OLD in TARGETLINE.</p></li>
    end program demo_switch
 </code></pre>
 <p>Expected output</p>
-<h3 id="f-t-t-t-t-t">F T T T T T</h3>
-<h3 id="t-5">T</h3>
-<h3 id="f-2">F</h3>
-<p>DASHES is all dashes</p>
-<h3 id="f-3">F</h3>
-<h3 id="f-4">F</h3>
-<h3 id="t-6">T</h3>
-<p>This is a string [T][h][i][s][ ][i][s][ ][a][ ][s][t][r][i][n][g]</p>
-<h3 id="f-t-t-t-f-t-t-f-t-f-t-t-t-t-t-t">F T T T F T T F T F T T T T T T</h3>
-<p>LINE=Thisisastring</p>
-<h3 id="f-t-t-t-t-t-t-t-t-t-t-t-t">F T T T T T T T T T T T T</h3>
-<h3 id="f-5">F</h3>
-<h3 id="t-7">T</h3>
+<pre><code>    &gt; F T T T T T
+    &gt; T
+    &gt; F
+    &gt; DASHES is all dashes
+    &gt; F
+    &gt; F
+    &gt; T
+    &gt; This is a string
+    &gt; [T][h][i][s][ ][i][s][ ][a][ ][s][t][r][i][n][g]
+    &gt;  F  T  T  T  F  T  T  F  T  F  T  T  T  T  T  T
+    &gt; LINE=Thisisastring
+    &gt; F T T T T T T T T T T T T
+    &gt; F
+    &gt; T
+</code></pre>
 <h2 id="author-78">AUTHOR</h2>
 <p>John S. Urban</p>
 <h2 id="license-77">LICENSE</h2>
@@ -5662,12 +5666,12 @@ list of letters to replace letters in OLD_SET with.</li>
             in the new set is used to replace the remaining characters
             in the new set.
 </code></pre>
-<h2 id="returns-43">RETURNS</h2>
+<h2 id="returns-53">RETURNS</h2>
 <ul>
 <li><strong>outstr</strong><br />
 instr with substitutions applied</li>
 </ul>
-<h2 id="examples-37">EXAMPLES</h2>
+<h2 id="examples-81">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_transliterate
 
@@ -5723,12 +5727,12 @@ input string to remove quotes from, using the rules of list-directed input (two 
 <li><p><strong>esc</strong><br />
 optional character used to protect the next quote character from being processed as a quote, but simply as a plain character.</p></li>
 </ul>
-<h2 id="result-3">RESULT</h2>
+<h2 id="returns-54">RETURNS</h2>
 <ul>
 <li><strong>unquoted_str</strong><br />
 The output string, which is based on removing quotes from quoted_str.</li>
 </ul>
-<h2 id="example-44">EXAMPLE</h2>
+<h2 id="examples-82">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_unquote
       use M_strings, only : unquote
@@ -5789,14 +5793,14 @@ optional starting position in "str" to begin converting to uppercase</p></li>
 <li><p><strong>end</strong><br />
 optional ending position in "str" to stop converting to uppercase</p></li>
 </ul>
-<h2 id="results-6">RESULTS</h2>
+<h2 id="returns-55">RETURNS</h2>
 <ul>
 <li><strong>upper</strong><br />
 copy of the input string with all characters converted to uppercase over optionally specified range.</li>
 </ul>
 <h2 id="trivia-1">TRIVIA</h2>
 <p>The terms "uppercase" and "lowercase" date back to the early days of the mechanical printing press. Individual metal alloy casts of each needed letter, or punctuation symbol, were meticulously added to a press block, by hand, before rolling out copies of a page. These metal casts were stored and organized in wooden cases. The more often needed miniscule letters were placed closer to hand, in the lower cases of the work bench. The less often needed, capitalized, majuscule letters, ended up in the harder to reach upper cases.</p>
-<h2 id="example-45">EXAMPLE</h2>
+<h2 id="examples-83">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_upper
     use M_strings, only: upper
@@ -5837,12 +5841,12 @@ copy of the input string with all characters converted to uppercase over optiona
 <li><strong>str</strong><br />
 string to convert to uppercase</li>
 </ul>
-<h2 id="results-7">RESULTS</h2>
+<h2 id="returns-56">RETURNS</h2>
 <ul>
 <li><strong>upper</strong><br />
 copy of the input string with all unquoted characters converted to uppercase</li>
 </ul>
-<h2 id="example-46">EXAMPLE</h2>
+<h2 id="examples-84">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_upper_quoted
     use M_strings, only: upper_quoted
@@ -5886,12 +5890,12 @@ input value to be converted to a string</p></li>
 <li><p><strong>FMT</strong><br />
 format can be explicitly given, but is limited to generating a string of eighty or less characters.</p></li>
 </ul>
-<h2 id="returns-44">RETURNS</h2>
+<h2 id="returns-57">RETURNS</h2>
 <ul>
 <li><strong>OUTSTR</strong><br />
 returned string representing input value,</li>
 </ul>
-<h2 id="example-47">EXAMPLE</h2>
+<h2 id="examples-85">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_v2s
    use M_strings, only: v2s
@@ -5944,7 +5948,7 @@ You may specify a specific format that produces a string up to the length of CHA
 <li><p><strong>TRIMZ</strong><br />
 If a format is supplied the default is not to try to trim trailing zeros. Set TRIMZ to .true. to trim zeros from a string assumed to represent a simple numeric value.</p></li>
 </ul>
-<h2 id="returns-45">RETURNS</h2>
+<h2 id="returns-58">RETURNS</h2>
 <ul>
 <li><p><strong>CHARS</strong><br />
 returned string representing input value, must be at least 23 characters long; or what is required by optional FMT if longer.</p></li>
@@ -5953,7 +5957,7 @@ position of last non-blank character in returned string; optional.</p></li>
 <li><p><strong>IERR</strong><br />
 If not zero, error occurred; optional.</p></li>
 </ul>
-<h2 id="example-48">EXAMPLE</h2>
+<h2 id="examples-86">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>     program demo_value_to_string
      use M_strings, only: value_to_string
@@ -6000,7 +6004,7 @@ If not zero, error occurred; optional.</p></li>
 </code></pre>
 <h2 id="description-87">DESCRIPTION</h2>
 <p>visible(3f) expands characters to commonly used sequences used to represent the characters as control sequences or meta-control sequences.</p>
-<h2 id="examples-38">EXAMPLES</h2>
+<h2 id="examples-87">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>    program demo_visible
     use M_strings, only : visible
@@ -6042,12 +6046,12 @@ The input value to left-pad. May be a scalar or vector string or integer. If the
 <li><p><strong>length</strong><br />
 The minimum string length to return. If not present, the length of the input parameter VALUEIN is used. If the input value VALUEIN is an integer no zero padding occurs if LENGTH is not supplied.</p></li>
 </ul>
-<h2 id="returns-46">RETURNS</h2>
+<h2 id="returns-59">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 A trimmed string padded on the left with zeros to the requested length</li>
 </ul>
-<h2 id="example-49">EXAMPLE</h2>
+<h2 id="examples-88">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>     program demo_zpad
       use M_strings, only : zpad
