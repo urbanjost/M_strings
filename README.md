@@ -169,3 +169,7 @@ Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.co
 
 Each man-page includes a working example program. These and additional
 examples are included in the [example/](example/) directory.
+
+## See Also
++ [M_match](https://github.com/urbanjost/M_match) Fortran module for Basic Regular Expressions (LICENSE:PD)
++ [M_regex](https://github.com/urbanjost/M_regex) Fortran interface to POSIX 1003.2 regular expression library using ISO_C_BINDING.
