@@ -65,10 +65,11 @@ M_strings(3f) - [M_strings::INTRO] Fortran string module
 <A HREF=#2>Synopsis</A><BR>
 <A HREF=#3>See Also</A><BR>
 <A HREF=#4>Examples</A><BR>
-<A HREF=#5>Author</A><BR>
-<A HREF=#6>License</A><BR>
+<A HREF=#5>Example</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>License</A><BR>
 </BLOCKQUOTE>
-<A name=7>
+<A name=8>
 
      <H3>DESCRIPTION</H3>
 
@@ -98,7 +99,7 @@ public entities:
              & reverse, squeeze
      use M_strings,only : replace, join
      use M_strings,only : upper, lower, upper_quoted
-     use M_strings,only : rotate13, percent_encode
+     use M_strings,only : rotate13, percent_encode, percent_decode
      use M_strings,only : adjustc, compact, nospace, indent
      use M_strings,only : crop, clip, unquote, quote, matching_delimiter
      use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
@@ -229,7 +230,14 @@ separator
 <TR valign=top><TD colspan=2>
 <B>rotate13</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
 apply trivial encryption algorithm ROT13 to a string
-percent_encode apply percent-encryption (aka. URL encryption) to characters
+</TD></TR>
+<TR valign=top><TD colspan=2>
+<B>percent_encode</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+apply percent-encryption (aka. URL encryption) to characters
+</TD></TR>
+<TR valign=top><TD colspan=2>
+<B>percent_decode</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+apply percent-decryption (aka. URL decryption) to characters
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>squeeze</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
@@ -467,7 +475,7 @@ changes string to numeric value
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>msg</B> </TD><TD valign=bottom>
-append the values of up to nine values into a string
+append the values of up to nine values into a string.
 </TD></TR>
 <TR valign=top><TD colspan=2>
 <B>value_to_string</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
@@ -706,13 +714,78 @@ the corresponding man(1) page for the function.
 </BLOCKQUOTE>
 <A name=5>
 
+     <H3>EXAMPLE</H3>
+
+</A>
+<BLOCKQUOTE>
+Sample program:
+<P>
+<PRE>
+     program demo_M_strings
+     use M_strings,only : SPLIT, slice, sep, delim, chomp, strtok
+     use M_strings,only : split2020, find_field
+     use M_strings,only : substitute, change, modif, transliterate, &
+             & reverse, squeeze
+     use M_strings,only : REPLACE, join
+     use M_strings,only : UPPER, LOWER, upper_quoted
+     use M_strings,only : rotate13, percent_encode, percent_decode
+     use M_strings,only : adjustc, compact, nospace, indent
+     use M_strings,only : crop, clip, unquote, quote, matching_delimiter
+     use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
+             & stretch, lenset, merge_str
+     use M_strings,only : switch, s2c, c2s
+     use M_strings,only : noesc, notabs, dilate, expand, visible
+     use M_strings,only : longest_common_substring
+     use M_strings,only : string_to_value, string_to_values, s2v, s2vs
+     use M_strings,only : int, real, dble, nint
+     use M_strings,only : atoi, atol, aton
+     use M_strings,only : value_to_string, v2s, msg
+     use M_strings,only : listout, getvals
+     use M_strings,only : glob, ends_with
+     use M_strings,only : paragraph
+     use M_strings,only : base, decodebase, codebase, base2
+     use M_strings,only : isalnum, isalpha, iscntrl, isdigit
+     use M_strings,only : isgraph, islower, isprint, ispunct
+     use M_strings,only : isspace, isupper, isascii, isblank, isxdigit
+     use M_strings,only : isnumber
+     use M_strings,only : fortran_name
+     use M_strings,only : describe
+     use M_strings,only : edit_distance
+     use M_strings,only : bundle
+     character(len=:),allocatable :: string
+     character(len=:),allocatable :: array(:) ! output array of tokens
+     character(len=*),parameter   :: gen=&#146;(*(g0))&#146;
+     character(len=*),parameter   :: genx=&#146;(*("[",g0,"] ":))&#146;
+     string=&#146;abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 01234567890&#146;
+     write(*,gen)string
+     write(*,gen)upper(string)
+     write(*,gen)lower(string)
+     call split(string,array)
+     write(*,genx)array
+     write(*,gen)replace(string,&#146;qrs&#146;,&#146;--RePlace--&#146;,ignorecase=.true.)
+     end program demo_M_strings
+<P>
+</PRE>
+Results:
+<P>
+<PRE>
+ &gt; abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 01234567890
+ &gt; ABCDEFGHIJKLMNOPQRSTUVWXYZ ABCDEFGHIJKLMNOPQRSTUVWXYZ 01234567890
+ &gt; abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz 01234567890
+ &gt; [abcdefghijklmnopqrstuvwxyz] [ABCDEFGHIJKLMNOPQRSTUVWXYZ] [01234567890               ]
+ &gt; abcdefghijklmnop--RePlace--tuvwxyz ABCDEFGHIJKLMNOP--RePlace--TUVWXYZ 01234567890
+<P>
+</PRE>
+</BLOCKQUOTE>
+<A name=6>
+
      <H3>AUTHOR</H3>
 
 </A>
 <BLOCKQUOTE>
 John S. Urban
 </BLOCKQUOTE>
-<A name=6>
+<A name=7>
 
      <H3>LICENSE</H3>
 
@@ -721,7 +794,7 @@ John S. Urban
 Public Domain
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>M_strings (3m_strings)</TD> <TD align=right width=33%><I>June 09, 2024</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from bb6cc3bc-0465-45a7-89c8-5e52a7317966 using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>M_strings (3m_strings)</TD> <TD align=right width=33%><I>June 23, 2024</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from c0ef1eac-d1a2-4361-a82b-dba3a8f4cd14 using man macros.</FONT>
 <br><br><center><img src="images/M_strings.gif"></center>
 </div>
 </div>

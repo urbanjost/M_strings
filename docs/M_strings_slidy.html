@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <title>M_strings__oop</title>
+  <title>M_strings</title>
   <style type="text/css">
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,7 @@
 </head>
 <body>
 <div class="slide titlepage">
-  <h1 class="title">M_strings__oop</h1>
+  <h1 class="title">M_strings</h1>
 </div>
 <div id="name" class="slide section level1">
 <h1>NAME</h1>
@@ -4129,22 +4129,22 @@ character array filled with data from source_string broken at spaces into variab
 </div>
 <div id="name-60" class="slide section level1">
 <h1>NAME</h1>
-<p>percent_decode(3f) - [M_strings:ENCODE] percent-decode strings and character arrays (LICENSE:ISC)</p>
+<p>percent_decode(3f) - [M_strings:ENCODE] percent-encode strings and character arrays (LICENSE:ISC)</p>
 <h2 id="synopsis-60">SYNOPSIS</h2>
 <p>function percent_decode(text,exit_code)</p>
 <pre><code>     character(len=1),intent(in)  :: text(:)
+     character(len=;),allocatable :: percent_decode
      integer,optional,intent(out) :: exit_code
-     character(len=:),allocatable :: percent_decode
 </code></pre>
 <p>or</p>
 <p>function percent_decode(text,exit_code)</p>
 <pre><code>     character(len=*),intent(in)  :: text
+     character(len=;),allocatable :: percent_decode
      integer,optional,intent(out) :: exit_code
-     character(len=:),allocatable :: percent_decode
 </code></pre>
 <h2 id="description-60">DESCRIPTION</h2>
 <p>percent_decode(3f) percent-decodes percent-encoded strings or character arrays.</p>
-<p>URI containing spaces or most other non-alphanumeric characters must be encoded using percent encoding (aka. URL encoding). This procedure unwinds the encryption.</p>
+<p>URI containing spaces or most other non-alphanumeric characters must be encoded using percent encoding (aka. URL encoding).</p>
 <p>The characters allowed in a URI are either reserved or unreserved (or a percent character as part of a percent-encoding). Reserved characters are those characters that sometimes have special meaning, while unreserved characters have no such meaning. Using percent-encoding, characters which otherwise would not be allowed are represented using allowed characters. The sets of reserved and unreserved characters and the circumstances under which certain reserved characters have special meaning have changed slightly with each revision of specifications that govern URIs and URI schemes.</p>
 <p>According to RFC 3986, the characters in a URL have to be taken from a defined set of unreserved and reserved ASCII characters. Any other characters are not allowed in a URL.</p>
 <p>The unreserved characters can be encoded, but should not be. The unreserved characters are:</p>

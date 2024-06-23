@@ -22,7 +22,7 @@
 !!              & reverse, squeeze
 !!      use M_strings,only : replace, join
 !!      use M_strings,only : upper, lower, upper_quoted
-!!      use M_strings,only : rotate13, percent_encode
+!!      use M_strings,only : rotate13, percent_encode, percent_decode
 !!      use M_strings,only : adjustc, compact, nospace, indent
 !!      use M_strings,only : crop, clip, unquote, quote, matching_delimiter
 !!      use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
@@ -69,32 +69,33 @@
 !!
 !!   EDITING
 !!
-!!       substitute     subroutine non-recursively globally replaces old
-!!                      substring with new substring
-!!       replace        function non-recursively globally replaces old
-!!                      substring with new substring using allocatable string
-!!                      (version of substitute(3f) without limitation on
-!!                      length of output string)
-!!       change         subroutine non-recursively globally replaces old
-!!                      substring with new substring with a directive like
-!!                      line editor
-!!       modif          subroutine modifies a string with a directive like the
-!!                      XEDIT line editor MODIFY command
-!!       transliterate  replace characters found in set one with characters
-!!                      from set two
-!!       reverse        reverse character order in a string
-!!       join           join an array of CHARACTER variables with specified
-!!                      separator
-!!       rotate13       apply trivial encryption algorithm ROT13 to a string
-!!       percent_encode apply percent-encryption (aka. URL encryption) to characters
-!!       squeeze        delete adjacent duplicate characters from a string
+!!       substitute      subroutine non-recursively globally replaces old
+!!                       substring with new substring
+!!       replace         function non-recursively globally replaces old
+!!                       substring with new substring using allocatable string
+!!                       (version of substitute(3f) without limitation on
+!!                       length of output string)
+!!       change          subroutine non-recursively globally replaces old
+!!                       substring with new substring with a directive like
+!!                       line editor
+!!       modif           subroutine modifies a string with a directive like the
+!!                       XEDIT line editor MODIFY command
+!!       transliterate   replace characters found in set one with characters
+!!                       from set two
+!!       reverse         reverse character order in a string
+!!       join            join an array of CHARACTER variables with specified
+!!                       separator
+!!       rotate13        apply trivial encryption algorithm ROT13 to a string
+!!       percent_encode  apply percent-encryption (aka. URL encryption) to characters
+!!       percent_decode  apply percent-decryption (aka. URL decryption) to characters
+!!       squeeze         delete adjacent duplicate characters from a string
 !!
 !!   CASE
 !!
-!!       upper          function converts string to uppercase
-!!       lower          function converts string to miniscule
-!!       upper_quoted   function converts string to uppercase skipping strings
-!!                      quoted per Fortran rules
+!!       upper           function converts string to uppercase
+!!       lower           function converts string to miniscule
+!!       upper_quoted    function converts string to uppercase skipping strings
+!!                       quoted per Fortran rules
 !!
 !!   STRING LENGTH AND PADDING
 !!
@@ -168,7 +169,7 @@
 !!       atoi              function returns INTEGER(kind=int32)  from a string
 !!       atol              function returns INTEGER(kind=int64)  from a string
 !!       aton              changes string to numeric value
-!!       msg               append the values of up to nine values into a string
+!!       msg               append the values of up to nine values into a string.
 !!
 !!       value_to_string   generic subroutine returns string given numeric value
 !!                         (REAL, DOUBLEPRECISION, INTEGER, LOGICAL )
@@ -276,6 +277,61 @@
 !!
 !!    Each of the procedures includes an [example](example/) program in
 !!    the corresponding man(1) page for the function.
+!!##EXAMPLE
+!!
+!!    Sample program:
+!!
+!!      program demo_M_strings
+!!      use M_strings,only : SPLIT, slice, sep, delim, chomp, strtok
+!!      use M_strings,only : split2020, find_field
+!!      use M_strings,only : substitute, change, modif, transliterate, &
+!!              & reverse, squeeze
+!!      use M_strings,only : REPLACE, join
+!!      use M_strings,only : UPPER, LOWER, upper_quoted
+!!      use M_strings,only : rotate13, percent_encode, percent_decode
+!!      use M_strings,only : adjustc, compact, nospace, indent
+!!      use M_strings,only : crop, clip, unquote, quote, matching_delimiter
+!!      use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
+!!              & stretch, lenset, merge_str
+!!      use M_strings,only : switch, s2c, c2s
+!!      use M_strings,only : noesc, notabs, dilate, expand, visible
+!!      use M_strings,only : longest_common_substring
+!!      use M_strings,only : string_to_value, string_to_values, s2v, s2vs
+!!      use M_strings,only : int, real, dble, nint
+!!      use M_strings,only : atoi, atol, aton
+!!      use M_strings,only : value_to_string, v2s, msg
+!!      use M_strings,only : listout, getvals
+!!      use M_strings,only : glob, ends_with
+!!      use M_strings,only : paragraph
+!!      use M_strings,only : base, decodebase, codebase, base2
+!!      use M_strings,only : isalnum, isalpha, iscntrl, isdigit
+!!      use M_strings,only : isgraph, islower, isprint, ispunct
+!!      use M_strings,only : isspace, isupper, isascii, isblank, isxdigit
+!!      use M_strings,only : isnumber
+!!      use M_strings,only : fortran_name
+!!      use M_strings,only : describe
+!!      use M_strings,only : edit_distance
+!!      use M_strings,only : bundle
+!!      character(len=:),allocatable :: string
+!!      character(len=:),allocatable :: array(:) ! output array of tokens
+!!      character(len=*),parameter   :: gen='(*(g0))'
+!!      character(len=*),parameter   :: genx='(*("[",g0,"] ":))'
+!!      string='abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 01234567890'
+!!      write(*,gen)string
+!!      write(*,gen)upper(string)
+!!      write(*,gen)lower(string)
+!!      call split(string,array)
+!!      write(*,genx)array
+!!      write(*,gen)replace(string,'qrs','--RePlace--',ignorecase=.true.)
+!!      end program demo_M_strings
+!!
+!! Results:
+!!
+!!  > abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 01234567890
+!!  > ABCDEFGHIJKLMNOPQRSTUVWXYZ ABCDEFGHIJKLMNOPQRSTUVWXYZ 01234567890
+!!  > abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz 01234567890
+!!  > [abcdefghijklmnopqrstuvwxyz] [ABCDEFGHIJKLMNOPQRSTUVWXYZ] [01234567890               ]
+!!  > abcdefghijklmnop--RePlace--tuvwxyz ABCDEFGHIJKLMNOP--RePlace--TUVWXYZ 01234567890
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -315,6 +371,8 @@ public squeeze            !  delete adjacent duplicate characters from a string
 public rotate13           !  apply trivial encryption algorithm ROT13 to string
 public percent_encode     !  percent-encode characters or a string
 interface percent_encode;    module procedure percent_encode_string, percent_encode_characters;  end interface
+public percent_decode     !  percent-decode characters or a string
+interface percent_decode;    module procedure percent_decode_string, percent_decode_characters;  end interface
 !-------------------------# CHARACTER ARRAY VERSUS STRING
 public switch             !  generic switch between a string and an array of single characters (a2s,s2a)
 private a2s               !  function to copy char array to string
@@ -3476,13 +3534,12 @@ end function rotate13
 !!
 !!##AUTHOR
 !!    John S. Urban
-
 function percent_encode_string(text)
 character(len=*),intent(in)  :: text
 character(len=:),allocatable :: percent_encode_string
    percent_encode_string=percent_encode_characters(switch(text))
 end function percent_encode_string
-
+!-----------------------------------------------------------------------------------------------------------------------------------
 function percent_encode_characters(text)
 character(len=1),intent(in) :: text(:)
 character(len=:),allocatable :: percent_encode_characters
@@ -3502,6 +3559,193 @@ percent_encode_characters(:)=repeat(' ',len(percent_encode_characters))
    enddo
    percent_encode_characters=trim(percent_encode_characters)
 end function percent_encode_characters
+!==================================================================================================================================!
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!==================================================================================================================================!
+!>
+!!##NAME
+!!    percent_decode(3f) - [M_strings:ENCODE] percent-decode strings and
+!!    character arrays
+!!    (LICENSE:ISC)
+!!
+!!##SYNOPSIS
+!!
+!!
+!!     function percent_decode(text,exit_code)
+!!
+!!      character(len=1),intent(in)  :: text(:)
+!!      integer,optional,intent(out) :: exit_code
+!!      character(len=:),allocatable :: percent_decode
+!!
+!!     or
+!!
+!!     function percent_decode(text,exit_code)
+!!
+!!      character(len=*),intent(in)  :: text
+!!      integer,optional,intent(out) :: exit_code
+!!      character(len=:),allocatable :: percent_decode
+!!
+!!##DESCRIPTION
+!!
+!!    percent_decode(3f) percent-decodes percent-encoded strings or character
+!!    arrays.
+!!
+!!    URI containing spaces or most other non-alphanumeric characters must
+!!    be encoded using percent encoding (aka. URL encoding). This procedure
+!!    unwinds the encryption.
+!!
+!!    The characters allowed in a URI are either reserved or unreserved
+!!    (or a percent character as part of a percent-encoding). Reserved
+!!    characters are those characters that sometimes have special meaning,
+!!    while unreserved characters have no such meaning. Using percent-encoding,
+!!    characters which otherwise would not be allowed are represented using
+!!    allowed characters. The sets of reserved and unreserved characters and
+!!    the circumstances under which certain reserved characters have special
+!!    meaning have changed slightly with each revision of specifications that
+!!    govern URIs and URI schemes.
+!!
+!!    According to RFC 3986, the characters in a URL have to be taken from
+!!    a defined set of unreserved and reserved ASCII characters. Any other
+!!    characters are not allowed in a URL.
+!!
+!!    The unreserved characters can be encoded, but should not be. The
+!!    unreserved characters are:
+!!
+!!       > ABCDEFGHIJKLMNOPQRSTUVWXYZ
+!!       > abcdefghijklmnopqrstuvwxyz
+!!       > 0123456789-_.~
+!!
+!!    The reserved characters have to be encoded only under certain
+!!    circumstances. The reserved characters are:
+!!
+!!       >  * ' ( ) ; : @ & = + $ , / ? % # [ ]
+!!
+!!##OPTIONS
+!!     SOURCE_STRING   string or character array to decode
+!!     EXIT_CODE       non-zero if decoding failed
+!!
+!!##RETURNS
+!!     percent_decode  a string holding a percent-decoded copy of the input
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!       program demo_percent_decode
+!!       use M_strings, only : percent_encode, percent_decode
+!!       implicit none
+!!       character(len=:),allocatable :: input,output
+!!       character(len=*),parameter :: see='(g0,*("""",g0,"""":))'
+!!       character(len=*),parameter :: expected='&
+!!       &%01%02%03%04%05%06%07%08%09%0A%0B%0C%0D%0E%0F%10%11%12%13%14%15%&
+!!       &16%17%18%19%1A%1B%1C%1D%1E%1F%20%21%22%23%24%25%26%27%28%29%2A%2&
+!!       &B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWX&
+!!       &YZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D~%7F%80%81%&
+!!       &82%83%84%85%86%87%88%89%8A%8B%8C%8D%8E%8F%90%91%92%93%94%95%96%9&
+!!       &7%98%99%9A%9B%9C%9D%9E%9F%A0%A1%A2%A3%A4%A5%A6%A7%A8%A9%AA%AB%AC&
+!!       &%AD%AE%AF%B0%B1%B2%B3%B4%B5%B6%B7%B8%B9%BA%BB%BC%BD%BE%BF%C0%C1%&
+!!       &C2%C3%C4%C5%C6%C7%C8%C9%CA%CB%CC%CD%CE%CF%D0%D1%D2%D3%D4%D5%D6%D&
+!!       &7%D8%D9%DA%DB%DC%DD%DE%DF%E0%E1%E2%E3%E4%E5%E6%E7%E8%E9%EA%EB%EC&
+!!       &%ED%EE%EF%F0%F1%F2%F3%F4%F5%F6%F7%F8%F9%FA%FB%FC%FD%FE%FF%20'
+!!       integer :: exit_code, j
+!!          input='[this is a string]'
+!!          write(*,see)'INPUT=',input
+!!          output=percent_encode(input)
+!!          write(*,see)'ENCODED=',output
+!!          output=percent_decode(output)
+!!          write(*,see)'DECODED=',output
+!!          input=repeat(' ',256)
+!!          do j=0,255
+!!                input(j:j)=char(j)
+!!          enddo
+!!          output=percent_encode(input)
+!!          write(*,*)'ENCODING PASSED:',output==expected
+!!          output=percent_decode(output)
+!!          write(*,*)'DECODING PASSED:',input == output
+!!       end program demo_percent_decode
+!!
+!! Results:
+!!
+!!     > INPUT="[this is a string]"
+!!     > ENCODED="%5Bthis%20is%20a%20string%5D"
+!!     > DECODED="[this is a string]"
+!!     >  ENCODING PASSED: T
+!!     >  DECODING PASSED: T
+!!
+!!##AUTHOR
+!!    o based on dm_cgi_encode.f90, Copyright (c) 2023, Philipp Engel
+!!    o Modified to be more aligned with percent_encode(3f), John S. Urban, 2024
+!-----------------------------------------------------------------------------------------------------------------------------------
+function percent_decode_characters(text,exit_code)
+character(len=1),intent(in)  :: text(:)
+integer,intent(out),optional :: exit_code
+character(len=:),allocatable :: percent_decode_characters
+   percent_decode_characters=percent_decode_string(switch(text),exit_code)
+end function percent_decode_characters
+!-----------------------------------------------------------------------------------------------------------------------------------
+function percent_decode_string(input, exit_code) result(output)
+!! Unwinds percent-encoding in given input string.
+!
+! based on dm_cgi_encode.f90
+! Copyright (c) 2023, Philipp Engel
+! modified 2024-06-22, JSU
+
+! Original Copyright:
+! Permission to use, copy, modify, and/or distribute this software for any
+! purpose with or without fee is hereby granted, provided that the above
+! copyright notice and this permission notice appear in all copies.
+!
+! THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+! WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+! MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+! ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+! WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+! ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+! OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+!
+character(len=*), intent(in)   :: input  !! Encoded input string.
+character(len=:), allocatable  :: output !! Decoded output string.
+integer,intent(out),optional   :: exit_code
+character(len=2)  :: hex
+integer           :: input_col, output_col, hex_chars, input_len, output_len
+integer           :: iostat
+integer,parameter :: ERROR_BOUNDS=1, ERROR_NONE=0
+   if(present(exit_code))then
+      exit_code = ERROR_BOUNDS ! initially assume an error has occurred if return
+   endif
+   input_len = len_trim(input)
+   output=repeat(' ',len(input)) ! output should be at most length of input
+   output_len = len(output)
+   if (output_len < input_len) return ! should not occur in this version
+   input_col = 1
+   output_col = 1
+   do
+      if (input_col > input_len) exit
+      if (output_col > output_len) return
+      CONVERT: select case (input(input_col:input_col))
+      case ('%')
+         if (input_col + 2 > input_len) exit CONVERT ! ignoring, which is probably not right
+         hex = input(input_col + 1:input_col + 2)
+         read (hex, '(z2)', iostat=iostat) hex_chars
+         if (iostat == 0) then
+            output(output_col:output_col) = achar(hex_chars)   ! Bytes are in hex.
+            input_col = input_col + 2
+         else
+            output(output_col:output_col) = input(input_col:input_col) ! Bytes are not in hex.
+         endif
+      case ('+')
+         output(output_col:output_col) = ' '
+      case default
+         output(output_col:output_col) = input(input_col:input_col)
+      end select CONVERT
+      input_col = input_col + 1
+      output_col = output_col + 1
+   enddo
+   output=output(:output_col-1)
+   if(present(exit_code))then
+      exit_code = ERROR_NONE
+   endif
+end function percent_decode_string
 !==================================================================================================================================!
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !==================================================================================================================================!
@@ -7926,7 +8170,7 @@ end function edit_distance
 !!
 !!##DESCRIPTION
 !!    Given a list of up to twenty strings create a string array. The
-!!    length of the variables with be the same as the maximum length
+!!    length of the variables will be the same as the maximum length
 !!    of the input strings unless explicitly specified via LEN.
 !!
 !!    This is an alternative to the syntax
