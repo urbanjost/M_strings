@@ -155,7 +155,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   adjustc(3m_strings)
+				 June 24, 2024		   adjustc(3m_strings)
 M_strings(3m_strings)					 M_strings(3m_strings)
 
 
@@ -609,7 +609,7 @@ LICENSE
 
 
 
-				 June 23, 2024		 M_strings(3m_strings)
+				 June 24, 2024		 M_strings(3m_strings)
 compact(3m_strings)					   compact(3m_strings)
 
 
@@ -682,7 +682,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   compact(3m_strings)
+				 June 24, 2024		   compact(3m_strings)
 cpad(3m_strings)					      cpad(3m_strings)
 
 
@@ -744,7 +744,7 @@ LICENSE
 
 
 
-				 June 23, 2024		      cpad(3m_strings)
+				 June 24, 2024		      cpad(3m_strings)
 aton(3m_strings)					      aton(3m_strings)
 
 
@@ -823,7 +823,7 @@ LICENSE
 
 
 
-				 June 23, 2024		      aton(3m_strings)
+				 June 24, 2024		      aton(3m_strings)
 base(3m_strings)					      base(3m_strings)
 
 
@@ -890,7 +890,7 @@ LICENSE
 
 
 
-				 June 23, 2024		      base(3m_strings)
+				 June 24, 2024		      base(3m_strings)
 M_strings__oop(3m_strings)			    M_strings__oop(3m_strings)
 
 
@@ -1167,7 +1167,7 @@ LICENSE
 
 
 
-				 June 23, 2024	    M_strings__oop(3m_strings)
+				 June 24, 2024	    M_strings__oop(3m_strings)
 crop(3m_strings)					      crop(3m_strings)
 
 
@@ -1223,7 +1223,7 @@ LICENSE
 
 
 
-				 June 23, 2024		      crop(3m_strings)
+				 June 24, 2024		      crop(3m_strings)
 dble(3m_strings)					      dble(3m_strings)
 
 
@@ -1281,7 +1281,7 @@ LICENSE
 
 
 
-				 June 23, 2024		      dble(3m_strings)
+				 June 24, 2024		      dble(3m_strings)
 base2(3m_strings)					     base2(3m_strings)
 
 
@@ -1341,7 +1341,7 @@ LICENSE
 
 
 
-				 June 23, 2024		     base2(3m_strings)
+				 June 24, 2024		     base2(3m_strings)
 glob(3m_strings)					      glob(3m_strings)
 
 
@@ -1359,33 +1359,40 @@ SYNOPSIS
 
 
 DESCRIPTION
-  glob(3f) compares given (entire) STRING for a match to PATTERN which may
+  glob(3f) compares an (entire) STRING for a match to a PATTERN which may
   contain basic wildcard "globbing" characters.
+
+  "*" matches any string. "?" matches any single character.
 
   In this version to get a match the entire string must be described by
   PATTERN. Trailing whitespace is significant, so trim the input string to
   have trailing whitespace ignored.
 
-  Patterns like "b*ba" fail on a string like "babababa" because the algorithm
-  finds an early match. To skip over the early matches insert an extra
-  character at the end of the string and pattern that does not occur in the
-  pattern. Typically a NULL is used (char(0)).
+  Patterns like "b*ba" fail on a string like "babababa" because the first
+  match found is not at the end of the string so 'baba' does not match
+
+  To skip over the early matches insert an extra character at the end of the
+  string and pattern that does not occur in the pattern. Typically a NULL is
+  used (char(0)). So searching for b*ba\0 in babababa\0 matches the entire
+  string.
 
 OPTIONS
   string
-    the input string to test to see if it contains the pattern.
+    the input string to be tested for a match to the pattern.
 
   pattern
-    the following simple globbing options are available
+    the globbing pattern to search for. The following simple globbing options
+    are available
 
     •  "?" matching any one character
 
     •  "*" matching zero or more characters.  Do NOT use adjacent asterisks.
 
-    •  spaces are significant and must be matched or pretrimmed
+    •  spaces are significant and must be matched or trimmed before the
+       comparison.
 
-    •  There is no escape character, so matching strings with literal question
-       mark and asterisk is problematic.
+    •  There is no escape character, so matching strings with a literal
+       question mark and asterisk is problematic.
 
 EXAMPLES
   Example program
@@ -1615,7 +1622,7 @@ LICENSE
 
 
 
-				 June 23, 2024		      glob(3m_strings)
+				 June 24, 2024		      glob(3m_strings)
 bundle(3m_strings)					    bundle(3m_strings)
 
 
@@ -1680,7 +1687,7 @@ LICENSE
 
 
 
-				 June 23, 2024		    bundle(3m_strings)
+				 June 24, 2024		    bundle(3m_strings)
 delim(3m_strings)					     delim(3m_strings)
 
 
@@ -1848,7 +1855,7 @@ LICENSE
 
 
 
-				 June 23, 2024		     delim(3m_strings)
+				 June 24, 2024		     delim(3m_strings)
 split(3m_strings)					     split(3m_strings)
 
 
@@ -2000,7 +2007,7 @@ LICENSE
 
 
 
-				 June 23, 2024		     split(3m_strings)
+				 June 24, 2024		     split(3m_strings)
 split2020(3m_strings)					 split2020(3m_strings)
 
 
@@ -2201,7 +2208,7 @@ VERSION
 
 
 
-				 June 23, 2024		 split2020(3m_strings)
+				 June 24, 2024		 split2020(3m_strings)
 stretch(3m_strings)					   stretch(3m_strings)
 
 
@@ -2304,7 +2311,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   stretch(3m_strings)
+				 June 24, 2024		   stretch(3m_strings)
 string_to_value(3m_strings)			   string_to_value(3m_strings)
 
 
@@ -2369,7 +2376,7 @@ LICENSE
 
 
 
-				 June 23, 2024	   string_to_value(3m_strings)
+				 June 24, 2024	   string_to_value(3m_strings)
 string_to_values(3m_strings)			  string_to_values(3m_strings)
 
 
@@ -2464,7 +2471,7 @@ LICENSE
 
 
 
-				 June 23, 2024	  string_to_values(3m_strings)
+				 June 24, 2024	  string_to_values(3m_strings)
 strtok(3m_strings)					    strtok(3m_strings)
 
 
@@ -2569,7 +2576,7 @@ LICENSE
 
 
 
-				 June 23, 2024		    strtok(3m_strings)
+				 June 24, 2024		    strtok(3m_strings)
 c2s(3m_strings) 					       c2s(3m_strings)
 
 
@@ -2606,7 +2613,7 @@ LICENSE
 
 
 
-				 June 23, 2024		       c2s(3m_strings)
+				 June 24, 2024		       c2s(3m_strings)
 find_field(3m_strings)					find_field(3m_strings)
 
 
@@ -2752,7 +2759,7 @@ VERSION
 
 
 
-				 June 23, 2024		find_field(3m_strings)
+				 June 24, 2024		find_field(3m_strings)
 substitute(3m_strings)					substitute(3m_strings)
 
 
@@ -2839,7 +2846,7 @@ LICENSE
 
 
 
-				 June 23, 2024		substitute(3m_strings)
+				 June 24, 2024		substitute(3m_strings)
 switch(3m_strings)					    switch(3m_strings)
 
 
@@ -2947,7 +2954,7 @@ LICENSE
 
 
 
-				 June 23, 2024		    switch(3m_strings)
+				 June 24, 2024		    switch(3m_strings)
 transliterate(3m_strings)			     transliterate(3m_strings)
 
 
@@ -3037,7 +3044,7 @@ LICENSE
 
 
 
-				 June 23, 2024	     transliterate(3m_strings)
+				 June 24, 2024	     transliterate(3m_strings)
 unquote(3m_strings)					   unquote(3m_strings)
 
 
@@ -3125,7 +3132,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   unquote(3m_strings)
+				 June 24, 2024		   unquote(3m_strings)
 indent(3m_strings)					    indent(3m_strings)
 
 
@@ -3177,7 +3184,7 @@ LICENSE
 
 
 
-				 June 23, 2024		    indent(3m_strings)
+				 June 24, 2024		    indent(3m_strings)
 int(3m_strings) 					       int(3m_strings)
 
 
@@ -3236,7 +3243,7 @@ LICENSE
 
 
 
-				 June 23, 2024		       int(3m_strings)
+				 June 24, 2024		       int(3m_strings)
 change(3m_strings)					    change(3m_strings)
 
 
@@ -3321,7 +3328,7 @@ LICENSE
 
 
 
-				 June 23, 2024		    change(3m_strings)
+				 June 24, 2024		    change(3m_strings)
 chomp(3m_strings)					     chomp(3m_strings)
 
 
@@ -3415,7 +3422,7 @@ LICENSE
 
 
 
-				 June 23, 2024		     chomp(3m_strings)
+				 June 24, 2024		     chomp(3m_strings)
 clip(3m_strings)					      clip(3m_strings)
 
 
@@ -3468,7 +3475,7 @@ LICENSE
 
 
 
-				 June 23, 2024		      clip(3m_strings)
+				 June 24, 2024		      clip(3m_strings)
 isalpha(3m_strings)					   isalpha(3m_strings)
 
 
@@ -3522,7 +3529,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   isalpha(3m_strings)
+				 June 24, 2024		   isalpha(3m_strings)
 isascii(3m_strings)					   isascii(3m_strings)
 
 
@@ -3588,7 +3595,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   isascii(3m_strings)
+				 June 24, 2024		   isascii(3m_strings)
 codebase(3m_strings)					  codebase(3m_strings)
 
 
@@ -3644,7 +3651,7 @@ LICENSE
 
 
 
-				 June 23, 2024		  codebase(3m_strings)
+				 June 24, 2024		  codebase(3m_strings)
 isblank(3m_strings)					   isblank(3m_strings)
 
 
@@ -3701,7 +3708,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   isblank(3m_strings)
+				 June 24, 2024		   isblank(3m_strings)
 iscntrl(3m_strings)					   iscntrl(3m_strings)
 
 
@@ -3756,7 +3763,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   iscntrl(3m_strings)
+				 June 24, 2024		   iscntrl(3m_strings)
 islower(3m_strings)					   islower(3m_strings)
 
 
@@ -3814,7 +3821,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   islower(3m_strings)
+				 June 24, 2024		   islower(3m_strings)
 isprint(3m_strings)					   isprint(3m_strings)
 
 
@@ -3869,7 +3876,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   isprint(3m_strings)
+				 June 24, 2024		   isprint(3m_strings)
 decodebase(3m_strings)					decodebase(3m_strings)
 
 
@@ -3952,7 +3959,7 @@ LICENSE
 
 
 
-				 June 23, 2024		decodebase(3m_strings)
+				 June 24, 2024		decodebase(3m_strings)
 describe(3m_strings)					  describe(3m_strings)
 
 
@@ -4124,7 +4131,7 @@ LICENSE
 
 
 
-				 June 23, 2024		  describe(3m_strings)
+				 June 24, 2024		  describe(3m_strings)
 dilate(3m_strings)					    dilate(3m_strings)
 
 
@@ -4187,7 +4194,7 @@ LICENSE
 
 
 
-				 June 23, 2024		    dilate(3m_strings)
+				 June 24, 2024		    dilate(3m_strings)
 edit_distance(3m_strings)			     edit_distance(3m_strings)
 
 
@@ -4233,7 +4240,7 @@ LICENSE
 
 
 
-				 June 23, 2024	     edit_distance(3m_strings)
+				 June 24, 2024	     edit_distance(3m_strings)
 ends_with(3m_strings)					 ends_with(3m_strings)
 
 
@@ -4244,25 +4251,29 @@ NAME
 
 
 SYNOPSIS
-  function ends_with(source_string,suffix)
-
-      or
-
-  function ends_with(source_string,[suffix])
+  pure function ends_with(source_string[,suffix][,ignorecase])
 
       character(len=*),intent(in)	   :: source_string
       character(len=*),intent(in)	   :: suffix(..)
+      logical,intent(in),optional	   :: ignorecase
       logical				   :: ends_with
 
 
 DESCRIPTION
+  ends_with(3f) tests if a string ends with any specified suffix. Differs from
+  using index(3f) in that the input file and multiple suffices are trimmed by
+  ends_with(3f),
+
 OPTIONS
   SOURCE_STRING
-    string to tokenize
+    string to search
 
   SUFFIX
-    list of separator strings. May be scalar or an array.  Trailing spaces are
-    ignored.
+    list of separator strings. May be scalar or an array.  Trailing spaces in
+    SUFFIX are ignored.
+
+  IGNORECASE
+    If .true. case is ignored.
 
 RETURNS
   ENDS_WITH
@@ -4275,18 +4286,48 @@ EXAMPLES
      use M_strings, only : ends_with
      use, intrinsic :: iso_fortran_env, only : stdout=>output_unit
      implicit none
+     character(len=:),allocatable :: line, pattern
+     !
+	write(*,*)'basic usage'
+	write(stdout,*)ends_with('prog.a','.a'), 'should be true'
+	write(stdout,*)ends_with('prog.a','.o'), 'should be false'
 	write(stdout,*)ends_with('prog.a',['.o','.i','.s'])
 	write(stdout,*)ends_with('prog.f90',['.F90','.f90','.f	','.F  '])
+	!
+	write(*,*)'ignored case'
+	write(stdout,*)ends_with('prog.F90',['.f90','.f  '],ignorecase=.true.)
+	!
+	write(*,*)'trailing whitespace is ignored'
 	write(stdout,*)ends_with('prog.pdf','.pdf')
-	write(stdout,*)ends_with('prog.doc','.txt')
+	write(stdout,*)ends_with('prog.pdf','.pdf ')
+	write(stdout,*)ends_with('prog.pdf ','.pdf ')
+	write(stdout,*)ends_with('prog.pdf  ','.pdf ')
+	!
+	write(*,*)'equivalent using index(3f)'
+	line=	'myfile.doc  '
+	pattern='.doc	     '
+	write(stdout,*)&
+	&index(trim(line),trim(pattern),back=.true.)==len_trim(line)-len_trim(pattern)+1
+	write(stdout,*)ends_with(line,pattern)
      end program demo_ends_with
 
   Results:
 
-      > F
-      > T
-      > T
-      > F
+      >  basic usage
+      >  T should be true
+      >  F should be false
+      >  F
+      >  T
+      >  ignored case
+      >  T
+      >  trailing whitespace is ignored
+      >  T
+      >  T
+      >  T
+      >  T
+      >  equivalent using index(3f)
+      >  T
+      >  T
 
 
 AUTHOR
@@ -4297,7 +4338,7 @@ LICENSE
 
 
 
-				 June 23, 2024		 ends_with(3m_strings)
+				 June 24, 2024		 ends_with(3m_strings)
 expand(3m_strings)					    expand(3m_strings)
 
 
@@ -4374,7 +4415,7 @@ LICENSE
 
 
 
-				 June 23, 2024		    expand(3m_strings)
+				 June 24, 2024		    expand(3m_strings)
 fortran_name(3m_strings)			      fortran_name(3m_strings)
 
 
@@ -4439,7 +4480,7 @@ EXAMPLES
 
 
 
-				 June 23, 2024	      fortran_name(3m_strings)
+				 June 24, 2024	      fortran_name(3m_strings)
 isnumber(3m_strings)					  isnumber(3m_strings)
 
 
@@ -4581,7 +4622,7 @@ LICENSE
 
 
 
-				 June 23, 2024		  isnumber(3m_strings)
+				 June 24, 2024		  isnumber(3m_strings)
 getvals(3m_strings)					   getvals(3m_strings)
 
 
@@ -4698,7 +4739,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   getvals(3m_strings)
+				 June 24, 2024		   getvals(3m_strings)
 isupper(3m_strings)					   isupper(3m_strings)
 
 
@@ -4759,7 +4800,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   isupper(3m_strings)
+				 June 24, 2024		   isupper(3m_strings)
 isxdigit(3m_strings)					  isxdigit(3m_strings)
 
 
@@ -4812,7 +4853,7 @@ LICENSE
 
 
 
-				 June 23, 2024		  isxdigit(3m_strings)
+				 June 24, 2024		  isxdigit(3m_strings)
 len_white(3m_strings)					 len_white(3m_strings)
 
 
@@ -4908,7 +4949,7 @@ LICENSE
 
 
 
-				 June 23, 2024		 len_white(3m_strings)
+				 June 24, 2024		 len_white(3m_strings)
 lenset(3m_strings)					    lenset(3m_strings)
 
 
@@ -4969,7 +5010,7 @@ LICENSE
 
 
 
-				 June 23, 2024		    lenset(3m_strings)
+				 June 24, 2024		    lenset(3m_strings)
 longest_common_substring(3m_strings)	  longest_common_substring(3m_strings)
 
 
@@ -5046,7 +5087,7 @@ EXAMPLES
 
 
 
-				 June 23, longest_common_substring(3m_strings)
+				 June 24, longest_common_substring(3m_strings)
 lower(3m_strings)					     lower(3m_strings)
 
 
@@ -5065,32 +5106,33 @@ SYNOPSIS
 
 
 DESCRIPTION
-  lower(string) returns a copy of the input string with all characters
-  converted to miniscule over the specified range, assuming ASCII character
-  sets are being used. If no range is specified the entire string is converted
-  to miniscule.
+  lower(str) returns a copy of the ASCII input string with all characters
+  converted to miniscule (ie. "lowercase") over the specified range, If no
+  range is specified the entire string is converted to miniscule.
 
 OPTIONS
   str
     string to convert to miniscule
 
   begin
-    optional starting position in "str" to begin converting to miniscule
+    optional starting position in "str" to begin converting to miniscule.
+    Defaults to the beginning of the string (ie. "1").
 
   end
-    optional ending position in "str" to stop converting to miniscule
+    optional ending position in "str" to stop converting to miniscule.
+    Defaults to the end of the string (ie. "len(str)").
 
 RETURNS
   lower
-    copy of the input string with all characters converted to miniscule over
-    optionally specified range.
+    copy of the entire input string with all characters converted to miniscule
+    over optionally specified range.
 
 TRIVIA
   The terms "uppercase" and "lowercase" date back to the early days of the
   mechanical printing press. Individual metal alloy casts of each needed
-  letter, or punctuation symbol, were meticulously added to a press block, by
+  letter or punctuation symbol were meticulously added to a press block, by
   hand, before rolling out copies of a page. These metal casts were stored and
-  organized in wooden cases. The more often needed miniscule letters were
+  organized in wooden cases. The more-often-needed miniscule letters were
   placed closer to hand, in the lower cases of the work bench. The less often
   needed, capitalized, majuscule letters, ended up in the harder to reach
   upper cases.
@@ -5121,7 +5163,7 @@ LICENSE
 
 
 
-				 June 23, 2024		     lower(3m_strings)
+				 June 24, 2024		     lower(3m_strings)
 isalnum(3m_strings)					   isalnum(3m_strings)
 
 
@@ -5226,7 +5268,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   isalnum(3m_strings)
+				 June 24, 2024		   isalnum(3m_strings)
 merge_str(3m_strings)					 merge_str(3m_strings)
 
 
@@ -5302,7 +5344,7 @@ LICENSE
 
 
 
-				 June 23, 2024		 merge_str(3m_strings)
+				 June 24, 2024		 merge_str(3m_strings)
 modif(3m_strings)					     modif(3m_strings)
 
 
@@ -5395,7 +5437,7 @@ LICENSE
 
 
 
-				 June 23, 2024		     modif(3m_strings)
+				 June 24, 2024		     modif(3m_strings)
 nint(3m_strings)					      nint(3m_strings)
 
 
@@ -5454,7 +5496,7 @@ LICENSE
 
 
 
-				 June 23, 2024		      nint(3m_strings)
+				 June 24, 2024		      nint(3m_strings)
 nospace(3m_strings)					   nospace(3m_strings)
 
 
@@ -5508,7 +5550,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   nospace(3m_strings)
+				 June 24, 2024		   nospace(3m_strings)
 isdigit(3m_strings)					   isdigit(3m_strings)
 
 
@@ -5567,7 +5609,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   isdigit(3m_strings)
+				 June 24, 2024		   isdigit(3m_strings)
 isgraph(3m_strings)					   isgraph(3m_strings)
 
 
@@ -5622,7 +5664,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   isgraph(3m_strings)
+				 June 24, 2024		   isgraph(3m_strings)
 noesc(3m_strings)					     noesc(3m_strings)
 
 
@@ -5736,7 +5778,7 @@ LICENSE
 
 
 
-				 June 23, 2024		     noesc(3m_strings)
+				 June 24, 2024		     noesc(3m_strings)
 ispunct(3m_strings)					   ispunct(3m_strings)
 
 
@@ -5794,7 +5836,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   ispunct(3m_strings)
+				 June 24, 2024		   ispunct(3m_strings)
 paragraph(3m_strings)					 paragraph(3m_strings)
 
 
@@ -5882,7 +5924,7 @@ LICENSE
 
 
 
-				 June 23, 2024		 paragraph(3m_strings)
+				 June 24, 2024		 paragraph(3m_strings)
 percent_encode(3m_strings)			    percent_encode(3m_strings)
 
 
@@ -5967,7 +6009,7 @@ AUTHOR
 
 
 
-				 June 23, 2024	    percent_encode(3m_strings)
+				 June 24, 2024	    percent_encode(3m_strings)
 isspace(3m_strings)					   isspace(3m_strings)
 
 
@@ -6022,7 +6064,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   isspace(3m_strings)
+				 June 24, 2024		   isspace(3m_strings)
 percent_decode(3m_strings)			    percent_decode(3m_strings)
 
 
@@ -6145,7 +6187,7 @@ AUTHOR
 
 
 
-				 June 23, 2024	    percent_decode(3m_strings)
+				 June 24, 2024	    percent_decode(3m_strings)
 join(3m_strings)					      join(3m_strings)
 
 
@@ -6205,35 +6247,63 @@ RETURNS
 EXAMPLES
   Sample program:
 
-    program demo_join
-    use M_strings, only: join
-    implicit none
-    character(len=:),allocatable  :: s(:)
-    character(len=:),allocatable  :: out
-    integer			  :: i
-      s=[character(len=10) :: 'United',' we',' stand,', &
-      & ' divided',' we fall.']
-      out=join(s)
-      write(*,'(a)') out
-      write(*,'(a)') join(s,trm=.false.)
-      write(*,'(a)') (join(s,trm=.false.,sep='|'),i=1,3)
-      write(*,'(a)') join(s,sep='<>')
-      write(*,'(a)') join(s,sep=';',left='[',right=']')
-      write(*,'(a)') join(s,left='[',right=']')
-      write(*,'(a)') join(s,left='>>')
-    end program demo_join
+      program demo_join
+      use M_strings, only: join
+      implicit none
+      character(len=:),allocatable  :: s(:)
+	s=[character(len=10) :: 'United','we','stand,', &
+	& 'divided','we fall.']
 
-  Expected output:
+	write(*,'(a)') 'SIMPLE JOIN:		      ',&
+	   join(s)
+	write(*,'(a)') 'SIMPLE JOIN WITH SEPARATOR:   ',&
+	   join(s,sep=' ')
+	write(*,'(a)') 'CUSTOM SEPARATOR:	      ',&
+	   join(s,sep='==>')
+	write(*,'(a)') 'LEFT AND RIGHT AND SEPARATOR: ',&
+	   join(s,sep=';',left='[',right=']')
+	write(*,'(a)') 'NO TRIMMING:		      ',&
+	   join(s,trm=.false.)
+	write(*,'(a)') 'LEFT AND RIGHT: 	      ',&
+	   join(s,left='[',right=']')
+	write(*,'(a)') 'START,END AND EVERYTHING:     ',&
+	   join(s,trm=.false.,sep=',',start='[',end=']',left='"',right='"')
 
-    United we stand, divided we fall.
-    United     we	 stand,    divided   we fall.
-    United    | we	 | stand,   | divided  | we fall.
-    United    | we	 | stand,   | divided  | we fall.
-    United    | we	 | stand,   | divided  | we fall.
-    United<> we<> stand,<> divided<> we fall.
-    [United];[ we];[ stand,];[ divided];[ we fall.]
-    [United][ we][ stand,][ divided][ we fall.]
-    >>United>> we>> stand,>> divided>> we fall.
+	write(*,'(a)') 'TABLE'
+	call line()
+	write(*,'(a)') join(s(1:3),trm=.false.,sep='|',start='|',end='|')
+	write(*,'(a)') join([s(4:5),repeat(' ',len(s))],&
+	& trm=.false.,sep='|',start='|',end='|')
+	call line()
+      contains
+      subroutine line()
+      integer :: i
+	write(*,'(a)') join([(repeat('-',len(s)),i=1,3)],&
+	& sep='#',start='#',end='#')
+      end subroutine line
+      end program demo_join
+
+  Results:
+
+   > SIMPLE JOIN:
+   > Unitedwestand,dividedwe fall.
+   > SIMPLE JOIN WITH SEPARATOR:
+   > United we stand, divided we fall.
+   > CUSTOM SEPARATOR:
+   > United==>we==>stand,==>divided==>we fall.
+   > LEFT AND RIGHT AND SEPARATOR:
+   > [United];[we];[stand,];[divided];[we fall.]
+   > NO TRIMMING:
+   > United    we	 stand,    divided   we fall.
+   > LEFT AND RIGHT:
+   > [United][we][stand,][divided][we fall.]
+   > START,END AND EVERYTHING:
+   > ["United	 ","we	      ","stand,    ","divided	","we fall.  "]
+   > TABLE
+   > #----------#----------#----------#
+   > |United	|we	   |stand,    |
+   > |divided	|we fall.  |	      |
+   > #----------#----------#----------#
 
 
 AUTHOR
@@ -6244,7 +6314,7 @@ LICENSE
 
 
 
-				 June 23, 2024		      join(3m_strings)
+				 June 24, 2024		      join(3m_strings)
 quote(3m_strings)					     quote(3m_strings)
 
 
@@ -6338,7 +6408,7 @@ LICENSE
 
 
 
-				 June 23, 2024		     quote(3m_strings)
+				 June 24, 2024		     quote(3m_strings)
 real(3m_strings)					      real(3m_strings)
 
 
@@ -6395,7 +6465,7 @@ LICENSE
 
 
 
-				 June 23, 2024		      real(3m_strings)
+				 June 24, 2024		      real(3m_strings)
 listout(3m_strings)					   listout(3m_strings)
 
 
@@ -6482,7 +6552,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   listout(3m_strings)
+				 June 24, 2024		   listout(3m_strings)
 replace(3m_strings)					   replace(3m_strings)
 
 
@@ -6608,7 +6678,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   replace(3m_strings)
+				 June 24, 2024		   replace(3m_strings)
 reverse(3m_strings)					   reverse(3m_strings)
 
 
@@ -6656,7 +6726,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   reverse(3m_strings)
+				 June 24, 2024		   reverse(3m_strings)
 lpad(3m_strings)					      lpad(3m_strings)
 
 
@@ -6725,7 +6795,7 @@ LICENSE
 
 
 
-				 June 23, 2024		      lpad(3m_strings)
+				 June 24, 2024		      lpad(3m_strings)
 matching_delimiter(3m_strings)			matching_delimiter(3m_strings)
 
 
@@ -6793,7 +6863,7 @@ LICENSE
 
 
 
-				 June 23, 2024	matching_delimiter(3m_strings)
+				 June 24, 2024	matching_delimiter(3m_strings)
 rotate13(3m_strings)					  rotate13(3m_strings)
 
 
@@ -6892,7 +6962,7 @@ LICENSE
 
 
 
-				 June 23, 2024		  rotate13(3m_strings)
+				 June 24, 2024		  rotate13(3m_strings)
 rpad(3m_strings)					      rpad(3m_strings)
 
 
@@ -6961,7 +7031,7 @@ LICENSE
 
 
 
-				 June 23, 2024		      rpad(3m_strings)
+				 June 24, 2024		      rpad(3m_strings)
 msg(3m_strings) 					       msg(3m_strings)
 
 
@@ -7049,7 +7119,7 @@ LICENSE
 
 
 
-				 June 23, 2024		       msg(3m_strings)
+				 June 24, 2024		       msg(3m_strings)
 s2c(3m_strings) 					       s2c(3m_strings)
 
 
@@ -7113,7 +7183,7 @@ LICENSE
 
 
 
-				 June 23, 2024		       s2c(3m_strings)
+				 June 24, 2024		       s2c(3m_strings)
 s2vs(3m_strings)					      s2vs(3m_strings)
 
 
@@ -7194,7 +7264,7 @@ LICENSE
 
 
 
-				 June 23, 2024		      s2vs(3m_strings)
+				 June 24, 2024		      s2vs(3m_strings)
 notabs(3m_strings)					    notabs(3m_strings)
 
 
@@ -7266,7 +7336,7 @@ LICENSE
 
 
 
-				 June 23, 2024		    notabs(3m_strings)
+				 June 24, 2024		    notabs(3m_strings)
 s2v(3m_strings) 					       s2v(3m_strings)
 
 
@@ -7392,7 +7462,7 @@ LICENSE
 
 
 
-				 June 23, 2024		       s2v(3m_strings)
+				 June 24, 2024		       s2v(3m_strings)
 pad(3m_strings) 					       pad(3m_strings)
 
 
@@ -7515,7 +7585,7 @@ LICENSE
 
 
 
-				 June 23, 2024		       pad(3m_strings)
+				 June 24, 2024		       pad(3m_strings)
 sep(3m_strings) 					       sep(3m_strings)
 
 
@@ -7616,7 +7686,7 @@ LICENSE
 
 
 
-				 June 23, 2024		       sep(3m_strings)
+				 June 24, 2024		       sep(3m_strings)
 squeeze(3m_strings)					   squeeze(3m_strings)
 
 
@@ -7696,7 +7766,7 @@ LICENSE
 
 
 
-				 June 23, 2024		   squeeze(3m_strings)
+				 June 24, 2024		   squeeze(3m_strings)
 slice(3m_strings)					     slice(3m_strings)
 
 
@@ -7842,7 +7912,364 @@ LICENSE
 
 
 
-				 June 23, 2024		     slice(3m_strings)
+				 June 24, 2024		     slice(3m_strings)
+upper(3m_strings)					     upper(3m_strings)
+
+
+
+NAME
+  upper(3f) - [M_strings:CASE] changes a string to uppercase (LICENSE:PD)
+
+
+SYNOPSIS
+  elemental pure function upper(str,begin,end) result (string)
+
+      character(*), intent(in)	  :: str
+      integer,optional,intent(in) :: begin,end
+      character(len(str))	  :: string  ! output string
+
+
+DESCRIPTION
+  upper(string) returns a copy of the input string with all characters
+  converted in the optionally specified range to uppercase, assuming ASCII
+  character sets are being used. If no range is specified the entire string is
+  converted to uppercase.
+
+OPTIONS
+  str
+    string to convert to uppercase
+
+  begin
+    optional starting position in "str" to begin converting to uppercase
+
+  end
+    optional ending position in "str" to stop converting to uppercase
+
+RETURNS
+  upper
+    copy of the input string with all characters converted to uppercase over
+    optionally specified range.
+
+TRIVIA
+  The terms "uppercase" and "lowercase" date back to the early days of the
+  mechanical printing press. Individual metal alloy casts of each needed
+  letter, or punctuation symbol, were meticulously added to a press block, by
+  hand, before rolling out copies of a page. These metal casts were stored and
+  organized in wooden cases. The more often needed miniscule letters were
+  placed closer to hand, in the lower cases of the work bench. The less often
+  needed, capitalized, majuscule letters, ended up in the harder to reach
+  upper cases.
+
+EXAMPLES
+  Sample program:
+
+      program demo_upper
+      use M_strings, only: upper
+      implicit none
+      character(len=:),allocatable  :: s
+	 s=' ABCDEFG abcdefg '
+	 write(*,*) 'mixed-case input string is ....',s
+	 write(*,*) 'upper-case output string is ...',upper(s)
+	 write(*,*) 'make first character uppercase  ... ',&
+	 & upper('this is a sentence.',1,1)
+	 write(*,'(1x,a,*(a:,"+"))') 'UPPER(3f) is elemental ==>',&
+	 & upper(["abc","def","ghi"])
+      end program demo_upper
+
+  Expected output
+
+      mixed-case input string is .... ABCDEFG abcdefg
+      upper-case output string is ... ABCDEFG ABCDEFG
+      make first character uppercase  ... This is a sentence.
+      UPPER(3f) is elemental ==>ABC+DEF+GHI
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				 June 24, 2024		     upper(3m_strings)
+upper_quoted(3m_strings)			      upper_quoted(3m_strings)
+
+
+
+NAME
+  upper_quoted(3f) - [M_strings:CASE] elemental function converts string to
+  uppercase skipping strings quoted per Fortran syntax rules (LICENSE:PD)
+
+
+SYNOPSIS
+  elemental pure function upper_quoted(str) result (string)
+
+      character(*), intent(in)	  :: str
+      character(len(str))	  :: string  ! output string
+
+
+DESCRIPTION
+  upper_quoted(string) returns a copy of the input string with all not-quoted
+  characters converted to uppercase, assuming ASCII character sets are being
+  used. The quoting rules are the same as for Fortran source.  Either a single
+  or double quote starts a quoted string, and a quote character of the same
+  type is doubled when it appears internally in the quoted string. If a double
+  quote quotes the string single quotes may appear in the quoted string as
+  single characters, and vice-versa for single quotes.
+
+OPTIONS
+  str
+    string to convert to uppercase
+
+RETURNS
+  upper
+    copy of the input string with all unquoted characters converted to
+    uppercase
+
+EXAMPLES
+  Sample program:
+
+      program demo_upper_quoted
+      use M_strings, only: upper_quoted
+      implicit none
+      character(len=:),allocatable  :: s
+      s=' ABCDEFG abcdefg "Double-Quoted" ''Single-Quoted'' "with ""&
+	 & Quote" everything else'
+	 write(*,*) 'mixed-case input string is ....',s
+	 write(*,*) 'upper-case output string is ...',upper_quoted(s)
+	 write(*,'(1x,a,*(a:,"+"))') 'upper_quoted(3f) is elemental ==>', &
+	 & upper_quoted(["abc","def","ghi"])
+      end program demo_upper_quoted
+
+  Expected output:
+
+      mixed-case input string is .... ABCDEFG abcdefg "Double-Quoted"
+      'Single-Quoted' "with "" Quote" everything else
+      upper-case output string is ... ABCDEFG ABCDEFG "Double-Quoted"
+      'Single-Quoted' "with "" Quote" EVERYTHING ELSE
+      upper_quoted(3f) is elemental ==>ABC+DEF+GHI
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				 June 24, 2024	      upper_quoted(3m_strings)
+v2s(3m_strings) 					       v2s(3m_strings)
+
+
+
+NAME
+  v2s(3f) - [M_strings:TYPE] return numeric string from a numeric value
+  (LICENSE:PD)
+
+
+SYNOPSIS
+  function v2s(value) result(outstr)
+
+	 integer|real|doubleprecision|logical,intent(in ) :: value
+	 character(len=:),allocatable :: outstr
+	 character(len=*),optional,intent(in) :: fmt
+
+
+DESCRIPTION
+  v2s(3f) returns a representation of a numeric value as a string when given a
+  numeric value of type REAL, DOUBLEPRECISION, INTEGER or LOGICAL. It creates
+  the strings using internal WRITE() statements. Trailing zeros are removed
+  from non-zero values, and the string is left-justified.
+
+OPTIONS
+  VALUE
+    input value to be converted to a string
+
+  FMT
+    format can be explicitly given, but is limited to generating a string of
+    eighty or less characters.
+
+RETURNS
+  OUTSTR
+    returned string representing input value,
+
+EXAMPLES
+  Sample Program:
+
+     program demo_v2s
+     use M_strings, only: v2s
+     write(*,*) 'The value of 3.0/4.0 is ['//v2s(3.0/4.0)//']'
+     write(*,*) 'The value of 1234    is ['//v2s(1234)//']'
+     write(*,*) 'The value of 0d0     is ['//v2s(0d0)//']'
+     write(*,*) 'The value of .false. is ['//v2s(.false.)//']'
+     write(*,*) 'The value of .true. is  ['//v2s(.true.)//']'
+     end program demo_v2s
+
+  Expected output
+
+      The value of 3.0/4.0 is [0.75]
+      The value of 1234    is [1234]
+      The value of 0d0	   is [0]
+      The value of .false. is [F]
+      The value of .true. is  [T]
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				 June 24, 2024		       v2s(3m_strings)
+value_to_string(3m_strings)			   value_to_string(3m_strings)
+
+
+
+NAME
+  value_to_string(3f) - [M_strings:TYPE] return numeric string from a numeric
+  value (LICENSE:PD)
+
+
+SYNOPSIS
+  subroutine value_to_string(value,chars[,lgth,ierr,fmt,trimz])
+
+      character(len=*) :: chars  ! minimum of 23 characters required
+      !--------
+      ! VALUE may be any <em>one</em> of the following types:
+      doubleprecision,intent(in)	       :: value
+      real,intent(in)			       :: value
+      integer,intent(in)		       :: value
+      logical,intent(in)		       :: value
+      !--------
+      character(len=*),intent(out)	       :: chars
+      integer,intent(out),optional	       :: lgth
+      integer,optional			       :: ierr
+      character(len=*),intent(in),optional     :: fmt
+      logical,intent(in)		       :: trimz
+
+
+DESCRIPTION
+  value_to_string(3f) returns a numeric representation of a numeric value in a
+  string given a numeric value of type REAL, DOUBLEPRECISION, INTEGER or
+  LOGICAL. It creates the string using internal writes. It then removes
+  trailing zeros from non-zero values, and left-justifies the string.
+
+OPTIONS
+  VALUE
+    input value to be converted to a string
+
+  FMT
+    You may specify a specific format that produces a string up to the length
+    of CHARS; optional.
+
+  TRIMZ
+    If a format is supplied the default is not to try to trim trailing zeros.
+    Set TRIMZ to .true. to trim zeros from a string assumed to represent a
+    simple numeric value.
+
+RETURNS
+  CHARS
+    returned string representing input value, must be at least 23 characters
+    long; or what is required by optional FMT if longer.
+
+  LGTH
+    position of last non-blank character in returned string; optional.
+
+  IERR
+    If not zero, error occurred; optional.
+
+EXAMPLES
+  Sample program:
+
+       program demo_value_to_string
+       use M_strings, only: value_to_string
+       implicit none
+       character(len=80) :: string
+       integer		 :: lgth
+	  call value_to_string(3.0/4.0,string,lgth)
+	  write(*,*) 'The value is [',string(:lgth),']'
+
+	  call value_to_string(3.0/4.0,string,lgth,fmt='')
+	  write(*,*) 'The value is [',string(:lgth),']'
+
+	  call value_to_string&
+	  &(3.0/4.0,string,lgth,fmt='("THE VALUE IS ",g0)')
+	  write(*,*) 'The value is [',string(:lgth),']'
+
+	  call value_to_string(1234,string,lgth)
+	  write(*,*) 'The value is [',string(:lgth),']'
+
+	  call value_to_string(1.0d0/3.0d0,string,lgth)
+	  write(*,*) 'The value is [',string(:lgth),']'
+
+       end program demo_value_to_string
+
+  Expected output
+
+      The value is [0.75]
+      The value is [	  0.7500000000]
+      The value is [THE VALUE IS .750000000]
+      The value is [1234]
+      The value is [0.33333333333333331]
+
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				 June 24, 2024	   value_to_string(3m_strings)
+visible(3m_strings)					   visible(3m_strings)
+
+
+
+NAME
+  visible(3f) - [M_strings:NONALPHA] expand a string to control and meta-
+  control representations (LICENSE:PD)
+
+
+SYNOPSIS
+  function visible(input) result(output)
+
+      character(len=*),intent(in)	    :: input
+      character(len=:),allocatable	    :: output
+
+
+DESCRIPTION
+  visible(3f) expands characters to commonly used sequences used to represent
+  the characters as control sequences or meta-control sequences.
+
+EXAMPLES
+  Sample Program:
+
+      program demo_visible
+      use M_strings, only : visible
+      integer :: i
+	 do i=0,255
+	    write(*,'(i0,1x,a)')i,visible(char(i))
+	 enddo
+      end program demo_visible
+
+BUGS
+  The expansion is not reversible, as input sequences such as "M-" or "^a"
+  will look like expanded sequences.
+
+AUTHOR
+  John S. Urban
+
+LICENSE
+  Public Domain
+
+
+
+				 June 24, 2024		   visible(3m_strings)
 zpad(3m_strings)					      zpad(3m_strings)
 
 
@@ -7959,361 +8386,4 @@ LICENSE
 
 
 
-				 June 23, 2024		      zpad(3m_strings)
-upper(3m_strings)					     upper(3m_strings)
-
-
-
-NAME
-  upper(3f) - [M_strings:CASE] changes a string to uppercase (LICENSE:PD)
-
-
-SYNOPSIS
-  elemental pure function upper(str,begin,end) result (string)
-
-      character(*), intent(in)	  :: str
-      integer,optional,intent(in) :: begin,end
-      character(len(str))	  :: string  ! output string
-
-
-DESCRIPTION
-  upper(string) returns a copy of the input string with all characters
-  converted in the optionally specified range to uppercase, assuming ASCII
-  character sets are being used. If no range is specified the entire string is
-  converted to uppercase.
-
-OPTIONS
-  str
-    string to convert to uppercase
-
-  begin
-    optional starting position in "str" to begin converting to uppercase
-
-  end
-    optional ending position in "str" to stop converting to uppercase
-
-RETURNS
-  upper
-    copy of the input string with all characters converted to uppercase over
-    optionally specified range.
-
-TRIVIA
-  The terms "uppercase" and "lowercase" date back to the early days of the
-  mechanical printing press. Individual metal alloy casts of each needed
-  letter, or punctuation symbol, were meticulously added to a press block, by
-  hand, before rolling out copies of a page. These metal casts were stored and
-  organized in wooden cases. The more often needed miniscule letters were
-  placed closer to hand, in the lower cases of the work bench. The less often
-  needed, capitalized, majuscule letters, ended up in the harder to reach
-  upper cases.
-
-EXAMPLES
-  Sample program:
-
-      program demo_upper
-      use M_strings, only: upper
-      implicit none
-      character(len=:),allocatable  :: s
-	 s=' ABCDEFG abcdefg '
-	 write(*,*) 'mixed-case input string is ....',s
-	 write(*,*) 'upper-case output string is ...',upper(s)
-	 write(*,*) 'make first character uppercase  ... ',&
-	 & upper('this is a sentence.',1,1)
-	 write(*,'(1x,a,*(a:,"+"))') 'UPPER(3f) is elemental ==>',&
-	 & upper(["abc","def","ghi"])
-      end program demo_upper
-
-  Expected output
-
-      mixed-case input string is .... ABCDEFG abcdefg
-      upper-case output string is ... ABCDEFG ABCDEFG
-      make first character uppercase  ... This is a sentence.
-      UPPER(3f) is elemental ==>ABC+DEF+GHI
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-				 June 23, 2024		     upper(3m_strings)
-upper_quoted(3m_strings)			      upper_quoted(3m_strings)
-
-
-
-NAME
-  upper_quoted(3f) - [M_strings:CASE] elemental function converts string to
-  uppercase skipping strings quoted per Fortran syntax rules (LICENSE:PD)
-
-
-SYNOPSIS
-  elemental pure function upper_quoted(str) result (string)
-
-      character(*), intent(in)	  :: str
-      character(len(str))	  :: string  ! output string
-
-
-DESCRIPTION
-  upper_quoted(string) returns a copy of the input string with all not-quoted
-  characters converted to uppercase, assuming ASCII character sets are being
-  used. The quoting rules are the same as for Fortran source.  Either a single
-  or double quote starts a quoted string, and a quote character of the same
-  type is doubled when it appears internally in the quoted string. If a double
-  quote quotes the string single quotes may appear in the quoted string as
-  single characters, and vice-versa for single quotes.
-
-OPTIONS
-  str
-    string to convert to uppercase
-
-RETURNS
-  upper
-    copy of the input string with all unquoted characters converted to
-    uppercase
-
-EXAMPLES
-  Sample program:
-
-      program demo_upper_quoted
-      use M_strings, only: upper_quoted
-      implicit none
-      character(len=:),allocatable  :: s
-      s=' ABCDEFG abcdefg "Double-Quoted" ''Single-Quoted'' "with ""&
-	 & Quote" everything else'
-	 write(*,*) 'mixed-case input string is ....',s
-	 write(*,*) 'upper-case output string is ...',upper_quoted(s)
-	 write(*,'(1x,a,*(a:,"+"))') 'upper_quoted(3f) is elemental ==>', &
-	 & upper_quoted(["abc","def","ghi"])
-      end program demo_upper_quoted
-
-  Expected output:
-
-      mixed-case input string is .... ABCDEFG abcdefg "Double-Quoted"
-      'Single-Quoted' "with "" Quote" everything else
-      upper-case output string is ... ABCDEFG ABCDEFG "Double-Quoted"
-      'Single-Quoted' "with "" Quote" EVERYTHING ELSE
-      upper_quoted(3f) is elemental ==>ABC+DEF+GHI
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-				 June 23, 2024	      upper_quoted(3m_strings)
-v2s(3m_strings) 					       v2s(3m_strings)
-
-
-
-NAME
-  v2s(3f) - [M_strings:TYPE] return numeric string from a numeric value
-  (LICENSE:PD)
-
-
-SYNOPSIS
-  function v2s(value) result(outstr)
-
-	 integer|real|doubleprecision|logical,intent(in ) :: value
-	 character(len=:),allocatable :: outstr
-	 character(len=*),optional,intent(in) :: fmt
-
-
-DESCRIPTION
-  v2s(3f) returns a representation of a numeric value as a string when given a
-  numeric value of type REAL, DOUBLEPRECISION, INTEGER or LOGICAL. It creates
-  the strings using internal WRITE() statements. Trailing zeros are removed
-  from non-zero values, and the string is left-justified.
-
-OPTIONS
-  VALUE
-    input value to be converted to a string
-
-  FMT
-    format can be explicitly given, but is limited to generating a string of
-    eighty or less characters.
-
-RETURNS
-  OUTSTR
-    returned string representing input value,
-
-EXAMPLES
-  Sample Program:
-
-     program demo_v2s
-     use M_strings, only: v2s
-     write(*,*) 'The value of 3.0/4.0 is ['//v2s(3.0/4.0)//']'
-     write(*,*) 'The value of 1234    is ['//v2s(1234)//']'
-     write(*,*) 'The value of 0d0     is ['//v2s(0d0)//']'
-     write(*,*) 'The value of .false. is ['//v2s(.false.)//']'
-     write(*,*) 'The value of .true. is  ['//v2s(.true.)//']'
-     end program demo_v2s
-
-  Expected output
-
-      The value of 3.0/4.0 is [0.75]
-      The value of 1234    is [1234]
-      The value of 0d0	   is [0]
-      The value of .false. is [F]
-      The value of .true. is  [T]
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-				 June 23, 2024		       v2s(3m_strings)
-value_to_string(3m_strings)			   value_to_string(3m_strings)
-
-
-
-NAME
-  value_to_string(3f) - [M_strings:TYPE] return numeric string from a numeric
-  value (LICENSE:PD)
-
-
-SYNOPSIS
-  subroutine value_to_string(value,chars[,lgth,ierr,fmt,trimz])
-
-      character(len=*) :: chars  ! minimum of 23 characters required
-      !--------
-      ! VALUE may be any <em>one</em> of the following types:
-      doubleprecision,intent(in)	       :: value
-      real,intent(in)			       :: value
-      integer,intent(in)		       :: value
-      logical,intent(in)		       :: value
-      !--------
-      character(len=*),intent(out)	       :: chars
-      integer,intent(out),optional	       :: lgth
-      integer,optional			       :: ierr
-      character(len=*),intent(in),optional     :: fmt
-      logical,intent(in)		       :: trimz
-
-
-DESCRIPTION
-  value_to_string(3f) returns a numeric representation of a numeric value in a
-  string given a numeric value of type REAL, DOUBLEPRECISION, INTEGER or
-  LOGICAL. It creates the string using internal writes. It then removes
-  trailing zeros from non-zero values, and left-justifies the string.
-
-OPTIONS
-  VALUE
-    input value to be converted to a string
-
-  FMT
-    You may specify a specific format that produces a string up to the length
-    of CHARS; optional.
-
-  TRIMZ
-    If a format is supplied the default is not to try to trim trailing zeros.
-    Set TRIMZ to .true. to trim zeros from a string assumed to represent a
-    simple numeric value.
-
-RETURNS
-  CHARS
-    returned string representing input value, must be at least 23 characters
-    long; or what is required by optional FMT if longer.
-
-  LGTH
-    position of last non-blank character in returned string; optional.
-
-  IERR
-    If not zero, error occurred; optional.
-
-EXAMPLES
-  Sample program:
-
-       program demo_value_to_string
-       use M_strings, only: value_to_string
-       implicit none
-       character(len=80) :: string
-       integer		 :: lgth
-	  call value_to_string(3.0/4.0,string,lgth)
-	  write(*,*) 'The value is [',string(:lgth),']'
-
-	  call value_to_string(3.0/4.0,string,lgth,fmt='')
-	  write(*,*) 'The value is [',string(:lgth),']'
-
-	  call value_to_string&
-	  &(3.0/4.0,string,lgth,fmt='("THE VALUE IS ",g0)')
-	  write(*,*) 'The value is [',string(:lgth),']'
-
-	  call value_to_string(1234,string,lgth)
-	  write(*,*) 'The value is [',string(:lgth),']'
-
-	  call value_to_string(1.0d0/3.0d0,string,lgth)
-	  write(*,*) 'The value is [',string(:lgth),']'
-
-       end program demo_value_to_string
-
-  Expected output
-
-      The value is [0.75]
-      The value is [	  0.7500000000]
-      The value is [THE VALUE IS .750000000]
-      The value is [1234]
-      The value is [0.33333333333333331]
-
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-				 June 23, 2024	   value_to_string(3m_strings)
-visible(3m_strings)					   visible(3m_strings)
-
-
-
-NAME
-  visible(3f) - [M_strings:NONALPHA] expand a string to control and meta-
-  control representations (LICENSE:PD)
-
-
-SYNOPSIS
-  function visible(input) result(output)
-
-      character(len=*),intent(in)	    :: input
-      character(len=:),allocatable	    :: output
-
-
-DESCRIPTION
-  visible(3f) expands characters to commonly used sequences used to represent
-  the characters as control sequences or meta-control sequences.
-
-EXAMPLES
-  Sample Program:
-
-      program demo_visible
-      use M_strings, only : visible
-      integer :: i
-	 do i=0,255
-	    write(*,'(i0,1x,a)')i,visible(char(i))
-	 enddo
-      end program demo_visible
-
-BUGS
-  The expansion is not reversible, as input sequences such as "M-" or "^a"
-  will look like expanded sequences.
-
-AUTHOR
-  John S. Urban
-
-LICENSE
-  Public Domain
-
-
-
-				 June 23, 2024		   visible(3m_strings)
+				 June 24, 2024		      zpad(3m_strings)

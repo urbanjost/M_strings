@@ -603,28 +603,36 @@ CONTAINS
 !!     character(len=*),intent(in) :: pattern
 !!
 !!##DESCRIPTION
-!!    glob(3f) compares given (entire) STRING for a match to PATTERN which may
-!!    contain basic wildcard "globbing" characters.
+!!    glob(3f) compares an (entire) STRING for a match to a PATTERN which
+!!    may contain basic wildcard "globbing" characters.
 !!
-!!    In this version to get a match the entire string must be described
-!!    by PATTERN. Trailing whitespace is significant, so trim the input
-!!    string to have trailing whitespace ignored.
+!!    "*" matches any string. "?" matches any single character.
 !!
-!!    Patterns like "b*ba" fail on a string like "babababa" because the
-!!    algorithm finds an early match. To skip over the early matches insert
-!!    an extra character at the end of the string and pattern that does
-!!    not occur in the pattern. Typically a NULL is used (char(0)).
+!!    In this version to get a match the entire string must be described by
+!!    PATTERN. Trailing whitespace is significant, so trim the input string
+!!    to have trailing whitespace ignored.
+!!
+!!    Patterns like "b*ba" fail on a string like "babababa" because the first
+!!    match found is not at the end of the string so 'baba' does not match
+!!    'babababa'. So the algorithm is said to find an early match.
+!!
+!!    To skip over the early matches insert an extra character at the end of
+!!    the string and pattern that does not occur in the pattern. Typically a
+!!    NULL is used (char(0)). So searching for b*ba\0 in babababa\0 matches
+!!    the entire string.
 !!
 !!##OPTIONS
-!!    string   the input string to test to see if it contains the pattern.
-!!    pattern  the following simple globbing options are available
+!!    string   the input string to be tested for a match to the pattern.
+!!    pattern  the globbing pattern to search for. The following simple
+!!             globbing options are available
 !!
 !!             o "?" matching any one character
 !!             o "*" matching zero or more characters.
 !!               Do NOT use adjacent asterisks.
-!!             o spaces are significant and must be matched or pretrimmed
+!!             o spaces are significant and must be matched or trimmed
+!!               before the comparison.
 !!             o There is no escape character, so matching strings with
-!!               literal question mark and asterisk is problematic.
+!!               a literal question mark and asterisk is problematic.
 !!
 !!##EXAMPLES
 !!
@@ -957,22 +965,24 @@ end function glob
 !!
 !!##SYNOPSIS
 !!
-!!    function ends_with(source_string,suffix)
-!!
-!!     or
-!!
-!!    function ends_with(source_string,[suffix])
+!!    pure function ends_with(source_string[,suffix][,ignorecase])
 !!
 !!     character(len=*),intent(in)          :: source_string
 !!     character(len=*),intent(in)          :: suffix(..)
+!!     logical,intent(in),optional          :: ignorecase
 !!     logical                              :: ends_with
 !!
 !!##DESCRIPTION
 !!
+!!    ends_with(3f) tests if a string ends with any specified suffix. Differs
+!!    from using index(3f) in that the input file and multiple suffices
+!!    are trimmed by ends_with(3f),
+!!
 !!##OPTIONS
-!!     SOURCE_STRING  string to tokenize
+!!     SOURCE_STRING  string to search
 !!     SUFFIX         list of separator strings. May be scalar or an array.
-!!                    Trailing spaces are ignored.
+!!                    Trailing spaces in SUFFIX are ignored.
+!!     IGNORECASE     If .true. case is ignored.
 !!
 !!##RETURNS
 !!     ENDS_WITH      returns .TRUE. if one of the suffix match the end
@@ -986,46 +996,88 @@ end function glob
 !!    use M_strings, only : ends_with
 !!    use, intrinsic :: iso_fortran_env, only : stdout=>output_unit
 !!    implicit none
+!!    character(len=:),allocatable :: line, pattern
+!!    !
+!!       write(*,*)'basic usage'
+!!       write(stdout,*)ends_with('prog.a','.a'), 'should be true'
+!!       write(stdout,*)ends_with('prog.a','.o'), 'should be false'
 !!       write(stdout,*)ends_with('prog.a',['.o','.i','.s'])
 !!       write(stdout,*)ends_with('prog.f90',['.F90','.f90','.f  ','.F  '])
+!!       !
+!!       write(*,*)'ignored case'
+!!       write(stdout,*)ends_with('prog.F90',['.f90','.f  '],ignorecase=.true.)
+!!       !
+!!       write(*,*)'trailing whitespace is ignored'
 !!       write(stdout,*)ends_with('prog.pdf','.pdf')
-!!       write(stdout,*)ends_with('prog.doc','.txt')
+!!       write(stdout,*)ends_with('prog.pdf','.pdf ')
+!!       write(stdout,*)ends_with('prog.pdf ','.pdf ')
+!!       write(stdout,*)ends_with('prog.pdf  ','.pdf ')
+!!       !
+!!       write(*,*)'equivalent using index(3f)'
+!!       line=   'myfile.doc  '
+!!       pattern='.doc        '
+!!       write(stdout,*)&
+!!       &index(trim(line),trim(pattern),back=.true.)==len_trim(line)-len_trim(pattern)+1
+!!       write(stdout,*)ends_with(line,pattern)
 !!    end program demo_ends_with
 !!
-!!   Results:
+!! Results:
 !!
-!!     > F
-!!     > T
-!!     > T
-!!     > F
+!!     >  basic usage
+!!     >  T should be true
+!!     >  F should be false
+!!     >  F
+!!     >  T
+!!     >  ignored case
+!!     >  T
+!!     >  trailing whitespace is ignored
+!!     >  T
+!!     >  T
+!!     >  T
+!!     >  T
+!!     >  equivalent using index(3f)
+!!     >  T
+!!     >  T
 !!
 !!##AUTHOR
 !!    John S. Urban
 !!
 !!##LICENSE
 !!    Public Domain
-pure function ends_with_str(string, ending) result(matched)
-character(*), intent(in) :: string, ending
-integer                  :: n1, n2
-logical                  :: matched
-   n1 = len(string) - len(ending) + 1
-   n2 = len(string)
+pure function ends_with_str(string, ending,ignorecase) result(matched)
+character(*), intent(in)     :: string, ending
+logical,intent(in),optional  :: ignorecase
+integer                      :: n1, n2
+logical                      :: matched
+logical                      :: ignorecase_local
+   if(present(ignorecase))then
+           ignorecase_local=ignorecase
+   else
+           ignorecase_local=.false.
+   endif
+   n1 = len_trim(string) - len_trim(ending) + 1
+   n2 = len_trim(string)
    if (n1 < 1) then
        matched = .false.
    else
-       matched = (string(n1:n2) == ending)
+       if(ignorecase_local)then
+          matched = (upper(string(n1:n2)) == upper(ending))
+       else
+          matched = (string(n1:n2) == ending)
+       endif
    endif
 end function ends_with_str
 !-----------------------------------------------------------------------------------------------------------------------------------
-pure function ends_with_any(string, endings) result(matched)
-character(*), intent(in) :: string
-character(*), intent(in) :: endings(:)
-logical                  :: matched
-integer                  :: i
+pure function ends_with_any(string, endings,ignorecase) result(matched)
+character(*), intent(in)     :: string
+character(*), intent(in)     :: endings(:)
+logical,intent(in),optional  :: ignorecase
+logical                      :: matched
+integer                      :: i
    matched = .true.
    FINDIT: block
    do i=1, size(endings)
-       if(ends_with_str(string,trim(endings(i)))) exit FINDIT
+       if( ends_with_str(string,endings(i),ignorecase) ) exit FINDIT
    enddo
    matched = .false.
    endblock FINDIT
@@ -3794,35 +3846,63 @@ end function percent_decode_string
 !!
 !!  Sample program:
 !!
-!!   program demo_join
-!!   use M_strings, only: join
-!!   implicit none
-!!   character(len=:),allocatable  :: s(:)
-!!   character(len=:),allocatable  :: out
-!!   integer                       :: i
-!!     s=[character(len=10) :: 'United',' we',' stand,', &
-!!     & ' divided',' we fall.']
-!!     out=join(s)
-!!     write(*,'(a)') out
-!!     write(*,'(a)') join(s,trm=.false.)
-!!     write(*,'(a)') (join(s,trm=.false.,sep='|'),i=1,3)
-!!     write(*,'(a)') join(s,sep='<>')
-!!     write(*,'(a)') join(s,sep=';',left='[',right=']')
-!!     write(*,'(a)') join(s,left='[',right=']')
-!!     write(*,'(a)') join(s,left='>>')
-!!   end program demo_join
+!!     program demo_join
+!!     use M_strings, only: join
+!!     implicit none
+!!     character(len=:),allocatable  :: s(:)
+!!       s=[character(len=10) :: 'United','we','stand,', &
+!!       & 'divided','we fall.']
 !!
-!!  Expected output:
+!!       write(*,'(a)') 'SIMPLE JOIN:                  ',&
+!!          join(s)
+!!       write(*,'(a)') 'SIMPLE JOIN WITH SEPARATOR:   ',&
+!!          join(s,sep=' ')
+!!       write(*,'(a)') 'CUSTOM SEPARATOR:             ',&
+!!          join(s,sep='==>')
+!!       write(*,'(a)') 'LEFT AND RIGHT AND SEPARATOR: ',&
+!!          join(s,sep=';',left='[',right=']')
+!!       write(*,'(a)') 'NO TRIMMING:                  ',&
+!!          join(s,trm=.false.)
+!!       write(*,'(a)') 'LEFT AND RIGHT:               ',&
+!!          join(s,left='[',right=']')
+!!       write(*,'(a)') 'START,END AND EVERYTHING:     ',&
+!!          join(s,trm=.false.,sep=',',start='[',end=']',left='"',right='"')
 !!
-!!   United we stand, divided we fall.
-!!   United     we        stand,    divided   we fall.
-!!   United    | we       | stand,   | divided  | we fall.
-!!   United    | we       | stand,   | divided  | we fall.
-!!   United    | we       | stand,   | divided  | we fall.
-!!   United<> we<> stand,<> divided<> we fall.
-!!   [United];[ we];[ stand,];[ divided];[ we fall.]
-!!   [United][ we][ stand,][ divided][ we fall.]
-!!   >>United>> we>> stand,>> divided>> we fall.
+!!       write(*,'(a)') 'TABLE'
+!!       call line()
+!!       write(*,'(a)') join(s(1:3),trm=.false.,sep='|',start='|',end='|')
+!!       write(*,'(a)') join([s(4:5),repeat(' ',len(s))],&
+!!       & trm=.false.,sep='|',start='|',end='|')
+!!       call line()
+!!     contains
+!!     subroutine line()
+!!     integer :: i
+!!       write(*,'(a)') join([(repeat('-',len(s)),i=1,3)],&
+!!       & sep='#',start='#',end='#')
+!!     end subroutine line
+!!     end program demo_join
+!!
+!! Results:
+!!
+!!  > SIMPLE JOIN:
+!!  > Unitedwestand,dividedwe fall.
+!!  > SIMPLE JOIN WITH SEPARATOR:
+!!  > United we stand, divided we fall.
+!!  > CUSTOM SEPARATOR:
+!!  > United==>we==>stand,==>divided==>we fall.
+!!  > LEFT AND RIGHT AND SEPARATOR:
+!!  > [United];[we];[stand,];[divided];[we fall.]
+!!  > NO TRIMMING:
+!!  > United    we        stand,    divided   we fall.
+!!  > LEFT AND RIGHT:
+!!  > [United][we][stand,][divided][we fall.]
+!!  > START,END AND EVERYTHING:
+!!  > ["United    ","we        ","stand,    ","divided   ","we fall.  "]
+!!  > TABLE
+!!  > #----------#----------#----------#
+!!  > |United    |we        |stand,    |
+!!  > |divided   |we fall.  |          |
+!!  > #----------#----------#----------#
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -4167,31 +4247,31 @@ end function upper_range
 !!     character(len(str))      :: string  ! output string
 !!
 !!##DESCRIPTION
-!!      lower(string) returns a copy of the input string with all characters
-!!      converted to miniscule over the specified range, assuming ASCII
-!!      character sets are being used. If no range is specified the entire
-!!      string is converted to miniscule.
+!!      lower(str) returns a copy of the ASCII input string with all
+!!      characters converted to miniscule (ie. "lowercase") over the
+!!      specified range, If no range is specified the entire string is
+!!      converted to miniscule.
 !!
 !!##OPTIONS
 !!    str    string to convert to miniscule
 !!    begin  optional starting position in "str" to begin converting to
-!!           miniscule
+!!           miniscule. Defaults to the beginning of the string (ie. "1").
 !!    end    optional ending position in "str" to stop converting to
-!!           miniscule
+!!           miniscule. Defaults to the end of the string (ie. "len(str)").
 !!
 !!##RETURNS
-!!    lower  copy of the input string with all characters converted to
+!!    lower  copy of the entire input string with all characters converted to
 !!           miniscule over optionally specified range.
 !!
 !!##TRIVIA
-!!    The terms "uppercase" and "lowercase" date back to the early days of
-!!    the mechanical printing press. Individual metal alloy casts of each
-!!    needed letter, or punctuation symbol, were meticulously added to a
-!!    press block, by hand, before rolling out copies of a page. These
-!!    metal casts were stored and organized in wooden cases. The more
-!!    often needed miniscule letters were placed closer to hand, in the
-!!    lower cases of the work bench. The less often needed, capitalized,
-!!    majuscule letters, ended up in the harder to reach upper cases.
+!!    The terms "uppercase" and "lowercase" date back to the early days
+!!    of the mechanical printing press. Individual metal alloy casts of
+!!    each needed letter or punctuation symbol were meticulously added to a
+!!    press block, by hand, before rolling out copies of a page. These metal
+!!    casts were stored and organized in wooden cases. The more-often-needed
+!!    miniscule letters were placed closer to hand, in the lower cases of
+!!    the work bench. The less often needed, capitalized, majuscule letters,
+!!    ended up in the harder to reach upper cases.
 !!
 !!##EXAMPLES
 !!
@@ -4238,7 +4318,7 @@ integer,parameter             :: diff = iachar('A')-iachar('a')
       iend= max(1,min(iend,end))
    endif
 
-   do concurrent (i = ibegin:iend)                   ! step thru each letter in the string in specified range
+   do concurrent (i = ibegin:iend)                    ! step thru each letter in the string in specified range
       select case (str(i:i))
       case ('A':'Z')
          string(i:i) = achar(iachar(str(i:i))-diff)   ! change letter to miniscule
