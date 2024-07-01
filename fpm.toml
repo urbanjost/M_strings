@@ -43,8 +43,46 @@ homepage = "https://github.com/urbanjost/M_strings.git"
    # can use various registries, including local mirrors
    #M_framework = { namespace = "GPF" }
    #
+   # regular internet connection or possibly an internal network
    M_framework = { git = "https://github.com/urbanjost/M_framework.git" }
    #
-   # For off-line work I use the GLINKS directory with links to the packages
+   # For off-line work I use the GLINKS directory with links to many packages
+   # I have or use offline
    # ln -f -s $HOME/github/GLINKS GLINKS
+   # NOTE: some filesystems, particularly those found on off-the-shelf external
+   #       drives and some OSes may not support directory links, even soft links
+   #       Even if supported they might be platform specific and need regenerated
+   #       (scripts may be useful).
    #M_framework  = { path = "GLINKS/M_framework" }
+   # ISSUE: wanting to switch automatically between dependency sorces:
+   # conditional logic and/or a preprocessor can be used, as can be scripts
+   # to read in the fpm.toml file and rewrite it, but trying to use a
+   # pure TOML approach first as a minimalist approach -- can fpm have
+   # an --offline/--online/--registry switch or some other indication of
+   # which depdendencies to use?; or allow redundant ones and go through
+   # them from top to bottom?
+   # now with recent improvements to registries, could use a local registry mirror
+   # for packages in a registry, but can local packages be added to a local registry (yet?)
+   #
+   # There are also copies of dependencies in the build/ directories subject to the clean(1)
+   # subcommand; and I find that a full clean is required to switch between different 
+   # dependency locations;
+   #
+   # Note that using a soft link to a directory like GLINK probably subverts the requirement
+   # that the local dependencies in a "path" are contained in the project area (to promote
+   # the project being self-contained?).  It would be slightly easier to point to directories
+   # by relative or full pathnames although that is fraught with other potential complications.
+   #
+   # another approach is to install libraries which many dependencies produce and use the libraries
+   # normally. This allows for flexible compilation of each library and greatly reduces duplicate
+   # compilation of the same dependencies but means if the package is distributed to other platforms
+   # that the libraries all need built there as well.
+   #
+   # A standard preprocessor for Fortran that could also be applied to files like fpm.toml might be
+   # useful.
+   #
+   # An in-production registry would help
+   #
+   # check on if registry can be build from local packages but if not a public registry if you
+   # distribute your package you have to maintain a public mirror of the registry or others cannot
+   # build your package without recreating the local registry contents needed.

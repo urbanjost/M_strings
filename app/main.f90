@@ -1,7 +1,7 @@
-   program demo_replace
-   use M_strings, only : replace
-   implicit none
-   character(len=:),allocatable :: targetline
+program demo_replace
+use M_strings, only : replace
+implicit none
+character(len=:),allocatable :: targetline
 
    write(*,*) replace('Xis is Xe input string','X','th')
    write(*,*) replace('Xis is xe input string','x','th',ignorecase=.true.)
@@ -32,4 +32,4 @@
    write(*,*)replace('myf90stuff.f90.f90','.f90','for',occurrence=-1,repeat=1)
    write(*,*)replace('myf90stuff.f90.f90','f90','for',occurrence=-2,repeat=2)
 
-   end program demo_replace
+end program demo_replace

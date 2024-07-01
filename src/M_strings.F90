@@ -603,28 +603,36 @@ CONTAINS
 !!     character(len=*),intent(in) :: pattern
 !!
 !!##DESCRIPTION
-!!    glob(3f) compares given (entire) STRING for a match to PATTERN which may
-!!    contain basic wildcard "globbing" characters.
+!!    glob(3f) compares an (entire) STRING for a match to a PATTERN which
+!!    may contain basic wildcard "globbing" characters.
 !!
-!!    In this version to get a match the entire string must be described
-!!    by PATTERN. Trailing whitespace is significant, so trim the input
-!!    string to have trailing whitespace ignored.
+!!    "*" matches any string. "?" matches any single character.
 !!
-!!    Patterns like "b*ba" fail on a string like "babababa" because the
-!!    algorithm finds an early match. To skip over the early matches insert
-!!    an extra character at the end of the string and pattern that does
-!!    not occur in the pattern. Typically a NULL is used (char(0)).
+!!    In this version to get a match the entire string must be described by
+!!    PATTERN. Trailing whitespace is significant, so trim the input string
+!!    to have trailing whitespace ignored.
+!!
+!!    Patterns like "b*ba" fail on a string like "babababa" because the first
+!!    match found is not at the end of the string so 'baba' does not match
+!!    'babababa'. So the algorithm is said to find an early match.
+!!
+!!    To skip over the early matches insert an extra character at the end of
+!!    the string and pattern that does not occur in the pattern. Typically a
+!!    NULL is used (char(0)). So searching for b*ba\0 in babababa\0 matches
+!!    the entire string.
 !!
 !!##OPTIONS
-!!    string   the input string to test to see if it contains the pattern.
-!!    pattern  the following simple globbing options are available
+!!    string   the input string to be tested for a match to the pattern.
+!!    pattern  the globbing pattern to search for. The following simple
+!!             globbing options are available
 !!
 !!             o "?" matching any one character
 !!             o "*" matching zero or more characters.
 !!               Do NOT use adjacent asterisks.
-!!             o spaces are significant and must be matched or pretrimmed
+!!             o spaces are significant and must be matched or trimmed
+!!               before the comparison.
 !!             o There is no escape character, so matching strings with
-!!               literal question mark and asterisk is problematic.
+!!               a literal question mark and asterisk is problematic.
 !!
 !!##EXAMPLES
 !!
@@ -957,22 +965,24 @@ end function glob
 !!
 !!##SYNOPSIS
 !!
-!!    function ends_with(source_string,suffix)
-!!
-!!     or
-!!
-!!    function ends_with(source_string,[suffix])
+!!    pure function ends_with(source_string[,suffix][,ignorecase])
 !!
 !!     character(len=*),intent(in)          :: source_string
 !!     character(len=*),intent(in)          :: suffix(..)
+!!     logical,intent(in),optional          :: ignorecase
 !!     logical                              :: ends_with
 !!
 !!##DESCRIPTION
 !!
+!!    ends_with(3f) tests if a string ends with any specified suffix. Differs
+!!    from using index(3f) in that the input file and multiple suffices
+!!    are trimmed by ends_with(3f),
+!!
 !!##OPTIONS
-!!     SOURCE_STRING  string to tokenize
+!!     SOURCE_STRING  string to search
 !!     SUFFIX         list of separator strings. May be scalar or an array.
-!!                    Trailing spaces are ignored.
+!!                    Trailing spaces in SUFFIX are ignored.
+!!     IGNORECASE     If .true. case is ignored.
 !!
 !!##RETURNS
 !!     ENDS_WITH      returns .TRUE. if one of the suffix match the end
@@ -986,46 +996,88 @@ end function glob
 !!    use M_strings, only : ends_with
 !!    use, intrinsic :: iso_fortran_env, only : stdout=>output_unit
 !!    implicit none
+!!    character(len=:),allocatable :: line, pattern
+!!    !
+!!       write(*,*)'basic usage'
+!!       write(stdout,*)ends_with('prog.a','.a'), 'should be true'
+!!       write(stdout,*)ends_with('prog.a','.o'), 'should be false'
 !!       write(stdout,*)ends_with('prog.a',['.o','.i','.s'])
 !!       write(stdout,*)ends_with('prog.f90',['.F90','.f90','.f  ','.F  '])
+!!       !
+!!       write(*,*)'ignored case'
+!!       write(stdout,*)ends_with('prog.F90',['.f90','.f  '],ignorecase=.true.)
+!!       !
+!!       write(*,*)'trailing whitespace is ignored'
 !!       write(stdout,*)ends_with('prog.pdf','.pdf')
-!!       write(stdout,*)ends_with('prog.doc','.txt')
+!!       write(stdout,*)ends_with('prog.pdf','.pdf ')
+!!       write(stdout,*)ends_with('prog.pdf ','.pdf ')
+!!       write(stdout,*)ends_with('prog.pdf  ','.pdf ')
+!!       !
+!!       write(*,*)'equivalent using index(3f)'
+!!       line=   'myfile.doc  '
+!!       pattern='.doc        '
+!!       write(stdout,*)&
+!!       &index(trim(line),trim(pattern),back=.true.)==len_trim(line)-len_trim(pattern)+1
+!!       write(stdout,*)ends_with(line,pattern)
 !!    end program demo_ends_with
 !!
-!!   Results:
+!! Results:
 !!
-!!     > F
-!!     > T
-!!     > T
-!!     > F
+!!     >  basic usage
+!!     >  T should be true
+!!     >  F should be false
+!!     >  F
+!!     >  T
+!!     >  ignored case
+!!     >  T
+!!     >  trailing whitespace is ignored
+!!     >  T
+!!     >  T
+!!     >  T
+!!     >  T
+!!     >  equivalent using index(3f)
+!!     >  T
+!!     >  T
 !!
 !!##AUTHOR
 !!    John S. Urban
 !!
 !!##LICENSE
 !!    Public Domain
-pure function ends_with_str(string, ending) result(matched)
-character(*), intent(in) :: string, ending
-integer                  :: n1, n2
-logical                  :: matched
-   n1 = len(string) - len(ending) + 1
-   n2 = len(string)
+pure function ends_with_str(string, ending,ignorecase) result(matched)
+character(*), intent(in)     :: string, ending
+logical,intent(in),optional  :: ignorecase
+integer                      :: n1, n2
+logical                      :: matched
+logical                      :: ignorecase_local
+   if(present(ignorecase))then
+           ignorecase_local=ignorecase
+   else
+           ignorecase_local=.false.
+   endif
+   n1 = len_trim(string) - len_trim(ending) + 1
+   n2 = len_trim(string)
    if (n1 < 1) then
        matched = .false.
    else
-       matched = (string(n1:n2) == ending)
+       if(ignorecase_local)then
+          matched = (upper(string(n1:n2)) == upper(ending))
+       else
+          matched = (string(n1:n2) == ending)
+       endif
    endif
 end function ends_with_str
 !-----------------------------------------------------------------------------------------------------------------------------------
-pure function ends_with_any(string, endings) result(matched)
-character(*), intent(in) :: string
-character(*), intent(in) :: endings(:)
-logical                  :: matched
-integer                  :: i
+pure function ends_with_any(string, endings,ignorecase) result(matched)
+character(*), intent(in)     :: string
+character(*), intent(in)     :: endings(:)
+logical,intent(in),optional  :: ignorecase
+logical                      :: matched
+integer                      :: i
    matched = .true.
    FINDIT: block
    do i=1, size(endings)
-       if(ends_with_str(string,trim(endings(i)))) exit FINDIT
+       if( ends_with_str(string,endings(i),ignorecase) ) exit FINDIT
    enddo
    matched = .false.
    endblock FINDIT
@@ -2919,66 +2971,66 @@ subroutine modif(cline,mod)
 character(len=*)            :: cline        !STRING TO BE MODIFIED
 character(len=*),intent(in) :: mod          !STRING TO DIRECT MODIFICATION
 character(len=len(cline))   :: cmod
-character(len=3),parameter  :: c='#&^'      !ASSIGN DEFAULT EDIT CHARACTERS
-integer                     :: maxscra      !LENGTH OF SCRATCH BUFFER
-character(len=len(cline))   :: dum2         !SCRATCH CHARACTER BUFFER
-logical                     :: linsrt       !FLAG FOR INSERTING DATA ON LINE
+character(len=3),parameter  :: c='#&^'         !ASSIGN DEFAULT EDIT CHARACTERS
+integer                     :: maxscra         !LENGTH OF SCRATCH BUFFER
+character(len=len(cline))   :: dum2            !SCRATCH CHARACTER BUFFER
+logical                     :: linsrt          !FLAG FOR INSERTING DATA ON LINE
 integer :: i, j, ic, ichr, iend, lmax, lmx1
 maxscra=len(cline)
    cmod=trim(mod)
-   lmax=min0(len(cline),maxscra)         !DETERMINE MAXIMUM LINE LENGTH
-   lmx1=lmax-1                           !MAX LINE LENGTH -1
-   dum2=' '                              !INITIALIZE NEW LINE
-   linsrt=.false.                        !INITIALIZE INSERT MODE
-   iend=len_trim(cmod)                   !DETERMINE END OF MODS
-   i=0                                   !CHAR COUNTER FOR MOD LINE CMOD
-   ic=0                                  !CHAR COUNTER FOR CURRENT LINE CLINE
-   ichr=0                                !CHAR COUNTER NEW LINE DUM2
-11 continue
-   i=i+1                                 !NEXT CHAR IN MOD LINE
-   if(ichr > lmx1)goto 999              !IF TOO MANY CHARS IN NEW LINE
-   if(linsrt) then                       !IF INSERTING NEW CHARS
-      if(i > iend) cmod(i:i)=c(1:1)     !FORCE END OF INSERT MODE
-      if(cmod(i:i) == c(1:1))then        !IF END OF INSERT MODE
-         linsrt=.false.                  !RESET INSERT MODE FLAG
-         if(ic+1 == i)then               !NULL INSERT STRING
-            ichr=ichr+1                  !INCREMENT COUNTER FOR NEW LINE
-            dum2(ichr:ichr)=c(1:1)       !INSERT INSERT MODE TERMINATOR
-         endif
-         do j=ic,i                       !LOOP OF NUMBER OF CHARS INSERTED
-            ichr=ichr+1                  !INCREMENT COUNTER FOR NEW LINE
-            if(ichr > lmax)goto 999     !IF AT BUFFER LIMIT, QUIT
-            dum2(ichr:ichr)=cline(j:j)   !APPEND CHARS FROM ORIG LINE
-         enddo                           !...WHICH ALIGN WITH INSERTED CHARS
-         ic=i                            !RESET CHAR COUNT TO END OF INSERT
-         goto 1                          !CHECK NEW LINE LENGTH AND CYCLE
-      endif                              !END OF TERMINATED INSERT LOGIC
-      ichr=ichr+1                        !INCREMENT NEW LINE COUNT
-      dum2(ichr:ichr)=cmod(i:i)          !SET NEWLINE CHAR TO INSERTED CHAR
-   else                                  !IF NOT INSERTING CHARACTERS
-      ic=ic+1                            !INCREMENT ORIGINAL LINE COUNTER
-      if(cmod(i:i) == c(1:1))goto 1      !IF DELETE CHAR. NO COPY AND CYCLE
-      if(cmod(i:i) == c(3:3))then        !IF BEGIN INSERT MODE
-         linsrt=.true.                   !SET INSERT FLAG TRUE
-         goto 1                          !CHECK LINE LENGTH AND CONTINUE
-      endif                              !IF NOT BEGINNING INSERT MODE
-      ichr=ichr+1                        !INCREMENT NEW LINE COUNTER
-      if(cmod(i:i) == c(2:2))then        !IF REPLACE WITH BLANK
-         dum2(ichr:ichr)=' '             !SET NEWLINE CHAR TO BLANK
-         goto 1                          !CHECK LINE LENGTH AND CYCLE
-      endif                              !IF NOT REPLACE WITH BLANK
-      if(cmod(i:i) == ' ')then           !IF BLANK, KEEP ORIGINAL CHARACTER
-         dum2(ichr:ichr)=cline(ic:ic)    !SET NEW CHAR TO ORIGINAL CHAR
-      else                               !IF NOT KEEPING OLD CHAR
-         dum2(ichr:ichr)=cmod(i:i)       !REPLACE ORIGINAL CHAR WITH NEW
-      endif                              !END CHAR KEEP OR REPLACE
-   endif                                 !END INSERT OR NO-INSERT
-1  continue
-   if(i < lmax)goto 11                  !CHECK FOR END OF LINE REACHED
-                                         !AND CYCLE IF OK
+   lmax=min0(len(cline),maxscra)               !DETERMINE MAXIMUM LINE LENGTH
+   lmx1=lmax-1                                 !MAX LINE LENGTH -1
+   dum2=' '                                    !INITIALIZE NEW LINE
+   linsrt=.false.                              !INITIALIZE INSERT MODE
+   iend=len_trim(cmod)                         !DETERMINE END OF MODS
+   i=0                                         !CHAR COUNTER FOR MOD LINE CMOD
+   ic=0                                        !CHAR COUNTER FOR CURRENT LINE CLINE
+   ichr=0                                      !CHAR COUNTER NEW LINE DUM2
+   INFINITE: do
+      if(i >= lmax)exit INFINITE               !CHECK FOR END OF LINE REACHED
+      i=i+1                                    !NEXT CHAR IN MOD LINE
+      if(ichr > lmx1)exit INFINITE             !IF TOO MANY CHARS IN NEW LINE
+      if(linsrt) then                          !IF INSERTING NEW CHARS
+         if(i > iend) cmod(i:i)=c(1:1)         !FORCE END OF INSERT MODE
+         if(cmod(i:i) == c(1:1))then           !IF END OF INSERT MODE
+            linsrt=.false.                     !RESET INSERT MODE FLAG
+            if(ic+1 == i)then                  !NULL INSERT STRING
+               ichr=ichr+1                     !INCREMENT COUNTER FOR NEW LINE
+               dum2(ichr:ichr)=c(1:1)          !INSERT INSERT MODE TERMINATOR
+            endif
+            do j=ic,i                          !LOOP OF NUMBER OF CHARS INSERTED
+               ichr=ichr+1                     !INCREMENT COUNTER FOR NEW LINE
+               if(ichr > lmax)exit INFINITE    !IF AT BUFFER LIMIT, QUIT
+               dum2(ichr:ichr)=cline(j:j)      !APPEND CHARS FROM ORIG LINE
+            enddo                              !...WHICH ALIGN WITH INSERTED CHARS
+            ic=i                               !RESET CHAR COUNT TO END OF INSERT
+            cycle INFINITE                     !CHECK NEW LINE LENGTH AND CYCLE
+         endif                                 !END OF TERMINATED INSERT LOGIC
+         ichr=ichr+1                           !INCREMENT NEW LINE COUNT
+         dum2(ichr:ichr)=cmod(i:i)             !SET NEWLINE CHAR TO INSERTED CHAR
+      else                                     !IF NOT INSERTING CHARACTERS
+         ic=ic+1                               !INCREMENT ORIGINAL LINE COUNTER
+         if(cmod(i:i) == c(1:1))cycle INFINITE !IF DELETE CHAR. NO COPY AND CYCLE
+         if(cmod(i:i) == c(3:3))then           !IF BEGIN INSERT MODE
+            linsrt=.true.                      !SET INSERT FLAG TRUE
+            cycle INFINITE                     !CHECK LINE LENGTH AND CONTINUE
+         endif                                 !IF NOT BEGINNING INSERT MODE
+         ichr=ichr+1                           !INCREMENT NEW LINE COUNTER
+         if(cmod(i:i) == c(2:2))then           !IF REPLACE WITH BLANK
+            dum2(ichr:ichr)=' '                !SET NEWLINE CHAR TO BLANK
+            cycle INFINITE                     !CHECK LINE LENGTH AND CYCLE
+         endif                                 !IF NOT REPLACE WITH BLANK
+         if(cmod(i:i) == ' ')then              !IF BLANK, KEEP ORIGINAL CHARACTER
+            dum2(ichr:ichr)=cline(ic:ic)       !SET NEW CHAR TO ORIGINAL CHAR
+         else                                  !IF NOT KEEPING OLD CHAR
+            dum2(ichr:ichr)=cmod(i:i)          !REPLACE ORIGINAL CHAR WITH NEW
+         endif                                 !END CHAR KEEP OR REPLACE
+      endif                                    !END INSERT OR NO-INSERT
+   enddo INFINITE
+                                               !AND CYCLE IF OK
 999   continue
-   cline=dum2                            !SET ORIGINAL CHARS TO NEW CHARS
-end subroutine modif                     !RETURN
+   cline=dum2                                  !SET ORIGINAL CHARS TO NEW CHARS
+end subroutine modif                        !RETURN
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
@@ -3115,9 +3167,12 @@ end function len_white
 !!     character(len=:),allocatable :: strout
 !!
 !!##DESCRIPTION
-!!    All control characters throughout the string are replaced with spaces
+!!    Tabs are expanded assuming a stop every eight characters.  All other
+!!    control characters throughout the string are replaced with spaces
 !!    and leading and trailing spaces are trimmed from the resulting string.
-!!    Tabs are expanded assuming a stop every eight characters.
+!!
+!!    This means trailing characters like linefeed and carriage returns are
+!!    removed. If this is not desired, see clip(3f).
 !!
 !!##OPTIONS
 !!    strin   input string to trim leading and trailing space and control
@@ -3142,6 +3197,8 @@ end function len_white
 !!
 !!      untrimmed string=[   ABCDEFG abcdefg                      ]
 !!      cropped string=[ABCDEFG abcdefg]
+!!##SEE ALSO
+!!    clip(3f)
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -3190,12 +3247,15 @@ end function crop
 !!    character(len=20) ::  untrimmed = '   ABCDEFG abcdefg  '
 !!       write(*,*) 'untrimmed string=[',untrimmed,']'
 !!       write(*,*) 'clipped string=[',clip(untrimmed),']'
+!!       ! which is equivalent to
+!!       write(*,*) 'clipped string=[',trim(adjustl(untrimmed)),']'
 !!    end program demo_clip
 !!
-!!   Expected output
+!!   Expected output:
 !!
-!!      untrimmed string=[   ABCDEFG abcdefg                      ]
-!!      clipped string=[ABCDEFG abcdefg]
+!!       >  untrimmed string=[   ABCDEFG abcdefg  ]
+!!       >  clipped string=[ABCDEFG abcdefg]
+!!       >  clipped string=[ABCDEFG abcdefg]
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -3210,7 +3270,8 @@ logical,parameter            :: T=.true.,F=.false.
 character(len=*),intent(in)  :: string
 character(len=:),allocatable :: lopped
 integer                      :: ends(2)
-   ends=verify( string, " ", [F,T] )
+   ! find first and last non-blank character positions
+   ends=verify(string, set=" ", back=[F,T]) ! Position of a character in a string that does not appear in a given set of characters.
    if(ends(1) == 0)then
       lopped=""
    else
@@ -3301,33 +3362,33 @@ PURE FUNCTION transliterate(instr,old_set,new_set) RESULT(outstr)
 ! ident_19="@(#) M_strings transliterate(3f) replace characters from old set with new set"
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-CHARACTER(LEN=*),INTENT(IN)  :: instr                             ! input string to change
-CHARACTER(LEN=*),intent(in)  :: old_set
-CHARACTER(LEN=*),intent(in)  :: new_set
+CHARACTER(LEN=*),INTENT(IN)  :: instr                  ! input string to change
+CHARACTER(LEN=*),intent(in)  :: old_set                ! set of characters to replace
+CHARACTER(LEN=*),intent(in)  :: new_set                ! new characters to replace old characcters
 !-----------------------------------------------------------------------------------------------------------------------------------
-CHARACTER(LEN=LEN(instr))    :: outstr                            ! output string to generate
+CHARACTER(LEN=LEN(instr))    :: outstr                 ! output string to generate
 !-----------------------------------------------------------------------------------------------------------------------------------
-INTEGER                      :: i10                               ! loop counter for stepping thru string
+INTEGER                      :: i10                    ! loop counter for stepping thru string
 INTEGER                      :: ii,jj
 !-----------------------------------------------------------------------------------------------------------------------------------
    jj=LEN(new_set)
    IF(jj /= 0)THEN
-      outstr=instr                                                ! initially assume output string equals input string
+      outstr=instr                                     ! initially assume output string equals input string
       stepthru: DO i10 = 1, LEN(instr)
-         ii=iNDEX(old_set,instr(i10:i10))                         ! see if current character is in old_set
+         ii=iNDEX(old_set,instr(i10:i10))              ! see if current character is in old_set
          IF (ii /= 0)THEN
-            if(ii <= jj)then                                      ! use corresponding character in new_set
+            if(ii <= jj)then                           ! use corresponding character in new_set
                outstr(i10:i10) = new_set(ii:ii)
             else
-               outstr(i10:i10) = new_set(jj:jj)                   ! new_set not as long as old_set; use last character in new_set
+               outstr(i10:i10) = new_set(jj:jj)        ! new_set not as long as old_set; use last character in new_set
             endif
          ENDIF
       ENDDO stepthru
-   else                                                           ! new_set is null string so delete characters in old_set
+   else                                                ! new_set is null string so delete characters in old_set
       outstr=' '
       hopthru: DO i10 = 1, LEN(instr)
-         ii=iNDEX(old_set,instr(i10:i10))                         ! see if current character is in old_set
-         IF (ii == 0)THEN                                         ! only keep characters not in old_set
+         ii=iNDEX(old_set,instr(i10:i10))              ! see if current character is in old_set
+         IF (ii == 0)THEN                              ! only keep characters not in old_set
             jj=jj+1
             outstr(jj:jj) = instr(i10:i10)
          ENDIF
@@ -3647,7 +3708,7 @@ end function percent_encode_characters
 !!       &C2%C3%C4%C5%C6%C7%C8%C9%CA%CB%CC%CD%CE%CF%D0%D1%D2%D3%D4%D5%D6%D&
 !!       &7%D8%D9%DA%DB%DC%DD%DE%DF%E0%E1%E2%E3%E4%E5%E6%E7%E8%E9%EA%EB%EC&
 !!       &%ED%EE%EF%F0%F1%F2%F3%F4%F5%F6%F7%F8%F9%FA%FB%FC%FD%FE%FF%20'
-!!       integer :: exit_code, j
+!!       integer :: j
 !!          input='[this is a string]'
 !!          write(*,see)'INPUT=',input
 !!          output=percent_encode(input)
@@ -3794,35 +3855,63 @@ end function percent_decode_string
 !!
 !!  Sample program:
 !!
-!!   program demo_join
-!!   use M_strings, only: join
-!!   implicit none
-!!   character(len=:),allocatable  :: s(:)
-!!   character(len=:),allocatable  :: out
-!!   integer                       :: i
-!!     s=[character(len=10) :: 'United',' we',' stand,', &
-!!     & ' divided',' we fall.']
-!!     out=join(s)
-!!     write(*,'(a)') out
-!!     write(*,'(a)') join(s,trm=.false.)
-!!     write(*,'(a)') (join(s,trm=.false.,sep='|'),i=1,3)
-!!     write(*,'(a)') join(s,sep='<>')
-!!     write(*,'(a)') join(s,sep=';',left='[',right=']')
-!!     write(*,'(a)') join(s,left='[',right=']')
-!!     write(*,'(a)') join(s,left='>>')
-!!   end program demo_join
+!!     program demo_join
+!!     use M_strings, only: join
+!!     implicit none
+!!     character(len=:),allocatable  :: s(:)
+!!       s=[character(len=10) :: 'United','we','stand,', &
+!!       & 'divided','we fall.']
 !!
-!!  Expected output:
+!!       write(*,'(a)') 'SIMPLE JOIN:                  ',&
+!!          join(s)
+!!       write(*,'(a)') 'SIMPLE JOIN WITH SEPARATOR:   ',&
+!!          join(s,sep=' ')
+!!       write(*,'(a)') 'CUSTOM SEPARATOR:             ',&
+!!          join(s,sep='==>')
+!!       write(*,'(a)') 'LEFT AND RIGHT AND SEPARATOR: ',&
+!!          join(s,sep=';',left='[',right=']')
+!!       write(*,'(a)') 'NO TRIMMING:                  ',&
+!!          join(s,trm=.false.)
+!!       write(*,'(a)') 'LEFT AND RIGHT:               ',&
+!!          join(s,left='[',right=']')
+!!       write(*,'(a)') 'START,END AND EVERYTHING:     ',&
+!!          join(s,trm=.false.,sep=',',start='[',end=']',left='"',right='"')
 !!
-!!   United we stand, divided we fall.
-!!   United     we        stand,    divided   we fall.
-!!   United    | we       | stand,   | divided  | we fall.
-!!   United    | we       | stand,   | divided  | we fall.
-!!   United    | we       | stand,   | divided  | we fall.
-!!   United<> we<> stand,<> divided<> we fall.
-!!   [United];[ we];[ stand,];[ divided];[ we fall.]
-!!   [United][ we][ stand,][ divided][ we fall.]
-!!   >>United>> we>> stand,>> divided>> we fall.
+!!       write(*,'(a)') 'TABLE'
+!!       call line()
+!!       write(*,'(a)') join(s(1:3),trm=.false.,sep='|',start='|',end='|')
+!!       write(*,'(a)') join([s(4:5),repeat(' ',len(s))],&
+!!       & trm=.false.,sep='|',start='|',end='|')
+!!       call line()
+!!     contains
+!!     subroutine line()
+!!     integer :: i
+!!       write(*,'(a)') join([(repeat('-',len(s)),i=1,3)],&
+!!       & sep='#',start='#',end='#')
+!!     end subroutine line
+!!     end program demo_join
+!!
+!! Results:
+!!
+!!  > SIMPLE JOIN:
+!!  > Unitedwestand,dividedwe fall.
+!!  > SIMPLE JOIN WITH SEPARATOR:
+!!  > United we stand, divided we fall.
+!!  > CUSTOM SEPARATOR:
+!!  > United==>we==>stand,==>divided==>we fall.
+!!  > LEFT AND RIGHT AND SEPARATOR:
+!!  > [United];[we];[stand,];[divided];[we fall.]
+!!  > NO TRIMMING:
+!!  > United    we        stand,    divided   we fall.
+!!  > LEFT AND RIGHT:
+!!  > [United][we][stand,][divided][we fall.]
+!!  > START,END AND EVERYTHING:
+!!  > ["United    ","we        ","stand,    ","divided   ","we fall.  "]
+!!  > TABLE
+!!  > #----------#----------#----------#
+!!  > |United    |we        |stand,    |
+!!  > |divided   |we fall.  |          |
+!!  > #----------#----------#----------#
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -4167,31 +4256,31 @@ end function upper_range
 !!     character(len(str))      :: string  ! output string
 !!
 !!##DESCRIPTION
-!!      lower(string) returns a copy of the input string with all characters
-!!      converted to miniscule over the specified range, assuming ASCII
-!!      character sets are being used. If no range is specified the entire
-!!      string is converted to miniscule.
+!!      lower(str) returns a copy of the ASCII input string with all
+!!      characters converted to miniscule (ie. "lowercase") over the
+!!      specified range, If no range is specified the entire string is
+!!      converted to miniscule.
 !!
 !!##OPTIONS
 !!    str    string to convert to miniscule
 !!    begin  optional starting position in "str" to begin converting to
-!!           miniscule
+!!           miniscule. Defaults to the beginning of the string (ie. "1").
 !!    end    optional ending position in "str" to stop converting to
-!!           miniscule
+!!           miniscule. Defaults to the end of the string (ie. "len(str)").
 !!
 !!##RETURNS
-!!    lower  copy of the input string with all characters converted to
+!!    lower  copy of the entire input string with all characters converted to
 !!           miniscule over optionally specified range.
 !!
 !!##TRIVIA
-!!    The terms "uppercase" and "lowercase" date back to the early days of
-!!    the mechanical printing press. Individual metal alloy casts of each
-!!    needed letter, or punctuation symbol, were meticulously added to a
-!!    press block, by hand, before rolling out copies of a page. These
-!!    metal casts were stored and organized in wooden cases. The more
-!!    often needed miniscule letters were placed closer to hand, in the
-!!    lower cases of the work bench. The less often needed, capitalized,
-!!    majuscule letters, ended up in the harder to reach upper cases.
+!!    The terms "uppercase" and "lowercase" date back to the early days
+!!    of the mechanical printing press. Individual metal alloy casts of
+!!    each needed letter or punctuation symbol were meticulously added to a
+!!    press block, by hand, before rolling out copies of a page. These metal
+!!    casts were stored and organized in wooden cases. The more-often-needed
+!!    miniscule letters were placed closer to hand, in the lower cases of
+!!    the work bench. The less often needed, capitalized, majuscule letters,
+!!    ended up in the harder to reach upper cases.
 !!
 !!##EXAMPLES
 !!
@@ -4238,7 +4327,7 @@ integer,parameter             :: diff = iachar('A')-iachar('a')
       iend= max(1,min(iend,end))
    endif
 
-   do concurrent (i = ibegin:iend)                   ! step thru each letter in the string in specified range
+   do concurrent (i = ibegin:iend)                    ! step thru each letter in the string in specified range
       select case (str(i:i))
       case ('A':'Z')
          string(i:i) = achar(iachar(str(i:i))-diff)   ! change letter to miniscule
