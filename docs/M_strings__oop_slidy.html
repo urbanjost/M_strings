@@ -193,7 +193,7 @@ string representing input value in base 2</li>
    integer,intent(in)           :: b,a
 </code></pre>
 <h2 id="description-3">DESCRIPTION</h2>
-<p>Convert a numeric string from base B to base A. The function returns FALSE if B is not in the range [2..36] or if string X contains invalid characters in base B or if result Y is too big</p>
+<p>Convert a numeric string from base B to base A. The function returns FALSE if B is not in the range [2..36] or if string X contains invalid characters in base B or if result Y is too big.</p>
 <p>The letters A,B,```,Z represent 10,11,...,36 in a base &gt; 10.</p>
 <h2 id="options-3">OPTIONS</h2>
 <ul>
@@ -202,33 +202,48 @@ input string representing numeric whole value</p></li>
 <li><p><strong>b</strong><br />
 assumed base of input string</p></li>
 <li><p><strong>y</strong><br />
-output string</p></li>
+output string. Y is assumed long enough to hold the computed value. If an error occurs Y is filled with asterisks (*).</p></li>
 <li><p><strong>a</strong><br />
 base specified for output string</p></li>
 </ul>
+<h2 id="returns-3">RETURNS</h2>
+<p>Returns .TRUE. if no error occurred, else returns .FALSE. .</p>
 <h2 id="examples-3">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_base
-   use M_strings, only : base
+   use M_strings, only: base
    implicit none
-   integer           :: ba,bd
-   character(len=40) :: x,y
-
-   print *,&#39; BASE CONVERSION&#39;
-   write(*,&#39;(&quot;Start   Base (2 to 36): &quot;)&#39;,advance=&#39;no&#39;); read *, bd
-   write(*,&#39;(&quot;Arrival Base (2 to 36): &quot;)&#39;,advance=&#39;no&#39;); read *, ba
-   INFINITE: do
-      write(*,&#39;(&quot;Enter number in start base (0 to quit): &quot;)&#39;,advance=&#39;no&#39;)
-      read *, x
-      if(x == &#39;0&#39;) exit INFINITE
-      if(base(x,bd,y,ba))then
-           write(*,&#39;(&quot;In base &quot;,I2,&quot;: &quot;,A20)&#39;)  ba, y
-       else
-         print *,&#39;Error in decoding/encoding number.&#39;
-       endif
-    enddo INFINITE
-
-    end program demo_base
+   integer           :: ba, bd, i
+   character(len=40) :: x, y
+   character(len=*), parameter :: input(*) = [character(len=80) :: &amp;
+      &#39;10 12345 10&#39;, &amp;
+      &#39;2 10111 10&#39;, &amp;
+      &#39;10 12345 20&#39;, &amp;
+      &#39;10 abcdef 2&#39;, &amp;
+      &#39;0 0 0&#39;]
+   character(len=:),allocatable :: line
+      print *, &#39;Base Conversion using base(3f)&#39;
+      do i = 1, size(input)
+         line=input(i)
+         read (line, *) bd, x, ba
+         if (x == &#39;0&#39;) exit
+         if (base(x, bd, y, ba)) then
+         else
+            print *, &#39;Error in decoding/encoding numbers&#39;
+         end if
+         write (*, &#39;(a,&quot; in base &quot;,i0,&quot; is &quot;,a,&quot; in base &quot;,i0)&#39;)&amp;
+         &amp; trim(x),bd,trim(y),ba
+      end do
+   end program demo_base
+</code></pre>
+<p>Results:</p>
+<pre><code>   fpm: Entering directory &#39;/home/urbanjs/venus/V600/github/M_strings&#39;
+    Base Conversion using base(3f)
+   12345 in base 10 is 12345 in base 10
+   10111 in base 2 is 23 in base 10
+   12345 in base 10 is 1AH5 in base 20
+    Error in decoding/encoding numbers
+   abcdef in base 10 is **************************************** in base 2
 </code></pre>
 <h2 id="author-3">AUTHOR</h2>
 <p>John S. Urban</p>
@@ -294,7 +309,7 @@ length of returned array variables</p></li>
 <li><strong>c_string_pointer</strong><br />
 C pointer to convert</li>
 </ul>
-<h2 id="returns-3">RETURNS</h2>
+<h2 id="returns-4">RETURNS</h2>
 <ul>
 <li><strong>f_string</strong><br />
 Fortran character variable to return</li>
@@ -384,7 +399,7 @@ string to tokenize</p></li>
 <li><p><strong>DELIMITERS</strong><br />
 list of separator characters</p></li>
 </ul>
-<h2 id="returns-4">RETURNS</h2>
+<h2 id="returns-5">RETURNS</h2>
 <ul>
 <li><p><strong>TOKEN</strong><br />
 returned token</p></li>
@@ -453,7 +468,7 @@ status flag. 0 = success, <strong>-1</strong> = no tokens remain</p></li>
 <li><strong>strin</strong><br />
 input string to trim leading and trailing space characters from</li>
 </ul>
-<h2 id="returns-5">RETURNS</h2>
+<h2 id="returns-6">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 clipped version of input string</li>
@@ -490,8 +505,19 @@ clipped version of input string</li>
    character(len=*),intent(out) :: answer
 </code></pre>
 <h2 id="description-9">DESCRIPTION</h2>
-<p>Convert a number from base 10 to base OUT_BASE. The function returns �FALSE. if OUT_BASE is not in [2..36] or if number IN_BASE10 is too big.</p>
+<p>Convert a number from base 10 to base OUT_BASE. The function returns �FALSE. if OUT_BASE is not in the range [2..36] or if number IN_BASE10 is too big.</p>
 <p>The letters A,B,```,Z represent 10,11,...,36 in the base &gt; 10.</p>
+<h2 id="options-9">OPTIONS</h2>
+<ul>
+<li><p><strong>in_base10</strong><br />
+whole number to convert to an alternate base</p></li>
+<li><p><strong>out_base</strong><br />
+the desired base of the output</p></li>
+<li><p><strong>answer</strong><br />
+the input value converted to a string representing the original number IN_BASE10 in base OUT_BASE.</p></li>
+</ul>
+<h2 id="returns-7">RETURNS</h2>
+<p>Returns .true. if no error occurred, else returns .false. .</p>
 <h2 id="examples-9">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_codebase
@@ -529,14 +555,14 @@ clipped version of input string</li>
 </code></pre>
 <h2 id="description-10">DESCRIPTION</h2>
 <p>COMPACT(3f) converts multiple spaces, tabs and control characters (called "whitespace") to a single character or nothing. Leading whitespace is removed.</p>
-<h2 id="options-9">OPTIONS</h2>
+<h2 id="options-10">OPTIONS</h2>
 <ul>
 <li><p><strong>STR</strong><br />
 input string to reduce or remove whitespace from</p></li>
 <li><p><strong>CHAR</strong><br />
 By default the character that replaces adjacent whitespace is a space. If the optional CHAR parameter is supplied it will be used to replace the whitespace. If a null character is supplied for CHAR whitespace is removed.</p></li>
 </ul>
-<h2 id="returns-6">RETURNS</h2>
+<h2 id="returns-8">RETURNS</h2>
 <ul>
 <li><strong>OUTSTR</strong><br />
 string of same length as input string but with all contiguous whitespace reduced to a single space and leading whitespace removed</li>
@@ -581,14 +607,14 @@ string of same length as input string but with all contiguous whitespace reduced
 </code></pre>
 <h2 id="description-11">DESCRIPTION</h2>
 <p>cpad(3f) converts a scalar value to a cropped string and then pads it with spaces to center it to at least the specified length. If the trimmed input is longer than the requested length the string is returned trimmed of leading and trailing spaces.</p>
-<h2 id="options-10">OPTIONS</h2>
+<h2 id="options-11">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 The input may be scalar or a vector. the input value to return as a string, padded with spaces to center it at the the specified length if shorter than length. The input may be any intrinsic scalar which is converted to a cropped string much as if written with list-directed output.</p></li>
 <li><p><strong>length</strong><br />
 The minimum string length to return</p></li>
 </ul>
-<h2 id="returns-7">RETURNS</h2>
+<h2 id="returns-9">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 The input string center-padded to the requested length with spaces.</li>
@@ -626,12 +652,12 @@ The input string center-padded to the requested length with spaces.</li>
 All other control characters throughout the string are replaced with spaces and leading and trailing spaces are trimmed from the resulting string.</li>
 </ul>
 <p>This means trailing characters like linefeed and carriage returns are removed. If this is not desired, see clip(3f).</p>
-<h2 id="options-11">OPTIONS</h2>
+<h2 id="options-12">OPTIONS</h2>
 <ul>
 <li><strong>strin</strong><br />
 input string to trim leading and trailing space and control characters from</li>
 </ul>
-<h2 id="returns-8">RETURNS</h2>
+<h2 id="returns-10">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 cropped version of input string</li>
@@ -667,12 +693,12 @@ cropped version of input string</li>
 </code></pre>
 <h2 id="description-13">DESCRIPTION</h2>
 <p>dble(3f) returns a DOUBLE value when given a numeric representation of a numeric value. This overloads the DBLE(3f) intrinsic so that CHARACTER arguments assumed to represent a numeric value may be input.</p>
-<h2 id="options-12">OPTIONS</h2>
+<h2 id="options-13">OPTIONS</h2>
 <ul>
 <li><strong>STRING</strong><br />
 input string to be converted to a dble value</li>
 </ul>
-<h2 id="returns-9">RETURNS</h2>
+<h2 id="returns-11">RETURNS</h2>
 <ul>
 <li><strong>DBLE</strong><br />
 double precision value represented by input string</li>
@@ -711,7 +737,7 @@ double precision value represented by input string</li>
 <h2 id="description-14">DESCRIPTION</h2>
 <p>Convert a numeric string representing a whole number in base BASEIN to base 10. The function returns FALSE if BASEIN is not in the range [2..36] or if string STRING contains invalid characters in base BASEIN or if result OUT10 is too big</p>
 <p>The letters A,B,```,Z represent 10,11,...,36 in the base &gt; 10.</p>
-<h2 id="options-13">OPTIONS</h2>
+<h2 id="options-14">OPTIONS</h2>
 <ul>
 <li><p><strong>string</strong><br />
 input string. It represents a whole number in the base specified by BASEIN unless BASEIN is set to zero. When BASEIN is zero STRING is assumed to be of the form BASE#VALUE where BASE represents the function normally provided by BASEIN.</p></li>
@@ -720,34 +746,42 @@ base of input string; either 0 or from 2 to 36.</p></li>
 <li><p><strong>out10</strong><br />
 output value in base 10</p></li>
 </ul>
+<h2 id="returns-12">RETURNS</h2>
+<p>Returns .true. if no error occurred, else returns .false. .</p>
 <h2 id="examples-14">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_decodebase
    use M_strings, only : codebase, decodebase
    implicit none
-   integer           :: ba,bd
-   character(len=40) :: x,y
-   integer           :: r
-
-   print *,&#39; BASE CONVERSION&#39;
-   write(*,&#39;(&quot;Start   Base (2 to 36): &quot;)&#39;,advance=&#39;no&#39;); read *, bd
-   write(*,&#39;(&quot;Arrival Base (2 to 36): &quot;)&#39;,advance=&#39;no&#39;); read *, ba
-   INFINITE: do
-      print *,&#39;&#39;
-      write(*,&#39;(&quot;Enter number in start base: &quot;)&#39;,advance=&#39;no&#39;); read *, x
-      if(x == &#39;0&#39;) exit INFINITE
-      if(decodebase(x,bd,r)) then
-         if(codebase(r,ba,y)) then
-           write(*,&#39;(&quot;In base &quot;,I2,&quot;: &quot;,A20)&#39;)  ba, y
-         else
-           print *,&#39;Error in coding number.&#39;
+   integer           :: bd, i, r
+   character(len=40) :: x
+   character(len=*), parameter :: input(*) = [character(len=80) :: &amp;
+      &#39;10  12345&#39;,   &amp;
+      &#39;2   10111&#39;,   &amp;
+      &#39;6   12345&#39;,   &amp;
+      &#39;10  abcdef&#39;,  &amp;
+      &#39;0   0&#39;]
+   character(len=:),allocatable :: line
+      print *, &#39;Base Conversion using decodebase(3f)&#39;
+      do i = 1, size(input)
+         line=input(i)
+         read (line, *) bd, x
+         if (x == &#39;0&#39;) exit
+         if(.not.decodebase(x,bd,r)) then
+           print *,&#39;Error in decoding number.&#39;
          endif
-      else
-         print *,&#39;Error in decoding number.&#39;
-      endif
-   enddo INFINITE
-
+         write (*, &#39;(a,&quot; in base &quot;,i0,&quot; becomes &quot;,i0,&quot; in base 10&quot;)&#39;)&amp;
+         &amp; trim(x),bd,r
+      end do
    end program demo_decodebase
+</code></pre>
+<p>Results:</p>
+<pre><code> &gt;  Base Conversion using decodebase(3f)
+ &gt; 12345 in base 10 becomes 12345 in base 10
+ &gt; 10111 in base 2 becomes 23 in base 10
+ &gt; 12345 in base 6 becomes 1865 in base 10
+ &gt;  Error in decoding number.
+ &gt; abcdef in base 10 becomes 0 in base 10
 </code></pre>
 <h2 id="author-14">AUTHOR</h2>
 <p>John S. Urban</p>
@@ -780,7 +814,7 @@ output value in base 10</p></li>
 <p>No quoting or escaping of delimiter is allowed, so the delimiter character can not be placed in a token.</p>
 <p>No checking for more than N parameters; If any more they are ignored.</p>
 <p>This routine originates pre-Fortran90. A version using optional parameters and allocatable arrays is on the TODO list.</p>
-<h2 id="options-14">OPTIONS</h2>
+<h2 id="options-15">OPTIONS</h2>
 <ul>
 <li><p><strong>LINE</strong><br />
 input string to parse into tokens</p></li>
@@ -1067,12 +1101,12 @@ delimiter characters</p></li>
 It assumes a tab is set every 8 characters. Trailing spaces are removed.</li>
 </ul>
 <p>In addition, trailing carriage returns and line feeds are removed (they are usually a problem created by going to and from MSWindows).</p>
-<h2 id="options-15">OPTIONS</h2>
+<h2 id="options-16">OPTIONS</h2>
 <ul>
 <li><strong>instr</strong><br />
 Input line to remove tabs from</li>
 </ul>
-<h2 id="returns-10">RETURNS</h2>
+<h2 id="returns-13">RETURNS</h2>
 <ul>
 <li><strong>outstr</strong><br />
 Output string with tabs expanded.</li>
@@ -1144,7 +1178,7 @@ Output string with tabs expanded.</li>
 </code></pre>
 <h2 id="description-19">DESCRIPTION</h2>
 <p>ends_with(3f) tests if a string ends with any specified suffix. Differs from using index(3f) in that the input file and multiple suffices are trimmed by ends_with(3f),</p>
-<h2 id="options-16">OPTIONS</h2>
+<h2 id="options-17">OPTIONS</h2>
 <ul>
 <li><p><strong>SOURCE_STRING</strong><br />
 string to search</p></li>
@@ -1153,7 +1187,7 @@ list of separator strings. May be scalar or an array. Trailing spaces in SUFFIX 
 <li><p><strong>IGNORECASE</strong><br />
 If .true. case is ignored.</p></li>
 </ul>
-<h2 id="returns-11">RETURNS</h2>
+<h2 id="returns-14">RETURNS</h2>
 <ul>
 <li><strong>ENDS_WITH</strong><br />
 returns .TRUE. if one of the suffix match the end of SOURCE_STRING.</li>
@@ -1291,7 +1325,7 @@ returns .TRUE. if one of the suffix match the end of SOURCE_STRING.</li>
 </code></pre>
 <p>Also, I have a bit of special handling for blanks. All the usage information is in the argument descriptions. Note that most of the arguments are optional.</p>
 <p>from comp.lang.fortran @ Richard Maine</p>
-<h2 id="options-17">OPTIONS</h2>
+<h2 id="options-18">OPTIONS</h2>
 <ul>
 <li><p><strong>STRING</strong><br />
 The string input.</p></li>
@@ -1384,12 +1418,12 @@ True if a field was found.</p></li>
 </code></pre>
 <h2 id="description-22">DESCRIPTION</h2>
 <p>Determines if a string is an allowed Fortran name. To pass the input string must be composed of 1 to 63 ASCII characters and start with a letter and be composed entirely of alphanumeric characters [a-zA-Z0-9] and underscores.</p>
-<h2 id="options-18">OPTIONS</h2>
+<h2 id="options-19">OPTIONS</h2>
 <ul>
 <li><strong>LINE</strong><br />
 input string to test. Leading spaces are significant but trailing spaces are ignored.</li>
 </ul>
-<h2 id="returns-12">RETURNS</h2>
+<h2 id="returns-15">RETURNS</h2>
 <ul>
 <li><strong>LOUT</strong><br />
 a logical value indicating if the input string passed or failed the test to see if it is a valid Fortran name or not.</li>
@@ -1448,12 +1482,12 @@ a logical value indicating if the input string passed or failed the test to see 
 <pre><code>       4*10.0
        10.0, 10.0, 10.0, 10.0
 </code></pre>
-<h2 id="options-19">OPTIONS</h2>
+<h2 id="options-20">OPTIONS</h2>
 <ul>
 <li><strong>LINE</strong><br />
 A character variable containing the characters representing a list of numbers</li>
 </ul>
-<h2 id="returns-13">RETURNS</h2>
+<h2 id="returns-16">RETURNS</h2>
 <ul>
 <li><p><strong>VALUES()</strong><br />
 array holding numbers read from string. May be of type INTEGER, REAL, DOUBLEPRECISION, or CHARACTER. If CHARACTER the strings are returned as simple words instead of numeric values.</p></li>
@@ -1525,7 +1559,7 @@ zero if no error occurred in reading numbers. Optional. If not present and an er
 <p>In this version to get a match the entire string must be described by PATTERN. Trailing whitespace is significant, so trim the input string to have trailing whitespace ignored.</p>
 <p>Patterns like "b*ba" fail on a string like "babababa" because the first match found is not at the end of the string so 'baba' does not match</p>
 <p>To skip over the early matches insert an extra character at the end of the string and pattern that does not occur in the pattern. Typically a NULL is used (char(0)). So searching for b*ba\0 in babababa\0 matches the entire string.</p>
-<h2 id="options-20">OPTIONS</h2>
+<h2 id="options-21">OPTIONS</h2>
 <ul>
 <li><p><strong>string</strong><br />
 the input string to be tested for a match to the pattern.</p></li>
@@ -1805,12 +1839,12 @@ the globbing pattern to search for. The following simple globbing options are av
 </code></pre>
 <h2 id="description-26">DESCRIPTION</h2>
 <p>int(3f) returns an integer when given a numeric representation of a numeric value. This overloads the INT(3f) intrinsic so that CHARACTER arguments assumed to represent a numeric value may be input.</p>
-<h2 id="options-21">OPTIONS</h2>
+<h2 id="options-22">OPTIONS</h2>
 <ul>
 <li><strong>STRING</strong><br />
 input string to be converted to an INT32 integer</li>
 </ul>
-<h2 id="returns-14">RETURNS</h2>
+<h2 id="returns-17">RETURNS</h2>
 <ul>
 <li><strong>INT</strong><br />
 integer represented by input string</li>
@@ -1921,12 +1955,12 @@ returns .true. if character is a hexadecimal digit (0-9, a-f, or A-F).</p></li>
 </code></pre>
 <h2 id="description-28">DESCRIPTION</h2>
 <p>isalpha(3f) returns .true. if character is a letter and �false. otherwise</p>
-<h2 id="options-22">OPTIONS</h2>
+<h2 id="options-23">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-15">RETURNS</h2>
+<h2 id="returns-18">RETURNS</h2>
 <ul>
 <li><strong>isalpha</strong><br />
 logical value returns .true. if character is a ASCII letter or false otherwise.</li>
@@ -1960,12 +1994,12 @@ logical value returns .true. if character is a ASCII letter or false otherwise.<
 </code></pre>
 <h2 id="description-29">DESCRIPTION</h2>
 <p>isascii(3f) returns .true. if the character is in the range char(0) to char(127)</p>
-<h2 id="options-23">OPTIONS</h2>
+<h2 id="options-24">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-16">RETURNS</h2>
+<h2 id="returns-19">RETURNS</h2>
 <ul>
 <li><strong>isupper</strong><br />
 logical value returns true if character is an ASCII character.</li>
@@ -2011,12 +2045,12 @@ logical value returns true if character is an ASCII character.</li>
 </code></pre>
 <h2 id="description-30">DESCRIPTION</h2>
 <p>isblank(3f) returns .true. if character is a blank character (space or horizontal tab).</p>
-<h2 id="options-24">OPTIONS</h2>
+<h2 id="options-25">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-17">RETURNS</h2>
+<h2 id="returns-20">RETURNS</h2>
 <ul>
 <li><p><strong>isblank</strong><br />
 logical value returns true if character is a "blank"</p>
@@ -2054,12 +2088,12 @@ space or horizontal tab character).</li>
 </code></pre>
 <h2 id="description-31">DESCRIPTION</h2>
 <p>iscntrl(3f) returns .true. if character is a delete character or ordinary control character</p>
-<h2 id="options-25">OPTIONS</h2>
+<h2 id="options-26">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-18">RETURNS</h2>
+<h2 id="returns-21">RETURNS</h2>
 <ul>
 <li><strong>iscntrl</strong><br />
 logical value returns true if character is a control character</li>
@@ -2136,12 +2170,12 @@ logical value returns true if character is a control character</li>
 </code></pre>
 <h2 id="description-33">DESCRIPTION</h2>
 <p>isgraph(3f) returns .true. if character is a printable character except a space is considered non-printable</p>
-<h2 id="options-26">OPTIONS</h2>
+<h2 id="options-27">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-19">RETURNS</h2>
+<h2 id="returns-22">RETURNS</h2>
 <ul>
 <li><strong>isgraph</strong><br />
 logical value returns true if character is a printable non-space character</li>
@@ -2176,12 +2210,12 @@ logical value returns true if character is a printable non-space character</li>
 </code></pre>
 <h2 id="description-34">DESCRIPTION</h2>
 <p>islower(3f) returns .true. if character is a miniscule letter (a-z)</p>
-<h2 id="options-27">OPTIONS</h2>
+<h2 id="options-28">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-20">RETURNS</h2>
+<h2 id="returns-23">RETURNS</h2>
 <ul>
 <li><strong>islower</strong><br />
 logical value returns true if character is a lowercase ASCII character else false.</li>
@@ -2220,14 +2254,14 @@ logical value returns true if character is a lowercase ASCII character else fals
 </code></pre>
 <h2 id="description-35">DESCRIPTION</h2>
 <p>ISNUMBER(3f) returns a value greater than zero if the string represents a number, and a number less than or equal to zero if it is a bad number. Blank characters are ignored.</p>
-<h2 id="options-28">OPTIONS</h2>
+<h2 id="options-29">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 the string to evaluate as to whether it represents a numeric value or not</p></li>
 <li><p><strong>msg</strong><br />
 An optional message describing the string</p></li>
 </ul>
-<h2 id="returns-21">RETURNS</h2>
+<h2 id="returns-24">RETURNS</h2>
 <ul>
 <li><p><strong>isnumber</strong><br />
 the following values are returned</p>
@@ -2341,12 +2375,12 @@ the following values are returned</p>
 </code></pre>
 <h2 id="description-36">DESCRIPTION</h2>
 <p>isprint(3f) returns .true. if character is an ASCII printable character</p>
-<h2 id="options-29">OPTIONS</h2>
+<h2 id="options-30">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-22">RETURNS</h2>
+<h2 id="returns-25">RETURNS</h2>
 <ul>
 <li><strong>isprint</strong><br />
 logical value returns true if character is a printable ASCII character else false.</li>
@@ -2381,12 +2415,12 @@ logical value returns true if character is a printable ASCII character else fals
 </code></pre>
 <h2 id="description-37">DESCRIPTION</h2>
 <p>ispunct(3f) returns .true. if character is a printable punctuation character</p>
-<h2 id="options-30">OPTIONS</h2>
+<h2 id="options-31">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-23">RETURNS</h2>
+<h2 id="returns-26">RETURNS</h2>
 <ul>
 <li><strong>ispunct</strong><br />
 logical value returns true if character is a printable punctuation character.</li>
@@ -2425,12 +2459,12 @@ logical value returns true if character is a printable punctuation character.</l
 </code></pre>
 <h2 id="description-38">DESCRIPTION</h2>
 <p>isspace(3f) returns .true. if character is a null, space, tab, carriage return, new line, vertical tab, or formfeed</p>
-<h2 id="options-31">OPTIONS</h2>
+<h2 id="options-32">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-24">RETURNS</h2>
+<h2 id="returns-27">RETURNS</h2>
 <ul>
 <li><strong>isspace</strong><br />
 returns true if character is ASCII white space</li>
@@ -2464,12 +2498,12 @@ returns true if character is ASCII white space</li>
 </code></pre>
 <h2 id="description-39">DESCRIPTION</h2>
 <p>isupper(3f) returns .true. if character is an uppercase letter (A-Z)</p>
-<h2 id="options-32">OPTIONS</h2>
+<h2 id="options-33">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-25">RETURNS</h2>
+<h2 id="returns-28">RETURNS</h2>
 <ul>
 <li><strong>isupper</strong><br />
 logical value returns true if character is an uppercase ASCII character else false.</li>
@@ -2510,12 +2544,12 @@ logical value returns true if character is an uppercase ASCII character else fal
 </code></pre>
 <h2 id="description-40">DESCRIPTION</h2>
 <p>isxdigit(3f) returns .true. if character is a hexadecimal digit (0-9, a-f, or A-F).</p>
-<h2 id="options-33">OPTIONS</h2>
+<h2 id="options-34">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-26">RETURNS</h2>
+<h2 id="returns-29">RETURNS</h2>
 <ul>
 <li><strong>isxdigit</strong><br />
 logical value returns true if character is a hexadecimal digit</li>
@@ -2554,7 +2588,7 @@ logical value returns true if character is a hexadecimal digit</li>
 </code></pre>
 <h2 id="description-41">DESCRIPTION</h2>
 <p>JOIN(3f) appends the elements of a CHARACTER array into a single CHARACTER variable, with elements 1 to N joined from left to right. By default each element is trimmed of trailing spaces and the default separator is a null string.</p>
-<h2 id="options-34">OPTIONS</h2>
+<h2 id="options-35">OPTIONS</h2>
 <ul>
 <li><p><strong>STR(:)</strong><br />
 array of CHARACTER variables to be joined</p></li>
@@ -2571,7 +2605,7 @@ suffix string</p></li>
 <li><p><strong>TRM</strong><br />
 option to trim each element of STR of trailing spaces. Defaults to .TRUE.</p></li>
 </ul>
-<h2 id="returns-27">RETURNS</h2>
+<h2 id="returns-30">RETURNS</h2>
 <ul>
 <li><strong>STRING</strong><br />
 CHARACTER variable composed of all of the elements of STR() appended together with the optional separator SEP placed between the elements.</li>
@@ -2651,14 +2685,14 @@ CHARACTER variable composed of all of the elements of STR() appended together wi
 </code></pre>
 <h2 id="description-42">DESCRIPTION</h2>
 <p>lenset(3f) truncates a string or pads it with spaces to the specified length.</p>
-<h2 id="options-35">OPTIONS</h2>
+<h2 id="options-36">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 input string</p></li>
 <li><p><strong>length</strong><br />
 output string length</p></li>
 </ul>
-<h2 id="returns-28">RETURNS</h2>
+<h2 id="returns-31">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 output string</li>
@@ -2695,12 +2729,12 @@ output string</li>
 <h2 id="description-43">DESCRIPTION</h2>
 <p>len_white(3f) returns the position of the last character in string that is not a whitespace character. The Fortran90 intrinsic LEN_TRIM() should be used when trailing whitespace can be assumed to always be spaces.</p>
 <p>This procedure was heavily used in the past because ANSI FORTRAN 77 character objects are fixed length and blank padded and the LEN_TRIM() intrinsic did not exist. It should now be used only when whitespace characters other than blanks are likely.</p>
-<h2 id="options-36">OPTIONS</h2>
+<h2 id="options-37">OPTIONS</h2>
 <ul>
 <li><strong>string</strong><br />
 input string whose trimmed length is being calculated ignoring all trailing whitespace characters.</li>
 </ul>
-<h2 id="returns-29">RETURNS</h2>
+<h2 id="returns-32">RETURNS</h2>
 <ul>
 <li><strong>len_white</strong><br />
 the number of characters in the trimmed string</li>
@@ -2775,12 +2809,12 @@ the number of characters in the trimmed string</li>
 </code></pre>
 <h2 id="description-44">DESCRIPTION</h2>
 <p>expand a list of whole numbers where negative numbers indicate a range. So [10,<strong>-20</strong>] would be expanded to [10,11,12,13,14,15,16,17,18,19,20].</p>
-<h2 id="options-37">OPTIONS</h2>
+<h2 id="options-38">OPTIONS</h2>
 <ul>
 <li><strong>icurve_lists(:)</strong><br />
 input array</li>
 </ul>
-<h2 id="returns-30">RETURNS</h2>
+<h2 id="returns-33">RETURNS</h2>
 <ul>
 <li><p><strong>icurve_expanded(:)</strong><br />
 output array; assumed large enough to hold returned list</p></li>
@@ -2845,12 +2879,12 @@ zero if no error occurred</p></li>
 <p>function that returns the longest common substring of two strings.</p>
 <p>Note that substrings are consecutive characters within a string. This distinguishes them from subsequences, which is any sequence of characters within a string, even if there are extraneous characters in between them.</p>
 <p>Hence, the longest common subsequence between "thisisatest" and "testing123testing" is "tsitest", whereas the longest common substring is just "test".</p>
-<h2 id="options-38">OPTIONS</h2>
+<h2 id="options-39">OPTIONS</h2>
 <ul>
 <li><strong>a,b</strong><br />
 strings to search for the longest common substring.</li>
 </ul>
-<h2 id="returns-31">RETURNS</h2>
+<h2 id="returns-34">RETURNS</h2>
 <ul>
 <li><strong>longest_common_substring</strong><br />
 the longest common substring found</li>
@@ -2906,7 +2940,7 @@ the longest common substring found</li>
 </code></pre>
 <h2 id="description-46">DESCRIPTION</h2>
 <p>lower(str) returns a copy of the ASCII input string with all characters converted to miniscule (ie. "lowercase") over the specified range, If no range is specified the entire string is converted to miniscule.</p>
-<h2 id="options-39">OPTIONS</h2>
+<h2 id="options-40">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 string to convert to miniscule</p></li>
@@ -2915,7 +2949,7 @@ optional starting position in "str" to begin converting to miniscule. Defaults t
 <li><p><strong>end</strong><br />
 optional ending position in "str" to stop converting to miniscule. Defaults to the end of the string (ie. "len(str)").</p></li>
 </ul>
-<h2 id="returns-32">RETURNS</h2>
+<h2 id="returns-35">RETURNS</h2>
 <ul>
 <li><strong>lower</strong><br />
 copy of the entire input string with all characters converted to miniscule over optionally specified range.</li>
@@ -2952,14 +2986,14 @@ copy of the entire input string with all characters converted to miniscule over 
 </code></pre>
 <h2 id="description-47">DESCRIPTION</h2>
 <p>lpad(3f) converts a scalar value to a cropped string and then pads it on the left with spaces to at least the specified length. If the trimmed input is longer than the requested length the string is returned trimmed of leading and trailing spaces.</p>
-<h2 id="options-40">OPTIONS</h2>
+<h2 id="options-41">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 The input may be scalar or a vector. the input value to return as a string, padded on the left to the specified length if shorter than length. The input may be any intrinsic scalar which is converted to a cropped string much as if written with list-directed output.</p></li>
 <li><p><strong>length</strong><br />
 The minimum string length to return</p></li>
 </ul>
-<h2 id="returns-33">RETURNS</h2>
+<h2 id="returns-36">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 The input string padded to the requested length on the left with spaces.</li>
@@ -3001,7 +3035,7 @@ The input string padded to the requested length on the left with spaces.</li>
 </code></pre>
 <h2 id="description-48">DESCRIPTION</h2>
 <p>Sets imatch to the position in string of the delimiter matching the delimiter in position ipos. Allowable delimiters are (), [], {}, &lt;&gt;.</p>
-<h2 id="options-41">OPTIONS</h2>
+<h2 id="options-42">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 input string to locate delimiter position in</p></li>
@@ -3053,7 +3087,7 @@ location of matching delimiter. If no match is found, zero (0) is returned.</p><
 <h2 id="description-49">DESCRIPTION</h2>
 <p>merge_str(3f) pads the shorter of str1 and str2 to the longest length of str1 and str2 and then calls MERGE(padded_str1,padded_str2,expr). It trims trailing spaces off the result and returns the trimmed string. This makes it easier to call MERGE(3f) with strings, as MERGE(3f) requires the strings to be the same length.</p>
 <p>NOTE: STR1 and STR2 are always required even though declared optional. this is so the call "STR_MERGE(A,B,present(A))" is a valid call. The parameters STR1 and STR2 when they are optional parameters can be passed to a procedure if the options are optional on the called procedure.</p>
-<h2 id="options-42">OPTIONS</h2>
+<h2 id="options-43">OPTIONS</h2>
 <ul>
 <li><p><strong>STR1</strong><br />
 string to return if the logical expression EXPR is true</p></li>
@@ -3062,7 +3096,7 @@ string to return if the logical expression EXPR is false</p></li>
 <li><p><strong>EXPR</strong><br />
 logical expression to evaluate to determine whether to return STR1 when true, and STR2 when false.</p></li>
 </ul>
-<h2 id="returns-34">RETURNS</h2>
+<h2 id="returns-37">RETURNS</h2>
 <ul>
 <li><strong>MERGE_STR</strong><br />
 a trimmed string is returned that is otherwise the value of STR1 or STR2, depending on the logical expression EXPR.</li>
@@ -3166,14 +3200,14 @@ A space below a character leaves it unchanged.</p></li>
 </code></pre>
 <h2 id="description-51">DESCRIPTION</h2>
 <p>msg(3f) builds a space-separated string from up to nine scalar values.</p>
-<h2 id="options-43">OPTIONS</h2>
+<h2 id="options-44">OPTIONS</h2>
 <ul>
 <li><p><strong>g[1-9]</strong><br />
 optional value to print the value of after the message. May be of type INTEGER, LOGICAL, REAL, DOUBLEPRECISION, COMPLEX, or CHARACTER.</p></li>
 <li><p><strong>sep</strong><br />
 separator between values. Defaults to a space</p></li>
 </ul>
-<h2 id="returns-35">RETURNS</h2>
+<h2 id="returns-38">RETURNS</h2>
 <ul>
 <li><strong>msg</strong><br />
 description to print</li>
@@ -3821,12 +3855,12 @@ function that returns the longest common substring of two strings.</p></li>
 </code></pre>
 <h2 id="description-54">DESCRIPTION</h2>
 <p>nint(3f) returns an integer when given a numeric representation of a numeric value. This overloads the NINT(3f) intrinsic so that CHARACTER arguments assumed to represent a numeric value may be input.</p>
-<h2 id="options-44">OPTIONS</h2>
+<h2 id="options-45">OPTIONS</h2>
 <ul>
 <li><strong>STRING</strong><br />
 input string to be converted to an integer</li>
 </ul>
-<h2 id="returns-36">RETURNS</h2>
+<h2 id="returns-39">RETURNS</h2>
 <ul>
 <li><strong>NINT</strong><br />
 integer represented by input string</li>
@@ -3999,12 +4033,12 @@ integer represented by input string</li>
 <p>NOTABS() converts tabs in INSTR to spaces in OUTSTR while maintaining columns. It assumes a tab is set every 8 characters. Trailing spaces are removed.</p>
 <p>In addition, trailing carriage returns and line feeds are removed (they are usually a problem created by going to and from MSWindows).</p>
 <p>What are some reasons for removing tab characters from an input line? Some Fortran compilers have problems with tabs, as tabs are not part of the Fortran character set. Some editors and printers will have problems with tabs. It is often useful to expand tabs in input files to simplify further processing such as tokenizing an input line.</p>
-<h2 id="options-45">OPTIONS</h2>
+<h2 id="options-46">OPTIONS</h2>
 <ul>
 <li><strong>instr</strong><br />
 Input line to remove tabs from</li>
 </ul>
-<h2 id="returns-37">RETURNS</h2>
+<h2 id="returns-40">RETURNS</h2>
 <ul>
 <li><p><strong>outstr</strong><br />
 Output string with tabs expanded. Assumed to be of sufficient length</p></li>
@@ -4049,7 +4083,7 @@ Significant length of returned string</p></li>
 </code></pre>
 <h2 id="description-58">DESCRIPTION</h2>
 <p>pad(3f) pads a string with a pattern to at least the specified length. If the trimmed input string is longer than the requested length the trimmed string is returned.</p>
-<h2 id="options-46">OPTIONS</h2>
+<h2 id="options-47">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 the input string to return trimmed, but then padded to the specified length if shorter than length</p></li>
@@ -4062,7 +4096,7 @@ if true pads string on the right, else on the left</p></li>
 <li><p><strong>clip</strong><br />
 trim spaces from input string but otherwise retain length. Except for simple cases you typically would trim the input yourself.</p></li>
 </ul>
-<h2 id="returns-38">RETURNS</h2>
+<h2 id="returns-41">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 The input string padded to the requested length or the trimmed input string if the input string is longer than the requested length.</li>
@@ -4144,14 +4178,14 @@ APPENDIX ```.................. 1235 &gt; 00012 &gt; ________________________1234
 <h2 id="description-59">DESCRIPTION</h2>
 <p>paragraph(3f) breaks a long line into a simple paragraph of specified line length.</p>
 <p>Given a long string break it on spaces into an array such that no variable is longer than the specified length. Individual words longer than LENGTH will be placed in variables by themselves.</p>
-<h2 id="options-47">OPTIONS</h2>
+<h2 id="options-48">OPTIONS</h2>
 <ul>
 <li><p><strong>SOURCE_STRING</strong><br />
 input string to break into an array of shorter strings on blank delimiters</p></li>
 <li><p><strong>LENGTH</strong><br />
 length of lines to break the string into.</p></li>
 </ul>
-<h2 id="returns-39">RETURNS</h2>
+<h2 id="returns-42">RETURNS</h2>
 <ul>
 <li><strong>PARAGRAPH</strong><br />
 character array filled with data from source_string broken at spaces into variables of length LENGTH.</li>
@@ -4225,14 +4259,14 @@ character array filled with data from source_string broken at spaces into variab
 <p>The reserved characters have to be encoded only under certain circumstances. The reserved characters are:</p>
 <pre><code>      &gt;  * &#39; ( ) ; : @ &amp; = + $ , / ? % # [ ]
 </code></pre>
-<h2 id="options-48">OPTIONS</h2>
+<h2 id="options-49">OPTIONS</h2>
 <ul>
 <li><p><strong>SOURCE_STRING</strong><br />
 string or character array to decode</p></li>
 <li><p><strong>EXIT_CODE</strong><br />
 non-zero if decoding failed</p></li>
 </ul>
-<h2 id="returns-40">RETURNS</h2>
+<h2 id="returns-43">RETURNS</h2>
 <ul>
 <li><strong>percent_decode</strong><br />
 a string holding a percent-decoded copy of the input</li>
@@ -4311,12 +4345,12 @@ a string holding a percent-decoded copy of the input</li>
 <p>The reserved characters have to be encoded only under certain circumstances. The reserved characters are:</p>
 <pre><code>      &gt;  * &#39; ( ) ; : @ &amp; = + $ , / ? % # [ ]
 </code></pre>
-<h2 id="options-49">OPTIONS</h2>
+<h2 id="options-50">OPTIONS</h2>
 <ul>
 <li><strong>SOURCE_STRING</strong><br />
 string or character array to encode</li>
 </ul>
-<h2 id="returns-41">RETURNS</h2>
+<h2 id="returns-44">RETURNS</h2>
 <ul>
 <li><strong>percent_encode</strong><br />
 a string holding a percent-encoded copy of the input</li>
@@ -4348,7 +4382,7 @@ a string holding a percent-encoded copy of the input</li>
 </code></pre>
 <h2 id="description-62">DESCRIPTION</h2>
 <p>Add quotes to a CHARACTER variable as if it was written using list-directed output. This is particularly useful for processing strings to add to CSV files.</p>
-<h2 id="options-50">OPTIONS</h2>
+<h2 id="options-51">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 input string to add quotes to, using the rules of list-directed output (single quotes are replaced by two adjacent quotes)</p></li>
@@ -4365,7 +4399,7 @@ alternate quoting methods are supported:</p></li>
 <li><strong>clip</strong><br />
 default is to trim leading and trailing spaces from the string. If CLIP is .FALSE. spaces are not trimmed</li>
 </ul>
-<h2 id="returns-42">RETURNS</h2>
+<h2 id="returns-45">RETURNS</h2>
 <ul>
 <li><strong>quoted_str</strong><br />
 The output string, which is based on adding quotes to STR.</li>
@@ -4423,12 +4457,12 @@ The output string, which is based on adding quotes to STR.</li>
 </code></pre>
 <h2 id="description-63">DESCRIPTION</h2>
 <p>real(3f) returns a REAL value when given a numeric representation of a numeric value. This overloads the REAL(3f) intrinsic so that CHARACTER arguments assumed to represent a numeric value may be input.</p>
-<h2 id="options-51">OPTIONS</h2>
+<h2 id="options-52">OPTIONS</h2>
 <ul>
 <li><strong>STRING</strong><br />
 input string to be converted to a real value</li>
 </ul>
-<h2 id="returns-43">RETURNS</h2>
+<h2 id="returns-46">RETURNS</h2>
 <ul>
 <li><strong>REAL</strong><br />
 real value represented by input string</li>
@@ -4476,7 +4510,7 @@ real value represented by input string</li>
 </code></pre>
 <h2 id="description-64">DESCRIPTION</h2>
 <p>Replace one substring for another in string. Either CMD or OLD and NEW must be specified.</p>
-<h2 id="options-52">OPTIONS</h2>
+<h2 id="options-53">OPTIONS</h2>
 <ul>
 <li><p><strong>targetline</strong><br />
 input line to be changed</p></li>
@@ -4493,7 +4527,7 @@ number of replacements to perform. Defaults to a global replacement.</p></li>
 <li><p><strong>ignorecase</strong><br />
 whether to ignore ASCII case or not. Defaults to .false. .</p></li>
 </ul>
-<h2 id="returns-44">RETURNS</h2>
+<h2 id="returns-47">RETURNS</h2>
 <ul>
 <li><p><strong>newline</strong><br />
 allocatable string returned</p></li>
@@ -4648,14 +4682,14 @@ error code. iF ier = <strong>-1</strong> bad directive, &gt;= 0 then count of ch
 </code></pre>
 <h2 id="description-67">DESCRIPTION</h2>
 <p>rpad(3f) converts a scalar intrinsic value to a string and then pads it on the right with spaces to at least the specified length. If the trimmed input string is longer than the requested length the string is returned trimmed of leading and trailing spaces.</p>
-<h2 id="options-53">OPTIONS</h2>
+<h2 id="options-54">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 The input may be scalar or a vector. the input value to return as a string, padded on the left to the specified length if shorter than length. The input may be any intrinsic scalar which is converted to a cropped string much as if written with list-directed output.</p></li>
 <li><p><strong>length</strong><br />
 The minimum string length to return</p></li>
 </ul>
-<h2 id="returns-45">RETURNS</h2>
+<h2 id="returns-48">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 The input string padded to the requested length on the right with spaces.</li>
@@ -4741,7 +4775,7 @@ The input string padded to the requested length on the right with spaces.</li>
 <h2 id="description-69">DESCRIPTION</h2>
 <p>This function converts a string to a DOUBLEPRECISION numeric value.</p>
 <p>The intrinsics INT(3f), REAL(3f), and DBLE(3f) are also extended to take CHARACTER variables. The KIND= keyword is not supported on the extensions.</p>
-<h2 id="options-54">OPTIONS</h2>
+<h2 id="options-55">OPTIONS</h2>
 <ul>
 <li><p><strong>string</strong><br />
 holds string assumed to represent a numeric value</p></li>
@@ -4750,7 +4784,7 @@ If an error occurs the program is stopped if the optional parameter IERR is not 
 <li><p><strong>onerr</strong><br />
 The value to return on error. A value of NaN is returned on error by default.</p></li>
 </ul>
-<h2 id="returns-46">RETURNS</h2>
+<h2 id="returns-49">RETURNS</h2>
 <ul>
 <li><strong>s2v</strong><br />
 numeric value read from string</li>
@@ -4845,14 +4879,14 @@ numeric value read from string</li>
 </code></pre>
 <h2 id="description-70">DESCRIPTION</h2>
 <p>The function S2VS(3f) takes a string representing a series of numbers and converts it to a numeric doubleprecision array. The string values may be delimited by spaces, semi-colons, and commas by default.</p>
-<h2 id="options-55">OPTIONS</h2>
+<h2 id="options-56">OPTIONS</h2>
 <ul>
 <li><p><strong>LINE</strong><br />
 Input string containing numbers</p></li>
 <li><p><strong>DELIM</strong><br />
 optional list of delimiter characters. If a space is included, it should appear as the left-most character in the list. The default is " ;," (spaces, semi-colons, and commas).</p></li>
 </ul>
-<h2 id="returns-47">RETURNS</h2>
+<h2 id="returns-50">RETURNS</h2>
 <ul>
 <li><strong>S2VS</strong><br />
 doubleprecision array</li>
@@ -4910,7 +4944,7 @@ doubleprecision array</li>
 </code></pre>
 <h2 id="description-71">DESCRIPTION</h2>
 <p>sep(3f) parses a string using specified delimiter characters and store tokens into an allocatable array</p>
-<h2 id="options-56">OPTIONS</h2>
+<h2 id="options-57">OPTIONS</h2>
 <ul>
 <li><p><strong>INPUT_LINE</strong><br />
 Input string to tokenize</p></li>
@@ -4923,7 +4957,7 @@ Treatment of null fields. By default adjacent delimiters in the input string do 
 <li><p><strong>ORDER='ASCENDING'|'DESCENDING'</strong><br />
 by default the tokens are returned from last to first; order='ASCENDING' returns them from first to last (left to right).</p></li>
 </ul>
-<h2 id="returns-48">RETURNS</h2>
+<h2 id="returns-51">RETURNS</h2>
 <ul>
 <li><strong>SEP</strong><br />
 Output array of tokens</li>
@@ -4983,7 +5017,7 @@ Output array of tokens</li>
 </code></pre>
 <h2 id="description-72">DESCRIPTION</h2>
 <p>slice(3f) parses a string using specified delimiter characters and store token beginning and ending positions into allocatable arrays</p>
-<h2 id="options-57">OPTIONS</h2>
+<h2 id="options-58">OPTIONS</h2>
 <ul>
 <li><p><strong>INPUT_LINE</strong><br />
 Input string to tokenize</p></li>
@@ -5116,7 +5150,7 @@ Treatment of null fields. By default adjacent delimiters in the input string do 
 </code></pre>
 <h2 id="description-73">DESCRIPTION</h2>
 <p>Parse a string into tokens. STRING, SET, TOKENS and SEPARATOR must all be of the same CHARACTER kind type parameter.</p>
-<h2 id="options-58">OPTIONS</h2>
+<h2 id="options-59">OPTIONS</h2>
 <ul>
 <li><p><strong>STRING</strong><br />
 string to break into tokens</p></li>
@@ -5235,7 +5269,7 @@ shall be a logical scalar. It is an INTENT (IN) argument. If POS does not appear
 </code></pre>
 <h2 id="description-74">DESCRIPTION</h2>
 <p>SPLIT(3f) parses a string using specified delimiter characters and store tokens into an allocatable array</p>
-<h2 id="options-59">OPTIONS</h2>
+<h2 id="options-60">OPTIONS</h2>
 <ul>
 <li><p><strong>INPUT_LINE</strong><br />
 Input string to tokenize</p></li>
@@ -5353,14 +5387,14 @@ Treatment of null fields. By default adjacent delimiters in the input string do 
 </code></pre>
 <h2 id="description-75">DESCRIPTION</h2>
 <p>squeeze(3f) reduces adjacent duplicates of the specified character to a single character</p>
-<h2 id="options-60">OPTIONS</h2>
+<h2 id="options-61">OPTIONS</h2>
 <ul>
 <li><p><strong>STR</strong><br />
 input string in which to reduce adjacent duplicate characters to a single character</p></li>
 <li><p><strong>CHAR</strong><br />
 The character to remove adjacent duplicates of</p></li>
 </ul>
-<h2 id="returns-49">RETURNS</h2>
+<h2 id="returns-52">RETURNS</h2>
 <ul>
 <li><strong>OUTSTR</strong><br />
 string with all contiguous adjacent occurrences of CHAR removed</li>
@@ -5419,7 +5453,7 @@ string with all contiguous adjacent occurrences of CHAR removed</li>
 </code></pre>
 <h2 id="description-76">DESCRIPTION</h2>
 <p>stretch(3f) pads a string with spaces to at least the specified length. If the trimmed input string is longer than the requested length the original string is returned trimmed of trailing spaces.</p>
-<h2 id="options-61">OPTIONS</h2>
+<h2 id="options-62">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 the input string to return trimmed, but then padded to the specified length if shorter than length</p></li>
@@ -5430,7 +5464,7 @@ optional string to use as padding. Defaults to a space.</p></li>
 <li><p><strong>suffix</strong><br />
 optional string to append to output string</p></li>
 </ul>
-<h2 id="returns-50">RETURNS</h2>
+<h2 id="returns-53">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 The input string padded to the requested length or the trimmed input string if the input string is longer than the requested length.</li>
@@ -5502,12 +5536,12 @@ The input string padded to the requested length or the trimmed input string if t
 <p>Returns a numeric value from a numeric character string.</p>
 <p>Works with any g-format input, including integer, real, and exponential. If the input string begins with "B", "Z", or "O" and otherwise represents a positive whole number it is assumed to be a binary, hexadecimal, or octal value. If the string contains commas they are removed. If the string is of the form NN:MMM``` or NN#MMM then NN is assumed to be the base of the whole number.</p>
 <p>If an error occurs in the READ, IOSTAT is returned in IERR and value is set to zero. if no error occurs, IERR=0.</p>
-<h2 id="options-62">OPTIONS</h2>
+<h2 id="options-63">OPTIONS</h2>
 <ul>
 <li><strong>CHARS</strong><br />
 input string to read numeric value from</li>
 </ul>
-<h2 id="returns-51">RETURNS</h2>
+<h2 id="returns-54">RETURNS</h2>
 <ul>
 <li><p><strong>VALU</strong><br />
 numeric value returned. May be INTEGER, REAL, or DOUBLEPRECISION.</p></li>
@@ -5546,14 +5580,14 @@ error flag (0 == no error)</p></li>
 </code></pre>
 <h2 id="description-78">DESCRIPTION</h2>
 <p>This routine can take a string representing a series of numbers and convert it to a numeric array and return how many numbers were found.</p>
-<h2 id="options-63">OPTIONS</h2>
+<h2 id="options-64">OPTIONS</h2>
 <ul>
 <li><p><strong>LINE</strong><br />
 Input string containing numbers</p></li>
 <li><p><strong>IREAD</strong><br />
 maximum number of values to try to read from input string</p></li>
 </ul>
-<h2 id="returns-52">RETURNS</h2>
+<h2 id="returns-55">RETURNS</h2>
 <ul>
 <li><p><strong>VALUES</strong><br />
 real array to be filled with numbers</p></li>
@@ -5630,7 +5664,7 @@ error flag (0=no error, else column number string starts at that error occurred 
 and ITOKEN until the function result returns .false.</li>
 </ul>
 <p>This routine assumes no other calls are made to it using any other input string while it is processing an input line.</p>
-<h2 id="options-64">OPTIONS</h2>
+<h2 id="options-65">OPTIONS</h2>
 <ul>
 <li><p><strong>source_string</strong><br />
 input string to parse</p></li>
@@ -5639,7 +5673,7 @@ token count should be set to zero for a new string</p></li>
 <li><p><strong>delimiters</strong><br />
 characters used to determine the end of tokens</p></li>
 </ul>
-<h2 id="returns-53">RETURNS</h2>
+<h2 id="returns-56">RETURNS</h2>
 <ul>
 <li><p><strong>token_start</strong><br />
 beginning position in SOURCE_STRING where token was found</p></li>
@@ -5703,7 +5737,7 @@ ending position in SOURCE_STRING where token was found strtok_status</p></li>
 </code></pre>
 <h2 id="description-80">DESCRIPTION</h2>
 <p>Globally substitute one substring for another in string.</p>
-<h2 id="options-65">OPTIONS</h2>
+<h2 id="options-66">OPTIONS</h2>
 <ul>
 <li><p><strong>TARGETLINE</strong><br />
 input line to be changed. Must be long enough to hold altered output.</p></li>
@@ -5856,7 +5890,7 @@ sets the right margin to be scanned for OLD in TARGETLINE.</p></li>
 </code></pre>
 <h2 id="description-82">DESCRIPTION</h2>
 <p>Translate, squeeze, and/or delete characters from the input string.</p>
-<h2 id="options-66">OPTIONS</h2>
+<h2 id="options-67">OPTIONS</h2>
 <ul>
 <li><p><strong>instr</strong><br />
 input string to change</p></li>
@@ -5881,7 +5915,7 @@ list of letters to replace letters in OLD_SET with.</li>
             in the new set is used to replace the remaining characters
             in the new set.
 </code></pre>
-<h2 id="returns-54">RETURNS</h2>
+<h2 id="returns-57">RETURNS</h2>
 <ul>
 <li><strong>outstr</strong><br />
 instr with substitutions applied</li>
@@ -5935,14 +5969,14 @@ instr with substitutions applied</li>
 <h2 id="description-83">DESCRIPTION</h2>
 <p>Remove quotes from a CHARACTER variable as if it was read using list-directed input. This is particularly useful for processing tokens read from input such as CSV files.</p>
 <p>Fortran can now read using list-directed input from an internal file, which should handle quoted strings, but list-directed input does not support escape characters, which UNQUOTE(3f) does.</p>
-<h2 id="options-67">OPTIONS</h2>
+<h2 id="options-68">OPTIONS</h2>
 <ul>
 <li><p><strong>quoted_str</strong><br />
 input string to remove quotes from, using the rules of list-directed input (two adjacent quotes inside a quoted region are replaced by a single quote, a single quote or double quote is selected as the delimiter based on which is encountered first going from left to right, ```)</p></li>
 <li><p><strong>esc</strong><br />
 optional character used to protect the next quote character from being processed as a quote, but simply as a plain character.</p></li>
 </ul>
-<h2 id="returns-55">RETURNS</h2>
+<h2 id="returns-58">RETURNS</h2>
 <ul>
 <li><strong>unquoted_str</strong><br />
 The output string, which is based on removing quotes from quoted_str.</li>
@@ -5999,7 +6033,7 @@ The output string, which is based on removing quotes from quoted_str.</li>
 </code></pre>
 <h2 id="description-84">DESCRIPTION</h2>
 <p>upper(string) returns a copy of the input string with all characters converted in the optionally specified range to uppercase, assuming ASCII character sets are being used. If no range is specified the entire string is converted to uppercase.</p>
-<h2 id="options-68">OPTIONS</h2>
+<h2 id="options-69">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 string to convert to uppercase</p></li>
@@ -6008,7 +6042,7 @@ optional starting position in "str" to begin converting to uppercase</p></li>
 <li><p><strong>end</strong><br />
 optional ending position in "str" to stop converting to uppercase</p></li>
 </ul>
-<h2 id="returns-56">RETURNS</h2>
+<h2 id="returns-59">RETURNS</h2>
 <ul>
 <li><strong>upper</strong><br />
 copy of the input string with all characters converted to uppercase over optionally specified range.</li>
@@ -6051,12 +6085,12 @@ copy of the input string with all characters converted to uppercase over optiona
 </code></pre>
 <h2 id="description-85">DESCRIPTION</h2>
 <p>upper_quoted(string) returns a copy of the input string with all not-quoted characters converted to uppercase, assuming ASCII character sets are being used. The quoting rules are the same as for Fortran source. Either a single or double quote starts a quoted string, and a quote character of the same type is doubled when it appears internally in the quoted string. If a double quote quotes the string single quotes may appear in the quoted string as single characters, and vice-versa for single quotes.</p>
-<h2 id="options-69">OPTIONS</h2>
+<h2 id="options-70">OPTIONS</h2>
 <ul>
 <li><strong>str</strong><br />
 string to convert to uppercase</li>
 </ul>
-<h2 id="returns-57">RETURNS</h2>
+<h2 id="returns-60">RETURNS</h2>
 <ul>
 <li><strong>upper</strong><br />
 copy of the input string with all unquoted characters converted to uppercase</li>
@@ -6098,14 +6132,14 @@ copy of the input string with all unquoted characters converted to uppercase</li
 </code></pre>
 <h2 id="description-86">DESCRIPTION</h2>
 <p>v2s(3f) returns a representation of a numeric value as a string when given a numeric value of type REAL, DOUBLEPRECISION, INTEGER or LOGICAL. It creates the strings using internal WRITE() statements. Trailing zeros are removed from non-zero values, and the string is left-justified.</p>
-<h2 id="options-70">OPTIONS</h2>
+<h2 id="options-71">OPTIONS</h2>
 <ul>
 <li><p><strong>VALUE</strong><br />
 input value to be converted to a string</p></li>
 <li><p><strong>FMT</strong><br />
 format can be explicitly given, but is limited to generating a string of eighty or less characters.</p></li>
 </ul>
-<h2 id="returns-58">RETURNS</h2>
+<h2 id="returns-61">RETURNS</h2>
 <ul>
 <li><strong>OUTSTR</strong><br />
 returned string representing input value,</li>
@@ -6154,7 +6188,7 @@ returned string representing input value,</li>
 </code></pre>
 <h2 id="description-87">DESCRIPTION</h2>
 <p>value_to_string(3f) returns a numeric representation of a numeric value in a string given a numeric value of type REAL, DOUBLEPRECISION, INTEGER or LOGICAL. It creates the string using internal writes. It then removes trailing zeros from non-zero values, and left-justifies the string.</p>
-<h2 id="options-71">OPTIONS</h2>
+<h2 id="options-72">OPTIONS</h2>
 <ul>
 <li><p><strong>VALUE</strong><br />
 input value to be converted to a string</p></li>
@@ -6163,7 +6197,7 @@ You may specify a specific format that produces a string up to the length of CHA
 <li><p><strong>TRIMZ</strong><br />
 If a format is supplied the default is not to try to trim trailing zeros. Set TRIMZ to .true. to trim zeros from a string assumed to represent a simple numeric value.</p></li>
 </ul>
-<h2 id="returns-59">RETURNS</h2>
+<h2 id="returns-62">RETURNS</h2>
 <ul>
 <li><p><strong>CHARS</strong><br />
 returned string representing input value, must be at least 23 characters long; or what is required by optional FMT if longer.</p></li>
@@ -6254,14 +6288,14 @@ If not zero, error occurred; optional.</p></li>
 <pre><code>       write(strout,&#39;(i5.5)&#39;)ivalue
 </code></pre>
 <p>but unlike internal I/O the function call can be used in expressions or passed as a procedure argument.</p>
-<h2 id="options-72">OPTIONS</h2>
+<h2 id="options-73">OPTIONS</h2>
 <ul>
 <li><p><strong>valuein</strong><br />
 The input value to left-pad. May be a scalar or vector string or integer. If the leftmost non-blank character is a sign character it is moved to the left-most position of the output.</p></li>
 <li><p><strong>length</strong><br />
 The minimum string length to return. If not present, the length of the input parameter VALUEIN is used. If the input value VALUEIN is an integer no zero padding occurs if LENGTH is not supplied.</p></li>
 </ul>
-<h2 id="returns-60">RETURNS</h2>
+<h2 id="returns-63">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 A trimmed string padded on the left with zeros to the requested length</li>

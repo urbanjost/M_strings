@@ -2937,39 +2937,40 @@ subroutine modif(cline,mod)
 !
 ! MODIF
 ! =====
-! ACTION- MODIFIES THE LINE CURRENTLY POINTED AT. THE INPUT STRING CLINE IS ASSUMED TO BE LONG ENOUGH TO ACCOMMODATE THE CHANGES
-!         THE MODIFY DIRECTIVES ARE AS FOLLOWS-
+! ACTION- Modifies the line currently pointed at. The input string CLINE
+!         is assumed to be long enough to accommodate the changes.
+!         The MODIFY directives are as follows-
 !
 !   DIRECTIVE                       EXPLANATION
 !   ---------                       ------------
-!   ^STRING#   CAUSES THE STRING OF CHARACTERS BETWEEN THE ^ AND THE
-!              NEXT  # TO BE INSERTED BEFORE THE CHARACTERS POINTED TO
-!              BY THE ^. AN ^ OR & WITHIN THE STRING IS TREATED AS A
-!              REGULAR CHARACTER. IF THE CLOSING # IS NOT SPECIFIED,
-!              MODIF(3f) INSERTS THE REMAINDER OFTHELINE AS IF A # WAS
-!              SPECIFIED AFTER THE LAST NONBLANK CHARACTER.
+!   ^STRING#   Causes the string of characters between the ^ and the
+!              next  # to be inserted before the characters pointed to
+!              by the ^. An ^ or & within the string is treated as a
+!              regular character. If the closing # is not specified,
+!              MODIF(3f) inserts the remainder of the line as if a # was
+!              specified after the last nonblank character.
 !
-!              THERE ARE TWO EXCEPTIONS. THE COMBINATION ^# CAUSES A #
-!              TO BE INSERTED BEFORE THE CHARACTER POINTED TO BY THE
-!              ^,  AND AN ^ AS THE LAST CHARACTER OF THE DIRECTIVES
-!              CAUSES A BLANK TO BE INSERTED.
+!              There are two exceptions. The combination ^# causes a #
+!              to be inserted before the character pointed to by the
+!              ^,  and an ^ as the last character of the directives
+!              causes a blank to be inserted.
 !
-!   #          (WHEN NOT THE FIRST # AFTER AN ^) CAUSES THE CHARACTER
-!              ABOVE IT TO BE DELETED.
+!   #          (When not the first # after an ^) causes the character
+!              above it to be deleted.
 !
-!   &          REPLACES THE CHARACTER ABOVE IT WITH A SPACE.
+!   &          Replaces the character above it with a space.
 !
-!   (SPACE)    A SPACE BELOW A CHARACTER LEAVES IT UNCHANGED.
+!   (SPACE)    A Space below a character leaves it unchanged.
 !
-!   ANY OTHER CHARACTER REPLACES THE CHARACTER ABOVE IT.
+!   Any other character replaces the character above it.
 !
 ! EXAMPLE-
 ! THE INPUT LINE........ 10 THIS STRING  TO BE MORTIFD
 ! THE DIRECTIVES LINE...        ^ IS THE#        D#  ^IE
 ! ALTERED INPUT LINE.... 10 THIS IS THE STRING  TO BE MODIFIED
 !CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-character(len=*)            :: cline        !STRING TO BE MODIFIED
-character(len=*),intent(in) :: mod          !STRING TO DIRECT MODIFICATION
+character(len=*)            :: cline           !STRING TO BE MODIFIED
+character(len=*),intent(in) :: mod             !STRING TO DIRECT MODIFICATION
 character(len=len(cline))   :: cmod
 character(len=3),parameter  :: c='#&^'         !ASSIGN DEFAULT EDIT CHARACTERS
 integer                     :: maxscra         !LENGTH OF SCRATCH BUFFER
@@ -3028,9 +3029,8 @@ maxscra=len(cline)
       endif                                    !END INSERT OR NO-INSERT
    enddo INFINITE
                                                !AND CYCLE IF OK
-999   continue
    cline=dum2                                  !SET ORIGINAL CHARS TO NEW CHARS
-end subroutine modif                        !RETURN
+end subroutine modif                           !RETURN
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
@@ -10097,41 +10097,59 @@ end function isalnum
 !!
 !!    Convert a numeric string from base B to base A. The function returns
 !!    FALSE if B is not in the range [2..36] or if string X contains invalid
-!!    characters in base B or if result Y is too big
+!!    characters in base B or if result Y is too big.
 !!
 !!    The letters A,B,...,Z represent 10,11,...,36 in a base > 10.
 !!
 !!##OPTIONS
 !!    x   input string representing numeric whole value
 !!    b   assumed base of input string
-!!    y   output string
+!!    y   output string.
+!!        Y is assumed long enough to hold the computed value.
+!!        If an error occurs Y is filled with asterisks (*).
 !!    a   base specified for output string
+!!##RETURNS
+!!        Returns .TRUE. if no error occurred, else returns .FALSE. .
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_base
-!!    use M_strings, only : base
+!!    use M_strings, only: base
 !!    implicit none
-!!    integer           :: ba,bd
-!!    character(len=40) :: x,y
+!!    integer           :: ba, bd, i
+!!    character(len=40) :: x, y
+!!    character(len=*), parameter :: input(*) = [character(len=80) :: &
+!!       '10 12345 10', &
+!!       '2 10111 10', &
+!!       '10 12345 20', &
+!!       '10 abcdef 2', &
+!!       '0 0 0']
+!!    character(len=:),allocatable :: line
+!!       print *, 'Base Conversion using base(3f)'
+!!       do i = 1, size(input)
+!!          line=input(i)
+!!          read (line, *) bd, x, ba
+!!          if (x == '0') exit
+!!          if (base(x, bd, y, ba)) then
+!!          else
+!!             print *, 'Error in decoding/encoding numbers'
+!!          end if
+!!          write (*, '(a," in base ",i0," is ",a," in base ",i0)')&
+!!          & trim(x),bd,trim(y),ba
+!!       end do
+!!    end program demo_base
 !!
-!!    print *,' BASE CONVERSION'
-!!    write(*,'("Start   Base (2 to 36): ")',advance='no'); read *, bd
-!!    write(*,'("Arrival Base (2 to 36): ")',advance='no'); read *, ba
-!!    INFINITE: do
-!!       write(*,'("Enter number in start base (0 to quit): ")',advance='no')
-!!       read *, x
-!!       if(x == '0') exit INFINITE
-!!       if(base(x,bd,y,ba))then
-!!            write(*,'("In base ",I2,": ",A20)')  ba, y
-!!        else
-!!          print *,'Error in decoding/encoding number.'
-!!        endif
-!!     enddo INFINITE
+!! Results:
 !!
-!!     end program demo_base
+!!    fpm: Entering directory '/home/urbanjs/venus/V600/github/M_strings'
+!!     Base Conversion using base(3f)
+!!    12345 in base 10 is 12345 in base 10
+!!    10111 in base 2 is 23 in base 10
+!!    12345 in base 10 is 1AH5 in base 20
+!!     Error in decoding/encoding numbers
+!!    abcdef in base 10 is **************************************** in base 2
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -10141,20 +10159,29 @@ elemental impure logical function base(x, b, y, a)
 character(len=*), intent(in)  :: x
 character(len=*), intent(out) :: y
 integer, intent(in)           :: b, a
-integer                       :: temp
+integer                       :: tempx
+integer                       :: iostat
 
 ! ident_81="@(#) M_strings base(3f) convert whole number string in base [2-36] to string in alternate base [2-36]"
 
+! Y is assumed long enough to hold the computed value
+
    base = .true.
-   if (decodebase(x, b, temp)) then
-      if (codebase(temp, a, y)) then
+   if (decodebase(x, b, tempx)) then
+      if (codebase(tempx, a, y)) then
       else
-         write(stderr,*) 'Error in coding number.'
+         flush(unit=output_unit,iostat=iostat)
+         write(stderr,'(*(g0))') 'Error in coding number ',trim(x),' in base ',a
+         flush(unit=stderr,iostat=iostat)
          base = .false.
+         y=repeat('*',len(y))
       endif
    else
-      write(stderr,*) 'Error in decoding number.'
+      flush(unit=output_unit,iostat=iostat)
+      write(stderr,'(*(g0))') 'Error in decoding number ',trim(x),' in base ',b
+      flush(unit=stderr,iostat=iostat)
       base = .false.
+      y=repeat('*',len(y))
    endif
 
 end function base
@@ -10183,8 +10210,10 @@ end function base
 !!
 !!##OPTIONS
 !!    int   input string representing numeric whole value
+!!
 !!##RETURNS
 !!    base2   string representing input value in base 2
+!!
 !!##EXAMPLES
 !!
 !!   Sample program:
@@ -10198,6 +10227,7 @@ end function base
 !!         write(*,'(a)') base2(-64)
 !!         write(*,'(a)') base2(-huge(0)-1)
 !!      end program demo_base2
+!!
 !! Results:
 !!
 !!     > 1111111111111111111111111111111
@@ -10260,6 +10290,9 @@ end function base2
 !!    basein   base of input string; either 0 or from 2 to 36.
 !!    out10    output value in base 10
 !!
+!!##RETURNS
+!!    Returns .true. if no error occurred, else returns .false. .
+!!
 !!##EXAMPLES
 !!
 !!   Sample program:
@@ -10267,29 +10300,36 @@ end function base2
 !!    program demo_decodebase
 !!    use M_strings, only : codebase, decodebase
 !!    implicit none
-!!    integer           :: ba,bd
-!!    character(len=40) :: x,y
-!!    integer           :: r
-!!
-!!    print *,' BASE CONVERSION'
-!!    write(*,'("Start   Base (2 to 36): ")',advance='no'); read *, bd
-!!    write(*,'("Arrival Base (2 to 36): ")',advance='no'); read *, ba
-!!    INFINITE: do
-!!       print *,''
-!!       write(*,'("Enter number in start base: ")',advance='no'); read *, x
-!!       if(x == '0') exit INFINITE
-!!       if(decodebase(x,bd,r)) then
-!!          if(codebase(r,ba,y)) then
-!!            write(*,'("In base ",I2,": ",A20)')  ba, y
-!!          else
-!!            print *,'Error in coding number.'
+!!    integer           :: bd, i, r
+!!    character(len=40) :: x
+!!    character(len=*), parameter :: input(*) = [character(len=80) :: &
+!!       '10  12345',   &
+!!       '2   10111',   &
+!!       '6   12345',   &
+!!       '10  abcdef',  &
+!!       '0   0']
+!!    character(len=:),allocatable :: line
+!!       print *, 'Base Conversion using decodebase(3f)'
+!!       do i = 1, size(input)
+!!          line=input(i)
+!!          read (line, *) bd, x
+!!          if (x == '0') exit
+!!          if(.not.decodebase(x,bd,r)) then
+!!            print *,'Error in decoding number.'
 !!          endif
-!!       else
-!!          print *,'Error in decoding number.'
-!!       endif
-!!    enddo INFINITE
-!!
+!!          write (*, '(a," in base ",i0," becomes ",i0," in base 10")')&
+!!          & trim(x),bd,r
+!!       end do
 !!    end program demo_decodebase
+!!
+!! Results:
+!!
+!!  >  Base Conversion using decodebase(3f)
+!!  > 12345 in base 10 becomes 12345 in base 10
+!!  > 10111 in base 2 becomes 23 in base 10
+!!  > 12345 in base 6 becomes 1865 in base 10
+!!  >  Error in decoding number.
+!!  > abcdef in base 10 becomes 0 in base 10
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -10302,6 +10342,9 @@ end function base2
 !!
 !!##LICENSE
 !!    Public Domain
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
 logical function decodebase(string,basein,out_baseten)
 
 ! ident_82="@(#) M_strings decodebase(3f) convert whole number string in base [2-36] to base 10 number"
@@ -10339,10 +10382,11 @@ integer           :: ierr
      out_sign=1
   endif
 
-  out_baseten=0
+  out_baseten=huge(0)
   y=0.0
   ALL: if(basein_local<2.or.basein_local>36) then
     write(stderr,*) '(*decodebase* ERROR: Base must be between 2 and 36. base=',basein_local
+    out_baseten=huge(0)
   else ALL
      out_baseten=0;y=0.0; mult=1.0
      long=LEN_TRIM(string_local)
@@ -10355,6 +10399,7 @@ integer           :: ierr
         endif
         if(ch<'0'.or.ch>'Z'.or.(ch>'9'.and.ch<'A'))then
            write(stderr,*)'*decodebase* ERROR: invalid character ',ch
+           out_baseten=huge(0)
            exit ALL
         endif
         if(ch<='9') then
@@ -10394,10 +10439,19 @@ end function decodebase
 !!
 !!##DESCRIPTION
 !!    Convert a number from base 10 to base OUT_BASE. The function returns
-!!    .FALSE. if OUT_BASE is not in [2..36] or if number IN_BASE10 is
-!!    too big.
+!!    .FALSE. if OUT_BASE is not in the range [2..36] or if number IN_BASE10
+!!    is too big.
 !!
 !!    The letters A,B,...,Z represent 10,11,...,36 in the base > 10.
+!!
+!!##OPTIONS
+!!    in_base10   whole number to convert to an alternate base
+!!    out_base    the desired base of the output
+!!    answer      the input value converted to a string representing
+!!                the original number IN_BASE10 in base OUT_BASE.
+!!
+!!##RETURNS
+!!    Returns .true. if no error occurred, else returns .false. .
 !!
 !!##EXAMPLES
 !!
