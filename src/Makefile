@@ -86,9 +86,9 @@ ship:
 .PHONY: run
 run: $(PROG)
 	# run everything
-	echo $? | xargs -n 1
-#	echo $? | xargs -n 1  |xargs -iXX /bin/time XX  \</dev/null
-	echo $? | xargs -n 1  |(set +x;xargs -iXX env XX 2>&1)
+##	echo $? | xargs -n 1
+	echo $? | xargs -n 1  |(set +x;xargs -iXX /bin/time XX  \</dev/null 2>&1)
+##	echo $? | xargs -n 1  |(set +x;xargs -iXX env XX 2>&1)
 
 #.PHONY: test
 #test: $(TPROG)

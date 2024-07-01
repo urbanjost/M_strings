@@ -466,11 +466,14 @@ clipped version of input string</li>
    character(len=20) ::  untrimmed = &#39;   ABCDEFG abcdefg  &#39;
       write(*,*) &#39;untrimmed string=[&#39;,untrimmed,&#39;]&#39;
       write(*,*) &#39;clipped string=[&#39;,clip(untrimmed),&#39;]&#39;
+      ! which is equivalent to
+      write(*,*) &#39;clipped string=[&#39;,trim(adjustl(untrimmed)),&#39;]&#39;
    end program demo_clip
 </code></pre>
-<p>Expected output</p>
-<pre><code>     untrimmed string=[   ABCDEFG abcdefg                      ]
-     clipped string=[ABCDEFG abcdefg]
+<p>Expected output:</p>
+<pre><code>      &gt;  untrimmed string=[   ABCDEFG abcdefg  ]
+      &gt;  clipped string=[ABCDEFG abcdefg]
+      &gt;  clipped string=[ABCDEFG abcdefg]
 </code></pre>
 <h2 id="author-8">AUTHOR</h2>
 <p>John S. Urban</p>
@@ -618,7 +621,11 @@ The input string center-padded to the requested length with spaces.</li>
     character(len=:),allocatable :: strout
 </code></pre>
 <h2 id="description-12">DESCRIPTION</h2>
-<p>All control characters throughout the string are replaced with spaces and leading and trailing spaces are trimmed from the resulting string. Tabs are expanded assuming a stop every eight characters.</p>
+<ul>
+<li><strong>Tabs are expanded assuming a stop every eight characters.</strong><br />
+All other control characters throughout the string are replaced with spaces and leading and trailing spaces are trimmed from the resulting string.</li>
+</ul>
+<p>This means trailing characters like linefeed and carriage returns are removed. If this is not desired, see clip(3f).</p>
 <h2 id="options-11">OPTIONS</h2>
 <ul>
 <li><strong>strin</strong><br />
@@ -643,6 +650,8 @@ cropped version of input string</li>
 <pre><code>     untrimmed string=[   ABCDEFG abcdefg                      ]
      cropped string=[ABCDEFG abcdefg]
 </code></pre>
+<h2 id="see-also">SEE ALSO</h2>
+<p>clip(3f)</p>
 <h2 id="author-12">AUTHOR</h2>
 <p>John S. Urban</p>
 <h2 id="license-12">LICENSE</h2>
@@ -3490,7 +3499,7 @@ function that returns the longest common substring of two strings.</p></li>
 </code></pre>
 <h3 id="oops-interface">OOPS INTERFACE</h3>
 <p>The M_strings__oop(3fm) module (included with the M_strings(3fm) module) provides an OOP (Object-Oriented Programming) interface to the M_strings(3fm) module.</p>
-<h2 id="see-also">SEE ALSO</h2>
+<h2 id="see-also-1">SEE ALSO</h2>
 <p>There are additional routines in other GPF modules for working with expressions (M_calculator), time strings (M_time), random strings (M_random, M_uuid), lists (M_list), and interfacing with the C regular expression library (M_regex).</p>
 <h2 id="examples-52">EXAMPLES</h2>
 <p>Each of the procedures includes an [example](example/) program in the corresponding man(1) page for the function.</p>
@@ -3560,7 +3569,7 @@ function that returns the longest common substring of two strings.</p></li>
 <h2 id="description-53">DESCRIPTION</h2>
 <p>The M_strings(3fm) module is a collection of Fortran procedures that supplement the built-in intrinsic string routines. Routines for parsing, tokenizing, changing case, substituting new strings for substrings, locating strings with simple wildcard expressions, removing tabs and line terminators and other string manipulations are included.</p>
 <p>M_strings__oop(3fm) is a companion module that provides an OOP interface to the M_strings module.</p>
-<h2 id="see-also-1">SEE ALSO</h2>
+<h2 id="see-also-2">SEE ALSO</h2>
 <p>There are additional routines in other GPF modules for working with expressions (M_calculator), time strings (M_time), random strings (M_random, M_uuid), lists (M_list), and interfacing with the C regular expression library (M_regex).</p>
 <h2 id="examples-53">EXAMPLES</h2>
 <p>Each of the procedural functions in M_strings(3fm) includes an example program in the corresponding man(1) page for the function. The object-oriented interface does not have individual man(1) pages, but is instead demonstrated using the following example program:</p>
@@ -4019,7 +4028,7 @@ Significant length of returned string</p></li>
       enddo
    end program demo_notabs
 </code></pre>
-<h2 id="see-also-2">SEE ALSO</h2>
+<h2 id="see-also-3">SEE ALSO</h2>
 <p>GNU/Unix commands expand(1) and unexpand(1)</p>
 <h2 id="author-55">AUTHOR</h2>
 <p>John S. Urban</p>
@@ -4115,7 +4124,7 @@ CHAPTER 2 : The end ```....... 1234</p></li>
 <li><p><strong>&gt;</strong><br />
 APPENDIX ```.................. 1235 &gt; 00012 &gt; ________________________12345 &gt; _________________________12345 &gt; _12345 &gt; __12345 &gt; 12345 &gt; _12345 &gt; 12345 &gt; 12345 &gt; 12345 &gt; 12345</p></li>
 </ul>
-<h2 id="see-also-3">SEE ALSO</h2>
+<h2 id="see-also-4">SEE ALSO</h2>
 <p>adjustl(3f), adjustr(3f), repeat(3f), trim(3f), len_trim(3f), len(3f)</p>
 <p>adjustc(3f), stretch(3f), lpad(3f), rpad(3f), cpad(3f), zpad(3f), lenset(3f)</p>
 <h2 id="author-56">AUTHOR</h2>
@@ -4246,7 +4255,7 @@ a string holding a percent-decoded copy of the input</li>
       &amp;C2%C3%C4%C5%C6%C7%C8%C9%CA%CB%CC%CD%CE%CF%D0%D1%D2%D3%D4%D5%D6%D&amp;
       &amp;7%D8%D9%DA%DB%DC%DD%DE%DF%E0%E1%E2%E3%E4%E5%E6%E7%E8%E9%EA%EB%EC&amp;
       &amp;%ED%EE%EF%F0%F1%F2%F3%F4%F5%F6%F7%F8%F9%FA%FB%FC%FD%FE%FF%20&#39;
-      integer :: exit_code, j
+      integer :: j
          input=&#39;[this is a string]&#39;
          write(*,see)&#39;INPUT=&#39;,input
          output=percent_encode(input)
