@@ -1,0 +1,1742 @@
+commands uuencode, uudecode, base64
+
+"""Base16, Base32, Base64 (RFC 3548), Base85 and Ascii85 data encodings"""
+This module handles the content transfer encoding method defined in RFC 2045
+to encode arbitrary 8-bit data using the three 8-bit bytes in four 7-bit
+characters encoding known as Base64.
+
+It is used in the MIME standards for email to attach images, audio, and text
+using some 8-bit character sets to messages.
+
+This module provides an interface to encode and decode both headers and bodies
+with Base64 encoding.
+
+RFC 2045 defines a method for including character set information in an
+`encoded-word' in a header.  This method is commonly used for 8-bit real names
+in To:, From:, Cc:, etc. fields, as well as Subject: lines.
+
+This module does not do the line wrapping or end-of-line character conversion
+necessary for proper internationalized headers; it only does dumb encoding and
+decoding.  To deal with the various line wrapping issues, use the email.header
+module.
+/*
+ * Copyright (c) 1996, 1998 by Internet Software Consortium.
+ *
+ * Permission to use, copy, modify, and distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND INTERNET SOFTWARE CONSORTIUM DISCLAIMS
+ * ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL INTERNET SOFTWARE
+ * CONSORTIUM BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
+ * DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR
+ * PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ * ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+ * SOFTWARE.
+ */
+
+/*
+ * Portions Copyright (c) 1995 by International Business Machines, Inc.
+ *
+ * International Business Machines, Inc. (hereinafter called IBM) grants
+ * permission under its copyrights to use, copy, modify, and distribute this
+ * Software with or without fee, provided that the above copyright notice and
+ * all paragraphs of this notice appear in all copies, and that the name of IBM
+ * not be used in connection with the marketing of any product incorporating
+ * the Software or modifications thereof, without specific, written prior
+ * permission.
+ *
+ * To the extent it has a right to do so, IBM grants an immunity from suit
+ * under its patents, if any, for the use, sale or manufacture of products to
+ * the extent that such products are used for performing Domain Name System
+ * dynamic updates in TCP/IP networks by means of the Software.  No immunity is
+ * granted for any product per se or for any other function of any product.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", AND IBM DISCLAIMS ALL WARRANTIES,
+ * INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ * PARTICULAR PURPOSE.  IN NO EVENT SHALL IBM BE LIABLE FOR ANY SPECIAL,
+ * DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER ARISING
+ * OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE, EVEN
+ * IF IBM IS APPRISED OF THE POSSIBILITY OF SUCH DAMAGES.
+ */
+
+#include <sys/cdefs.h>
+
+#include <sys/types.h>
+#include <sys/types.h>
+#include <sys/param.h>
+#include <sys/socket.h>
+
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <arpa/nameser.h>
+
+#include <ctype.h>
+#include <resolv.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define Assert(Cond) if (!(Cond)) abort()
+
+static const char Base64[] =
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+static const char Pad64 = '=';
+
+/* (From RFC1521 and draft-ietf-dnssec-secext-03.txt)
+   The following encoding technique is taken from RFC 1521 by Borenstein
+   and Freed.  It is reproduced here in a slightly edited form for
+   convenience.
+
+   A 65-character subset of US-ASCII is used, enabling 6 bits to be
+   represented per printable character. (The extra 65th character, "=",
+   is used to signify a special processing function.)
+
+   The encoding process represents 24-bit groups of input bits as output
+   strings of 4 encoded characters. Proceeding from left to right, a
+   24-bit input group is formed by concatenating 3 8-bit input groups.
+   These 24 bits are then treated as 4 concatenated 6-bit groups, each
+   of which is translated into a single digit in the base64 alphabet.
+
+   Each 6-bit group is used as an index into an array of 64 printable
+   characters. The character referenced by the index is placed in the
+   output string.
+
+                         Table 1: The Base64 Alphabet
+
+      Value Encoding  Value Encoding  Value Encoding  Value Encoding
+          0 A            17 R            34 i            51 z
+          1 B            18 S            35 j            52 0
+          2 C            19 T            36 k            53 1
+          3 D            20 U            37 l            54 2
+          4 E            21 V            38 m            55 3
+          5 F            22 W            39 n            56 4
+          6 G            23 X            40 o            57 5
+          7 H            24 Y            41 p            58 6
+          8 I            25 Z            42 q            59 7
+          9 J            26 a            43 r            60 8
+         10 K            27 b            44 s            61 9
+         11 L            28 c            45 t            62 +
+         12 M            29 d            46 u            63 /
+         13 N            30 e            47 v
+         14 O            31 f            48 w         (pad) =
+         15 P            32 g            49 x
+         16 Q            33 h            50 y
+
+   Special processing is performed if fewer than 24 bits are available
+   at the end of the data being encoded.  A full encoding quantum is
+   always completed at the end of a quantity.  When fewer than 24 input
+   bits are available in an input group, zero bits are added (on the
+   right) to form an integral number of 6-bit groups.  Padding at the
+   end of the data is performed using the '=' character.
+
+   Since all base64 input is an integral number of octets, only the
+         -------------------------------------------------                       
+   following cases can arise:
+   
+       (1) the final quantum of encoding input is an integral
+           multiple of 24 bits; here, the final unit of encoded
+	   output will be an integral multiple of 4 characters
+	   with no "=" padding,
+       (2) the final quantum of encoding input is exactly 8 bits;
+           here, the final unit of encoded output will be two
+	   characters followed by two "=" padding characters, or
+       (3) the final quantum of encoding input is exactly 16 bits;
+           here, the final unit of encoded output will be three
+	   characters followed by one "=" padding character.
+   */
+
+int
+b64_ntop(u_char const *src, size_t srclength, char *target, size_t targsize) {
+	size_t datalength = 0;
+	u_char input[3];
+	u_char output[4];
+	size_t i;
+
+	while (2 < srclength) {
+		input[0] = *src++;
+		input[1] = *src++;
+		input[2] = *src++;
+		srclength -= 3;
+
+		output[0] = input[0] >> 2;
+		output[1] = ((input[0] & 0x03) << 4) + (input[1] >> 4);
+		output[2] = ((input[1] & 0x0f) << 2) + (input[2] >> 6);
+		output[3] = input[2] & 0x3f;
+		Assert(output[0] < 64);
+		Assert(output[1] < 64);
+		Assert(output[2] < 64);
+		Assert(output[3] < 64);
+
+		if (datalength + 4 > targsize)
+			return (-1);
+		target[datalength++] = Base64[output[0]];
+		target[datalength++] = Base64[output[1]];
+		target[datalength++] = Base64[output[2]];
+		target[datalength++] = Base64[output[3]];
+	}
+    
+	/* Now we worry about padding. */
+	if (0 != srclength) {
+		/* Get what's left. */
+		input[0] = input[1] = input[2] = '\0';
+		for (i = 0; i < srclength; i++)
+			input[i] = *src++;
+	
+		output[0] = input[0] >> 2;
+		output[1] = ((input[0] & 0x03) << 4) + (input[1] >> 4);
+		output[2] = ((input[1] & 0x0f) << 2) + (input[2] >> 6);
+		Assert(output[0] < 64);
+		Assert(output[1] < 64);
+		Assert(output[2] < 64);
+
+		if (datalength + 4 > targsize)
+			return (-1);
+		target[datalength++] = Base64[output[0]];
+		target[datalength++] = Base64[output[1]];
+		if (srclength == 1)
+			target[datalength++] = Pad64;
+		else
+			target[datalength++] = Base64[output[2]];
+		target[datalength++] = Pad64;
+	}
+	if (datalength >= targsize)
+		return (-1);
+	target[datalength] = '\0';	/* Returned value doesn't count \0. */
+	return (datalength);
+}
+
+/* skips all whitespace anywhere.
+   converts characters, four at a time, starting at (or after)
+   src from base - 64 numbers into three 8 bit bytes in the target area.
+   it returns the number of data bytes stored at the target, or -1 on error.
+ */
+
+int
+b64_pton(src, target, targsize)
+	char const *src;
+	u_char *target;
+	size_t targsize;
+{
+	int tarindex, state, ch;
+	char *pos;
+
+	state = 0;
+	tarindex = 0;
+
+	while ((ch = *src++) != '\0') {
+		if (isspace((unsigned char)ch))        /* Skip whitespace anywhere. */
+			continue;
+
+		if (ch == Pad64)
+			break;
+
+		pos = strchr(Base64, ch);
+		if (pos == 0) 		/* A non-base64 character. */
+			return (-1);
+
+		switch (state) {
+		case 0:
+			if (target) {
+				if ((size_t)tarindex >= targsize)
+					return (-1);
+				target[tarindex] = (pos - Base64) << 2;
+			}
+			state = 1;
+			break;
+		case 1:
+			if (target) {
+				if ((size_t)tarindex + 1 >= targsize)
+					return (-1);
+				target[tarindex]   |=  (pos - Base64) >> 4;
+				target[tarindex+1]  = ((pos - Base64) & 0x0f)
+							<< 4 ;
+			}
+			tarindex++;
+			state = 2;
+			break;
+		case 2:
+			if (target) {
+				if ((size_t)tarindex + 1 >= targsize)
+					return (-1);
+				target[tarindex]   |=  (pos - Base64) >> 2;
+				target[tarindex+1]  = ((pos - Base64) & 0x03)
+							<< 6;
+			}
+			tarindex++;
+			state = 3;
+			break;
+		case 3:
+			if (target) {
+				if ((size_t)tarindex >= targsize)
+					return (-1);
+				target[tarindex] |= (pos - Base64);
+			}
+			tarindex++;
+			state = 0;
+			break;
+		default:
+			abort();
+		}
+	}
+
+	/*
+	 * We are done decoding Base-64 chars.  Let's see if we ended
+	 * on a byte boundary, and/or with erroneous trailing characters.
+	 */
+
+	if (ch == Pad64) {		/* We got a pad char. */
+		ch = *src++;		/* Skip it, get next. */
+		switch (state) {
+		case 0:		/* Invalid = in first position */
+		case 1:		/* Invalid = in second position */
+			return (-1);
+
+		case 2:		/* Valid, means one byte of info */
+			/* Skip any number of spaces. */
+			for ((void)NULL; ch != '\0'; ch = *src++)
+				if (!isspace((unsigned char)ch))
+					break;
+			/* Make sure there is another trailing = sign. */
+			if (ch != Pad64)
+				return (-1);
+			ch = *src++;		/* Skip the = */
+			/* Fall through to "single trailing =" case. */
+			/* FALLTHROUGH */
+
+		case 3:		/* Valid, means two bytes of info */
+			/*
+			 * We know this char is an =.  Is there anything but
+			 * whitespace after it?
+			 */
+			for ((void)NULL; ch != '\0'; ch = *src++)
+				if (!isspace((unsigned char)ch))
+					return (-1);
+
+			/*
+			 * Now make sure for cases 2 and 3 that the "extra"
+			 * bits that slopped past the last full byte were
+			 * zeros.  If we don't check them, they become a
+			 * subliminal channel.
+			 */
+			if (target && target[tarindex] != 0)
+				return (-1);
+		}
+	} else {
+		/*
+		 * We ended by seeing the end of the string.  Make sure we
+		 * have no partial bytes lying around.
+		 */
+		if (state != 0)
+			return (-1);
+	}
+
+	return (tarindex);
+}
+// @(#)root/base:$Id$
+// Author: Gerardo Ganis + Fons Rademakers   15/5/2009
+
+/*************************************************************************
+ * Copyright (C) 1995-2009, Rene Brun and Fons Rademakers.               *
+ * All rights reserved.                                                  *
+ *                                                                       *
+ * For the licensing terms see $ROOTSYS/LICENSE.                         *
+ * For the list of contributors see $ROOTSYS/README/CREDITS.             *
+ *************************************************************************/
+
+#ifndef ROOT_TBase64
+#define ROOT_TBase64
+
+//////////////////////////////////////////////////////////////////////////
+//                                                                      //
+// TBase64                                                              //
+//                                                                      //
+// This code implements the Base64 encoding and decoding.               //
+// Base64 encoded messages are typically used in authentication         //
+// protocols and to pack binary data in HTTP messages.                  //
+//                                                                      //
+//////////////////////////////////////////////////////////////////////////
+
+#include "Rtypes.h"
+#include "TString.h"
+
+
+class TBase64 {
+
+public:
+   virtual ~TBase64() { }
+
+   static TString Encode(const char *data);
+   static TString Encode(const char *data, Int_t len);
+   static TString Decode(const char *data);
+
+   ClassDef(TBase64,0)  // Base64 encoding/decoding
+};
+
+#endif
+Rosetta Code
+
+  * Create account
+  * Log in
+
+[                    ]
+Toggle navigation
+
+  * Community
+      + Twitter
+      + Chat/IRC
+      + Planet
+      + The Village Pump
+      + Finances
+  * Explore
+      + Languages
+      + Tasks
+      + Recent changes
+      + Similar sites
+      + Random page
+
+  * 
+      + Page
+      + Discussion
+  * 
+      + Edit
+      + History
+
+I'm working on modernizing Rosetta Code's infrastructure. Starting with
+communications. Please accept this time-limited open invite to RC's Slack.. --
+Michael Mol (talk) 20:59, 30 May 2020 (UTC)
+
+Base64 decode data
+
+From Rosetta Code
+Jump to:navigation, search
+Task
+Base64 decode data
+You are encouraged to solve this task according to the task description, using
+any language you may know.
+
+See Base64 encode data.
+
+Now write a program that takes the output of the Base64 encode data task as
+input and regenerate the original file.
+
+When working on the VBA implementation I found several 'solutions' on the net,
+including one from the software maker himself, that showed output with
+incorrect padding. Obviously with incorrect padding in the output you can not
+decode correctly to the original file again.
+
+Contents
+
+  * 1 Ada
+  * 2 Arturo
+  * 3 C
+  * 4 C#
+  * 5 C++
+  * 6 Cach? ObjectScript
+  * 7 Common Lisp
+  * 8 Crystal
+  * 9 D
+  * 10 Delphi
+  * 11 F#
+      + 11.1 Standard Library
+      + 11.2 Manual Implementation
+  * 12 Factor
+  * 13 Go
+  * 14 Groovy
+  * 15 Haskell
+  * 16 Haxe
+  * 17 Java
+  * 18 Jsish
+  * 19 Julia
+  * 20 Kotlin
+  * 21 Lua
+  * 22 Mathematica
+  * 23 OCaml
+  * 24 Ol
+  * 25 Perl
+  * 26 Phix
+  * 27 PHP
+  * 28 PicoLisp
+  * 29 Pike
+  * 30 Prolog
+  * 31 Python
+  * 32 Raku
+  * 33 Red
+  * 34 Ruby
+  * 35 Rust
+  * 36 Scala
+  * 37 Seed7
+  * 38 Sidef
+  * 39 Standard ML
+  * 40 Tcl
+  * 41 Visual Basic .NET
+  * 42 zkl
+
+Ada[edit]
+
+Library: AWS
+
+with Ada.Text_IO;
+ 
+with AWS.Translator;
+ 
+procedure Decode_AWS is
+   Input  : constant String :=
+     "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVw" &
+     "IHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=";
+   Result : constant String := AWS.Translator.Base64_Decode (Input);
+begin
+   Ada.Text_IO.Put_Line (Input);
+   Ada.Text_IO.New_Line;
+   Ada.Text_IO.Put_Line (Result);
+end Decode_AWS;
+
+Output:
+
+VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+Arturo[edit]
+
+text: "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g="
+ 
+print [decodeBase64 text]
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+C[edit]
+
+Translation of: C++
+
+#include <stdio.h>
+#include <stdlib.h>
+ 
+typedef unsigned char ubyte;
+const ubyte BASE64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+ 
+int findIndex(const ubyte val) {
+    if ('A' <= val && val <= 'Z') {
+        return val - 'A';
+    }
+    if ('a' <= val && val <= 'z') {
+        return val - 'a' + 26;
+    }
+    if ('0' <= val && val <= '9') {
+        return val - '0' + 52;
+    }
+    if (val == '+') {
+        return 62;
+    }
+    if (val == '/') {
+        return 63;
+    }
+    return -1;
+}
+ 
+int decode(const ubyte source[], ubyte sink[]) {
+    const size_t length = strlen(source);
+    const ubyte *it = source;
+    const ubyte *end = source + length;
+    int acc;
+ 
+    if (length % 4 != 0) {
+        return 1;
+    }
+ 
+    while (it != end) {
+        const ubyte b1 = *it++;
+        const ubyte b2 = *it++;
+        const ubyte b3 = *it++;         // might be the first padding byte
+        const ubyte b4 = *it++;         // might be the first or second padding byte
+ 
+        const int i1 = findIndex(b1);
+        const int i2 = findIndex(b2);
+ 
+        acc = i1 << 2;                  // six bits came from the first byte
+        acc |= i2 >> 4;                 // two bits came from the first byte
+        *sink++ = acc;                  // output the first byte
+ 
+        if (b3 != '=') {
+            const int i3 = findIndex(b3);
+ 
+            acc = (i2 & 0xF) << 4;      // four bits came from the second byte
+            acc += i3 >> 2;             // four bits came from the second byte
+            *sink++ = acc;              // output the second byte
+ 
+            if (b4 != '=') {
+                const int i4 = findIndex(b4);
+ 
+                acc = (i3 & 0x3) << 6;  // two bits came from the third byte
+                acc |= i4;              // six bits came from the third byte
+                *sink++ = acc;          // output the third byte
+            }
+        }
+    }
+ 
+    *sink = '\0';   // add the sigil for end of string
+    return 0;
+}
+ 
+int main() {
+    ubyte data[] = "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLVBhdWwgUi5FaHJsaWNo";
+    ubyte decoded[1024];
+ 
+    printf("%s\n\n", data);
+    decode(data, decoded);
+    printf("%s\n\n", decoded);
+ 
+    return 0;
+}
+
+Output:
+
+VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLVBhdWwgUi5FaHJsaWNo
+
+To err is human, but to really foul things up you need a computer.
+    --Paul R.Ehrlich
+
+C#[edit]
+
+Translation of: Visual Basic .NET
+
+using System;
+using System.Text;
+ 
+namespace Base64DecodeData {
+    class Program {
+        static void Main(string[] args) {
+            var data = "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=";
+            Console.WriteLine(data);
+            Console.WriteLine();
+ 
+            var decoded = Encoding.ASCII.GetString(Convert.FromBase64String(data));
+            Console.WriteLine(decoded);
+        }
+    }
+}
+
+Output:
+
+VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+C++[edit]
+
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+ 
+typedef unsigned char ubyte;
+const auto BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+ 
+std::vector<ubyte> encode(const std::vector<ubyte>& source) {
+    auto it = source.cbegin();
+    auto end = source.cend();
+ 
+    std::vector<ubyte> sink;
+    while (it != end) {
+        auto b1 = *it++;
+        int acc;
+ 
+        sink.push_back(BASE64[b1 >> 2]);            // first output (first six bits from b1)
+ 
+        acc = (b1 & 0x3) << 4;                      // last two bits from b1
+        if (it != end) {
+            auto b2 = *it++;
+            acc |= (b2 >> 4);                       // first four bits from b2
+ 
+            sink.push_back(BASE64[acc]);            // second output
+ 
+            acc = (b2 & 0xF) << 2;                  // last four bits from b2
+            if (it != end) {
+                auto b3 = *it++;
+                acc |= (b3 >> 6);                   // first two bits from b3
+ 
+                sink.push_back(BASE64[acc]);        // third output
+                sink.push_back(BASE64[b3 & 0x3F]);  // fouth output (final six bits from b3)
+            } else {
+                sink.push_back(BASE64[acc]);        // third output
+                sink.push_back('=');                // fourth output (1 byte padding)
+            }
+        } else {
+            sink.push_back(BASE64[acc]);            // second output
+            sink.push_back('=');                    // third output (first padding byte)
+            sink.push_back('=');                    // fourth output (second padding byte)
+        }
+    }
+    return sink;
+}
+ 
+int findIndex(ubyte val) {
+    if ('A' <= val && val <= 'Z') {
+        return val - 'A';
+    }
+    if ('a' <= val && val <= 'z') {
+        return val - 'a' + 26;
+    }
+    if ('0' <= val && val <= '9') {
+        return val - '0' + 52;
+    }
+    if ('+' == val) {
+        return 62;
+    }
+    if ('/' == val) {
+        return 63;
+    }
+    return -1;
+}
+ 
+std::vector<ubyte> decode(const std::vector<ubyte>& source) {
+    if (source.size() % 4 != 0) {
+        throw new std::runtime_error("Error in size to the decode method");
+    }
+ 
+    auto it = source.cbegin();
+    auto end = source.cend();
+ 
+    std::vector<ubyte> sink;
+    while (it != end) {
+        auto b1 = *it++;
+        auto b2 = *it++;
+        auto b3 = *it++; // might be first padding byte
+        auto b4 = *it++; // might be first or second padding byte
+ 
+        auto i1 = findIndex(b1);
+        auto i2 = findIndex(b2);
+        int acc;
+ 
+        acc = i1 << 2;          // six bits came from the first byte
+        acc |= i2 >> 4;         // two bits came from the first byte
+ 
+        sink.push_back(acc);    // output the first byte
+ 
+        if (b3 != '=') {
+            auto i3 = findIndex(b3);
+ 
+            acc = (i2 & 0xF) << 4;  // four bits came from the second byte
+            acc |= i3 >> 2;         // four bits came from the second byte
+ 
+            sink.push_back(acc);    // output the second byte
+ 
+            if (b4 != '=') {
+                auto i4 = findIndex(b4);
+ 
+                acc = (i3 & 0x3) << 6;  // two bits came from the third byte
+                acc |= i4;              // six bits came from the third byte
+ 
+                sink.push_back(acc);    // output the third byte
+            }
+        }
+    }
+    return sink;
+}
+ 
+int main() {
+    using namespace std;
+ 
+    string data = "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLVBhdWwgUi5FaHJsaWNo";
+    vector<ubyte> datav{ begin(data), end(data) };
+    cout << data << "\n\n";
+ 
+    auto decoded = decode(datav);
+    std::for_each(cbegin(decoded), cend(decoded), [](char c) { cout << c; });
+    cout << '\n';
+ 
+    return 0;
+}
+
+Output:
+
+VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLVBhdWwgUi5FaHJsaWNo
+
+To err is human, but to really foul things up you need a computer.
+    --Paul R.Ehrlich
+
+Cach? ObjectScript[edit]
+
+USER>Write $System.Encryption.Base64Decode("VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=")
+To err is human, but to really foul things up you need a computer.
+                                                                      -- Paul R. Ehrlich
+
+Common Lisp[edit]
+
+Similar to the BASE64 encoding task I am using the cl-base64 library.
+
+(eval-when (:load-toplevel :compile-toplevel :execute)
+  (ql:quickload "cl-base64"))
+ 
+;; * The package definition
+(defpackage :base64-decode
+  (:use :common-lisp :cl-base64))
+(in-package :base64-decode)
+ 
+;; * The encoded data
+(defvar *base64-data*
+  "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"
+ "See BASE64-ENCODE for the origin of this
+ data. http://rosettacode.org/wiki/Base64_encode_data")
+ 
+;; * The function
+(defun base64-decode (&optional (data *base64-data*) (file #p"favicon-2.ico"))
+  "Returns the original FILE BASE64 encoded in DATA."
+  (with-open-file (stream file :direction :output :element-type 'unsigned-byte
+                          :if-exists :supersede :if-does-not-exist :create)
+    (let* ((array (base64-string-to-usb8-array data))
+           (len (length array)))
+      (write-sequence array stream)
+      (format t "Wrote ~D bytes in file ~A~%" len file))))
+
+Output:
+
+Wrote 3638 bytes in file favicon-2.ico
+
+Crystal[edit]
+
+require "base64"
+ 
+encoded_string = "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g="
+ 
+decoded_string = Base64.decode_string(encoded_string)
+puts decoded_string
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+D[edit]
+
+Translation of: Raku
+
+import std.base64;
+import std.stdio;
+ 
+void main() {
+    auto data = "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=";
+    writeln(data);
+    writeln;
+ 
+    auto decoded = cast(char[])Base64.decode(data);
+    writeln(decoded);
+}
+
+Output:
+
+VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+Delphi[edit]
+
+program Base64Decoder;
+ 
+{$APPTYPE CONSOLE}
+ 
+uses
+  System.SysUtils, System.NetEncoding;
+ 
+const
+  Src = 'VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=';
+ 
+begin
+  WriteLn(Format('Source string: ' + sLineBreak + '"%s"', [Src]));
+  WriteLn(Format('Decoded string: ' + sLineBreak + '"%s"', [TNetEncoding.Base64.Decode(Src)]));
+ 
+end.
+ 
+
+Output:
+
+Source string:
+"VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g="
+Decoded string:
+"To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich"
+
+F#[edit]
+
+Standard Library[edit]
+
+ 
+open System
+open System.IO
+ 
+let encoded = "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"
+ 
+let decoded = Convert.FromBase64String encoded
+ 
+File.WriteAllBytes("favicon.ico", decoded)
+ 
+
+Output:
+
+Rosetta Code Icon
+
+Manual Implementation[edit]
+
+ 
+open System
+open System.IO
+ 
+let encoded = "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"
+ 
+ 
+let decode (s: string) =
+    let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".ToCharArray()
+    let filtered = String.filter (fun c -> Array.contains c chars || c = '=') s
+    let paddingSize = filtered |> String.filter ((=) '=') |> String.length
+    let s = filtered.Replace('=', 'A').ToCharArray() |> Array.map int
+    let ints = chars |> Array.map int
+    let calc c =
+        let n = [c..(c + 3)]
+                |> List.sumBy (fun k -> Array.IndexOf(ints, s.[k]) <<< (18 - 6 * (k % 4)))
+        [16; 8; 0]
+        |> List.map (fun k -> (n >>> k) &&& 255 |> char |> string) |> List.reduce (+)
+    [0..4..Array.length s - 1]
+    |> List.map calc
+    |> List.reduce (+)
+    |> fun r -> r.Substring(0, String.length r - paddingSize).ToCharArray()
+    |> Array.map byte
+ 
+let decoded = decode encoded
+ 
+File.WriteAllBytes("favicon.ico", decoded)
+ 
+
+Output:
+
+Rosetta Code Icon
+
+Factor[edit]
+
+USING: base64 io strings ;
+ 
+"VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLVBhdWwgUi5FaHJsaWNo"
+base64> >string print
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+    --Paul R.Ehrlich
+
+Go[edit]
+
+As images can no longer be uploaded to RC, I've encoded and decoded a string
+rather than the Rosetta Code icon.
+
+package main
+ 
+import (
+    "encoding/base64"
+    "fmt"
+)
+ 
+func main() {
+    msg := "Rosetta Code Base64 decode data task"
+    fmt.Println("Original :", msg)
+    encoded := base64.StdEncoding.EncodeToString([]byte(msg))
+    fmt.Println("\nEncoded  :", encoded)
+    decoded, err := base64.StdEncoding.DecodeString(encoded)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println("\nDecoded  :", string(decoded))
+}
+
+Output:
+
+Original : Rosetta Code Base64 decode data task
+
+Encoded  : Um9zZXR0YSBDb2RlIEJhc2U2NCBkZWNvZGUgZGF0YSB0YXNr
+
+Decoded  : Rosetta Code Base64 decode data task
+
+Groovy[edit]
+
+Translation of: Java
+
+import java.nio.charset.StandardCharsets
+ 
+class Decode {
+    static void main(String[] args) {
+        String data = "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g="
+        Base64.Decoder decoder = Base64.getDecoder()
+        byte[] decoded = decoder.decode(data)
+        String decodedStr = new String(decoded, StandardCharsets.UTF_8)
+        System.out.println(decodedStr)
+    }
+}
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+Haskell[edit]
+
+Simple implementation that decodes an ASCII string.
+
+--Decodes Base64 to ASCII
+import qualified Data.Map.Strict as Map (Map, lookup, fromList)
+import Data.Maybe (fromJust, listToMaybe, mapMaybe)
+import Numeric (readInt, showIntAtBase)
+import Data.Char (chr, digitToInt)
+import Data.List.Split (chunksOf)
+ 
+byteToASCII :: String -> String
+byteToASCII = map chr . decoder
+ 
+--generates list of bytes (represented by Int)
+decoder :: String -> [Int]
+decoder =
+  map readBin .
+  takeWhile (\x -> length x == 8) .
+  chunksOf 8 . concatMap toBin . mapMaybe (`Map.lookup` table) . filter (/= '=')
+ 
+--turns decimal into a list of char that represents a binary number
+toBin :: Int -> String
+toBin n = leftPad $ showIntAtBase 2 ("01" !!) n ""
+ 
+--this adds all the zeros to the left that showIntAtBase omitted
+leftPad :: String -> String
+leftPad a = replicate (6 - length a) '0' ++ a
+ 
+--turns list of '0' and '1' into list of 0 and 1
+readBin :: String -> Int
+readBin = fromJust . fmap fst . listToMaybe . readInt 2 (`elem` "01") digitToInt
+ 
+--lookup list for the sextets
+table :: Map.Map Char Int
+table =
+  Map.fromList $
+  zip "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/" [0 ..]
+ 
+main :: IO ()
+main =
+  putStrLn $
+  byteToASCII
+    "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCi0tIFBhdWwgUi4gRWhybGljaA=="
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+-- Paul R. Ehrlich
+
+
+or in terms of Data.ByteString.Base64:
+
+{-# LANGUAGE OverloadedStrings #-}
+ 
+import qualified Data.ByteString.Base64 as Base64 (decode, encode)
+import qualified Data.ByteString.Char8 as B (putStrLn)
+ 
+main :: IO ()
+main = do
+  B.putStrLn $
+    Base64.encode
+      "To err is human, but to really foul things up you need a computer.\n-- Paul R. Ehrlich"
+  B.putStrLn "\n-->\n"
+  either print B.putStrLn $
+    Base64.decode
+      "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCi0tIFBhdWwgUi4gRWhybGljaA=="
+
+Output:
+
+VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCi0tIFBhdWwgUi4gRWhybGljaA==
+
+-->
+
+To err is human, but to really foul things up you need a computer.
+-- Paul R. Ehrlich
+
+Haxe[edit]
+
+class Main {
+  static function main() {
+    var data = "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVw" +
+               "IHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=";
+    Sys.println('$data\n');
+    var decoded = haxe.crypto.Base64.decode(data);
+    Sys.println(decoded);
+  }
+}
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+Java[edit]
+
+Translation of: Kotlin
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+ 
+public class Decode {
+    public static void main(String[] args) {
+        String data = "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=";
+        Base64.Decoder decoder = Base64.getDecoder();
+        byte[] decoded = decoder.decode(data);
+        String decodedStr = new String(decoded, StandardCharsets.UTF_8);
+        System.out.println(decodedStr);
+    }
+}
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+Jsish[edit]
+
+See Base64_encode_data#Jsish for base64.jsi.
+
+/* Base64 decode, in Jsish */
+var data = exec('jsish base64.jsi', {retAll:true}).data;  // or use File.read('stdin');
+var icon = Util.base64(data, true);
+File.write('rosetta-favicon.ico', icon);
+
+Julia[edit]
+
+Using an IOBuffer here, though not really needed to decode a string, shows how
+we could pipe a network stream or file though Julia's builtin Base64 decoder.
+
+using Base64
+ 
+io = IOBuffer()
+ 
+iob64_decode = Base64DecodePipe(io)
+ 
+write(io, "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLVBhdWwgUi5FaHJsaWNo")
+ 
+seekstart(io)
+ 
+println(String(read(iob64_decode)))
+ 
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+    --Paul R.Ehrlich
+
+Kotlin[edit]
+
+Translation of: D
+
+import java.util.Base64
+ 
+fun main() {
+    val data =
+        "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g="
+    val decoder = Base64.getDecoder()
+    val decoded = decoder.decode(data)
+    val decodedStr = String(decoded, Charsets.UTF_8)
+    println(decodedStr)
+}
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+Lua[edit]
+
+-- Start taken from https://stackoverflow.com/a/35303321
+local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/' -- You will need this for encoding/decoding
+ 
+-- decoding
+function dec(data)
+    data = string.gsub(data, '[^'..b..'=]', '')
+    return (data:gsub('.', function(x)
+        if (x == '=') then return '' end
+        local r,f='',(b:find(x)-1)
+        for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and '1' or '0') end
+        return r;
+    end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x)
+        if (#x ~= 8) then return '' end
+        local c=0
+        for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end
+            return string.char(c)
+    end))
+end
+-- end of copy
+ 
+local data = "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLVBhdWwgUi5FaHJsaWNo"
+print(data)
+print()
+ 
+local decoded = dec(data)
+print(decoded)
+
+Output:
+
+VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLVBhdWwgUi5FaHJsaWNo
+
+To err is human, but to really foul things up you need a computer.
+    --Paul R.Ehrlich
+
+Mathematica[edit]
+
+ImportString[
+   "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLVBhdWwgUi5FaHJsaWNo",
+   "Base64"
+]
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+OCaml[edit]
+
+We continue from the same toplevel session from the previous page:
+
+# let plain = Base64.decode_exn enc;;
+val plain : string =
+  "\000\000\001\000\002\000\016\016\000\000\000\000\000\000h\005\000\000&\000"... (* string length 3638; truncated *)
+
+Ol[edit]
+
+ 
+(define base64-codes "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/")
+(define kernel (alist->ff (map cons (string->bytes base64-codes) (iota (string-length base64-codes)))))
+ 
+; returns n bits from input binary stream
+(define (bits n hold)
+   (let loop ((hold hold))
+      (vector-apply hold (lambda (v i l)
+         (cond
+            ((null? l)
+               (values (>> v (- i n)) #false))
+            ((pair? l)
+               (if (not (less? i n))
+                  (values (>> v (- i n)) (vector (band v (- (<< 1 (- i n)) 1)) (- i n) l))
+                  (loop (vector
+                     (bor (<< v 6) (kernel (car l) 0))
+                     (+ i 6)
+                     (unless (eq? (car l) "=") (cdr l))))))
+            (else
+               (loop (vector v i (l)))))))))
+ 
+; decoder.
+(define (decode str)
+   (print "decoding string '" str "':")
+   (let loop ((hold [0 0 (str-iter str)]))
+      (let*((bit hold (bits 8 hold)))
+         (unless (zero? bit) (display (string bit)))
+         (when hold
+            (loop hold))))
+   (print)(print))
+ 
+; TESTING
+(decode "SGVsbG8sIExpc3Ah")
+ 
+(decode "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=")
+ 
+(decode "TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0aGlzIHNpbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaCBpcyBhIGx1c3Qgb2YgdGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZGVsaWdodCBpbiB0aGUgY29udGludWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRoZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4=")
+ 
+
+Output:
+
+Hello, Lisp!
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.
+
+Perl[edit]
+
+The MIME::Base64 module is to be preferred, but this works too.
+
+sub decode_base64 {
+    my($d) = @_;
+    $d =~ tr!A-Za-z0-9+/!!cd;
+    $d =~ s/=+$//;
+    $d =~ tr!A-Za-z0-9+/! -_!;
+    my $r = '';
+    while( $d =~ /(.{1,60})/gs ){
+        my $len = chr(32 + length($1)*3/4);
+        $r .= unpack("u", $len . $1 );
+    }
+    $r;
+}
+ 
+$data = <<EOD;
+J1R3YXMgYnJpbGxpZywgYW5kIHRoZSBzbGl0aHkgdG92ZXMKRGlkIGd5cmUgYW5kIGdpbWJsZSBp
+biB0aGUgd2FiZToKQWxsIG1pbXN5IHdlcmUgdGhlIGJvcm9nb3ZlcywKQW5kIHRoZSBtb21lIHJh
+dGhzIG91dGdyYWJlLgo=
+EOD
+ 
+print decode_base64($data) . "\n";
+
+Output:
+
+'Twas brillig, and the slithy toves
+Did gyre and gimble in the wabe:
+All mimsy were the borogoves,
+And the mome raths outgrabe.
+
+Phix[edit]
+
+include builtins\base64.e
+string s = "Rosetta Code Base64 decode data task"
+string e = encode_base64(s)
+?e
+?decode_base64(e)
+
+Output:
+
+"Um9zZXR0YSBDb2RlIEJhc2U2NCBkZWNvZGUgZGF0YSB0YXNr"
+"Rosetta Code Base64 decode data task"
+
+PHP[edit]
+
+$encoded = 'VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVw' .
+           'IHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=';
+echo
+    $encoded, PHP_EOL,
+    base64_decode($encoded), PHP_EOL;
+
+Output:
+
+VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+PicoLisp[edit]
+
+(setq *Char64
+   `'(chop
+         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/" ) )
+(de decode64 (S)
+   (let S (chop S)
+      (pack
+         (make
+            (while S
+               (let
+                  (A (dec (index (++ S) *Char64))
+                     B (dec (index (++ S) *Char64))
+                     C (dec (index (++ S) *Char64))
+                     D (dec (index (++ S) *Char64)) )
+                  (link
+                     (char (| (>> -2 A) (>> 4 B))) )
+                  (and
+                     C
+                     (link
+                        (char
+                           (| (>> -4 (& B 15)) (>> 2 C)) ) )
+                     D
+                     (link
+                        (char (| (>> -6 (& C 3)) D)) ) ) ) ) ) ) ) )
+(prinl (decode64 "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLVBhdWwgUi5FaHJsaWNo"))
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+    --Paul R.Ehrlich
+
+Pike[edit]
+
+By necessity this also implements all of the Base64 encode task to avoid a
+humongous amount of icon data hardcoded in the program.
+
+ 
+string icon = Protocols.HTTP.get_url_data("http://rosettacode.org/favicon.ico");
+string encoded = MIME.encode_base64(icon);
+Stdio.write_file("favicon.ico", MIME.decode_base64(encoded));
+ 
+
+Prolog[edit]
+
+In SWI-Prolog base64 is a built in predicate. https://www.swi-prolog.org/pldoc/
+doc_for?object=base64%3Abase64/2
+
+This predicate is reversable and can encode or decode.
+
+Output:
+
+?- Encoded = 'VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=',
+base64(Plain, Encoded).
+
+Plain = 'To err is human, but to really foul things up you need a computer.\n    -- Paul R. Ehrlich'.
+
+Python[edit]
+
+ 
+import base64
+data = 'VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g='
+print(base64.b64decode(data).decode('utf-8'))
+ 
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+Raku[edit]
+
+(formerly Perl 6)
+
+Works with: Rakudo version 2018.11
+
+my $e64 = '
+VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY2
+9tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=
+';
+ 
+my @base64map = flat 'A' .. 'Z', 'a' .. 'z', ^10, '+', '/';
+my %base64 is default(0) = @base64map.pairs.invert;
+ 
+sub base64-decode-slow ($enc) {
+    my $buf = Buf.new;
+    for $enc.subst(/\s/, '', :g).comb(4) -> $chunck {
+        $buf.append: |(sprintf "%06d%06d%06d%06d", |$chunck.comb.map:
+            {%base64{$_}.base(2)}).comb(8).map: {:2($_)};
+    }
+    $buf
+}
+ 
+say 'Slow:';
+say base64-decode-slow($e64).decode('utf8');
+ 
+ 
+# Of course, the above routine is slow and is only for demonstration purposes.
+# For real code you should use a module, which is MUCH faster and heavily tested.
+say "\nFast:";
+use Base64::Native;
+say base64-decode($e64).decode('utf8');
+
+Output:
+
+Slow:
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+Fast:
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+Red[edit]
+
+Red [Source: https://github.com/vazub/rosetta-red]
+ 
+print to-string debase "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLVBhdWwgUi5FaHJsaWNo"
+ 
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+Ruby[edit]
+
+require 'base64'
+ 
+raku_example ='
+VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY2
+9tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=
+'
+puts Base64.decode64 raku_example
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+Rust[edit]
+
+use std::str;
+ 
+const INPUT: &str = "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLVBhdWwgUi5FaHJsaWNo";
+const UPPERCASE_OFFSET: i8 = -65;
+const LOWERCASE_OFFSET: i8 = 26 - 97;
+const NUM_OFFSET: i8 = 52 - 48;
+ 
+fn main() {
+    println!("Input: {}", INPUT);
+ 
+    let result = INPUT.chars()
+        .filter(|&ch| ch != '=')                                //Filter '=' chars
+        .map(|ch| {                                             //Map char values using Base64 Characters Table
+            let ascii = ch as i8;
+            let convert = match ch {
+                '0' ... '9' => ascii + NUM_OFFSET,
+                'a' ... 'z' => ascii + LOWERCASE_OFFSET,
+                'A' ... 'Z' => ascii + UPPERCASE_OFFSET,
+                '+' => 62,
+                '/' => 63,
+                _ => panic!("Not a valid base64 encoded string")
+            };
+            format!("{:#08b}", convert)[2..].to_string()        //convert indices to binary format and remove the two first digits
+        })
+        .collect::<String>()                                    //concatenate the resulting binary values
+        .chars()
+        .collect::<Vec<char>>()
+        .chunks(8)                                              //split into 8 character chunks
+        .map(|chunk| {
+            let num_str = chunk.iter().collect::<String>();
+            usize::from_str_radix(&num_str, 2).unwrap() as u8   //convert the binary string into its u8 value
+        })
+        .collect::<Vec<_>>();
+ 
+    let result = str::from_utf8(&result).unwrap();              //convert into UTF-8 string
+ 
+    println!("Output: {}", result);
+}
+
+Output:
+
+Input: VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLVBhdWwgUi5FaHJsaWNo
+Output: To err is human, but to really foul things up you need a computer.
+    --Paul R.Ehrlich
+
+Scala[edit]
+
+Output:
+    Best seen in running your browser either by ScalaFiddle (ES aka JavaScript,
+    non JVM) or Scastie (remote JVM).
+
+import java.util.Base64
+ 
+object Base64Decode extends App {
+ 
+  def text2BinaryDecoding(encoded: String): String = {
+    val decoded = Base64.getDecoder.decode(encoded)
+    new String(decoded, "UTF-8")
+  }
+ 
+  def data =
+    "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g="
+ 
+  println(text2BinaryDecoding(data))
+}
+
+Seed7[edit]
+
+The Seed7 library encoding.s7i defines the functions toBase64 and fromBase64.
+
+$ include "seed7_05.s7i";
+  include "gethttp.s7i";
+  include "encoding.s7i";
+ 
+const proc: main is func
+  local
+    var string: original is "";
+    var string: encoded is "";
+  begin
+    original := getHttp("rosettacode.org/favicon.ico");
+    encoded := toBase64(original);
+    writeln("Is the Rosetta Code icon the same (byte for byte) encoded then decoded: " <&
+            fromBase64(encoded) = original);
+  end func;
+
+Output:
+
+Is the Rosetta Code icon the same (byte for byte) encoded then decoded: TRUE
+
+Sidef[edit]
+
+var data = <<'EOT'
+VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY2
+9tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=
+EOT
+ 
+say data.decode_base64
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+Standard ML[edit]
+
+val debase64 = fn input =>
+let
+ 
+ infix 2 Worb
+ infix 2 Wandb
+ fun (p Worb q )  =  Word.orb  (p,q);
+ fun (p Wandb q ) =  Word.andb (p,q);
+ 
+fun decode #"/" =  0wx3F
+  | decode #"+" =  0wx3E
+  | decode c    =  if Char.isDigit c then Word.fromInt (ord c) +  0wx04
+              else if Char.isLower c then Word.fromInt (ord c) - 0wx047
+              else if Char.isUpper c then Word.fromInt (ord c) - 0wx041
+              else 0wx00 ;
+ 
+fun convert (a::b::c::d::_) =
+         let
+            val w = Word.<< (a,0wx12) Worb Word.<< (b,0wx0c) Worb Word.<< (c,0wx06) Worb d
+         in
+            [Word.>> (w,0wx10), Word.>> ((w Wandb 0wx00ff00),0wx08) , w Wandb 0wx0000ff ]
+         end
+  | convert _ = [] ;
+ 
+fun decodeLst []    = []
+  | decodeLst ilist = ( convert o  map decode )( List.take (ilist,4) ) @  decodeLst (List.drop (ilist,4))
+ 
+in
+ 
+  String.implode ( List.map (chr o Word.toInt) ( decodeLst (String.explode input ))  )
+ 
+end                                                                 handle Subscript  => "Invalid code\n" ;
+
+call
+
+val input = "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=";
+print (debase64 input) ;
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+Tcl[edit]
+
+package require tcl 8.6
+set data VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=
+ 
+puts [binary decode base64 $data]
+
+Output:
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+Visual Basic .NET[edit]
+
+Translation of: D
+
+Module Module1
+ 
+    Sub Main()
+        Dim data = "VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g="
+        Console.WriteLine(data)
+        Console.WriteLine()
+ 
+        Dim decoded = Text.Encoding.ASCII.GetString(Convert.FromBase64String(data))
+        Console.WriteLine(decoded)
+    End Sub
+ 
+End Module
+
+Output:
+
+VG8gZXJyIGlzIGh1bWFuLCBidXQgdG8gcmVhbGx5IGZvdWwgdGhpbmdzIHVwIHlvdSBuZWVkIGEgY29tcHV0ZXIuCiAgICAtLSBQYXVsIFIuIEVocmxpY2g=
+
+To err is human, but to really foul things up you need a computer.
+    -- Paul R. Ehrlich
+
+zkl[edit]
+
+Using shared libraries for cURL and message hashing:
+
+var [const] MsgHash=Import("zklMsgHash"), Curl=Import("zklCurl");
+ 
+icon:=Curl().get("http://rosettacode.org/favicon.ico"); //-->(Data(4,331),693,0)
+icon=icon[0][icon[1],*]; // remove header
+iconEncoded:=MsgHash.base64encode(icon);
+iconDecoded:=MsgHash.base64decode(iconEncoded);
+File("rosettaCodeIcon.ico","wb").write(iconDecoded); # eyeball checking says good
+println("Is the Rosetta Code icon the same (byte for byte) encoded then decoded: ",
+   icon==iconDecoded);
+
+Output:
+
+Is the Rosetta Code icon the same (byte for byte) encoded then decoded: True
+
+Text based test:
+
+msg,b64 := "Rosetta Code Base64 decode data task", MsgHash.base64encode(msg);
+println("Original: %s\nEncoded:  %s\nBytes:    %s\nDecoded:  %s"
+   .fmt(msg, b64.text, b64.bytes().apply("toString",16).concat(","),
+        MsgHash.base64decode(b64).text));
+
+Original: Rosetta Code Base64 decode data task
+Encoded:  Um9zZXR0YSBDb2RlIEJhc2U2NCBkZWNvZGUgZGF0YSB0YXNr
+
+Bytes:    55,6d,39,7a,5a,58,52,30,59,53,42,44,62,32,52,6c,49,45,4a,68,63,32,55,32,4e,43,42,6b,5a,57,4e,76,5a,47,55,67,5a,47,46,30,59,53,42,30,59,58,4e,72,a
+Decoded:  Rosetta Code Base64 decode data task
+
+Retrieved from "https://rosettacode.org/mw/index.php?title=Base64_decode_data&
+oldid=306753"
+Categories:
+
+  * Programming Tasks
+  * Solutions by Programming Task
+  * Ada
+  * AWS
+  * Arturo
+  * C
+  * C sharp
+  * C++
+  * Cach? ObjectScript
+  * Common Lisp
+  * Crystal
+  * D
+  * Delphi
+  * F Sharp
+  * Factor
+  * Go
+  * Groovy
+  * Haskell
+  * Haxe
+  * Java
+  * Jsish
+  * Julia
+  * Kotlin
+  * Lua
+  * Mathematica
+  * OCaml
+  * Ol
+  * Perl
+  * Phix
+  * PHP
+  * PicoLisp
+  * Pike
+  * Prolog
+  * Python
+  * Raku
+  * Red
+  * Ruby
+  * Rust
+  * Scala
+  * Seed7
+  * Sidef
+  * Standard ML
+  * Tcl
+  * Visual Basic .NET
+  * Zkl
+
+  * What links here
+  * Related changes
+  * Special pages
+  * Printable version
+  * Permanent link
+  * Page information
+  * Browse properties
+
+  * This page was last modified on 8 June 2020, at 20:15.
+  * Content is available under GNU Free Documentation License 1.2 unless
+    otherwise noted.
+
+  * Privacy policy
+  * About Rosetta Code
+  * Disclaimers
+
+  * GNU Free Documentation License 1.2
+  * Powered by MediaWiki
+  * Powered by Semantic MediaWiki
+
