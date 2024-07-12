@@ -44,7 +44,7 @@ homepage = "https://github.com/urbanjost/M_strings.git"
    #M_framework = { namespace = "GPF" }
    #
    # regular internet connection or possibly an internal network
-   #M_framework = { git = "https://github.com/urbanjost/M_framework.git" }
+   M_framework = { git = "https://github.com/urbanjost/M_framework.git" }
    #
    # For off-line work I use the GLINKS directory with links to many packages
    # I have or use offline
@@ -53,7 +53,7 @@ homepage = "https://github.com/urbanjost/M_strings.git"
    #       drives and some OSes may not support directory links, even soft links
    #       Even if supported they might be platform specific and need regenerated
    #       (scripts may be useful).
-   M_framework  = { path = "GLINKS/M_framework" }
+   #M_framework  = { path = "GLINKS/M_framework" }
    # ISSUE: wanting to switch automatically between dependency sorces:
    # conditional logic and/or a preprocessor can be used, as can be scripts
    # to read in the fpm.toml file and rewrite it, but trying to use a
