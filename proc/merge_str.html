@@ -1,78 +1,64 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   <meta name="description" content="string operations">
+      <meta name="description" content="string operations">
     <meta name="author" content="John S. Urban" >
     <link rel="icon" href="../favicon.png">
 
     <title>merge_str &ndash; M_strings</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
-    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
-    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="../js/svg-pan-zoom.min.js"></script>
-
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">M_strings </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-              data-toggle="dropdown" role="button"
-              aria-haspopup="true"
-     aria-expanded="false">Contents <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-            <li><a href="../lists/files.html">Source Files</a></li>
-            <li><a href="../lists/modules.html">Modules</a></li>
-            <li><a href="../lists/procedures.html">Procedures</a></li>
-                   <li><a href="../lists/types.html">Derived Types</a></li>
-       
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
             </ul>
-        
-            </li>
-<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
-<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
-<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
-                             <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
-          </ul>
-        <form action="../search.html" class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
         </div>
-<!--
-        <button type="submit" class="btn btn-default">Submit</button>
--->
-        </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -80,33 +66,36 @@
       <small>Function</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 0.7% of total for procedures.">21 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 0.7% of total for procedures.">21 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
               <a href="../src/M_strings.F90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
-              <li><a href='../module/m_strings.html'>M_strings</a></li>
-          <li class="active">merge_str</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
+                <li class="breadcrumb-item"><a href='../module/m_strings.html'>M_strings</a></li>
+            <li class="breadcrumb-item active" aria-current="page">merge_str</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
@@ -135,8 +124,9 @@
   
   
   
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
       <div class="list-group">
         <a class="list-group-item" href="../proc/merge_str.html#src">merge_str</a>
       </div>
@@ -153,64 +143,64 @@
     
 
     <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">merge_str</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">LENGTH</span>] <span class="nv">pads</span> <span class="nv">strings</span> <span class="nv">to</span> <span class="nv">same</span> <span class="nv">length</span> <span class="nv">and</span>
-<span class="k">then</span> <span class="nv">calls</span> <span class="nv">MERGE</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>
-<span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
+<div class="codehilite"><pre><span></span><code>merge_str(3f) - [M_strings:LENGTH] pads strings to same length and
+then calls MERGE(3f)
+(LICENSE:PD)
 </code></pre></div>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">merge_str(str1,str2,expr) result</span><span class="p">(</span>strout<span class="p">)</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">merge_str(str1,str2,expr) result</span><span class="p">(</span>strout<span class="p">)</span>
 
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">str1</span><span class="w"></span>
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">str2</span><span class="w"></span>
-<span class="w"> </span><span class="nb">logical</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">              </span><span class="p">::</span><span class="w"> </span><span class="n">expr</span><span class="w"></span>
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w">    </span><span class="p">::</span><span class="w"> </span><span class="n">strout</span><span class="w"></span>
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">str1</span>
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">str2</span>
+<span class="w"> </span><span class="nb">logical</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">              </span><span class="p">::</span><span class="w"> </span><span class="n">expr</span>
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w">    </span><span class="p">::</span><span class="w"> </span><span class="n">strout</span>
 </code></pre></div>
 
 <h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">merge_str</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">pads</span> <span class="nv">the</span> <span class="nv">shorter</span> <span class="nv">of</span> <span class="nv">str1</span> <span class="nv">and</span> <span class="nv">str2</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">longest</span> <span class="nv">length</span>
-<span class="nv">of</span> <span class="nv">str1</span> <span class="nv">and</span> <span class="nv">str2</span> <span class="nv">and</span> <span class="k">then</span> <span class="nv">calls</span> <span class="nv">MERGE</span><span class="ss">(</span><span class="nv">padded_str1</span>,<span class="nv">padded_str2</span>,<span class="nv">expr</span><span class="ss">)</span>.
-<span class="nv">It</span> <span class="nv">trims</span> <span class="nv">trailing</span> <span class="nv">spaces</span> <span class="nv">off</span> <span class="nv">the</span> <span class="nb">result</span> <span class="nv">and</span> <span class="nv">returns</span> <span class="nv">the</span> <span class="nv">trimmed</span>
-<span class="nv">string</span>. <span class="nv">This</span> <span class="nv">makes</span> <span class="nv">it</span> <span class="nv">easier</span> <span class="nv">to</span> <span class="k">call</span> <span class="nl">MERGE</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">with</span> <span class="nv">strings</span>, <span class="nv">as</span>
-<span class="nv">MERGE</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">requires</span> <span class="nv">the</span> <span class="nv">strings</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">the</span> <span class="nv">same</span> <span class="nv">length</span>.
+<div class="codehilite"><pre><span></span><code>merge_str(3f) pads the shorter of str1 and str2 to the longest length
+of str1 and str2 and then calls MERGE(padded_str1,padded_str2,expr).
+It trims trailing spaces off the result and returns the trimmed
+string. This makes it easier to call MERGE(3f) with strings, as
+MERGE(3f) requires the strings to be the same length.
 
-<span class="nv">NOTE</span>: <span class="nv">STR1</span> <span class="nv">and</span> <span class="nv">STR2</span> <span class="nv">are</span> <span class="nv">always</span> <span class="nv">required</span> <span class="nv">even</span> <span class="nv">though</span> <span class="nv">declared</span> <span class="nv">optional</span>.
-      <span class="nv">this</span> <span class="nv">is</span> <span class="nv">so</span> <span class="nv">the</span> <span class="nv">call</span> <span class="s2">&quot;</span><span class="s">STR_MERGE(A,B,present(A))</span><span class="s2">&quot;</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">valid</span> <span class="nv">call</span>.
-      <span class="nv">The</span> <span class="nv">parameters</span> <span class="nv">STR1</span> <span class="nv">and</span> <span class="nv">STR2</span> <span class="nv">when</span> <span class="nv">they</span> <span class="nv">are</span> <span class="nv">optional</span> <span class="nv">parameters</span>
-      <span class="nv">can</span> <span class="nv">be</span> <span class="nv">passed</span> <span class="nv">to</span> <span class="nv">a</span> <span class="nv">procedure</span> <span class="k">if</span> <span class="nv">the</span> <span class="nv">options</span> <span class="nv">are</span> <span class="nv">optional</span> <span class="nv">on</span> <span class="nv">the</span>
-      <span class="nv">called</span> <span class="nv">procedure</span>.
+NOTE: STR1 and STR2 are always required even though declared optional.
+      this is so the call &quot;STR_MERGE(A,B,present(A))&quot; is a valid call.
+      The parameters STR1 and STR2 when they are optional parameters
+      can be passed to a procedure if the options are optional on the
+      called procedure.
 </code></pre></div>
 
 <h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">STR1</span>    <span class="nv">string</span> <span class="nv">to</span> <span class="k">return</span> <span class="k">if</span> <span class="nv">the</span> <span class="nv">logical</span> <span class="nv">expression</span> <span class="nv">EXPR</span> <span class="nv">is</span> <span class="nv">true</span>
-<span class="nv">STR2</span>    <span class="nv">string</span> <span class="nv">to</span> <span class="k">return</span> <span class="k">if</span> <span class="nv">the</span> <span class="nv">logical</span> <span class="nv">expression</span> <span class="nv">EXPR</span> <span class="nv">is</span> <span class="nv">false</span>
-<span class="nv">EXPR</span>    <span class="nv">logical</span> <span class="nv">expression</span> <span class="nv">to</span> <span class="nv">evaluate</span> <span class="nv">to</span> <span class="nv">determine</span> <span class="nv">whether</span> <span class="nv">to</span> <span class="k">return</span>
-        <span class="nv">STR1</span> <span class="nv">when</span> <span class="nv">true</span>, <span class="nv">and</span> <span class="nv">STR2</span> <span class="nv">when</span> <span class="nv">false</span>.
+<div class="codehilite"><pre><span></span><code><span class="nv">STR1</span><span class="w">    </span><span class="nv">string</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">logical</span><span class="w"> </span><span class="nv">expression</span><span class="w"> </span><span class="nv">EXPR</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">true</span>
+<span class="nv">STR2</span><span class="w">    </span><span class="nv">string</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">logical</span><span class="w"> </span><span class="nv">expression</span><span class="w"> </span><span class="nv">EXPR</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">false</span>
+<span class="nv">EXPR</span><span class="w">    </span><span class="nv">logical</span><span class="w"> </span><span class="nv">expression</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">evaluate</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">determine</span><span class="w"> </span><span class="nv">whether</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="k">return</span>
+<span class="w">        </span><span class="nv">STR1</span><span class="w"> </span><span class="nv">when</span><span class="w"> </span><span class="nv">true</span>,<span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">STR2</span><span class="w"> </span><span class="nv">when</span><span class="w"> </span><span class="nv">false</span>.
 </code></pre></div>
 
-<h2 id="result">RESULT</h2>
+<h2 id="returns">RETURNS</h2>
 <div class="codehilite"><pre><span></span><code> MERGE_STR  a trimmed string is returned that is otherwise the value
             of STR1 or STR2, depending on the logical expression EXPR.
 </code></pre></div>
 
 <h2 id="examples">EXAMPLES</h2>
 <p>Sample Program:</p>
-<div class="codehilite"><pre><span></span><code> <span class="nv">program</span> <span class="nv">demo_merge_str</span>
- <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">merge_str</span>
- <span class="nv">implicit</span> <span class="nv">none</span>
- <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>, <span class="nv">allocatable</span> :: <span class="nv">answer</span>
-    <span class="nv">answer</span><span class="o">=</span><span class="nv">merge_str</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">first string</span><span class="s1">&#39;</span>, <span class="o">&amp;</span>
-     <span class="o">&amp;</span> <span class="s1">&#39;</span><span class="s">second string is longer</span><span class="s1">&#39;</span>,<span class="mi">10</span> <span class="o">==</span> <span class="mi">10</span><span class="ss">)</span>
-    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">answer</span>
-    <span class="nv">answer</span><span class="o">=</span><span class="nv">merge_str</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">first string</span><span class="s1">&#39;</span>, <span class="o">&amp;</span>
-     <span class="o">&amp;</span> <span class="s1">&#39;</span><span class="s">second string is longer</span><span class="s1">&#39;</span>,<span class="mi">10</span> <span class="o">/=</span> <span class="mi">10</span><span class="ss">)</span>
-    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">answer</span>
- <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_merge_str</span>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_merge_str</span>
+<span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">M_strings</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">merge_str</span>
+<span class="w"> </span><span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
+<span class="w"> </span><span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=:),</span><span class="w"> </span><span class="nx">allocatable</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nx">answer</span>
+<span class="w">    </span><span class="nx">answer</span><span class="p">=</span><span class="nx">merge_str</span><span class="p">(</span><span class="err">&#39;</span><span class="nx">first</span><span class="w"> </span><span class="kt">string</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span>
+<span class="w">     </span><span class="o">&amp;</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">second</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">longer</span><span class="err">&#39;</span><span class="p">,</span><span class="mi">10</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="p">,</span><span class="nx">a</span><span class="p">,</span><span class="s">&quot;]&quot;</span><span class="p">)</span><span class="err">&#39;</span><span class="p">)</span><span class="w"> </span><span class="nx">answer</span>
+<span class="w">    </span><span class="nx">answer</span><span class="p">=</span><span class="nx">merge_str</span><span class="p">(</span><span class="err">&#39;</span><span class="nx">first</span><span class="w"> </span><span class="kt">string</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span>
+<span class="w">     </span><span class="o">&amp;</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">second</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">longer</span><span class="err">&#39;</span><span class="p">,</span><span class="mi">10</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="p">,</span><span class="nx">a</span><span class="p">,</span><span class="s">&quot;]&quot;</span><span class="p">)</span><span class="err">&#39;</span><span class="p">)</span><span class="w"> </span><span class="nx">answer</span>
+<span class="w"> </span><span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_merge_str</span>
 </code></pre></div>
 
 <p>Expected output</p>
-<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="p">[</span><span class="n">first</span><span class="w"> </span><span class="n">string</span><span class="p">]</span><span class="w"></span>
-<span class="w"> </span><span class="p">[</span><span class="n">second</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">longer</span><span class="p">]</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="p">[</span><span class="n">first</span><span class="w"> </span><span class="n">string</span><span class="p">]</span>
+<span class="w"> </span><span class="p">[</span><span class="n">second</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">longer</span><span class="p">]</span>
 </code></pre></div>
 
 <h2 id="author">AUTHOR</h2>
@@ -221,15 +211,16 @@
 <div class="codehilite"><pre><span></span><code>Public Domain
 </code></pre></div>
 
+
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -282,83 +273,52 @@
 
       <h3>Return Value
         <small>
-          <span class="anchor" id="variable-strout~3"></span>
+          <span class="anchor" id="variable-strout~13"></span>
           character(len=:), allocatable
         </small>
       </h3>
       
     <br>
 
-    <section class="visible-xs visible-sm hidden-md">
-        <h3>Contents</h3>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/merge_str.html#src">merge_str</a>
-      </div>
-    </div>
-
-
-    </section>
-    <br class="visible-xs visible-sm hidden-md">
-
 
     
     
 
     
     
+
 
 
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">merge_str</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span><span class="n">str2</span><span class="p">,</span><span class="n">expr</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">strout</span><span class="p">)</span><span class="w"></span>
+    <div class="hl codehilite"><pre><span></span><span class="k">function </span><span class="n">merge_str</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span><span class="n">str2</span><span class="p">,</span><span class="n">expr</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">strout</span><span class="p">)</span>
 <span class="c">! for some reason the MERGE(3f) intrinsic requires the strings it compares to be of equal length</span>
 <span class="c">! make an alias for MERGE(3f) that makes the lengths the same before doing the comparison by padding the shorter one with spaces</span>
 
-<span class="c">! ident_46=&quot;@(#) M_strings merge_str(3f) pads first and second arguments to MERGE(3f) to same length&quot;</span>
+<span class="c">! ident_48=&quot;@(#) M_strings merge_str(3f) pads first and second arguments to MERGE(3f) to same length&quot;</span>
 
-<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">str1</span><span class="w"></span>
-<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">str2</span><span class="w"></span>
-<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">str1_local</span><span class="w"></span>
-<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">str2_local</span><span class="w"></span>
-<span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                   </span><span class="kd">::</span><span class="w"> </span><span class="n">expr</span><span class="w"></span>
-<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">strout</span><span class="w"></span>
-<span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">big</span><span class="w"></span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">str1</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">str2</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">str1_local</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">str2_local</span>
+<span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                   </span><span class="kd">::</span><span class="w"> </span><span class="n">expr</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">strout</span>
+<span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">big</span>
 <span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">str2</span><span class="p">))</span><span class="k">then</span>
-<span class="k">      </span><span class="n">str2_local</span><span class="o">=</span><span class="n">str2</span><span class="w"></span>
+<span class="k">      </span><span class="n">str2_local</span><span class="o">=</span><span class="n">str2</span>
 <span class="w">   </span><span class="k">else</span>
-<span class="k">      </span><span class="n">str2_local</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w"></span>
+<span class="k">      </span><span class="n">str2_local</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
 <span class="w">   </span><span class="k">endif</span>
 <span class="k">   if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">str1</span><span class="p">))</span><span class="k">then</span>
-<span class="k">      </span><span class="n">str1_local</span><span class="o">=</span><span class="n">str1</span><span class="w"></span>
+<span class="k">      </span><span class="n">str1_local</span><span class="o">=</span><span class="n">str1</span>
 <span class="w">   </span><span class="k">else</span>
-<span class="k">      </span><span class="n">str1_local</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w"></span>
+<span class="k">      </span><span class="n">str1_local</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
 <span class="w">   </span><span class="k">endif</span>
-<span class="k">   </span><span class="n">big</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">str1_local</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">str2_local</span><span class="p">))</span><span class="w"></span>
+<span class="k">   </span><span class="n">big</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">str1_local</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">str2_local</span><span class="p">))</span>
 <span class="w">   </span><span class="c">! note: perhaps it would be better to warn or fail if an optional value that is not present is returned, instead of returning &#39;&#39;</span>
-<span class="w">   </span><span class="n">strout</span><span class="o">=</span><span class="nb">trim</span><span class="p">(</span><span class="nb">merge</span><span class="p">(</span><span class="n">lenset</span><span class="p">(</span><span class="n">str1_local</span><span class="p">,</span><span class="n">big</span><span class="p">),</span><span class="n">lenset</span><span class="p">(</span><span class="n">str2_local</span><span class="p">,</span><span class="n">big</span><span class="p">),</span><span class="n">expr</span><span class="p">))</span><span class="w"></span>
-<span class="k">end function </span><span class="n">merge_str</span><span class="w"></span>
+<span class="w">   </span><span class="n">strout</span><span class="o">=</span><span class="nb">trim</span><span class="p">(</span><span class="nb">merge</span><span class="p">(</span><span class="n">lenset</span><span class="p">(</span><span class="n">str1_local</span><span class="p">,</span><span class="n">big</span><span class="p">),</span><span class="n">lenset</span><span class="p">(</span><span class="n">str2_local</span><span class="p">,</span><span class="n">big</span><span class="p">),</span><span class="n">expr</span><span class="p">))</span>
+<span class="k">end function </span><span class="n">merge_str</span>
 </pre></div>
 
     </section>
@@ -367,50 +327,48 @@
     </div>
   </div>
 
-    <hr>    
+      <hr>
     </div> <!-- /container -->
     <footer>
       <div class="container">
-      <div class="row">
-        <div class="col-xs-6 col-md-6"><p>M_strings was developed by John S. Urban<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              M_strings
+ was developed by John S. Urban<br>              &copy; 2024 
 </p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2024-07-14 20:56              </p>
+          </div>
         </div>
-        <div class="col-xs-6 col-md-6">
-          <p class="text-right">
-            Documentation generated by 
-            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2023-01-08 21:09            </p>
-        </div>
-      </div>
-      <br>
-      </div> <!-- /container -->    
+        <br>
+      </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
+    <!-- Bootstrap core JavaScript -->
     <!-- Placed at the end of the document so the pages load faster -->
-<!--
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
--->
-    <script src="../js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
     <!-- MathJax JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
-        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
-        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
-      });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script src="../tipuesearch/tipuesearch_content.js"></script>
-    <script src="../tipuesearch/tipuesearch_set.js"></script>
-    <script src="../tipuesearch/tipuesearch.js"></script>
-    
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
   </body>
 </html>
