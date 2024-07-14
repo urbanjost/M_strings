@@ -123,7 +123,8 @@
 !!       indent   find number of leading spaces
 !!       crop     function trims leading and trailing spaces and control
 !!                characters
-!!       clip     function trims leading and trailing spaces
+!!       clip     trim leading and trailings spaces or set of characters
+!!                from string
 !!
 !!       See Also: squeeze
 !!
@@ -169,7 +170,9 @@
 !!       atoi              function returns INTEGER(kind=int32)  from a string
 !!       atol              function returns INTEGER(kind=int64)  from a string
 !!       aton              changes string to numeric value
-!!       msg               append the values of up to nine values into a string.
+!!       msg               append the values of up to twenty values into
+!!                         a string, including user-specified separator
+!!                         and a CSV-style option
 !!
 !!       value_to_string   generic subroutine returns string given numeric value
 !!                         (REAL, DOUBLEPRECISION, INTEGER, LOGICAL )
@@ -390,7 +393,7 @@ public compact            !  left justify string and replace duplicate whitespac
 public nospace            !  function replaces whitespace with nothing
 public indent             !  count number of leading spaces
 public crop               !  function trims leading and trailing spaces and control characters
-public clip               !  function trims leading and trailing spaces
+public clip               !  function trims leading and trailing spaces or set of characters from string
 !-------------------------# QUOTES
 public matching_delimiter !  find position of matching delimiter
 public unquote            !  remove quotes from string as if read with list-directed input
@@ -429,7 +432,7 @@ public atoi               !   function returns an INTEGER(kind=int32) value from
 public atol               !   function returns an INTEGER(kind=int64) value from a string
 public aton               !   function returns true or false as to whether string converts to numeric value, and numeric value
 !------------------------------------------------------------------------------------------------------------
-public msg                !  function returns a string representing up to nine scalar intrinsic values
+public msg                !  function returns a string representing up to twenty scalar intrinsic values, including CSV style
 public value_to_string    !  generic subroutine returns string given numeric REAL|DOUBLEPRECISION|INTEGER|LOGICAL value
 public v2s                !  generic function returns string given numeric REAL|DOUBLEPRECISION|INTEGER|LOGICAL value
  private d2s              !  function returns string from doubleprecision value
@@ -522,7 +525,7 @@ end interface
 !-!end interface
 !-----------------------------------------------------------------------------------------------------------------------------------
 
-! ident_5="@(#) M_strings msg(3f) convert up to nine scalar values to a string. Alternatively can also handle one-dimensional arrays"
+! ident_5="@(#) M_strings msg(3f) convert up to twenty scalar values to a (CSV) string. Alternatively can also handle one-dimensional arrays"
 
 interface msg
    module procedure msg_scalar, msg_one
@@ -2937,39 +2940,40 @@ subroutine modif(cline,mod)
 !
 ! MODIF
 ! =====
-! ACTION- MODIFIES THE LINE CURRENTLY POINTED AT. THE INPUT STRING CLINE IS ASSUMED TO BE LONG ENOUGH TO ACCOMMODATE THE CHANGES
-!         THE MODIFY DIRECTIVES ARE AS FOLLOWS-
+! ACTION- Modifies the line currently pointed at. The input string CLINE
+!         is assumed to be long enough to accommodate the changes.
+!         The MODIFY directives are as follows-
 !
 !   DIRECTIVE                       EXPLANATION
 !   ---------                       ------------
-!   ^STRING#   CAUSES THE STRING OF CHARACTERS BETWEEN THE ^ AND THE
-!              NEXT  # TO BE INSERTED BEFORE THE CHARACTERS POINTED TO
-!              BY THE ^. AN ^ OR & WITHIN THE STRING IS TREATED AS A
-!              REGULAR CHARACTER. IF THE CLOSING # IS NOT SPECIFIED,
-!              MODIF(3f) INSERTS THE REMAINDER OFTHELINE AS IF A # WAS
-!              SPECIFIED AFTER THE LAST NONBLANK CHARACTER.
+!   ^STRING#   Causes the string of characters between the ^ and the
+!              next  # to be inserted before the characters pointed to
+!              by the ^. An ^ or & within the string is treated as a
+!              regular character. If the closing # is not specified,
+!              MODIF(3f) inserts the remainder of the line as if a # was
+!              specified after the last nonblank character.
 !
-!              THERE ARE TWO EXCEPTIONS. THE COMBINATION ^# CAUSES A #
-!              TO BE INSERTED BEFORE THE CHARACTER POINTED TO BY THE
-!              ^,  AND AN ^ AS THE LAST CHARACTER OF THE DIRECTIVES
-!              CAUSES A BLANK TO BE INSERTED.
+!              There are two exceptions. The combination ^# causes a #
+!              to be inserted before the character pointed to by the
+!              ^,  and an ^ as the last character of the directives
+!              causes a blank to be inserted.
 !
-!   #          (WHEN NOT THE FIRST # AFTER AN ^) CAUSES THE CHARACTER
-!              ABOVE IT TO BE DELETED.
+!   #          (When not the first # after an ^) causes the character
+!              above it to be deleted.
 !
-!   &          REPLACES THE CHARACTER ABOVE IT WITH A SPACE.
+!   &          Replaces the character above it with a space.
 !
-!   (SPACE)    A SPACE BELOW A CHARACTER LEAVES IT UNCHANGED.
+!   (SPACE)    A Space below a character leaves it unchanged.
 !
-!   ANY OTHER CHARACTER REPLACES THE CHARACTER ABOVE IT.
+!   Any other character replaces the character above it.
 !
 ! EXAMPLE-
 ! THE INPUT LINE........ 10 THIS STRING  TO BE MORTIFD
 ! THE DIRECTIVES LINE...        ^ IS THE#        D#  ^IE
 ! ALTERED INPUT LINE.... 10 THIS IS THE STRING  TO BE MODIFIED
 !CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-character(len=*)            :: cline        !STRING TO BE MODIFIED
-character(len=*),intent(in) :: mod          !STRING TO DIRECT MODIFICATION
+character(len=*)            :: cline           !STRING TO BE MODIFIED
+character(len=*),intent(in) :: mod             !STRING TO DIRECT MODIFICATION
 character(len=len(cline))   :: cmod
 character(len=3),parameter  :: c='#&^'         !ASSIGN DEFAULT EDIT CHARACTERS
 integer                     :: maxscra         !LENGTH OF SCRATCH BUFFER
@@ -3028,9 +3032,8 @@ maxscra=len(cline)
       endif                                    !END INSERT OR NO-INSERT
    enddo INFINITE
                                                !AND CYCLE IF OK
-999   continue
    cline=dum2                                  !SET ORIGINAL CHARS TO NEW CHARS
-end subroutine modif                        !RETURN
+end subroutine modif                           !RETURN
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
@@ -3218,21 +3221,25 @@ end function crop
 !===================================================================================================================================
 !>
 !!##NAME
-!!    clip(3f) - [M_strings:WHITESPACE] trim leading and trailing blanks from a string
+!!    clip(3f) - [M_strings:WHITESPACE] trim leading and trailing blanks
+!!    or set of characters from a string
 !!    (LICENSE:PD)
 !!
 !!##SYNOPSIS
 !!
-!!    function clip(strin) result (strout)
+!!    function clip(strin,set) result (strout)
 !!
-!!     character(len=*),intent(in)  :: strin
-!!     character(len=:),allocatable :: strout
+!!     character(len=*),intent(in)          :: strin
+!!     character(len=*),intent(in),optional :: set
+!!     character(len=:),allocatable         :: strout
 !!
 !!##DESCRIPTION
-!!    leading and trailing spaces are trimmed from the resulting string.
+!!    leading and trailing spaces or set of characters are trimmed from
+!!    the input string.
 !!
 !!##OPTIONS
-!!    strin   input string to trim leading and trailing space characters from
+!!    strin   input string to trim leading and trailing characters from
+!!    set     set of characters to trim. Defaults to a space.
 !!
 !!##RETURNS
 !!    strout  clipped version of input string
@@ -3249,34 +3256,48 @@ end function crop
 !!       write(*,*) 'clipped string=[',clip(untrimmed),']'
 !!       ! which is equivalent to
 !!       write(*,*) 'clipped string=[',trim(adjustl(untrimmed)),']'
+!!       write(*,*)'non-space:'
+!!       write(*,*) '['//clip('----single-character----',set='-')//']'
+!!       write(*,*) '['//clip('  ... . .multi-character . ...',set='. ')//']'
 !!    end program demo_clip
 !!
-!!   Expected output:
+!!   Results:
 !!
 !!       >  untrimmed string=[   ABCDEFG abcdefg  ]
 !!       >  clipped string=[ABCDEFG abcdefg]
 !!       >  clipped string=[ABCDEFG abcdefg]
+!!       >  non-space:
+!!       >  [single-character]
+!!       >  [multi-character]
 !!
 !!##AUTHOR
 !!    John S. Urban
 !!
 !!##LICENSE
 !!    Public Domain
-function clip(string) result(lopped)
+function clip(string,set) result(lopped)
 
-! ident_18="@(#) M_strings clip(3f) trim leading and trailings spaces from resulting string"
+! ident_18="@(#) M_strings clip(3f) trim leading and trailings spaces or set of characters from string"
 
-logical,parameter            :: T=.true.,F=.false.
-character(len=*),intent(in)  :: string
-character(len=:),allocatable :: lopped
-integer                      :: ends(2)
-   ! find first and last non-blank character positions
-   ends=verify(string, set=" ", back=[F,T]) ! Position of a character in a string that does not appear in a given set of characters.
+logical,parameter                     :: T=.true.,F=.false.
+character(len=*),intent(in)           :: string
+character(len=*),intent(in),optional  :: set
+character(len=:),allocatable          :: lopped
+integer                               :: ends(2)
+
+   ! find first and last non-blank character positions, or the same for specified character set
+   if(present(set))then
+      ends=verify(string, set=set, back=[F,T]) ! Position of a character in a string that does not appear in given set
+   else
+      ends=verify(string, set=' ', back=[F,T])
+   endif
+
    if(ends(1) == 0)then
       lopped=""
    else
       lopped=string(ends(1):ends(2))
    endif
+
 end function clip
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -9776,6 +9797,7 @@ end function ispunct
 !!##NAME
 !!     fortran_name(3f) - [M_strings:COMPARE] test if string meets criteria
 !!     for being a fortran name
+!!     (LICENSE:PD)
 !!
 !!##SYNOPSIS
 !!
@@ -9830,6 +9852,11 @@ end function ispunct
 !!      > 10 Variable-name        F
 !!      > 11 A                    T
 !!      > 12 x@x                  F
+!!##AUTHOR
+!!     John S. Urban
+!!
+!!##LICENSE
+!!     Public Domain
 elemental function fortran_name(line) result (lout)
 
 ! ident_77="@(#) M_strings fortran_name(3f) Return .true. if name is a valid Fortran name"
@@ -9845,9 +9872,9 @@ character(len=:),allocatable :: name
 logical                      :: lout
    name=trim(line)
    if(len(name) /= 0)then
-      lout = verify(name(1:1), lower//upper) == 0  &
-       & .and. verify(name,allowed) == 0           &
-       & .and. len(name) <= 63
+      lout = verify(name(1:1), lower//upper) == 0  &  ! first character is a letter
+       & .and. verify(name,allowed) == 0           &  ! composed of alphanumeric and underscore in its entirety
+       & .and. len(name) <= 63                        ! length less than 64 characters
    else
       lout = .false.
    endif
@@ -10097,41 +10124,59 @@ end function isalnum
 !!
 !!    Convert a numeric string from base B to base A. The function returns
 !!    FALSE if B is not in the range [2..36] or if string X contains invalid
-!!    characters in base B or if result Y is too big
+!!    characters in base B or if result Y is too big.
 !!
 !!    The letters A,B,...,Z represent 10,11,...,36 in a base > 10.
 !!
 !!##OPTIONS
 !!    x   input string representing numeric whole value
 !!    b   assumed base of input string
-!!    y   output string
+!!    y   output string.
+!!        Y is assumed long enough to hold the computed value.
+!!        If an error occurs Y is filled with asterisks (*).
 !!    a   base specified for output string
+!!##RETURNS
+!!        Returns .TRUE. if no error occurred, else returns .FALSE. .
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_base
-!!    use M_strings, only : base
+!!    use M_strings, only: base
 !!    implicit none
-!!    integer           :: ba,bd
-!!    character(len=40) :: x,y
+!!    integer           :: ba, bd, i
+!!    character(len=40) :: x, y
+!!    character(len=*), parameter :: input(*) = [character(len=80) :: &
+!!       '10 12345 10', &
+!!       '2 10111 10', &
+!!       '10 12345 20', &
+!!       '10 abcdef 2', &
+!!       '0 0 0']
+!!    character(len=:),allocatable :: line
+!!       print *, 'Base Conversion using base(3f)'
+!!       do i = 1, size(input)
+!!          line=input(i)
+!!          read (line, *) bd, x, ba
+!!          if (x == '0') exit
+!!          if (base(x, bd, y, ba)) then
+!!          else
+!!             print *, 'Error in decoding/encoding numbers'
+!!          end if
+!!          write (*, '(a," in base ",i0," is ",a," in base ",i0)')&
+!!          & trim(x),bd,trim(y),ba
+!!       end do
+!!    end program demo_base
 !!
-!!    print *,' BASE CONVERSION'
-!!    write(*,'("Start   Base (2 to 36): ")',advance='no'); read *, bd
-!!    write(*,'("Arrival Base (2 to 36): ")',advance='no'); read *, ba
-!!    INFINITE: do
-!!       write(*,'("Enter number in start base (0 to quit): ")',advance='no')
-!!       read *, x
-!!       if(x == '0') exit INFINITE
-!!       if(base(x,bd,y,ba))then
-!!            write(*,'("In base ",I2,": ",A20)')  ba, y
-!!        else
-!!          print *,'Error in decoding/encoding number.'
-!!        endif
-!!     enddo INFINITE
+!! Results:
 !!
-!!     end program demo_base
+!!    fpm: Entering directory '/home/urbanjs/venus/V600/github/M_strings'
+!!     Base Conversion using base(3f)
+!!    12345 in base 10 is 12345 in base 10
+!!    10111 in base 2 is 23 in base 10
+!!    12345 in base 10 is 1AH5 in base 20
+!!     Error in decoding/encoding numbers
+!!    abcdef in base 10 is **************************************** in base 2
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -10141,20 +10186,29 @@ elemental impure logical function base(x, b, y, a)
 character(len=*), intent(in)  :: x
 character(len=*), intent(out) :: y
 integer, intent(in)           :: b, a
-integer                       :: temp
+integer                       :: tempx
+integer                       :: iostat
 
 ! ident_81="@(#) M_strings base(3f) convert whole number string in base [2-36] to string in alternate base [2-36]"
 
+! Y is assumed long enough to hold the computed value
+
    base = .true.
-   if (decodebase(x, b, temp)) then
-      if (codebase(temp, a, y)) then
+   if (decodebase(x, b, tempx)) then
+      if (codebase(tempx, a, y)) then
       else
-         write(stderr,*) 'Error in coding number.'
+         flush(unit=output_unit,iostat=iostat)
+         write(stderr,'(*(g0))') 'Error in coding number ',trim(x),' in base ',a
+         flush(unit=stderr,iostat=iostat)
          base = .false.
+         y=repeat('*',len(y))
       endif
    else
-      write(stderr,*) 'Error in decoding number.'
+      flush(unit=output_unit,iostat=iostat)
+      write(stderr,'(*(g0))') 'Error in decoding number ',trim(x),' in base ',b
+      flush(unit=stderr,iostat=iostat)
       base = .false.
+      y=repeat('*',len(y))
    endif
 
 end function base
@@ -10183,8 +10237,10 @@ end function base
 !!
 !!##OPTIONS
 !!    int   input string representing numeric whole value
+!!
 !!##RETURNS
 !!    base2   string representing input value in base 2
+!!
 !!##EXAMPLES
 !!
 !!   Sample program:
@@ -10198,6 +10254,7 @@ end function base
 !!         write(*,'(a)') base2(-64)
 !!         write(*,'(a)') base2(-huge(0)-1)
 !!      end program demo_base2
+!!
 !! Results:
 !!
 !!     > 1111111111111111111111111111111
@@ -10260,6 +10317,9 @@ end function base2
 !!    basein   base of input string; either 0 or from 2 to 36.
 !!    out10    output value in base 10
 !!
+!!##RETURNS
+!!    Returns .true. if no error occurred, else returns .false. .
+!!
 !!##EXAMPLES
 !!
 !!   Sample program:
@@ -10267,29 +10327,36 @@ end function base2
 !!    program demo_decodebase
 !!    use M_strings, only : codebase, decodebase
 !!    implicit none
-!!    integer           :: ba,bd
-!!    character(len=40) :: x,y
-!!    integer           :: r
-!!
-!!    print *,' BASE CONVERSION'
-!!    write(*,'("Start   Base (2 to 36): ")',advance='no'); read *, bd
-!!    write(*,'("Arrival Base (2 to 36): ")',advance='no'); read *, ba
-!!    INFINITE: do
-!!       print *,''
-!!       write(*,'("Enter number in start base: ")',advance='no'); read *, x
-!!       if(x == '0') exit INFINITE
-!!       if(decodebase(x,bd,r)) then
-!!          if(codebase(r,ba,y)) then
-!!            write(*,'("In base ",I2,": ",A20)')  ba, y
-!!          else
-!!            print *,'Error in coding number.'
+!!    integer           :: bd, i, r
+!!    character(len=40) :: x
+!!    character(len=*), parameter :: input(*) = [character(len=80) :: &
+!!       '10  12345',   &
+!!       '2   10111',   &
+!!       '6   12345',   &
+!!       '10  abcdef',  &
+!!       '0   0']
+!!    character(len=:),allocatable :: line
+!!       print *, 'Base Conversion using decodebase(3f)'
+!!       do i = 1, size(input)
+!!          line=input(i)
+!!          read (line, *) bd, x
+!!          if (x == '0') exit
+!!          if(.not.decodebase(x,bd,r)) then
+!!            print *,'Error in decoding number.'
 !!          endif
-!!       else
-!!          print *,'Error in decoding number.'
-!!       endif
-!!    enddo INFINITE
-!!
+!!          write (*, '(a," in base ",i0," becomes ",i0," in base 10")')&
+!!          & trim(x),bd,r
+!!       end do
 !!    end program demo_decodebase
+!!
+!! Results:
+!!
+!!  >  Base Conversion using decodebase(3f)
+!!  > 12345 in base 10 becomes 12345 in base 10
+!!  > 10111 in base 2 becomes 23 in base 10
+!!  > 12345 in base 6 becomes 1865 in base 10
+!!  >  Error in decoding number.
+!!  > abcdef in base 10 becomes 0 in base 10
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -10302,6 +10369,9 @@ end function base2
 !!
 !!##LICENSE
 !!    Public Domain
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
 logical function decodebase(string,basein,out_baseten)
 
 ! ident_82="@(#) M_strings decodebase(3f) convert whole number string in base [2-36] to base 10 number"
@@ -10339,10 +10409,11 @@ integer           :: ierr
      out_sign=1
   endif
 
-  out_baseten=0
+  out_baseten=huge(0)
   y=0.0
   ALL: if(basein_local<2.or.basein_local>36) then
     write(stderr,*) '(*decodebase* ERROR: Base must be between 2 and 36. base=',basein_local
+    out_baseten=huge(0)
   else ALL
      out_baseten=0;y=0.0; mult=1.0
      long=LEN_TRIM(string_local)
@@ -10355,6 +10426,7 @@ integer           :: ierr
         endif
         if(ch<'0'.or.ch>'Z'.or.(ch>'9'.and.ch<'A'))then
            write(stderr,*)'*decodebase* ERROR: invalid character ',ch
+           out_baseten=huge(0)
            exit ALL
         endif
         if(ch<='9') then
@@ -10394,10 +10466,19 @@ end function decodebase
 !!
 !!##DESCRIPTION
 !!    Convert a number from base 10 to base OUT_BASE. The function returns
-!!    .FALSE. if OUT_BASE is not in [2..36] or if number IN_BASE10 is
-!!    too big.
+!!    .FALSE. if OUT_BASE is not in the range [2..36] or if number IN_BASE10
+!!    is too big.
 !!
 !!    The letters A,B,...,Z represent 10,11,...,36 in the base > 10.
+!!
+!!##OPTIONS
+!!    in_base10   whole number to convert to an alternate base
+!!    out_base    the desired base of the output
+!!    answer      the input value converted to a string representing
+!!                the original number IN_BASE10 in base OUT_BASE.
+!!
+!!##RETURNS
+!!    Returns .true. if no error occurred, else returns .false. .
 !!
 !!##EXAMPLES
 !!
@@ -10551,7 +10632,8 @@ end function tobase
 !!
 !!    Given a long string break it on spaces into an array such that no
 !!    variable is longer than the specified length. Individual words longer
-!!    than LENGTH will be placed in variables by themselves.
+!!    than LENGTH will be placed in lines by themselves and the paragraph
+!!    width will be increased to the length of the longest word.
 !!
 !!##OPTIONS
 !!     SOURCE_STRING  input string to break into an array of shorter strings
@@ -10782,28 +10864,33 @@ end function setbits64
 !===================================================================================================================================
 !>
 !!##NAME
-!!     msg(3f) - [M_strings:TYPE] converts any standard scalar type to a string
+!!     msg(3f) - [M_strings:TYPE] converts multiple values to a (CSV) string
 !!     (LICENSE:PD)
 !!##SYNOPSIS
 !!
 !!
-!!     function msg(g1,g2g3,g4,g5,g6,g7,g8,g9,sep)
+!!     function msg( g1,g2,g3,g4,g5,g6,g7,g8,g9,g10, &
+!!                 & g11,g12,g13,g14,g15,g16,g17,g18,g19,g20,sep,csv)
 !!
-!!      class(*),intent(in),optional  :: g1,g2,g3,g4,g5,g6,g7,g8,g9
+!!      class(*),intent(in),optional  :: g1,g2,g3,g4,g5,g6,g7,g8,g9,g10
+!!      class(*),intent(in),optional  :: g11,g12,g13,g14,g15,g16,g17,g18,g19,g20
 !!      character(len=*),intent(in),optional :: sep
+!!      logical,intent(in),optional :: csv
 !!      character(len=:),allocatable :: msg
 !!
 !!##DESCRIPTION
-!!     msg(3f) builds a space-separated string from up to nine scalar values.
+!!     msg(3f) builds a string from up to twenty scalar values.
 !!
 !!##OPTIONS
-!!     g[1-9]  optional value to print the value of after the message. May
-!!             be of type INTEGER, LOGICAL, REAL, DOUBLEPRECISION, COMPLEX,
-!!             or CHARACTER.
-!!     sep     separator between values. Defaults to a space
+!!     g[1-20]  optional value to print the value of after the message. May
+!!              be of type INTEGER, LOGICAL, REAL, DOUBLEPRECISION, COMPLEX,
+!!              or CHARACTER.
+!!     sep      separator between values. Defaults to a space
+!!     csv      write output conforming to RFC 1080 for CSV (Comma-Separated
+!!              Values) files
 !!
 !!##RETURNS
-!!     msg     description to print
+!!     msg      description to print
 !!
 !!##EXAMPLES
 !!
@@ -10811,7 +10898,7 @@ end function setbits64
 !!   Sample program:
 !!
 !!        program demo_msg
-!!        use M_strings, only : msg
+!!        use M_strings, only : msg, quote
 !!        implicit none
 !!        character(len=:),allocatable :: pr
 !!        character(len=:),allocatable :: frmt
@@ -10836,23 +10923,42 @@ end function setbits64
 !!        frmt=msg('(*(i',int(log10(real(biggest)))+0,':,1x))',sep='')
 !!        write(*,*)'format=',frmt
 !!
+!!        ! compound output
+!!        pr=msg(10,100.0,"string",(11.0,22.0),.false.)
+!!        write(*,'(a)')pr
+!!        ! a separator and also use of quote(3f)
+!!        pr=msg(10,100.0,quote("string"),(11.0,22.0),.false.,sep=';')
+!!        write(*,'(a)')pr
+!!        ! CSV mode
+!!        pr=msg(10,100.0,"string",(11.0,22.0),.false.,csv=.true.)
+!!        write(*,'(a)')pr
+!!        ! everything a vector instead of a scalar
+!!        pr=msg([10,20,30],["string"],[(11.0,22.0)],[.false.,.true.])
+!!        write(*,'(a)')pr
+!!        pr=msg([10,20,30],["string"],[(11.0,22.0)],[.false.,.true.],sep='|')
+!!        write(*,'(a)')pr
+!!        pr=msg([10,20,30],["string"],[(11.0,22.0)],[.false.,.true.],csv=.true.)
+!!        write(*,'(a)')pr
+!!
 !!        ! although it will often work, using msg(3f) in an I/O statement
 !!        ! is not recommended
-!!        write(*,*)msg('program will now stop')
+!!        write(*,*)msg('program will now attempt to stop')
 !!
 !!        end program demo_msg
 !!
-!!   Output
+!! Results:
 !!
-!!       HUGE(3f) integers 2147483647 and real 3.40282347E+38
-!!       and double 1.7976931348623157E+308
-!!       real            : 3.40282347E+38 0.00000000
-!!       12345.6787 1.17549435E-38
-!!       doubleprecision : 1.7976931348623157E+308 0.0000000000000000
-!!       12345.678900000001 2.2250738585072014E-308
-!!       complex         : (3.40282347E+38,1.17549435E-38)
-!!        format=(*(i9:,1x))
-!!        program will now stop
+!!  > HUGE(3f) integers 2147483647 and real 3.40282347E+38 and ...
+!!  > ... double 1.7976931348623157E+308
+!!  > real            : 3.40282347E+38 0.00000000 12345.6787 1.17549435E-38
+!!  > doubleprecision : 1.7976931348623157E+308 0.0000000000000000 ...
+!!  > ... 12345.678900000001 2.2250738585072014E-308
+!!  > complex         : (3.40282347E+38,1.17549435E-38)
+!!  >  format=(*(i9:,1x))
+!!  > 10 100.000000 string (11.0000000,22.0000000) F
+!!  > 10;100.000000;"string";(11.0000000,22.0000000);F
+!!  > 10,100.000000,"string",11.0000000,22.0000000,F
+!!  >  program will now attempt to stop
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -10860,38 +10966,58 @@ end function setbits64
 !!##LICENSE
 !!    Public Domain
 !===================================================================================================================================
-function msg_scalar(generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9,sep)
+function msg_scalar(g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13, g14, g15, g16, g17, g18, g19, g20, sep, csv)
 
 ! ident_87="@(#) M_strings msg_scalar(3fp) writes a message to a string composed of any standard scalar types"
 
-class(*),intent(in),optional  :: generic1 ,generic2 ,generic3 ,generic4 ,generic5
-class(*),intent(in),optional  :: generic6 ,generic7 ,generic8 ,generic9
+class(*),intent(in),optional  :: g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13, g14, g15, g16, g17, g18, g19, g20
 character(len=*),intent(in),optional :: sep
+logical,intent(in),optional   :: csv
 character(len=:),allocatable  :: sep_local
+logical                       :: csv_local
 character(len=:), allocatable :: msg_scalar
 character(len=4096)           :: line
 integer                       :: ibegin
 integer                       :: increment
+
+   if(present(csv))then
+      csv_local=csv
+   else
+      csv_local=.false.
+   endif
+
    if(present(sep))then
       sep_local=sep
       increment=len(sep)+1
    else
-      sep_local=' '
+      sep_local=merge(',',' ',csv_local)
       increment=2
    endif
 
    ibegin=1
    line=' '
-   if(present(generic1))call print_generic(generic1)
-   if(present(generic2))call print_generic(generic2)
-   if(present(generic3))call print_generic(generic3)
-   if(present(generic4))call print_generic(generic4)
-   if(present(generic5))call print_generic(generic5)
-   if(present(generic6))call print_generic(generic6)
-   if(present(generic7))call print_generic(generic7)
-   if(present(generic8))call print_generic(generic8)
-   if(present(generic9))call print_generic(generic9)
+   if(present(g1))call print_generic(g1)
+   if(present(g2))call print_generic(g2)
+   if(present(g3))call print_generic(g3)
+   if(present(g4))call print_generic(g4)
+   if(present(g5))call print_generic(g5)
+   if(present(g6))call print_generic(g6)
+   if(present(g7))call print_generic(g7)
+   if(present(g8))call print_generic(g8)
+   if(present(g9))call print_generic(g9)
+   if(present(g10))call print_generic(g10)
+   if(present(g11))call print_generic(g11)
+   if(present(g12))call print_generic(g12)
+   if(present(g13))call print_generic(g13)
+   if(present(g14))call print_generic(g14)
+   if(present(g15))call print_generic(g15)
+   if(present(g16))call print_generic(g16)
+   if(present(g17))call print_generic(g17)
+   if(present(g18))call print_generic(g18)
+   if(present(g19))call print_generic(g19)
+   if(present(g20))call print_generic(g20)
    msg_scalar=trim(line)
+   if(sep_local.ne.'')msg_scalar=msg_scalar(:len(msg_scalar)-1)
 contains
 !===================================================================================================================================
 subroutine print_generic(generic)
@@ -10906,8 +11032,18 @@ class(*),intent(in) :: generic
       !x!type is (real(kind=real128));     write(line(ibegin:),'(1pg0)') generic
       !x!type is (real(kind=real256));     write(line(ibegin:),'(1pg0)') generic
       type is (logical);                write(line(ibegin:),'(l1)') generic
-      type is (character(len=*));       write(line(ibegin:),'(a)') trim(generic)
-      type is (complex);                write(line(ibegin:),'("(",1pg0,",",1pg0,")")') generic
+      type is (character(len=*))
+         if(csv_local)then
+            write(line(ibegin:),'(a)') quote(trim(generic))
+         else
+            write(line(ibegin:),'(a)') trim(generic)
+         endif
+      type is (complex)
+         if(csv_local)then
+            write(line(ibegin:),'(1pg0,a,1pg0)') generic%re,sep_local,generic%im
+         else
+            write(line(ibegin:),'("(",1pg0,",",1pg0,")")') generic
+         endif
    end select
    ibegin=len_trim(line)+increment
    line=trim(line)//sep_local
@@ -10917,61 +11053,101 @@ end function msg_scalar
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
-function msg_one(generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9,sep)
+function msg_one(g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13, g14, g15, g16, g17, g18, g19, g20, sep, csv)
 
 ! ident_88="@(#) M_strings msg_one(3fp) writes a message to a string composed of any standard one dimensional types"
 
-class(*),intent(in)           :: generic1(:)
-class(*),intent(in),optional  :: generic2(:), generic3(:), generic4(:), generic5(:)
-class(*),intent(in),optional  :: generic6(:), generic7(:), generic8(:), generic9(:)
+class(*),intent(in)           :: g1(:)
+class(*),intent(in),optional  :: g2(:),g3(:),g4(:),g5(:),g6(:),g7(:),g8(:),g9(:),g10(:)
+class(*),intent(in),optional  :: g11(:),g12(:),g13(:),g14(:),g15(:),g16(:),g17(:),g18(:),g19(:),g20(:)
 character(len=*),intent(in),optional :: sep
-character(len=:),allocatable   :: sep_local
+logical,intent(in),optional   :: csv
+character(len=:),allocatable  :: sep_local
+logical                       :: csv_local
 character(len=:), allocatable :: msg_one
 character(len=4096)           :: line
 integer                       :: ibegin
 integer                       :: increment
+
+   if(present(csv))then
+      csv_local=csv
+   else
+      csv_local=.false.
+   endif
+
    if(present(sep))then
       sep_local=sep
       increment=len(sep)+1
    else
-      sep_local=' '
+      sep_local=merge(',',' ',csv_local)
       increment=2
    endif
 
    ibegin=1
    line=' '
-   call print_generic(generic1)
-   if(present(generic2))call print_generic(generic2)
-   if(present(generic3))call print_generic(generic3)
-   if(present(generic4))call print_generic(generic4)
-   if(present(generic5))call print_generic(generic5)
-   if(present(generic6))call print_generic(generic6)
-   if(present(generic7))call print_generic(generic7)
-   if(present(generic8))call print_generic(generic8)
-   if(present(generic9))call print_generic(generic9)
+   call print_generic(g1)
+   if(present(g2))call print_generic(g2)
+   if(present(g3))call print_generic(g3)
+   if(present(g4))call print_generic(g4)
+   if(present(g5))call print_generic(g5)
+   if(present(g6))call print_generic(g6)
+   if(present(g7))call print_generic(g7)
+   if(present(g8))call print_generic(g8)
+   if(present(g9))call print_generic(g9)
+   if(present(g10))call print_generic(g10)
+   if(present(g11))call print_generic(g11)
+   if(present(g12))call print_generic(g12)
+   if(present(g13))call print_generic(g13)
+   if(present(g14))call print_generic(g14)
+   if(present(g15))call print_generic(g15)
+   if(present(g16))call print_generic(g16)
+   if(present(g17))call print_generic(g17)
+   if(present(g18))call print_generic(g18)
+   if(present(g19))call print_generic(g19)
+   if(present(g20))call print_generic(g20)
    msg_one=trim(line)
+   if(sep_local.ne.'')msg_one=msg_one(:len(msg_one)-1)
 contains
 !===================================================================================================================================
 subroutine print_generic(generic)
 class(*),intent(in),optional :: generic(:)
 integer :: i
-   select type(generic)
-      type is (integer(kind=int8));     write(line(ibegin:),'("[",*(i0,1x))') generic
-      type is (integer(kind=int16));    write(line(ibegin:),'("[",*(i0,1x))') generic
-      type is (integer(kind=int32));    write(line(ibegin:),'("[",*(i0,1x))') generic
-      type is (integer(kind=int64));    write(line(ibegin:),'("[",*(i0,1x))') generic
-      type is (real(kind=real32));      write(line(ibegin:),'("[",*(1pg0,1x))') generic
-      type is (real(kind=real64));      write(line(ibegin:),'("[",*(1pg0,1x))') generic
-      !x!type is (real(kind=real128));     write(line(ibegin:),'("[",*(1pg0,1x))') generic
-      !x!type is (real(kind=real256));     write(line(ibegin:),'("[",*(1pg0,1x))') generic
-      type is (logical);                write(line(ibegin:),'("[",*(l1,1x))') generic
-      type is (character(len=*));       write(line(ibegin:),'("[",:*("""",a,"""",1x))') (trim(generic(i)),i=1,size(generic))
-      type is (complex);                write(line(ibegin:),'("[",*("(",1pg0,",",1pg0,")",1x))') generic
-   end select
-   ibegin=len_trim(line)+increment
-   line=trim(line)//"]"//sep_local
+   if(csv_local)then
+      select type(generic)
+         type is (integer(kind=int8));     write(line(ibegin:),'(*(i0:,","))') generic
+         type is (integer(kind=int16));    write(line(ibegin:),'(*(i0:,","))') generic
+         type is (integer(kind=int32));    write(line(ibegin:),'(*(i0:,","))') generic
+         type is (integer(kind=int64));    write(line(ibegin:),'(*(i0:,","))') generic
+         type is (real(kind=real32));      write(line(ibegin:),'(*(1pg0:,","))') generic
+         type is (real(kind=real64));      write(line(ibegin:),'(*(1pg0:,","))') generic
+         !x!type is (real(kind=real128));     write(line(ibegin:),'(*(1pg0:,","))') generic
+         !x!type is (real(kind=real256));     write(line(ibegin:),'(*(1pg0:,","))') generic
+         type is (logical);                write(line(ibegin:),'(*(l1:,","))') generic
+         type is (character(len=*));       write(line(ibegin:),'(:*(a:,","))') (quote(trim(generic(i))),i=1,size(generic))
+         type is (complex);                write(line(ibegin:),'(*(1pg0,",",1pg0:))') generic
+      end select
+      ibegin=len_trim(line)+increment
+      line=trim(line)//sep_local
+   else
+      select type(generic)
+         type is (integer(kind=int8));     write(line(ibegin:),'("[",*(i0:,","))') generic
+         type is (integer(kind=int16));    write(line(ibegin:),'("[",*(i0:,","))') generic
+         type is (integer(kind=int32));    write(line(ibegin:),'("[",*(i0:,","))') generic
+         type is (integer(kind=int64));    write(line(ibegin:),'("[",*(i0:,","))') generic
+         type is (real(kind=real32));      write(line(ibegin:),'("[",*(1pg0:,","))') generic
+         type is (real(kind=real64));      write(line(ibegin:),'("[",*(1pg0:,","))') generic
+         !x!type is (real(kind=real128));     write(line(ibegin:),'("[",*(1pg0:,","))') generic
+         !x!type is (real(kind=real256));     write(line(ibegin:),'("[",*(1pg0:,","))') generic
+         type is (logical);                write(line(ibegin:),'("[",*(l1:,","))') generic
+         type is (character(len=*));       write(line(ibegin:),'("[",:*(:"""",a,"""":,","))') (trim(generic(i)),i=1,size(generic))
+         type is (complex);                write(line(ibegin:),'("[",*(:"(",1pg0,",",1pg0,")":,","))') generic
+      end select
+      line=trim(line)//"]"
+      ibegin=len_trim(line)+increment
+      line=trim(line)//sep_local
+   endif
 end subroutine print_generic
-!===================================================================================================================================
+
 end function msg_one
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!

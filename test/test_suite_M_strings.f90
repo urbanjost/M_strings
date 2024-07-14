@@ -943,6 +943,9 @@ subroutine test_clip()
    call unit_test('clip',clip('A B CC D') == 'A B CC D',msg='clip string test 2')
    call unit_test('clip',clip('A B CC D    ') == 'A B CC D',msg='clip string test 3')
    call unit_test('clip',clip('     A B CC D    ') == 'A B CC D',msg='clip string test 4')
+
+   call unit_test('clip',clip('----single-character----',set='-') == 'single-character',msg='user-specified character')
+   call unit_test('clip',clip('  ... . .multi-character set . ...',set='. ') == 'multi-character set',msg='multi-character set')
    call unit_test_end('clip')
 end subroutine test_clip
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
@@ -2080,10 +2083,37 @@ integer :: getval
 end function 
 end subroutine test_matching_delimiter
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_msg()
-   call unit_test_start('msg','[TYPE] converts any standard scalar type to a string')
-   call unit_test_end('msg')
+subroutine test_msg   ()
+logical             :: allpassed=.true.
+
+  call unit_test_start('msg','test building message strings')
+
+  call add('INTEGER',msg(10),'10','10')
+  call add('LOGICAL',msg(.false.),'F','F')
+  call add('LOGICAL',msg(.true.),'T','T')
+  call add('REAL',msg(100.0),'100.000000','100.0000')
+  call add('COMPLEX',msg((11.0,22.0)),'(11.0000000,22.0000000)','(11.00000,22.00000)')
+  call add('COMPOUND',msg(10,100.0,"string",(11.0,22.0),.false.), &
+       & '10 100.000000 string (11.0000000,22.0000000) F',&
+       & '10 100.0000 string (11.00000,22.00000) F')
+  call unit_test_end("msg   ",msg="")
+
 end subroutine test_msg
+
+subroutine add(message,question,answer,answer2)
+character(len=*),intent(in)   :: message
+character(len=*),intent(in)   :: question
+character(len=*),intent(in)   :: answer
+character(len=*),intent(in)   :: answer2
+logical                       :: passed
+  passed=question .eq. answer
+  if(passed)then
+     call unit_test('msg',passed,'testing',message,'expected',answer,'got',question)
+  else
+     passed=question .eq. answer2
+     call unit_test('msg',passed,'testing',message,'expected',answer2,'got',question)
+  endif
+end subroutine add
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_paragraph()
    call unit_test_start('paragraph','[TOKENS] break a long line into a paragraph')
