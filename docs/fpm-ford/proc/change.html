@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="string operations">
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>change &ndash; M_strings</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">M_strings </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="../lists/files.html">Source Files</a></li>
+            <li><a href="../lists/modules.html">Modules</a></li>
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+                   <li><a href="../lists/types.html">Derived Types</a></li>
+       
+            </ul>
+        
+            </li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+                             <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+          </ul>
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+  <div class="row">
+    <h1>change
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="row" id="info-bar">
+    <div class="col-lg-12">
+      <div class="well well-sm">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+          <li id="statements"><i class="fa fa-list-ol"></i>
+            <a data-toggle="tooltip"
+               data-placement="bottom" data-html="true"
+               title=" 1.2% of total for procedures.">34 statements</a>
+          </li>
+
+            <li id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/M_strings.F90"> Source File</a>
+            </li>
+        </ul>
+        <ol class="breadcrumb in-well text-right">
+              <li><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
+              <li><a href='../module/m_strings.html'>M_strings</a></li>
+          <li class="active">change</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="panel panel-primary">
+      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/change.html#src">change</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine change(target_string, cmd, ierr)  
+</h2>
+    
+
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>change(3f) - [M_strings:EDITING] change old string to new string with
+a directive like a line editor
+(LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>subroutine change(target_string,cmd,ierr)
+
+ character(len=*),intent(inout) :: target_string
+ character(len=*),intent(in)    :: cmd
+ integer                        :: ierr
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">change</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">old</span><span class="w"> </span><span class="n">substring</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">substring</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">variable</span><span class="w"></span>
+<span class="n">like</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="n">editor</span><span class="o">.</span><span class="w"> </span><span class="n">Primarily</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">create</span><span class="w"> </span><span class="n">interactive</span><span class="w"> </span><span class="n">utilities</span><span class="w"></span>
+<span class="n">such</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="n">history</span><span class="w"> </span><span class="n">editors</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">interactive</span><span class="w"> </span><span class="n">line</span><span class="o">-</span><span class="n">mode</span><span class="w"> </span><span class="n">programs</span><span class="o">.</span><span class="w"> </span><span class="n">The</span><span class="w"></span>
+<span class="n">output</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">assumed</span><span class="w"> </span><span class="n">long</span><span class="w"> </span><span class="n">enough</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">accommodate</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">change</span><span class="o">.</span><span class="w"></span>
+<span class="n">a</span><span class="w"> </span><span class="n">directive</span><span class="w"> </span><span class="n">resembles</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="n">editor</span><span class="w"> </span><span class="n">directive</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">form</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">C</span><span class="o">/</span><span class="n">old_string</span><span class="o">/</span><span class="n">new_string</span><span class="o">/</span><span class="w"></span>
+
+<span class="n">where</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">any</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">included</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">old_string</span><span class="w"></span>
+<span class="ow">or</span><span class="w"> </span><span class="n">new_string</span><span class="o">.</span><span class="w"></span>
+
+<span class="n">a</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="w"> </span><span class="n">old_string</span><span class="w"> </span><span class="n">implies</span><span class="w"> </span><span class="s2">&quot;beginning of string&quot;</span><span class="o">.</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code>target_string  line to be changed
+cmd            contains instructions to change the string
+ierr           error code.
+
+   o =-1 bad directive
+   o =0 no changes made
+   o &gt;0 count of changes made
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_change</span>
+
+ <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">change</span>
+ <span class="nv">implicit</span> <span class="nv">none</span>
+ <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">132</span><span class="ss">)</span> :: <span class="nv">line</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">This is a test string to change</span><span class="s1">&#39;</span>
+ <span class="nv">integer</span>            :: <span class="nv">ierr</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">line</span><span class="ss">)</span>
+    <span class="o">!</span> <span class="nv">change</span> <span class="nv">miniscule</span> <span class="nv">a</span> <span class="nv">to</span> <span class="nv">uppercase</span> <span class="nv">A</span>
+    <span class="k">call</span> <span class="nl">change</span><span class="ss">(</span><span class="nv">line</span>,<span class="s1">&#39;</span><span class="s">c/a/A/</span><span class="s1">&#39;</span>,<span class="nv">ierr</span><span class="ss">)</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">line</span><span class="ss">)</span>
+    <span class="o">!</span> <span class="nv">put</span> <span class="nv">string</span> <span class="nv">at</span> <span class="nv">beginning</span> <span class="nv">of</span> <span class="nv">line</span>
+    <span class="k">call</span> <span class="nl">change</span><span class="ss">(</span><span class="nv">line</span>,<span class="s1">&#39;</span><span class="s">c//prefix: /</span><span class="s1">&#39;</span>,<span class="nv">ierr</span><span class="ss">)</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">line</span><span class="ss">)</span>
+    <span class="o">!</span> <span class="nv">remove</span> <span class="nv">blanks</span>
+    <span class="k">call</span> <span class="nl">change</span><span class="ss">(</span><span class="nv">line</span>,<span class="s1">&#39;</span><span class="s">c/ //</span><span class="s1">&#39;</span>,<span class="nv">ierr</span><span class="ss">)</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">line</span><span class="ss">)</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_change</span>
+</code></pre></div>
+
+<p>Expected output</p>
+<div class="codehilite"><pre><span></span><code> This is a test string to change
+ This is A test string to chAnge
+ prefix: This is A test string to chAnge
+ prefix:ThisisAteststringtochAnge
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-target_string"></span>
+              character(len=*),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>target_string</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cmd~2"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cmd</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ierr~3"></span>
+              integer
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ierr</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+        <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="panel panel-primary">
+      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/change.html#src">change</a>
+      </div>
+    </div>
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+
+    
+    
+
+    
+    
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">change</span><span class="p">(</span><span class="n">target_string</span><span class="p">,</span><span class="n">cmd</span><span class="p">,</span><span class="n">ierr</span><span class="p">)</span><span class="w"></span>
+<span class="c">! Change a string assumed long enough to accommodate the change, with a directive that resembles a line editor directive of the form</span>
+<span class="c">!    C/old_string/new_string/</span>
+<span class="c">! where / may be any character which is not included in old_string or new_string.</span>
+<span class="c">! a null old_string implies &quot;beginning of string&quot;</span>
+<span class="c">!===================================================================================================================================</span>
+
+<span class="c">! ident_13=&quot;@(#) M_strings change(3f) change a character string like a line editor&quot;</span>
+
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">target_string</span><span class="w">          </span><span class="c">! line to be changed</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">      </span><span class="kd">::</span><span class="w"> </span><span class="n">cmd</span><span class="w">                    </span><span class="c">! contains the instructions changing the string</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">delimiters</span><span class="w"></span>
+<span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">ierr</span><span class="w">                   </span><span class="c">! error code. ier=-1 bad directive;=0 no changes made;&gt;0 ier changes made</span>
+<span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">itoken</span><span class="w"></span>
+<span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span><span class="w">                </span><span class="kd">::</span><span class="w"> </span><span class="n">id</span><span class="o">=</span><span class="mi">2</span><span class="w">                   </span><span class="c">! expected location of delimiter</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">old</span><span class="p">,</span><span class="n">new</span><span class="w">                </span><span class="c">! scratch string buffers</span>
+<span class="kt">logical</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">ifok</span><span class="w"></span>
+<span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">lmax</span><span class="w">                   </span><span class="c">! length of target string</span>
+<span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">start_token</span><span class="p">,</span><span class="n">end_token</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="w">   </span><span class="n">lmax</span><span class="o">=</span><span class="nb">len_trim</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="w">                                                          </span><span class="c">! significant length of change directive</span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="n">lmax</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="k">then</span><span class="w">                         </span><span class="c">! strtok ignores blank tokens so look for special case where first token is really null</span>
+<span class="w">      </span><span class="n">delimiters</span><span class="o">=</span><span class="n">cmd</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="n">id</span><span class="p">)</span><span class="w">                                                    </span><span class="c">! find delimiter in expected location</span>
+<span class="w">      </span><span class="n">itoken</span><span class="o">=</span><span class="mi">0</span><span class="w">                                                                 </span><span class="c">! initialize strtok(3f) procedure</span>
+
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">strtok</span><span class="p">(</span><span class="n">cmd</span><span class="p">(</span><span class="n">id</span><span class="p">:),</span><span class="n">itoken</span><span class="p">,</span><span class="n">start_token</span><span class="p">,</span><span class="n">end_token</span><span class="p">,</span><span class="n">delimiters</span><span class="p">))</span><span class="w"> </span><span class="k">then</span><span class="w">        </span><span class="c">! find OLD string</span>
+<span class="w">         </span><span class="n">old</span><span class="o">=</span><span class="n">cmd</span><span class="p">(</span><span class="n">start_token</span><span class="o">+</span><span class="n">id</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">end_token</span><span class="o">+</span><span class="n">id</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span>
+<span class="k">         </span><span class="n">old</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w"></span>
+<span class="w">      </span><span class="k">endif</span>
+
+<span class="k">      if</span><span class="p">(</span><span class="n">cmd</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">cmd</span><span class="p">(</span><span class="n">id</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">id</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="k">then</span>
+<span class="k">         </span><span class="n">new</span><span class="o">=</span><span class="n">old</span><span class="w"></span>
+<span class="w">         </span><span class="n">old</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w">                                                                     </span><span class="c">! normal case</span>
+<span class="w">         </span><span class="n">ifok</span><span class="o">=</span><span class="n">strtok</span><span class="p">(</span><span class="n">cmd</span><span class="p">(</span><span class="n">id</span><span class="p">:),</span><span class="n">itoken</span><span class="p">,</span><span class="n">start_token</span><span class="p">,</span><span class="n">end_token</span><span class="p">,</span><span class="n">delimiters</span><span class="p">)</span><span class="w">         </span><span class="c">! find NEW string</span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="n">end_token</span><span class="w">  </span><span class="o">==</span><span class="w">  </span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">-</span><span class="n">id</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="n">end_token</span><span class="o">=</span><span class="nb">len_trim</span><span class="p">(</span><span class="n">cmd</span><span class="p">(</span><span class="n">id</span><span class="p">:))</span><span class="w">       </span><span class="c">! if missing ending delimiter</span>
+<span class="w">         </span><span class="n">new</span><span class="o">=</span><span class="n">cmd</span><span class="p">(</span><span class="n">start_token</span><span class="o">+</span><span class="n">id</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="nb">min</span><span class="p">(</span><span class="n">end_token</span><span class="o">+</span><span class="n">id</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">lmax</span><span class="p">))</span><span class="w"></span>
+<span class="w">      </span><span class="k">endif</span>
+
+<span class="k">      call </span><span class="n">substitute</span><span class="p">(</span><span class="n">target_string</span><span class="p">,</span><span class="n">old</span><span class="p">,</span><span class="n">new</span><span class="p">,</span><span class="n">ierr</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="nb">len_trim</span><span class="p">(</span><span class="n">target_string</span><span class="p">))</span><span class="w">    </span><span class="c">! change old substrings to new substrings</span>
+<span class="w">   </span><span class="k">else</span><span class="w">                                                                        </span><span class="c">! command was two or less characters</span>
+<span class="w">      </span><span class="n">ierr</span><span class="o">=-</span><span class="mi">1</span><span class="w"></span>
+<span class="w">      </span><span class="k">call </span><span class="n">journal</span><span class="p">(</span><span class="s1">&#39;sc&#39;</span><span class="p">,</span><span class="s1">&#39;*change* incorrect change directive -too short&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">endif</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="k">end subroutine </span><span class="n">change</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-6"><p>M_strings was developed by John S. Urban<br>&copy; 2023 
+</p>
+        </div>
+        <div class="col-xs-6 col-md-6">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2023-01-08 21:09            </p>
+        </div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+  </body>
+</html>

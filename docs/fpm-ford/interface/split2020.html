@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="string operations">
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>split2020 &ndash; M_strings</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">M_strings </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="../lists/files.html">Source Files</a></li>
+            <li><a href="../lists/modules.html">Modules</a></li>
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+                   <li><a href="../lists/types.html">Derived Types</a></li>
+       
+            </ul>
+        
+            </li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+                             <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+          </ul>
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+  <div class="row">
+    <h1>split2020
+      <small>Interface</small>
+      
+    </h1>
+      <div class="row" id="info-bar">
+    <div class="col-lg-12">
+      <div class="well well-sm">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+          <li id="statements"><i class="fa fa-list-ol"></i>
+            <a data-toggle="tooltip"
+               data-placement="bottom" data-html="true"
+               title="<p> 0.1% of total for procedures.</p>Including implementation: 87 statements,  3.0% of total for procedures.">3 statements</a>
+          </li>
+
+            <li id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/M_strings.F90"> Source File</a>
+            </li>
+        </ul>
+        <ol class="breadcrumb in-well text-right">
+              <li><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
+              <li><a href='../module/m_strings.html'>M_strings</a></li>
+          <li class="active">split2020</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="panel panel-primary">
+      <div class="panel-heading text-left">
+        <h3 class="panel-title">
+          <a data-toggle="collapse" href="#modprocs-0">Module Procedures</a>
+        </h3>
+      </div>
+      <div id="modprocs-0" class="panel-collapse collapse">
+        <div class="list-group">
+            <a class="list-group-item" href="../interface/split2020.html#moduleprocedure-split_tokens">split_tokens</a>
+            <a class="list-group-item" href="../interface/split2020.html#moduleprocedure-split_first_last">split_first_last</a>
+            <a class="list-group-item" href="../interface/split2020.html#moduleprocedure-split_pos">split_pos</a>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+      <h2>public interface split2020</h2>
+   
+
+     <section class="visible-xs visible-sm hidden-md">
+         <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="panel panel-primary">
+      <div class="panel-heading text-left">
+        <h3 class="panel-title">
+          <a data-toggle="collapse" href="#modprocs-1">Module Procedures</a>
+        </h3>
+      </div>
+      <div id="modprocs-1" class="panel-collapse collapse">
+        <div class="list-group">
+            <a class="list-group-item" href="../interface/split2020.html#moduleprocedure-split_tokens">split_tokens</a>
+            <a class="list-group-item" href="../interface/split2020.html#moduleprocedure-split_first_last">split_first_last</a>
+            <a class="list-group-item" href="../interface/split2020.html#moduleprocedure-split_pos">split_pos</a>
+        </div>
+      </div>
+    </div>
+
+
+
+     </section>
+     <br class="visible-xs visible-sm hidden-md">
+     
+
+
+   <h2>Module Procedures</h2>
+      <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-split_tokens"></span><h3>private pure subroutine split_tokens(string, set, tokens, separator)  
+</h3></div>
+    <div class="panel-body">
+        <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>split2020(3f) - [M_strings:TOKENS] parse a string into tokens using
+proposed f2023 method
+(LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>TOKEN form</p>
+<div class="codehilite"><pre><span></span><code>subroutine split2020 (string, set, tokens, separator)
+character(len=*),intent(in) :: string
+character(len=*),intent(in) :: set
+character(len=:),allocatable,intent(out) :: tokens(:)
+character(len=1),allocatable,intent(out),optional :: separator(:)
+</code></pre></div>
+
+<p>BOUNDS ARRAY form</p>
+<div class="codehilite"><pre><span></span><code>subroutine split2020 (string, set, first, last)
+character(len=*),intent(in) :: string
+character(len=*),intent(in) :: set
+integer,allocatable,intent(out) :: first(:)
+integer,allocatable,intent(out) :: last(:)
+</code></pre></div>
+
+<p>STEP THROUGH BY POSITION form</p>
+<div class="codehilite"><pre><span></span><code>subroutine split2020 (string, set, pos [, back])
+character(len=*),intent(in) :: string
+character(len=*),intent(in) :: set
+integer,intent(inout)       :: pos
+logical,intent(in),optional :: back
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code>Parse a string into tokens. STRING, SET, TOKENS and SEPARATOR must
+all be of the same CHARACTER kind type parameter.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">STRING</span><span class="w">      </span><span class="k">string</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="k">break</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">tokens</span><span class="w"></span>
+
+<span class="n">SET</span><span class="w">         </span><span class="n">Each</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">SET</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">delimiter</span><span class="p">.</span><span class="w"> </span><span class="n">A</span><span class="w"></span>
+<span class="w">            </span><span class="n">sequence</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">zero</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">more</span><span class="w"> </span><span class="n">characters</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">STRING</span><span class="w"> </span><span class="n">delimited</span><span class="w"> </span><span class="n">by</span><span class="w"></span>
+<span class="w">            </span><span class="n">any</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">delimiter</span><span class="p">,</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">beginning</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">STRING</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">comprise</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">token</span><span class="p">.</span><span class="w"> </span><span class="n">Thus</span><span class="p">,</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">consecutive</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">delimiters</span><span class="w"></span>
+<span class="w">            </span><span class="n">in</span><span class="w"> </span><span class="n">STRING</span><span class="p">,</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">delimiter</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">last</span><span class="w"></span>
+<span class="w">            </span><span class="n">character</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">STRING</span><span class="p">,</span><span class="w"> </span><span class="n">indicate</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">zero</span><span class="w"> </span><span class="n">length</span><span class="p">.</span><span class="w"></span>
+
+<span class="w">            </span><span class="o">???</span><span class="w"> </span><span class="n">how</span><span class="w"> </span><span class="n">about</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">null</span><span class="w"> </span><span class="n">defaults</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">whitespace</span><span class="w"> </span><span class="n">characters</span><span class="w"></span>
+
+<span class="n">TOKENS</span><span class="w">      </span><span class="n">It</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">allocated</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">lower</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="n">equal</span><span class="w"> </span><span class="n">to</span><span class="w"></span>
+<span class="w">            </span><span class="n">one</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">upper</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="n">equal</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">tokens</span><span class="w"> </span><span class="n">in</span><span class="w"></span>
+<span class="w">            </span><span class="n">STRING</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">equal</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">of</span><span class="w"></span>
+<span class="w">            </span><span class="n">the</span><span class="w"> </span><span class="n">longest</span><span class="w"> </span><span class="n">token</span><span class="p">.</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">tokens</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">STRING</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">assigned</span><span class="w"> </span><span class="n">by</span><span class="w"></span>
+<span class="w">            </span><span class="n">intrinsic</span><span class="w"> </span><span class="n">assignment</span><span class="p">,</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="n">found</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">elements</span><span class="w"></span>
+<span class="w">            </span><span class="n">of</span><span class="w"> </span><span class="n">TOKENS</span><span class="p">,</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">element</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="w"></span>
+
+<span class="w">            </span><span class="o">???</span><span class="n">If</span><span class="w"> </span><span class="k">input</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">null</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">still</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="mh">1</span><span class="o">?</span><span class="w"></span>
+
+<span class="n">SEPARATOR</span><span class="w">   </span><span class="n">Each</span><span class="w"> </span><span class="n">element</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">SEPARATOR</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">assigned</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">of</span><span class="w"></span>
+<span class="w">            </span><span class="n">the</span><span class="w"> </span><span class="n">ith</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">delimiter</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">STRING</span><span class="p">.</span><span class="w"></span>
+<span class="w">            </span><span class="n">It</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">allocated</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">lower</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="n">equal</span><span class="w"> </span><span class="n">to</span><span class="w"></span>
+<span class="w">            </span><span class="n">one</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">upper</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="n">equal</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">less</span><span class="w"> </span><span class="n">than</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">number</span><span class="w"></span>
+<span class="w">            </span><span class="n">of</span><span class="w"> </span><span class="n">tokens</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">STRING</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">equal</span><span class="w"> </span><span class="n">to</span><span class="w"></span>
+<span class="w">            </span><span class="n">one</span><span class="p">.</span><span class="w"></span>
+
+<span class="w">            </span><span class="o">???</span><span class="n">one</span><span class="w"> </span><span class="n">less</span><span class="w"> </span><span class="n">than</span><span class="o">?</span><span class="w"> </span><span class="p">&#39;</span><span class="sc">&#39; &#39;</span><span class="w"> </span><span class="p">&#39;</span><span class="w"></span>
+
+<span class="n">FIRST</span><span class="w">     </span><span class="n">It</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">allocated</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">lower</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="n">equal</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">the</span><span class="w"></span>
+<span class="w">          </span><span class="n">upper</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="n">equal</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">tokens</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">STRING</span><span class="p">.</span><span class="w"> </span><span class="n">Each</span><span class="w"></span>
+<span class="w">          </span><span class="n">element</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">assigned</span><span class="p">,</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">element</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">starting</span><span class="w"></span>
+<span class="w">          </span><span class="n">position</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">each</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">STRING</span><span class="p">,</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="n">found</span><span class="p">.</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">a</span><span class="w"></span>
+<span class="w">          </span><span class="n">token</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">zero</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">starting</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">equal</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">one</span><span class="w"></span>
+<span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">beginning</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">STRING</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">greater</span><span class="w"></span>
+<span class="w">          </span><span class="n">than</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">preceding</span><span class="w"> </span><span class="n">delimiter</span><span class="w"> </span><span class="n">otherwise</span><span class="p">.</span><span class="w"></span>
+
+<span class="n">LAST</span><span class="w">      </span><span class="n">It</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">allocated</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">lower</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="n">equal</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">the</span><span class="w"></span>
+<span class="w">          </span><span class="n">upper</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="n">equal</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">tokens</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">STRING</span><span class="p">.</span><span class="w"> </span><span class="n">Each</span><span class="w"></span>
+<span class="w">          </span><span class="n">element</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">assigned</span><span class="p">,</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">element</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ending</span><span class="w"></span>
+<span class="w">          </span><span class="n">position</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">each</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">STRING</span><span class="p">,</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="n">found</span><span class="p">.</span><span class="w"> </span><span class="n">If</span><span class="w"></span>
+<span class="w">          </span><span class="n">a</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">zero</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ending</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">less</span><span class="w"></span>
+<span class="w">          </span><span class="n">than</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">starting</span><span class="w"> </span><span class="n">position</span><span class="p">.</span><span class="w"></span>
+
+<span class="n">POS</span><span class="w">       </span><span class="n">If</span><span class="w"> </span><span class="n">BACK</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">present</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">.</span><span class="n">TRUE</span><span class="p">.,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"></span>
+<span class="w">          </span><span class="n">of</span><span class="w"> </span><span class="n">POS</span><span class="w"> </span><span class="n">shall</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">range</span><span class="w"> </span><span class="mh">0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">POS</span><span class="w">     </span><span class="n">LEN</span><span class="w"> </span><span class="p">(</span><span class="n">STRING</span><span class="p">)</span><span class="o">+</span><span class="mh">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="n">otherwise</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">shall</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">range</span><span class="w"> </span><span class="mh">0</span><span class="w">     </span><span class="n">POS</span><span class="w"> </span><span class="n">LEN</span><span class="w"> </span><span class="p">(</span><span class="n">STRING</span><span class="p">).</span><span class="w"></span>
+
+<span class="w">          </span><span class="n">If</span><span class="w"> </span><span class="n">BACK</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">absent</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">present</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">.</span><span class="n">FALSE</span><span class="p">.,</span><span class="w"> </span><span class="n">POS</span><span class="w"></span>
+<span class="w">          </span><span class="n">is</span><span class="w"> </span><span class="n">assigned</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">leftmost</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">delimiter</span><span class="w"> </span><span class="n">in</span><span class="w"></span>
+<span class="w">          </span><span class="n">STRING</span><span class="w"> </span><span class="n">whose</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">greater</span><span class="w"> </span><span class="n">than</span><span class="w"> </span><span class="n">POS</span><span class="p">,</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">is</span><span class="w"></span>
+<span class="w">          </span><span class="n">no</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">character</span><span class="p">,</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">assigned</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">greater</span><span class="w"> </span><span class="n">than</span><span class="w"></span>
+<span class="w">          </span><span class="n">the</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">STRING</span><span class="p">.</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">identifies</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">starting</span><span class="w"></span>
+<span class="w">          </span><span class="n">position</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">greater</span><span class="w"> </span><span class="n">than</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">POS</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">invocation</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="k">and</span><span class="w"> </span><span class="n">ending</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">less</span><span class="w"> </span><span class="n">than</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">POS</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="k">return</span><span class="p">.</span><span class="w"></span>
+
+<span class="w">          </span><span class="n">If</span><span class="w"> </span><span class="n">BACK</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">present</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">true</span><span class="p">,</span><span class="w"> </span><span class="n">POS</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">assigned</span><span class="w"> </span><span class="n">the</span><span class="w"></span>
+<span class="w">          </span><span class="n">position</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">rightmost</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">delimiter</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">STRING</span><span class="w"> </span><span class="n">whose</span><span class="w"></span>
+<span class="w">          </span><span class="n">position</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">less</span><span class="w"> </span><span class="n">than</span><span class="w"> </span><span class="n">POS</span><span class="p">,</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">character</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="n">it</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">assigned</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">zero</span><span class="p">.</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">identifies</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">with</span><span class="w"></span>
+<span class="w">          </span><span class="n">ending</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">less</span><span class="w"> </span><span class="n">than</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">POS</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">invocation</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="k">and</span><span class="w"> </span><span class="n">starting</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">greater</span><span class="w"> </span><span class="n">than</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">POS</span><span class="w"></span>
+<span class="w">          </span><span class="n">on</span><span class="w"> </span><span class="k">return</span><span class="p">.</span><span class="w"></span>
+
+<span class="w">          </span><span class="n">When</span><span class="w"> </span><span class="n">SPLIT</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">invoked</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">POS</span><span class="w"> </span><span class="n">of</span><span class="w"></span>
+<span class="w">          </span><span class="mh">1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">POS</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">LEN</span><span class="p">(</span><span class="n">STRING</span><span class="p">)</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">STRING</span><span class="p">(</span><span class="nl">POS:</span><span class="n">POS</span><span class="p">)</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">a</span><span class="w"></span>
+<span class="w">          </span><span class="n">token</span><span class="w"> </span><span class="n">delimiter</span><span class="w"> </span><span class="n">present</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">SET</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">identified</span><span class="w"> </span><span class="n">by</span><span class="w"></span>
+<span class="w">          </span><span class="n">SPLIT</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">comprise</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">complete</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">described</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"></span>
+<span class="w">          </span><span class="n">description</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">SET</span><span class="w"> </span><span class="n">argument</span><span class="p">,</span><span class="w"> </span><span class="n">but</span><span class="w"> </span><span class="n">rather</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">partial</span><span class="w"> </span><span class="n">token</span><span class="p">.</span><span class="w"></span>
+
+<span class="n">BACK</span><span class="w">      </span><span class="n">shall</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">logical</span><span class="w"> </span><span class="n">scalar</span><span class="p">.</span><span class="w"> </span><span class="n">It</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">INTENT</span><span class="w"> </span><span class="p">(</span><span class="n">IN</span><span class="p">)</span><span class="w"> </span><span class="n">argument</span><span class="p">.</span><span class="w"> </span><span class="n">If</span><span class="w"></span>
+<span class="w">          </span><span class="n">POS</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">appear</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">BACK</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">present</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="n">STRING</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="n">backwards</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">tokens</span><span class="w"> </span><span class="n">starting</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">the</span><span class="w"></span>
+<span class="w">          </span><span class="k">end</span><span class="p">.</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">POS</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">appear</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">BACK</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">absent</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">present</span><span class="w"></span>
+<span class="w">          </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">false</span><span class="p">,</span><span class="w"> </span><span class="n">STRING</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="n">forwards</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">tokens</span><span class="w"></span>
+<span class="w">          </span><span class="n">starting</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">beginning</span><span class="p">.</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample of uses</p>
+<div class="codehilite"><pre><span></span><code><span class="n">program</span><span class="w"> </span><span class="n">demo_sort2020</span><span class="w"></span>
+<span class="n">use</span><span class="w"> </span><span class="n">M_strings</span><span class="p">,</span><span class="w"> </span><span class="n">only</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">split2020</span><span class="w"></span>
+<span class="n">implicit</span><span class="w"> </span><span class="n">none</span><span class="w"></span>
+<span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">gen</span><span class="o">=</span><span class="p">&#39;(</span><span class="o">*</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="p">,</span><span class="n">g0</span><span class="p">,</span><span class="s">&quot;]&quot;</span><span class="o">:</span><span class="p">,</span><span class="s">&quot;,&quot;</span><span class="p">))&#39;</span><span class="w"></span>
+
+<span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">Execution</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">TOKEN</span><span class="w"> </span><span class="n">form</span><span class="w"></span>
+<span class="w"> </span><span class="n">block</span><span class="w"></span>
+<span class="w">   </span><span class="n">character</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="o">=:</span><span class="p">),</span><span class="w"> </span><span class="n">allocatable</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="k">string</span><span class="w"></span>
+<span class="w">   </span><span class="n">character</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="o">=:</span><span class="p">),</span><span class="w"> </span><span class="n">allocatable</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">tokens</span><span class="p">(</span><span class="o">:</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">character</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot; ,&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">&#39;</span><span class="n">first</span><span class="p">,</span><span class="n">second</span><span class="p">,</span><span class="n">third</span><span class="p">&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">call</span><span class="w"> </span><span class="n">split2020</span><span class="p">(</span><span class="k">string</span><span class="p">,</span><span class="w"> </span><span class="n">set</span><span class="p">,</span><span class="w"> </span><span class="n">tokens</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">gen</span><span class="p">)</span><span class="n">tokens</span><span class="w"></span>
+
+<span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">assigns</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">[&#39;</span><span class="n">first</span><span class="w"> </span><span class="sc">&#39;,&#39;</span><span class="n">second</span><span class="sc">&#39;,&#39;</span><span class="n">third</span><span class="w"> </span><span class="p">&#39;</span><span class="w"> </span><span class="p">]</span><span class="w"></span>
+<span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">TOKENS</span><span class="p">.</span><span class="w"></span>
+<span class="w"> </span><span class="n">endblock</span><span class="w"></span>
+
+<span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">Execution</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">BOUNDS</span><span class="w"> </span><span class="n">form</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">block</span><span class="w"></span>
+<span class="w">   </span><span class="n">character</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="o">=:</span><span class="p">),</span><span class="w"> </span><span class="n">allocatable</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="k">string</span><span class="w"></span>
+<span class="w">   </span><span class="n">character</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot; ,&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">integer</span><span class="p">,</span><span class="w"> </span><span class="n">allocatable</span><span class="w">        </span><span class="o">::</span><span class="w"> </span><span class="n">first</span><span class="p">(</span><span class="o">:</span><span class="p">),</span><span class="w"> </span><span class="n">last</span><span class="p">(</span><span class="o">:</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">string</span><span class="w"> </span><span class="o">=</span><span class="w">    </span><span class="p">&#39;</span><span class="n">first</span><span class="p">,</span><span class="n">second</span><span class="p">,,</span><span class="n">forth</span><span class="p">&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">call</span><span class="w"> </span><span class="n">split2020</span><span class="w"> </span><span class="p">(</span><span class="k">string</span><span class="p">,</span><span class="w"> </span><span class="n">set</span><span class="p">,</span><span class="w"> </span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">gen</span><span class="p">)</span><span class="n">first</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">gen</span><span class="p">)</span><span class="n">last</span><span class="w"></span>
+
+<span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="k">assign</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mh">1</span><span class="p">,</span><span class="w"> </span><span class="mh">7</span><span class="p">,</span><span class="w"> </span><span class="mh">14</span><span class="p">,</span><span class="w"> </span><span class="mh">15</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">FIRST</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mh">5</span><span class="p">,</span><span class="w"> </span><span class="mh">12</span><span class="p">,</span><span class="w"> </span><span class="mh">13</span><span class="p">,</span><span class="w"> </span><span class="mh">19</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">LAST</span><span class="p">.</span><span class="w"></span>
+<span class="w"> </span><span class="n">endblock</span><span class="w"></span>
+
+<span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">Execution</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">STEP</span><span class="w"> </span><span class="n">form</span><span class="w"></span>
+<span class="w"> </span><span class="n">block</span><span class="w"></span>
+<span class="w">   </span><span class="n">character</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="o">=:</span><span class="p">),</span><span class="w"> </span><span class="n">allocatable</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="k">string</span><span class="w"></span>
+<span class="w">   </span><span class="n">character</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot; ,&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">integer</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">istart</span><span class="p">,</span><span class="w"> </span><span class="n">iend</span><span class="w"></span>
+<span class="w">   </span><span class="k">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot; one,   last  example  &quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">do</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">len</span><span class="p">(</span><span class="k">string</span><span class="p">))</span><span class="w"></span>
+<span class="w">     </span><span class="n">istart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">1</span><span class="w"></span>
+<span class="w">     </span><span class="n">call</span><span class="w"> </span><span class="n">split2020</span><span class="w"> </span><span class="p">(</span><span class="k">string</span><span class="p">,</span><span class="w"> </span><span class="n">set</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">)</span><span class="w"></span>
+<span class="w">     </span><span class="n">iend</span><span class="o">=</span><span class="n">p</span><span class="o">-</span><span class="mh">1</span><span class="w"></span>
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">iend</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">istart</span><span class="p">)</span><span class="n">then</span><span class="w"></span>
+<span class="w">        </span><span class="n">print</span><span class="w"> </span><span class="p">&#39;(</span><span class="n">t3</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="mh">1</span><span class="n">x</span><span class="p">,</span><span class="n">i0</span><span class="p">,</span><span class="mh">1</span><span class="n">x</span><span class="p">,</span><span class="n">i0</span><span class="p">)&#39;,</span><span class="w"> </span><span class="k">string</span><span class="w"> </span><span class="p">(</span><span class="nl">istart:</span><span class="n">iend</span><span class="p">),</span><span class="n">istart</span><span class="p">,</span><span class="n">iend</span><span class="w"></span>
+<span class="w">     </span><span class="n">endif</span><span class="w"></span>
+<span class="w">   </span><span class="n">enddo</span><span class="w"></span>
+<span class="w"> </span><span class="n">endblock</span><span class="w"></span>
+<span class="k">end</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">demo_sort2020</span><span class="w"></span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">[first ],[second],[third ]</span><span class="w"></span>
+<span class="k">[1],[7],[14],[15]</span><span class="w"></span>
+<span class="k">[5],[12],[13],[19]</span><span class="w"></span>
+<span class="w">  </span><span class="na">one 2 4</span><span class="w"></span>
+<span class="w">  </span><span class="na">last 9 12</span><span class="w"></span>
+<span class="w">  </span><span class="na">example 15 21</span><span class="w"></span>
+
+<span class="w">  </span><span class="na">&gt; ??? option to skip adjacent delimiters (not return null tokens)</span><span class="w"></span>
+<span class="w">  </span><span class="na">&gt;     common with whitespace</span><span class="w"></span>
+<span class="w">  </span><span class="na">&gt; ??? quoted strings, especially CSV both &quot; and &#39;, Fortran adjacent</span><span class="w"></span>
+<span class="w">  </span><span class="na">&gt;     is insert versus other rules</span><span class="w"></span>
+<span class="w">  </span><span class="na">&gt; ??? escape character like \\ .</span><span class="w"></span>
+<span class="w">  </span><span class="na">&gt; ??? multi-character delimiters like \\n, \\t,</span><span class="w"></span>
+<span class="w">  </span><span class="na">&gt; ??? regular expression separator</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">Milan</span><span class="w"> </span><span class="n">Curcic</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;milancurcic@hey.com&quot;</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>MIT
+</code></pre></div>
+
+<h2 id="version">VERSION</h2>
+<div class="codehilite"><pre><span></span><code>version 0.1.0, copyright 2020, Milan Curcic
+</code></pre></div>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>string</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>set</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character,
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character,
+            </td>
+<td>intent(out),</td>
+              <td>optional,</td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>separator</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+      <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-split_first_last"></span><h3>private pure subroutine split_first_last(string, set, first, last)  
+</h3></div>
+    <div class="panel-body">
+        
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>string</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>set</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>first</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>last</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+      <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-split_pos"></span><h3>private pure subroutine split_pos(string, set, pos, back)  
+</h3></div>
+    <div class="panel-body">
+        
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>string</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>set</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>pos</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              logical,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>back</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+
+ </div>
+</div>
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-6"><p>M_strings was developed by John S. Urban<br>&copy; 2023 
+</p>
+        </div>
+        <div class="col-xs-6 col-md-6">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2023-01-08 21:09            </p>
+        </div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+  </body>
+</html>
