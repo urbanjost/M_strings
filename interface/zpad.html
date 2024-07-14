@@ -1,64 +1,78 @@
-<!-- -*- mode: jinja2 -*- -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="description" content="string operations">
+   <meta name="description" content="string operations">
     <meta name="author" content="John S. Urban" >
     <link rel="icon" href="../favicon.png">
 
     <title>zpad &ndash; M_strings</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
-      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
     <script src="../js/svg-pan-zoom.min.js"></script>
+
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <div class="container-fluid mb-sm-4 mb-xl-2">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-          <a class="navbar-brand" href="../index.html">M_strings </a>
-          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
-                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
           </button>
-
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" href="../lists/files.html">Source Files</a>
-                  </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="../lists/modules.html">Modules</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
-                </li>
-            </ul>
-              <div class="d-flex align-items-end flex-grow-1">
-                <form action="../search.html" role="search" class="ms-auto">
-                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
-                </form>
-              </div>
-          </div><!--/.nav-collapse -->
+          <a class="navbar-brand" href="../index.html">M_strings </a>
         </div>
-      </nav>
-    </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="../lists/files.html">Source Files</a></li>
+            <li><a href="../lists/modules.html">Modules</a></li>
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+                   <li><a href="../lists/types.html">Derived Types</a></li>
+       
+            </ul>
+        
+            </li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+                             <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+          </ul>
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
 
     <div class="container">
   <div class="row">
@@ -66,41 +80,38 @@
       <small>Interface</small>
       
     </h1>
-      <div class="container p-2 mb-4 bg-light border rounded-3">
-    <div class="row align-items-center justify-content-between" id="info-bar">
-      <div class="col">
+      <div class="row" id="info-bar">
+    <div class="col-lg-12">
+      <div class="well well-sm">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title="<p> 0.1% of total for procedures.</p>Including implementation: 68 statements,  2.4% of total for procedures.">3 statements</a>
-            </li>
+          <li id="statements"><i class="fa fa-list-ol"></i>
+            <a data-toggle="tooltip"
+               data-placement="bottom" data-html="true"
+               title="<p> 0.1% of total for procedures.</p>Including implementation: 68 statements,  2.4% of total for procedures.">3 statements</a>
+          </li>
 
-            <li class="list-inline-item" id="source-file">
+            <li id="source-file">
               <i class="fa fa-code"></i>
               <a href="../src/M_strings.F90"> Source File</a>
             </li>
         </ul>
-      </div>
-      <div class="col">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
-                <li class="breadcrumb-item"><a href='../module/m_strings.html'>M_strings</a></li>
-            <li class="breadcrumb-item active" aria-current="page">zpad</li>
-          </ol>
-        </nav>
+        <ol class="breadcrumb in-well text-right">
+              <li><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
+              <li><a href='../module/m_strings.html'>M_strings</a></li>
+          <li class="active">zpad</li>
+        </ol>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-bs-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip()
     })
   </script>
 
   </div>
-
+  
   <div class="row">
     <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
         <div id="sidebar">
@@ -123,37 +134,76 @@
   
   
   
-      <div class="card mb-4">
-      <a data-bs-toggle="collapse" href="#modprocs-0"
-         aria-expanded="false" aria-controls="modprocs-0">
-         <h4 class="card-header bg-primary text-white">Module Procedures</h4>
-      </a>
-      <div id="modprocs-0" class="collapse">
-        <div class="list-group list-group-flush">
+      <div class="panel panel-primary">
+      <div class="panel-heading text-left">
+        <h3 class="panel-title">
+          <a data-toggle="collapse" href="#modprocs-0">Module Procedures</a>
+        </h3>
+      </div>
+      <div id="modprocs-0" class="panel-collapse collapse">
+        <div class="list-group">
             <a class="list-group-item" href="../interface/zpad.html#moduleprocedure-zpad_scalar">zpad_scalar</a>
             <a class="list-group-item" href="../interface/zpad.html#moduleprocedure-zpad_vector">zpad_vector</a>
         </div>
       </div>
     </div>
 
-  
 
 
   </div>
 
     </div>
-
+    
     <div class="col-md-9" id='text'>
       <h2>public interface zpad</h2>
-      
+   
+
+     <section class="visible-xs visible-sm hidden-md">
+         <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="panel panel-primary">
+      <div class="panel-heading text-left">
+        <h3 class="panel-title">
+          <a data-toggle="collapse" href="#modprocs-1">Module Procedures</a>
+        </h3>
+      </div>
+      <div id="modprocs-1" class="panel-collapse collapse">
+        <div class="list-group">
+            <a class="list-group-item" href="../interface/zpad.html#moduleprocedure-zpad_scalar">zpad_scalar</a>
+            <a class="list-group-item" href="../interface/zpad.html#moduleprocedure-zpad_vector">zpad_vector</a>
+        </div>
+      </div>
+    </div>
 
 
 
-        <h2>Module Procedures</h2>
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-zpad_scalar"></span> <h3>private  function zpad_scalar(valuein, length) result(strout)  
+     </section>
+     <br class="visible-xs visible-sm hidden-md">
+     
+
+
+   <h2>Module Procedures</h2>
+      <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-zpad_scalar"></span><h3>private  function zpad_scalar(valuein, length) result(strout)  
 </h3></div>
-    <div class="card-body">
+    <div class="panel-body">
         <h2 id="name">NAME</h2>
 <div class="codehilite"><pre><span></span><code>zpad(3f) - [M_strings:LENGTH] pad a string on the left with zeros to
 specified length
@@ -161,105 +211,104 @@ specified length
 </code></pre></div>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">zpad(valuein,length) result</span><span class="p">(</span>strout<span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">zpad(valuein,length) result</span><span class="p">(</span>strout<span class="p">)</span><span class="w"></span>
 
-<span class="w"> </span><span class="nb">class</span><span class="o">*</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">           </span><span class="p">::</span><span class="w"> </span><span class="n">valuein</span><span class="p">(..)</span>
-<span class="w"> </span><span class="n">integer</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nb">length</span>
+<span class="w"> </span><span class="nb">class</span><span class="o">*</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">           </span><span class="p">::</span><span class="w"> </span><span class="n">valuein</span><span class="p">(..)</span><span class="w"></span>
+<span class="w"> </span><span class="n">integer</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nb">length</span><span class="w"></span>
 </code></pre></div>
 
 <h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">zpad</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span><span class="w"> </span><span class="nv">crops</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">input</span><span class="w"> </span><span class="nv">string</span><span class="w"> </span><span class="ss">(</span><span class="nv">or</span><span class="w"> </span><span class="nv">integer</span>,<span class="w"> </span><span class="nv">which</span><span class="w"> </span><span class="nv">will</span><span class="w"> </span><span class="nv">be</span><span class="w"> </span><span class="nv">converted</span>
-<span class="nv">to</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">string</span><span class="ss">)</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nv">pads</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="nv">on</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">left</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">zeros</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">specified</span>
-<span class="nv">length</span>.
+<div class="codehilite"><pre><span></span><code><span class="nv">zpad</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">crops</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">or</span> <span class="nv">integer</span> <span class="ss">(</span><span class="nv">which</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">converted</span>
+<span class="nv">to</span> <span class="nv">a</span> <span class="nv">string</span><span class="ss">)</span> <span class="nv">and</span> <span class="k">then</span> <span class="nv">pads</span> <span class="nv">it</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">left</span> <span class="nv">with</span> <span class="nv">zeros</span> <span class="nv">to</span> <span class="nv">at</span> <span class="nv">least</span>
+<span class="nv">the</span> <span class="nv">specified</span> <span class="nv">length</span>. <span class="k">If</span> <span class="nv">the</span> <span class="nv">trimmed</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">longer</span> <span class="nv">than</span> <span class="nv">the</span>
+<span class="nv">requested</span> <span class="nv">length</span> <span class="nv">the</span> <span class="nv">original</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">returned</span> <span class="nv">trimmed</span> <span class="nv">of</span> <span class="nv">leading</span>
+<span class="nv">and</span> <span class="nv">trailing</span> <span class="nv">spaces</span>.
 
-<span class="nv">Note</span><span class="w"> </span><span class="nv">that</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">trimmed</span><span class="w"> </span><span class="nv">input</span><span class="w"> </span><span class="nv">string</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">already</span><span class="w"> </span><span class="nv">as</span><span class="w"> </span><span class="nv">long</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">longer</span>
-<span class="nv">than</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">requested</span><span class="w"> </span><span class="nv">length</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">trimmed</span><span class="w"> </span><span class="nv">original</span><span class="w"> </span><span class="nv">string</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">returned</span>.
+<span class="k">For</span> <span class="nv">strings</span> <span class="nv">representing</span> <span class="nv">unsigned</span> <span class="nv">numbers</span> <span class="nv">this</span> <span class="nv">is</span> <span class="nv">basically</span> <span class="nv">an</span> <span class="nv">alias</span> <span class="k">for</span>
 
-<span class="k">For</span><span class="w"> </span><span class="nv">strings</span><span class="w"> </span><span class="nv">representing</span><span class="w"> </span><span class="nv">unsigned</span><span class="w"> </span><span class="nv">numbers</span><span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">basically</span><span class="w"> </span><span class="nv">an</span>
-<span class="nv">alias</span><span class="w"> </span><span class="k">for</span>
+    <span class="nv">strout</span><span class="o">=</span><span class="nv">pad</span><span class="ss">(</span><span class="nv">str</span>,<span class="nv">length</span>,<span class="s1">&#39;</span><span class="s">0</span><span class="s1">&#39;</span>,<span class="nv">clip</span><span class="o">=</span>.<span class="nv">true</span>.,<span class="nv">right</span><span class="o">=</span>.<span class="nv">false</span>.<span class="ss">)</span>
 
-<span class="w">    </span><span class="nv">strout</span><span class="o">=</span><span class="nv">pad</span><span class="ss">(</span><span class="nv">str</span>,<span class="nv">length</span>,<span class="s1">&#39;0&#39;</span>,<span class="nv">clip</span><span class="o">=</span>.<span class="nv">true</span>.,<span class="nv">right</span><span class="o">=</span>.<span class="nv">false</span>.<span class="ss">)</span>
+<span class="k">For</span> <span class="nv">integers</span> <span class="nv">the</span> <span class="nv">same</span> <span class="nv">is</span> <span class="nv">often</span> <span class="nv">done</span> <span class="nv">with</span> <span class="nv">internal</span> <span class="nv">WRITE</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">statements</span>
+<span class="nv">such</span> <span class="nv">as</span>
 
-<span class="k">For</span><span class="w"> </span><span class="nv">integers</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">same</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">often</span><span class="w"> </span><span class="nv">done</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">internal</span><span class="w"> </span><span class="nv">WRITE</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span><span class="w"> </span><span class="nv">statements</span>
-<span class="nv">such</span><span class="w"> </span><span class="nv">as</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="nv">strout</span>,<span class="s1">&#39;</span><span class="s">(i5.5)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">ivalue</span>
 
-<span class="w">    </span><span class="nv">write</span><span class="ss">(</span><span class="nv">strout</span>,<span class="s1">&#39;(i5.5)&#39;</span><span class="ss">)</span><span class="nv">ivalue</span>
-
-<span class="nv">but</span><span class="w"> </span><span class="nv">unlike</span><span class="w"> </span><span class="nv">internal</span><span class="w"> </span><span class="nv">I</span><span class="o">/</span><span class="nv">O</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">function</span><span class="w"> </span><span class="k">call</span><span class="w"> </span><span class="nl">can</span><span class="w"> </span><span class="nv">be</span><span class="w"> </span><span class="nv">used</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">expressions</span>
-<span class="nv">or</span><span class="w"> </span><span class="nv">passed</span><span class="w"> </span><span class="nv">as</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">procedure</span><span class="w"> </span><span class="nv">argument</span>.
+<span class="nv">but</span> <span class="nv">unlike</span> <span class="nv">internal</span> <span class="nv">I</span><span class="o">/</span><span class="nv">O</span> <span class="nv">the</span> <span class="nv">function</span> <span class="k">call</span> <span class="nl">can</span> <span class="nv">be</span> <span class="nv">used</span> <span class="nv">in</span> <span class="nv">expressions</span>
+<span class="nv">or</span> <span class="nv">passed</span> <span class="nv">as</span> <span class="nv">a</span> <span class="nv">procedure</span> <span class="nv">argument</span>. <span class="k">If</span> <span class="nv">the</span> <span class="nv">requested</span> <span class="nv">length</span> <span class="nv">is</span> <span class="nv">exceeded</span>
+<span class="nv">the</span> <span class="nv">returned</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">untruncated</span> <span class="nv">but</span> <span class="nv">cropped</span> <span class="nv">of</span> <span class="nv">leading</span> <span class="nv">and</span> <span class="nv">trailing</span>
+<span class="nv">spaces</span>.
 </code></pre></div>
 
 <h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">valuein</span><span class="w">  </span><span class="nv">The</span><span class="w"> </span><span class="nv">input</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">left</span><span class="o">-</span><span class="nv">pad</span>.<span class="w"> </span><span class="nv">May</span><span class="w"> </span><span class="nv">be</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">scalar</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">vector</span>
-<span class="w">         </span><span class="nv">string</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">integer</span>.<span class="w"> </span><span class="k">If</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">leftmost</span><span class="w"> </span><span class="nv">non</span><span class="o">-</span><span class="nv">blank</span><span class="w"> </span><span class="nv">character</span><span class="w"> </span><span class="nv">is</span>
-<span class="w">         </span><span class="nv">a</span><span class="w"> </span><span class="nv">sign</span><span class="w"> </span><span class="nv">character</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">moved</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">left</span><span class="o">-</span><span class="nv">most</span><span class="w"> </span><span class="nv">position</span><span class="w"> </span><span class="nv">of</span>
-<span class="w">         </span><span class="nv">the</span><span class="w"> </span><span class="nv">output</span>.
-<span class="nv">length</span><span class="w">   </span><span class="nv">The</span><span class="w"> </span><span class="nv">minimum</span><span class="w"> </span><span class="nv">string</span><span class="w"> </span><span class="nv">length</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="k">return</span>.<span class="w"> </span><span class="k">If</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">present</span>,<span class="w"> </span><span class="nv">the</span>
-<span class="w">         </span><span class="nv">length</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">input</span><span class="w"> </span><span class="nv">parameter</span><span class="w"> </span><span class="nv">VALUEIN</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">used</span>.<span class="w"> </span><span class="k">If</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">input</span>
-<span class="w">         </span><span class="nv">value</span><span class="w"> </span><span class="nv">VALUEIN</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">an</span><span class="w"> </span><span class="nv">integer</span><span class="w"> </span><span class="nv">no</span><span class="w"> </span><span class="nv">zero</span><span class="w"> </span><span class="nv">padding</span><span class="w"> </span><span class="nv">occurs</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">LENGTH</span>
-<span class="w">         </span><span class="nv">is</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">supplied</span>.
+<div class="codehilite"><pre><span></span><code><span class="nv">str</span>      <span class="nv">May</span> <span class="nv">be</span> <span class="nv">a</span> <span class="nv">scalor</span> <span class="nv">or</span> <span class="nv">vector</span> <span class="nv">string</span> <span class="nv">or</span> <span class="nv">integer</span>. <span class="nv">The</span> <span class="nv">input</span> <span class="nv">string</span>
+         <span class="nv">to</span> <span class="k">return</span> <span class="nv">trimmed</span>, <span class="nv">but</span> <span class="k">then</span> <span class="nv">padded</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">specified</span> <span class="nv">length</span>
+         <span class="k">if</span> <span class="nv">shorter</span> <span class="nv">than</span> <span class="nv">length</span>. <span class="k">If</span> <span class="nv">an</span> <span class="nv">integer</span> <span class="nv">is</span> <span class="nv">input</span> <span class="nv">it</span> <span class="nv">is</span> <span class="nv">first</span>
+         <span class="nv">converted</span> <span class="nv">to</span> <span class="nv">a</span> <span class="nv">string</span>. <span class="k">If</span> <span class="nv">the</span> <span class="nv">leftmost</span> <span class="nv">non</span><span class="o">-</span><span class="nv">blank</span> <span class="nv">character</span>
+         <span class="nv">is</span> <span class="nv">a</span> <span class="nv">sign</span> <span class="nv">character</span> <span class="nv">it</span> <span class="nv">is</span> <span class="nv">moved</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">left</span><span class="o">-</span><span class="nv">most</span> <span class="nv">position</span>
+         <span class="nv">of</span> <span class="nv">the</span> <span class="nv">output</span>.
+<span class="nv">length</span>   <span class="nv">The</span> <span class="nv">minimum</span> <span class="nv">string</span> <span class="nv">length</span> <span class="nv">to</span> <span class="k">return</span>. <span class="k">If</span> <span class="nv">not</span> <span class="nv">present</span>, <span class="nv">the</span>
+         <span class="nv">length</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">parameter</span> <span class="nv">STR</span> <span class="nv">is</span> <span class="nv">used</span>. <span class="k">If</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">value</span>
+         <span class="nv">STR</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">no</span> <span class="nv">zero</span> <span class="nv">padding</span> <span class="nv">occurs</span> <span class="k">if</span> <span class="nv">LENGTH</span> <span class="nv">is</span> <span class="nv">not</span>
+         <span class="nv">supplied</span>.
 </code></pre></div>
 
 <h2 id="returns">RETURNS</h2>
-<div class="codehilite"><pre><span></span><code>strout  A trimmed string padded on the left with zeros to
-        the requested length
+<div class="codehilite"><pre><span></span><code><span class="nv">strout</span>  <span class="nv">The</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">padded</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">requested</span> <span class="nv">length</span> <span class="nv">or</span> <span class="nv">the</span> <span class="nv">trimmed</span>
+        <span class="nv">input</span> <span class="nv">string</span> <span class="k">if</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">is</span> <span class="nv">longer</span> <span class="nv">than</span> <span class="nv">the</span> <span class="nv">requested</span>
+        <span class="nv">length</span>.
 </code></pre></div>
 
-<h2 id="examples">EXAMPLES</h2>
+<h2 id="example">EXAMPLE</h2>
 <p>Sample Program:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_zpad</span>
-<span class="w">   </span><span class="nx">use</span><span class="w"> </span><span class="nx">M_strings</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">zpad</span>
-<span class="w">   </span><span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
-<span class="w">   </span><span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="nx">parameter</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nx">boxed</span><span class="p">=</span><span class="err">&#39;</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="p">,</span><span class="nx">a</span><span class="p">,</span><span class="s">&quot;]&quot;</span><span class="p">,</span><span class="o">*</span><span class="p">(</span><span class="nx">g0</span><span class="p">,</span><span class="mi">1</span><span class="nx">x</span><span class="p">))</span><span class="err">&#39;</span>
-<span class="w">   </span><span class="nx">integer</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nx">lun</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="nx">boxed</span><span class="p">,</span><span class="w"> </span><span class="nx">zpad</span><span class="p">(</span><span class="w"> </span><span class="err">&#39;</span><span class="mi">111</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">),</span><span class="err">&#39;</span><span class="nx">basic</span><span class="w"> </span><span class="nx">use</span><span class="err">&#39;</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="nx">boxed</span><span class="p">,</span><span class="w"> </span><span class="nx">zpad</span><span class="p">(</span><span class="w"> </span><span class="nx">valuein</span><span class="p">=</span><span class="mi">42</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nx">length</span><span class="p">=</span><span class="mi">7</span><span class="p">),</span><span class="err">&#39;</span><span class="nx">by</span><span class="w"> </span><span class="nx">argument</span><span class="w"> </span><span class="nx">name</span><span class="err">&#39;</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="nx">boxed</span><span class="p">,</span><span class="w"> </span><span class="nx">zpad</span><span class="p">(</span><span class="w"> </span><span class="err">&#39;</span><span class="w">  </span><span class="mi">34567</span><span class="w">  </span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">),</span><span class="err">&#39;</span><span class="nx">cropped</span><span class="w"> </span><span class="nx">before</span><span class="w"> </span><span class="nx">padding</span><span class="err">&#39;</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="nx">boxed</span><span class="p">,</span><span class="w"> </span><span class="nx">zpad</span><span class="p">(</span><span class="w"> </span><span class="err">&#39;</span><span class="mi">123456789</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">),</span><span class="err">&#39;</span><span class="nx">input</span><span class="w"> </span><span class="nx">longer</span><span class="w"> </span><span class="nx">than</span><span class="w"> </span><span class="nx">length</span><span class="err">&#39;</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="nx">boxed</span><span class="p">,</span><span class="w"> </span><span class="nx">zpad</span><span class="p">(</span><span class="w"> </span><span class="err">&#39;</span><span class="w">  </span><span class="o">+</span><span class="mi">34567</span><span class="w">  </span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">),</span><span class="err">&#39;</span><span class="nx">starts</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">plus</span><span class="w"> </span><span class="nx">sign</span><span class="err">&#39;</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="nx">boxed</span><span class="p">,</span><span class="w"> </span><span class="nx">zpad</span><span class="p">(</span><span class="w"> </span><span class="err">&#39;</span><span class="w">  </span><span class="o">-</span><span class="mi">34567</span><span class="w">  </span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">),</span><span class="err">&#39;</span><span class="nx">starts</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">minus</span><span class="w"> </span><span class="nx">sign</span><span class="err">&#39;</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="nx">boxed</span><span class="p">,</span><span class="w"> </span><span class="nx">zpad</span><span class="p">(</span><span class="mi">1234</span><span class="p">),</span><span class="err">&#39;</span><span class="nx">some</span><span class="w"> </span><span class="nx">integers</span><span class="w"> </span><span class="nx">instead</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">strings</span><span class="err">&#39;</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="nx">boxed</span><span class="p">,</span><span class="w"> </span><span class="nx">zpad</span><span class="p">(</span><span class="o">-</span><span class="mi">1234</span><span class="p">)</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="nx">boxed</span><span class="p">,</span><span class="w"> </span><span class="nx">zpad</span><span class="p">(</span><span class="mi">1234</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="nx">boxed</span><span class="p">,</span><span class="w"> </span><span class="nx">zpad</span><span class="p">(</span><span class="o">-</span><span class="mi">1234</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="nx">boxed</span><span class="p">,</span><span class="w"> </span><span class="nx">zpad</span><span class="p">(</span><span class="err">&#39;&#39;</span><span class="p">),</span><span class="err">&#39;</span><span class="nx">a</span><span class="w"> </span><span class="nx">null</span><span class="w"> </span><span class="nx">gets</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">nothing</span><span class="err">&#39;</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="nx">boxed</span><span class="p">,</span><span class="w"> </span><span class="nx">zpad</span><span class="p">(</span><span class="sc">&#39;0&#39;</span><span class="p">),</span><span class="err">&#39;</span><span class="nx">but</span><span class="w"> </span><span class="nx">blanks</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">used</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">length</span><span class="err">&#39;</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="nx">boxed</span><span class="p">,</span><span class="w"> </span><span class="nx">zpad</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">0</span><span class="w">    </span><span class="err">&#39;</span><span class="p">)</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="nx">boxed</span><span class="p">,</span><span class="w"> </span><span class="nx">zpad</span><span class="p">(</span><span class="err">&#39;</span><span class="w">     </span><span class="err">&#39;</span><span class="p">)</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">input</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="nx">may</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">an</span><span class="w"> </span><span class="nx">array</span><span class="p">:</span><span class="err">&#39;</span>
-<span class="w">      </span><span class="nx">print</span><span class="w"> </span><span class="err">&#39;</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="p">,</span><span class="nx">a</span><span class="p">,</span><span class="s">&quot;]&quot;</span><span class="p">)</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">zpad</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="mi">100000</span><span class="p">],</span><span class="mi">8</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code>  <span class="nv">program</span> <span class="nv">demo_zpad</span>
+   <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">zpad</span>
+   <span class="nv">implicit</span> <span class="nv">none</span>
+   <span class="nv">integer</span> :: <span class="nv">lun</span>, <span class="nv">i</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span> <span class="s1">&#39;</span><span class="s">111</span><span class="s1">&#39;</span>, <span class="mi">5</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span> <span class="s1">&#39;</span><span class="s">123456789</span><span class="s1">&#39;</span>, <span class="mi">5</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span> <span class="s1">&#39;</span><span class="s">  34567  </span><span class="s1">&#39;</span>, <span class="mi">7</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span> <span class="nv">valuein</span><span class="o">=</span><span class="mi">42</span> , <span class="nv">length</span><span class="o">=</span><span class="mi">7</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span> <span class="s1">&#39;</span><span class="s">  +34567  </span><span class="s1">&#39;</span>, <span class="mi">7</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span> <span class="s1">&#39;</span><span class="s">  -34567  </span><span class="s1">&#39;</span>, <span class="mi">7</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span><span class="mi">1234</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span><span class="o">-</span><span class="mi">1234</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span><span class="mi">1234</span>,<span class="mi">8</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span><span class="o">-</span><span class="mi">1234</span>,<span class="mi">8</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span><span class="s1">&#39;&#39;</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">0</span><span class="s1">&#39;</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">0    </span><span class="s1">&#39;</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">     </span><span class="s1">&#39;</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">zpad</span><span class="ss">(</span>[<span class="mi">1</span>,<span class="mi">10</span>,<span class="mi">100</span>,<span class="mi">1000</span>,<span class="mi">10000</span>,<span class="mi">100000</span>],<span class="mi">8</span><span class="ss">)</span>
 
-<span class="w">      </span><span class="p">!</span><span class="w"> </span><span class="nx">example</span><span class="w"> </span><span class="nx">usage</span><span class="p">:</span>
-<span class="w">      </span><span class="p">!</span><span class="w"> </span><span class="nx">open</span><span class="w"> </span><span class="nx">output_00085</span><span class="p">.</span><span class="nx">dat</span>
-<span class="w">      </span><span class="nx">i</span><span class="p">=</span><span class="mi">85</span>
-<span class="w">      </span><span class="nx">open</span><span class="p">(</span><span class="nx">newunit</span><span class="p">=</span><span class="nx">lun</span><span class="p">,</span><span class="nx">file</span><span class="p">=</span><span class="err">&#39;</span><span class="nx">output_</span><span class="err">&#39;</span><span class="c1">//zpad(i,5)//&#39;.dat&#39;)</span>
-<span class="w">      </span><span class="nx">close</span><span class="p">(</span><span class="nx">unit</span><span class="p">=</span><span class="nx">lun</span><span class="p">,</span><span class="nx">status</span><span class="p">=</span><span class="err">&#39;</span><span class="nx">delete</span><span class="err">&#39;</span><span class="p">)</span>
+      <span class="o">!</span> <span class="nv">open</span> <span class="nv">output_00085</span>.<span class="nv">dat</span>
+      <span class="nv">i</span><span class="o">=</span><span class="mi">85</span>
+      <span class="nv">open</span><span class="ss">(</span><span class="nv">newunit</span><span class="o">=</span><span class="nv">lun</span>,<span class="nv">file</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">output_</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">zpad</span><span class="ss">(</span><span class="nv">i</span>,<span class="mi">5</span><span class="ss">)</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">.dat</span><span class="s1">&#39;</span><span class="ss">)</span>
+      <span class="nv">close</span><span class="ss">(</span><span class="nv">unit</span><span class="o">=</span><span class="nv">lun</span>,<span class="nv">status</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">delete</span><span class="s1">&#39;</span><span class="ss">)</span>
 
-<span class="w">  </span><span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_zpad</span>
+  <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_zpad</span>
 </code></pre></div>
 
 <p>Results:</p>
-<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="mi">00111</span>]<span class="nv">basic</span><span class="w"> </span><span class="nv">use</span>
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="mi">0000042</span>]<span class="nv">by</span><span class="w"> </span><span class="nv">argument</span><span class="w"> </span><span class="nv">name</span>
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="mi">0034567</span>]<span class="nv">cropped</span><span class="w"> </span><span class="nv">before</span><span class="w"> </span><span class="nv">padding</span>
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="mi">123456789</span>]<span class="nv">input</span><span class="w"> </span><span class="nv">longer</span><span class="w"> </span><span class="nv">than</span><span class="w"> </span><span class="nv">length</span>
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="o">+</span><span class="mi">0034567</span>]<span class="nv">starts</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">plus</span><span class="w"> </span><span class="nv">sign</span>
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="o">-</span><span class="mi">0034567</span>]<span class="nv">starts</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">minus</span><span class="w"> </span><span class="nv">sign</span>
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="mi">1234</span>]<span class="nv">some</span><span class="w"> </span><span class="nv">integers</span><span class="w"> </span><span class="nv">instead</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">strings</span>
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="o">-</span><span class="mi">1234</span>]
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="mi">00001234</span>]
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="o">-</span><span class="mi">00001234</span>]
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[]<span class="nv">a</span><span class="w"> </span><span class="nv">null</span><span class="w"> </span><span class="nv">gets</span><span class="w"> </span><span class="nv">you</span><span class="w"> </span><span class="nv">nothing</span>
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="mi">0</span>]<span class="nv">but</span><span class="w"> </span><span class="nv">blanks</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="nv">used</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">default</span><span class="w"> </span><span class="nv">length</span>
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="mi">00000</span>]
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="mi">00000</span>]
-<span class="w"> </span><span class="o">&gt;</span><span class="w">  </span><span class="nv">input</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="nv">may</span><span class="w"> </span><span class="nv">be</span><span class="w"> </span><span class="nv">an</span><span class="w"> </span><span class="nv">array</span>:
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="mi">00000001</span>]
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="mi">00000010</span>]
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="mi">00000100</span>]
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="mi">00001000</span>]
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="mi">00010000</span>]
-<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>[<span class="mi">00100000</span>]
+<div class="codehilite"><pre><span></span><code>   [00111]
+   [123456789]
+   [0034567]
+   [0000042]
+   [+0034567]
+   [-0034567]
+   [1234]
+   [-1234]
+   [00001234]
+   [-00001234]
+   []
+   [0]
+   [00000]
+   [00000]
+   [00000001]
+   [00000010]
+   [00000100]
+   [00001000]
+   [00010000]
+   [00100000]
 </code></pre></div>
 
 <h2 id="author">AUTHOR</h2>
@@ -274,16 +323,16 @@ specified length
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-valuein~7"></span>
+              <span class="anchor" ></span>
               class(*),
             </td>
 <td>intent(in)</td>
@@ -298,7 +347,7 @@ specified length
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-length~11"></span>
+              <span class="anchor" ></span>
               integer,
             </td>
 <td>intent(in),</td>
@@ -323,26 +372,26 @@ specified length
     </div>
   </div>
 
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-zpad_vector"></span> <h3>private  function zpad_vector(valuein, length) result(strout)  
+      <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-zpad_vector"></span><h3>private  function zpad_vector(valuein, length) result(strout)  
 </h3></div>
-    <div class="card-body">
+    <div class="panel-body">
         
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-valuein~8"></span>
+              <span class="anchor" ></span>
               class(*),
             </td>
 <td>intent(in)</td>
@@ -357,7 +406,7 @@ specified length
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-length~12"></span>
+              <span class="anchor" ></span>
               integer,
             </td>
 <td>intent(in),</td>
@@ -382,50 +431,54 @@ specified length
     </div>
   </div>
 
+
+ </div>
 </div>
-  </div>
-      <hr>
+
+    <hr>    
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row justify-content-between">
-          <div class="col">
-            <p>
-              M_strings
- was developed by John S. Urban<br>              &copy; 2024 
+      <div class="row">
+        <div class="col-xs-6 col-md-6"><p>M_strings was developed by John S. Urban<br>&copy; 2023 
 </p>
-          </div>
-          <div class="col">
-            <p class="text-end">
-              Documentation generated by
-              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2024-07-14 20:56              </p>
-          </div>
         </div>
-        <br>
-      </div> <!-- /container -->
+        <div class="col-xs-6 col-md-6">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2023-01-08 21:09            </p>
+        </div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
     </footer>
 
-    <!-- Bootstrap core JavaScript -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
 
     <!-- MathJax JavaScript
-             ================================================== -->
-             <!-- Placed at the end of the document so the pages load faster -->
-        <script type="text/x-mathjax-config">
-          MathJax.Hub.Config({
-          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
-          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
-          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
-          });
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-          <script src="../tipuesearch/tipuesearch_content.js"></script>
-          <script src="../tipuesearch/tipuesearch_set.js"></script>
-          <script src="../tipuesearch/tipuesearch.js"></script>
-
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
   </body>
 </html>

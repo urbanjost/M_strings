@@ -1,64 +1,78 @@
-<!-- -*- mode: jinja2 -*- -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="description" content="string operations">
+   <meta name="description" content="string operations">
     <meta name="author" content="John S. Urban" >
     <link rel="icon" href="../favicon.png">
 
     <title>aton &ndash; M_strings</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
-      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
     <script src="../js/svg-pan-zoom.min.js"></script>
+
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <div class="container-fluid mb-sm-4 mb-xl-2">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-          <a class="navbar-brand" href="../index.html">M_strings </a>
-          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
-                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
           </button>
-
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" href="../lists/files.html">Source Files</a>
-                  </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="../lists/modules.html">Modules</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
-                </li>
-            </ul>
-              <div class="d-flex align-items-end flex-grow-1">
-                <form action="../search.html" role="search" class="ms-auto">
-                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
-                </form>
-              </div>
-          </div><!--/.nav-collapse -->
+          <a class="navbar-brand" href="../index.html">M_strings </a>
         </div>
-      </nav>
-    </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="../lists/files.html">Source Files</a></li>
+            <li><a href="../lists/modules.html">Modules</a></li>
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+                   <li><a href="../lists/types.html">Derived Types</a></li>
+       
+            </ul>
+        
+            </li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+                             <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+          </ul>
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
 
     <div class="container">
   <div class="row">
@@ -66,41 +80,38 @@
       <small>Interface</small>
       
     </h1>
-      <div class="container p-2 mb-4 bg-light border rounded-3">
-    <div class="row align-items-center justify-content-between" id="info-bar">
-      <div class="col">
+      <div class="row" id="info-bar">
+    <div class="col-lg-12">
+      <div class="well well-sm">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title="<p> 0.3% of total for procedures.</p>Including implementation: 474 statements, 16.4% of total for procedures.">8 statements</a>
-            </li>
+          <li id="statements"><i class="fa fa-list-ol"></i>
+            <a data-toggle="tooltip"
+               data-placement="bottom" data-html="true"
+               title="<p> 0.3% of total for procedures.</p>Including implementation: 468 statements, 16.4% of total for procedures.">8 statements</a>
+          </li>
 
-            <li class="list-inline-item" id="source-file">
+            <li id="source-file">
               <i class="fa fa-code"></i>
               <a href="../src/M_strings.F90"> Source File</a>
             </li>
         </ul>
-      </div>
-      <div class="col">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
-                <li class="breadcrumb-item"><a href='../module/m_strings.html'>M_strings</a></li>
-            <li class="breadcrumb-item active" aria-current="page">aton</li>
-          </ol>
-        </nav>
+        <ol class="breadcrumb in-well text-right">
+              <li><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
+              <li><a href='../module/m_strings.html'>M_strings</a></li>
+          <li class="active">aton</li>
+        </ol>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-bs-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip()
     })
   </script>
 
   </div>
-
+  
   <div class="row">
     <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
         <div id="sidebar">
@@ -123,41 +134,84 @@
   
   
   
-      <div class="card mb-4">
-      <a data-bs-toggle="collapse" href="#modprocs-0"
-         aria-expanded="false" aria-controls="modprocs-0">
-         <h4 class="card-header bg-primary text-white">Module Procedures</h4>
-      </a>
-      <div id="modprocs-0" class="collapse">
-        <div class="list-group list-group-flush">
-            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-ator_real32~2">ator_real32</a>
-            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-ator_real64~2">ator_real64</a>
-            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-atoi_int8~2">atoi_int8</a>
-            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-atoi_int16~2">atoi_int16</a>
-            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-atoi_int32~2">atoi_int32</a>
-            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-atoi_int64~2">atoi_int64</a>
+      <div class="panel panel-primary">
+      <div class="panel-heading text-left">
+        <h3 class="panel-title">
+          <a data-toggle="collapse" href="#modprocs-0">Module Procedures</a>
+        </h3>
+      </div>
+      <div id="modprocs-0" class="panel-collapse collapse">
+        <div class="list-group">
+            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-ator_real32">ator_real32</a>
+            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-ator_real64">ator_real64</a>
+            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-atoi_int8">atoi_int8</a>
+            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-atoi_int16">atoi_int16</a>
+            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-atoi_int32">atoi_int32</a>
+            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-atoi_int64">atoi_int64</a>
         </div>
       </div>
     </div>
 
-  
 
 
   </div>
 
     </div>
-
+    
     <div class="col-md-9" id='text'>
       <h2>public interface aton</h2>
-      
+   
+
+     <section class="visible-xs visible-sm hidden-md">
+         <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="panel panel-primary">
+      <div class="panel-heading text-left">
+        <h3 class="panel-title">
+          <a data-toggle="collapse" href="#modprocs-1">Module Procedures</a>
+        </h3>
+      </div>
+      <div id="modprocs-1" class="panel-collapse collapse">
+        <div class="list-group">
+            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-ator_real32">ator_real32</a>
+            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-ator_real64">ator_real64</a>
+            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-atoi_int8">atoi_int8</a>
+            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-atoi_int16">atoi_int16</a>
+            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-atoi_int32">atoi_int32</a>
+            <a class="list-group-item" href="../interface/aton.html#moduleprocedure-atoi_int64">atoi_int64</a>
+        </div>
+      </div>
+    </div>
 
 
 
-        <h2>Module Procedures</h2>
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-ator_real32"></span> <h3>private  function ator_real32(str, val, msg)  
+     </section>
+     <br class="visible-xs visible-sm hidden-md">
+     
+
+
+   <h2>Module Procedures</h2>
+      <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-ator_real32"></span><h3>private  function ator_real32(str, val, msg)  
 </h3></div>
-    <div class="card-body">
+    <div class="panel-body">
         <h2 id="name">NAME</h2>
 <div class="codehilite"><pre><span></span><code>aton(3f) - [M_strings:TYPE] function returns argument as a numeric
 value from a string
@@ -165,11 +219,11 @@ value from a string
 </code></pre></div>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code><span class="nx">logical</span><span class="w"> </span><span class="nx">function</span><span class="w"> </span><span class="nx">aton</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span><span class="nx">val</span><span class="p">[,</span><span class="nx">msg</span><span class="p">])</span>
+<div class="codehilite"><pre><span></span><code>logical function aton(str,val[,msg])
 
-<span class="w"> </span><span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="nx">intent</span><span class="p">(</span><span class="k">in</span><span class="p">)</span><span class="w">       </span><span class="o">::</span><span class="w"> </span><span class="nx">str</span>
-<span class="w"> </span><span class="k">type</span><span class="p">(</span><span class="nx">TYPE</span><span class="p">(</span><span class="nx">kind</span><span class="p">=</span><span class="nx">KIND</span><span class="p">)),</span><span class="nx">intent</span><span class="p">(</span><span class="nx">out</span><span class="p">)</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nx">val</span>
-<span class="w"> </span><span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=:),</span><span class="nx">allocatable</span><span class="p">,</span><span class="nx">intent</span><span class="p">(</span><span class="nx">out</span><span class="p">)</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nx">msg</span>
+ character(len=*),intent(in)       :: str
+ type(TYPE(kind=KIND)),intent(out) :: val
+ character(len=:),allocatable,intent(out) :: msg
 </code></pre></div>
 
 <h2 id="description">DESCRIPTION</h2>
@@ -183,41 +237,41 @@ value from a string
 </code></pre></div>
 
 <h2 id="returns">RETURNS</h2>
-<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="nv">aton</span><span class="w">     </span>.<span class="nv">true</span>.<span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">conversion</span><span class="w"> </span><span class="nv">was</span><span class="w"> </span><span class="nv">successful</span>,<span class="w"> </span>.<span class="nv">false</span>.<span class="w"> </span><span class="nv">otherwise</span>
+<div class="codehilite"><pre><span></span><code> <span class="nv">aton</span>     .<span class="nv">true</span>. <span class="k">if</span> <span class="nv">the</span> <span class="nv">conversion</span> <span class="nv">was</span> <span class="nv">successful</span>, .<span class="nv">false</span>. <span class="nv">otherwise</span>
 </code></pre></div>
 
-<h2 id="examples">EXAMPLES</h2>
+<h2 id="example">EXAMPLE</h2>
 <p>Sample Program:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_aton</span>
+<div class="codehilite"><pre><span></span><code>  <span class="nv">program</span> <span class="nv">demo_aton</span>
 
-<span class="w">   </span><span class="nx">use</span><span class="w"> </span><span class="nx">M_strings</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="p">:</span><span class="w"> </span><span class="nx">aton</span>
-<span class="w">   </span><span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
-<span class="w">   </span><span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="mi">14</span><span class="p">),</span><span class="nx">allocatable</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nx">strings</span><span class="p">(:)</span>
-<span class="w">   </span><span class="nx">doubleprecision</span><span class="w">               </span><span class="o">::</span><span class="w"> </span><span class="nx">dv</span>
-<span class="w">   </span><span class="nx">integer</span><span class="w">                       </span><span class="o">::</span><span class="w"> </span><span class="nx">iv</span>
-<span class="w">   </span><span class="nx">real</span><span class="w">                          </span><span class="o">::</span><span class="w"> </span><span class="nx">rv</span>
-<span class="w">   </span><span class="nx">integer</span><span class="w">                       </span><span class="o">::</span><span class="w"> </span><span class="nx">i</span>
+   <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">aton</span>
+   <span class="nv">implicit</span> <span class="nv">none</span>
+   <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">14</span><span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">strings</span><span class="ss">(</span>:<span class="ss">)</span>
+   <span class="nv">doubleprecision</span>               :: <span class="nv">dv</span>
+   <span class="nv">integer</span>                       :: <span class="nv">iv</span>
+   <span class="nv">real</span>                          :: <span class="nv">rv</span>
+   <span class="nv">integer</span>                       :: <span class="nv">i</span>
 
-<span class="w">   </span><span class="p">!</span><span class="w"> </span><span class="nx">different</span><span class="w"> </span><span class="nx">strings</span><span class="w"> </span><span class="nx">representing</span><span class="w"> </span><span class="nx">INTEGER</span><span class="p">,</span><span class="w"> </span><span class="nx">REAL</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">DOUBLEPRECISION</span>
-<span class="w">   </span><span class="nx">strings</span><span class="p">=[</span><span class="o">&amp;</span>
-<span class="w">   </span><span class="o">&amp;</span><span class="err">&#39;</span><span class="w"> </span><span class="m m-Double">10.345</span><span class="w">       </span><span class="err">&#39;</span><span class="p">,</span><span class="o">&amp;</span>
-<span class="w">   </span><span class="o">&amp;</span><span class="err">&#39;</span><span class="o">+</span><span class="mi">10</span><span class="w">           </span><span class="err">&#39;</span><span class="p">,</span><span class="o">&amp;</span>
-<span class="w">   </span><span class="o">&amp;</span><span class="err">&#39;</span><span class="w">    </span><span class="o">-</span><span class="mi">3</span><span class="w">        </span><span class="err">&#39;</span><span class="p">,</span><span class="o">&amp;</span>
-<span class="w">   </span><span class="o">&amp;</span><span class="err">&#39;</span><span class="w">    </span><span class="o">-</span><span class="m m-Double">4.94</span><span class="nx">e</span><span class="o">-</span><span class="mi">2</span><span class="w">  </span><span class="err">&#39;</span><span class="p">,</span><span class="o">&amp;</span>
-<span class="w">   </span><span class="o">&amp;</span><span class="err">&#39;</span><span class="m m-Double">0.1</span><span class="w">           </span><span class="err">&#39;</span><span class="p">,</span><span class="o">&amp;</span>
-<span class="w">   </span><span class="o">&amp;</span><span class="err">&#39;</span><span class="m m-Double">12345.678910</span><span class="nx">d0</span><span class="err">&#39;</span><span class="p">,</span><span class="o">&amp;</span>
-<span class="w">   </span><span class="o">&amp;</span><span class="err">&#39;</span><span class="w">              </span><span class="err">&#39;</span><span class="p">,</span><span class="o">&amp;</span><span class="w"> </span><span class="p">!</span><span class="w"> </span><span class="nx">Note</span><span class="p">:</span><span class="w"> </span><span class="nx">will</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">zero</span><span class="w"> </span><span class="nx">without</span><span class="w"> </span><span class="nx">an</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="nx">message</span>
-<span class="w">   </span><span class="o">&amp;</span><span class="err">&#39;</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="err">&#39;</span><span class="p">,</span><span class="o">&amp;</span><span class="w"> </span><span class="p">!</span><span class="w"> </span><span class="nx">Note</span><span class="p">:</span><span class="w"> </span><span class="nx">spaces</span><span class="w"> </span><span class="nx">will</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">ignored</span>
-<span class="w">   </span><span class="o">&amp;</span><span class="err">&#39;</span><span class="nx">WHAT</span><span class="p">?</span><span class="w">         </span><span class="err">&#39;</span><span class="p">]</span><span class="w">  </span><span class="p">!</span><span class="w"> </span><span class="nx">Note</span><span class="p">:</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="nx">messages</span><span class="w"> </span><span class="nx">will</span><span class="w"> </span><span class="nx">appear</span><span class="p">,</span><span class="w"> </span><span class="nx">zero</span><span class="w"> </span><span class="k">returned</span>
+   <span class="o">!</span> <span class="nv">different</span> <span class="nv">strings</span> <span class="nv">representing</span> <span class="nv">INTEGER</span>, <span class="nv">REAL</span>, <span class="nv">and</span> <span class="nv">DOUBLEPRECISION</span>
+   <span class="nv">strings</span><span class="o">=</span>[<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s"> 10.345       </span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">+10           </span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">    -3        </span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">    -4.94e-2  </span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">0.1           </span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">12345.678910d0</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">              </span><span class="s1">&#39;</span>,<span class="o">&amp;</span> <span class="o">!</span> <span class="nv">Note</span>: <span class="nv">will</span> <span class="k">return</span> <span class="nv">zero</span> <span class="nv">without</span> <span class="nv">an</span> <span class="nv">error</span> <span class="nv">message</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">1 2 1 2 1 . 0 </span><span class="s1">&#39;</span>,<span class="o">&amp;</span> <span class="o">!</span> <span class="nv">Note</span>: <span class="nv">spaces</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">ignored</span>
+   <span class="o">&amp;</span><span class="s1">&#39;</span><span class="s">WHAT?         </span><span class="s1">&#39;</span>]  <span class="o">!</span> <span class="nv">Note</span>: <span class="nv">error</span> <span class="nv">messages</span> <span class="nv">will</span> <span class="nv">appear</span>, <span class="nv">zero</span> <span class="nv">returned</span>
 
-<span class="w">   </span><span class="nx">do</span><span class="w"> </span><span class="nx">i</span><span class="p">=</span><span class="mi">1</span><span class="p">,</span><span class="nx">size</span><span class="p">(</span><span class="nx">strings</span><span class="p">)</span>
-<span class="w">      </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">advance</span><span class="p">=</span><span class="err">&#39;</span><span class="nx">no</span><span class="sc">&#39;)&#39;</span><span class="nx">STRING</span><span class="p">:</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">strings</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
-<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="nx">aton</span><span class="p">(</span><span class="nx">strings</span><span class="p">(</span><span class="nx">i</span><span class="p">),</span><span class="nx">iv</span><span class="p">))</span><span class="w"> </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="nx">g0</span><span class="p">)</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">advance</span><span class="p">=</span><span class="err">&#39;</span><span class="nx">no</span><span class="sc">&#39;)&#39;</span><span class="p">:</span><span class="nx">INTEGER</span><span class="w"> </span><span class="err">&#39;</span><span class="p">,</span><span class="nx">iv</span>
-<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="nx">aton</span><span class="p">(</span><span class="nx">strings</span><span class="p">(</span><span class="nx">i</span><span class="p">),</span><span class="nx">rv</span><span class="p">))</span><span class="w"> </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="nx">g0</span><span class="p">)</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">advance</span><span class="p">=</span><span class="err">&#39;</span><span class="nx">no</span><span class="sc">&#39;)&#39;</span><span class="p">:</span><span class="nx">INTEGER</span><span class="w"> </span><span class="err">&#39;</span><span class="p">,</span><span class="nx">rv</span>
-<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="nx">aton</span><span class="p">(</span><span class="nx">strings</span><span class="p">(</span><span class="nx">i</span><span class="p">),</span><span class="nx">dv</span><span class="p">))</span><span class="w"> </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="nx">g0</span><span class="p">)</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">advance</span><span class="p">=</span><span class="err">&#39;</span><span class="nx">no</span><span class="sc">&#39;)&#39;</span><span class="p">:</span><span class="nx">INTEGER</span><span class="w"> </span><span class="err">&#39;</span><span class="p">,</span><span class="nx">dv</span>
-<span class="w">   </span><span class="nx">enddo</span>
+   <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span>,<span class="nv">advance</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">no</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">STRING:</span><span class="s1">&#39;</span>,<span class="nv">strings</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>
+      <span class="k">if</span><span class="ss">(</span><span class="nv">aton</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">iv</span><span class="ss">))</span> <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(g0)</span><span class="s1">&#39;</span>,<span class="nv">advance</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">no</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">:INTEGER </span><span class="s1">&#39;</span>,<span class="nv">iv</span>
+      <span class="k">if</span><span class="ss">(</span><span class="nv">aton</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">rv</span><span class="ss">))</span> <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(g0)</span><span class="s1">&#39;</span>,<span class="nv">advance</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">no</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">:INTEGER </span><span class="s1">&#39;</span>,<span class="nv">rv</span>
+      <span class="k">if</span><span class="ss">(</span><span class="nv">aton</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">dv</span><span class="ss">))</span> <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(g0)</span><span class="s1">&#39;</span>,<span class="nv">advance</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">no</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">:INTEGER </span><span class="s1">&#39;</span>,<span class="nv">dv</span>
+   <span class="nv">enddo</span>
 
-<span class="w">   </span><span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_aton</span>
+   <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_aton</span>
 </code></pre></div>
 
 <h2 id="author">AUTHOR</h2>
@@ -232,16 +286,16 @@ value from a string
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-str~14"></span>
+              <span class="anchor" ></span>
               character(len=*),
             </td>
 <td>intent(in)</td>
@@ -256,7 +310,7 @@ value from a string
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-val~3"></span>
+              <span class="anchor" ></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -271,7 +325,7 @@ value from a string
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-msg~5"></span>
+              <span class="anchor" ></span>
               character(len=:),
             </td>
 <td>intent(out),</td>
@@ -296,26 +350,26 @@ value from a string
     </div>
   </div>
 
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-ator_real64"></span> <h3>private  function ator_real64(str, val, msg)  
+      <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-ator_real64"></span><h3>private  function ator_real64(str, val, msg)  
 </h3></div>
-    <div class="card-body">
+    <div class="panel-body">
         
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-str~15"></span>
+              <span class="anchor" ></span>
               character(len=*),
             </td>
 <td>intent(in)</td>
@@ -330,7 +384,7 @@ value from a string
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-val~4"></span>
+              <span class="anchor" ></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -345,7 +399,7 @@ value from a string
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-msg~6"></span>
+              <span class="anchor" ></span>
               character(len=:),
             </td>
 <td>intent(out),</td>
@@ -370,26 +424,26 @@ value from a string
     </div>
   </div>
 
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-atoi_int8"></span> <h3>private  function atoi_int8(str, val, msg)  
+      <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-atoi_int8"></span><h3>private  function atoi_int8(str, val, msg)  
 </h3></div>
-    <div class="card-body">
+    <div class="panel-body">
         
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-str~16"></span>
+              <span class="anchor" ></span>
               character(len=*),
             </td>
 <td>intent(in)</td>
@@ -404,7 +458,7 @@ value from a string
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-val~5"></span>
+              <span class="anchor" ></span>
               integer(kind=int8)
             </td>
 <td></td>
@@ -419,7 +473,7 @@ value from a string
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-msg~7"></span>
+              <span class="anchor" ></span>
               character(len=:),
             </td>
 <td>intent(out),</td>
@@ -444,26 +498,26 @@ value from a string
     </div>
   </div>
 
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-atoi_int16"></span> <h3>private  function atoi_int16(str, val, msg)  
+      <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-atoi_int16"></span><h3>private  function atoi_int16(str, val, msg)  
 </h3></div>
-    <div class="card-body">
+    <div class="panel-body">
         
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-str~17"></span>
+              <span class="anchor" ></span>
               character(len=*),
             </td>
 <td>intent(in)</td>
@@ -478,7 +532,7 @@ value from a string
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-val~6"></span>
+              <span class="anchor" ></span>
               integer(kind=int16)
             </td>
 <td></td>
@@ -493,7 +547,7 @@ value from a string
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-msg~8"></span>
+              <span class="anchor" ></span>
               character(len=:),
             </td>
 <td>intent(out),</td>
@@ -518,26 +572,26 @@ value from a string
     </div>
   </div>
 
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-atoi_int32"></span> <h3>private  function atoi_int32(str, val, msg)  
+      <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-atoi_int32"></span><h3>private  function atoi_int32(str, val, msg)  
 </h3></div>
-    <div class="card-body">
+    <div class="panel-body">
         
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-str~18"></span>
+              <span class="anchor" ></span>
               character(len=*),
             </td>
 <td>intent(in)</td>
@@ -552,7 +606,7 @@ value from a string
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-val~7"></span>
+              <span class="anchor" ></span>
               integer(kind=int32)
             </td>
 <td></td>
@@ -567,7 +621,7 @@ value from a string
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-msg~9"></span>
+              <span class="anchor" ></span>
               character(len=:),
             </td>
 <td>intent(out),</td>
@@ -592,26 +646,26 @@ value from a string
     </div>
   </div>
 
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-atoi_int64"></span> <h3>private  function atoi_int64(str, val, msg)  
+      <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-atoi_int64"></span><h3>private  function atoi_int64(str, val, msg)  
 </h3></div>
-    <div class="card-body">
+    <div class="panel-body">
         
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-str~19"></span>
+              <span class="anchor" ></span>
               character(len=*),
             </td>
 <td>intent(in)</td>
@@ -626,7 +680,7 @@ value from a string
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-val~8"></span>
+              <span class="anchor" ></span>
               integer(kind=int64)
             </td>
 <td></td>
@@ -641,7 +695,7 @@ value from a string
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-msg~10"></span>
+              <span class="anchor" ></span>
               character(len=:),
             </td>
 <td>intent(out),</td>
@@ -666,50 +720,54 @@ value from a string
     </div>
   </div>
 
+
+ </div>
 </div>
-  </div>
-      <hr>
+
+    <hr>    
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row justify-content-between">
-          <div class="col">
-            <p>
-              M_strings
- was developed by John S. Urban<br>              &copy; 2024 
+      <div class="row">
+        <div class="col-xs-6 col-md-6"><p>M_strings was developed by John S. Urban<br>&copy; 2023 
 </p>
-          </div>
-          <div class="col">
-            <p class="text-end">
-              Documentation generated by
-              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2024-07-14 20:56              </p>
-          </div>
         </div>
-        <br>
-      </div> <!-- /container -->
+        <div class="col-xs-6 col-md-6">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2023-01-08 21:09            </p>
+        </div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
     </footer>
 
-    <!-- Bootstrap core JavaScript -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
 
     <!-- MathJax JavaScript
-             ================================================== -->
-             <!-- Placed at the end of the document so the pages load faster -->
-        <script type="text/x-mathjax-config">
-          MathJax.Hub.Config({
-          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
-          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
-          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
-          });
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-          <script src="../tipuesearch/tipuesearch_content.js"></script>
-          <script src="../tipuesearch/tipuesearch_set.js"></script>
-          <script src="../tipuesearch/tipuesearch.js"></script>
-
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
   </body>
 </html>
