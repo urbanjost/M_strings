@@ -1,7 +1,8 @@
 module M_testsuite_M_strings
 use,intrinsic :: iso_fortran_env,only : std_in=>input_unit,std_out=>output_unit,std_err=>error_unit
-use M_framework,  only : unit_test_level,  unit_test_stop, unit_test_msg, str, &
-                       & unit_test_start, unit_test,  unit_test_end, unit_test_stop
+use M_framework,  only : unit_test_level,  unit_test_stop, unit_test_msg, chr=>str, &
+                       & unit_test_start, unit_test,  unit_test_end,                &
+                       & unit_test_mode
 use M_strings
 implicit none
 character(len=*),parameter :: options=' -section 3 -library libGPF -filename `pwd`/M_strings.FF &
@@ -10,9 +11,24 @@ character(len=*),parameter :: g='(*(g0,1x))'
 logical,parameter :: T=.true., F=.false.
 character(len=*),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
 character(len=*),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+logical                    :: matched
 contains
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_suite_m_strings()
+! optional call to change default modes
+   call unit_test_mode(       &
+       keep_going=T,           &
+       flags=[0],              &
+       luns=[std_err],         &
+       command='',             &
+       brief=F,                &
+       match='',               &
+       interactive=F,          &
+       CMDLINE=T,              &
+       debug=F)
+
+   unit_test_level=0
+!  unit_test_level=1
    call test_adjustc()
    call test_aton()
    call test_base()
@@ -64,7 +80,8 @@ subroutine test_suite_m_strings()
    call test_matching_delimiter()
    call test_merge_str()
    call test_modif()
-   call test_msg()
+   call test_str()
+   call test_fmt()
    call test_m_strings()
    call test_nint()
    call test_noesc()
@@ -336,7 +353,7 @@ character(len=:),allocatable :: info, original
    original=targetline
    targetline=replace(targetline,old,new)
    if(unit_test_level > 0)then
-      info=str('GIVEN[',original,']OLD[',old,']NEW['//new//']GOT[',targetline,']EXPECTED['//expected,']',sep='')
+      info=chr('GIVEN[',original,']OLD[',old,']NEW['//new//']GOT[',targetline,']EXPECTED['//expected,']',sep='')
    else
       info=''
    endif
@@ -761,16 +778,16 @@ call unit_test_end('combined')
 end subroutine test_m_strings
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_chomp()
-character(len=:),allocatable  :: str
+character(len=:),allocatable  :: strng
 character(len=:),allocatable  :: token
 character(len=66),allocatable :: delimiters
 integer                       :: ipass
    call unit_test_start('chomp','[TOKENS] Tokenize a string, consuming it one token per call')
 
-   str = 'a b ccc ddd x12#$)$*#@Z1!( ab cd ef'
+   strng = 'a b ccc ddd x12#$)$*#@Z1!( ab cd ef'
    delimiters=' #@$)*!('
    ipass=0
-   do while ( chomp(str,token,delimiters)  >=  0 )
+   do while ( chomp(strng,token,delimiters)  >=  0 )
       ipass=ipass+1
       if(unit_test_level > 0)then
          write( std_err,g) ipass,'TOKEN=['//trim(token)//']'
@@ -1678,7 +1695,7 @@ character(len=:),allocatable :: given
 
    given='1234.56d0 3.3333d0, 5.5555d0'
    call getvals(given,dvalues,icount,ierr)
-   call unit_test_msg('getvals','got',str(dvalues(:icount))//'','given',given,if=unit_test_level>0)
+   call unit_test_msg('getvals','got',chr(dvalues(:icount))//'','given',given,if=unit_test_level>0)
    call unit_test('getvals',all(dvalues(:icount) == [1234.56d0,3.3333d0,5.5555d0]),msg='double test')
 
    call unit_test_end('getvals')
@@ -2058,17 +2075,17 @@ end subroutine test_longest_common_substring
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_matching_delimiter()
 use M_strings, only : matching_delimiter
-character(len=128)  :: str
+character(len=128)  :: strng
    call unit_test_start('matching_delimiter','[QUOTES] find position of matching delimiter')
 !  Allowable delimiters are (), [], {}, <>.
-   str=' a [[[[b] and ] then ] finally ]'
+   strng=' a [[[[b] and ] then ] finally ]'
    call unit_test('matching_delimiter',getval(1)  ==  0 ,'test get zero for invalid delimiter')
    call unit_test('matching_delimiter',getval(4)  == 32 ,'expect 32, got',getval(4)+0) ! +0 for gfortran-11 bug
    call unit_test('matching_delimiter',getval(5)  == 22 ,'expect 22, got',getval(5)+0)
    call unit_test('matching_delimiter',getval(6)  == 15 ,'expect 15, got',getval(6)+0)
    call unit_test('matching_delimiter',getval(7)  ==  9 ,'expect 9, got',getval(7)+0)
    call unit_test('matching_delimiter',getval(32) ==  4 ,'expect 4, got',getval(32)+0)
-   str=' a (<[{b} and ] then > finally )'
+   strng=' a (<[{b} and ] then > finally )'
    call unit_test('matching_delimiter',getval(4)  == 32 ,'expect 32, got',getval(4)+0) ! +0 for gfortran-11 bug
    call unit_test('matching_delimiter',getval(5)  == 22 ,'expect 22, got',getval(5)+0)
    call unit_test('matching_delimiter',getval(6)  == 15 ,'expect 15, got',getval(6)+0)
@@ -2079,27 +2096,26 @@ contains
 function getval(ipos)
 integer,intent(in) :: ipos
 integer :: getval
-   call matching_delimiter(str,ipos,getval)
+   call matching_delimiter(strng,ipos,getval)
 end function 
 end subroutine test_matching_delimiter
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_msg   ()
+subroutine test_str()
 logical             :: allpassed=.true.
 
-  call unit_test_start('msg','test building message strings')
+  call unit_test_start('str','test building message strings')
 
-  call add('INTEGER',msg(10),'10','10')
-  call add('LOGICAL',msg(.false.),'F','F')
-  call add('LOGICAL',msg(.true.),'T','T')
-  call add('REAL',msg(100.0),'100.000000','100.0000')
-  call add('COMPLEX',msg((11.0,22.0)),'(11.0000000,22.0000000)','(11.00000,22.00000)')
-  call add('COMPOUND',msg(10,100.0,"string",(11.0,22.0),.false.), &
+  call add('INTEGER',str(10),'10','10')
+  call add('LOGICAL',str(.false.),'F','F')
+  call add('LOGICAL',str(.true.),'T','T')
+  call add('REAL',str(100.0),'100.000000','100.0000')
+  call add('COMPLEX',str((11.0,22.0)),'(11.0000000,22.0000000)','(11.00000,22.00000)')
+  call add('COMPOUND',str(10,100.0,"string",(11.0,22.0),.false.), &
        & '10 100.000000 string (11.0000000,22.0000000) F',&
        & '10 100.0000 string (11.00000,22.00000) F')
-  call unit_test_end("msg   ",msg="")
+  call unit_test_end("str   ",msg="")
 
-end subroutine test_msg
-
+contains
 subroutine add(message,question,answer,answer2)
 character(len=*),intent(in)   :: message
 character(len=*),intent(in)   :: question
@@ -2108,12 +2124,37 @@ character(len=*),intent(in)   :: answer2
 logical                       :: passed
   passed=question .eq. answer
   if(passed)then
-     call unit_test('msg',passed,'testing',message,'expected',answer,'got',question)
+     call unit_test('str',passed,'testing',message,'expected',answer,'got',question)
   else
      passed=question .eq. answer2
-     call unit_test('msg',passed,'testing',message,'expected',answer2,'got',question)
+     call unit_test('str',passed,'testing',message,'expected',answer2,'got',question)
   endif
 end subroutine add
+end subroutine test_str
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_fmt()
+logical             :: allpassed=.true.
+  call unit_test_start("fmt   ",msg="convert intrinsic to string using optional format",matched=matched)
+  if(.not.matched)return
+
+  call  add('INTEGER',  fmt(10),            '10'       )
+  call  add('LOGICAL',  fmt(.false.),       'F'        )
+  call  add('LOGICAL',  fmt(.true.),        'T'        )
+  call  add('REAL',     fmt(100.0),         '100'      )
+  call  add('COMPLEX',  fmt((11.0,22.0)),   '(11,22)'  )
+  call  add('REAL',     fmt(100.0,'f0.2'),  '100.00'   )
+  call unit_test_end("fmt   ",msg="")
+
+contains
+
+subroutine add(message,question,answer)
+character(len=*),intent(in)   :: message
+character(len=*),intent(in)   :: question
+character(len=*),intent(in)   :: answer
+  call unit_test('fmt',question.eq.answer,'testing',message,'expected',answer,'got',question)
+end subroutine add
+
+end subroutine test_fmt
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_paragraph()
    call unit_test_start('paragraph','[TOKENS] break a long line into a paragraph')
@@ -2152,8 +2193,7 @@ use M_framework
 use M_framework__verify, only : unit_test_level, unit_test_stop
 use M_testsuite_M_strings
 implicit none
-!  unit_test_level=1
-   unit_test_level=0
+
    call test_suite_M_strings()
 
    ! untested

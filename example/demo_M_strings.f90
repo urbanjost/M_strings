@@ -16,7 +16,7 @@
        use M_strings,only : string_to_value, string_to_values, s2v, s2vs
        use M_strings,only : int, real, dble, nint
        use M_strings,only : atoi, atol, aton
-       use M_strings,only : value_to_string, v2s, msg
+       use M_strings,only : value_to_string, v2s, str, fmt
        use M_strings,only : listout, getvals
        use M_strings,only : glob, ends_with
        use M_strings,only : paragraph
