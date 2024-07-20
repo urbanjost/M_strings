@@ -33,7 +33,7 @@
 !!      use M_strings,only : string_to_value, string_to_values, s2v, s2vs
 !!      use M_strings,only : int, real, dble, nint
 !!      use M_strings,only : atoi, atol, aton
-!!      use M_strings,only : value_to_string, v2s, msg
+!!      use M_strings,only : value_to_string, v2s, str, fmt
 !!      use M_strings,only : listout, getvals
 !!      use M_strings,only : glob, ends_with
 !!      use M_strings,only : paragraph
@@ -170,10 +170,12 @@
 !!       atoi              function returns INTEGER(kind=int32)  from a string
 !!       atol              function returns INTEGER(kind=int64)  from a string
 !!       aton              changes string to numeric value
-!!       msg               append the values of up to twenty values into
+!!
+!!       str               append the values of up to twenty values into
 !!                         a string, including user-specified separator
 !!                         and a CSV-style option
-!!
+!!       fmt               return string from generic  intrinsic value
+!!                         using optionally specified format.
 !!       value_to_string   generic subroutine returns string given numeric value
 !!                         (REAL, DOUBLEPRECISION, INTEGER, LOGICAL )
 !!       v2s               generic function returns string from numeric value
@@ -302,7 +304,7 @@
 !!      use M_strings,only : string_to_value, string_to_values, s2v, s2vs
 !!      use M_strings,only : int, real, dble, nint
 !!      use M_strings,only : atoi, atol, aton
-!!      use M_strings,only : value_to_string, v2s, msg
+!!      use M_strings,only : value_to_string, v2s, str, fmt
 !!      use M_strings,only : listout, getvals
 !!      use M_strings,only : glob, ends_with
 !!      use M_strings,only : paragraph
@@ -432,7 +434,8 @@ public atoi               !   function returns an INTEGER(kind=int32) value from
 public atol               !   function returns an INTEGER(kind=int64) value from a string
 public aton               !   function returns true or false as to whether string converts to numeric value, and numeric value
 !------------------------------------------------------------------------------------------------------------
-public msg                !  function returns a string representing up to twenty scalar intrinsic values, including CSV style
+public str                !  function returns a string representing up to twenty scalar intrinsic values, including CSV style
+public fmt                !  function returns a string representing an intrinsic value using optionally specified format
 public value_to_string    !  generic subroutine returns string given numeric REAL|DOUBLEPRECISION|INTEGER|LOGICAL value
 public v2s                !  generic function returns string given numeric REAL|DOUBLEPRECISION|INTEGER|LOGICAL value
  private d2s              !  function returns string from doubleprecision value
@@ -525,11 +528,11 @@ end interface
 !-!end interface
 !-----------------------------------------------------------------------------------------------------------------------------------
 
-! ident_5="@(#) M_strings msg(3f) convert up to twenty scalar values to a (CSV) string. Alternatively can also handle one-dimensional arrays"
+! ident_5="@(#) M_strings str(3f) convert up to twenty scalar values to a (CSV) string. Alternatively can also handle one-dimensional arrays"
 
-interface msg
-   module procedure msg_scalar, msg_one
-end interface msg
+interface str
+   module procedure str_scalar, str_one
+end interface str
 !-----------------------------------------------------------------------------------------------------------------------------------
 ! ASCII character constants
 character, public, parameter :: ascii_nul = char(0)   ! null
@@ -555,21 +558,17 @@ end interface split2020
 !-----------------------------------------------------------------------------------------------------------------------------------
 !-----------------------------------------------------------------------------------------------------------------------------------
 !This contains a conditionally built mini-version of M_journal which allows the M_strings.f90 module
-!to be built using make as a stand-alone distribution but still have make.shell built a true version
+!to be built using make as a stand-alone distribution but still have make.shell build a true version
 !
 !This is so when built with make.shell(1) or fpm(1) it will use the
 !real M_journal.f90 file but that fpm(1) will not auto-discover the mini
-!M_journal.f90 file and built it and cause duplicates.
+!M_journal.f90 file and build it and cause duplicates.
 
 interface journal
-   module procedure flush_trail               ! journal()                ! no options
-   module procedure write_message_only        ! journal(c)               ! must have one string
-   module procedure where_write_message_all   ! journal(where,[g1-g9])   ! must have two strings
+   module procedure flush_trail                    ! journal()        ! no options
+   module procedure write_message_only             ! journal(c)       ! must have one string
+   module procedure where_write_message            ! journal(where,c)
 end interface journal
-
-interface str
-   module procedure str_scalar, str_one
-end interface str
 
 !$@(#) M_journal::journal(3fg): provides public message routine, no paging or graphic mode change
 
@@ -581,12 +580,14 @@ integer,save               :: last_int=0
 !-----------------------------------------------------------------------------------------------------------------------------------
 !-----------------------------------------------------------------------------------------------------------------------------------
 ! for compatibility allow old name for renamed procedures
-interface matchw;  module procedure glob;    end interface
-interface atleast; module procedure pad;     end interface
-interface cc;      module procedure bundle;  end interface
+interface matchw;   module procedure  glob;                end interface
+interface atleast;  module procedure  pad;                 end interface
+interface cc;       module procedure  bundle;              end interface
+interface msg;      module procedure  str_scalar,str_one;  end interface  msg
 public matchw          !  clone of glob -- for backward compatibiity
 public atleast         !  clone of pad -- for backward compatibiity
 public cc              !  clone of pad -- for backward compatibiity
+public msg                !  function returns a string representing up to twenty scalar intrinsic values, including CSV style
 !-----------------------------------------------------------------------------------------------------------------------------------
 CONTAINS
 !===================================================================================================================================
@@ -1719,13 +1720,13 @@ end subroutine slice
 !!    character(len=100)            :: inline
 !!    character(len=:),allocatable  :: token
 !!    character(len=*),parameter    :: delimiters=' ;,'
-!!    integer                       :: ios
+!!    integer                       :: iostat
 !!    integer                       :: icount
 !!    integer                       :: itoken
 !!       icount=0
 !!       do        ! read lines from stdin until end-of-file or error
-!!          read (unit=*,fmt="(a)",iostat=ios) inline
-!!          if(ios /= 0)stop
+!!          read (unit=*,fmt="(a)",iostat=iostat) inline
+!!          if(iostat /= 0)stop
 !!          icount=icount+1
 !!          itoken=0
 !!          write(*,*)'INLINE ',trim(inline)
@@ -2753,10 +2754,10 @@ end subroutine change
 !!     implicit none
 !!     character(len=264)          :: inline
 !!     character(len=*),parameter  :: delimiters=' ;,'
-!!     integer                     :: ios, itoken, ibegin, iend
+!!     integer                     :: iostat, itoken, ibegin, iend
 !!        do ! read lines from stdin until end-of-file or error
-!!           read (unit=*,fmt="(a)",iostat=ios) inline
-!!           if(ios /= 0)stop
+!!           read (unit=*,fmt="(a)",iostat=iostat) inline
+!!           if(iostat /= 0)stop
 !!           ! must set ITOKEN=0 before looping on strtok(3f)
 !!           ! on a new string.
 !!           itoken=0
@@ -2904,7 +2905,7 @@ end function strtok
 !!    use M_strings, only : modif
 !!    implicit none
 !!    character(len=256)           :: line
-!!    integer                      :: ios
+!!    integer                      :: iostat
 !!    integer                      :: count
 !!    integer                      :: COMMAND_LINE_LENGTH
 !!    character(len=:),allocatable :: COMMAND_LINE
@@ -2921,8 +2922,8 @@ end function strtok
 !!       ! remove command name
 !!       COMMAND_LINE=adjustl(COMMAND_LINE(COUNT+2:))
 !!       INFINITE: do
-!!          read(*,'(a)',iostat=ios)line
-!!          if(ios /= 0)exit
+!!          read(*,'(a)',iostat=iostat)line
+!!          if(iostat /= 0)exit
 !!          call modif(line,COMMAND_LINE)
 !!          write(*,'(a)')trim(line)
 !!       enddo INFINITE
@@ -3495,10 +3496,10 @@ END FUNCTION transliterate
 !!    use M_strings, only : rotate13
 !!    implicit none
 !!    character(len=256) :: line
-!!    integer            :: ios
+!!    integer            :: iostat
 !!    do
-!!       read(*,'(a)',iostat=ios)line
-!!       if(ios /= 0)exit
+!!       read(*,'(a)',iostat=iostat)line
+!!       if(iostat /= 0)exit
 !!       write(*,'(a)')rotate13(line)
 !!    enddo
 !!    end program demo_rotate13
@@ -4661,10 +4662,10 @@ end function c2s
 !!    use M_strings, only : indent
 !!    implicit none
 !!    character(len=1024) :: in
-!!    integer             :: ios
+!!    integer             :: iostat
 !!       READFILE: do
-!!          read(*,'(A)',iostat=ios)in
-!!          if(ios /= 0) exit READFILE
+!!          read(*,'(A)',iostat=iostat)in
+!!          if(iostat /= 0) exit READFILE
 !!          write(*,'(i3,"",a)')indent(in),trim(in)
 !!       enddo READFILE
 !!    end program demo_indent
@@ -4885,7 +4886,7 @@ integer                               :: i
 integer                               :: lgth
 character(len=3)                      :: thr
 integer                               :: xxx
-integer                               :: ios
+integer                               :: iostat
    i=0 ! pointer into input
 
    lgth=len_trim(line)
@@ -4912,7 +4913,7 @@ integer                               :: ios
             case('c','C');exit EXP                           ! %c     suppress further output
             case('d','D')                                    ! %d     Dnnn decimal value
                       thr=line(i+1:)
-                   read(thr,'(i3)',iostat=ios)xxx
+                   read(thr,'(i3)',iostat=iostat)xxx
                       lineout=lineout//char(xxx)
                    i=i+3
             case('e','E');lineout=lineout//char( 27)         ! %e     escape
@@ -4921,7 +4922,7 @@ integer                               :: ios
            !case('n','N');lineout=lineout//new_line('A')     ! %n     new line
             case('o','O')
                       thr=line(i+1:)
-                   read(thr,'(o3)',iostat=ios)xxx
+                   read(thr,'(o3)',iostat=iostat)xxx
                       lineout=lineout//char(xxx)
                    i=i+3
             case('r','R');lineout=lineout//char( 13)         ! %r     carriage return
@@ -4929,7 +4930,7 @@ integer                               :: ios
             case('v','V');lineout=lineout//char( 11)         ! %v     vertical tab
             case('x','X','h','H')                            ! %x     xHH  byte with hexadecimal value HH (1 to 2 digits)
                       thr=line(i+1:)
-                   read(thr,'(z2)',iostat=ios)xxx
+                   read(thr,'(z2)',iostat=iostat)xxx
                       lineout=lineout//char(xxx)
                    i=i+2
             end select BACKSLASH
@@ -4991,10 +4992,10 @@ end function expand
 !!    !  on files up to 1024 characters wide
 !!    use M_strings, only : notabs
 !!    character(len=1024) :: in,out
-!!    integer             :: ios,iout
+!!    integer             :: iostat,iout
 !!       do
-!!          read(*,'(A)',iostat=ios)in
-!!          if(ios /= 0) exit
+!!          read(*,'(A)',iostat=iostat)in
+!!          if(iostat /= 0) exit
 !!          call notabs(in,out,iout)
 !!          write(*,'(a)')out(:iout)
 !!       enddo
@@ -6677,7 +6678,7 @@ doubleprecision             :: valu8
       if(valu8 <= huge(valu))then
          valu=real(valu8)
       else
-         call journal('sc','*a2r*','- value too large',valu8,'>',huge(valu))
+         call journal('sc','*a2r* - value too large'//str(valu8)//'>'//str(huge(valu)))
          valu=huge(valu)
          ierr=-1
       endif
@@ -6698,7 +6699,7 @@ doubleprecision             :: valu8
       if(valu8 <= huge(valu))then
          valu=int(valu8)
       else
-         call journal('sc','*a2i*','- value too large',valu8,'>',huge(valu))
+         call journal('sc','*a2i* - value too large'//str(valu8)//'>'//str(huge(valu)))
          valu=huge(valu)
          ierr=-1
       endif
@@ -6724,7 +6725,7 @@ class(*),optional,intent(in) :: onerr
 !----------------------------------------------------------------------------------------------------------------------------------
 character(len=*),parameter   :: fmt="('(bn,g',i5,'.0)')"     ! format used to build frmt
 character(len=15)            :: frmt                         ! holds format built to read input string
-character(len=256)           :: msg                          ! hold message from I/O errors
+character(len=256)           :: iomsg                        ! hold message from I/O errors
 integer                      :: intg
 integer                      :: pnd
 integer                      :: basevalue, ivalu
@@ -6732,13 +6733,13 @@ character(len=3),save        :: nan_string='NaN'
 !----------------------------------------------------------------------------------------------------------------------------------
    ierr=0                                                       ! initialize error flag to zero
    local_chars=unquote(chars)
-   msg=''
+   iomsg=''
    if(len(local_chars) == 0)local_chars=' '
    call substitute(local_chars,',','')                          ! remove any comma characters
    pnd=scan(local_chars,'#:')
    if(pnd /= 0)then
       write(frmt,fmt)pnd-1                                      ! build format of form '(BN,Gn.0)'
-      read(local_chars(:pnd-1),fmt=frmt,iostat=ierr,iomsg=msg)basevalue   ! try to read value from string
+      read(local_chars(:pnd-1),fmt=frmt,iostat=ierr,iomsg=iomsg)basevalue   ! try to read value from string
       if(decodebase(local_chars(pnd+1:),basevalue,ivalu))then
          valu=real(ivalu,kind=kind(0.0d0))
       else
@@ -6749,19 +6750,19 @@ character(len=3),save        :: nan_string='NaN'
       select case(local_chars(1:1))
       case('z','Z','h','H')                                     ! assume hexadecimal
          frmt='(Z'//v2s(len(local_chars))//')'
-         read(local_chars(2:),frmt,iostat=ierr,iomsg=msg)intg
+         read(local_chars(2:),frmt,iostat=ierr,iomsg=iomsg)intg
          valu=dble(intg)
       case('b','B')                                             ! assume binary (base 2)
          frmt='(B'//v2s(len(local_chars))//')'
-         read(local_chars(2:),frmt,iostat=ierr,iomsg=msg)intg
+         read(local_chars(2:),frmt,iostat=ierr,iomsg=iomsg)intg
          valu=dble(intg)
       case('o','O')                                             ! assume octal
          frmt='(O'//v2s(len(local_chars))//')'
-         read(local_chars(2:),frmt,iostat=ierr,iomsg=msg)intg
+         read(local_chars(2:),frmt,iostat=ierr,iomsg=iomsg)intg
          valu=dble(intg)
       case default
          write(frmt,fmt)len(local_chars)                        ! build format of form '(BN,Gn.0)'
-         read(local_chars,fmt=frmt,iostat=ierr,iomsg=msg)valu   ! try to read value from string
+         read(local_chars,fmt=frmt,iostat=ierr,iomsg=iomsg)valu   ! try to read value from string
       end select
    endif
    if(ierr /= 0)then                                            ! if an error occurred ierr will be non-zero.
@@ -6779,8 +6780,8 @@ character(len=3),save        :: nan_string='NaN'
       endif
       if(local_chars /= 'eod')then                           ! print warning message except for special value "eod"
          call journal('sc','*a2d* - cannot produce number from string ['//trim(chars)//']')
-         if(msg /= '')then
-            call journal('sc','*a2d* - ['//trim(msg)//']')
+         if(iomsg /= '')then
+            call journal('sc','*a2d* - ['//trim(iomsg)//']')
          endif
       endif
    endif
@@ -7261,7 +7262,7 @@ integer                                  :: err_local
 character(len=*),optional,intent(in)     :: fmt         ! format to write value with
 logical,intent(in),optional              :: trimz
 character(len=:),allocatable             :: fmt_local
-character(len=1024)                      :: msg
+character(len=1024)                      :: iomsg
 
 !  Notice that the value GVAL can be any of several types ( INTEGER,REAL,DOUBLEPRECISION,LOGICAL)
 
@@ -7270,20 +7271,20 @@ character(len=1024)                      :: msg
       type is (integer)
          fmt_local='(i0)'
          if(fmt /= '') fmt_local=fmt
-         write(chars,fmt_local,iostat=err_local,iomsg=msg)gval
+         write(chars,fmt_local,iostat=err_local,iomsg=iomsg)gval
       type is (real)
          fmt_local='(bz,g23.10e3)'
          fmt_local='(bz,g0.8)'
          if(fmt /= '') fmt_local=fmt
-         write(chars,fmt_local,iostat=err_local,iomsg=msg)gval
+         write(chars,fmt_local,iostat=err_local,iomsg=iomsg)gval
       type is (doubleprecision)
          fmt_local='(bz,g0)'
          if(fmt /= '') fmt_local=fmt
-         write(chars,fmt_local,iostat=err_local,iomsg=msg)gval
+         write(chars,fmt_local,iostat=err_local,iomsg=iomsg)gval
       type is (logical)
          fmt_local='(l1)'
          if(fmt /= '') fmt_local=fmt
-         write(chars,fmt_local,iostat=err_local,iomsg=msg)gval
+         write(chars,fmt_local,iostat=err_local,iomsg=iomsg)gval
       class default
          call journal('*value_to_string* UNKNOWN TYPE')
          chars=' '
@@ -7296,13 +7297,13 @@ character(len=1024)                      :: msg
       err_local=-1
       select type(gval)
       type is (integer)
-         write(chars,*,iostat=err_local,iomsg=msg)gval
+         write(chars,*,iostat=err_local,iomsg=iomsg)gval
       type is (real)
-         write(chars,*,iostat=err_local,iomsg=msg)gval
+         write(chars,*,iostat=err_local,iomsg=iomsg)gval
       type is (doubleprecision)
-         write(chars,*,iostat=err_local,iomsg=msg)gval
+         write(chars,*,iostat=err_local,iomsg=iomsg)gval
       type is (logical)
-         write(chars,*,iostat=err_local,iomsg=msg)gval
+         write(chars,*,iostat=err_local,iomsg=iomsg)gval
       class default
          chars=''
       end select
@@ -7324,8 +7325,8 @@ character(len=1024)                      :: msg
       err=err_local
    elseif(err_local /= 0)then
        ! cannot currently do I/O from a function being called from I/O
-       !write(stderr,'(a)')'*value_to_string* WARNING:['//trim(msg)//']'
-      chars=chars//' *value_to_string* WARNING:['//trim(msg)//']'
+       !write(stderr,'(a)')'*value_to_string* WARNING:['//trim(iomsg)//']'
+      chars=chars//' *value_to_string* WARNING:['//trim(iomsg)//']'
    endif
 
 end subroutine value_to_string
@@ -8041,7 +8042,7 @@ character(len=20)                    :: local_mode
    case('escape')
       quoted_str=double_quote//trim(replace(quoted_str,'"','\"'))//double_quote
    case default
-      call journal('sc','*quote* ERROR: unknown quote mode ',local_mode)
+      call journal('sc','*quote* ERROR: unknown quote mode '//local_mode)
       quoted_str=str
    end select
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -8096,14 +8097,14 @@ end function quote
 !!       character(len=128)           :: quoted_str
 !!       character(len=:),allocatable :: unquoted_str
 !!       character(len=1),parameter   :: esc='\'
-!!       character(len=1024)          :: msg
-!!       integer                      :: ios
+!!       character(len=1024)          :: iomsg
+!!       integer                      :: iostat
 !!       character(len=1024)          :: dummy
 !!       do
 !!          write(*,'(a)',advance='no')'Enter test string:'
-!!          read(*,'(a)',iostat=ios,iomsg=msg)quoted_str
-!!          if(ios /= 0)then
-!!             write(*,*)trim(msg)
+!!          read(*,'(a)',iostat=iostat,iomsg=iomsg)quoted_str
+!!          if(iostat /= 0)then
+!!             write(*,*)trim(iomsg)
 !!             exit
 !!          endif
 !!
@@ -8115,9 +8116,9 @@ end function quote
 !!          write(*,'(a)')'UNQUOTED     ['//unquoted_str//']'
 !!
 !!          ! read the string list-directed to compare the results
-!!          read(quoted_str,*,iostat=ios,iomsg=msg)dummy
-!!          if(ios /= 0)then
-!!             write(*,*)trim(msg)
+!!          read(quoted_str,*,iostat=iostat,iomsg=iomsg)dummy
+!!          if(iostat /= 0)then
+!!             write(*,*)trim(iomsg)
 !!          else
 !!             write(*,'(a)')'LIST DIRECTED['//trim(dummy)//']'
 !!          endif
@@ -8768,10 +8769,10 @@ end function describe
 !!       integer,parameter  :: longest_line=256
 !!       character(len=longest_line) :: line
 !!       real               :: values(longest_line/2+1)
-!!       integer            :: ios,icount,ierr
+!!       integer            :: iostat,icount,ierr
 !!       INFINITE: do
-!!          read(*,'(a)',iostat=ios) line
-!!          if(ios /= 0)exit INFINITE
+!!          read(*,'(a)',iostat=iostat) line
+!!          if(iostat /= 0)exit INFINITE
 !!          call getvals(line,values,icount,ierr)
 !!          write(*,'(4(g0,1x))')'VALUES=',values(:icount)
 !!       enddo INFINITE
@@ -8824,7 +8825,7 @@ integer,intent(out),optional :: ierr
 
 character(len=:),allocatable :: buffer
 character(len=len(line))     :: words(size(values))
-integer                      :: ios, i, ierr_local,isize
+integer                      :: iostat, i, ierr_local,isize
 
    isize=0
    select type(values)
@@ -8838,22 +8839,22 @@ integer                      :: ios, i, ierr_local,isize
 
    words=' '                            ! make sure words() is initialized to null+blanks
    buffer=trim(unquote(line))//"/"      ! add a slash to the end so how the read behaves with missing values is clearly defined
-   read(buffer,*,iostat=ios) words      ! undelimited strings are read into an array
+   read(buffer,*,iostat=iostat) words      ! undelimited strings are read into an array
    icount=0
    do i=1,isize                         ! loop thru array and convert non-blank words to numbers
       if(words(i) == ' ')cycle
 
       select type(values)
-      type is (integer);          read(words(i),*,iostat=ios)values(icount+1)
-      type is (real);             read(words(i),*,iostat=ios)values(icount+1)
-      type is (doubleprecision);  read(words(i),*,iostat=ios)values(icount+1)
+      type is (integer);          read(words(i),*,iostat=iostat)values(icount+1)
+      type is (real);             read(words(i),*,iostat=iostat)values(icount+1)
+      type is (doubleprecision);  read(words(i),*,iostat=iostat)values(icount+1)
       type is (character(len=*)); values(icount+1)=words(i)
       end select
 
-      if(ios == 0)then
+      if(iostat == 0)then
          icount=icount+1
       else
-         ierr_local=ios
+         ierr_local=iostat
          write(stderr,*)'*getvals* WARNING:['//trim(words(i))//'] is not a number of specified type'
       endif
    enddo
@@ -10864,22 +10865,22 @@ end function setbits64
 !===================================================================================================================================
 !>
 !!##NAME
-!!     msg(3f) - [M_strings:TYPE] converts multiple values to a (CSV) string
+!!     str(3f) - [M_strings:TYPE] converts multiple values to a (CSV) string
 !!     (LICENSE:PD)
 !!##SYNOPSIS
 !!
 !!
-!!     function msg( g1,g2,g3,g4,g5,g6,g7,g8,g9,g10, &
+!!     function str( g1,g2,g3,g4,g5,g6,g7,g8,g9,g10, &
 !!                 & g11,g12,g13,g14,g15,g16,g17,g18,g19,g20,sep,csv)
 !!
 !!      class(*),intent(in),optional  :: g1,g2,g3,g4,g5,g6,g7,g8,g9,g10
 !!      class(*),intent(in),optional  :: g11,g12,g13,g14,g15,g16,g17,g18,g19,g20
 !!      character(len=*),intent(in),optional :: sep
 !!      logical,intent(in),optional :: csv
-!!      character(len=:),allocatable :: msg
+!!      character(len=:),allocatable :: str
 !!
 !!##DESCRIPTION
-!!     msg(3f) builds a string from up to twenty scalar values.
+!!     str(3f) builds a string from up to twenty scalar values.
 !!
 !!##OPTIONS
 !!     g[1-20]  optional value to print the value of after the message. May
@@ -10890,61 +10891,61 @@ end function setbits64
 !!              Values) files
 !!
 !!##RETURNS
-!!     msg      description to print
+!!     str      description to print
 !!
 !!##EXAMPLES
 !!
 !!
 !!   Sample program:
 !!
-!!        program demo_msg
-!!        use M_strings, only : msg, quote
+!!        program demo_str
+!!        use M_strings, only : str, quote
 !!        implicit none
 !!        character(len=:),allocatable :: pr
 !!        character(len=:),allocatable :: frmt
 !!        integer                      :: biggest
 !!
-!!        pr=msg('HUGE(3f) integers',huge(0),&
+!!        pr=str('HUGE(3f) integers',huge(0),&
 !!        & 'and real',huge(0.0),'and double',huge(0.0d0))
 !!        write(*,'(a)')pr
-!!        pr=msg('real            :',&
+!!        pr=str('real            :',&
 !!         & huge(0.0),0.0,12345.6789,tiny(0.0) )
 !!        write(*,'(a)')pr
-!!        pr=msg('doubleprecision :',&
+!!        pr=str('doubleprecision :',&
 !!         & huge(0.0d0),0.0d0,12345.6789d0,tiny(0.0d0) )
 !!        write(*,'(a)')pr
-!!        pr=msg('complex         :',&
+!!        pr=str('complex         :',&
 !!         & cmplx(huge(0.0),tiny(0.0)) )
 !!        write(*,'(a)')pr
 !!
 !!        ! create a format on the fly
 !!        biggest=huge(0)
 !!        ! +0 for gfortran-11 bug
-!!        frmt=msg('(*(i',int(log10(real(biggest)))+0,':,1x))',sep='')
+!!        frmt=str('(*(i',int(log10(real(biggest)))+0,':,1x))',sep='')
 !!        write(*,*)'format=',frmt
 !!
 !!        ! compound output
-!!        pr=msg(10,100.0,"string",(11.0,22.0),.false.)
+!!        pr=str(10,100.0,"string",(11.0,22.0),.false.)
 !!        write(*,'(a)')pr
 !!        ! a separator and also use of quote(3f)
-!!        pr=msg(10,100.0,quote("string"),(11.0,22.0),.false.,sep=';')
+!!        pr=str(10,100.0,quote("string"),(11.0,22.0),.false.,sep=';')
 !!        write(*,'(a)')pr
 !!        ! CSV mode
-!!        pr=msg(10,100.0,"string",(11.0,22.0),.false.,csv=.true.)
+!!        pr=str(10,100.0,"string",(11.0,22.0),.false.,csv=.true.)
 !!        write(*,'(a)')pr
 !!        ! everything a vector instead of a scalar
-!!        pr=msg([10,20,30],["string"],[(11.0,22.0)],[.false.,.true.])
+!!        pr=str([10,20,30],["string"],[(11.0,22.0)],[.false.,.true.])
 !!        write(*,'(a)')pr
-!!        pr=msg([10,20,30],["string"],[(11.0,22.0)],[.false.,.true.],sep='|')
+!!        pr=str([10,20,30],["string"],[(11.0,22.0)],[.false.,.true.],sep='|')
 !!        write(*,'(a)')pr
-!!        pr=msg([10,20,30],["string"],[(11.0,22.0)],[.false.,.true.],csv=.true.)
+!!        pr=str([10,20,30],["string"],[(11.0,22.0)],[.false.,.true.],csv=.true.)
 !!        write(*,'(a)')pr
 !!
-!!        ! although it will often work, using msg(3f) in an I/O statement
+!!        ! although it will often work, using str(3f) in an I/O statement
 !!        ! is not recommended
-!!        write(*,*)msg('program will now attempt to stop')
+!!        write(*,*)str('program will now attempt to stop')
 !!
-!!        end program demo_msg
+!!        end program demo_str
 !!
 !! Results:
 !!
@@ -10966,16 +10967,16 @@ end function setbits64
 !!##LICENSE
 !!    Public Domain
 !===================================================================================================================================
-function msg_scalar(g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13, g14, g15, g16, g17, g18, g19, g20, sep, csv)
+function str_scalar(g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13, g14, g15, g16, g17, g18, g19, g20, sep, csv)
 
-! ident_87="@(#) M_strings msg_scalar(3fp) writes a message to a string composed of any standard scalar types"
+! ident_87="@(#) M_strings str_scalar(3fp) writes a message to a string composed of any standard scalar types"
 
 class(*),intent(in),optional  :: g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13, g14, g15, g16, g17, g18, g19, g20
 character(len=*),intent(in),optional :: sep
 logical,intent(in),optional   :: csv
 character(len=:),allocatable  :: sep_local
 logical                       :: csv_local
-character(len=:), allocatable :: msg_scalar
+character(len=:), allocatable :: str_scalar
 character(len=4096)           :: line
 integer                       :: ibegin
 integer                       :: increment
@@ -11016,8 +11017,8 @@ integer                       :: increment
    if(present(g18))call print_generic(g18)
    if(present(g19))call print_generic(g19)
    if(present(g20))call print_generic(g20)
-   msg_scalar=trim(line)
-   if(sep_local.ne.'')msg_scalar=msg_scalar(:len(msg_scalar)-1)
+   str_scalar=trim(line)
+   if(sep_local.ne.'')str_scalar=str_scalar(:len(str_scalar)-1)
 contains
 !===================================================================================================================================
 subroutine print_generic(generic)
@@ -11049,13 +11050,13 @@ class(*),intent(in) :: generic
    line=trim(line)//sep_local
 end subroutine print_generic
 !===================================================================================================================================
-end function msg_scalar
+end function str_scalar
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
-function msg_one(g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13, g14, g15, g16, g17, g18, g19, g20, sep, csv)
+function str_one(g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13, g14, g15, g16, g17, g18, g19, g20, sep, csv)
 
-! ident_88="@(#) M_strings msg_one(3fp) writes a message to a string composed of any standard one dimensional types"
+! ident_88="@(#) M_strings str_one(3fp) writes a message to a string composed of any standard one dimensional types"
 
 class(*),intent(in)           :: g1(:)
 class(*),intent(in),optional  :: g2(:),g3(:),g4(:),g5(:),g6(:),g7(:),g8(:),g9(:),g10(:)
@@ -11064,7 +11065,7 @@ character(len=*),intent(in),optional :: sep
 logical,intent(in),optional   :: csv
 character(len=:),allocatable  :: sep_local
 logical                       :: csv_local
-character(len=:), allocatable :: msg_one
+character(len=:), allocatable :: str_one
 character(len=4096)           :: line
 integer                       :: ibegin
 integer                       :: increment
@@ -11105,8 +11106,8 @@ integer                       :: increment
    if(present(g18))call print_generic(g18)
    if(present(g19))call print_generic(g19)
    if(present(g20))call print_generic(g20)
-   msg_one=trim(line)
-   if(sep_local.ne.'')msg_one=msg_one(:len(msg_one)-1)
+   str_one=trim(line)
+   if(sep_local.ne.'')str_one=str_one(:len(str_one)-1)
 contains
 !===================================================================================================================================
 subroutine print_generic(generic)
@@ -11148,7 +11149,152 @@ integer :: i
    endif
 end subroutine print_generic
 
-end function msg_one
+end function str_one
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
+!!    fmt(3f) - [M_strings] convert any intrinsic to a string using specified format
+!!    (LICENSE:PD)
+!!##SYNOPSIS
+!!
+!!    function fmt(value,format) result(string)
+!!
+!!     class(*),intent(in),optional :: value
+!!     character(len=*),intent(in),optional :: format
+!!     character(len=:),allocatable :: string
+!!##DESCRIPTION
+!!    FMT(3f) converts any standard intrinsic value to a string using the specified
+!!    format.
+!!##OPTIONS
+!!    value    value to print the value of. May be of type INTEGER, LOGICAL,
+!!             REAL, DOUBLEPRECISION, COMPLEX, or CHARACTER.
+!!    format   format to use to print value. It is up to the user to use an
+!!             appropriate format. The format does not require being
+!!             surrounded by parenthesis. If not present a default is selected
+!!             similar to what would be produced with free format, with
+!!             trailing zeros removed.
+!!##RETURNS
+!!    string   A string value
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!     program demo_fmt
+!!     use :: M_strings, only : fmt
+!!     implicit none
+!!     character(len=:),allocatable :: output
+!!
+!!        output=fmt(10,"'[',i0,']'")
+!!        write(*,*)'result is ',output
+!!
+!!        output=fmt(10.0/3.0,"'[',g0.5,']'")
+!!        write(*,*)'result is ',output
+!!
+!!        output=fmt(.true.,"'The final answer is [',g0,']'")
+!!        write(*,*)'result is ',output
+!!
+!!     end program demo_fmt
+!!
+!!   Results:
+!!
+!!     result is [10]
+!!     result is [3.3333]
+!!     result is The final answer is [T]
+!!
+!!##AUTHOR
+!!    John S. Urban
+!!
+!!##LICENSE
+!!    Public Domain
+recursive function fmt(generic,format) result (line)
+use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
+
+! ident_89="@(#) M_strings fmt(3f) convert any intrinsic to a string using specified format"
+
+class(*),intent(in)          :: generic
+character(len=*),intent(in),optional  :: format
+character(len=:),allocatable :: line
+character(len=:),allocatable :: fmt_local
+character(len=:),allocatable :: re,im
+integer                      :: iostat
+character(len=255)           :: iomsg
+character(len=1),parameter   :: null=char(0)
+integer                      :: ilen
+logical                      :: trimit
+   if(present(format))then
+      fmt_local=format
+      trimit=.false.
+   else
+      fmt_local=''
+      trimit=.true.
+   endif
+   ! add ",a" and print null and use position of null to find length of output
+   ! add cannot use SIZE= or POS= or ADVANCE='NO' on WRITE() on INTERNAL READ,
+   ! and do not want to trim as trailing spaces can be significant
+   if(fmt_local == '')then
+      select type(generic)
+         type is (integer(kind=int8));     fmt_local='(i0,a)'
+         type is (integer(kind=int16));    fmt_local='(i0,a)'
+         type is (integer(kind=int32));    fmt_local='(i0,a)'
+         type is (integer(kind=int64));    fmt_local='(i0,a)'
+         type is (real(kind=real32));      fmt_local='(1pg0,a)'
+         type is (real(kind=real64));      fmt_local='(1pg0,a)'
+#ifdef __NVCOMPILER
+#else
+         type is (real(kind=real128));     fmt_local='(1pg0,a)'
+#endif
+         type is (logical);                fmt_local='(l1,a)'
+         type is (character(len=*));       fmt_local='(a,a)'
+         type is (complex);                fmt_local='("(",1pg0,",",1pg0,")",a)'
+      end select
+   else
+      if(format(1:1) == '(')then
+         fmt_local=format(:len_trim(format)-1)//',a)'
+      else
+         fmt_local='('//fmt_local//',a)'
+      endif
+   endif
+   allocate(character(len=256) :: line) ! cannot currently write into allocatable variable
+   iostat=0
+   select type(generic)
+      type is (integer(kind=int8));     write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
+      type is (integer(kind=int16));    write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
+      type is (integer(kind=int32));    write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
+      type is (integer(kind=int64));    write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
+      type is (real(kind=real32));      write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
+      type is (real(kind=real64));      write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
+#ifdef __NVCOMPILER
+#else
+      type is (real(kind=real128));     write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
+#endif
+      type is (logical);                write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
+      type is (character(len=*));       write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
+      type is (complex);
+              if(trimit)then
+                 re=fmt(generic%re)
+                 im=fmt(generic%im)
+                 call trimzeros_(re)
+                 call trimzeros_(im)
+                 fmt_local='("(",g0,",",g0,")",a)'
+                 write(line,fmt_local,iostat=iostat,iomsg=iomsg) trim(re),trim(im),null
+                 trimit=.false.
+              else
+                 write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
+              endif
+   end select
+   if(iostat /= 0)then
+      line='<ERROR>'//trim(iomsg)
+   else
+      ilen=index(line,null,back=.true.)
+      if(ilen == 0)ilen=len(line)
+      line=line(:ilen-1)
+   endif
+
+   if(index(line,'.') /= 0 .and. trimit) call trimzeros_(line)
+
+end function fmt
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
@@ -11738,7 +11884,7 @@ logical,save                       :: trailopen=.false.
 integer,save                       :: itrail
 character,save                     :: comment='#'
 integer                            :: i
-integer                            :: ios
+integer                            :: iostat
 integer                            :: times             ! number of times written to stdout
 character(len=3)                   :: adv               ! whether remaining writes from this call use advancing I/O
 
@@ -11786,16 +11932,16 @@ character(len=4096)                :: mssge
       !-----------------------------------------------------------------------------------------------------------------------------
       case('N')                                                   ! new name for stdout
          if(msg /= ' '.and.msg /= '#N#'.and.msg /= '"#N#"')then   ! if filename not special or blank open new file
-            close(unit=last_int,iostat=ios)
-            open(unit=last_int,file=clip(msg),iostat=ios)
-            if(ios == 0)then
+            close(unit=last_int,iostat=iostat)
+            open(unit=last_int,file=clip(msg),iostat=iostat)
+            if(iostat == 0)then
                stdout=last_int
             else
-               write(*,*)'*journal* error opening redirected output file, ioerr=',ios
+               write(*,*)'*journal* error opening redirected output file, ioerr=',iostat
                write(*,*)'*journal* msg='//trim(msg)
             endif
          elseif(msg == ' ')then
-            close(unit=last_int,iostat=ios)
+            close(unit=last_int,iostat=iostat)
             stdout=6
          endif
       !-----------------------------------------------------------------------------------------------------------------------------
@@ -11816,25 +11962,25 @@ character(len=4096)                :: mssge
             endif
          endif
       case('F','f')
-         flush(unit=itrail,iostat=ios,iomsg=mssge)
-         if(ios /= 0)then
+         flush(unit=itrail,iostat=iostat,iomsg=mssge)
+         if(iostat /= 0)then
             write(*,'(a)') trim(mssge)
          endif
       case('A','a')
          if(msg /= '')then
             open(newunit=itrail,status='unknown',access='sequential',file=clip(msg),&
-            & form='formatted',iostat=ios,position='append')
+            & form='formatted',iostat=iostat,position='append')
             trailopen=.true.
          endif
       case('O','o')
          if(msg /= '')then
-            open(newunit=itrail,status='unknown',access='sequential', file=clip(msg),form='formatted',iostat=ios)
+            open(newunit=itrail,status='unknown',access='sequential', file=clip(msg),form='formatted',iostat=iostat)
             trailopen=.true.
          else
             if(trailopen)then
                write(itrail,'(4a)',advance=adv)prefix,comment,'closing trail file:',trim(msg)
             endif
-            close(unit=itrail,iostat=ios)
+            close(unit=itrail,iostat=iostat)
             trailopen=.false.
          endif
       case default
@@ -11852,19 +11998,6 @@ end subroutine flush_trail
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
-subroutine where_write_message_all(where, g0,g1,g2,g3,g4,g5,g6,g7,g8,g9,nospace)
-
-!$(#) M_journal::where_write_message_all(3f): writes a message to a string composed of any standard scalar types
-
-character(len=*),intent(in)   :: where
-class(*),intent(in)           :: g0
-class(*),intent(in),optional  :: g1,g2,g3,g4,g5,g6,g7,g8,g9
-logical,intent(in),optional   :: nospace
- !call where_write_message(where,str(g0, g1, g2, g3, g4, g5, g6, g7, g8, g9,nospace))
-end subroutine where_write_message_all
-!===================================================================================================================================
-!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
-!===================================================================================================================================
 subroutine write_message_only(message)
 
 !$(#) M_journal::write_message_only(3fp): calls JOURNAL('sc',message)
@@ -11876,130 +12009,6 @@ character(len=*),intent(in)          :: message
 end subroutine write_message_only
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
-!===================================================================================================================================
-function str_scalar(generic0, generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9, &
-                  & generica, genericb, genericc, genericd, generice, genericf, genericg, generich, generici, genericj, &
-                  & sep)
-class(*),intent(in),optional  :: generic0, generic1, generic2, generic3, generic4
-class(*),intent(in),optional  :: generic5, generic6, generic7, generic8, generic9
-class(*),intent(in),optional  :: generica, genericb, genericc, genericd, generice
-class(*),intent(in),optional  :: genericf, genericg, generich, generici, genericj
-character(len=*),intent(in),optional :: sep
-character(len=:), allocatable :: str_scalar
-character(len=4096)           :: line
-integer                       :: ibegin
-integer                       :: increment
-character(len=:),allocatable  :: sep_local
-   if(present(sep))then
-      sep_local=sep
-      increment=len(sep)+1
-   else
-      sep_local=' '
-      increment=2
-   endif
-
-   ibegin=1
-   line=''
-   if(present(generic0))call print_generic(generic0)
-   if(present(generic1))call print_generic(generic1)
-   if(present(generic2))call print_generic(generic2)
-   if(present(generic3))call print_generic(generic3)
-   if(present(generic4))call print_generic(generic4)
-   if(present(generic5))call print_generic(generic5)
-   if(present(generic6))call print_generic(generic6)
-   if(present(generic7))call print_generic(generic7)
-   if(present(generic8))call print_generic(generic8)
-   if(present(generic9))call print_generic(generic9)
-   if(present(generica))call print_generic(generica)
-   if(present(genericb))call print_generic(genericb)
-   if(present(genericc))call print_generic(genericc)
-   if(present(genericd))call print_generic(genericd)
-   if(present(generice))call print_generic(generice)
-   if(present(genericf))call print_generic(genericf)
-   if(present(genericg))call print_generic(genericg)
-   if(present(generich))call print_generic(generich)
-   if(present(generici))call print_generic(generici)
-   if(present(genericj))call print_generic(genericj)
-   str_scalar=trim(line)
-contains
-!===================================================================================================================================
-subroutine print_generic(generic)
-class(*),intent(in) :: generic
-   select type(generic)
-      type is (integer(kind=int8));     write(line(ibegin:),'(i0)') generic
-      type is (integer(kind=int16));    write(line(ibegin:),'(i0)') generic
-      type is (integer(kind=int32));    write(line(ibegin:),'(i0)') generic
-      type is (integer(kind=int64));    write(line(ibegin:),'(i0)') generic
-      type is (real(kind=real32));      write(line(ibegin:),'(1pg0)') generic
-      type is (real(kind=real64));      write(line(ibegin:),'(1pg0)') generic
-      !x!type is (real(kind=real128));     write(line(ibegin:),'(1pg0)') generic
-      !x!type is (real(kind=real256));     write(line(ibegin:),'(1pg0)') generic
-      type is (logical);                write(line(ibegin:),'(l1)') generic
-      type is (character(len=*));       write(line(ibegin:),'(a)') trim(generic)
-      type is (complex);                write(line(ibegin:),'("(",1pg0,",",1pg0,")")') generic
-   end select
-   ibegin=len_trim(line)+increment
-   line=trim(line)//sep_local
-end subroutine print_generic
-
-end function str_scalar
-!===================================================================================================================================
-function str_one(generic0,generic1, generic2, generic3, generic4, generic5, generic6, generic7, generic8, generic9,sep)
-class(*),intent(in)           :: generic0(:)
-class(*),intent(in),optional  :: generic1(:), generic2(:), generic3(:), generic4(:), generic5(:)
-class(*),intent(in),optional  :: generic6(:), generic7(:), generic8(:), generic9(:)
-character(len=*),intent(in),optional :: sep
-character(len=:),allocatable  :: sep_local
-character(len=:), allocatable :: str_one
-character(len=4096)           :: line
-integer                       :: ibegin
-integer                       :: increment
-   if(present(sep))then
-      sep_local=sep
-      increment=len(sep)+1
-   else
-      sep_local=' '
-      increment=2
-   endif
-
-   ibegin=1
-   line=' '
-   call print_generic(generic0)
-   if(present(generic1))call print_generic(generic1)
-   if(present(generic2))call print_generic(generic2)
-   if(present(generic3))call print_generic(generic3)
-   if(present(generic4))call print_generic(generic4)
-   if(present(generic5))call print_generic(generic5)
-   if(present(generic6))call print_generic(generic6)
-   if(present(generic7))call print_generic(generic7)
-   if(present(generic8))call print_generic(generic8)
-   if(present(generic9))call print_generic(generic9)
-   str_one=trim(line)
-contains
-
-subroutine print_generic(generic)
-class(*),intent(in),optional :: generic(:)
-integer :: i
-   select type(generic)
-      type is (integer(kind=int8));     write(line(ibegin:),'("[",*(i0,1x))') generic
-      type is (integer(kind=int16));    write(line(ibegin:),'("[",*(i0,1x))') generic
-      type is (integer(kind=int32));    write(line(ibegin:),'("[",*(i0,1x))') generic
-      type is (integer(kind=int64));    write(line(ibegin:),'("[",*(i0,1x))') generic
-      type is (real(kind=real32));      write(line(ibegin:),'("[",*(1pg0,1x))') generic
-      type is (real(kind=real64));      write(line(ibegin:),'("[",*(1pg0,1x))') generic
-      !x!type is (real(kind=real128));     write(line(ibegin:),'("[",*(1pg0,1x))') generic
-      !x!type is (real(kind=real256));     write(line(ibegin:),'("[",*(1pg0,1x))') generic
-      type is (logical);                write(line(ibegin:),'("[",*(l1,1x))') generic
-      type is (character(len=*));       write(line(ibegin:),'("[",:*("""",a,"""",1x))') (trim(generic(i)),i=1,size(generic))
-      type is (complex);                write(line(ibegin:),'("[",*("(",1pg0,",",1pg0,")",1x))') generic
-      class default
-         stop 'unknown type in *print_generic*'
-   end select
-   line=trim(line)//"]"//sep_local
-   ibegin=len_trim(line)+increment
-end subroutine print_generic
-
-end function str_one
 !===================================================================================================================================
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -12403,7 +12412,7 @@ real(kind=wp)                 :: whole, fractional
 integer                       :: power
 integer                       :: cnt(6)
 integer(kind=int8)            :: a, part
-integer                       :: i, ipos, ios, too_many_digit_count
+integer                       :: i, ipos, iostat, too_many_digit_count
 
    value=0.0_wp
    cnt=0
@@ -12469,8 +12478,8 @@ integer                       :: i, ipos, ios, too_many_digit_count
    if(all(cnt <= 1).and.ipos /= 0)then
       ator_real32 = .true.
    else
-      read(str,fmt=*,iostat=ios) val ! use internal read for INF, NAN for now
-      if(ios == 0)then
+      read(str,fmt=*,iostat=iostat) val ! use internal read for INF, NAN for now
+      if(iostat == 0)then
          ator_real32 = .true.
          if(present(msg)) msg=''
       else
@@ -12513,7 +12522,7 @@ real(kind=wp)                 :: whole, fractional
 integer                       :: power
 integer                       :: cnt(6)
 integer(kind=int8)            :: a, part
-integer                       :: i, ipos, ios, too_many_digit_count
+integer                       :: i, ipos, iostat, too_many_digit_count
 
    value=0.0_wp
    cnt=0
@@ -12579,8 +12588,8 @@ integer                       :: i, ipos, ios, too_many_digit_count
    if(all(cnt <= 1).and.ipos /= 0)then
       ator_real64 = .true.
    else
-      read(str,fmt=*,iostat=ios) val ! use internal read for INF, NAN for now
-      if(ios == 0)then
+      read(str,fmt=*,iostat=iostat) val ! use internal read for INF, NAN for now
+      if(iostat == 0)then
          ator_real64 = .true.
          if(present(msg)) msg=''
       else

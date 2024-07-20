@@ -415,13 +415,13 @@ status flag. 0 = success, <strong>-1</strong> = no tokens remain</p></li>
    character(len=100)            :: inline
    character(len=:),allocatable  :: token
    character(len=*),parameter    :: delimiters=&#39; ;,&#39;
-   integer                       :: ios
+   integer                       :: iostat
    integer                       :: icount
    integer                       :: itoken
       icount=0
       do        ! read lines from stdin until end-of-file or error
-         read (unit=*,fmt=&quot;(a)&quot;,iostat=ios) inline
-         if(ios /= 0)stop
+         read (unit=*,fmt=&quot;(a)&quot;,iostat=iostat) inline
+         if(iostat /= 0)stop
          icount=icount+1
          itoken=0
          write(*,*)&#39;INLINE &#39;,trim(inline)
@@ -1419,25 +1419,76 @@ True if a field was found.</p></li>
 </div>
 <div id="name-22" class="slide section level1">
 <h1>NAME</h1>
-<p>fortran_name(3f) - [M_strings:COMPARE] test if string meets criteria for being a fortran name (LICENSE:PD)</p>
+<p>fmt(3f) - [M_strings] convert any intrinsic to a string using specified format (LICENSE:PD)</p>
 <h2 id="synopsis-22">SYNOPSIS</h2>
+<p>function fmt(value,format) result(string)</p>
+<pre><code>    class(*),intent(in),optional :: value
+    character(len=*),intent(in),optional :: format
+    character(len=:),allocatable :: string
+</code></pre>
+<h2 id="description-22">DESCRIPTION</h2>
+<p>FMT(3f) converts any standard intrinsic value to a string using the specified format.</p>
+<h2 id="options-19">OPTIONS</h2>
+<ul>
+<li><p><strong>value</strong><br />
+value to print the value of. May be of type INTEGER, LOGICAL, REAL, DOUBLEPRECISION, COMPLEX, or CHARACTER.</p></li>
+<li><p><strong>format</strong><br />
+format to use to print value. It is up to the user to use an appropriate format. The format does not require being surrounded by parenthesis. If not present a default is selected similar to what would be produced with free format, with trailing zeros removed.</p></li>
+</ul>
+<h2 id="returns-15">RETURNS</h2>
+<ul>
+<li><strong>string</strong><br />
+A string value</li>
+</ul>
+<h2 id="examples-22">EXAMPLES</h2>
+<p>Sample program:</p>
+<pre><code>    program demo_fmt
+    use :: M_strings, only : fmt
+    implicit none
+    character(len=:),allocatable :: output
+
+       output=fmt(10,&quot;&#39;[&#39;,i0,&#39;]&#39;&quot;)
+       write(*,*)&#39;result is &#39;,output
+
+       output=fmt(10.0/3.0,&quot;&#39;[&#39;,g0.5,&#39;]&#39;&quot;)
+       write(*,*)&#39;result is &#39;,output
+
+       output=fmt(.true.,&quot;&#39;The final answer is [&#39;,g0,&#39;]&#39;&quot;)
+       write(*,*)&#39;result is &#39;,output
+
+    end program demo_fmt
+</code></pre>
+<p>Results:</p>
+<pre><code>    result is [10]
+    result is [3.3333]
+    result is The final answer is [T]
+</code></pre>
+<h2 id="author-22">AUTHOR</h2>
+<p>John S. Urban</p>
+<h2 id="license-22">LICENSE</h2>
+<p>Public Domain</p>
+</div>
+<div id="name-23" class="slide section level1">
+<h1>NAME</h1>
+<p>fortran_name(3f) - [M_strings:COMPARE] test if string meets criteria for being a fortran name (LICENSE:PD)</p>
+<h2 id="synopsis-23">SYNOPSIS</h2>
 <p>elemental function fortran_name(line) result (lout)</p>
 <pre><code>     character(len=*),intent(in)  :: line
      logical                      :: lout
 </code></pre>
-<h2 id="description-22">DESCRIPTION</h2>
+<h2 id="description-23">DESCRIPTION</h2>
 <p>Determines if a string is an allowed Fortran name. To pass the input string must be composed of 1 to 63 ASCII characters and start with a letter and be composed entirely of alphanumeric characters [a-zA-Z0-9] and underscores.</p>
-<h2 id="options-19">OPTIONS</h2>
+<h2 id="options-20">OPTIONS</h2>
 <ul>
 <li><strong>LINE</strong><br />
 input string to test. Leading spaces are significant but trailing spaces are ignored.</li>
 </ul>
-<h2 id="returns-15">RETURNS</h2>
+<h2 id="returns-16">RETURNS</h2>
 <ul>
 <li><strong>LOUT</strong><br />
 a logical value indicating if the input string passed or failed the test to see if it is a valid Fortran name or not.</li>
 </ul>
-<h2 id="examples-22">EXAMPLES</h2>
+<h2 id="examples-23">EXAMPLES</h2>
 <p>Sample program</p>
 <pre><code>     program demo_fortran_name
      use M_strings, only : fortran_name
@@ -1466,22 +1517,22 @@ a logical value indicating if the input string passed or failed the test to see 
      &gt; 11 A                    T
      &gt; 12 x@x                  F
 </code></pre>
-<h2 id="author-22">AUTHOR</h2>
+<h2 id="author-23">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-22">LICENSE</h2>
+<h2 id="license-23">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-23" class="slide section level1">
+<div id="name-24" class="slide section level1">
 <h1>NAME</h1>
 <p>getvals(3f) - [M_strings:TYPE] read arbitrary number of REAL values from a character variable up to size of VALUES() array (LICENSE:PD)</p>
-<h2 id="synopsis-23">SYNOPSIS</h2>
+<h2 id="synopsis-24">SYNOPSIS</h2>
 <p>subroutine getvals(line,values,icount,ierr)</p>
 <pre><code>    character(len=*),intent(in)  :: line
     class(*),intent(out)         :: values(:)
     integer,intent(out)          :: icount
     integer,intent(out),optional :: ierr
 </code></pre>
-<h2 id="description-23">DESCRIPTION</h2>
+<h2 id="description-24">DESCRIPTION</h2>
 <p>GETVALS(3f) reads a relatively arbitrary number of numeric values from a character variable into a REAL array using list-directed input.</p>
 <p>NOTE: In this version null values are skipped instead of meaning to leave that value unchanged</p>
 <blockquote>
@@ -1495,12 +1546,12 @@ a logical value indicating if the input string passed or failed the test to see 
 <pre><code>       4*10.0
        10.0, 10.0, 10.0, 10.0
 </code></pre>
-<h2 id="options-20">OPTIONS</h2>
+<h2 id="options-21">OPTIONS</h2>
 <ul>
 <li><strong>LINE</strong><br />
 A character variable containing the characters representing a list of numbers</li>
 </ul>
-<h2 id="returns-16">RETURNS</h2>
+<h2 id="returns-17">RETURNS</h2>
 <ul>
 <li><p><strong>VALUES()</strong><br />
 array holding numbers read from string. May be of type INTEGER, REAL, DOUBLEPRECISION, or CHARACTER. If CHARACTER the strings are returned as simple words instead of numeric values.</p></li>
@@ -1509,7 +1560,7 @@ number of defined numbers in VALUES(). If ICOUNT reaches the size of the VALUES(
 <li><p><strong>IERR</strong><br />
 zero if no error occurred in reading numbers. Optional. If not present and an error occurs the program is terminated.</p></li>
 </ul>
-<h2 id="examples-23">EXAMPLES</h2>
+<h2 id="examples-24">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>      program demo_getvals
       use M_strings, only: getvals
@@ -1517,10 +1568,10 @@ zero if no error occurred in reading numbers. Optional. If not present and an er
       integer,parameter  :: longest_line=256
       character(len=longest_line) :: line
       real               :: values(longest_line/2+1)
-      integer            :: ios,icount,ierr
+      integer            :: iostat,icount,ierr
       INFINITE: do
-         read(*,&#39;(a)&#39;,iostat=ios) line
-         if(ios /= 0)exit INFINITE
+         read(*,&#39;(a)&#39;,iostat=iostat) line
+         if(iostat /= 0)exit INFINITE
          call getvals(line,values,icount,ierr)
          write(*,&#39;(4(g0,1x))&#39;)&#39;VALUES=&#39;,values(:icount)
       enddo INFINITE
@@ -1553,26 +1604,26 @@ zero if no error occurred in reading numbers. Optional. If not present and an er
     VALUES=   1.00000000       10.0000000
     VALUES=   11.0000000       22.0000000       33.0000000
 </code></pre>
-<h2 id="author-23">AUTHOR</h2>
+<h2 id="author-24">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-23">LICENSE</h2>
+<h2 id="license-24">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-24" class="slide section level1">
+<div id="name-25" class="slide section level1">
 <h1>NAME</h1>
 <p>glob(3f) - [M_strings:COMPARE] compare given string for match to a pattern which may contain globbing wildcard characters (LICENSE:PD)</p>
-<h2 id="synopsis-24">SYNOPSIS</h2>
+<h2 id="synopsis-25">SYNOPSIS</h2>
 <p>logical function glob(string, pattern )</p>
 <pre><code>    character(len=*),intent(in) :: string
     character(len=*),intent(in) :: pattern
 </code></pre>
-<h2 id="description-24">DESCRIPTION</h2>
+<h2 id="description-25">DESCRIPTION</h2>
 <p>glob(3f) compares an (entire) STRING for a match to a PATTERN which may contain basic wildcard "globbing" characters.</p>
 <p>"*" matches any string. "?" matches any single character.</p>
 <p>In this version to get a match the entire string must be described by PATTERN. Trailing whitespace is significant, so trim the input string to have trailing whitespace ignored.</p>
 <p>Patterns like "b*ba" fail on a string like "babababa" because the first match found is not at the end of the string so 'baba' does not match</p>
 <p>To skip over the early matches insert an extra character at the end of the string and pattern that does not occur in the pattern. Typically a NULL is used (char(0)). So searching for b*ba\0 in babababa\0 matches the entire string.</p>
-<h2 id="options-21">OPTIONS</h2>
+<h2 id="options-22">OPTIONS</h2>
 <ul>
 <li><p><strong>string</strong><br />
 the input string to be tested for a match to the pattern.</p></li>
@@ -1585,7 +1636,7 @@ the globbing pattern to search for. The following simple globbing options are av
 <li><p>There is no escape character, so matching strings with a literal question mark and asterisk is problematic.</p></li>
 </ul></li>
 </ul>
-<h2 id="examples-24">EXAMPLES</h2>
+<h2 id="examples-25">EXAMPLES</h2>
 <p>Example program</p>
 <pre><code>   program demo_glob
    implicit none
@@ -1799,24 +1850,24 @@ the globbing pattern to search for. The following simple globbing options are av
    end program demo_glob
 </code></pre>
 <p>Expected output</p>
-<h2 id="author-24">AUTHOR</h2>
+<h2 id="author-25">AUTHOR</h2>
 <p>John S. Urban</p>
 <h2 id="references">REFERENCES</h2>
 <p>The article "Matching Wildcards: An Empirical Way to Tame an Algorithm" in Dr Dobb's Journal, By Kirk J. Krauss, October 07, 2014</p>
-<h2 id="license-24">LICENSE</h2>
+<h2 id="license-25">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-25" class="slide section level1">
+<div id="name-26" class="slide section level1">
 <h1>NAME</h1>
 <p>indent(3f) - [M_strings:WHITESPACE] count number of leading spaces in a string (LICENSE:PD)</p>
-<h2 id="synopsis-25">SYNOPSIS</h2>
+<h2 id="synopsis-26">SYNOPSIS</h2>
 <p>function indent(line)</p>
 <pre><code>    integer                        :: indent
     character(len=*),intent(in)    :: line
 </code></pre>
-<h2 id="description-25">DESCRIPTION</h2>
+<h2 id="description-26">DESCRIPTION</h2>
 <p>Count number of leading spaces in a CHARACTER variable.</p>
-<h2 id="examples-25">EXAMPLES</h2>
+<h2 id="examples-26">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_indent
    !  test filter to count leading spaces in a character variable
@@ -1824,10 +1875,10 @@ the globbing pattern to search for. The following simple globbing options are av
    use M_strings, only : indent
    implicit none
    character(len=1024) :: in
-   integer             :: ios
+   integer             :: iostat
       READFILE: do
-         read(*,&#39;(A)&#39;,iostat=ios)in
-         if(ios /= 0) exit READFILE
+         read(*,&#39;(A)&#39;,iostat=iostat)in
+         if(iostat /= 0) exit READFILE
          write(*,&#39;(i3,&quot;&quot;,a)&#39;)indent(in),trim(in)
       enddo READFILE
    end program demo_indent
@@ -1837,32 +1888,32 @@ the globbing pattern to search for. The following simple globbing options are av
      &gt; 0a b c
      &gt; 6      a b c
 </code></pre>
-<h2 id="author-25">AUTHOR</h2>
+<h2 id="author-26">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-25">LICENSE</h2>
+<h2 id="license-26">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-26" class="slide section level1">
+<div id="name-27" class="slide section level1">
 <h1>NAME</h1>
 <p>int(3f) - [M_strings:TYPE] overloads INT(3f) so it can handle character arguments (LICENSE:PD)</p>
-<h2 id="synopsis-26">SYNOPSIS</h2>
+<h2 id="synopsis-27">SYNOPSIS</h2>
 <p>impure elemental function int(string)</p>
 <pre><code>    character(len=*) :: string
     integer(kind=int32) :: int
 </code></pre>
-<h2 id="description-26">DESCRIPTION</h2>
+<h2 id="description-27">DESCRIPTION</h2>
 <p>int(3f) returns an integer when given a numeric representation of a numeric value. This overloads the INT(3f) intrinsic so that CHARACTER arguments assumed to represent a numeric value may be input.</p>
-<h2 id="options-22">OPTIONS</h2>
+<h2 id="options-23">OPTIONS</h2>
 <ul>
 <li><strong>STRING</strong><br />
 input string to be converted to an INT32 integer</li>
 </ul>
-<h2 id="returns-17">RETURNS</h2>
+<h2 id="returns-18">RETURNS</h2>
 <ul>
 <li><strong>INT</strong><br />
 integer represented by input string</li>
 </ul>
-<h2 id="examples-26">EXAMPLES</h2>
+<h2 id="examples-27">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>     program demo_int
      use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64
@@ -1880,21 +1931,21 @@ integer represented by input string</li>
     &gt; intrinsic int(3f) still works 20
     &gt; elemental 10 20 20 20
 </code></pre>
-<h2 id="author-26">AUTHOR</h2>
+<h2 id="author-27">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-26">LICENSE</h2>
+<h2 id="license-27">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-27" class="slide section level1">
+<div id="name-28" class="slide section level1">
 <h1>NAME</h1>
 <p>isalnum,isalpha,iscntrl,isdigit,isgraph,islower, isprint,ispunct,isspace,isupper, isascii,isblank,isxdigit(3f) - [M_strings:COMPARE] test membership in subsets of ASCII set (LICENSE:PD)</p>
-<h2 id="synopsis-27">SYNOPSIS</h2>
+<h2 id="synopsis-28">SYNOPSIS</h2>
 <p>Where "FUNCNAME" is one of the function names in the group, the functions are defined by</p>
 <pre><code>    elemental function FUNCNAME(onechar)
     character,intent(in) :: onechar
     logical              :: FUNC_NAME
 </code></pre>
-<h2 id="description-27">DESCRIPTION</h2>
+<h2 id="description-28">DESCRIPTION</h2>
 <p>These elemental functions test if a character belongs to various subsets of the ASCII character set.</p>
 <ul>
 <li><p><strong>isalnum</strong><br />
@@ -1924,7 +1975,7 @@ returns .true. if character is an uppercase letter (A-Z)</p></li>
 <li><p><strong>isxdigit</strong><br />
 returns .true. if character is a hexadecimal digit (0-9, a-f, or A-F).</p></li>
 </ul>
-<h2 id="examples-27">EXAMPLES</h2>
+<h2 id="examples-28">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_isdigit
 
@@ -1953,32 +2004,32 @@ returns .true. if character is a hexadecimal digit (0-9, a-f, or A-F).</p></li>
    For string[1234567890] T
    For string[both 8787 ] F
 </code></pre>
-<h2 id="author-27">AUTHOR</h2>
+<h2 id="author-28">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-27">LICENSE</h2>
+<h2 id="license-28">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-28" class="slide section level1">
+<div id="name-29" class="slide section level1">
 <h1>NAME</h1>
 <p>isalpha(3f) - [M_strings:COMPARE] returns .true. if character is a letter and .false. otherwise (LICENSE:PD)</p>
-<h2 id="synopsis-28">SYNOPSIS</h2>
+<h2 id="synopsis-29">SYNOPSIS</h2>
 <p>elemental function isalpha(onechar)</p>
 <pre><code>   character,intent(in) :: onechar
    logical              :: isalpha
 </code></pre>
-<h2 id="description-28">DESCRIPTION</h2>
+<h2 id="description-29">DESCRIPTION</h2>
 <p>isalpha(3f) returns .true. if character is a letter and �false. otherwise</p>
-<h2 id="options-23">OPTIONS</h2>
+<h2 id="options-24">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-18">RETURNS</h2>
+<h2 id="returns-19">RETURNS</h2>
 <ul>
 <li><strong>isalpha</strong><br />
 logical value returns .true. if character is a ASCII letter or false otherwise.</li>
 </ul>
-<h2 id="examples-28">EXAMPLES</h2>
+<h2 id="examples-29">EXAMPLES</h2>
 <p>Sample program</p>
 <pre><code>    program demo_isalpha
     use M_strings, only : isalpha
@@ -1992,32 +2043,32 @@ logical value returns .true. if character is a ASCII letter or false otherwise.<
 <pre><code>   ISGRAPH: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm
    nopqrstuvwxyz
 </code></pre>
-<h2 id="author-28">AUTHOR</h2>
+<h2 id="author-29">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-28">LICENSE</h2>
+<h2 id="license-29">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-29" class="slide section level1">
+<div id="name-30" class="slide section level1">
 <h1>NAME</h1>
 <p>isascii(3f) - [M_strings:COMPARE] returns .true. if the character is in the range char(0) to char(256) (LICENSE:PD)</p>
-<h2 id="synopsis-29">SYNOPSIS</h2>
+<h2 id="synopsis-30">SYNOPSIS</h2>
 <p>elemental function isascii(onechar)</p>
 <pre><code>    character,intent(in) :: onechar
     logical              :: isascii
 </code></pre>
-<h2 id="description-29">DESCRIPTION</h2>
+<h2 id="description-30">DESCRIPTION</h2>
 <p>isascii(3f) returns .true. if the character is in the range char(0) to char(127)</p>
-<h2 id="options-24">OPTIONS</h2>
+<h2 id="options-25">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-19">RETURNS</h2>
+<h2 id="returns-20">RETURNS</h2>
 <ul>
 <li><strong>isupper</strong><br />
 logical value returns true if character is an ASCII character.</li>
 </ul>
-<h2 id="examples-29">EXAMPLES</h2>
+<h2 id="examples-30">EXAMPLES</h2>
 <p>Sample program</p>
 <pre><code>    program demo_isascii
     use M_strings, only : isascii
@@ -2043,27 +2094,27 @@ logical value returns true if character is an ASCII character.</li>
    109 110 111 112 113 114 115 116 117 118
    119 120 121 122 123 124 125 126 127
 </code></pre>
-<h2 id="author-29">AUTHOR</h2>
+<h2 id="author-30">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-29">LICENSE</h2>
+<h2 id="license-30">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-30" class="slide section level1">
+<div id="name-31" class="slide section level1">
 <h1>NAME</h1>
 <p>isblank(3f) - [M_strings:COMPARE] returns .true. if character is a blank character (space or horizontal tab). (LICENSE:PD)</p>
-<h2 id="synopsis-30">SYNOPSIS</h2>
+<h2 id="synopsis-31">SYNOPSIS</h2>
 <p>elemental function isblank(onechar)</p>
 <pre><code>    character,intent(in) :: onechar
     logical              :: isblank
 </code></pre>
-<h2 id="description-30">DESCRIPTION</h2>
+<h2 id="description-31">DESCRIPTION</h2>
 <p>isblank(3f) returns .true. if character is a blank character (space or horizontal tab).</p>
-<h2 id="options-25">OPTIONS</h2>
+<h2 id="options-26">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-20">RETURNS</h2>
+<h2 id="returns-21">RETURNS</h2>
 <ul>
 <li><p><strong>isblank</strong><br />
 logical value returns true if character is a "blank"</p>
@@ -2072,7 +2123,7 @@ logical value returns true if character is a "blank"</p>
 space or horizontal tab character).</li>
 </ul></li>
 </ul>
-<h2 id="examples-30">EXAMPLES</h2>
+<h2 id="examples-31">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_isblank
     use M_strings, only : isblank
@@ -2086,32 +2137,32 @@ space or horizontal tab character).</li>
 <p>Results:</p>
 <pre><code>   ISXBLANK:  9 32
 </code></pre>
-<h2 id="author-30">AUTHOR</h2>
+<h2 id="author-31">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-30">LICENSE</h2>
+<h2 id="license-31">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-31" class="slide section level1">
+<div id="name-32" class="slide section level1">
 <h1>NAME</h1>
 <p>iscntrl(3f) - [M_strings:COMPARE] returns .true. if character is a delete character or ordinary control character (LICENSE:PD)</p>
-<h2 id="synopsis-31">SYNOPSIS</h2>
+<h2 id="synopsis-32">SYNOPSIS</h2>
 <p>elemental function iscntrl(onechar)</p>
 <pre><code>    character,intent(in) :: onechar
     logical              :: iscntrl
 </code></pre>
-<h2 id="description-31">DESCRIPTION</h2>
+<h2 id="description-32">DESCRIPTION</h2>
 <p>iscntrl(3f) returns .true. if character is a delete character or ordinary control character</p>
-<h2 id="options-26">OPTIONS</h2>
+<h2 id="options-27">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-21">RETURNS</h2>
+<h2 id="returns-22">RETURNS</h2>
 <ul>
 <li><strong>iscntrl</strong><br />
 logical value returns true if character is a control character</li>
 </ul>
-<h2 id="examples-31">EXAMPLES</h2>
+<h2 id="examples-32">EXAMPLES</h2>
 <p>Sample program</p>
 <pre><code>    program demo_iscntrl
     use M_strings, only : iscntrl
@@ -2126,22 +2177,22 @@ logical value returns true if character is a control character</li>
 <pre><code>   ISCNTRL:  0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
    20 21 22 23 24 25 26 27 28 29 30 31 127
 </code></pre>
-<h2 id="author-31">AUTHOR</h2>
+<h2 id="author-32">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-31">LICENSE</h2>
+<h2 id="license-32">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-32" class="slide section level1">
+<div id="name-33" class="slide section level1">
 <h1>NAME</h1>
 <p>isdigit(3f) - [M_strings:COMPARE] returns .true. if character is a digit (0,1,```,9) and .false. otherwise (LICENSE:PD)</p>
-<h2 id="synopsis-32">SYNOPSIS</h2>
+<h2 id="synopsis-33">SYNOPSIS</h2>
 <p>elemental function isdigit(onechar)</p>
 <pre><code>    character,intent(in) :: onechar
     logical              :: isdigit
 </code></pre>
-<h2 id="description-32">DESCRIPTION</h2>
+<h2 id="description-33">DESCRIPTION</h2>
 <p>isdigit(3f) returns .true. if character is a digit (0,1,```,9) and .false. otherwise</p>
-<h2 id="examples-32">EXAMPLES</h2>
+<h2 id="examples-33">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>    program demo_isdigit
     use M_strings, only : isdigit, isspace, switch
@@ -2168,32 +2219,32 @@ logical value returns true if character is a control character</li>
        For string[1234567890] T
        For string[both 8787 ] F
 </code></pre>
-<h2 id="author-32">AUTHOR</h2>
+<h2 id="author-33">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-32">LICENSE</h2>
+<h2 id="license-33">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-33" class="slide section level1">
+<div id="name-34" class="slide section level1">
 <h1>NAME</h1>
 <p>isgraph(3f) - [M_strings:COMPARE] returns .true. if character is a printable character except a space is considered non-printable (LICENSE:PD)</p>
-<h2 id="synopsis-33">SYNOPSIS</h2>
+<h2 id="synopsis-34">SYNOPSIS</h2>
 <p>elemental function isgraph(onechar)</p>
 <pre><code>    character,intent(in) :: onechar
     logical              :: isgraph
 </code></pre>
-<h2 id="description-33">DESCRIPTION</h2>
+<h2 id="description-34">DESCRIPTION</h2>
 <p>isgraph(3f) returns .true. if character is a printable character except a space is considered non-printable</p>
-<h2 id="options-27">OPTIONS</h2>
+<h2 id="options-28">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-22">RETURNS</h2>
+<h2 id="returns-23">RETURNS</h2>
 <ul>
 <li><strong>isgraph</strong><br />
 logical value returns true if character is a printable non-space character</li>
 </ul>
-<h2 id="examples-33">EXAMPLES</h2>
+<h2 id="examples-34">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_isgraph
    use M_strings, only : isgraph
@@ -2208,32 +2259,32 @@ logical value returns true if character is a printable non-space character</li>
    HIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno
    pqrstuvwxyz{|}~
 </code></pre>
-<h2 id="author-33">AUTHOR</h2>
+<h2 id="author-34">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-33">LICENSE</h2>
+<h2 id="license-34">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-34" class="slide section level1">
+<div id="name-35" class="slide section level1">
 <h1>NAME</h1>
 <p>islower(3f) - [M_strings:COMPARE] returns .true. if character is a miniscule letter (a-z) (LICENSE:PD)</p>
-<h2 id="synopsis-34">SYNOPSIS</h2>
+<h2 id="synopsis-35">SYNOPSIS</h2>
 <p>elemental function islower(onechar)</p>
 <pre><code>    character,intent(in) :: onechar
     logical              :: islower
 </code></pre>
-<h2 id="description-34">DESCRIPTION</h2>
+<h2 id="description-35">DESCRIPTION</h2>
 <p>islower(3f) returns .true. if character is a miniscule letter (a-z)</p>
-<h2 id="options-28">OPTIONS</h2>
+<h2 id="options-29">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-23">RETURNS</h2>
+<h2 id="returns-24">RETURNS</h2>
 <ul>
 <li><strong>islower</strong><br />
 logical value returns true if character is a lowercase ASCII character else false.</li>
 </ul>
-<h2 id="examples-34">EXAMPLES</h2>
+<h2 id="examples-35">EXAMPLES</h2>
 <p>Sample program</p>
 <pre><code>    program demo_islower
     use M_strings, only : islower
@@ -2252,29 +2303,29 @@ logical value returns true if character is a lowercase ASCII character else fals
    ISLOWER:  a b c d e f g h i j k l m n
    o p q r s t u v w x y z
 </code></pre>
-<h2 id="author-34">AUTHOR</h2>
+<h2 id="author-35">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-34">LICENSE</h2>
+<h2 id="license-35">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-35" class="slide section level1">
+<div id="name-36" class="slide section level1">
 <h1>NAME</h1>
 <p>isnumber(3f) - [M_strings:TYPE] determine if a string represents a number (LICENSE:PD)</p>
-<h2 id="synopsis-35">SYNOPSIS</h2>
+<h2 id="synopsis-36">SYNOPSIS</h2>
 <p>function isnumber(str,msg)</p>
 <pre><code>    character(len=*),intent(in)  :: str
     character(len=:),intent(out),allocatable,optional  :: msg
 </code></pre>
-<h2 id="description-35">DESCRIPTION</h2>
+<h2 id="description-36">DESCRIPTION</h2>
 <p>ISNUMBER(3f) returns a value greater than zero if the string represents a number, and a number less than or equal to zero if it is a bad number. Blank characters are ignored.</p>
-<h2 id="options-29">OPTIONS</h2>
+<h2 id="options-30">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 the string to evaluate as to whether it represents a numeric value or not</p></li>
 <li><p><strong>msg</strong><br />
 An optional message describing the string</p></li>
 </ul>
-<h2 id="returns-24">RETURNS</h2>
+<h2 id="returns-25">RETURNS</h2>
 <ul>
 <li><p><strong>isnumber</strong><br />
 the following values are returned</p>
@@ -2290,7 +2341,7 @@ the following values are returned</p>
 </ul></li>
 </ul>
 <p>values less than 1 represent an error</p>
-<h2 id="examples-35">EXAMPLES</h2>
+<h2 id="examples-36">EXAMPLES</h2>
 <p>As the example shows, you can use an internal READ(3f) along with the IOSTAT= parameter to check (and read) a string as well.</p>
 <pre><code>    program demo_isnumber
     use M_strings, only : isnumber
@@ -2373,32 +2424,32 @@ the following values are returned</p>
    &gt; ERROR:        5010 Bad real number in item 1 of list input
    &gt;  ERROR for 1e+2.0           -5 :bad number
 </code></pre>
-<h2 id="author-35">AUTHOR</h2>
+<h2 id="author-36">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-35">LICENSE</h2>
+<h2 id="license-36">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-36" class="slide section level1">
+<div id="name-37" class="slide section level1">
 <h1>NAME</h1>
 <p>isprint(3f) - [M_strings:COMPARE] returns .true. if character is an ASCII printable character (LICENSE:PD)</p>
-<h2 id="synopsis-36">SYNOPSIS</h2>
+<h2 id="synopsis-37">SYNOPSIS</h2>
 <p>elemental function isprint(onechar)</p>
 <pre><code>    character,intent(in) :: onechar
     logical              :: isprint
 </code></pre>
-<h2 id="description-36">DESCRIPTION</h2>
+<h2 id="description-37">DESCRIPTION</h2>
 <p>isprint(3f) returns .true. if character is an ASCII printable character</p>
-<h2 id="options-30">OPTIONS</h2>
+<h2 id="options-31">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-25">RETURNS</h2>
+<h2 id="returns-26">RETURNS</h2>
 <ul>
 <li><strong>isprint</strong><br />
 logical value returns true if character is a printable ASCII character else false.</li>
 </ul>
-<h2 id="examples-36">EXAMPLES</h2>
+<h2 id="examples-37">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_isprint
    use M_strings, only : isprint
@@ -2413,32 +2464,32 @@ logical value returns true if character is a printable ASCII character else fals
    GHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmn
    opqrstuvwxyz{|}~
 </code></pre>
-<h2 id="author-36">AUTHOR</h2>
+<h2 id="author-37">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-36">LICENSE</h2>
+<h2 id="license-37">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-37" class="slide section level1">
+<div id="name-38" class="slide section level1">
 <h1>NAME</h1>
 <p>ispunct(3f) - [M_strings:COMPARE] returns .true. if character is a printable punctuation character (LICENSE:PD)</p>
-<h2 id="synopsis-37">SYNOPSIS</h2>
+<h2 id="synopsis-38">SYNOPSIS</h2>
 <p>elemental function ispunct(onechar)</p>
 <pre><code>    character,intent(in) :: onechar
     logical              :: ispunct
 </code></pre>
-<h2 id="description-37">DESCRIPTION</h2>
+<h2 id="description-38">DESCRIPTION</h2>
 <p>ispunct(3f) returns .true. if character is a printable punctuation character</p>
-<h2 id="options-31">OPTIONS</h2>
+<h2 id="options-32">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-26">RETURNS</h2>
+<h2 id="returns-27">RETURNS</h2>
 <ul>
 <li><strong>ispunct</strong><br />
 logical value returns true if character is a printable punctuation character.</li>
 </ul>
-<h2 id="examples-37">EXAMPLES</h2>
+<h2 id="examples-38">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_ispunct
     use M_strings, only : ispunct
@@ -2457,32 +2508,32 @@ logical value returns true if character is a printable punctuation character.</l
    ISPUNCT:  ! &quot; # $ % &amp; &#39; ( ) * + , - . / : ; &lt; =
    &gt; ? @ [ \ ] ^ _ ` { | } ~
 </code></pre>
-<h2 id="author-37">AUTHOR</h2>
+<h2 id="author-38">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-37">LICENSE</h2>
+<h2 id="license-38">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-38" class="slide section level1">
+<div id="name-39" class="slide section level1">
 <h1>NAME</h1>
 <p>isspace(3f) - [M_strings:COMPARE] returns .true. if character is a null, space, tab, carriage return, new line, vertical tab, or formfeed (LICENSE:PD)</p>
-<h2 id="synopsis-38">SYNOPSIS</h2>
+<h2 id="synopsis-39">SYNOPSIS</h2>
 <p>elemental function isspace(onechar)</p>
 <pre><code>    character,intent(in) :: onechar
     logical              :: isspace
 </code></pre>
-<h2 id="description-38">DESCRIPTION</h2>
+<h2 id="description-39">DESCRIPTION</h2>
 <p>isspace(3f) returns .true. if character is a null, space, tab, carriage return, new line, vertical tab, or formfeed</p>
-<h2 id="options-32">OPTIONS</h2>
+<h2 id="options-33">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-27">RETURNS</h2>
+<h2 id="returns-28">RETURNS</h2>
 <ul>
 <li><strong>isspace</strong><br />
 returns true if character is ASCII white space</li>
 </ul>
-<h2 id="examples-38">EXAMPLES</h2>
+<h2 id="examples-39">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_isspace
     use M_strings, only : isspace
@@ -2496,32 +2547,32 @@ returns true if character is ASCII white space</li>
 <p>Results:</p>
 <pre><code>   ISSPACE:  0 9 10 11 12 13 32
 </code></pre>
-<h2 id="author-38">AUTHOR</h2>
+<h2 id="author-39">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-38">LICENSE</h2>
+<h2 id="license-39">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-39" class="slide section level1">
+<div id="name-40" class="slide section level1">
 <h1>NAME</h1>
 <p>isupper(3f) - [M_strings:COMPARE] returns .true. if character is an uppercase letter (A-Z) (LICENSE:PD)</p>
-<h2 id="synopsis-39">SYNOPSIS</h2>
+<h2 id="synopsis-40">SYNOPSIS</h2>
 <p>elemental function isupper(onechar)</p>
 <pre><code>    character,intent(in) :: onechar
     logical              :: isupper
 </code></pre>
-<h2 id="description-39">DESCRIPTION</h2>
+<h2 id="description-40">DESCRIPTION</h2>
 <p>isupper(3f) returns .true. if character is an uppercase letter (A-Z)</p>
-<h2 id="options-33">OPTIONS</h2>
+<h2 id="options-34">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-28">RETURNS</h2>
+<h2 id="returns-29">RETURNS</h2>
 <ul>
 <li><strong>isupper</strong><br />
 logical value returns true if character is an uppercase ASCII character else false.</li>
 </ul>
-<h2 id="examples-39">EXAMPLES</h2>
+<h2 id="examples-40">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_isupper
     use M_strings, only : isupper
@@ -2542,32 +2593,32 @@ logical value returns true if character is an uppercase ASCII character else fal
     &gt; J K L M N O P Q R S
     &gt; T U V W X Y Z
 </code></pre>
-<h2 id="author-39">AUTHOR</h2>
+<h2 id="author-40">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-39">LICENSE</h2>
+<h2 id="license-40">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-40" class="slide section level1">
+<div id="name-41" class="slide section level1">
 <h1>NAME</h1>
 <p>isxdigit(3f) - [M_strings:COMPARE] returns .true. if character is a hexadecimal digit (0-9, a-f, or A-F). (LICENSE:PD)</p>
-<h2 id="synopsis-40">SYNOPSIS</h2>
+<h2 id="synopsis-41">SYNOPSIS</h2>
 <p>elemental function isxdigit(onechar)</p>
 <pre><code>    character,intent(in) :: onechar
     logical              :: isxdigit
 </code></pre>
-<h2 id="description-40">DESCRIPTION</h2>
+<h2 id="description-41">DESCRIPTION</h2>
 <p>isxdigit(3f) returns .true. if character is a hexadecimal digit (0-9, a-f, or A-F).</p>
-<h2 id="options-34">OPTIONS</h2>
+<h2 id="options-35">OPTIONS</h2>
 <ul>
 <li><strong>onechar</strong><br />
 character to test</li>
 </ul>
-<h2 id="returns-29">RETURNS</h2>
+<h2 id="returns-30">RETURNS</h2>
 <ul>
 <li><strong>isxdigit</strong><br />
 logical value returns true if character is a hexadecimal digit</li>
 </ul>
-<h2 id="examples-40">EXAMPLES</h2>
+<h2 id="examples-41">EXAMPLES</h2>
 <p>Sample program</p>
 <pre><code>    program demo_isxdigit
     use M_strings, only : isxdigit
@@ -2580,15 +2631,15 @@ logical value returns true if character is a hexadecimal digit</li>
 <p>Results:</p>
 <pre><code>   ISXDIGIT: 0123456789ABCDEFabcdef
 </code></pre>
-<h2 id="author-40">AUTHOR</h2>
+<h2 id="author-41">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-40">LICENSE</h2>
+<h2 id="license-41">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-41" class="slide section level1">
+<div id="name-42" class="slide section level1">
 <h1>NAME</h1>
 <p>join(3f) - [M_strings:EDITING] append CHARACTER variable array into a single CHARACTER variable with specified separator (LICENSE:PD)</p>
-<h2 id="synopsis-41">SYNOPSIS</h2>
+<h2 id="synopsis-42">SYNOPSIS</h2>
 <p>pure function join(str,sep,trm,left,right,start,end) result (string)</p>
 <pre><code>    character(len=*),intent(in)          :: str(:)
     character(len=*),intent(in),optional :: sep
@@ -2599,9 +2650,9 @@ logical value returns true if character is a hexadecimal digit</li>
     character(len=*),intent(in),optional :: end
     character(len=:),allocatable         :: string
 </code></pre>
-<h2 id="description-41">DESCRIPTION</h2>
+<h2 id="description-42">DESCRIPTION</h2>
 <p>JOIN(3f) appends the elements of a CHARACTER array into a single CHARACTER variable, with elements 1 to N joined from left to right. By default each element is trimmed of trailing spaces and the default separator is a null string.</p>
-<h2 id="options-35">OPTIONS</h2>
+<h2 id="options-36">OPTIONS</h2>
 <ul>
 <li><p><strong>STR(:)</strong><br />
 array of CHARACTER variables to be joined</p></li>
@@ -2618,12 +2669,12 @@ suffix string</p></li>
 <li><p><strong>TRM</strong><br />
 option to trim each element of STR of trailing spaces. Defaults to .TRUE.</p></li>
 </ul>
-<h2 id="returns-30">RETURNS</h2>
+<h2 id="returns-31">RETURNS</h2>
 <ul>
 <li><strong>STRING</strong><br />
 CHARACTER variable composed of all of the elements of STR() appended together with the optional separator SEP placed between the elements.</li>
 </ul>
-<h2 id="examples-41">EXAMPLES</h2>
+<h2 id="examples-42">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_join
     use M_strings, only: join
@@ -2682,35 +2733,35 @@ CHARACTER variable composed of all of the elements of STR() appended together wi
  &gt; |divided   |we fall.  |          |
  &gt; #----------#----------#----------#
 </code></pre>
-<h2 id="author-41">AUTHOR</h2>
+<h2 id="author-42">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-41">LICENSE</h2>
+<h2 id="license-42">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-42" class="slide section level1">
+<div id="name-43" class="slide section level1">
 <h1>NAME</h1>
 <p>lenset(3f) - [M_strings:LENGTH] return string trimmed or padded to specified length (LICENSE:PD)</p>
-<h2 id="synopsis-42">SYNOPSIS</h2>
+<h2 id="synopsis-43">SYNOPSIS</h2>
 <p>function lenset(str,length) result(strout)</p>
 <pre><code>    character(len=*)                     :: str
     character(len=length)                :: strout
     integer,intent(in)                   :: length
 </code></pre>
-<h2 id="description-42">DESCRIPTION</h2>
+<h2 id="description-43">DESCRIPTION</h2>
 <p>lenset(3f) truncates a string or pads it with spaces to the specified length.</p>
-<h2 id="options-36">OPTIONS</h2>
+<h2 id="options-37">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 input string</p></li>
 <li><p><strong>length</strong><br />
 output string length</p></li>
 </ul>
-<h2 id="returns-31">RETURNS</h2>
+<h2 id="returns-32">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 output string</li>
 </ul>
-<h2 id="examples-42">EXAMPLES</h2>
+<h2 id="examples-43">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>    program demo_lenset
      use M_strings, only : lenset
@@ -2727,32 +2778,32 @@ output string</li>
 <pre><code>    [abcde]
     [abcdefghij          ]
 </code></pre>
-<h2 id="author-42">AUTHOR</h2>
+<h2 id="author-43">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-42">LICENSE</h2>
+<h2 id="license-43">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-43" class="slide section level1">
+<div id="name-44" class="slide section level1">
 <h1>NAME</h1>
 <p>len_white(3f) - [M_strings:LENGTH] get length of string trimmed of whitespace. (LICENSE:PD)</p>
-<h2 id="synopsis-43">SYNOPSIS</h2>
+<h2 id="synopsis-44">SYNOPSIS</h2>
 <p>integer function len_white(string)</p>
 <pre><code>    character(len=*) :: string
 </code></pre>
-<h2 id="description-43">DESCRIPTION</h2>
+<h2 id="description-44">DESCRIPTION</h2>
 <p>len_white(3f) returns the position of the last character in string that is not a whitespace character. The Fortran90 intrinsic LEN_TRIM() should be used when trailing whitespace can be assumed to always be spaces.</p>
 <p>This procedure was heavily used in the past because ANSI FORTRAN 77 character objects are fixed length and blank padded and the LEN_TRIM() intrinsic did not exist. It should now be used only when whitespace characters other than blanks are likely.</p>
-<h2 id="options-37">OPTIONS</h2>
+<h2 id="options-38">OPTIONS</h2>
 <ul>
 <li><strong>string</strong><br />
 input string whose trimmed length is being calculated ignoring all trailing whitespace characters.</li>
 </ul>
-<h2 id="returns-32">RETURNS</h2>
+<h2 id="returns-33">RETURNS</h2>
 <ul>
 <li><strong>len_white</strong><br />
 the number of characters in the trimmed string</li>
 </ul>
-<h2 id="examples-43">EXAMPLES</h2>
+<h2 id="examples-44">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_len_white
 
@@ -2805,29 +2856,29 @@ the number of characters in the trimmed string</li>
           write(*,*)&#39;error:[&#39;,s(:lastnb),&#39;]&#39;
       end subroutine messages
 </code></pre>
-<h2 id="author-43">AUTHOR</h2>
+<h2 id="author-44">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-43">LICENSE</h2>
+<h2 id="license-44">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-44" class="slide section level1">
+<div id="name-45" class="slide section level1">
 <h1>NAME</h1>
 <p>listout(3f) - [M_strings:NUMERIC] expand a list of numbers where negative numbers denote range ends (1 <strong>-10</strong> means 1 thru 10) (LICENSE:PD)</p>
-<h2 id="synopsis-44">SYNOPSIS</h2>
+<h2 id="synopsis-45">SYNOPSIS</h2>
 <p>subroutine listout(icurve_lists,icurve_expanded,inums,ierr)</p>
 <pre><code>   integer,intent(in)    :: icurve_lists(:)
    integer,intent(out)   :: icurve_expanded(:)
    integer,intent(out)   :: inums
    integer,intent(out)   :: ierr
 </code></pre>
-<h2 id="description-44">DESCRIPTION</h2>
+<h2 id="description-45">DESCRIPTION</h2>
 <p>expand a list of whole numbers where negative numbers indicate a range. So [10,<strong>-20</strong>] would be expanded to [10,11,12,13,14,15,16,17,18,19,20].</p>
-<h2 id="options-38">OPTIONS</h2>
+<h2 id="options-39">OPTIONS</h2>
 <ul>
 <li><strong>icurve_lists(:)</strong><br />
 input array</li>
 </ul>
-<h2 id="returns-33">RETURNS</h2>
+<h2 id="returns-34">RETURNS</h2>
 <ul>
 <li><p><strong>icurve_expanded(:)</strong><br />
 output array; assumed large enough to hold returned list</p></li>
@@ -2836,7 +2887,7 @@ number of icurve_expanded numbers on output</p></li>
 <li><p><strong>ierr</strong><br />
 zero if no error occurred</p></li>
 </ul>
-<h2 id="examples-44">EXAMPLES</h2>
+<h2 id="examples-45">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_listout
     use M_strings, only : listout
@@ -2875,34 +2926,34 @@ zero if no error occurred</p></li>
     &gt; 208 207 206 205 204
     &gt; 203 202 201 200
 </code></pre>
-<h2 id="author-44">AUTHOR</h2>
+<h2 id="author-45">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-44">LICENSE</h2>
+<h2 id="license-45">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-45" class="slide section level1">
+<div id="name-46" class="slide section level1">
 <h1>NAME</h1>
 <p>longest_common_substring(3f) - [M_strings:COMPARE] function that returns the longest common substring of two strings.</p>
-<h2 id="synopsis-45">SYNOPSIS</h2>
+<h2 id="synopsis-46">SYNOPSIS</h2>
 <p>function longest_common_substring(a,b) result(match)</p>
 <pre><code>    character(len=*),intent(in)  :: a, b
     character(len=:),allocatable :: match
 </code></pre>
-<h2 id="description-45">DESCRIPTION</h2>
+<h2 id="description-46">DESCRIPTION</h2>
 <p>function that returns the longest common substring of two strings.</p>
 <p>Note that substrings are consecutive characters within a string. This distinguishes them from subsequences, which is any sequence of characters within a string, even if there are extraneous characters in between them.</p>
 <p>Hence, the longest common subsequence between "thisisatest" and "testing123testing" is "tsitest", whereas the longest common substring is just "test".</p>
-<h2 id="options-39">OPTIONS</h2>
+<h2 id="options-40">OPTIONS</h2>
 <ul>
 <li><strong>a,b</strong><br />
 strings to search for the longest common substring.</li>
 </ul>
-<h2 id="returns-34">RETURNS</h2>
+<h2 id="returns-35">RETURNS</h2>
 <ul>
 <li><strong>longest_common_substring</strong><br />
 the longest common substring found</li>
 </ul>
-<h2 id="examples-45">EXAMPLES</h2>
+<h2 id="examples-46">EXAMPLES</h2>
 <p>Sample program</p>
 <pre><code>   program demo_longest_common_substring
    use M_strings, only : longest_common_substring
@@ -2942,18 +2993,18 @@ the longest common substring found</li>
    (PASSED) &quot;thisisatest&quot;; expected &quot;thisisatest&quot;
 </code></pre>
 </div>
-<div id="name-46" class="slide section level1">
+<div id="name-47" class="slide section level1">
 <h1>NAME</h1>
 <p>lower(3f) - [M_strings:CASE] changes a string to lowercase over specified range (LICENSE:PD)</p>
-<h2 id="synopsis-46">SYNOPSIS</h2>
+<h2 id="synopsis-47">SYNOPSIS</h2>
 <p>elemental pure function lower(str,begin,end) result (string)</p>
 <pre><code>    character(*), intent(in) :: str
     integer,optional         :: begin, end
     character(len(str))      :: string  ! output string
 </code></pre>
-<h2 id="description-46">DESCRIPTION</h2>
+<h2 id="description-47">DESCRIPTION</h2>
 <p>lower(str) returns a copy of the ASCII input string with all characters converted to miniscule (ie. "lowercase") over the specified range, If no range is specified the entire string is converted to miniscule.</p>
-<h2 id="options-40">OPTIONS</h2>
+<h2 id="options-41">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 string to convert to miniscule</p></li>
@@ -2962,14 +3013,14 @@ optional starting position in "str" to begin converting to miniscule. Defaults t
 <li><p><strong>end</strong><br />
 optional ending position in "str" to stop converting to miniscule. Defaults to the end of the string (ie. "len(str)").</p></li>
 </ul>
-<h2 id="returns-35">RETURNS</h2>
+<h2 id="returns-36">RETURNS</h2>
 <ul>
 <li><strong>lower</strong><br />
 copy of the entire input string with all characters converted to miniscule over optionally specified range.</li>
 </ul>
 <h2 id="trivia">TRIVIA</h2>
 <p>The terms "uppercase" and "lowercase" date back to the early days of the mechanical printing press. Individual metal alloy casts of each needed letter or punctuation symbol were meticulously added to a press block, by hand, before rolling out copies of a page. These metal casts were stored and organized in wooden cases. The more-often-needed miniscule letters were placed closer to hand, in the lower cases of the work bench. The less often needed, capitalized, majuscule letters, ended up in the harder to reach upper cases.</p>
-<h2 id="examples-46">EXAMPLES</h2>
+<h2 id="examples-47">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>      program demo_lower
       use M_strings, only: lower
@@ -2984,34 +3035,34 @@ copy of the entire input string with all characters converted to miniscule over 
 <pre><code>      mixed-case input string is ```. ABCDEFG abcdefg
       lower-case output string is ``` abcdefg abcdefg
 </code></pre>
-<h2 id="author-45">AUTHOR</h2>
+<h2 id="author-46">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-45">LICENSE</h2>
+<h2 id="license-46">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-47" class="slide section level1">
+<div id="name-48" class="slide section level1">
 <h1>NAME</h1>
 <p>lpad(3f) - [M_strings:LENGTH] convert to a cropped string and then blank-pad on the left to requested length (LICENSE:PD)</p>
-<h2 id="synopsis-47">SYNOPSIS</h2>
+<h2 id="synopsis-48">SYNOPSIS</h2>
 <p>function lpad(valuein,length) result(strout)</p>
 <pre><code>    class*,intent(in)       :: valuein(..)
     integer,intent(in)      :: length
 </code></pre>
-<h2 id="description-47">DESCRIPTION</h2>
+<h2 id="description-48">DESCRIPTION</h2>
 <p>lpad(3f) converts a scalar value to a cropped string and then pads it on the left with spaces to at least the specified length. If the trimmed input is longer than the requested length the string is returned trimmed of leading and trailing spaces.</p>
-<h2 id="options-41">OPTIONS</h2>
+<h2 id="options-42">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 The input may be scalar or a vector. the input value to return as a string, padded on the left to the specified length if shorter than length. The input may be any intrinsic scalar which is converted to a cropped string much as if written with list-directed output.</p></li>
 <li><p><strong>length</strong><br />
 The minimum string length to return</p></li>
 </ul>
-<h2 id="returns-36">RETURNS</h2>
+<h2 id="returns-37">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 The input string padded to the requested length on the left with spaces.</li>
 </ul>
-<h2 id="examples-47">EXAMPLES</h2>
+<h2 id="examples-48">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>     program demo_lpad
       use M_strings, only : lpad
@@ -3032,23 +3083,23 @@ The input string padded to the requested length on the left with spaces.</li>
     &gt; [     42]
     &gt; [         0.111111112]
 </code></pre>
-<h2 id="author-46">AUTHOR</h2>
+<h2 id="author-47">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-46">LICENSE</h2>
+<h2 id="license-47">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-48" class="slide section level1">
+<div id="name-49" class="slide section level1">
 <h1>NAME</h1>
 <p>matching_delimiter(3f) - [M_strings:QUOTES] find position of matching delimiter (LICENSE:PD)</p>
-<h2 id="synopsis-48">SYNOPSIS</h2>
+<h2 id="synopsis-49">SYNOPSIS</h2>
 <p>impure elemental subroutine matching_delimiter(str,ipos,imatch)</p>
 <pre><code>   character(len=*),intent(in)  :: str
    integer,intent(in)           :: ipos
    integer,intent(out)          :: imatch
 </code></pre>
-<h2 id="description-48">DESCRIPTION</h2>
+<h2 id="description-49">DESCRIPTION</h2>
 <p>Sets imatch to the position in string of the delimiter matching the delimiter in position ipos. Allowable delimiters are (), [], {}, &lt;&gt;.</p>
-<h2 id="options-42">OPTIONS</h2>
+<h2 id="options-43">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 input string to locate delimiter position in</p></li>
@@ -3057,7 +3108,7 @@ position of delimiter to find match for</p></li>
 <li><p><strong>imatch</strong><br />
 location of matching delimiter. If no match is found, zero (0) is returned.</p></li>
 </ul>
-<h2 id="examples-48">EXAMPLES</h2>
+<h2 id="examples-49">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_matching_delimiter
       use M_strings, only : matching_delimiter
@@ -3082,25 +3133,25 @@ location of matching delimiter. If no match is found, zero (0) is returned.</p><
 
    end program demo_matching_delimiter
 </code></pre>
-<h2 id="author-47">AUTHOR</h2>
+<h2 id="author-48">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-47">LICENSE</h2>
+<h2 id="license-48">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-49" class="slide section level1">
+<div id="name-50" class="slide section level1">
 <h1>NAME</h1>
 <p>merge_str(3f) - [M_strings:LENGTH] pads strings to same length and then calls MERGE(3f) (LICENSE:PD)</p>
-<h2 id="synopsis-49">SYNOPSIS</h2>
+<h2 id="synopsis-50">SYNOPSIS</h2>
 <p>function merge_str(str1,str2,expr) result(strout)</p>
 <pre><code>    character(len=*),intent(in),optional :: str1
     character(len=*),intent(in),optional :: str2
     logical,intent(in)              :: expr
     character(len=:),allocatable    :: strout
 </code></pre>
-<h2 id="description-49">DESCRIPTION</h2>
+<h2 id="description-50">DESCRIPTION</h2>
 <p>merge_str(3f) pads the shorter of str1 and str2 to the longest length of str1 and str2 and then calls MERGE(padded_str1,padded_str2,expr). It trims trailing spaces off the result and returns the trimmed string. This makes it easier to call MERGE(3f) with strings, as MERGE(3f) requires the strings to be the same length.</p>
 <p>NOTE: STR1 and STR2 are always required even though declared optional. this is so the call "STR_MERGE(A,B,present(A))" is a valid call. The parameters STR1 and STR2 when they are optional parameters can be passed to a procedure if the options are optional on the called procedure.</p>
-<h2 id="options-43">OPTIONS</h2>
+<h2 id="options-44">OPTIONS</h2>
 <ul>
 <li><p><strong>STR1</strong><br />
 string to return if the logical expression EXPR is true</p></li>
@@ -3109,12 +3160,12 @@ string to return if the logical expression EXPR is false</p></li>
 <li><p><strong>EXPR</strong><br />
 logical expression to evaluate to determine whether to return STR1 when true, and STR2 when false.</p></li>
 </ul>
-<h2 id="returns-37">RETURNS</h2>
+<h2 id="returns-38">RETURNS</h2>
 <ul>
 <li><strong>MERGE_STR</strong><br />
 a trimmed string is returned that is otherwise the value of STR1 or STR2, depending on the logical expression EXPR.</li>
 </ul>
-<h2 id="examples-49">EXAMPLES</h2>
+<h2 id="examples-50">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>    program demo_merge_str
     use M_strings, only : merge_str
@@ -3132,21 +3183,21 @@ a trimmed string is returned that is otherwise the value of STR1 or STR2, depend
 <pre><code>    [first string]
     [second string is longer]
 </code></pre>
-<h2 id="author-48">AUTHOR</h2>
+<h2 id="author-49">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-48">LICENSE</h2>
+<h2 id="license-49">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-50" class="slide section level1">
+<div id="name-51" class="slide section level1">
 <h1>NAME</h1>
 <p>modif(3f) - [M_strings:EDITING] emulate the MODIFY command from the line editor XEDIT (LICENSE:PD)</p>
-<h2 id="synopsis-50">SYNOPSIS</h2>
+<h2 id="synopsis-51">SYNOPSIS</h2>
 <p>subroutine modif(cline,cmod)</p>
 <pre><code>    character(len=*) :: cline ! input string to change
     ! directive provides directions on changing string
     character(len=*) :: cmod
 </code></pre>
-<h2 id="description-50">DESCRIPTION</h2>
+<h2 id="description-51">DESCRIPTION</h2>
 <p>MODIF(3f) Modifies the line currently pointed at using a directive that acts much like a line editor directive. Primarily used to create interactive utilities such as input history editors for interactive line-mode programs.</p>
 <p>the modify directives are as follows-</p>
 <h3 id="directive-explanation">DIRECTIVE EXPLANATION</h3>
@@ -3162,7 +3213,7 @@ Replaces the character above it with a space.</p></li>
 A space below a character leaves it unchanged.</p></li>
 </ul>
 <p>Any other character replaces the character above it.</p>
-<h2 id="examples-50">EXAMPLES</h2>
+<h2 id="examples-51">EXAMPLES</h2>
 <p>Example input/output:</p>
 <pre><code>   THE INPUT LINE```..... 10 THIS STRING  TO BE MORTIFD
    THE DIRECTIVES LINE```        ^ IS THE#        D#  ^IE
@@ -3173,7 +3224,7 @@ A space below a character leaves it unchanged.</p></li>
    use M_strings, only : modif
    implicit none
    character(len=256)           :: line
-   integer                      :: ios
+   integer                      :: iostat
    integer                      :: count
    integer                      :: COMMAND_LINE_LENGTH
    character(len=:),allocatable :: COMMAND_LINE
@@ -3190,108 +3241,12 @@ A space below a character leaves it unchanged.</p></li>
       ! remove command name
       COMMAND_LINE=adjustl(COMMAND_LINE(COUNT+2:))
       INFINITE: do
-         read(*,&#39;(a)&#39;,iostat=ios)line
-         if(ios /= 0)exit
+         read(*,&#39;(a)&#39;,iostat=iostat)line
+         if(iostat /= 0)exit
          call modif(line,COMMAND_LINE)
          write(*,&#39;(a)&#39;)trim(line)
       enddo INFINITE
    end program demo_modif
-</code></pre>
-<h2 id="author-49">AUTHOR</h2>
-<p>John S. Urban</p>
-<h2 id="license-49">LICENSE</h2>
-<p>Public Domain</p>
-</div>
-<div id="name-51" class="slide section level1">
-<h1>NAME</h1>
-<p>msg(3f) - [M_strings:TYPE] converts multiple values to a (CSV) string (LICENSE:PD)</p>
-<h2 id="synopsis-51">SYNOPSIS</h2>
-<p>function msg( g1,g2,g3,g4,g5,g6,g7,g8,g9,g10, &amp; &amp; g11,g12,g13,g14,g15,g16,g17,g18,g19,g20,sep,csv)</p>
-<ul class="incremental">
-<li><p><strong>class(*),intent(in),optional</strong><br />
-:: g1,g2,g3,g4,g5,g6,g7,g8,g9,g10</p></li>
-<li><p><strong>class(*),intent(in),optional</strong><br />
-:: g11,g12,g13,g14,g15,g16,g17,g18,g19,g20 character(len=*),intent(in),optional :: sep logical,intent(in),optional :: csv character(len=:),allocatable :: msg</p></li>
-</ul>
-<h2 id="description-51">DESCRIPTION</h2>
-<p>msg(3f) builds a string from up to twenty scalar values.</p>
-<h2 id="options-44">OPTIONS</h2>
-<ul>
-<li><p><strong>g[1-20]</strong><br />
-optional value to print the value of after the message. May be of type INTEGER, LOGICAL, REAL, DOUBLEPRECISION, COMPLEX, or CHARACTER.</p></li>
-<li><p><strong>sep</strong><br />
-separator between values. Defaults to a space</p></li>
-<li><p><strong>csv</strong><br />
-write output conforming to RFC 1080 for CSV (Comma-Separated Values) files</p></li>
-</ul>
-<h2 id="returns-38">RETURNS</h2>
-<ul>
-<li><strong>msg</strong><br />
-description to print</li>
-</ul>
-<h2 id="examples-51">EXAMPLES</h2>
-<p>Sample program:</p>
-<pre><code>       program demo_msg
-       use M_strings, only : msg, quote
-       implicit none
-       character(len=:),allocatable :: pr
-       character(len=:),allocatable :: frmt
-       integer                      :: biggest
-
-       pr=msg(&#39;HUGE(3f) integers&#39;,huge(0),&amp;
-       &amp; &#39;and real&#39;,huge(0.0),&#39;and double&#39;,huge(0.0d0))
-       write(*,&#39;(a)&#39;)pr
-       pr=msg(&#39;real            :&#39;,&amp;
-        &amp; huge(0.0),0.0,12345.6789,tiny(0.0) )
-       write(*,&#39;(a)&#39;)pr
-       pr=msg(&#39;doubleprecision :&#39;,&amp;
-        &amp; huge(0.0d0),0.0d0,12345.6789d0,tiny(0.0d0) )
-       write(*,&#39;(a)&#39;)pr
-       pr=msg(&#39;complex         :&#39;,&amp;
-        &amp; cmplx(huge(0.0),tiny(0.0)) )
-       write(*,&#39;(a)&#39;)pr
-
-       ! create a format on the fly
-       biggest=huge(0)
-       ! +0 for gfortran-11 bug
-       frmt=msg(&#39;(*(i&#39;,int(log10(real(biggest)))+0,&#39;:,1x))&#39;,sep=&#39;&#39;)
-       write(*,*)&#39;format=&#39;,frmt
-
-       ! compound output
-       pr=msg(10,100.0,&quot;string&quot;,(11.0,22.0),.false.)
-       write(*,&#39;(a)&#39;)pr
-       ! a separator and also use of quote(3f)
-       pr=msg(10,100.0,quote(&quot;string&quot;),(11.0,22.0),.false.,sep=&#39;;&#39;)
-       write(*,&#39;(a)&#39;)pr
-       ! CSV mode
-       pr=msg(10,100.0,&quot;string&quot;,(11.0,22.0),.false.,csv=.true.)
-       write(*,&#39;(a)&#39;)pr
-       ! everything a vector instead of a scalar
-       pr=msg([10,20,30],[&quot;string&quot;],[(11.0,22.0)],[.false.,.true.])
-       write(*,&#39;(a)&#39;)pr
-       pr=msg([10,20,30],[&quot;string&quot;],[(11.0,22.0)],[.false.,.true.],sep=&#39;|&#39;)
-       write(*,&#39;(a)&#39;)pr
-       pr=msg([10,20,30],[&quot;string&quot;],[(11.0,22.0)],[.false.,.true.],csv=.true.)
-       write(*,&#39;(a)&#39;)pr
-
-       ! although it will often work, using msg(3f) in an I/O statement
-       ! is not recommended
-       write(*,*)msg(&#39;program will now attempt to stop&#39;)
-
-       end program demo_msg
-</code></pre>
-<p>Results:</p>
-<pre><code> &gt; HUGE(3f) integers 2147483647 and real 3.40282347E+38 and ```
- &gt; ``` double 1.7976931348623157E+308
- &gt; real            : 3.40282347E+38 0.00000000 12345.6787 1.17549435E-38
- &gt; doubleprecision : 1.7976931348623157E+308 0.0000000000000000 ```
- &gt; ``` 12345.678900000001 2.2250738585072014E-308
- &gt; complex         : (3.40282347E+38,1.17549435E-38)
- &gt;  format=(*(i9:,1x))
- &gt; 10 100.000000 string (11.0000000,22.0000000) F
- &gt; 10;100.000000;&quot;string&quot;;(11.0000000,22.0000000);F
- &gt; 10,100.000000,&quot;string&quot;,11.0000000,22.0000000,F
- &gt;  program will now attempt to stop
 </code></pre>
 <h2 id="author-50">AUTHOR</h2>
 <p>John S. Urban</p>
@@ -3323,7 +3278,7 @@ description to print</li>
      use M_strings,only : string_to_value, string_to_values, s2v, s2vs
      use M_strings,only : int, real, dble, nint
      use M_strings,only : atoi, atol, aton
-     use M_strings,only : value_to_string, v2s, msg
+     use M_strings,only : value_to_string, v2s, str, fmt
      use M_strings,only : listout, getvals
      use M_strings,only : glob, ends_with
      use M_strings,only : paragraph
@@ -3483,8 +3438,10 @@ function returns INTEGER(kind=int32) from a string</p></li>
 function returns INTEGER(kind=int64) from a string</p></li>
 <li><p><strong>aton</strong><br />
 changes string to numeric value</p></li>
-<li><p><strong>msg</strong><br />
+<li><p><strong>str</strong><br />
 append the values of up to twenty values into a string, including user-specified separator and a CSV-style option</p></li>
+<li><p><strong>fmt</strong><br />
+return string from generic intrinsic value using optionally specified format.</p></li>
 <li><p><strong>value_to_string</strong><br />
 generic subroutine returns string given numeric value (REAL, DOUBLEPRECISION, INTEGER, LOGICAL )</p></li>
 <li><p><strong>v2s</strong><br />
@@ -3593,7 +3550,7 @@ function that returns the longest common substring of two strings.</p></li>
      use M_strings,only : string_to_value, string_to_values, s2v, s2vs
      use M_strings,only : int, real, dble, nint
      use M_strings,only : atoi, atol, aton
-     use M_strings,only : value_to_string, v2s, msg
+     use M_strings,only : value_to_string, v2s, str, fmt
      use M_strings,only : listout, getvals
      use M_strings,only : glob, ends_with
      use M_strings,only : paragraph
@@ -4089,10 +4046,10 @@ Significant length of returned string</p></li>
    !  on files up to 1024 characters wide
    use M_strings, only : notabs
    character(len=1024) :: in,out
-   integer             :: ios,iout
+   integer             :: iostat,iout
       do
-         read(*,&#39;(A)&#39;,iostat=ios)in
-         if(ios /= 0) exit
+         read(*,&#39;(A)&#39;,iostat=iostat)in
+         if(iostat /= 0) exit
          call notabs(in,out,iout)
          write(*,&#39;(a)&#39;)out(:iout)
       enddo
@@ -4690,10 +4647,10 @@ error code. iF ier = <strong>-1</strong> bad directive, &gt;= 0 then count of ch
    use M_strings, only : rotate13
    implicit none
    character(len=256) :: line
-   integer            :: ios
+   integer            :: iostat
    do
-      read(*,&#39;(a)&#39;,iostat=ios)line
-      if(ios /= 0)exit
+      read(*,&#39;(a)&#39;,iostat=iostat)line
+      if(iostat /= 0)exit
       write(*,&#39;(a)&#39;)rotate13(line)
    enddo
    end program demo_rotate13
@@ -5478,8 +5435,104 @@ string with all contiguous adjacent occurrences of CHAR removed</li>
 </div>
 <div id="name-76" class="slide section level1">
 <h1>NAME</h1>
-<p>stretch(3f) - [M_strings:LENGTH] return string padded to at least specified length (LICENSE:PD)</p>
+<p>str(3f) - [M_strings:TYPE] converts multiple values to a (CSV) string (LICENSE:PD)</p>
 <h2 id="synopsis-76">SYNOPSIS</h2>
+<p>function str( g1,g2,g3,g4,g5,g6,g7,g8,g9,g10, &amp; &amp; g11,g12,g13,g14,g15,g16,g17,g18,g19,g20,sep,csv)</p>
+<ul class="incremental">
+<li><p><strong>class(*),intent(in),optional</strong><br />
+:: g1,g2,g3,g4,g5,g6,g7,g8,g9,g10</p></li>
+<li><p><strong>class(*),intent(in),optional</strong><br />
+:: g11,g12,g13,g14,g15,g16,g17,g18,g19,g20 character(len=*),intent(in),optional :: sep logical,intent(in),optional :: csv character(len=:),allocatable :: str</p></li>
+</ul>
+<h2 id="description-76">DESCRIPTION</h2>
+<p>str(3f) builds a string from up to twenty scalar values.</p>
+<h2 id="options-62">OPTIONS</h2>
+<ul>
+<li><p><strong>g[1-20]</strong><br />
+optional value to print the value of after the message. May be of type INTEGER, LOGICAL, REAL, DOUBLEPRECISION, COMPLEX, or CHARACTER.</p></li>
+<li><p><strong>sep</strong><br />
+separator between values. Defaults to a space</p></li>
+<li><p><strong>csv</strong><br />
+write output conforming to RFC 1080 for CSV (Comma-Separated Values) files</p></li>
+</ul>
+<h2 id="returns-53">RETURNS</h2>
+<ul>
+<li><strong>str</strong><br />
+description to print</li>
+</ul>
+<h2 id="examples-76">EXAMPLES</h2>
+<p>Sample program:</p>
+<pre><code>       program demo_str
+       use M_strings, only : str, quote
+       implicit none
+       character(len=:),allocatable :: pr
+       character(len=:),allocatable :: frmt
+       integer                      :: biggest
+
+       pr=str(&#39;HUGE(3f) integers&#39;,huge(0),&amp;
+       &amp; &#39;and real&#39;,huge(0.0),&#39;and double&#39;,huge(0.0d0))
+       write(*,&#39;(a)&#39;)pr
+       pr=str(&#39;real            :&#39;,&amp;
+        &amp; huge(0.0),0.0,12345.6789,tiny(0.0) )
+       write(*,&#39;(a)&#39;)pr
+       pr=str(&#39;doubleprecision :&#39;,&amp;
+        &amp; huge(0.0d0),0.0d0,12345.6789d0,tiny(0.0d0) )
+       write(*,&#39;(a)&#39;)pr
+       pr=str(&#39;complex         :&#39;,&amp;
+        &amp; cmplx(huge(0.0),tiny(0.0)) )
+       write(*,&#39;(a)&#39;)pr
+
+       ! create a format on the fly
+       biggest=huge(0)
+       ! +0 for gfortran-11 bug
+       frmt=str(&#39;(*(i&#39;,int(log10(real(biggest)))+0,&#39;:,1x))&#39;,sep=&#39;&#39;)
+       write(*,*)&#39;format=&#39;,frmt
+
+       ! compound output
+       pr=str(10,100.0,&quot;string&quot;,(11.0,22.0),.false.)
+       write(*,&#39;(a)&#39;)pr
+       ! a separator and also use of quote(3f)
+       pr=str(10,100.0,quote(&quot;string&quot;),(11.0,22.0),.false.,sep=&#39;;&#39;)
+       write(*,&#39;(a)&#39;)pr
+       ! CSV mode
+       pr=str(10,100.0,&quot;string&quot;,(11.0,22.0),.false.,csv=.true.)
+       write(*,&#39;(a)&#39;)pr
+       ! everything a vector instead of a scalar
+       pr=str([10,20,30],[&quot;string&quot;],[(11.0,22.0)],[.false.,.true.])
+       write(*,&#39;(a)&#39;)pr
+       pr=str([10,20,30],[&quot;string&quot;],[(11.0,22.0)],[.false.,.true.],sep=&#39;|&#39;)
+       write(*,&#39;(a)&#39;)pr
+       pr=str([10,20,30],[&quot;string&quot;],[(11.0,22.0)],[.false.,.true.],csv=.true.)
+       write(*,&#39;(a)&#39;)pr
+
+       ! although it will often work, using str(3f) in an I/O statement
+       ! is not recommended
+       write(*,*)str(&#39;program will now attempt to stop&#39;)
+
+       end program demo_str
+</code></pre>
+<p>Results:</p>
+<pre><code> &gt; HUGE(3f) integers 2147483647 and real 3.40282347E+38 and ```
+ &gt; ``` double 1.7976931348623157E+308
+ &gt; real            : 3.40282347E+38 0.00000000 12345.6787 1.17549435E-38
+ &gt; doubleprecision : 1.7976931348623157E+308 0.0000000000000000 ```
+ &gt; ``` 12345.678900000001 2.2250738585072014E-308
+ &gt; complex         : (3.40282347E+38,1.17549435E-38)
+ &gt;  format=(*(i9:,1x))
+ &gt; 10 100.000000 string (11.0000000,22.0000000) F
+ &gt; 10;100.000000;&quot;string&quot;;(11.0000000,22.0000000);F
+ &gt; 10,100.000000,&quot;string&quot;,11.0000000,22.0000000,F
+ &gt;  program will now attempt to stop
+</code></pre>
+<h2 id="author-75">AUTHOR</h2>
+<p>John S. Urban</p>
+<h2 id="license-73">LICENSE</h2>
+<p>Public Domain</p>
+</div>
+<div id="name-77" class="slide section level1">
+<h1>NAME</h1>
+<p>stretch(3f) - [M_strings:LENGTH] return string padded to at least specified length (LICENSE:PD)</p>
+<h2 id="synopsis-77">SYNOPSIS</h2>
 <p>function stretch(str,length,pattern,suffix) result(strout)</p>
 <pre><code>    character(len=*),intent(in)         :: str
     integer,intent(in)                  :: length
@@ -5487,9 +5540,9 @@ string with all contiguous adjacent occurrences of CHAR removed</li>
     character(len=*)intent(in),optional :: suffix
     character(len=:),allocatable        :: strout
 </code></pre>
-<h2 id="description-76">DESCRIPTION</h2>
+<h2 id="description-77">DESCRIPTION</h2>
 <p>stretch(3f) pads a string with spaces to at least the specified length. If the trimmed input string is longer than the requested length the original string is returned trimmed of trailing spaces.</p>
-<h2 id="options-62">OPTIONS</h2>
+<h2 id="options-63">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 the input string to return trimmed, but then padded to the specified length if shorter than length</p></li>
@@ -5500,12 +5553,12 @@ optional string to use as padding. Defaults to a space.</p></li>
 <li><p><strong>suffix</strong><br />
 optional string to append to output string</p></li>
 </ul>
-<h2 id="returns-53">RETURNS</h2>
+<h2 id="returns-54">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 The input string padded to the requested length or the trimmed input string if the input string is longer than the requested length.</li>
 </ul>
-<h2 id="examples-76">EXAMPLES</h2>
+<h2 id="examples-77">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>  program demo_stretch
    use M_strings, only : stretch
@@ -5554,37 +5607,37 @@ The input string padded to the requested length or the trimmed input string if t
     CHAPTER 2 : The end           :         1234
     APPENDIX                      :         1235
 </code></pre>
-<h2 id="author-75">AUTHOR</h2>
+<h2 id="author-76">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-73">LICENSE</h2>
+<h2 id="license-74">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-77" class="slide section level1">
+<div id="name-78" class="slide section level1">
 <h1>NAME</h1>
 <p>string_to_value(3f) - [M_strings:TYPE] subroutine returns numeric value from string (LICENSE:PD)</p>
-<h2 id="synopsis-77">SYNOPSIS</h2>
+<h2 id="synopsis-78">SYNOPSIS</h2>
 <p>subroutine string_to_value(chars,valu,ierr)</p>
 <pre><code>    character(len=*),intent(in)              :: chars   ! input string
     integer|real|doubleprecision,intent(out) :: valu
     integer,intent(out)                      :: ierr
 </code></pre>
-<h2 id="description-77">DESCRIPTION</h2>
+<h2 id="description-78">DESCRIPTION</h2>
 <p>Returns a numeric value from a numeric character string.</p>
 <p>Works with any g-format input, including integer, real, and exponential. If the input string begins with "B", "Z", or "O" and otherwise represents a positive whole number it is assumed to be a binary, hexadecimal, or octal value. If the string contains commas they are removed. If the string is of the form NN:MMM``` or NN#MMM then NN is assumed to be the base of the whole number.</p>
 <p>If an error occurs in the READ, IOSTAT is returned in IERR and value is set to zero. if no error occurs, IERR=0.</p>
-<h2 id="options-63">OPTIONS</h2>
+<h2 id="options-64">OPTIONS</h2>
 <ul>
 <li><strong>CHARS</strong><br />
 input string to read numeric value from</li>
 </ul>
-<h2 id="returns-54">RETURNS</h2>
+<h2 id="returns-55">RETURNS</h2>
 <ul>
 <li><p><strong>VALU</strong><br />
 numeric value returned. May be INTEGER, REAL, or DOUBLEPRECISION.</p></li>
 <li><p><strong>IERR</strong><br />
 error flag (0 == no error)</p></li>
 </ul>
-<h2 id="examples-77">EXAMPLES</h2>
+<h2 id="examples-78">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_string_to_value
     use M_strings, only: string_to_value
@@ -5597,15 +5650,15 @@ error flag (0 == no error)</p></li>
        write(*,*) &#39;value of string [&#39;//trim(string)//&#39;] is &#39;,value
    end program demo_string_to_value
 </code></pre>
-<h2 id="author-76">AUTHOR</h2>
+<h2 id="author-77">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-74">LICENSE</h2>
+<h2 id="license-75">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-78" class="slide section level1">
+<div id="name-79" class="slide section level1">
 <h1>NAME</h1>
 <p>string_to_values(3f) - [M_strings:TYPE] read a string representing numbers into a numeric array (LICENSE:PD)</p>
-<h2 id="synopsis-78">SYNOPSIS</h2>
+<h2 id="synopsis-79">SYNOPSIS</h2>
 <p>subroutine string_to_values(line,iread,values,inums,delims,ierr)</p>
 <pre><code>       character(len=*) :: line
        integer          :: iread
@@ -5614,16 +5667,16 @@ error flag (0 == no error)</p></li>
        character(len=*) :: delims
        integer          :: ierr
 </code></pre>
-<h2 id="description-78">DESCRIPTION</h2>
+<h2 id="description-79">DESCRIPTION</h2>
 <p>This routine can take a string representing a series of numbers and convert it to a numeric array and return how many numbers were found.</p>
-<h2 id="options-64">OPTIONS</h2>
+<h2 id="options-65">OPTIONS</h2>
 <ul>
 <li><p><strong>LINE</strong><br />
 Input string containing numbers</p></li>
 <li><p><strong>IREAD</strong><br />
 maximum number of values to try to read from input string</p></li>
 </ul>
-<h2 id="returns-55">RETURNS</h2>
+<h2 id="returns-56">RETURNS</h2>
 <ul>
 <li><p><strong>VALUES</strong><br />
 real array to be filled with numbers</p></li>
@@ -5634,7 +5687,7 @@ delimiter character(s), usually a space. must not be a null string. If more than
 <li><p><strong>IERR</strong><br />
 error flag (0=no error, else column number string starts at that error occurred on).</p></li>
 </ul>
-<h2 id="examples-78">EXAMPLES</h2>
+<h2 id="examples-79">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>     program demo_string_to_values
       use M_strings, only : string_to_values
@@ -5670,15 +5723,15 @@ error flag (0=no error, else column number string starts at that error occurred 
     number of values found```           3
     values```................   10.0000000  2.29999995  3.14159989
 </code></pre>
-<h2 id="author-77">AUTHOR</h2>
+<h2 id="author-78">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-75">LICENSE</h2>
+<h2 id="license-76">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-79" class="slide section level1">
+<div id="name-80" class="slide section level1">
 <h1>NAME</h1>
 <p>strtok(3f) - [M_strings:TOKENS] Tokenize a string (LICENSE:PD)</p>
-<h2 id="synopsis-79">SYNOPSIS</h2>
+<h2 id="synopsis-80">SYNOPSIS</h2>
 <p>function strtok(source_string,itoken,token_start,token_end,delimiters) result(strtok_status)</p>
 <pre><code>  ! returned value
   logical                      :: strtok_status
@@ -5693,14 +5746,14 @@ error flag (0=no error, else column number string starts at that error occurred 
   ! list of separator characters
   character(len=*),intent(in)  :: delimiters
 </code></pre>
-<h2 id="description-79">DESCRIPTION</h2>
+<h2 id="description-80">DESCRIPTION</h2>
 <p>The STRTOK(3f) function is used to isolate sequential tokens in a string, SOURCE_STRING. These tokens are delimited in the string by at least one of the characters in DELIMITERS. The first time that STRTOK(3f) is called, ITOKEN should be specified as zero. Subsequent calls, wishing to obtain further tokens from the same string,</p>
 <ul>
 <li><strong>should pass back in TOKEN_END</strong><br />
 and ITOKEN until the function result returns .false.</li>
 </ul>
 <p>This routine assumes no other calls are made to it using any other input string while it is processing an input line.</p>
-<h2 id="options-65">OPTIONS</h2>
+<h2 id="options-66">OPTIONS</h2>
 <ul>
 <li><p><strong>source_string</strong><br />
 input string to parse</p></li>
@@ -5709,24 +5762,24 @@ token count should be set to zero for a new string</p></li>
 <li><p><strong>delimiters</strong><br />
 characters used to determine the end of tokens</p></li>
 </ul>
-<h2 id="returns-56">RETURNS</h2>
+<h2 id="returns-57">RETURNS</h2>
 <ul>
 <li><p><strong>token_start</strong><br />
 beginning position in SOURCE_STRING where token was found</p></li>
 <li><p><strong>token_end</strong><br />
 ending position in SOURCE_STRING where token was found strtok_status</p></li>
 </ul>
-<h2 id="examples-79">EXAMPLES</h2>
+<h2 id="examples-80">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_strtok
     use M_strings, only : strtok
     implicit none
     character(len=264)          :: inline
     character(len=*),parameter  :: delimiters=&#39; ;,&#39;
-    integer                     :: ios, itoken, ibegin, iend
+    integer                     :: iostat, itoken, ibegin, iend
        do ! read lines from stdin until end-of-file or error
-          read (unit=*,fmt=&quot;(a)&quot;,iostat=ios) inline
-          if(ios /= 0)stop
+          read (unit=*,fmt=&quot;(a)&quot;,iostat=iostat) inline
+          if(iostat /= 0)stop
           ! must set ITOKEN=0 before looping on strtok(3f)
           ! on a new string.
           itoken=0
@@ -5754,15 +5807,15 @@ ending position in SOURCE_STRING where token was found strtok_status</p></li>
     8  TOKEN=[:]       32  32
     9  TOKEN=[C]       35  35
 </code></pre>
-<h2 id="author-78">AUTHOR</h2>
+<h2 id="author-79">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-76">LICENSE</h2>
+<h2 id="license-77">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-80" class="slide section level1">
+<div id="name-81" class="slide section level1">
 <h1>NAME</h1>
 <p>substitute(3f) - [M_strings:EDITING] subroutine globally substitutes one substring for another in string (LICENSE:PD)</p>
-<h2 id="synopsis-80">SYNOPSIS</h2>
+<h2 id="synopsis-81">SYNOPSIS</h2>
 <p>subroutine substitute(targetline,old,new,ierr,start,end)</p>
 <pre><code>    character(len=*)              :: targetline
     character(len=*),intent(in)   :: old
@@ -5771,9 +5824,9 @@ ending position in SOURCE_STRING where token was found strtok_status</p></li>
     integer,intent(in),optional   :: start
     integer,intent(in),optional   :: end
 </code></pre>
-<h2 id="description-80">DESCRIPTION</h2>
+<h2 id="description-81">DESCRIPTION</h2>
 <p>Globally substitute one substring for another in string.</p>
-<h2 id="options-66">OPTIONS</h2>
+<h2 id="options-67">OPTIONS</h2>
 <ul>
 <li><p><strong>TARGETLINE</strong><br />
 input line to be changed. Must be long enough to hold altered output.</p></li>
@@ -5788,7 +5841,7 @@ sets the left margin to be scanned for OLD in TARGETLINE.</p></li>
 <li><p><strong>END</strong><br />
 sets the right margin to be scanned for OLD in TARGETLINE.</p></li>
 </ul>
-<h2 id="examples-80">EXAMPLES</h2>
+<h2 id="examples-81">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_substitute
    use M_strings, only : substitute
@@ -5821,15 +5874,15 @@ sets the right margin to be scanned for OLD in TARGETLINE.</p></li>
     &quot;&quot; =&gt; BEFORE: BEFORE:THis is THe input string
     i =&gt; &quot;&quot;     : BEFORE:THs s THe nput strng
 </code></pre>
-<h2 id="author-79">AUTHOR</h2>
+<h2 id="author-80">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-77">LICENSE</h2>
+<h2 id="license-78">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-81" class="slide section level1">
+<div id="name-82" class="slide section level1">
 <h1>NAME</h1>
 <p>switch(3f) - [M_strings:ARRAY] converts between CHARACTER scalar and array of single characters (LICENSE:PD)</p>
-<h2 id="synopsis-81">SYNOPSIS</h2>
+<h2 id="synopsis-82">SYNOPSIS</h2>
 <p>pure function switch(array) result (string)</p>
 <pre><code>    character(len=1),intent(in) :: array(:)
     character(len=SIZE(array))  :: string
@@ -5840,9 +5893,9 @@ sets the right margin to be scanned for OLD in TARGETLINE.</p></li>
 <pre><code>    character(len=*),intent(in) :: string
     character(len=1)            :: array(len(string))
 </code></pre>
-<h2 id="description-81">DESCRIPTION</h2>
+<h2 id="description-82">DESCRIPTION</h2>
 <p>SWITCH(3f): generic function that switches CHARACTER string to an array of single characters or an array of single characters to a CHARACTER string. Useful in passing strings to C. New Fortran features may supersede these routines.</p>
-<h2 id="examples-81">EXAMPLES</h2>
+<h2 id="examples-82">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_switch
    use M_strings, only : switch, isalpha, islower, nospace
@@ -5909,24 +5962,24 @@ sets the right margin to be scanned for OLD in TARGETLINE.</p></li>
     &gt; F
     &gt; T
 </code></pre>
-<h2 id="author-80">AUTHOR</h2>
+<h2 id="author-81">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-78">LICENSE</h2>
+<h2 id="license-79">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-82" class="slide section level1">
+<div id="name-83" class="slide section level1">
 <h1>NAME</h1>
 <p>transliterate(3f) - [M_strings:EDITING] replace characters from old set with new set (LICENSE:PD)</p>
-<h2 id="synopsis-82">SYNOPSIS</h2>
+<h2 id="synopsis-83">SYNOPSIS</h2>
 <p>pure function transliterate(instr,old_set,new_set) result(outstr)</p>
 <pre><code>    character(len=*),intent(in)  :: instr
     character(len=*),intent(in)  :: old_set
     character(len=*),intent(in)  :: new_set
     character(len=len(instr))    :: outstr
 </code></pre>
-<h2 id="description-82">DESCRIPTION</h2>
+<h2 id="description-83">DESCRIPTION</h2>
 <p>Translate, squeeze, and/or delete characters from the input string.</p>
-<h2 id="options-67">OPTIONS</h2>
+<h2 id="options-68">OPTIONS</h2>
 <ul>
 <li><p><strong>instr</strong><br />
 input string to change</p></li>
@@ -5951,12 +6004,12 @@ list of letters to replace letters in OLD_SET with.</li>
             in the new set is used to replace the remaining characters
             in the new set.
 </code></pre>
-<h2 id="returns-57">RETURNS</h2>
+<h2 id="returns-58">RETURNS</h2>
 <ul>
 <li><strong>outstr</strong><br />
 instr with substitutions applied</li>
 </ul>
-<h2 id="examples-82">EXAMPLES</h2>
+<h2 id="examples-83">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_transliterate
 
@@ -5988,36 +6041,36 @@ instr with substitutions applied</li>
     &gt; :A:B:C:D:E:F:G:H:I:J:K:L:M:N:O:P:Q:R:S:T:U:V:W:X:Y:Z
     &gt; ABCDEFGHIJKLMNOPQRSTUVWXYZ
 </code></pre>
-<h2 id="author-81">AUTHOR</h2>
+<h2 id="author-82">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-79">LICENSE</h2>
+<h2 id="license-80">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-83" class="slide section level1">
+<div id="name-84" class="slide section level1">
 <h1>NAME</h1>
 <p>unquote(3f) - [M_strings:QUOTES] remove quotes from string as if read with list-directed input (LICENSE:PD)</p>
-<h2 id="synopsis-83">SYNOPSIS</h2>
+<h2 id="synopsis-84">SYNOPSIS</h2>
 <p>function unquote(quoted_str,esc) result (unquoted_str)</p>
 <pre><code>   character(len=*),intent(in)          :: quoted_str
    character(len=1),optional,intent(in) :: esc
    character(len=:),allocatable         :: unquoted_str
 </code></pre>
-<h2 id="description-83">DESCRIPTION</h2>
+<h2 id="description-84">DESCRIPTION</h2>
 <p>Remove quotes from a CHARACTER variable as if it was read using list-directed input. This is particularly useful for processing tokens read from input such as CSV files.</p>
 <p>Fortran can now read using list-directed input from an internal file, which should handle quoted strings, but list-directed input does not support escape characters, which UNQUOTE(3f) does.</p>
-<h2 id="options-68">OPTIONS</h2>
+<h2 id="options-69">OPTIONS</h2>
 <ul>
 <li><p><strong>quoted_str</strong><br />
 input string to remove quotes from, using the rules of list-directed input (two adjacent quotes inside a quoted region are replaced by a single quote, a single quote or double quote is selected as the delimiter based on which is encountered first going from left to right, ```)</p></li>
 <li><p><strong>esc</strong><br />
 optional character used to protect the next quote character from being processed as a quote, but simply as a plain character.</p></li>
 </ul>
-<h2 id="returns-58">RETURNS</h2>
+<h2 id="returns-59">RETURNS</h2>
 <ul>
 <li><strong>unquoted_str</strong><br />
 The output string, which is based on removing quotes from quoted_str.</li>
 </ul>
-<h2 id="examples-83">EXAMPLES</h2>
+<h2 id="examples-84">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>   program demo_unquote
       use M_strings, only : unquote
@@ -6025,14 +6078,14 @@ The output string, which is based on removing quotes from quoted_str.</li>
       character(len=128)           :: quoted_str
       character(len=:),allocatable :: unquoted_str
       character(len=1),parameter   :: esc=&#39;\&#39;
-      character(len=1024)          :: msg
-      integer                      :: ios
+      character(len=1024)          :: iomsg
+      integer                      :: iostat
       character(len=1024)          :: dummy
       do
          write(*,&#39;(a)&#39;,advance=&#39;no&#39;)&#39;Enter test string:&#39;
-         read(*,&#39;(a)&#39;,iostat=ios,iomsg=msg)quoted_str
-         if(ios /= 0)then
-            write(*,*)trim(msg)
+         read(*,&#39;(a)&#39;,iostat=iostat,iomsg=iomsg)quoted_str
+         if(iostat /= 0)then
+            write(*,*)trim(iomsg)
             exit
          endif
 
@@ -6044,32 +6097,32 @@ The output string, which is based on removing quotes from quoted_str.</li>
          write(*,&#39;(a)&#39;)&#39;UNQUOTED     [&#39;//unquoted_str//&#39;]&#39;
 
          ! read the string list-directed to compare the results
-         read(quoted_str,*,iostat=ios,iomsg=msg)dummy
-         if(ios /= 0)then
-            write(*,*)trim(msg)
+         read(quoted_str,*,iostat=iostat,iomsg=iomsg)dummy
+         if(iostat /= 0)then
+            write(*,*)trim(iomsg)
          else
             write(*,&#39;(a)&#39;)&#39;LIST DIRECTED[&#39;//trim(dummy)//&#39;]&#39;
          endif
       enddo
    end program demo_unquote
 </code></pre>
-<h2 id="author-82">AUTHOR</h2>
+<h2 id="author-83">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-80">LICENSE</h2>
+<h2 id="license-81">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-84" class="slide section level1">
+<div id="name-85" class="slide section level1">
 <h1>NAME</h1>
 <p>upper(3f) - [M_strings:CASE] changes a string to uppercase (LICENSE:PD)</p>
-<h2 id="synopsis-84">SYNOPSIS</h2>
+<h2 id="synopsis-85">SYNOPSIS</h2>
 <p>elemental pure function upper(str,begin,end) result (string)</p>
 <pre><code>    character(*), intent(in)    :: str
     integer,optional,intent(in) :: begin,end
     character(len(str))         :: string  ! output string
 </code></pre>
-<h2 id="description-84">DESCRIPTION</h2>
+<h2 id="description-85">DESCRIPTION</h2>
 <p>upper(string) returns a copy of the input string with all characters converted in the optionally specified range to uppercase, assuming ASCII character sets are being used. If no range is specified the entire string is converted to uppercase.</p>
-<h2 id="options-69">OPTIONS</h2>
+<h2 id="options-70">OPTIONS</h2>
 <ul>
 <li><p><strong>str</strong><br />
 string to convert to uppercase</p></li>
@@ -6078,14 +6131,14 @@ optional starting position in "str" to begin converting to uppercase</p></li>
 <li><p><strong>end</strong><br />
 optional ending position in "str" to stop converting to uppercase</p></li>
 </ul>
-<h2 id="returns-59">RETURNS</h2>
+<h2 id="returns-60">RETURNS</h2>
 <ul>
 <li><strong>upper</strong><br />
 copy of the input string with all characters converted to uppercase over optionally specified range.</li>
 </ul>
 <h2 id="trivia-1">TRIVIA</h2>
 <p>The terms "uppercase" and "lowercase" date back to the early days of the mechanical printing press. Individual metal alloy casts of each needed letter, or punctuation symbol, were meticulously added to a press block, by hand, before rolling out copies of a page. These metal casts were stored and organized in wooden cases. The more often needed miniscule letters were placed closer to hand, in the lower cases of the work bench. The less often needed, capitalized, majuscule letters, ended up in the harder to reach upper cases.</p>
-<h2 id="examples-84">EXAMPLES</h2>
+<h2 id="examples-85">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_upper
     use M_strings, only: upper
@@ -6106,32 +6159,32 @@ copy of the input string with all characters converted to uppercase over optiona
     make first character uppercase  ``` This is a sentence.
     UPPER(3f) is elemental ==&gt;ABC+DEF+GHI
 </code></pre>
-<h2 id="author-83">AUTHOR</h2>
+<h2 id="author-84">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-81">LICENSE</h2>
+<h2 id="license-82">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-85" class="slide section level1">
+<div id="name-86" class="slide section level1">
 <h1>NAME</h1>
 <p>upper_quoted(3f) - [M_strings:CASE] elemental function converts string to uppercase skipping strings quoted per Fortran syntax rules (LICENSE:PD)</p>
-<h2 id="synopsis-85">SYNOPSIS</h2>
+<h2 id="synopsis-86">SYNOPSIS</h2>
 <p>elemental pure function upper_quoted(str) result (string)</p>
 <pre><code>    character(*), intent(in)    :: str
     character(len(str))         :: string  ! output string
 </code></pre>
-<h2 id="description-85">DESCRIPTION</h2>
+<h2 id="description-86">DESCRIPTION</h2>
 <p>upper_quoted(string) returns a copy of the input string with all not-quoted characters converted to uppercase, assuming ASCII character sets are being used. The quoting rules are the same as for Fortran source. Either a single or double quote starts a quoted string, and a quote character of the same type is doubled when it appears internally in the quoted string. If a double quote quotes the string single quotes may appear in the quoted string as single characters, and vice-versa for single quotes.</p>
-<h2 id="options-70">OPTIONS</h2>
+<h2 id="options-71">OPTIONS</h2>
 <ul>
 <li><strong>str</strong><br />
 string to convert to uppercase</li>
 </ul>
-<h2 id="returns-60">RETURNS</h2>
+<h2 id="returns-61">RETURNS</h2>
 <ul>
 <li><strong>upper</strong><br />
 copy of the input string with all unquoted characters converted to uppercase</li>
 </ul>
-<h2 id="examples-85">EXAMPLES</h2>
+<h2 id="examples-86">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>    program demo_upper_quoted
     use M_strings, only: upper_quoted
@@ -6152,35 +6205,35 @@ copy of the input string with all unquoted characters converted to uppercase</li
     &#39;Single-Quoted&#39; &quot;with &quot;&quot; Quote&quot; EVERYTHING ELSE
     upper_quoted(3f) is elemental ==&gt;ABC+DEF+GHI
 </code></pre>
-<h2 id="author-84">AUTHOR</h2>
+<h2 id="author-85">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-82">LICENSE</h2>
+<h2 id="license-83">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-86" class="slide section level1">
+<div id="name-87" class="slide section level1">
 <h1>NAME</h1>
 <p>v2s(3f) - [M_strings:TYPE] return numeric string from a numeric value (LICENSE:PD)</p>
-<h2 id="synopsis-86">SYNOPSIS</h2>
+<h2 id="synopsis-87">SYNOPSIS</h2>
 <p>function v2s(value) result(outstr)</p>
 <pre><code>       integer|real|doubleprecision|logical,intent(in ) :: value
        character(len=:),allocatable :: outstr
        character(len=*),optional,intent(in) :: fmt
 </code></pre>
-<h2 id="description-86">DESCRIPTION</h2>
+<h2 id="description-87">DESCRIPTION</h2>
 <p>v2s(3f) returns a representation of a numeric value as a string when given a numeric value of type REAL, DOUBLEPRECISION, INTEGER or LOGICAL. It creates the strings using internal WRITE() statements. Trailing zeros are removed from non-zero values, and the string is left-justified.</p>
-<h2 id="options-71">OPTIONS</h2>
+<h2 id="options-72">OPTIONS</h2>
 <ul>
 <li><p><strong>VALUE</strong><br />
 input value to be converted to a string</p></li>
 <li><p><strong>FMT</strong><br />
 format can be explicitly given, but is limited to generating a string of eighty or less characters.</p></li>
 </ul>
-<h2 id="returns-61">RETURNS</h2>
+<h2 id="returns-62">RETURNS</h2>
 <ul>
 <li><strong>OUTSTR</strong><br />
 returned string representing input value,</li>
 </ul>
-<h2 id="examples-86">EXAMPLES</h2>
+<h2 id="examples-87">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>   program demo_v2s
    use M_strings, only: v2s
@@ -6198,15 +6251,15 @@ returned string representing input value,</li>
     The value of .false. is [F]
     The value of .true. is  [T]
 </code></pre>
-<h2 id="author-85">AUTHOR</h2>
+<h2 id="author-86">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-83">LICENSE</h2>
+<h2 id="license-84">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-87" class="slide section level1">
+<div id="name-88" class="slide section level1">
 <h1>NAME</h1>
 <p>value_to_string(3f) - [M_strings:TYPE] return numeric string from a numeric value (LICENSE:PD)</p>
-<h2 id="synopsis-87">SYNOPSIS</h2>
+<h2 id="synopsis-88">SYNOPSIS</h2>
 <p>subroutine value_to_string(value,chars[,lgth,ierr,fmt,trimz])</p>
 <pre><code>    character(len=*) :: chars  ! minimum of 23 characters required
     !--------
@@ -6222,9 +6275,9 @@ returned string representing input value,</li>
     character(len=*),intent(in),optional     :: fmt
     logical,intent(in)                       :: trimz
 </code></pre>
-<h2 id="description-87">DESCRIPTION</h2>
+<h2 id="description-88">DESCRIPTION</h2>
 <p>value_to_string(3f) returns a numeric representation of a numeric value in a string given a numeric value of type REAL, DOUBLEPRECISION, INTEGER or LOGICAL. It creates the string using internal writes. It then removes trailing zeros from non-zero values, and left-justifies the string.</p>
-<h2 id="options-72">OPTIONS</h2>
+<h2 id="options-73">OPTIONS</h2>
 <ul>
 <li><p><strong>VALUE</strong><br />
 input value to be converted to a string</p></li>
@@ -6233,7 +6286,7 @@ You may specify a specific format that produces a string up to the length of CHA
 <li><p><strong>TRIMZ</strong><br />
 If a format is supplied the default is not to try to trim trailing zeros. Set TRIMZ to .true. to trim zeros from a string assumed to represent a simple numeric value.</p></li>
 </ul>
-<h2 id="returns-62">RETURNS</h2>
+<h2 id="returns-63">RETURNS</h2>
 <ul>
 <li><p><strong>CHARS</strong><br />
 returned string representing input value, must be at least 23 characters long; or what is required by optional FMT if longer.</p></li>
@@ -6242,7 +6295,7 @@ position of last non-blank character in returned string; optional.</p></li>
 <li><p><strong>IERR</strong><br />
 If not zero, error occurred; optional.</p></li>
 </ul>
-<h2 id="examples-87">EXAMPLES</h2>
+<h2 id="examples-88">EXAMPLES</h2>
 <p>Sample program:</p>
 <pre><code>     program demo_value_to_string
      use M_strings, only: value_to_string
@@ -6274,22 +6327,22 @@ If not zero, error occurred; optional.</p></li>
     The value is [1234]
     The value is [0.33333333333333331]
 </code></pre>
-<h2 id="author-86">AUTHOR</h2>
+<h2 id="author-87">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-84">LICENSE</h2>
+<h2 id="license-85">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-88" class="slide section level1">
+<div id="name-89" class="slide section level1">
 <h1>NAME</h1>
 <p>visible(3f) - [M_strings:NONALPHA] expand a string to control and meta-control representations (LICENSE:PD)</p>
-<h2 id="synopsis-88">SYNOPSIS</h2>
+<h2 id="synopsis-89">SYNOPSIS</h2>
 <p>function visible(input) result(output)</p>
 <pre><code>    character(len=*),intent(in)           :: input
     character(len=:),allocatable          :: output
 </code></pre>
-<h2 id="description-88">DESCRIPTION</h2>
+<h2 id="description-89">DESCRIPTION</h2>
 <p>visible(3f) expands characters to commonly used sequences used to represent the characters as control sequences or meta-control sequences.</p>
-<h2 id="examples-88">EXAMPLES</h2>
+<h2 id="examples-89">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>    program demo_visible
     use M_strings, only : visible
@@ -6301,20 +6354,20 @@ If not zero, error occurred; optional.</p></li>
 </code></pre>
 <h2 id="bugs">BUGS</h2>
 <p>The expansion is not reversible, as input sequences such as "M-" or "^a" will look like expanded sequences.</p>
-<h2 id="author-87">AUTHOR</h2>
+<h2 id="author-88">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-85">LICENSE</h2>
+<h2 id="license-86">LICENSE</h2>
 <p>Public Domain</p>
 </div>
-<div id="name-89" class="slide section level1">
+<div id="name-90" class="slide section level1">
 <h1>NAME</h1>
 <p>zpad(3f) - [M_strings:LENGTH] pad a string on the left with zeros to specified length (LICENSE:PD)</p>
-<h2 id="synopsis-89">SYNOPSIS</h2>
+<h2 id="synopsis-90">SYNOPSIS</h2>
 <p>function zpad(valuein,length) result(strout)</p>
 <pre><code>    class*,intent(in)           :: valuein(..)
     integer,intent(in),optional :: length
 </code></pre>
-<h2 id="description-89">DESCRIPTION</h2>
+<h2 id="description-90">DESCRIPTION</h2>
 <p>zpad(3f) crops the input string (or integer, which will be converted to a string) and then pads it on the left with zeros to the specified length.</p>
 <p>Note that if the trimmed input string is already as long or longer than the requested length the trimmed original string is returned.</p>
 <p>For strings representing unsigned numbers this is basically an alias for</p>
@@ -6324,19 +6377,19 @@ If not zero, error occurred; optional.</p></li>
 <pre><code>       write(strout,&#39;(i5.5)&#39;)ivalue
 </code></pre>
 <p>but unlike internal I/O the function call can be used in expressions or passed as a procedure argument.</p>
-<h2 id="options-73">OPTIONS</h2>
+<h2 id="options-74">OPTIONS</h2>
 <ul>
 <li><p><strong>valuein</strong><br />
 The input value to left-pad. May be a scalar or vector string or integer. If the leftmost non-blank character is a sign character it is moved to the left-most position of the output.</p></li>
 <li><p><strong>length</strong><br />
 The minimum string length to return. If not present, the length of the input parameter VALUEIN is used. If the input value VALUEIN is an integer no zero padding occurs if LENGTH is not supplied.</p></li>
 </ul>
-<h2 id="returns-63">RETURNS</h2>
+<h2 id="returns-64">RETURNS</h2>
 <ul>
 <li><strong>strout</strong><br />
 A trimmed string padded on the left with zeros to the requested length</li>
 </ul>
-<h2 id="examples-89">EXAMPLES</h2>
+<h2 id="examples-90">EXAMPLES</h2>
 <p>Sample Program:</p>
 <pre><code>     program demo_zpad
       use M_strings, only : zpad
@@ -6391,9 +6444,9 @@ A trimmed string padded on the left with zeros to the requested length</li>
     &gt; [00010000]
     &gt; [00100000]
 </code></pre>
-<h2 id="author-88">AUTHOR</h2>
+<h2 id="author-89">AUTHOR</h2>
 <p>John S. Urban</p>
-<h2 id="license-86">LICENSE</h2>
+<h2 id="license-87">LICENSE</h2>
 <p>Public Domain</p>
 </div>
 </body>
