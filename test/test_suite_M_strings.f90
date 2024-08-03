@@ -19,7 +19,7 @@ subroutine test_suite_m_strings()
    call unit_test_mode(       &
        keep_going=T,           &
        flags=[0],              &
-       luns=[std_err],         &
+       luns=[std_out],         &
        command='',             &
        brief=F,                &
        match='',               &
