@@ -10518,7 +10518,7 @@ integer,intent(in)           :: inval10
 integer,intent(in)           :: outbase
 character(len=*),intent(out) :: answer
 integer                      :: n
-real                         :: inval10_local
+real(kind=real64)            :: inval10_local
 integer                      :: outbase_local
 integer                      :: in_sign
   answer=''

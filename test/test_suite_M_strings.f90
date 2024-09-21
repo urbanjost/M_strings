@@ -510,6 +510,9 @@ end subroutine test_base2
 subroutine test_codebase()
 character(len=:),allocatable :: in(:)
 integer,allocatable          :: expected(:)
+character(len=80)            :: answer, baseformat, expect
+integer                      :: i, j, base, ierr
+logical                      :: ier
    call unit_test_start('codebase','[BASE] convert whole number in base 10 to string in base [2-36]')
 
    ! convert base10 values to base2 strings
@@ -523,6 +526,20 @@ integer,allocatable          :: expected(:)
    call checkit(['123123'],[1755],4)
    call checkit(['10'],[16],16)
    call checkit(['10'],[8],8)
+  ! test against Fortran BOZ values
+  do j=1,3
+     select case(j)
+     case(1); base=2;  baseformat='(b0)'
+     case(2); base=8;  baseformat='(o0)'
+     case(3); base=16; baseformat='(z0)'
+     end select
+     do i=0,huge(0),1237
+        ier=codebase(i,base,answer)
+        write(expect,baseformat)i
+        if(answer.ne.expect.or..not.ier) &
+	& call unit_test('codebase',F,'expected',expect,'got',answer)
+     enddo
+  enddo
 
    call unit_test_end('codebase')
 contains
