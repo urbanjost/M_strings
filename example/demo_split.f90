@@ -1,9 +1,9 @@
      program demo_split
      use M_strings, only: split
      implicit none
-     integer :: i
-     character(len=*),parameter :: title='(80("="),t1,a)'
-     character(len=*),parameter     :: line=&
+     integer                      :: i
+     character(len=*),parameter   :: title='(80("="),t1,a)'
+     character(len=*),parameter   :: line=&
      '  aBcdef   ghijklmnop qrstuvwxyz  1:|:2     333|333 a B cc    '
      character(len=:),allocatable :: array(:) ! output array of tokens
         write(*,*)'INPUT LINE:['//line//']'

@@ -90,4 +90,5 @@ append("v2s.3m_strings.html");
 append("value_to_string.3m_strings.html");
 append("visible.3m_strings.html");
 append("zpad.3m_strings.html");
+append("M_strings__oop.3m_strings__oop.html");
 }
