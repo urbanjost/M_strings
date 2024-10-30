@@ -47,8 +47,9 @@ public entities:
    use M_strings, only : [describe](https://urbanjost.github.io/M_strings/describe.3m_strings)             
    use M_strings, only : [edit_distance](https://urbanjost.github.io/M_strings/edit_distance.3m_strings)             
    use M_strings, only : [cc](https://urbanjost.github.io/M_strings/cc.3m_strings)             
-   use M_strings, only : [int](https://urbanjost.github.io/M_strings/int.3m_strings), [real](https://urbanjost.github.io/M_strings/real.3m_strings), [dble](https://urbanjost.github.io/M_strings/dble.3m_strings), [nint](https://urbanjost.github.io/M_strings/nint.3m_strings)             
-   use M_strings, only : [int](https://urbanjost.github.io/M_strings/atoi.3m_strings), [real](https://urbanjost.github.io/M_strings/atol.3m_strings), [dble](https://urbanjost.github.io/M_strings/ato.3m_strings)
+   use M_strings, only : 
+   [int](https://urbanjost.github.io/M_strings/int.3m_strings), [dble](https://urbanjost.github.io/M_strings/dble.3m_strings), [nint](https://urbanjost.github.io/M_strings/nint.3m_strings)             
+   use M_strings, only : [atoi](https://urbanjost.github.io/M_strings/atoi.3m_strings), [atol](https://urbanjost.github.io/M_strings/atol.3m_strings), [dble](https://urbanjost.github.io/M_strings/ato.3m_strings)
 
 ## Intrinsics
 
