@@ -1,7 +1,8 @@
 function loadthem(){
 append("M_strings.3m_strings.html");
-append("M_strings__oop.3m_strings.html");
 append("adjustc.3m_strings.html");
+append("atoi.3m_strings.html");
+append("atol.3m_strings.html");
 append("aton.3m_strings.html");
 append("base.3m_strings.html");
 append("base2.3m_strings.html");
@@ -49,6 +50,7 @@ append("lenset.3m_strings.html");
 append("listout.3m_strings.html");
 append("longest_common_substring.3m_strings.html");
 append("lower.3m_strings.html");
+append("lower_quoted.3m_strings.html");
 append("lpad.3m_strings.html");
 append("matching_delimiter.3m_strings.html");
 append("merge_str.3m_strings.html");
@@ -90,4 +92,5 @@ append("v2s.3m_strings.html");
 append("value_to_string.3m_strings.html");
 append("visible.3m_strings.html");
 append("zpad.3m_strings.html");
+append("M_strings__oop.3m_strings__oop.html");
 }

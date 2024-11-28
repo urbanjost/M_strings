@@ -19,7 +19,7 @@ subroutine test_suite_m_strings()
    call unit_test_mode(       &
        keep_going=T,           &
        flags=[0],              &
-       luns=[std_err],         &
+       luns=[std_out],         &
        command='',             &
        brief=F,                &
        match='',               &
@@ -117,6 +117,7 @@ subroutine test_suite_m_strings()
    call test_unquote()
    call test_upper()
    call test_upper_quoted()
+   call test_lower_quoted()
    call test_v2s()
    call test_value_to_string()
    call test_visible()
@@ -428,6 +429,43 @@ subroutine test_base()
    call checkit(['10'],['1000'],8,2)
    call checkit(['10'],['10000'],16,2)
 
+   LONG: block
+   character(len=132) :: in
+   character(len=132) :: out
+   character(len=132) :: string
+   integer            :: i
+   do i = 0, huge(0),1009
+      write(string,'(g0)')i
+
+      write(in,'(b0)')i
+      if (base(string, 10, out, 2)) then
+         if(out.ne.in)then
+            call unit_test('base',F,'i=',i,'base=',2,'expected',in,'got',out)
+         endif
+      else
+         call unit_test('base',F,'i=',i,'expected',in,'got',out,'error in decoding/encoding numbers')
+      endif
+
+      write(in,'(o0)')i
+      if (base(string, 10, out, 8)) then
+         if(out.ne.in)then
+            call unit_test('base',F,'i=',i,'base=',8,'expected',in,'got',out)
+         endif
+      else
+         call unit_test('base',F,'i=',i,'expected',in,'got',out,'error in decoding/encoding numbers')
+      endif
+
+      write(in,'(z0)')i
+      if (base(string, 10, out, 16)) then
+         if(out.ne.in)then
+            call unit_test('base',F,'i=',i,'base=',16,'expected',in,'got',out)
+         endif
+      else
+         call unit_test('base',F,'i=',i,'expected',in,'got',out,'error in decoding/encoding numbers')
+      endif
+   enddo
+   endblock LONG
+
    call unit_test_end('base')
 contains
 subroutine checkit(in,answers,inbase,outbase)
@@ -466,6 +504,29 @@ integer,allocatable          :: expected(:)
    call checkit(['10'],[8],8)
 
    call unit_test_end('decodebase')
+
+   ! test against Fortran BOZ values
+   LONG : block
+   integer                       ::  answer, base
+   integer                       ::  i, j
+   character(len=40)             ::  boz
+   character(len=:),allocatable  ::  baseformat
+   logical,parameter             ::  F=.false., T=.true.
+   logical                       ::  ier
+      do j=1,3
+         select case(j)
+          case(1); base=2;  baseformat='(b0)'
+          case(2); base=8;  baseformat='(o0)'
+          case(3); base=16; baseformat='(z0)'
+         end select
+         do i=0,huge(0),1237
+            write(boz,baseformat)i
+            ier=decodebase(boz,base,answer)
+            if(answer.ne.i.or..not.ier) &
+            & call unit_test('decodebase',F,'i=',i,'expected',i,'got',answer)
+         enddo
+      enddo
+   endblock LONG
 contains
 subroutine checkit(in,answers,inbase)
 character(len=*),intent(in)  :: in(:)
@@ -484,14 +545,24 @@ end subroutine checkit
 end subroutine test_decodebase
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_base2()
-character(len=:),allocatable :: in(:)
-integer,allocatable          :: expected(:)
+character(len=:),allocatable  ::  in(:)
+integer,allocatable           ::  expected(:)
+character(len=32)             ::  string,string2
+integer                       ::  i
    call unit_test_start('base2','[BASE] convert whole number to string in base 2')
 
    ! convert base10 values to base2 strings
    in=[character(len=32) :: '10','1010','101010','10101010','1010101010','101010101010']
    expected=[2,10,42,170,682,2730]
    call checkit(in,expected)
+
+   do i=1,huge(0)-1,1009
+      write(string,'(a)') base2(i)
+      write(string2,'(b0)')i
+      if(string.ne.string2)then
+         call unit_test('base2',F,'i=',i,'expected',string2,'got',string)
+      endif
+   enddo
 
    call unit_test_end('base2')
 contains
@@ -510,6 +581,9 @@ end subroutine test_base2
 subroutine test_codebase()
 character(len=:),allocatable :: in(:)
 integer,allocatable          :: expected(:)
+character(len=80)            :: answer, baseformat, expect
+integer                      :: i, j, base, ierr
+logical                      :: ier
    call unit_test_start('codebase','[BASE] convert whole number in base 10 to string in base [2-36]')
 
    ! convert base10 values to base2 strings
@@ -523,6 +597,20 @@ integer,allocatable          :: expected(:)
    call checkit(['123123'],[1755],4)
    call checkit(['10'],[16],16)
    call checkit(['10'],[8],8)
+   ! test against Fortran BOZ values
+   do j=1,3
+      select case(j)
+      case(1); base=2;  baseformat='(b0)'
+      case(2); base=8;  baseformat='(o0)'
+      case(3); base=16; baseformat='(z0)'
+      end select
+      do i=0,huge(0),1237
+         ier=codebase(i,base,answer)
+         write(expect,baseformat)i
+         if(answer.ne.expect.or..not.ier) &
+        & call unit_test('codebase',F,'i=',i,'expected',expect,'got',answer)
+      enddo
+   enddo
 
    call unit_test_end('codebase')
 contains
@@ -2097,7 +2185,7 @@ function getval(ipos)
 integer,intent(in) :: ipos
 integer :: getval
    call matching_delimiter(strng,ipos,getval)
-end function 
+end function
 end subroutine test_matching_delimiter
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_str()
@@ -2170,6 +2258,21 @@ subroutine test_split2020()
    call unit_test_start('split2020','[TOKENS] parse a string into tokens using proposed f2023 method')
    call unit_test_end('split2020')
 end subroutine test_split2020
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_lower_quoted()
+character(len=:),allocatable  :: s
+   call unit_test_start('lower_quoted','[CASE] convert string to lowercase skipping strings quoted per Fortran syntax rules')
+   s=' ABCDEFG abcdefg "Double-Quoted" ''Single-Quoted'' "with "" Quote" everything else'
+   call unit_test('lower_quoted',&
+   & lower_quoted(s).eq.' abcdefg abcdefg "Double-Quoted" ''Single-Quoted'' "with "" Quote" everything else',&
+   &'complex string')
+   if(unit_test_level.gt.0)then
+      call unit_test_msg('lower_quoted','input is  ['//s//']')
+      call unit_test_msg('lower_quoted','result is ['//lower_quoted(s)//']')
+   endif
+   call unit_test('lower_quoted',all(lower_quoted(["A'B'C",'D"E"F',"GHIJK"]).eq.["a'B'c",'d"E"f',"ghijk"]),'elemental test')
+   call unit_test_end('lower_quoted')
+end subroutine test_lower_quoted
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_upper_quoted()
 character(len=:),allocatable  :: s

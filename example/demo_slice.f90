@@ -1,10 +1,10 @@
       program demo_slice
       use M_strings, only: slice
       implicit none
-      integer :: i
-      character(len=*),parameter     :: &
+      integer                    :: i
+      character(len=*),parameter :: &
       & line='  aBcdef   ghijklmnop qrstuvwxyz  1:|:2     333|333 a B cc    '
-      integer,allocatable :: ibegin(:), iend(:) ! output arrays of positions
+      integer,allocatable        :: ibegin(:), iend(:) ! output arrays of positions
       character(len=*),parameter :: title='(80("="),t1,a)'
          write(*,*)'INPUT LINE:['//line//']'
          !
