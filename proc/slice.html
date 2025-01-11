@@ -73,7 +73,7 @@
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title=" 3.2% of total for procedures.">96 statements</a>
+                 title=" 3.1% of total for procedures.">96 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -434,9 +434,9 @@ SIZE: 20
 <span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="w">   </span><span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">input_line</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="w">                        </span><span class="c">! max number of strings INPUT_LINE could slice into if all delimiter</span>
 <span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">ibegin</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">ibegin</span><span class="p">)</span><span class="w">    </span><span class="c">!x! intel compiler says allocated already ?</span>
-<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">iend</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">iend</span><span class="p">)</span><span class="w">      </span><span class="c">!x! intel compiler says allocated already ?</span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">iend</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">iend</span><span class="p">)</span><span class="w">        </span><span class="c">!x! intel compiler says allocated already ?</span>
 <span class="w">   </span><span class="k">allocate</span><span class="p">(</span><span class="n">ibegin</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w">                        </span><span class="c">! allocate enough space to hold starting location of tokens if string all tokens</span>
-<span class="w">   </span><span class="k">allocate</span><span class="p">(</span><span class="n">iend</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w">                         </span><span class="c">! allocate enough space to hold ending location of tokens if string all tokens</span>
+<span class="w">   </span><span class="k">allocate</span><span class="p">(</span><span class="n">iend</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w">                          </span><span class="c">! allocate enough space to hold ending location of tokens if string all tokens</span>
 <span class="w">   </span><span class="n">ibegin</span><span class="p">(:)</span><span class="o">=</span><span class="mi">1</span>
 <span class="w">   </span><span class="n">iend</span><span class="p">(:)</span><span class="o">=</span><span class="mi">1</span>
 <span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
@@ -445,27 +445,27 @@ SIZE: 20
 <span class="w">   </span><span class="n">inotnull</span><span class="o">=</span><span class="mi">0</span><span class="w">                                                     </span><span class="c">! how many tokens found not composed of delimiters</span>
 <span class="w">   </span><span class="n">imax</span><span class="o">=</span><span class="mi">0</span><span class="w">                                                         </span><span class="c">! length of longest token found</span>
 <span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="n">lgth</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="k">then</span><span class="w">                                              </span><span class="c">! there is at least one non-delimiter in INPUT_LINE if get here</span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="n">lgth</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="k">then</span><span class="w">                                               </span><span class="c">! there is at least one non-delimiter in INPUT_LINE if get here</span>
 <span class="w">      </span><span class="n">icol</span><span class="o">=</span><span class="mi">1</span><span class="w">                                                      </span><span class="c">! initialize pointer into input line</span>
 <span class="w">      </span><span class="n">INFINITE</span><span class="p">:</span><span class="w"> </span><span class="k">do </span><span class="n">i30</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">lgth</span><span class="p">,</span><span class="mi">1</span><span class="w">                                   </span><span class="c">! store into each array element</span>
 <span class="w">         </span><span class="n">ibegin</span><span class="p">(</span><span class="n">i30</span><span class="p">)</span><span class="o">=</span><span class="n">icol</span><span class="w">                                         </span><span class="c">! assume start new token on the character</span>
 <span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="nb">index</span><span class="p">(</span><span class="n">dlim</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">idlim</span><span class="p">),</span><span class="n">input_line</span><span class="p">(</span><span class="n">icol</span><span class="p">:</span><span class="n">icol</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="k">then</span><span class="w">  </span><span class="c">! if current character is not a delimiter</span>
-<span class="w">            </span><span class="n">iend</span><span class="p">(</span><span class="n">i30</span><span class="p">)</span><span class="o">=</span><span class="n">lgth</span><span class="w">                                       </span><span class="c">! initially assume no more tokens</span>
+<span class="w">            </span><span class="n">iend</span><span class="p">(</span><span class="n">i30</span><span class="p">)</span><span class="o">=</span><span class="n">lgth</span><span class="w">                                        </span><span class="c">! initially assume no more tokens</span>
 <span class="w">            </span><span class="k">do </span><span class="n">i10</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">idlim</span><span class="w">                                        </span><span class="c">! search for next delimiter</span>
 <span class="w">               </span><span class="n">ifound</span><span class="o">=</span><span class="nb">index</span><span class="p">(</span><span class="n">input_line</span><span class="p">(</span><span class="n">ibegin</span><span class="p">(</span><span class="n">i30</span><span class="p">):</span><span class="n">lgth</span><span class="p">),</span><span class="n">dlim</span><span class="p">(</span><span class="n">i10</span><span class="p">:</span><span class="n">i10</span><span class="p">))</span>
 <span class="w">               </span><span class="k">IF</span><span class="p">(</span><span class="n">ifound</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
 <span class="k">                  </span><span class="n">iend</span><span class="p">(</span><span class="n">i30</span><span class="p">)</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">iend</span><span class="p">(</span><span class="n">i30</span><span class="p">),</span><span class="n">ifound</span><span class="o">+</span><span class="n">ibegin</span><span class="p">(</span><span class="n">i30</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
 <span class="w">               </span><span class="k">endif</span>
 <span class="k">            enddo</span>
-<span class="k">            </span><span class="n">icol</span><span class="o">=</span><span class="n">iend</span><span class="p">(</span><span class="n">i30</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="w">                                     </span><span class="c">! next place to look as found end of this token</span>
+<span class="k">            </span><span class="n">icol</span><span class="o">=</span><span class="n">iend</span><span class="p">(</span><span class="n">i30</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="w">                                      </span><span class="c">! next place to look as found end of this token</span>
 <span class="w">            </span><span class="n">inotnull</span><span class="o">=</span><span class="n">inotnull</span><span class="o">+</span><span class="mi">1</span><span class="w">                                   </span><span class="c">! increment count of number of tokens not composed of delimiters</span>
 <span class="w">         </span><span class="k">else</span><span class="w">                                                     </span><span class="c">! character is a delimiter for a null string</span>
-<span class="w">            </span><span class="n">iend</span><span class="p">(</span><span class="n">i30</span><span class="p">)</span><span class="o">=</span><span class="n">icol</span><span class="o">-</span><span class="mi">1</span><span class="w">                                     </span><span class="c">! record assumed end of string. Will be less than beginning</span>
+<span class="w">            </span><span class="n">iend</span><span class="p">(</span><span class="n">i30</span><span class="p">)</span><span class="o">=</span><span class="n">icol</span><span class="o">-</span><span class="mi">1</span><span class="w">                                      </span><span class="c">! record assumed end of string. Will be less than beginning</span>
 <span class="w">            </span><span class="n">icol</span><span class="o">=</span><span class="n">icol</span><span class="o">+</span><span class="mi">1</span><span class="w">                                           </span><span class="c">! advance pointer into input string</span>
 <span class="w">         </span><span class="k">endif</span>
 <span class="k">         </span><span class="n">imax</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">imax</span><span class="p">,</span><span class="n">iend</span><span class="p">(</span><span class="n">i30</span><span class="p">)</span><span class="o">-</span><span class="n">ibegin</span><span class="p">(</span><span class="n">i30</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
 <span class="w">         </span><span class="n">icount</span><span class="o">=</span><span class="n">i30</span><span class="w">                                               </span><span class="c">! increment count of number of tokens found</span>
-<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="n">icol</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">lgth</span><span class="p">)</span><span class="k">then</span><span class="w">                                     </span><span class="c">! no text left</span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="n">icol</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">lgth</span><span class="p">)</span><span class="k">then</span><span class="w">                                      </span><span class="c">! no text left</span>
 <span class="w">            </span><span class="k">exit </span><span class="n">INFINITE</span>
 <span class="w">         </span><span class="k">endif</span>
 <span class="k">      enddo </span><span class="n">INFINITE</span>
@@ -514,14 +514,14 @@ SIZE: 20
           <div class="col">
             <p>
               M_strings
- was developed by John S. Urban<br>              &copy; 2024 
+ was developed by John S. Urban<br>              &copy; 2025 
 </p>
           </div>
           <div class="col">
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2024-11-13 05:46 +0000             </p>
+ on 2025-01-11 01:53 +0000             </p>
           </div>
         </div>
         <br>
