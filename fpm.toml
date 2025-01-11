@@ -35,6 +35,24 @@ homepage = "https://github.com/urbanjost/M_strings.git"
 [install]
    library=true
 
+[[executable]]
+   name = "b64"
+   source-dir = "app"
+   main = "b64.f90"
+[[executable]]
+   name = "shake_strings"
+   source-dir = "app"
+   main = "main.f90"
+[executable.dependencies]
+[executable.dependencies.M_io]
+   git = "https://github.com/urbanjost/M_io.git" 
+   #namespace = "GPF" 
+   #path = "GLINKS/M_io" 
+[executable.dependencies.M_CLI2]
+   git = "https://github.com/urbanjost/M_CLI2.git" 
+   #namespace = "GPF" 
+   #path = "GLINKS/M_CLI2" 
+
 [[test]]
    name="test_suite"
    source-dir="test"

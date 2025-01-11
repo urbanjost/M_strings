@@ -31,19 +31,15 @@ subroutine test_suite_m_strings()
 !  unit_test_level=1
    call test_adjustc()
    call test_aton()
-   call test_base()
-   call test_base2()
    call test_bundle()
    call test_c2s()
    call test_change()
    call test_chomp()
    call test_clip()
-   call test_codebase()
    call test_compact()
    call test_cpad()
    call test_crop()
    call test_dble()
-   call test_decodebase()
    call test_delim()
    call test_describe()
    call test_dilate()
@@ -96,6 +92,8 @@ subroutine test_suite_m_strings()
    call test_rotate13()
    call test_percent_encode()
    call test_percent_decode()
+   call test_encode_base64()
+   call test_decode_base64()
    call test_rpad()
    call test_s2c()
    call test_s2v()
@@ -117,10 +115,15 @@ subroutine test_suite_m_strings()
    call test_unquote()
    call test_upper()
    call test_upper_quoted()
+   call test_lower_quoted()
    call test_v2s()
    call test_value_to_string()
    call test_visible()
    call test_zpad()
+   call test_base()
+   call test_base2()
+   call test_codebase()
+   call test_decodebase()
 end subroutine test_suite_m_strings
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_glob()
@@ -1068,6 +1071,84 @@ subroutine test_transliterate
    call unit_test('transliterate',transliterate('AbCDefgHiJklmnoPQRStUvwxyZ',uc,lc) == lc(1:26),msg='transliterate to lowercase')
    call unit_test_end('transliterate')
 end subroutine test_transliterate
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_encode_base64()
+character(len=1),allocatable :: s(:) 
+character(len=1),allocatable :: e(:) 
+character(len=1),allocatable :: r(:) 
+integer                      :: i 
+integer                      :: ibytes
+   call unit_test_start('encode_base64','[ENCODE] apply base64 encoding (as defined in RFC-4648) to an array of bytes')
+!   s='[this is a string]'
+!   e='W3RoaXMgaXMgYSBzdHJpbmdd'
+   ! add //'' to change function call to expression to avoid gfortran bug
+!   call unit_test('encode_base64',encode_base64(s) == e,  s,'==>',encode_base64(s)//'')
+
+   s=[(achar(i),i=0,255)]
+   e=switch('AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4&
+            &OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3Bx&
+            &cnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmq&
+            &q6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj&
+            &5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+/w==')
+   
+   ibytes=size(encode_base64(s))
+   call unit_test('encode_base64',ibytes == 349,'entire ASCII256 set','expected',349,'bytes; got',ibytes)
+   if(ibytes.eq.349)then
+      r=encode_base64(s,width=0)
+      call unit_test('encode_base64',all(r == e),'entire ASCII256 set')
+   endif
+
+   call unit_test_end('encode_base64',msg='')
+end subroutine test_encode_base64
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_decode_base64()
+character(len=1),allocatable :: s(:) 
+character(len=1),allocatable :: e(:) 
+character(len=1),allocatable :: r(:) 
+integer                      :: i 
+integer                      :: ibytes 
+character(len=1),allocatable :: chars(:) 
+character(len=1),allocatable :: encoded(:) 
+character(len=1),allocatable :: decoded(:) 
+real,allocatable             :: x(:) 
+integer                      :: ilen 
+   call unit_test_start('decode_base64','[ENCODE] apply base64 encoding (as defined in RFC-4648) to an array of bytes')
+   s=switch('AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4&
+            &OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3Bx&
+            &cnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmq&
+            &q6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj&
+            &5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+/w==')
+   e=[(achar(i),i=0,255)]
+   r=decode_base64(s)
+   ibytes=size(r)
+   call unit_test('decode_base64',ibytes == 256,'entire ASCII256 set','expected',256,'bytes; got',ibytes)
+   if(ibytes.eq.256)then
+      call unit_test('decode_base64',all(r == e),'entire ASCII256 set','encode ->decode failed')
+   endif
+
+   ! various lengths and random characters
+   do ilen=1,4000
+      if(allocated(chars))deallocate(chars)
+      allocate(chars(ilen))
+      if(allocated(x))deallocate(x)
+      allocate(x(ilen))
+      call random_number(x)
+      chars=achar(int(x*255))
+      encoded=encode_base64(chars)
+      decoded=decode_base64(encoded)
+      ibytes=size(decoded)
+      if(ibytes.ne.ilen)then
+         if(any(decoded.ne.chars))then
+            call unit_test('decode_base64',ilen == ibytes,'entire ASCII256 set','expected',ilen,'bytes; got',ibytes)
+            write(*,'(*(a))')'input:  ',chars
+            write(*,'(*(a))')'encoded:',encoded
+            write(*,'(*(a))')'decoded:',decoded
+         endif
+      endif
+   enddo
+
+   call unit_test_end('decode_base64',msg='')
+end subroutine test_decode_base64
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_percent_encode()
 character(len=:),allocatable  :: s
@@ -2257,6 +2338,21 @@ subroutine test_split2020()
    call unit_test_start('split2020','[TOKENS] parse a string into tokens using proposed f2023 method')
    call unit_test_end('split2020')
 end subroutine test_split2020
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_lower_quoted()
+character(len=:),allocatable  :: s
+   call unit_test_start('lower_quoted','[CASE] convert string to lowercase skipping strings quoted per Fortran syntax rules')
+   s=' ABCDEFG abcdefg "Double-Quoted" ''Single-Quoted'' "with "" Quote" everything else'
+   call unit_test('lower_quoted',&
+   & lower_quoted(s).eq.' abcdefg abcdefg "Double-Quoted" ''Single-Quoted'' "with "" Quote" everything else',&
+   &'complex string')
+   if(unit_test_level.gt.0)then
+      call unit_test_msg('lower_quoted','input is  ['//s//']')
+      call unit_test_msg('lower_quoted','result is ['//lower_quoted(s)//']')
+   endif
+   call unit_test('lower_quoted',all(lower_quoted(["A'B'C",'D"E"F',"GHIJK"]).eq.["a'B'c",'d"E"f',"ghijk"]),'elemental test')
+   call unit_test_end('lower_quoted')
+end subroutine test_lower_quoted
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_upper_quoted()
 character(len=:),allocatable  :: s

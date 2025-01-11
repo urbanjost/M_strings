@@ -25,7 +25,7 @@ public entities:
    use M_strings, only : [split2020](https://urbanjost.github.io/M_strings/split2020.3m_strings), [find_field](https://urbanjost.github.io/M_strings/find_field.3m_strings)             
    use M_strings, only : [substitute](https://urbanjost.github.io/M_strings/substitute.3m_strings), [change](https://urbanjost.github.io/M_strings/change.3m_strings), [modif](https://urbanjost.github.io/M_strings/modif.3m_strings), [transliterate](https://urbanjost.github.io/M_strings/transliterate.3m_strings), [reverse](https://urbanjost.github.io/M_strings/reverse.3m_strings), [squeeze](https://urbanjost.github.io/M_strings/squeeze.3m_strings)             
    use M_strings, only : [replace](https://urbanjost.github.io/M_strings/replace.3m_strings), [join](https://urbanjost.github.io/M_strings/join.3m_strings)             
-   use M_strings, only : [upper](https://urbanjost.github.io/M_strings/upper.3m_strings), [lower](https://urbanjost.github.io/M_strings/lower.3m_strings), [upper_quoted](https://urbanjost.github.io/M_strings/upper_quoted.3m_strings)             
+   use M_strings, only : [upper](https://urbanjost.github.io/M_strings/upper.3m_strings), [lower](https://urbanjost.github.io/M_strings/lower.3m_strings), [upper_quoted](https://urbanjost.github.io/M_strings/upper_quoted.3m_strings), [lower_quoted](https://urbanjost.github.io/M_strings/lower_quoted.3m_strings)             
    use M_strings, only : [rotate13](https://urbanjost.github.io/M_strings/rotate13.3m_strings), [percent_encode](https://urbanjost.github.io/M_strings/percent_encode.3m_strings)             
    use M_strings, only : [adjustc](https://urbanjost.github.io/M_strings/adjustc.3m_strings), [compact](https://urbanjost.github.io/M_strings/compact.3m_strings), [nospace](https://urbanjost.github.io/M_strings/nospace.3m_strings), [indent](https://urbanjost.github.io/M_strings/indent.3m_strings)             
    use M_strings, only : [crop](https://urbanjost.github.io/M_strings/crop.3m_strings), [clip](https://urbanjost.github.io/M_strings/clip.3m_strings), [unquote](https://urbanjost.github.io/M_strings/unquote.3m_strings), [quote](https://urbanjost.github.io/M_strings/quote.3m_strings), [matching_delimiter](https://urbanjost.github.io/M_strings/matching_delimiter.3m_strings)             
@@ -47,9 +47,8 @@ public entities:
    use M_strings, only : [describe](https://urbanjost.github.io/M_strings/describe.3m_strings)             
    use M_strings, only : [edit_distance](https://urbanjost.github.io/M_strings/edit_distance.3m_strings)             
    use M_strings, only : [cc](https://urbanjost.github.io/M_strings/cc.3m_strings)             
-   use M_strings, only : 
-   [int](https://urbanjost.github.io/M_strings/int.3m_strings), [dble](https://urbanjost.github.io/M_strings/dble.3m_strings), [nint](https://urbanjost.github.io/M_strings/nint.3m_strings)             
-   use M_strings, only : [atoi](https://urbanjost.github.io/M_strings/atoi.3m_strings), [atol](https://urbanjost.github.io/M_strings/atol.3m_strings), [dble](https://urbanjost.github.io/M_strings/ato.3m_strings)
+   use M_strings, only : [int](https://urbanjost.github.io/M_strings/int.3m_strings), [real](https://urbanjost.github.io/M_strings/real.3m_strings), [dble](https://urbanjost.github.io/M_strings/dble.3m_strings), [nint](https://urbanjost.github.io/M_strings/nint.3m_strings)             
+   use M_strings, only : [atoi](https://urbanjost.github.io/M_strings/atoi.3m_strings), [atol](https://urbanjost.github.io/M_strings/atol.3m_strings), [ato](https://urbanjost.github.io/M_strings/ato.3m_strings)
 
 ## Intrinsics
 
