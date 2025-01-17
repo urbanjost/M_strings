@@ -172,9 +172,6 @@
 !!                         from string
 !!       s2vs              function returns a DOUBLEPRECISION array of numbers
 !!                         from a string
-!!       s2vs              function returns a DOUBLEPRECISION array of numbers
-!!                         from a string
-!!       atoi              function returns INTEGER(kind=int32)  from a string
 !!       atol              function returns INTEGER(kind=int64)  from a string
 !!       aton              changes string to numeric value
 !!
@@ -12526,36 +12523,56 @@ end function longest_common_substring
 !!    !
 !!       write(*,'(*(a))')'decode result:',nl, decode_base64(textout)
 !!    !
+!!    ! one way to encode non-byte data
+!!       call other()
+!!    contains
+!!    subroutine other()
+!!    real                         :: arr1(100)
+!!    character(len=1),allocatable :: in(:)
+!!    character(len=1),allocatable :: out(:)
+!!    real,allocatable             :: arr2(:)
+!!       ! fill a real array with some values
+!!       arr1=[(sqrt(real(i)),i=1,size(arr1))]
+!!       ! use TRANSFER() to convert data to bytes
+!!       in=transfer(source=arr1,mold=['+'])
+!!       ! encode the bytes
+!!       out=encode_base64(in)
+!!       ! decode the bytes
+!!       out=decode_base64(out)
+!!       ! store the bytes back into arr1
+!!       arr2=transfer(source=out,mold=[0.0])
+!!       write(*,'(*(g0,1x))') 'are arr1 and arr2 the same?',all(arr1.eq.arr2)
+!!    end subroutine other
 !!    end program demo_encode_base64
 !!
-!!  Results:
+!! Results:
 !!
-!!     > input:
-!!     > This is some sample data
-!!     > To encode. Should make it long
-!!     > enough to generate multiple lines
-!!     > of output so can check line wrap
-!!     > functionality as well.
-!!     >
-!!     > result:
-!!     > VGhpcyBpcyBzb21lIHNhbXBsZSBkYXRhClRvIGVuY29kZS4gU2
-!!     > hvdWxkIG1ha2UgaXQgbG9uZwplbm91Z2ggdG8gZ2VuZXJhdGUg
-!!     > bXVsdGlwbGUgbGluZXMKb2Ygb3V0cHV0IHNvIGNhbiBjaGVjay
-!!     > BsaW5lIHdyYXAKZnVuY3Rpb25hbGl0eSBhcyB3ZWxsLgo=
-!!     >
-!!     > decode result:
-!!     > This is some sample data
-!!     > To encode. Should make it long
-!!     > enough to generate multiple lines
-!!     > of output so can check line wrap
-!!     > functionality as well.
-!!     >
+!!  > input:
+!!  > This is some sample data
+!!  > To encode. Should make it long
+!!  > enough to generate multiple lines
+!!  > of output so can check line wrap
+!!  > functionality as well.
+!!  >
+!!  > result:
+!!  > VGhpcyBpcyBzb21lIHNhbXBsZSBkYXRhClRvIGVuY29kZS4gU2
+!!  > hvdWxkIG1ha2UgaXQgbG9uZwplbm91Z2ggdG8gZ2VuZXJhdGUg
+!!  > bXVsdGlwbGUgbGluZXMKb2Ygb3V0cHV0IHNvIGNhbiBjaGVjay
+!!  > BsaW5lIHdyYXAKZnVuY3Rpb25hbGl0eSBhcyB3ZWxsLgo=
+!!  >
+!!  > decode result:
+!!  > This is some sample data
+!!  > To encode. Should make it long
+!!  > enough to generate multiple lines
+!!  > of output so can check line wrap
+!!  > functionality as well.
+!!  >
+!!  > are arr1 and arr2 the same? T
 !!
 !!##SEE ALSO
 !!     decode_base64(3), base64(1), uuencode(1), uudecode(1)
 function encode_base64(data,width) result(out)
 ! encode data to base64 encryption as defined by RFC-4648
-use,intrinsic :: iso_fortran_env, only : int8, int32
 character(len=1),intent(in)  :: data(:)
 integer,intent(in),optional  :: width
 character(len=1),allocatable :: out(:)  ! array to hold encoded data in memory
@@ -12586,7 +12603,7 @@ integer                      :: outsize
    do i=1,sz,3
          if(i+3<=sz)then                  ! if not last
            chunk=three2four(data(i:i+2))
-         elseif(modulo(sz,3).eq.0)then    ! was an even multiple of three
+         elseif(modulo(sz,3).eq.0)then    ! last was an even multiple of three
            chunk=three2four(data(i:i+2))
          else                             ! end of data but remainder needs padded
            chunk=three2four([data(i:sz),[(char(0),j=1,3-(sz-i+1))]])
@@ -12633,6 +12650,8 @@ end function encode_base64
 !!    RFC 4648.
 !!
 !!##OPTIONS
+!!
+!!    TEXT            Data to decode
 !!
 !!    IGNORE_GARBAGE  when decoding, ignore all characters not in the formal
 !!                    base64 alphabet. This option will attempt to recover

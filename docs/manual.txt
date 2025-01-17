@@ -148,7 +148,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      crop(3m_strings)
+			       January 16, 2025 	      crop(3m_strings)
 dble(3m_strings)					      dble(3m_strings)
 
 NAME
@@ -199,7 +199,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      dble(3m_strings)
+			       January 16, 2025 	      dble(3m_strings)
 decodebase(3m_strings)					decodebase(3m_strings)
 
 NAME
@@ -286,7 +286,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	decodebase(3m_strings)
+			       January 16, 2025 	decodebase(3m_strings)
 decode_base64(3m_strings)			     decode_base64(3m_strings)
 
 NAME
@@ -305,6 +305,9 @@ DESCRIPTION
   4648.
 
 OPTIONS
+  TEXT
+    Data to decode
+
   IGNORE_GARBAGE
     when decoding, ignore all characters not in the formal base64 alphabet.
     This option will attempt to recover from any other non-alphabet bytes in
@@ -368,7 +371,7 @@ EXAMPLE
 SEE ALSO
   encode_base64(3), base64(1), uuencode(1), uudecode(1)
 
-			       January 10, 2025      decode_base64(3m_strings)
+			       January 16, 2025      decode_base64(3m_strings)
 adjustc(3m_strings)					   adjustc(3m_strings)
 
 NAME
@@ -429,7 +432,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   adjustc(3m_strings)
+			       January 16, 2025 	   adjustc(3m_strings)
 atoi(3m_strings)					      atoi(3m_strings)
 
 NAME
@@ -495,7 +498,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      atoi(3m_strings)
+			       January 16, 2025 	      atoi(3m_strings)
 atol(3m_strings)					      atol(3m_strings)
 
 NAME
@@ -561,7 +564,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      atol(3m_strings)
+			       January 16, 2025 	      atol(3m_strings)
 aton(3m_strings)					      aton(3m_strings)
 
 NAME
@@ -632,7 +635,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      aton(3m_strings)
+			       January 16, 2025 	      aton(3m_strings)
 dilate(3m_strings)					    dilate(3m_strings)
 
 NAME
@@ -689,7 +692,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	    dilate(3m_strings)
+			       January 16, 2025 	    dilate(3m_strings)
 edit_distance(3m_strings)			     edit_distance(3m_strings)
 
 NAME
@@ -728,7 +731,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025      edit_distance(3m_strings)
+			       January 16, 2025      edit_distance(3m_strings)
 encode_base64(3m_strings)			     encode_base64(3m_strings)
 
 NAME
@@ -784,35 +787,56 @@ EXAMPLE
      !
 	write(*,'(*(a))')'decode result:',nl, decode_base64(textout)
      !
+     ! one way to encode non-byte data
+	call other()
+     contains
+     subroutine other()
+     real			  :: arr1(100)
+     character(len=1),allocatable :: in(:)
+     character(len=1),allocatable :: out(:)
+     real,allocatable		  :: arr2(:)
+	! fill a real array with some values
+	arr1=[(sqrt(real(i)),i=1,size(arr1))]
+	! use TRANSFER() to convert data to bytes
+	in=transfer(source=arr1,mold=['+'])
+	! encode the bytes
+	out=encode_base64(in)
+	! decode the bytes
+	out=decode_base64(out)
+	! store the bytes back into arr1
+	arr2=transfer(source=out,mold=[0.0])
+	write(*,'(*(g0,1x))') 'are arr1 and arr2 the same?',all(arr1.eq.arr2)
+     end subroutine other
      end program demo_encode_base64
 
   Results:
 
-      > input:
-      > This is some sample data
-      > To encode. Should make it long
-      > enough to generate multiple lines
-      > of output so can check line wrap
-      > functionality as well.
-      >
-      > result:
-      > VGhpcyBpcyBzb21lIHNhbXBsZSBkYXRhClRvIGVuY29kZS4gU2
-      > hvdWxkIG1ha2UgaXQgbG9uZwplbm91Z2ggdG8gZ2VuZXJhdGUg
-      > bXVsdGlwbGUgbGluZXMKb2Ygb3V0cHV0IHNvIGNhbiBjaGVjay
-      > BsaW5lIHdyYXAKZnVuY3Rpb25hbGl0eSBhcyB3ZWxsLgo=
-      >
-      > decode result:
-      > This is some sample data
-      > To encode. Should make it long
-      > enough to generate multiple lines
-      > of output so can check line wrap
-      > functionality as well.
-      >
+   > input:
+   > This is some sample data
+   > To encode. Should make it long
+   > enough to generate multiple lines
+   > of output so can check line wrap
+   > functionality as well.
+   >
+   > result:
+   > VGhpcyBpcyBzb21lIHNhbXBsZSBkYXRhClRvIGVuY29kZS4gU2
+   > hvdWxkIG1ha2UgaXQgbG9uZwplbm91Z2ggdG8gZ2VuZXJhdGUg
+   > bXVsdGlwbGUgbGluZXMKb2Ygb3V0cHV0IHNvIGNhbiBjaGVjay
+   > BsaW5lIHdyYXAKZnVuY3Rpb25hbGl0eSBhcyB3ZWxsLgo=
+   >
+   > decode result:
+   > This is some sample data
+   > To encode. Should make it long
+   > enough to generate multiple lines
+   > of output so can check line wrap
+   > functionality as well.
+   >
+   > are arr1 and arr2 the same? T
 
 SEE ALSO
   decode_base64(3), base64(1), uuencode(1), uudecode(1)
 
-			       January 10, 2025      encode_base64(3m_strings)
+			       January 16, 2025      encode_base64(3m_strings)
 ends_with(3m_strings)					 ends_with(3m_strings)
 
 NAME
@@ -903,7 +927,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	 ends_with(3m_strings)
+			       January 16, 2025 	 ends_with(3m_strings)
 lpad(3m_strings)					      lpad(3m_strings)
 
 NAME
@@ -965,7 +989,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      lpad(3m_strings)
+			       January 16, 2025 	      lpad(3m_strings)
 matching_delimiter(3m_strings)			matching_delimiter(3m_strings)
 
 NAME
@@ -1026,7 +1050,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 matching_delimiter(3m_strings)
+			       January 16, 2025 matching_delimiter(3m_strings)
 merge_str(3m_strings)					 merge_str(3m_strings)
 
 NAME
@@ -1095,7 +1119,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	 merge_str(3m_strings)
+			       January 16, 2025 	 merge_str(3m_strings)
 modif(3m_strings)					     modif(3m_strings)
 
 NAME
@@ -1181,7 +1205,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	     modif(3m_strings)
+			       January 16, 2025 	     modif(3m_strings)
 M_strings(3m_strings)					 M_strings(3m_strings)
 
 NAME
@@ -1434,12 +1458,6 @@ SYNOPSIS
   s2vs
     function returns a DOUBLEPRECISION array of numbers from a string
 
-  s2vs
-    function returns a DOUBLEPRECISION array of numbers from a string
-
-  atoi
-    function returns INTEGER(kind=int32)  from a string
-
   atol
     function returns INTEGER(kind=int64)  from a string
 
@@ -1643,7 +1661,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	 M_strings(3m_strings)
+			       January 16, 2025 	 M_strings(3m_strings)
 nint(3m_strings)					      nint(3m_strings)
 
 NAME
@@ -1695,7 +1713,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      nint(3m_strings)
+			       January 16, 2025 	      nint(3m_strings)
 nospace(3m_strings)					   nospace(3m_strings)
 
 NAME
@@ -1742,7 +1760,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   nospace(3m_strings)
+			       January 16, 2025 	   nospace(3m_strings)
 noesc(3m_strings)					     noesc(3m_strings)
 
 NAME
@@ -1849,7 +1867,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	     noesc(3m_strings)
+			       January 16, 2025 	     noesc(3m_strings)
 notabs(3m_strings)					    notabs(3m_strings)
 
 NAME
@@ -1938,7 +1956,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	    notabs(3m_strings)
+			       January 16, 2025 	    notabs(3m_strings)
 pad(3m_strings) 					       pad(3m_strings)
 
 NAME
@@ -2055,7 +2073,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	       pad(3m_strings)
+			       January 16, 2025 	       pad(3m_strings)
 paragraph(3m_strings)					 paragraph(3m_strings)
 
 NAME
@@ -2138,7 +2156,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	 paragraph(3m_strings)
+			       January 16, 2025 	 paragraph(3m_strings)
 percent_encode(3m_strings)			    percent_encode(3m_strings)
 
 NAME
@@ -2215,7 +2233,7 @@ EXAMPLES
 AUTHOR
   John S. Urban
 
-			       January 10, 2025     percent_encode(3m_strings)
+			       January 16, 2025     percent_encode(3m_strings)
 base2(3m_strings)					     base2(3m_strings)
 
 NAME
@@ -2269,7 +2287,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	     base2(3m_strings)
+			       January 16, 2025 	     base2(3m_strings)
 base(3m_strings)					      base(3m_strings)
 
 NAME
@@ -2347,7 +2365,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      base(3m_strings)
+			       January 16, 2025 	      base(3m_strings)
 bundle(3m_strings)					    bundle(3m_strings)
 
 NAME
@@ -2415,7 +2433,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	    bundle(3m_strings)
+			       January 16, 2025 	    bundle(3m_strings)
 quote(3m_strings)					     quote(3m_strings)
 
 NAME
@@ -2501,7 +2519,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	     quote(3m_strings)
+			       January 16, 2025 	     quote(3m_strings)
 real(3m_strings)					      real(3m_strings)
 
 NAME
@@ -2551,7 +2569,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      real(3m_strings)
+			       January 16, 2025 	      real(3m_strings)
 replace(3m_strings)					   replace(3m_strings)
 
 NAME
@@ -2670,7 +2688,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   replace(3m_strings)
+			       January 16, 2025 	   replace(3m_strings)
 reverse(3m_strings)					   reverse(3m_strings)
 
 NAME
@@ -2711,7 +2729,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   reverse(3m_strings)
+			       January 16, 2025 	   reverse(3m_strings)
 rotate13(3m_strings)					  rotate13(3m_strings)
 
 NAME
@@ -2803,7 +2821,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	  rotate13(3m_strings)
+			       January 16, 2025 	  rotate13(3m_strings)
 rpad(3m_strings)					      rpad(3m_strings)
 
 NAME
@@ -2865,7 +2883,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      rpad(3m_strings)
+			       January 16, 2025 	      rpad(3m_strings)
 s2c(3m_strings) 					       s2c(3m_strings)
 
 NAME
@@ -2923,7 +2941,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	       s2c(3m_strings)
+			       January 16, 2025 	       s2c(3m_strings)
 s2vs(3m_strings)					      s2vs(3m_strings)
 
 NAME
@@ -2998,7 +3016,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      s2vs(3m_strings)
+			       January 16, 2025 	      s2vs(3m_strings)
 c2s(3m_strings) 					       c2s(3m_strings)
 
 NAME
@@ -3029,7 +3047,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	       c2s(3m_strings)
+			       January 16, 2025 	       c2s(3m_strings)
 glob(3m_strings)					      glob(3m_strings)
 
 NAME
@@ -3304,7 +3322,7 @@ REFERENCES
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      glob(3m_strings)
+			       January 16, 2025 	      glob(3m_strings)
 sep(3m_strings) 					       sep(3m_strings)
 
 NAME
@@ -3398,7 +3416,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	       sep(3m_strings)
+			       January 16, 2025 	       sep(3m_strings)
 squeeze(3m_strings)					   squeeze(3m_strings)
 
 NAME
@@ -3471,7 +3489,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   squeeze(3m_strings)
+			       January 16, 2025 	   squeeze(3m_strings)
 slice(3m_strings)					     slice(3m_strings)
 
 NAME
@@ -3611,7 +3629,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	     slice(3m_strings)
+			       January 16, 2025 	     slice(3m_strings)
 str(3m_strings) 					       str(3m_strings)
 
 NAME
@@ -3720,7 +3738,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	       str(3m_strings)
+			       January 16, 2025 	       str(3m_strings)
 stretch(3m_strings)					   stretch(3m_strings)
 
 NAME
@@ -3816,7 +3834,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   stretch(3m_strings)
+			       January 16, 2025 	   stretch(3m_strings)
 string_to_value(3m_strings)			   string_to_value(3m_strings)
 
 NAME
@@ -3874,7 +3892,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025    string_to_value(3m_strings)
+			       January 16, 2025    string_to_value(3m_strings)
 string_to_values(3m_strings)			  string_to_values(3m_strings)
 
 NAME
@@ -3962,7 +3980,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025   string_to_values(3m_strings)
+			       January 16, 2025   string_to_values(3m_strings)
 change(3m_strings)					    change(3m_strings)
 
 NAME
@@ -4040,7 +4058,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	    change(3m_strings)
+			       January 16, 2025 	    change(3m_strings)
 chomp(3m_strings)					     chomp(3m_strings)
 
 NAME
@@ -4127,7 +4145,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	     chomp(3m_strings)
+			       January 16, 2025 	     chomp(3m_strings)
 clip(3m_strings)					      clip(3m_strings)
 
 NAME
@@ -4187,7 +4205,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      clip(3m_strings)
+			       January 16, 2025 	      clip(3m_strings)
 islower(3m_strings)					   islower(3m_strings)
 
 NAME
@@ -4238,7 +4256,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   islower(3m_strings)
+			       January 16, 2025 	   islower(3m_strings)
 isprint(3m_strings)					   isprint(3m_strings)
 
 NAME
@@ -4286,7 +4304,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   isprint(3m_strings)
+			       January 16, 2025 	   isprint(3m_strings)
 isnumber(3m_strings)					  isnumber(3m_strings)
 
 NAME
@@ -4421,7 +4439,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	  isnumber(3m_strings)
+			       January 16, 2025 	  isnumber(3m_strings)
 codebase(3m_strings)					  codebase(3m_strings)
 
 NAME
@@ -4488,7 +4506,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	  codebase(3m_strings)
+			       January 16, 2025 	  codebase(3m_strings)
 unquote(3m_strings)					   unquote(3m_strings)
 
 NAME
@@ -4569,7 +4587,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   unquote(3m_strings)
+			       January 16, 2025 	   unquote(3m_strings)
 upper(3m_strings)					     upper(3m_strings)
 
 NAME
@@ -4642,7 +4660,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	     upper(3m_strings)
+			       January 16, 2025 	     upper(3m_strings)
 upper_quoted(3m_strings)			      upper_quoted(3m_strings)
 
 NAME
@@ -4705,7 +4723,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025       upper_quoted(3m_strings)
+			       January 16, 2025       upper_quoted(3m_strings)
 v2s(3m_strings) 					       v2s(3m_strings)
 
 NAME
@@ -4763,7 +4781,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	       v2s(3m_strings)
+			       January 16, 2025 	       v2s(3m_strings)
 value_to_string(3m_strings)			   value_to_string(3m_strings)
 
 NAME
@@ -4857,7 +4875,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025    value_to_string(3m_strings)
+			       January 16, 2025    value_to_string(3m_strings)
 visible(3m_strings)					   visible(3m_strings)
 
 NAME
@@ -4895,7 +4913,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   visible(3m_strings)
+			       January 16, 2025 	   visible(3m_strings)
 zpad(3m_strings)					      zpad(3m_strings)
 
 NAME
@@ -5005,7 +5023,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      zpad(3m_strings)
+			       January 16, 2025 	      zpad(3m_strings)
 compact(3m_strings)					   compact(3m_strings)
 
 NAME
@@ -5071,7 +5089,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   compact(3m_strings)
+			       January 16, 2025 	   compact(3m_strings)
 cpad(3m_strings)					      cpad(3m_strings)
 
 NAME
@@ -5125,7 +5143,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      cpad(3m_strings)
+			       January 16, 2025 	      cpad(3m_strings)
 describe(3m_strings)					  describe(3m_strings)
 
 NAME
@@ -5290,7 +5308,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	  describe(3m_strings)
+			       January 16, 2025 	  describe(3m_strings)
 delim(3m_strings)					     delim(3m_strings)
 
 NAME
@@ -5452,7 +5470,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	     delim(3m_strings)
+			       January 16, 2025 	     delim(3m_strings)
 expand(3m_strings)					    expand(3m_strings)
 
 NAME
@@ -5523,7 +5541,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	    expand(3m_strings)
+			       January 16, 2025 	    expand(3m_strings)
 fmt(3m_strings) 					       fmt(3m_strings)
 
 NAME
@@ -5587,7 +5605,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	       fmt(3m_strings)
+			       January 16, 2025 	       fmt(3m_strings)
 fortran_name(3m_strings)			      fortran_name(3m_strings)
 
 NAME
@@ -5652,7 +5670,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025       fortran_name(3m_strings)
+			       January 16, 2025       fortran_name(3m_strings)
 getvals(3m_strings)					   getvals(3m_strings)
 
 NAME
@@ -5761,7 +5779,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   getvals(3m_strings)
+			       January 16, 2025 	   getvals(3m_strings)
 indent(3m_strings)					    indent(3m_strings)
 
 NAME
@@ -5806,7 +5824,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	    indent(3m_strings)
+			       January 16, 2025 	    indent(3m_strings)
 int(3m_strings) 					       int(3m_strings)
 
 NAME
@@ -5858,7 +5876,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	       int(3m_strings)
+			       January 16, 2025 	       int(3m_strings)
 isalnum(3m_strings)					   isalnum(3m_strings)
 
 NAME
@@ -5957,7 +5975,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   isalnum(3m_strings)
+			       January 16, 2025 	   isalnum(3m_strings)
 isalpha(3m_strings)					   isalpha(3m_strings)
 
 NAME
@@ -6004,7 +6022,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   isalpha(3m_strings)
+			       January 16, 2025 	   isalpha(3m_strings)
 isascii(3m_strings)					   isascii(3m_strings)
 
 NAME
@@ -6063,7 +6081,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   isascii(3m_strings)
+			       January 16, 2025 	   isascii(3m_strings)
 find_field(3m_strings)					find_field(3m_strings)
 
 NAME
@@ -6202,7 +6220,7 @@ VERSION
 
   Minor editing to conform to inclusion in the string procedure module
 
-			       January 10, 2025 	find_field(3m_strings)
+			       January 16, 2025 	find_field(3m_strings)
 isblank(3m_strings)					   isblank(3m_strings)
 
 NAME
@@ -6252,7 +6270,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   isblank(3m_strings)
+			       January 16, 2025 	   isblank(3m_strings)
 iscntrl(3m_strings)					   iscntrl(3m_strings)
 
 NAME
@@ -6300,7 +6318,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   iscntrl(3m_strings)
+			       January 16, 2025 	   iscntrl(3m_strings)
 isdigit(3m_strings)					   isdigit(3m_strings)
 
 NAME
@@ -6352,7 +6370,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   isdigit(3m_strings)
+			       January 16, 2025 	   isdigit(3m_strings)
 isgraph(3m_strings)					   isgraph(3m_strings)
 
 NAME
@@ -6400,7 +6418,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   isgraph(3m_strings)
+			       January 16, 2025 	   isgraph(3m_strings)
 ispunct(3m_strings)					   ispunct(3m_strings)
 
 NAME
@@ -6451,7 +6469,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   ispunct(3m_strings)
+			       January 16, 2025 	   ispunct(3m_strings)
 isspace(3m_strings)					   isspace(3m_strings)
 
 NAME
@@ -6499,7 +6517,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   isspace(3m_strings)
+			       January 16, 2025 	   isspace(3m_strings)
 isupper(3m_strings)					   isupper(3m_strings)
 
 NAME
@@ -6553,7 +6571,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   isupper(3m_strings)
+			       January 16, 2025 	   isupper(3m_strings)
 isxdigit(3m_strings)					  isxdigit(3m_strings)
 
 NAME
@@ -6599,7 +6617,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	  isxdigit(3m_strings)
+			       January 16, 2025 	  isxdigit(3m_strings)
 join(3m_strings)					      join(3m_strings)
 
 NAME
@@ -6731,7 +6749,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	      join(3m_strings)
+			       January 16, 2025 	      join(3m_strings)
 lenset(3m_strings)					    lenset(3m_strings)
 
 NAME
@@ -6785,7 +6803,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	    lenset(3m_strings)
+			       January 16, 2025 	    lenset(3m_strings)
 len_white(3m_strings)					 len_white(3m_strings)
 
 NAME
@@ -6872,7 +6890,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	 len_white(3m_strings)
+			       January 16, 2025 	 len_white(3m_strings)
 listout(3m_strings)					   listout(3m_strings)
 
 NAME
@@ -6952,7 +6970,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	   listout(3m_strings)
+			       January 16, 2025 	   listout(3m_strings)
 longest_common_substring(3m_strings)	  longest_common_substring(3m_strings)
 
 NAME
@@ -7025,7 +7043,7 @@ EXAMPLES
      comparing "thisisatest" and "thisisatest"
      (PASSED) "thisisatest"; expected "thisisatest"
 
-			       January 10,longest_common_substring(3m_strings)
+			       January 16,longest_common_substring(3m_strings)
 lower(3m_strings)					     lower(3m_strings)
 
 NAME
@@ -7094,7 +7112,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	     lower(3m_strings)
+			       January 16, 2025 	     lower(3m_strings)
 lower_quoted(3m_strings)			      lower_quoted(3m_strings)
 
 NAME
@@ -7157,7 +7175,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025       lower_quoted(3m_strings)
+			       January 16, 2025       lower_quoted(3m_strings)
 strtok(3m_strings)					    strtok(3m_strings)
 
 NAME
@@ -7255,7 +7273,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	    strtok(3m_strings)
+			       January 16, 2025 	    strtok(3m_strings)
 substitute(3m_strings)					substitute(3m_strings)
 
 NAME
@@ -7335,7 +7353,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	substitute(3m_strings)
+			       January 16, 2025 	substitute(3m_strings)
 switch(3m_strings)					    switch(3m_strings)
 
 NAME
@@ -7436,7 +7454,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	    switch(3m_strings)
+			       January 16, 2025 	    switch(3m_strings)
 transliterate(3m_strings)			     transliterate(3m_strings)
 
 NAME
@@ -7517,7 +7535,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025      transliterate(3m_strings)
+			       January 16, 2025      transliterate(3m_strings)
 percent_decode(3m_strings)			    percent_decode(3m_strings)
 
 NAME
@@ -7632,7 +7650,7 @@ AUTHOR
 
   •  Modified to be more aligned with percent_encode(3f), John S. Urban, 2024
 
-			       January 10, 2025     percent_decode(3m_strings)
+			       January 16, 2025     percent_decode(3m_strings)
 s2v(3m_strings) 					       s2v(3m_strings)
 
 NAME
@@ -7751,7 +7769,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	       s2v(3m_strings)
+			       January 16, 2025 	       s2v(3m_strings)
 split2020(3m_strings)					 split2020(3m_strings)
 
 NAME
@@ -7945,7 +7963,7 @@ LICENSE
 VERSION
   version 0.1.0, copyright 2020, Milan Curcic
 
-			       January 10, 2025 	 split2020(3m_strings)
+			       January 16, 2025 	 split2020(3m_strings)
 split(3m_strings)					     split(3m_strings)
 
 NAME
@@ -8090,7 +8108,7 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025 	     split(3m_strings)
+			       January 16, 2025 	     split(3m_strings)
 M_strings__oop(3m_strings__oop) 	       M_strings__oop(3m_strings__oop)
 
 NAME
@@ -8361,4 +8379,4 @@ AUTHOR
 LICENSE
   Public Domain
 
-			       January 10, 2025M_strings__oop(3m_strings__oop)
+			       January 16, 2025M_strings__oop(3m_strings__oop)
