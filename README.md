@@ -22,8 +22,8 @@ that may be consolidated at some point.
 
 <table border="1">
 <tr> <th>grouping</th> <th>page</th> <th>description</th> </tr>
-<tr><td style="background:#d4eec6;">:INTRO::OOPS</td><td><a href="docs/M_strings__oop.3m_strings__oop.html">M_strings__oop</a></td><td> OOP Fortran string module</td></tr>
-<tr><td style="background:#cdefe2;">:INTRO</td><td><a href="docs/M_strings.3m_strings.html">M_strings</a></td><td> Fortran string module</td></tr>
+<tr><td style="background:#d4eec6;">INTRO:OOPS</td><td><a href="docs/M_strings__oop.3m_strings__oop.html">M_strings__oop</a></td><td> OOP Fortran string module</td></tr>
+<tr><td style="background:#cdefe2;">INTRO</td><td><a href="docs/M_strings.3m_strings.html">M_strings</a></td><td> Fortran string module</td></tr>
 <tr><td style="background:#dddaeb;">ARRAY</td><td><a href="docs/bundle.3m_strings.html">bundle</a></td><td> return up to twenty strings of arbitrary length as an array (LICENSE:PD)</td></tr>
 <tr><td style="background:#dddaeb;">ARRAY</td><td><a href="docs/c2s.3m_strings.html">c2s</a></td><td> convert C string pointer to Fortran character string (LICENSE:PD)</td></tr>
 <tr><td style="background:#dddaeb;">ARRAY</td><td><a href="docs/s2c.3m_strings.html">s2c</a></td><td> convert character variable to array of characters with last element set to null (LICENSE:PD)</td></tr>
