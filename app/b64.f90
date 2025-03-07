@@ -2,40 +2,21 @@ program demo_base64
 use  M_io,      only : filebyte
 use  M_strings, only : encode_base64, decode_base64
 use  M_CLI2,    only : set_args, iget, lget, infiles=>unnamed
-! encode data to base64 encryption as defined by RFC-4648 and print to standard output
-! usage: base64 inputfile > outputfile
-! currently stdin and stdout cannot be defined as streams, so stdin should
-! be restricted to ASCII files with a newline terminator at end, and stdout is
-! potentially subject to linelength limits of the platform.
-! reading input into memory could be expensive if the file is large
-use,intrinsic :: iso_fortran_env, only : int8, int32, stderr=>ERROR_UNIT, stdout=>OUTPUT_UNIT
+! @(#) encode data to base64 encryption as defined by RFC-4648 and print to standard output
 implicit none
-integer(kind=int32)          :: i, j, column, sz, pad, iostat
-character(len=1),allocatable :: text(:) ! array to hold file in memory
-character(len=1)             :: chunk(4)
-character(len=1)             :: tri(3)
-character(len=1),allocatable :: trilast(:)
+character(len=1),allocatable :: text(:), help_text(:), version_text(:)
 integer                      :: wrap
-character(len=*),parameter   :: rfc4648_alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-integer,parameter            :: rfc4648_linelength=76
-character(len=1),parameter   :: rfc4648_padding='='
-character(len=:),allocatable :: help_text(:), version_text(:)
-logical                      :: decode
-logical                      :: ignore_garbage
+logical                      :: decode, ignore_garbage
    call setup()
    call set_args('--wrap:w 76 --decode:d F --ignore-garbage:i F',help_text,version_text)
    wrap=iget('wrap')
    ignore_garbage=lget('ignore-garbage')
    decode=lget('decode')
    if(size(infiles).eq.0)infiles=[character(len=1):: '-']
-   ! reading the file into memory can be a problem when the files are large, and this routine currently reads stdin
-   ! until an end-of-file while writing it to a scratch file first, which can be slow and use file space resources
-   ! can change it to process the file in a buffered mannner so reading from stdin is performed more efficiently
-   call filebyte(infiles(1),text) ! allocate character array and copy file into it and pad with two characters at end
+   call filebyte(infiles(1),text) ! allocate character array and copy file into it
    if(.not.allocated(text))then
-      stop '<ERROR>*base64* text not allocated'
+      stop '<ERROR>*b64* text not allocated'
    endif
-   ! non-advancing I/O is not stream I/O so this could hit a line length limit
    select case(decode)
    case(.false.)
            write(*,fmt='(*(a))',advance='no')encode_base64(text,width=wrap)
@@ -44,6 +25,14 @@ logical                      :: ignore_garbage
    end select
 contains
 subroutine setup()
+! notes:
+! currently stdin and stdout cannot be defined as streams, so stdin should
+! be restricted to ASCII files with a newline terminator at end, and stdout is
+! potentially subject to linelength limits of the platform, because non-advancing I/O is not stream I/O
+! reading input into memory could be expensive if the file is large
+! this routine currently reads stdin until an end-of-file while writing it to a scratch file first,
+! which can be slow and use file space resources
+! can change it to process the file in a buffered mannner so reading from stdin is performed more efficiently
 help_text=[ CHARACTER(LEN=128) :: &
 'NAME',&
 '   b64-(1f) - [FUNIX:FILESYSTEM] encode/data specified file to stdout',&
