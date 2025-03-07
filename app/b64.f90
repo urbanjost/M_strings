@@ -4,7 +4,8 @@ use  M_strings, only : encode_base64, decode_base64
 use  M_CLI2,    only : set_args, iget, lget, infiles=>unnamed
 ! @(#) encode data to base64 encryption as defined by RFC-4648 and print to standard output
 implicit none
-character(len=1),allocatable :: text(:), help_text(:), version_text(:)
+character(len=1),allocatable :: text(:)
+character(len=:),allocatable :: help_text(:), version_text(:)
 integer                      :: wrap
 logical                      :: decode, ignore_garbage
    call setup()
@@ -15,7 +16,7 @@ logical                      :: decode, ignore_garbage
    if(size(infiles).eq.0)infiles=[character(len=1):: '-']
    call filebyte(infiles(1),text) ! allocate character array and copy file into it
    if(.not.allocated(text))then
-      stop '<ERROR>*b64* text not allocated'
+      stop '<ERROR>*base64* text not allocated'
    endif
    select case(decode)
    case(.false.)
