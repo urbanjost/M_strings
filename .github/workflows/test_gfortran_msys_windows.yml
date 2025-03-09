@@ -27,7 +27,7 @@ jobs:
     - name: Install fpm
       shell: msys2 {0}
       run: |
-           wget https://raw.githubusercontent.com/urbanjost/index/main/bootstrap/fpm.F90
+           wget https://raw.githubusercontent.com/lockstockandbarrel/mars/main/bootstrap/fpm.F90
            mkdir tmp
            gfortran fpm.F90 -Jtmp -Itmp -static -o fpm
            rm -f tmp/*.mod

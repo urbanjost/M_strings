@@ -536,7 +536,7 @@ end interface
 !-!end interface
 !-----------------------------------------------------------------------------------------------------------------------------------
 
-! ident_5="@(#) M_strings str(3f) convert up to twenty scalar values to a (CSV) string. Alternatively can also handle one-dimensional arrays"
+! ident_5="@(#) M_strings str(3f) convert up to twenty scalar values or arrays to a string with optional CSV mode."
 
 interface str
    module procedure str_scalar, str_one
@@ -653,7 +653,7 @@ CONTAINS
 !!    program demo_glob
 !!    implicit none
 !!    ! This main routine passes a bunch of test strings
-!!    ! into the above code.  In performance comparison mode,
+!!    ! into the above code. In performance comparison mode,
 !!    ! it does that over and over. Otherwise, it does it just
 !!    ! once. Either way, it outputs a passed/failed result.
 !!    !
@@ -977,28 +977,28 @@ end function glob
 !!
 !!##SYNOPSIS
 !!
-!!    pure function ends_with(source_string[,suffix][,ignorecase])
+!! pure function ends_with(string,ending[,ignorecase])
 !!
-!!     character(len=*),intent(in) :: source_string
-!!     character(len=*),intent(in) :: suffix(..)
+!!     character(len=*),intent(in) :: string
+!!     character(len=*),intent(in) :: ending(..)
 !!     logical,intent(in),optional :: ignorecase
 !!     logical                     :: ends_with
 !!
 !!##DESCRIPTION
 !!
 !!    ends_with(3f) tests if a string ends with any specified suffix. Differs
-!!    from using index(3f) in that the input file and multiple suffices
+!!    from using index(3f) in that the input string and multiple suffices
 !!    are trimmed by ends_with(3f),
 !!
 !!##OPTIONS
-!!     SOURCE_STRING  string to search
-!!     SUFFIX         list of separator strings. May be scalar or an array.
-!!                    Trailing spaces in SUFFIX are ignored.
+!!     STRING         string to search
+!!     ENDING         list of separator strings. May be scalar or an array.
+!!                    Trailing spaces in ENDING are ignored.
 !!     IGNORECASE     If .true. case is ignored.
 !!
 !!##RETURNS
 !!     ENDS_WITH      returns .TRUE. if one of the suffix match the end
-!!                    of SOURCE_STRING.
+!!                    of STRING.
 !!
 !!##EXAMPLES
 !!
@@ -5233,7 +5233,7 @@ end subroutine notabs
 !!     character(len=:),allocatable  :: OUTSTR
 !!
 !!##DESCRIPTION
-!!    dilate(3) converts tabs in INSTR to spaces in OUTSTR.  It assumes a
+!!    dilate(3) converts tabs in INSTR to spaces in OUTSTR. It assumes a
 !!    tab is set every 8 characters. Trailing spaces are removed.
 !!
 !!    In addition, trailing carriage returns and line feeds are removed
@@ -10473,7 +10473,7 @@ end function base
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
 function base2(x) result(str)
-!  return string representing number as a binary number.  Fixed-length string:
+!  return string representing number as a binary number. Fixed-length string:
 integer, intent(in)                        :: x
 integer                                    :: i
 character(len=max(1,bit_size(x)-leadz(x))) :: str
@@ -12873,11 +12873,11 @@ integer(kind=int32) :: val
 !!##LICENSE
 !!    Public Domain
 character(len=*), intent(in) :: string
-character(len=1)            :: c
-integer                     :: i
-integer                     :: j
-integer                     :: ilen
-logical                     :: neg
+character(len=1)             :: c
+integer                      :: i
+integer                      :: j
+integer                      :: ilen
+logical                      :: neg
 
    val = 0
    neg=.false.
@@ -12978,11 +12978,11 @@ integer(kind=int64) :: val
 !!##LICENSE
 !!    Public Domain
 character(len=*), intent(in) :: string
-character(len=1)            :: c
-integer                     :: i
-integer                     :: j
-integer                     :: ilen
-logical                     :: neg
+character(len=1)             :: c
+integer                      :: i
+integer                      :: j
+integer                      :: ilen
+logical                      :: neg
 
    val = 0
    neg=.false.

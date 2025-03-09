@@ -33,7 +33,7 @@ jobs:
            echo $PATH
            pwd
            uname -a
-           wget https://raw.githubusercontent.com/urbanjost/index/main/bootstrap/fpm.F90
+           wget https://raw.githubusercontent.com/lockstockandbarrel/mars/main/bootstrap/fpm.F90
            mkdir -p /home/runner/.local/bin tmp
            ulimit -c unlimited -d unlimited -f unlimited -m unlimited -s unlimited -t unlimited -v unlimited -x unlimited
            gfortran fpm.F90 -Itmp -Jtmp -static -o /home/runner/.local/bin/fpm
