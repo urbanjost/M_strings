@@ -1,16 +1,17 @@
-module M_testsuite_M_chars
+module M_testsuite_M_strings__chars
 use,intrinsic :: iso_fortran_env,only : std_in=>input_unit,std_out=>output_unit,std_err=>error_unit
 use M_framework,  only : unit_test_level,  unit_test_stop, unit_test_msg, chr=>str, &
                        & unit_test_start, unit_test,  unit_test_end,                &
                        & unit_test_mode
 use M_strings
-use M_chars
+use M_strings__chars
 implicit none
-character(len=*),parameter :: g='(*(g0,1x))'
-logical,parameter :: T=.true., F=.false.
-character(len=*),parameter :: lc='abcdefghijklmnopqrstuvwxyz0123456789'
-character(len=*),parameter :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-logical                    :: matched
+character(len=*),parameter   :: g='(*(g0,1x))' 
+logical,parameter            :: T=.true., F=.false. 
+character(len=*),parameter   :: lc='abcdefghijklmnopqrstuvwxyz0123456789' 
+character(len=*),parameter   :: uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' 
+character(len=1),allocatable :: chs(:)
+logical                      :: matched 
 contains
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_suite_m_strings()
@@ -28,100 +29,103 @@ subroutine test_suite_m_strings()
 
    unit_test_level=0
 !  unit_test_level=1
-   call test_aton()
-   call test_bundle()
-   call test_c2s()
-   call test_change()
-   call test_chomp()
-   call test_clip()
-   call test_compact()
-   call test_cpad()
-   call test_crop()
-   call test_dble()
-   call test_delim()
-   call test_describe()
-   call test_dilate()
-   call test_edit_distance()
-   call test_ends_with()
-   call test_expand()
-   call test_find_field()
-   call test_fortran_name()
-   call test_getvals()
-   call test_glob()
-   call test_indent()
-   call test_int()
-   call test_isalnum()
-   call test_isalpha()
-   call test_isascii()
-   call test_isblank()
-   call test_iscntrl()
-   call test_isdigit()
-   call test_isgraph()
-   call test_islower()
-   call test_isnumber()
-   call test_isprint()
-   call test_ispunct()
-   call test_isspace()
-   call test_isupper()
-   call test_isxdigit()
-   call test_join()
-   call test_lenset()
-   call test_len_white()
-   call test_listout()
-   call test_longest_common_substring()
-   call test_lower()
-   call test_lpad()
-   call test_matching_delimiter()
-   call test_merge_str()
-   call test_modif()
-   call test_str()
-   call test_fmt()
-   call test_m_strings()
-   call test_nint()
-   call test_noesc()
-   call test_nospace()
-   call test_notabs()
-   call test_pad()
-   call test_paragraph()
-   call test_quote()
-   call test_real()
-   call test_replace()
-   call test_reverse()
-   call test_rotate13()
-   call test_percent_encode()
-   call test_percent_decode()
-   call test_encode_base64()
-   call test_decode_base64()
-   call test_rpad()
-   call test_s2c()
-   call test_s2v()
-   call test_s2vs()
-   call test_sep()
-   call test_setbits()
-   call test_split()
-   call test_split2020()
-   call test_slice()
-   call test_squeeze()
-   call test_stretch()
-   call test_string_to_value()
-   call test_string_to_values()
-   call test_strtok()
-   call test_substitute()
-   call test_switch()
-   call test_transliterate()
-   call test_trimzeros_()
-   call test_unquote()
+
    call test_toupper()
-   call test_upper_quoted()
-   call test_lower_quoted()
-   call test_v2s()
-   call test_value_to_string()
-   call test_visible()
-   call test_zpad()
-   call test_base()
-   call test_base2()
-   call test_codebase()
-   call test_decodebase()
+   call test_tolower()
+
+!   call test_aton()
+!   call test_bundle()
+!   call test_c2s()
+!   call test_change()
+!   call test_chomp()
+!   call test_clip()
+!   call test_compact()
+!   call test_cpad()
+!   call test_crop()
+!   call test_dble()
+!   call test_delim()
+!   call test_describe()
+!   call test_dilate()
+!   call test_edit_distance()
+!   call test_ends_with()
+!   call test_expand()
+!   call test_find_field()
+!   call test_fortran_name()
+!   call test_getvals()
+!   call test_glob()
+!   call test_indent()
+!   call test_int()
+!   call test_isalnum()
+!   call test_isalpha()
+!   call test_isascii()
+!   call test_isblank()
+!   call test_iscntrl()
+!   call test_isdigit()
+!   call test_isgraph()
+!   call test_islower()
+!   call test_isnumber()
+!   call test_isprint()
+!   call test_ispunct()
+!   call test_isspace()
+!   call test_isupper()
+!   call test_isxdigit()
+!   call test_join()
+!   call test_lenset()
+!   call test_len_white()
+!   call test_listout()
+!   call test_longest_common_substring()
+!   call test_lower()
+!   call test_lpad()
+!   call test_matching_delimiter()
+!   call test_merge_str()
+!   call test_modif()
+!   call test_str()
+!   call test_fmt()
+!   call test_m_strings()
+!   call test_nint()
+!   call test_noesc()
+!   call test_nospace()
+!   call test_notabs()
+!   call test_pad()
+!   call test_paragraph()
+!   call test_quote()
+!   call test_real()
+!   call test_replace()
+!   call test_reverse()
+!   call test_rotate13()
+!   call test_percent_encode()
+!   call test_percent_decode()
+!   call test_encode_base64()
+!   call test_decode_base64()
+!   call test_rpad()
+!   call test_s2c()
+!   call test_s2v()
+!   call test_s2vs()
+!   call test_sep()
+!   call test_setbits()
+!   call test_split()
+!   call test_split2020()
+!   call test_slice()
+!   call test_squeeze()
+!   call test_stretch()
+!   call test_string_to_value()
+!   call test_string_to_values()
+!   call test_strtok()
+!   call test_substitute()
+!   call test_switch()
+!   call test_transliterate()
+!   call test_trimzeros_()
+!   call test_unquote()
+!   call test_upper_quoted()
+!   call test_lower_quoted()
+!   call test_v2s()
+!   call test_value_to_string()
+!   call test_visible()
+!   call test_zpad()
+!   call test_base()
+!   call test_base2()
+!   call test_codebase()
+!   call test_decodebase()
 end subroutine test_suite_m_strings
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_glob()
@@ -1235,23 +1239,31 @@ end subroutine test_reverse
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_toupper
 character(len=36),parameter :: rnge='abcdefghIJKLMNopqrstuvwxyz0123456789'
+character(len=1),allocatable :: expected(:)
+
+   chs=switch(rnge)
+   expected=switch('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
 
    call unit_test_start('toupper','[CASE] changes a string to uppercase')
-   call unit_test('toupper',toupper(lc) == uc,toupper(lc))
-   call unit_test('toupper',toupper(lc,9,14) == rnge,'range',toupper(lc,9,14),'expected',rnge)
+   !call unit_test('toupper',all(toupper(chs) == expected),'expected',str(expected),'result',str(toupper(chs)))
+   call unit_test('toupper',all(toupper(chs) == expected),'result',str(toupper(chs)))
    call unit_test_end('toupper')
 
 end subroutine test_toupper
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_lower
-character(len=36),parameter :: rnge='ABCDEFGHijklmnOPQRSTUVWXYZ0123456789'
+subroutine test_tolower
+character(len=36),parameter :: rnge='abcdefghIJKLMNopqrstuvwxyz0123456789'
+character(len=1),allocatable :: expected(:)
 
-   call unit_test_start('lower','[CASE] changes a string to lowercase over specified range')
-   call unit_test('lower',lower(uc) == lc,'lower',lower(uc),'expected',lc)
-   call unit_test('lower',lower(uc,9,14) == rnge,'range',lower(uc,9,14),'expected',rnge)
-   call unit_test_end('lower')
+   chs=switch(rnge)
+   expected=switch('abcdefghijklmnopqrstuvwxyz0123456789')
 
-end subroutine test_lower
+   call unit_test_start('tolower','[CASE] changes a string to lowercase')
+   !call unit_test('tolower',all(tolower(chs) == expected),'expected',str(expected),'result',str(tolower(chs)))
+   call unit_test('tolower',all(tolower(chs) == expected),'result',str(tolower(chs)))
+   call unit_test_end('tolower')
+
+end subroutine test_tolower
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_switch
 character(len=1)            :: chars(36)
@@ -2367,12 +2379,12 @@ character(len=:),allocatable  :: s
    call unit_test_end('upper_quoted')
 end subroutine test_upper_quoted
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-end module M_testsuite_M_chars
+end module M_testsuite_M_strings__chars
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 program runtest
 use M_framework
 use M_framework__verify, only : unit_test_level, unit_test_stop
-use M_testsuite_M_chars
+use M_testsuite_M_strings__chars
 implicit none
 
    call test_suite_M_strings()

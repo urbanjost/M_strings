@@ -1,19 +1,19 @@
 !>
 !!##NAME
-!!    M_chars(3f) - [M_chars::INTRO] Fortran character module
+!!    M_strings__chars(3f) - [M_strings__chars::INTRO] Fortran character module
 !!
 !!##DESCRIPTION
 !!    Fortran allows for processing character data as strings, or as arrays
 !!    of single characters or even as integer values.
 !!
-!!    M_chars(3f) is a collection of functions that handle character variable
+!!    M_strings__chars(3f) is a collection of functions that handle character variable
 !!    arrays of len=1, which is more familiar for some programmers.
 !!
 !!##SYNOPSIS
 !!
 !!  public entities:
 !!
-!!      use M_chars,only : toupper, tolower
+!!      use M_strings__chars,only : toupper, tolower
 !!
 !!   CASE
 !!
@@ -28,8 +28,8 @@
 !!
 !!    Sample program:
 !!
-!!        program demo_M_chars
-!!        use M_chars,   only : toupper, tolower
+!!        program demo_M_strings__chars
+!!        use M_strings__chars,   only : toupper, tolower
 !!        implicit none
 !!        integer,parameter  :: bytes=80
 !!        character          :: string*(bytes)
@@ -38,7 +38,7 @@
 !!           string='Do unto Others'
 !!           write(*,*)toupper(lets)
 !!           write(*,*)tolower(lets)
-!!        end program demo_M_chars
+!!        end program demo_M_strings__chars
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -46,10 +46,10 @@
 !!##LICENSE
 !!    MIT
 
-module M_chars
+module M_strings__chars
 implicit none
 
-! ident_1="@(#) M_chars(3f) Fortran module containing routines that deal with character strings"
+! ident_1="@(#) M_strings__chars(3f) Fortran module containing routines that deal with character strings"
 
 private
 
@@ -61,7 +61,7 @@ contains
 
 !>
 !!##NAME
-!!    toupper(3f) - [M_chars:CASE] changes a character array to uppercase
+!!    toupper(3f) - [M_strings__chars:CASE] changes a character array to uppercase
 !!    (LICENSE:MIT)
 !!
 !!##SYNOPSIS
@@ -88,7 +88,7 @@ contains
 !!    Sample program:
 !!
 !!       program demo_toupper
-!!       use M_chars, only: toupper
+!!       use M_strings__chars, only: toupper
 !!       implicit none
 !!       character(len=1),allocatable :: s(:)
 !!          s=transfer(' ABCDEFG abcdefg ','A',size=17)
@@ -104,7 +104,7 @@ contains
 
 pure function toupper(str) result (string)
 
-! ident_2="@(#) M_chars toupper(3f) returns copy of input array accept lowercase letters are converted to uppercase characters"
+! ident_2="@(#) M_strings__chars toupper(3f) returns copy of input array accept lowercase letters are converted to uppercase characters"
 
 character(len=1),intent(in) :: str(:)
 character(len=1)            :: string(size(str))
@@ -115,7 +115,7 @@ end function toupper
 
 !>
 !!##NAME
-!!    tolower(3f) - [M_chars:CASE] changes a string to lowercase over
+!!    tolower(3f) - [M_strings__chars:CASE] changes a string to lowercase over
 !!    specified range
 !!    (LICENSE:MIT)
 !!
@@ -142,7 +142,7 @@ end function toupper
 !!    Sample program:
 !!
 !!       program demo_tolower
-!!       use M_chars, only: tolower
+!!       use M_strings__chars, only: tolower
 !!       implicit none
 !!       character(len=1),allocatable  :: s(:)
 !!          s=transfer(' ABCDEFG abcdefg ','A',size=17)
@@ -158,7 +158,7 @@ end function toupper
 
 pure function tolower(str) result (string)
 
-! ident_3="@(#) M_chars tolower(3f) returns copy of input array accept uppercase letters are converted to lowercase characters"
+! ident_3="@(#) M_strings__chars tolower(3f) returns copy of input array accept uppercase letters are converted to lowercase characters"
 
 character(len=1),intent(in) :: str(:)
 character(len=1)            :: string(size(str))
@@ -167,4 +167,4 @@ character(len=1)            :: string(size(str))
    end associate
 end function tolower
 
-end module M_chars
+end module M_strings__chars
