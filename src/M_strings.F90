@@ -11464,6 +11464,10 @@ logical                              :: trimit
          type is (logical);                fmt_local='(l1,a)'
          type is (character(len=*));       fmt_local='(a,a)'
          type is (complex);                fmt_local='("(",1pg0,",",1pg0,")",a)'
+         type is (complex(kind=real64));   fmt_local='("(",1pg0,",",1pg0,")",a)';write(*,*)'GOT HERE A:FMT:'
+         class default
+          fmt_local='(*(g0,1x)'
+          stop '<ERROR>*fmt* unknown type.'
       end select
    else
       if(format(1:1) == '(')then
@@ -11499,6 +11503,20 @@ logical                              :: trimit
               else
                  write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
               endif
+      type is (complex(kind=real64));
+              if(trimit)then
+                 re=fmt(generic%re)
+                 im=fmt(generic%im)
+                 call trimzeros_(re)
+                 call trimzeros_(im)
+                 fmt_local='("(",g0,",",g0,")",a)'
+                 write(line,fmt_local,iostat=iostat,iomsg=iomsg) trim(re),trim(im),null
+                 trimit=.false.
+              else
+                 write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
+              endif
+      class default
+          stop '<ERROR>*fmt* unknown type'
    end select
    if(iostat /= 0)then
       line='<ERROR>'//trim(iomsg)
