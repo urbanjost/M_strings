@@ -1,38 +1,47 @@
 program demo_base64
+! @(#) encode data to base64 encryption as defined by RFC-4648 and print to standard output
 use  M_io,      only : filebyte
 use  M_strings, only : encode_base64, decode_base64
 use  M_CLI2,    only : set_args, iget, lget, infiles=>unnamed
-! @(#) encode data to base64 encryption as defined by RFC-4648 and print to standard output
+use,intrinsic :: iso_fortran_env, only : int8, int32, stderr=>ERROR_UNIT, stdout=>OUTPUT_UNIT
 implicit none
 character(len=1),allocatable :: text(:)
 character(len=:),allocatable :: help_text(:), version_text(:)
 integer                      :: wrap
 logical                      :: decode, ignore_garbage
+
+   ! process command options
    call setup()
    call set_args('--wrap:w 76 --decode:d F --ignore-garbage:i F',help_text,version_text)
    wrap=iget('wrap')
    ignore_garbage=lget('ignore-garbage')
    decode=lget('decode')
    if(size(infiles).eq.0)infiles=[character(len=1):: '-']
-   call filebyte(infiles(1),text) ! allocate character array and copy file into it
+   ! load file into memory
+   call filebyte(infiles(1),text) ! allocate character array and copy file into it and pad with two characters at end
    if(.not.allocated(text))then
       stop '<ERROR>*base64* text not allocated'
    endif
+   ! encode or decode array of characters and write to stdout
    select case(decode)
    case(.false.)
-           write(*,fmt='(*(a))',advance='no')encode_base64(text,width=wrap)
+           write(stdout,fmt='(*(a))',advance='no')encode_base64(text,width=wrap)
    case default
-           write(*,fmt='(*(a))',advance='no')decode_base64(text,ignore_garbage=ignore_garbage)
+           write(stdout,fmt='(*(a))',advance='no')decode_base64(text,ignore_garbage=ignore_garbage)
    end select
 contains
 subroutine setup()
-! notes:
-! currently stdin and stdout cannot be defined as streams, so stdin should
-! be restricted to ASCII files with a newline terminator at end, and stdout is
-! potentially subject to linelength limits of the platform, because non-advancing I/O is not stream I/O
-! reading input into memory could be expensive if the file is large
-! this routine currently reads stdin until an end-of-file while writing it to a scratch file first,
+! notes and limitations:
+!
+! currently stdin and stdout cannot be defined as streams.
+! So this routine currently reads stdin until an end-of-file while writing it to a scratch file first,
 ! which can be slow and use file space resources
+! so stdin should be restricted to ASCII files with a newline terminator at end,
+! and stdout is potentially subject to linelength limits of the platform because
+! non-advancing I/O is not stream I/O
+!
+! reading the file into memory can be a problem when the files are large,
+!
 ! can change it to process the file in a buffered mannner so reading from stdin is performed more efficiently
 help_text=[ CHARACTER(LEN=128) :: &
 'NAME',&
@@ -46,25 +55,31 @@ help_text=[ CHARACTER(LEN=128) :: &
 '                                                                     ',&
 'DESCRIPTION                                                          ',&
 '   b64(1f) encodes or decodes a file as described for the            ',&
-'   b64alphabet-encoding in RFC 4648.  When decoding, whitespace characters',&
-'   on input are ignored.                                                  ',&
-'                                                                          ',&
-'   b64(1f) takes stdin or one filename on the command line and encodes    ',&
-'   or decodes it onto standard output.                                    ',&
-'                                                                          ',&
-'   With no FILE, or when FILE is "-", read standard input.                ',&
-'                                                                          ',&
-'   To ignore all bytes not in the formal base64 alphabet, use             ',&
-'   --ignore-garbage. This option will attempt to recover from any other   ',&
-'   non-alphabet bytes in the encoded stream.                              ',&
-'                                                                          ',&
-'OPTIONS                                                                   ',&
-'                                                                          ',&
-'    filename             name of file to encode                           ',&
-'    --decode,-d          decode instead of encode data                    ',&
-'    --ignore-garbage,i   when decoding, ignore non-alphabet characters    ',&
-'    --wrap=COLS,-w COLS  wrap encoded lines after COLS characters         ',&
-'                         (default 76). Use 0 to disable line wrapping     ',&
+'   b64alphabet-encoding in RFC 4648. When decoding, whitespace characters',&
+'   on input are ignored.                                                 ',&
+'                                                                         ',&
+'   b64(1f) takes stdin or one filename on the command line and encodes   ',&
+'   or decodes it onto standard output.                                   ',&
+'                                                                         ',&
+'   With no FILE, or when FILE is "-", read standard input.               ',&
+'                                                                         ',&
+'   As Fortran I/O does not currently allow stdin to be a stream,         ',&
+'   stdin should only be used with ASCII text files terminating with      ',&
+'   an end-of-line.                                                       ',&
+'                                                                         ',&
+'   If a filename is specified it may be any file, not just a text file.  ',&
+'                                                                         ',&
+'   To ignore all bytes not in the formal base64 alphabet, use            ',&
+'   --ignore-garbage. This option will attempt to recover from any other  ',&
+'   non-alphabet bytes in the encoded stream.                             ',&
+'                                                                         ',&
+'OPTIONS                                                                  ',&
+'                                                                         ',&
+'    filename             name of file to encode                          ',&
+'    --decode,-d          decode instead of encode data                   ',&
+'    --ignore-garbage,i   when decoding, ignore non-alphabet characters   ',&
+'    --wrap=COLS,-w COLS  wrap encoded lines after COLS characters        ',&
+'                         (default 76). Use 0 to disable line wrapping    ',&
 '    --version,-v         Print version information on standard output then',&
 '                         exit successfully.                               ',&
 '    --help,-h            Print usage information on standard output then  ',&

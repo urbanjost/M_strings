@@ -172,9 +172,6 @@
 !!                         from string
 !!       s2vs              function returns a DOUBLEPRECISION array of numbers
 !!                         from a string
-!!       s2vs              function returns a DOUBLEPRECISION array of numbers
-!!                         from a string
-!!       atoi              function returns INTEGER(kind=int32)  from a string
 !!       atol              function returns INTEGER(kind=int64)  from a string
 !!       aton              changes string to numeric value
 !!
@@ -539,7 +536,7 @@ end interface
 !-!end interface
 !-----------------------------------------------------------------------------------------------------------------------------------
 
-! ident_5="@(#) M_strings str(3f) convert up to twenty scalar values to a (CSV) string. Alternatively can also handle one-dimensional arrays"
+! ident_5="@(#) M_strings str(3f) convert up to twenty scalar values or arrays to a string with optional CSV mode."
 
 interface str
    module procedure str_scalar, str_one
@@ -656,7 +653,7 @@ CONTAINS
 !!    program demo_glob
 !!    implicit none
 !!    ! This main routine passes a bunch of test strings
-!!    ! into the above code.  In performance comparison mode,
+!!    ! into the above code. In performance comparison mode,
 !!    ! it does that over and over. Otherwise, it does it just
 !!    ! once. Either way, it outputs a passed/failed result.
 !!    !
@@ -980,28 +977,28 @@ end function glob
 !!
 !!##SYNOPSIS
 !!
-!!    pure function ends_with(source_string[,suffix][,ignorecase])
+!! pure function ends_with(string,ending[,ignorecase])
 !!
-!!     character(len=*),intent(in) :: source_string
-!!     character(len=*),intent(in) :: suffix(..)
+!!     character(len=*),intent(in) :: string
+!!     character(len=*),intent(in) :: ending(..)
 !!     logical,intent(in),optional :: ignorecase
 !!     logical                     :: ends_with
 !!
 !!##DESCRIPTION
 !!
 !!    ends_with(3f) tests if a string ends with any specified suffix. Differs
-!!    from using index(3f) in that the input file and multiple suffices
+!!    from using index(3f) in that the input string and multiple suffices
 !!    are trimmed by ends_with(3f),
 !!
 !!##OPTIONS
-!!     SOURCE_STRING  string to search
-!!     SUFFIX         list of separator strings. May be scalar or an array.
-!!                    Trailing spaces in SUFFIX are ignored.
+!!     STRING         string to search
+!!     ENDING         list of separator strings. May be scalar or an array.
+!!                    Trailing spaces in ENDING are ignored.
 !!     IGNORECASE     If .true. case is ignored.
 !!
 !!##RETURNS
 !!     ENDS_WITH      returns .TRUE. if one of the suffix match the end
-!!                    of SOURCE_STRING.
+!!                    of STRING.
 !!
 !!##EXAMPLES
 !!
@@ -5236,7 +5233,7 @@ end subroutine notabs
 !!     character(len=:),allocatable  :: OUTSTR
 !!
 !!##DESCRIPTION
-!!    dilate(3) converts tabs in INSTR to spaces in OUTSTR.  It assumes a
+!!    dilate(3) converts tabs in INSTR to spaces in OUTSTR. It assumes a
 !!    tab is set every 8 characters. Trailing spaces are removed.
 !!
 !!    In addition, trailing carriage returns and line feeds are removed
@@ -10476,7 +10473,7 @@ end function base
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
 function base2(x) result(str)
-!  return string representing number as a binary number.  Fixed-length string:
+!  return string representing number as a binary number. Fixed-length string:
 integer, intent(in)                        :: x
 integer                                    :: i
 character(len=max(1,bit_size(x)-leadz(x))) :: str
@@ -11467,6 +11464,10 @@ logical                              :: trimit
          type is (logical);                fmt_local='(l1,a)'
          type is (character(len=*));       fmt_local='(a,a)'
          type is (complex);                fmt_local='("(",1pg0,",",1pg0,")",a)'
+         type is (complex(kind=real64));   fmt_local='("(",1pg0,",",1pg0,")",a)'
+         class default
+          fmt_local='(*(g0,1x)'
+          stop '<ERROR>*fmt* unknown type.'
       end select
    else
       if(format(1:1) == '(')then
@@ -11502,6 +11503,20 @@ logical                              :: trimit
               else
                  write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
               endif
+      type is (complex(kind=real64));
+              if(trimit)then
+                 re=fmt(generic%re)
+                 im=fmt(generic%im)
+                 call trimzeros_(re)
+                 call trimzeros_(im)
+                 fmt_local='("(",g0,",",g0,")",a)'
+                 write(line,fmt_local,iostat=iostat,iomsg=iomsg) trim(re),trim(im),null
+                 trimit=.false.
+              else
+                 write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
+              endif
+      class default
+          stop '<ERROR>*fmt* unknown type'
    end select
    if(iostat /= 0)then
       line='<ERROR>'//trim(iomsg)
@@ -12526,36 +12541,56 @@ end function longest_common_substring
 !!    !
 !!       write(*,'(*(a))')'decode result:',nl, decode_base64(textout)
 !!    !
+!!    ! one way to encode non-byte data
+!!       call other()
+!!    contains
+!!    subroutine other()
+!!    real                         :: arr1(100)
+!!    character(len=1),allocatable :: in(:)
+!!    character(len=1),allocatable :: out(:)
+!!    real,allocatable             :: arr2(:)
+!!       ! fill a real array with some values
+!!       arr1=[(sqrt(real(i)),i=1,size(arr1))]
+!!       ! use TRANSFER() to convert data to bytes
+!!       in=transfer(source=arr1,mold=['+'])
+!!       ! encode the bytes
+!!       out=encode_base64(in)
+!!       ! decode the bytes
+!!       out=decode_base64(out)
+!!       ! store the bytes back into arr1
+!!       arr2=transfer(source=out,mold=[0.0])
+!!       write(*,'(*(g0,1x))') 'are arr1 and arr2 the same?',all(arr1.eq.arr2)
+!!    end subroutine other
 !!    end program demo_encode_base64
 !!
-!!  Results:
+!! Results:
 !!
-!!     > input:
-!!     > This is some sample data
-!!     > To encode. Should make it long
-!!     > enough to generate multiple lines
-!!     > of output so can check line wrap
-!!     > functionality as well.
-!!     >
-!!     > result:
-!!     > VGhpcyBpcyBzb21lIHNhbXBsZSBkYXRhClRvIGVuY29kZS4gU2
-!!     > hvdWxkIG1ha2UgaXQgbG9uZwplbm91Z2ggdG8gZ2VuZXJhdGUg
-!!     > bXVsdGlwbGUgbGluZXMKb2Ygb3V0cHV0IHNvIGNhbiBjaGVjay
-!!     > BsaW5lIHdyYXAKZnVuY3Rpb25hbGl0eSBhcyB3ZWxsLgo=
-!!     >
-!!     > decode result:
-!!     > This is some sample data
-!!     > To encode. Should make it long
-!!     > enough to generate multiple lines
-!!     > of output so can check line wrap
-!!     > functionality as well.
-!!     >
+!!  > input:
+!!  > This is some sample data
+!!  > To encode. Should make it long
+!!  > enough to generate multiple lines
+!!  > of output so can check line wrap
+!!  > functionality as well.
+!!  >
+!!  > result:
+!!  > VGhpcyBpcyBzb21lIHNhbXBsZSBkYXRhClRvIGVuY29kZS4gU2
+!!  > hvdWxkIG1ha2UgaXQgbG9uZwplbm91Z2ggdG8gZ2VuZXJhdGUg
+!!  > bXVsdGlwbGUgbGluZXMKb2Ygb3V0cHV0IHNvIGNhbiBjaGVjay
+!!  > BsaW5lIHdyYXAKZnVuY3Rpb25hbGl0eSBhcyB3ZWxsLgo=
+!!  >
+!!  > decode result:
+!!  > This is some sample data
+!!  > To encode. Should make it long
+!!  > enough to generate multiple lines
+!!  > of output so can check line wrap
+!!  > functionality as well.
+!!  >
+!!  > are arr1 and arr2 the same? T
 !!
 !!##SEE ALSO
 !!     decode_base64(3), base64(1), uuencode(1), uudecode(1)
 function encode_base64(data,width) result(out)
 ! encode data to base64 encryption as defined by RFC-4648
-use,intrinsic :: iso_fortran_env, only : int8, int32
 character(len=1),intent(in)  :: data(:)
 integer,intent(in),optional  :: width
 character(len=1),allocatable :: out(:)  ! array to hold encoded data in memory
@@ -12586,7 +12621,7 @@ integer                      :: outsize
    do i=1,sz,3
          if(i+3<=sz)then                  ! if not last
            chunk=three2four(data(i:i+2))
-         elseif(modulo(sz,3).eq.0)then    ! was an even multiple of three
+         elseif(modulo(sz,3).eq.0)then    ! last was an even multiple of three
            chunk=three2four(data(i:i+2))
          else                             ! end of data but remainder needs padded
            chunk=three2four([data(i:sz),[(char(0),j=1,3-(sz-i+1))]])
@@ -12633,6 +12668,8 @@ end function encode_base64
 !!    RFC 4648.
 !!
 !!##OPTIONS
+!!
+!!    TEXT            Data to decode
 !!
 !!    IGNORE_GARBAGE  when decoding, ignore all characters not in the formal
 !!                    base64 alphabet. This option will attempt to recover
@@ -12854,11 +12891,11 @@ integer(kind=int32) :: val
 !!##LICENSE
 !!    Public Domain
 character(len=*), intent(in) :: string
-character(len=1)            :: c
-integer                     :: i
-integer                     :: j
-integer                     :: ilen
-logical                     :: neg
+character(len=1)             :: c
+integer                      :: i
+integer                      :: j
+integer                      :: ilen
+logical                      :: neg
 
    val = 0
    neg=.false.
@@ -12959,11 +12996,11 @@ integer(kind=int64) :: val
 !!##LICENSE
 !!    Public Domain
 character(len=*), intent(in) :: string
-character(len=1)            :: c
-integer                     :: i
-integer                     :: j
-integer                     :: ilen
-logical                     :: neg
+character(len=1)             :: c
+integer                      :: i
+integer                      :: j
+integer                      :: ilen
+logical                      :: neg
 
    val = 0
    neg=.false.

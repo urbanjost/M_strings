@@ -30,7 +30,7 @@ jobs:
       run: |
            echo PATH %PATH%
            pwd
-           curl https://raw.githubusercontent.com/urbanjost/index/main/bootstrap/fpm.F90 --output fpm.F90
+           curl https://raw.githubusercontent.com/lockstockandbarrel/mars/main/bootstrap/fpm.F90 --output fpm.F90
            mkdir tmp
            gfortran -static fpm.F90 -Itmp -Jtmp -o fpm -D_WIN32 2>&1
            dir
