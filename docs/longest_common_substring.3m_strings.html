@@ -142,9 +142,9 @@ Sample program
    contains
 <P>
    subroutine compare(a,b,answer)
-   character(len=*),intent(in) :: a, b, answer
+   character(len=*),intent(in)  :: a, b, answer
    character(len=:),allocatable :: match
-   character(len=*),parameter :: g=&#146;(*(g0))&#146;
+   character(len=*),parameter   :: g=&#146;(*(g0))&#146;
       match=longest_common_substring(a,b)
       write(*,g) &#146;comparing "&#146;,a,&#146;" and "&#146;,b,&#146;"&#146;
       write(*,g) merge(&#146;(PASSED) "&#146;,&#146;(FAILED) "&#146;,answer == match), &

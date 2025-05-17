@@ -80,7 +80,7 @@ return a numeric array
 function s2vs(line[,delim])
 <P>
 <PRE>
-       character(len=*) :: line
+       character(len=*)            :: line
        doubleprecision,allocatable :: s2vs(:)
 <P>
 </PRE>
@@ -138,10 +138,10 @@ Sample Program:
      program demo_s2vs
      use M_strings, only : s2vs
      implicit none
-     character(len=80) :: s=&#146; 10 20e3;3.45 -400.3e-2;1234; 5678 &#146;
-     real,allocatable :: values(:)
+     character(len=80)   :: s=&#146; 10 20e3;3.45 -400.3e-2;1234; 5678 &#146;
+     real,allocatable    :: values(:)
      integer,allocatable :: ivalues(:)
-     integer :: ii
+     integer             :: ii
 <P>
      values=s2vs(s)
      ivalues=int(s2vs(s))

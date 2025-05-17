@@ -244,7 +244,7 @@ Sample of uses
     block
       character (len=:), allocatable :: string
       character (len=:), allocatable :: tokens(:)
-      character (len=*),parameter :: set = " ,"
+      character (len=*),parameter    :: set = " ,"
       string = &#146;first,second,third&#146;
       call split2020(string, set, tokens )
       write(*,gen)tokens
@@ -257,8 +257,8 @@ Sample of uses
 <P>
     block
       character (len=:), allocatable :: string
-      character (len=*),parameter :: set = " ,"
-      integer, allocatable        :: first(:), last(:)
+      character (len=*),parameter    :: set = " ,"
+      integer, allocatable           :: first(:), last(:)
       string =    &#146;first,second,,forth&#146;
       call split2020 (string, set, first, last)
       write(*,gen)first
@@ -271,8 +271,8 @@ Sample of uses
     ! Execution of STEP form
     block
       character (len=:), allocatable :: string
-      character (len=*),parameter :: set = " ,"
-      integer :: p, ibegin, iend
+      character (len=*),parameter    :: set = " ,"
+      integer                        :: p, ibegin, iend
       string = " one,   last  example  "
       do while (p &lt; len(string))
         ibegin = p + 1
