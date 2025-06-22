@@ -12,7 +12,7 @@
 #   define __COMPILER__ __INTEL_COMP
 #elif __GFORTRAN__ == 1
 #   define __COMPILER__ __GFORTRAN_COMP
-#elif __FLANG
+#elif __flang__
 #   define REAL128 1
 #   define __COMPILER__ __LLVM_FLANG_COMP
 #elif __NVCOMPILER
