@@ -91,6 +91,7 @@ jobs:
           rm -f _empty.f90
           ifx --version
 
+# ulimit -c unlimited -d unlimited -f unlimited -m unlimited -s unlimited -t unlimited -v unlimited -x unlimited
       - name: fpm test (debug)
         run: |
           fpm test --compiler ${{ matrix.compiler }} --profile debug --verbose
