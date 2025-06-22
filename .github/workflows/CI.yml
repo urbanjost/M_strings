@@ -1,0 +1,90 @@
+# from https://github.com/gha3mi/setup-fortran-conda
+name: multi-platform fpm test using conda setup
+
+on:
+  push:
+    branches: [main, master, dev]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        compiler: [gfortran, ifx, lfortran, flang-new]
+        include:
+        - os: ubuntu-latest
+          extra-packages: ""
+        - os: windows-latest
+          extra-packages: ""
+        - os: macos-latest
+          extra-packages: ""
+        exclude:
+          - os: macos-latest
+            compiler: flang-new
+          - os: macos-latest
+            compiler: ifx
+          - os: windows-latest
+            compiler: lfortran
+          - os: windows-latest
+            compiler: flang-new
+    env:
+      TZ: UTC+04:00
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Conda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          activate-environment: fortran
+          channels: conda-forge, defaults
+
+      - name: Setup Fortran
+        uses: gha3mi/setup-fortran-conda@main
+        with:
+          compiler: ${{ matrix.compiler }}
+          platform: ${{ matrix.os }}
+          extra-packages: ${{ matrix.extra-packages }}
+
+# ENVIRONMENT VARIABLES
+#  FPM_FC            sets the path to the Fortran compiler used for the build, ==> --compiler
+#  FPM_FFLAGS        sets the arguments for the Fortran compiler               ==> --flag
+#  FPM_CC            sets the path to the C compiler used for the build        ==> --c-compiler
+#  FPM_CFLAGS        sets the arguments for the C compiler                     ==> --c-flag
+#  FPM_CXX           sets the path to the C++ compiler used for the build,     ==> --cxx-compiler
+#  FPM_CXXFLAGS      sets the arguments for the C++ compiler                   ==> --cxx-flag
+#  FPM_AR            sets the path to the archiver used for the build,         ==> --archiver
+#  FPM_LDFLAGS       sets additional link arguments for creating executables   ==> --link-flag
+#
+      - name: Set environment for lfortran
+        if: matrix.compiler == 'lfortran'
+        run: echo "FPM_FFLAGS='--no-style-warnings'" >> $GITHUB_ENV
+
+      - name: Set environment for gfortran
+        if: matrix.compiler == 'gfortran'
+        run: |
+          echo >_empty.f90
+          gfortran -cpp -dM -E _empty.f90
+          rm -f _empty.f90
+          gfortran --version
+
+      - name: Set environment for flang-new
+        if: matrix.compiler == 'flang-new'
+        run: |
+          echo >_empty.f90
+          flang-new -cpp -dM -E _empty.f90
+          rm -f _empty.f90
+          flang-new --version
+
+      - name: fpm test (debug)
+        run: |
+          fpm test --compiler ${{ matrix.compiler }} --profile debug --verbose
+
+      - name: fpm test (release)
+        run: |
+          fpm test --compiler ${{ matrix.compiler }} --profile release --verbose

@@ -3,7 +3,7 @@
 #define  __GFORTRAN_COMP     2
 #define  __NVIDIA_COMP       3
 #define  __NAG_COMP          4
-#define  __FLANG_COMP        5
+#define  __flang__           5
 #define  __UNKNOWN_COMP   9999
 
 #define REAL128 0
