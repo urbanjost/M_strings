@@ -63,7 +63,8 @@ jobs:
 #
       - name: Set environment for lfortran
         if: matrix.compiler == 'lfortran'
-        run: echo "FPM_FFLAGS='--no-style-warnings'" >> $GITHUB_ENV
+        run: |
+	  echo "FPM_FFLAGS='--no-style-warnings'" >> $GITHUB_ENV
 
       - name: Set environment for gfortran
         if: matrix.compiler == 'gfortran'
@@ -80,6 +81,15 @@ jobs:
           flang-new -cpp -dM -E _empty.f90
           rm -f _empty.f90
           flang-new --version
+	  echo "FPM_FFLAGS='--cpp'" >> $GITHUB_ENV
+
+      - name: Set environment for ifx
+        if: matrix.compiler == 'ifx'
+        run: |
+          echo >_empty.f90
+          ifx -E -fpp empty.f90 -dryrun 2>&1 | perl -lne 'print for /-D(\S+)/'
+          rm -f _empty.f90
+          ifx --version
 
       - name: fpm test (debug)
         run: |
