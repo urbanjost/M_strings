@@ -1,5 +1,5 @@
 program main
-use M_strings, only: str
+use M_strings, only: str, fmt
 
 implicit none
 logical             :: allpassed=.true.
@@ -10,6 +10,7 @@ logical,allocatable :: tests(:)
   call add('INTEGER',str(10),'10','10')
   call add('LOGICAL',str(.false.),'F','F')
   call add('LOGICAL',str(.true.),'T','T')
+  write(*,*)fmt(100.0)
   call add('REAL',str(100.0),'100.000000','100.0000')
   call add('COMPLEX',str((11.0,22.0)),'(11.0000000,22.0000000)','(11.00000,22.00000)')
   call add('COMPOUND',str(10,100.0,"string",(11.0,22.0),.false.), &

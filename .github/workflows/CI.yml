@@ -51,7 +51,7 @@ jobs:
           platform: ${{ matrix.os }}
           extra-packages: ${{ matrix.extra-packages }}
 
-# ENVIRONMENT VARIABLES
+# ENVIRONMENT VARIABLES FOR COMPILERS
 #  FPM_FC            sets the path to the Fortran compiler used for the build, ==> --compiler
 #  FPM_FFLAGS        sets the arguments for the Fortran compiler               ==> --flag
 #  FPM_CC            sets the path to the C compiler used for the build        ==> --c-compiler
@@ -91,11 +91,19 @@ jobs:
           rm -f _empty.f90
           ifx --version
 
-# ulimit -c unlimited -d unlimited -f unlimited -m unlimited -s unlimited -t unlimited -v unlimited -x unlimited
+# OS
+
+      - name: Set environment for ubuntu
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          ulimit -c unlimited -d unlimited -f unlimited -m unlimited -s unlimited -t unlimited -v unlimited -x unlimited
+
+# RUN TESTS
+
       - name: fpm test (debug)
         run: |
           fpm test --compiler ${{ matrix.compiler }} --profile debug --verbose
 
       - name: fpm test (release)
         run: |
-          fpm test --compiler ${{ matrix.compiler }} --profile release --verbose
+          fpm test --compiler ${{ matrix.compiler }} --profile release -- --brief

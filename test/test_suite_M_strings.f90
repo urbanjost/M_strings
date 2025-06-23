@@ -21,7 +21,7 @@ subroutine test_suite_m_strings()
        flags=[0],              &
        luns=[std_out],         &
        command='',             &
-       brief=F,                &
+       brief=T,                &
        match='',               &
        interactive=F,          &
        CMDLINE=T,              &
