@@ -6,17 +6,17 @@
 #define  __flang__           5
 #define  __UNKNOWN_COMP   9999
 
-#undef FLOAT128
+#define FLOAT128
 
 #ifdef __INTEL_COMPILER
 #   define __COMPILER__ __INTEL_COMP
 #elif __GFORTRAN__ == 1
 #   define __COMPILER__ __GFORTRAN_COMP
 #elif __flang__
-#   define FLOAT128 1
+#   undef FLOAT128
 #   define __COMPILER__ __LLVM_FLANG_COMP
 #elif __NVCOMPILER
-#   define FLOAT128 1
+#   undef FLOAT128
 #   define __COMPILER__ __NVIDIA_COMP
 #else
 #   define __COMPILER__ __UNKNOWN_COMP
