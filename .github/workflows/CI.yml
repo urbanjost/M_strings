@@ -69,7 +69,7 @@ jobs:
       - name: Set environment for gfortran
         if: matrix.compiler == 'gfortran'
         run: |
-          echo >_empty.f90
+          echo "end" >_empty.f90
           gfortran -cpp -dM -E _empty.f90
           rm -f _empty.f90
           gfortran --version
@@ -77,7 +77,7 @@ jobs:
       - name: Set environment for flang-new
         if: matrix.compiler == 'flang-new'
         run: |
-          echo >_empty.f90
+          echo "end" >_empty.f90
           flang-new -cpp -dM -E _empty.f90
           rm -f _empty.f90
           flang-new --version
@@ -86,7 +86,7 @@ jobs:
       - name: Set environment for ifx
         if: matrix.compiler == 'ifx'
         run: |
-          echo >_empty.f90
+          echo "end" >_empty.f90
           ifx -E -fpp empty.f90 -dryrun 2>&1 | perl -lne 'print for /-D(\S+)/'
           rm -f _empty.f90
           ifx --version
