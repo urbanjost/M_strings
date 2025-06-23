@@ -64,7 +64,7 @@ jobs:
       - name: Set environment for lfortran
         if: matrix.compiler == 'lfortran'
         run: |
-          echo "FPM_FFLAGS='--no-style-warnings'" >> $GITHUB_ENV
+          echo "FPM_FFLAGS='--no-style-warnings' --cpp" >> $GITHUB_ENV
 
       - name: Set environment for gfortran
         if: matrix.compiler == 'gfortran'
