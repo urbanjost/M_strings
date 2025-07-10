@@ -302,7 +302,7 @@ format.
 <span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">iostat</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span><span class="w">                   </span><span class="kd">::</span><span class="w"> </span><span class="n">iomsg</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">parameter</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="nb">null</span><span class="o">=</span><span class="nb">char</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">ilen</span>
+<span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">iilen</span>
 <span class="kt">logical</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">trimit</span>
 <span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="k">format</span><span class="p">))</span><span class="k">then</span>
 <span class="k">      </span><span class="n">fmt_local</span><span class="o">=</span><span class="k">format</span>
@@ -356,8 +356,8 @@ format.
 <span class="nb">      </span><span class="k">type is</span><span class="w"> </span><span class="p">(</span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">));</span><span class="w">       </span><span class="k">write</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="n">fmt_local</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostat</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsg</span><span class="p">)</span><span class="w"> </span><span class="k">generic</span><span class="p">,</span><span class="nb">null</span>
 <span class="nb">      </span><span class="k">type is</span><span class="w"> </span><span class="p">(</span><span class="kt">complex</span><span class="p">);</span>
 <span class="w">              </span><span class="k">if</span><span class="p">(</span><span class="n">trimit</span><span class="p">)</span><span class="k">then</span>
-<span class="k">                 </span><span class="n">re</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="k">generic</span><span class="p">%</span><span class="n">re</span><span class="p">)</span>
-<span class="w">                 </span><span class="n">im</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="k">generic</span><span class="p">%</span><span class="n">im</span><span class="p">)</span>
+<span class="k">                 </span><span class="n">re</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="kt">real</span><span class="p">(</span><span class="k">generic</span><span class="p">))</span>
+<span class="w">                 </span><span class="n">im</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="nb">aimag</span><span class="p">(</span><span class="k">generic</span><span class="p">))</span>
 <span class="w">                 </span><span class="k">call </span><span class="n">trimzeros_</span><span class="p">(</span><span class="n">re</span><span class="p">)</span>
 <span class="w">                 </span><span class="k">call </span><span class="n">trimzeros_</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
 <span class="w">                 </span><span class="n">fmt_local</span><span class="o">=</span><span class="s1">&#39;(&quot;(&quot;,g0,&quot;,&quot;,g0,&quot;)&quot;,a)&#39;</span>
@@ -368,8 +368,8 @@ format.
 <span class="nb">              </span><span class="k">endif</span>
 <span class="k">      type is</span><span class="w"> </span><span class="p">(</span><span class="kt">complex</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">real64</span><span class="p">));</span>
 <span class="w">              </span><span class="k">if</span><span class="p">(</span><span class="n">trimit</span><span class="p">)</span><span class="k">then</span>
-<span class="k">                 </span><span class="n">re</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="k">generic</span><span class="p">%</span><span class="n">re</span><span class="p">)</span>
-<span class="w">                 </span><span class="n">im</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="k">generic</span><span class="p">%</span><span class="n">im</span><span class="p">)</span>
+<span class="k">                 </span><span class="n">re</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="kt">real</span><span class="p">(</span><span class="k">generic</span><span class="p">))</span>
+<span class="w">                 </span><span class="n">im</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="nb">aimag</span><span class="p">(</span><span class="k">generic</span><span class="p">))</span>
 <span class="w">                 </span><span class="k">call </span><span class="n">trimzeros_</span><span class="p">(</span><span class="n">re</span><span class="p">)</span>
 <span class="w">                 </span><span class="k">call </span><span class="n">trimzeros_</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
 <span class="w">                 </span><span class="n">fmt_local</span><span class="o">=</span><span class="s1">&#39;(&quot;(&quot;,g0,&quot;,&quot;,g0,&quot;)&quot;,a)&#39;</span>
@@ -384,9 +384,9 @@ format.
 <span class="k">   if</span><span class="p">(</span><span class="n">iostat</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
 <span class="k">      </span><span class="n">line</span><span class="o">=</span><span class="s1">&#39;&lt;ERROR&gt;&#39;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="n">iomsg</span><span class="p">)</span>
 <span class="w">   </span><span class="k">else</span>
-<span class="k">      </span><span class="n">ilen</span><span class="o">=</span><span class="nb">index</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="nb">null</span><span class="p">,</span><span class="n">back</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
-<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">ilen</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="n">ilen</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-<span class="w">      </span><span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="p">(:</span><span class="n">ilen</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">      </span><span class="n">iilen</span><span class="o">=</span><span class="nb">index</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="nb">null</span><span class="p">,</span><span class="n">back</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">iilen</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="n">iilen</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="w">      </span><span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="p">(:</span><span class="n">iilen</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="w">   </span><span class="k">endif</span>
 
 <span class="k">   if</span><span class="p">(</span><span class="nb">index</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">trimit</span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">trimzeros_</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
@@ -415,7 +415,7 @@ format.
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2025-06-23 07:38 +0000             </p>
+ on 2025-07-10 07:41 +0000             </p>
           </div>
         </div>
         <br>
