@@ -7969,13 +7969,13 @@ subroutine trimzeros_(string)
 ! if zero needs added at end assumes input string has room
 character(len=*)               :: string
 character(len=len(string) + 2) :: str
-character(len=len(string))     :: exp        ! the exponent string if present
+character(len=len(string))     :: eexp        ! the exponent string if present
 integer                        :: ipos       ! where exponent letter appears if present
 integer                        :: i, ii
    str = string                              ! working copy of string
    ipos = scan(str, 'eEdD')                  ! find end of real number if string uses exponent notation
    if (ipos > 0) then                        ! letter was found
-      exp = str(ipos:)                       ! keep exponent string so it can be added back as a suffix
+      eexp = str(ipos:)                       ! keep exponent string so it can be added back as a suffix
       str = str(1:ipos - 1)                  ! just the real part, exponent removed will not have trailing zeros removed
    endif
    if (index(str, '.') == 0) then            ! if no decimal character in original string add one to end of string
@@ -7999,7 +7999,7 @@ integer                        :: i, ii
       end select
    end do
    if (ipos > 0) then                        ! if originally had an exponent place it back on
-      string = trim(str)//trim(exp)
+      string = trim(str)//trim(eexp)
    else
       string = str
    endif
@@ -8554,8 +8554,8 @@ character(len=*),intent(in),optional  :: x1,x2,x3,x4,x5,x6,x7,x8,x9,x10
 character(len=*),intent(in),optional  :: x11,x12,x13,x14,x15,x16,x17,x18,x19,x20
 integer,intent(in),optional           :: len
 character(len=:),allocatable          :: vec(:)
-integer                               :: ilen, icount, iset
-   ilen=0
+integer                               :: iilen, icount, iset
+   iilen=0
    icount=0
    iset=0
    call increment(x1)
@@ -8579,8 +8579,8 @@ integer                               :: ilen, icount, iset
    call increment(x19)
    call increment(x20)
 
-   if(present(len)) ilen=len
-   allocate (character(len=ilen) :: vec(icount))
+   if(present(len)) iilen=len
+   allocate (character(len=iilen) :: vec(icount))
 
    call set(x1)
    call set(x2)
@@ -8608,7 +8608,7 @@ contains
 subroutine increment(str)
 character(len=*),intent(in),optional :: str
    if(present(str))then
-      ilen=max(ilen,len_trim(str))
+      iilen=max(iilen,len_trim(str))
       icount=icount+1
    endif
 end subroutine increment
@@ -11285,7 +11285,7 @@ class(*),intent(in) :: generic
          endif
       type is (complex)
          if(csv_local)then
-            write(line(ibegin:),'(1pg0,a,1pg0)') generic%re,sep_local,generic%im
+            write(line(ibegin:),'(1pg0,a,1pg0)') real(generic),sep_local,aimag(generic)
          else
             write(line(ibegin:),'("(",1pg0,",",1pg0,")")') generic
          endif
@@ -11468,7 +11468,7 @@ character(len=:),allocatable         :: re,im
 integer                              :: iostat
 character(len=255)                   :: iomsg
 character(len=1),parameter           :: null=char(0)
-integer                              :: ilen
+integer                              :: iilen
 logical                              :: trimit
    if(present(format))then
       fmt_local=format
@@ -11522,8 +11522,8 @@ logical                              :: trimit
       type is (character(len=*));       write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
       type is (complex);
               if(trimit)then
-                 re=fmt(generic%re)
-                 im=fmt(generic%im)
+                 re=fmt(real(generic))
+                 im=fmt(aimag(generic))
                  call trimzeros_(re)
                  call trimzeros_(im)
                  fmt_local='("(",g0,",",g0,")",a)'
@@ -11534,8 +11534,8 @@ logical                              :: trimit
               endif
       type is (complex(kind=real64));
               if(trimit)then
-                 re=fmt(generic%re)
-                 im=fmt(generic%im)
+                 re=fmt(real(generic))
+                 im=fmt(aimag(generic))
                  call trimzeros_(re)
                  call trimzeros_(im)
                  fmt_local='("(",g0,",",g0,")",a)'
@@ -11550,9 +11550,9 @@ logical                              :: trimit
    if(iostat /= 0)then
       line='<ERROR>'//trim(iomsg)
    else
-      ilen=index(line,null,back=.true.)
-      if(ilen == 0)ilen=len(line)
-      line=line(:ilen-1)
+      iilen=index(line,null,back=.true.)
+      if(iilen == 0)iilen=len(line)
+      line=line(:iilen-1)
    endif
 
    if(index(line,'.') /= 0 .and. trimit) call trimzeros_(line)
@@ -12923,7 +12923,7 @@ character(len=*), intent(in) :: string
 character(len=1)             :: c
 integer                      :: i
 integer                      :: j
-integer                      :: ilen
+integer                      :: iilen
 logical                      :: neg
 
    val = 0
@@ -12931,8 +12931,8 @@ logical                      :: neg
    i=0
    c=' '
 
-   ilen=len(string)
-   do i=1, ilen                               ! Pass over any leading spaces
+   iilen=len(string)
+   do i=1, iilen                               ! Pass over any leading spaces
       c = string(i:i)
       if (c  /=  ' ') exit
    enddo
@@ -12945,7 +12945,7 @@ logical                      :: neg
       i = i + 1
    endif
 
-   do j=i,ilen                                ! Continue as long as its a digit ...
+   do j=i,iilen                                ! Continue as long as its a digit ...
       c = string(j:j)
       if (lge(c, '0') .and. lle(c, '9')) then
          val = 10*val + ichar(c)-48           ! Shift number over and add new digit
@@ -13028,7 +13028,7 @@ character(len=*), intent(in) :: string
 character(len=1)             :: c
 integer                      :: i
 integer                      :: j
-integer                      :: ilen
+integer                      :: iilen
 logical                      :: neg
 
    val = 0
@@ -13036,8 +13036,8 @@ logical                      :: neg
    i=0
    c=' '
 
-   ilen=len(string)
-   do i=1, ilen                               ! Pass over any leading spaces
+   iilen=len(string)
+   do i=1, iilen                               ! Pass over any leading spaces
       c = string(i:i)
       if (c  /=  ' ') exit
    enddo
@@ -13050,7 +13050,7 @@ logical                      :: neg
       i = i + 1
    endif
 
-   do j=i,ilen                                ! Continue as long as its a digit ...
+   do j=i,iilen                                ! Continue as long as its a digit ...
       c = string(j:j)
       if (lge(c, '0') .and. lle(c, '9')) then
          val = 10*val + ichar(c)-48           ! Shift number over and add new digit
