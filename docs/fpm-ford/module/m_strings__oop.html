@@ -1,0 +1,917 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="string operations">
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>M_strings__oop &ndash; M_strings</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">M_strings </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>M_strings__oop
+      <small>Module</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 7.2% of total for modules and submodules.">378 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/M_strings__oop.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/m_strings__oop.f90.html'>M_strings__oop.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">M_strings__oop</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#inters-0"
+         aria-expanded="false" aria-controls="inters-0">
+         <h4 class="card-header bg-primary text-white">Interfaces</h4>
+      </a>
+      <div id="inters-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/m_strings__oop.html#interface-string">string</a>
+        </div>
+      </div>
+    </div>
+
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#types-0"
+         aria-expanded="false" aria-controls="types-0">
+         <h4 class="card-header bg-primary text-white">Derived Types</h4>
+      </a>
+      <div id="types-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/m_strings__oop.html#type-string">string</a>
+        </div>
+      </div>
+    </div>
+
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#funcs-0"
+         aria-expanded="false" aria-controls="funcs-0">
+         <h4 class="card-header bg-primary text-white">Functions</h4>
+      </a>
+      <div id="funcs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/m_strings__oop.html#proc-p">p</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>M_strings__oop(3f) - [M_strings::INTRO::OOPS] OOP Fortran string module
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>use M_strings__oop
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">The</span> <span class="nv">M_strings</span><span class="ss">(</span><span class="mi">3</span><span class="nv">fm</span><span class="ss">)</span> <span class="nv">module</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">collection</span> <span class="nv">of</span> <span class="nv">Fortran</span> <span class="nv">procedures</span>
+<span class="nv">that</span> <span class="nv">supplement</span> <span class="nv">the</span> <span class="nv">built</span><span class="o">-</span><span class="nv">in</span> <span class="nv">intrinsic</span> <span class="nv">string</span> <span class="nv">routines</span>. <span class="nv">Routines</span>
+<span class="k">for</span> <span class="nv">parsing</span>, <span class="nv">tokenizing</span>, <span class="nv">changing</span> <span class="nv">case</span>, <span class="nv">substituting</span> <span class="nv">new</span> <span class="nv">strings</span> <span class="k">for</span>
+<span class="nv">substrings</span>, <span class="nv">locating</span> <span class="nv">strings</span> <span class="nv">with</span> <span class="nv">simple</span> <span class="nv">wildcard</span> <span class="nv">expressions</span>, <span class="nv">removing</span>
+<span class="nv">tabs</span> <span class="nv">and</span> <span class="nv">line</span> <span class="nv">terminators</span> <span class="nv">and</span> <span class="nv">other</span> <span class="nv">string</span> <span class="nv">manipulations</span> <span class="nv">are</span> <span class="nv">included</span>.
+
+<span class="nv">M_strings__oop</span><span class="ss">(</span><span class="mi">3</span><span class="nv">fm</span><span class="ss">)</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">companion</span> <span class="nv">module</span> <span class="nv">that</span> <span class="nv">provides</span> <span class="nv">an</span> <span class="nv">OOP</span> <span class="nv">interface</span>
+<span class="nv">to</span> <span class="nv">the</span> <span class="nv">M_strings</span> <span class="nv">module</span>.
+</code></pre></div>
+
+<h2 id="see-also">SEE ALSO</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">There</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">additional</span><span class="w"> </span><span class="n">routines</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="n">GPF</span><span class="w"> </span><span class="n">modules</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">working</span><span class="w"> </span><span class="n">with</span><span class="w"></span>
+<span class="n">expressions</span><span class="w"> </span><span class="p">(</span><span class="n">M_calculator</span><span class="p">),</span><span class="w"> </span><span class="kt">time</span><span class="w"> </span><span class="n">strings</span><span class="w"> </span><span class="p">(</span><span class="n">M_time</span><span class="p">),</span><span class="w"> </span><span class="n">random</span><span class="w"> </span><span class="n">strings</span><span class="w"></span>
+<span class="p">(</span><span class="n">M_random</span><span class="p">,</span><span class="w"> </span><span class="n">M_uuid</span><span class="p">),</span><span class="w"> </span><span class="n">lists</span><span class="w"> </span><span class="p">(</span><span class="n">M_list</span><span class="p">),</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">interfacing</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="n">regular</span><span class="w"></span>
+<span class="n">expression</span><span class="w"> </span><span class="n">library</span><span class="w"> </span><span class="p">(</span><span class="n">M_regex</span><span class="p">).</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">Each</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">procedural</span><span class="w"> </span><span class="n">functions</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">M_strings</span><span class="p">(</span><span class="mi">3</span><span class="n">fm</span><span class="p">)</span><span class="w"> </span><span class="n">includes</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">example</span><span class="w"></span>
+<span class="n">program</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">corresponding</span><span class="w"> </span><span class="n">man</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="w"> </span><span class="n">The</span><span class="w"></span>
+<span class="n">object</span><span class="o">-</span><span class="n">oriented</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">individual</span><span class="w"> </span><span class="n">man</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">pages</span><span class="p">,</span><span class="w"></span>
+<span class="n">but</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">instead</span><span class="w"> </span><span class="n">demonstrated</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">following</span><span class="w"> </span><span class="n">example</span><span class="w"> </span><span class="n">program</span><span class="p">:</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">demo_M_strings__oop</span><span class="w"></span>
+<span class="w"> </span><span class="o">!</span><span class="w"></span>
+<span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">example</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">object</span><span class="o">-</span><span class="n">oriented</span><span class="w"> </span><span class="k">class</span><span class="o">/</span><span class="n">type</span><span class="w"> </span><span class="n">model</span><span class="w"></span>
+<span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">defined</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">M_strings__oop</span><span class="w"></span>
+<span class="w"> </span><span class="o">!</span><span class="w"></span>
+<span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">essentially</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="n">functionality</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">procedures</span><span class="w"></span>
+<span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">combined</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">several</span><span class="w"> </span><span class="n">Fortran</span><span class="w"> </span><span class="n">intrinsics</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">overloaded</span><span class="w"> </span><span class="n">operators</span><span class="w"></span>
+<span class="w"> </span><span class="o">!</span><span class="w"></span>
+<span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">M_strings__oop</span><span class="p">,</span><span class="n">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="w"></span>
+<span class="w"> </span><span class="n">implicit</span><span class="w"> </span><span class="n">none</span><span class="w"></span>
+<span class="w"> </span><span class="n">TYPE</span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">str1</span><span class="p">,</span><span class="w"> </span><span class="n">str2</span><span class="p">,</span><span class="w"> </span><span class="n">str3</span><span class="p">,</span><span class="w"> </span><span class="n">str4</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;Call methods of type(STRING)&#39;</span><span class="w"></span>
+
+<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">define</span><span class="w"> </span><span class="n">TYPE</span><span class="p">(</span><span class="n">STRING</span><span class="p">)</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">constructor</span><span class="w"></span>
+<span class="w">   </span><span class="n">str2</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;   This  is  a  String!       &#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">str4</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39; a  String &#39;</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str2</span><span class="si">%s</span><span class="s1">tr is ................ &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">str2</span><span class="o">%</span><span class="nb">str</span><span class="w">                      </span><span class="o">!</span><span class="w"> </span><span class="nb">print</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">member</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">type</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">202</span><span class="p">)</span><span class="s1">&#39;len ........................ &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">str2</span><span class="o">%</span><span class="n">len</span><span class="p">()</span><span class="w">                    </span><span class="o">!</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">intrinsic</span><span class="w"> </span><span class="n">LEN</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">202</span><span class="p">)</span><span class="s1">&#39;len_trim ................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">str2</span><span class="o">%</span><span class="n">len_trim</span><span class="p">()</span><span class="w">               </span><span class="o">!</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">intrinsic</span><span class="w"> </span><span class="n">LEN_TRIM</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">202</span><span class="p">)</span><span class="s1">&#39;index(&quot;is&quot;)................. &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">str2</span><span class="o">%</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;is&quot;</span><span class="p">)</span><span class="w">              </span><span class="o">!</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">intrinsic</span><span class="w"> </span><span class="n">INDEX</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">202</span><span class="p">)</span><span class="s1">&#39;index(&quot;is&quot;,back=.T.) ....... &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">str2</span><span class="o">%</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;is&quot;</span><span class="p">,</span><span class="n">back</span><span class="o">=.</span><span class="n">TRUE</span><span class="o">.</span><span class="p">)</span><span class="w">  </span><span class="o">!</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">intrinsic</span><span class="w"> </span><span class="n">INDEX</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;upper ...................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">upper</span><span class="p">())</span><span class="w">               </span><span class="o">!</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">upper</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;lower ...................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">lower</span><span class="p">())</span><span class="w">               </span><span class="o">!</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">lower</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;reverse .................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">reverse</span><span class="p">())</span><span class="w">             </span><span class="o">!</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">reverse</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;adjustl .................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">adjustl</span><span class="p">())</span><span class="w">             </span><span class="o">!</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">intrinsic</span><span class="w"> </span><span class="n">ADJUSTL</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;adjustr .................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">adjustr</span><span class="p">())</span><span class="w">             </span><span class="o">!</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">intrinsic</span><span class="w"> </span><span class="n">ADJUSTR</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;adjustc .................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">adjustc</span><span class="p">())</span><span class="w">             </span><span class="o">!</span><span class="w"> </span><span class="n">center</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">length</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;adjustc(40) ................ &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">adjustc</span><span class="p">(</span><span class="mi">40</span><span class="p">))</span><span class="w">           </span><span class="o">!</span><span class="w"> </span><span class="n">center</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">NN</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;lenset(40) ................. &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">lenset</span><span class="p">(</span><span class="mi">40</span><span class="p">))</span><span class="w">            </span><span class="o">!</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">pad</span><span class="p">()</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">force</span><span class="w"> </span><span class="n">minimal</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">length</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;trim ....................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">trim</span><span class="p">())</span><span class="w">                </span><span class="o">!</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">intrinsic</span><span class="w"> </span><span class="n">TRIM</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;crop ....................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">crop</span><span class="p">())</span><span class="w">                </span><span class="o">!</span><span class="w"> </span><span class="n">trim</span><span class="w"> </span><span class="n">leading</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">trailing</span><span class="w"> </span><span class="n">spaces</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;substitute(&quot;This&quot;,&quot;Here&quot;) .. &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">substitute</span><span class="p">(</span><span class="s2">&quot;This&quot;</span><span class="p">,</span><span class="s2">&quot;Here&quot;</span><span class="p">))</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">SUBSTITUTE</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;compact .................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">compact</span><span class="p">())</span><span class="w">                 </span><span class="o">!</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">COMPACT</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;compact(&quot;&quot;) ................ &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">compact</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;compact(&quot;:&quot;) ............... &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">compact</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">))</span><span class="w"></span>
+<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">calls</span><span class="w"> </span><span class="n">M_strings</span><span class="w"> </span><span class="n">procedure</span><span class="w"> </span><span class="n">TRANSLITERATE</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot;aei&quot;,&quot;VWX&quot;) . &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot;aei&quot;</span><span class="p">,</span><span class="s2">&quot;VWX&quot;</span><span class="p">))</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot;aeiou&quot;,&quot; &quot;) . &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot;aeiou&quot;</span><span class="p">,</span><span class="s2">&quot; &quot;</span><span class="p">))</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot;aeiou&quot;,&quot;&quot;) .. &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot;aeiou&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">))</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;transliterate(&quot; aeiou&quot;,&quot;&quot;) . &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">transliterate</span><span class="p">(</span><span class="s2">&quot; aeiou&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">))</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">404</span><span class="p">)</span><span class="s1">&#39;chars .................... . &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">str4</span><span class="o">%</span><span class="n">chars</span><span class="p">()</span><span class="w">                   </span><span class="o">!</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">SWITCH</span><span class="p">()</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">str2</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Some tabs</span><span class="se">\t</span><span class="s1">   x</span><span class="se">\b</span><span class="s1">X &#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str2</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str2</span><span class="o">%</span><span class="nb">str</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;expand ..................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">expand</span><span class="p">())</span><span class="w"></span>
+<span class="w">   </span><span class="n">str2</span><span class="o">=</span><span class="n">str2</span><span class="o">%</span><span class="n">expand</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;notabs ..................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">notabs</span><span class="p">())</span><span class="w">               </span><span class="o">!</span><span class="w"> </span><span class="n">calls</span><span class="w"> </span><span class="n">NOTABS</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;noesc ...................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="o">%</span><span class="n">noesc</span><span class="p">())</span><span class="w">                </span><span class="o">!</span><span class="w"> </span><span class="n">calls</span><span class="w"> </span><span class="n">NOESC</span><span class="p">()</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;Casting to numeric variables&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">str3</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;   12.345678901234567e1        &#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str3</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str3</span><span class="o">%</span><span class="nb">str</span><span class="w"></span>
+<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">calls</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">M_strings</span><span class="w"> </span><span class="n">procedure</span><span class="w"> </span><span class="n">STRING_TO_VALUE</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;int  ....................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">str3</span><span class="o">%</span><span class="nb nb-Type">int</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;nint ....................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">str3</span><span class="o">%</span><span class="n">nint</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;real ....................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">str3</span><span class="o">%</span><span class="n">real</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;dble ....................... &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">str3</span><span class="o">%</span><span class="n">dble</span><span class="p">()</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;Matching simple globbing patterns&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">str3</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;   12.345678901234567e1        &#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">str3</span><span class="o">=</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;Four score and seven years ago&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str3</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str3</span><span class="o">%</span><span class="nb">str</span><span class="w"></span>
+<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="o">%</span><span class="k">match</span><span class="w"> </span><span class="n">calls</span><span class="w"> </span><span class="n">M_strings</span><span class="w"> </span><span class="n">procedure</span><span class="w"> </span><span class="n">GLOB</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;match(&quot;Fo*&quot;) ............... &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">str3</span><span class="o">%</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;Fo*&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;match(&quot;and&quot;) ............... &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">str3</span><span class="o">%</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;and&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;match(&quot;*and*&quot;) ............. &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">str3</span><span class="o">%</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;*and*&quot;</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">   </span><span class="mi">101</span><span class="w"> </span><span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="s2">&quot;[&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="s2">&quot;]&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="mi">202</span><span class="w"> </span><span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">i0</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="mi">303</span><span class="w"> </span><span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="n">x</span><span class="p">,</span><span class="o">*</span><span class="p">(</span><span class="n">l3</span><span class="p">))</span><span class="w"></span>
+<span class="w">   </span><span class="mi">404</span><span class="w"> </span><span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="o">*</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">,</span><span class="n">a1</span><span class="p">,</span><span class="s2">&quot;]&quot;</span><span class="p">:))</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;OVERLOADED OPERATORS (add and subtract,return TYPE(STRING))&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;123.456&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">str2</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;AaBbCcDdEeFfGgHhIi AaBbCcDdEeFfGgHhIi&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str1</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str2</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str2</span><span class="o">%</span><span class="nb">str</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 + str2 ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">str2</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">looks</span><span class="w"> </span><span class="n">like</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numeric</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">added</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 + 20000 ............... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span><span class="w"> </span><span class="o">+</span><span class="mi">20000</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 - 20.0 ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span><span class="w"> </span><span class="o">-</span><span class="mf">20.0</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str2 - &quot;Aa&quot; (removes ALL) .. &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="s1">&#39;Aa&#39;</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;OVERLOADED OPERATORS (multiply,return TYPE(STRING))&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;AaBbCcDdEeFfGgHhIi&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str1</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 * 2 ................... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;OVERLOADED OPERATORS (//,return TYPE(STRING))&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;String one:&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">str2</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;String two:&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str1</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str2</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str2</span><span class="o">%</span><span class="nb">str</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 // str2 ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="n">str2</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">numeric</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">converted</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">strings</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 // 20000 ............... &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="mi">20000</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;str1 // 20.0 ................ &#39;</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">str1</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="mf">20.0</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;OVERLOADED OPERATORS (logical comparisons,return logical)&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="o">!</span><span class="w"> </span><span class="n">NOTE</span><span class="p">:</span><span class="w"> </span><span class="n">comparisons</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">performed</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">members</span><span class="w"></span>
+<span class="w">   </span><span class="o">!</span><span class="w">       </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">type</span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;abcdefghij&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">str2</span><span class="o">%</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;klmnopqrst&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str1</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str1</span><span class="o">%</span><span class="nb">str</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span><span class="s1">&#39;str2</span><span class="si">%s</span><span class="s1">tr ................... &#39;</span><span class="p">,</span><span class="n">str2</span><span class="o">%</span><span class="nb">str</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;: EQ LT GT LE GE NE&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;compare str1 to str1&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">303</span><span class="p">)</span><span class="n">str1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">str1</span><span class="w">  </span><span class="p">,</span><span class="n">str1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">str1</span><span class="w">  </span><span class="p">,</span><span class="n">str1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">str1</span><span class="w">  </span><span class="p">,</span><span class="n">str1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">str1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">              </span><span class="o">&amp;</span><span class="w"> </span><span class="p">,</span><span class="n">str1</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">str1</span><span class="w">  </span><span class="p">,</span><span class="n">str1</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">str1</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;compare str1 to str2&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">303</span><span class="p">)</span><span class="n">str1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">str2</span><span class="w">  </span><span class="p">,</span><span class="n">str1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">str2</span><span class="w">  </span><span class="p">,</span><span class="n">str1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">str2</span><span class="w">  </span><span class="p">,</span><span class="n">str1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">str2</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">              </span><span class="o">&amp;</span><span class="w"> </span><span class="p">,</span><span class="n">str1</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">str2</span><span class="w">  </span><span class="p">,</span><span class="n">str1</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">str2</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;compare str2 to str1&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="mi">303</span><span class="p">)</span><span class="n">str2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">str1</span><span class="w">  </span><span class="p">,</span><span class="n">str2</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">str1</span><span class="w">  </span><span class="p">,</span><span class="n">str2</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">str1</span><span class="w">  </span><span class="p">,</span><span class="n">str2</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">str1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">              </span><span class="o">&amp;</span><span class="w"> </span><span class="p">,</span><span class="n">str2</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">str1</span><span class="w">  </span><span class="p">,</span><span class="n">str2</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">str1</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">68</span><span class="p">)</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">demo_M_strings__oop</span><span class="w"></span>
+</code></pre></div>
+
+<p>Expected output</p>
+<dl>
+<dt>exercise the M_STRING_OOP module interface</dt>
+<dt>===================================================================</dt>
+<dt>Call methods of type(STRING)</dt>
+<dt>===================================================================</dt>
+<dt>str2%str is ................ [   This  is  a  String!             ]</dt>
+<dt>len ........................ 36</dt>
+<dt>len_trim ................... 23</dt>
+<dt>index(&ldquo;is&rdquo;)................. 6</dt>
+<dt>index(&ldquo;is&rdquo;,back=.T.) ....... 10</dt>
+<dt>upper ...................... [   THIS  IS  A  STRING!             ]</dt>
+<dt>lower ...................... [   this  is  a  string!             ]</dt>
+<dt>reverse .................... [             !gnirtS  a  si  sihT   ]</dt>
+<dt>adjustl .................... [This  is  a  String!                ]</dt>
+<dt>adjustr .................... [                This  is  a  String!]</dt>
+<dt>adjustc .................... [        This  is  a  String!        ]</dt>
+<dt>adjustc(40) ................ [              This  is  a  String!      ]</dt>
+<dt>lenset(40) ................. [   This  is  a  String!                 ]</dt>
+<dt>trim ....................... [   This  is  a  String!]</dt>
+<dt>crop ....................... [This  is  a  String!]</dt>
+<dt>substitute(&ldquo;This&rdquo;,&rdquo;Here&rdquo;) .. [   Here  is  a  String!             ]</dt>
+<dt>compact .................... [This is a String!]</dt>
+<dt>compact(&ldquo;&rdquo;) ................ [ThisisaString!]</dt>
+<dt>compact(&ldquo;:&rdquo;) ............... [This:is:a:String!]</dt>
+<dt>transliterate(&ldquo;aei&rdquo;,&rdquo;VWX&rdquo;) . [   ThXs  Xs  V  StrXng!             ]</dt>
+<dt>transliterate(&ldquo;aeiou&rdquo;,&rdquo; &ldquo;) . [   Th s   s     Str ng!             ]</dt>
+<dt>transliterate(&ldquo;aeiou&rdquo;,&rdquo;&ldquo;) .. [   Ths  s    Strng!                 ]</dt>
+<dt>transliterate(&rdquo; aeiou&rdquo;,&rdquo;&ldquo;) . [ThssStrng!                          ]</dt>
+<dt>chars .................... . [ ][a][ ][s][t][r][i][n][g][ ]</dt>
+<dt>===================================================================</dt>
+<dt>str2%str ................... [\t\tSome tabs\t   x\bX ]</dt>
+<dt>expand ..................... [         Some tabs          x   X]</dt>
+<dt>notabs ..................... [                Some tabs          x    X]</dt>
+<dt>noesc ...................... [  Some tabs    x X]</dt>
+<dt>===================================================================</dt>
+<dt>Casting to numeric variables</dt>
+<dt>str3%str ................... [   12.345678901234567e1        ]</dt>
+<dt>int  .......................          123</dt>
+<dt>real .......................    123.456787</dt>
+<dt>dble .......................    123.45678901234567</dt>
+<dt>===================================================================</dt>
+<dt>Matching simple globbing patterns</dt>
+<dt>str3%str ................... [Four score and seven years ago]</dt>
+<dt>match(&ldquo;Fo*&rdquo;) ...............  T</dt>
+<dt>match(&ldquo;and&rdquo;) ...............  F</dt>
+<dt>match(&ldquo;<em>and</em>&rdquo;) .............  T</dt>
+<dt>====================================================================</dt>
+<dt>OVERLOADED OPERATORS (add and subtract, return TYPE(STRING))</dt>
+<dt>str1%str .................. [123.456]</dt>
+<dt>str2%str .................. [AaBbCcDdEeFfGgHhIi AaBbCcDdEeFfGgHhIi]</dt>
+<dt>str1 + str2 ............... 123.456 AaBbCcDdEeFfGgHhIi AaBbCcDdEeFfGgHhIi</dt>
+<dt>str1 + 20000 .............. 20123.455999999998</dt>
+<dt>str1 - 20.0 ............... -103.456</dt>
+<dt>str2 - &ldquo;Aa&rdquo; (removes ALL) . BbCcDdEeFfGgHhIi BbCcDdEeFfGgHhIi</dt>
+<dt>===================================================================</dt>
+<dt>OVERLOADED OPERATORS (multiply, return TYPE(STRING))</dt>
+<dt>str1%str ................... [AaBbCcDdEeFfGgHhIi]</dt>
+<dt>str1 * 2 ................... AaBbCcDdEeFfGgHhIiAaBbCcDdEeFfGgHhIi</dt>
+<dt>===================================================================</dt>
+<dt>OVERLOADED OPERATORS (//, return TYPE(STRING))</dt>
+<dt>str1%str ................... [String one:]</dt>
+<dt>str2%str ................... [String two:]</dt>
+<dt>str1 // str2 ............... String one:String two:</dt>
+<dt>str1 // 20000 .............. String one:20000</dt>
+<dt>str1 // 20.0 ............... String one:20.0</dt>
+<dt>===================================================================</dt>
+<dt>OVERLOADED OPERATORS (logical comparisons, return logical)</dt>
+<dt>str1%str ................... [abcdefghij]</dt>
+<dt>str2%str ................... [klmnopqrst]</dt>
+<dd>
+<dl>
+<dt>EQ LT GT LE GE NE</dt>
+<dt>compare str1 to str1</dt>
+<dd>
+<dl>
+<dt>T  F  F  T  T  F</dt>
+<dt>compare str1 to str2</dt>
+<dd>
+<dl>
+<dt>F  T  F  T  F  T</dt>
+<dt>compare str2 to str1</dt>
+<dd>F  F  T  F  T  T
+   ===================================================================</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='m_strings.html'>M_strings</a></li>
+              </ul>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+      
+      <br>
+
+
+
+
+        <section>
+          <h2>Interfaces</h2>
+              <div class="card">
+    <div class="card-header bg-light codesum">
+      <span class="anchor" id="interface-string"></span>
+      <h3>public        interface <a href='../interface/string.html'>string</a> 
+      </h3>
+    </div>
+    <ul class="list-group">
+          <li class="list-group-item">
+                <h3>
+    private  function construct_from_fill(chars, len)  
+
+    </h3>
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-chars~2"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>chars</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-len~2"></span>
+              integer,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>len</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>type(<a href='../type/string.html'>string</a>)</small>
+    </h4>
+    
+
+          </li>
+    </ul>
+  </div>
+
+        </section>
+        <br>
+
+
+        <section>
+          <h2>Derived Types</h2>
+              <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="type-string"></span>
+      <h3>
+        type, public&nbsp;::&nbsp;
+        <a href='../type/string.html'>string</a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
+      
+
+        <h4>Components</h4>
+          <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-str~3"></span>
+              character(len=:),
+            </td>
+              <td>public,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>str</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        <h4>Constructor</h4>
+          
+        <table class="table table-striped varlist">
+          <tbody>
+                <tr>
+                  <td>
+                        private
+
+                    
+                    function
+                    <strong>construct_from_fill</strong>
+                    (chars, len)
+                  </td>
+                  <td></td>
+                </tr>
+          </tbody>
+        </table>
+
+
+        <h4>Type-Bound Procedures</h4>
+        <table class="table table-striped varlist">
+          <tbody>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-adjustc'>adjustc</a></strong> => oop_adjustc</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-adjustl'>adjustl</a></strong> => oop_adjustl</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-adjustr'>adjustr</a></strong> => oop_adjustr</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-chars'>chars</a></strong> => oop_switch</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-compact'>compact</a></strong> => oop_compact</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-cpad'>cpad</a></strong> => oop_cpad</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-crop'>crop</a></strong> => oop_crop</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-dble'>dble</a></strong> => oop_dble</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-expand'>expand</a></strong> => oop_expand</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-index'>index</a></strong> => oop_index</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-init'>init</a></strong> => init_string</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-int'>int</a></strong> => oop_int</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-len'>len</a></strong> => oop_len</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-len_trim'>len_trim</a></strong> => oop_len_trim</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-lenset'>lenset</a></strong> => oop_lenset</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-lower'>lower</a></strong> => oop_lower</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-lpad'>lpad</a></strong> => oop_lpad</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-match'>match</a></strong> => oop_glob</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-nint'>nint</a></strong> => oop_nint</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-noesc'>noesc</a></strong> => oop_noesc</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-notabs'>notabs</a></strong> => oop_notabs</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  generic, public ::
+  <strong><a href='../type/string.html#boundprocedure-operator%28ASTERISK%29'>operator(*)</a></strong> => string_multiply_value</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  generic, public ::
+  <strong><a href='../type/string.html#boundprocedure-operator%28%2B%29'>operator(+)</a></strong> => string_plus_value</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  generic, public ::
+  <strong><a href='../type/string.html#boundprocedure-operator%28-%29'>operator(-)</a></strong> => string_minus_value</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  generic, public ::
+  <strong><a href='../type/string.html#boundprocedure-operator%28SLASHSLASH%29'>operator(//)</a></strong> => string_append_value</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  generic, public ::
+  <strong><a href='../type/string.html#boundprocedure-operator%28SLASH%3D%29'>operator(/=)</a></strong> => ne</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  generic, public ::
+  <strong><a href='../type/string.html#boundprocedure-operator%28lt%29'>operator(<)</a></strong> => lt</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  generic, public ::
+  <strong><a href='../type/string.html#boundprocedure-operator%28lt%3D%29'>operator(<=)</a></strong> => le</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  generic, public ::
+  <strong><a href='../type/string.html#boundprocedure-operator%28%3D%3D%29'>operator(==)</a></strong> => eq</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  generic, public ::
+  <strong><a href='../type/string.html#boundprocedure-operator%28gt%29'>operator(>)</a></strong> => gt</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  generic, public ::
+  <strong><a href='../type/string.html#boundprocedure-operator%28gt%3D%29'>operator(>=)</a></strong> => ge</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-pad'>pad</a></strong> => oop_pad</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-real'>real</a></strong> => oop_real</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-reverse'>reverse</a></strong> => oop_reverse</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-rpad'>rpad</a></strong> => oop_rpad</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-substitute'>substitute</a></strong> => oop_substitute</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-transliterate'>transliterate</a></strong> => oop_transliterate</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-trim'>trim</a></strong> => oop_trim</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-upper'>upper</a></strong> => oop_upper</td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/string.html#boundprocedure-zpad'>zpad</a></strong> => oop_zpad</td>
+                  <td></td>
+              </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+        <section>
+          <h2>Functions</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-p"></span> <h3>public  function <a href='../proc/p.html'>p</a>(self) result(string_out)  
+</h3></div>
+    <div class="card-body">
+          
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-self~30"></span>
+              class(<a href='../type/string.html'>string</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>self</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>character(len=len)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+
+
+
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              M_strings
+ was developed by John S. Urban<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2025-07-11 00:20 +0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

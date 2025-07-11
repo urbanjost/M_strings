@@ -1,0 +1,777 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="string operations">
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>All Procedures &ndash; M_strings
+</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">M_strings </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12" id='text'>
+			 <h1>Procedures</h1>
+			 <table class="table table-striped">
+			 <thead><tr><th>Procedure</th><th>Location</th><th>Procedure Type</th><th>Description</th></tr></thead>
+			 <tbody>
+			   <tr>
+                 <td><a href='../proc/adjustc.html'>adjustc</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>pure function adjustc(string[,length])</p><a href="../proc/adjustc.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/atleast.html'>atleast</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/atoi.html'>atoi</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/atol.html'>atol</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/aton.html'>aton</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/base.html'>base</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>elemental impure logical function base(x,b,y,a)</p><a href="../proc/base.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/base2.html'>base2</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program:</p><a href="../proc/base2.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/bundle.html'>bundle</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/bundle.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/c2s.html'>c2s</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><a href="../proc/c2s.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/cc.html'>cc</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/change.html'>change</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Sample program:</p><a href="../proc/change.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/chomp.html'>chomp</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program:</p><a href="../proc/chomp.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/clip.html'>clip</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program:</p><a href="../proc/clip.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/codebase.html'>codebase</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>logical function codebase(in_base10,out_base,answer,uc)</p><a href="../proc/codebase.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/compact.html'>compact</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/compact.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/cpad.html'>cpad</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/crop.html'>crop</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program:</p><a href="../proc/crop.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/dble.html'>dble</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/decode_base64.html'>decode_base64</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program:</p><a href="../proc/decode_base64.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/decodebase.html'>decodebase</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>logical function decodebase(string,basein,out10)</p><a href="../proc/decodebase.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/delim.html'>delim</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Sample program:</p><a href="../proc/delim.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/describe.html'>describe</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/describe.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/dilate.html'>dilate</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program:</p><a href="../proc/dilate.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/edit_distance.html'>edit_distance</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>The Levenshtein distance function returns how many edits (deletions,
+   insertions, transposition) are required to turn one string into another.</p><a href="../proc/edit_distance.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/encode_base64.html'>encode_base64</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program:</p><a href="../proc/encode_base64.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/ends_with.html'>ends_with</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/expand.html'>expand</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>function expand(line,escape) result(lineout)</p><a href="../proc/expand.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/find_field.html'>find_field</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Sample of uses</p><a href="../proc/find_field.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/fmt.html'>fmt</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program:</p><a href="../proc/fmt.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/fortran_name.html'>fortran_name</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><a href="../proc/fortran_name.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/getvals.html'>getvals</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Subroutine</td>
+                 <td><p>GETVALS(3f) reads a relatively arbitrary number of numeric values from
+   a character variable into a REAL array using list-directed input.</p><a href="../proc/getvals.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/glob.html'>glob</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Example program</p><a href="../proc/glob.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/indent.html'>indent</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/indent.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/int.html'>int</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/isalnum.html'>isalnum</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/isalnum.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/isalpha.html'>isalpha</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>elemental function isalpha(onechar)</p><a href="../proc/isalpha.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/isascii.html'>isascii</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program</p><a href="../proc/isascii.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/isblank.html'>isblank</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program:</p><a href="../proc/isblank.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/iscntrl.html'>iscntrl</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program</p><a href="../proc/iscntrl.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/isdigit.html'>isdigit</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/isdigit.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/isgraph.html'>isgraph</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/isgraph.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/islower.html'>islower</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program</p><a href="../proc/islower.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/isnumber.html'>isNumber</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>As the example shows, you can use an internal READ(3f) along with the
+   IOSTAT= parameter to check (and read) a string as well.</p><a href="../proc/isnumber.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/isprint.html'>isprint</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/isprint.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/ispunct.html'>ispunct</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program:</p><a href="../proc/ispunct.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/isspace.html'>isspace</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program:</p><a href="../proc/isspace.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/isupper.html'>isupper</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program:</p><a href="../proc/isupper.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/isxdigit.html'>isxdigit</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program</p><a href="../proc/isxdigit.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/join.html'>join</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>JOIN(3f) appends the elements of a CHARACTER array into a single
+   CHARACTER variable, with elements 1 to N joined from left to right.
+   By default each element is trimmed of trailing spaces and the
+   default separator is a null string.</p><a href="../proc/join.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/len_white.html'>len_white</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/len_white.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/lenset.html'>lenset</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><a href="../proc/lenset.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/listout.html'>listout</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Subroutine</td>
+                 <td><p>(LICENSE:PD)</p><a href="../proc/listout.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/longest_common_substring.html'>longest_common_substring</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program</p><a href="../proc/longest_common_substring.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/lower.html'>lower</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><a href="../proc/lower.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/lower_quoted.html'>lower_quoted</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>lower_quoted(3f) - [M_strings:CASE] elemental function converts string to
+                lowercase skipping strings quoted per Fortran syntax rules
+ (LICENSE:PD)</p><a href="../proc/lower_quoted.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/lpad.html'>lpad</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/matching_delimiter.html'>matching_delimiter</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Subroutine</td>
+                 <td><p>impure elemental subroutine matching_delimiter(str,ipos,imatch)</p><a href="../proc/matching_delimiter.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/matchw.html'>matchw</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/merge_str.html'>merge_str</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/merge_str.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/modif.html'>modif</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Subroutine</td>
+                 <td><p>MODIF(3f) Modifies the line currently pointed at using a directive
+   that acts much like a line editor directive.
+   Primarily used to create interactive utilities such as input history
+   editors for interactive line-mode programs.</p><a href="../proc/modif.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/msg.html'>msg</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/nint.html'>nint</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/noesc.html'>noesc</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/noesc.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/nospace.html'>nospace</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program:</p><a href="../proc/nospace.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/notabs.html'>notabs</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Sample program:</p><a href="../proc/notabs.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/p.html'>p</a></td>
+                 <td><a href='../module/m_strings__oop.html'>M_strings__oop</a></td>
+                 <td>Function</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/pad.html'>pad</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>pad(3f) - [M_strings:LENGTH] return string padded to at least
+   specified length
+   (LICENSE:PD)</p><a href="../proc/pad.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/paragraph.html'>paragraph</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>function paragraph(source_string,length)</p><a href="../proc/paragraph.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/percent_decode.html'>percent_decode</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/percent_encode.html'>percent_encode</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/quote.html'>quote</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>function quote(str,mode,clip) result (quoted_str)</p><a href="../proc/quote.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/real.html'>real</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/replace.html'>replace</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/reverse.html'>reverse</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Results:</p><a href="../proc/reverse.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/rotate13.html'>rotate13</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program</p><a href="../proc/rotate13.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/rpad.html'>rpad</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/s2c.html'>s2c</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>character(len=3),allocatable :: array(:)
+ integer                      :: i
+    ! put one character into each 3-character element of array
+    array = [(string(i:i),i=1,len(string))]
+    ! write array with ASCII Decimal Equivalent below it except show
+    ! unprintable characters like NULL as &ldquo;XXX&rdquo;
+    write(<em>,g) merge(&lsquo;XXX&rsquo;,array,iachar(array(:)(1:1)) &lt; 32)
+    write(</em>,g) iachar(array(:)(1:1))</p><a href="../proc/s2c.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/s2v.html'>s2v</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/s2v.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/s2vs.html'>s2vs</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/s2vs.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/sep.html'>sep</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample program:</p><a href="../proc/sep.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/setbits16.html'>setbits16</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/setbits32.html'>setbits32</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/setbits64.html'>setbits64</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/setbits8.html'>setbits8</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/slice.html'>slice</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Sample program:</p><a href="../proc/slice.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/split.html'>split</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Sample program:</p><a href="../proc/split.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/split2020.html'>split2020</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/squeeze.html'>squeeze</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/squeeze.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/str.html'>str</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/stretch.html'>stretch</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/stretch.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/string.html'>string</a></td>
+                 <td><a href='../module/m_strings__oop.html'>M_strings__oop</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/string_to_value.html'>string_to_value</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/string_to_values.html'>string_to_values</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Subroutine</td>
+                 <td><a href="../proc/string_to_values.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/string_tokens.html'>string_tokens</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/strtok.html'>strtok</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>function strtok(source_string,itoken,token_start,token_end,delimiters)
+  result(strtok_status)</p><a href="../proc/strtok.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/substitute.html'>substitute</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Sample Program:</p><a href="../proc/substitute.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/switch.html'>switch</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/tolower.html'>tolower</a></td>
+                 <td><a href='../module/m_strings__chars.html'>M_strings__chars</a></td>
+                 <td>Function</td>
+                 <td><a href="../proc/tolower.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/toupper.html'>toupper</a></td>
+                 <td><a href='../module/m_strings__chars.html'>M_strings__chars</a></td>
+                 <td>Function</td>
+                 <td><a href="../proc/toupper.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/transliterate.html'>transliterate</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/transliterate.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/unquote.html'>unquote</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>function unquote(quoted_str,esc) result (unquoted_str)</p><a href="../proc/unquote.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/upper.html'>upper</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/upper_quoted.html'>upper_quoted</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>upper_quoted(3f) - [M_strings:CASE] elemental function converts string to
+                uppercase skipping strings quoted per Fortran syntax rules
+ (LICENSE:PD)</p><a href="../proc/upper_quoted.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/v2s.html'>v2s</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/value_to_string.html'>value_to_string</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Subroutine</td>
+                 <td><a href="../proc/value_to_string.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/visible.html'>visible</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Function</td>
+                 <td><p>Sample Program:</p><a href="../proc/visible.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/zpad.html'>zpad</a></td>
+                 <td><a href='../module/m_strings.html'>M_strings</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			 </tbody></table>
+             
+        </div>
+      </div>
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              M_strings
+ was developed by John S. Urban<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2025-07-11 00:20 +0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

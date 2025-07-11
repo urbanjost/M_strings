@@ -1,0 +1,554 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="string operations">
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>describe &ndash; M_strings</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">M_strings </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>describe
+      <small>Function</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 8.3% of total for procedures.">264 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/M_strings.F90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
+                <li class="breadcrumb-item"><a href='../module/m_strings.html'>M_strings</a></li>
+            <li class="breadcrumb-item active" aria-current="page">describe</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/describe.html#src">describe</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  function describe(ch) result(string)  
+</h2>
+    
+
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>describe(3f) - [M_strings:DESCRIBE] returns a string describing the name of
+a single character
+(LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">describe(ch) result </span><span class="p">(</span>string<span class="p">)</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="mi">1</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">   </span><span class="p">::</span><span class="w"> </span><span class="n">ch</span><span class="w"></span>
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w">  </span><span class="p">::</span><span class="w"> </span><span class="nb">string</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code>describe(3f) returns a string describing long name of a single
+character
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample Program:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">program</span><span class="w"> </span><span class="n">demo_describe</span><span class="w"></span>
+<span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">M_strings</span><span class="p">,</span><span class="w"> </span><span class="n">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">describe</span><span class="w"></span>
+<span class="w"> </span><span class="n">implicit</span><span class="w"> </span><span class="n">none</span><span class="w"></span>
+<span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">    </span><span class="n">do</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">128</span><span class="w">  </span><span class="o">!</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="n">ASCII</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">set</span><span class="w"></span>
+<span class="w">       </span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">describe</span><span class="p">(</span><span class="nb">char</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="n">enddo</span><span class="w"></span>
+<span class="n">end</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">demo_describe</span><span class="w"></span>
+</code></pre></div>
+
+<p>Expected output</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="p">@</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">ctrl</span><span class="o">-</span>?<span class="w"> </span><span class="p">(</span><span class="n">NUL</span><span class="p">)</span><span class="w"> </span><span class="nb">null</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">A</span><span class="w"> </span><span class="p">(</span><span class="n">SOH</span><span class="p">)</span><span class="w"> </span><span class="nb">start</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">heading</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">B</span><span class="w"> </span><span class="p">(</span><span class="n">STX</span><span class="p">)</span><span class="w"> </span><span class="nb">start</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="nb">text</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">C</span><span class="w"> </span><span class="p">(</span><span class="n">ETX</span><span class="p">)</span><span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="nb">text</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">D</span><span class="w"> </span><span class="p">(</span><span class="n">EOT</span><span class="p">)</span><span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">transmission</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">E</span><span class="w"> </span><span class="p">(</span><span class="n">ENQ</span><span class="p">)</span><span class="w"> </span><span class="n">enquiry</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">F</span><span class="w"> </span><span class="p">(</span><span class="n">ACK</span><span class="p">)</span><span class="w"> </span><span class="n">acknowledge</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">G</span><span class="w"> </span><span class="p">(</span><span class="n">BEL</span><span class="p">)</span><span class="w"> </span><span class="n">bell</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">H</span><span class="w"> </span><span class="p">(</span><span class="n">BS</span><span class="p">)</span><span class="w"> </span><span class="n">backspace</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">I</span><span class="w"> </span><span class="p">(</span><span class="n">HT</span><span class="p">)</span><span class="w"> </span><span class="n">horizontal</span><span class="w"> </span><span class="n">tabulation</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">J</span><span class="w"> </span><span class="p">(</span><span class="n">LF</span><span class="p">)</span><span class="w"> </span><span class="nb">line</span><span class="w"> </span><span class="n">feed</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">K</span><span class="w"> </span><span class="p">(</span><span class="n">VT</span><span class="p">)</span><span class="w"> </span><span class="n">vertical</span><span class="w"> </span><span class="n">tabulation</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">L</span><span class="w"> </span><span class="p">(</span><span class="n">FF</span><span class="p">)</span><span class="w"> </span><span class="n">form</span><span class="w"> </span><span class="n">feed</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">M</span><span class="w"> </span><span class="p">(</span><span class="n">CR</span><span class="p">)</span><span class="w"> </span><span class="n">carriage</span><span class="w"> </span><span class="k">return</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">N</span><span class="w"> </span><span class="p">(</span><span class="n">SO</span><span class="p">)</span><span class="w"> </span><span class="n">shift</span><span class="w"> </span><span class="n">out</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">O</span><span class="w"> </span><span class="p">(</span><span class="n">SI</span><span class="p">)</span><span class="w"> </span><span class="n">shift</span><span class="w"> </span><span class="n">in</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">P</span><span class="w"> </span><span class="p">(</span><span class="n">DLE</span><span class="p">)</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">link</span><span class="w"> </span><span class="n">escape</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">Q</span><span class="w"> </span><span class="p">(</span><span class="n">DC1</span><span class="p">)</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">control</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">R</span><span class="w"> </span><span class="p">(</span><span class="n">DC2</span><span class="p">)</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">control</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">S</span><span class="w"> </span><span class="p">(</span><span class="n">DC3</span><span class="p">)</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">control</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">T</span><span class="w"> </span><span class="p">(</span><span class="n">DC4</span><span class="p">)</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">control</span><span class="w"> </span><span class="mi">4</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="p">(</span><span class="n">NAK</span><span class="p">)</span><span class="w"> </span><span class="n">negative</span><span class="w"> </span><span class="n">acknowledge</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">V</span><span class="w"> </span><span class="p">(</span><span class="n">SYN</span><span class="p">)</span><span class="w"> </span><span class="n">synchronous</span><span class="w"> </span><span class="n">idle</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">W</span><span class="w"> </span><span class="p">(</span><span class="n">ETB</span><span class="p">)</span><span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">transmission</span><span class="w"> </span><span class="n">block</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">X</span><span class="w"> </span><span class="p">(</span><span class="n">CAN</span><span class="p">)</span><span class="w"> </span><span class="n">cancel</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">Y</span><span class="w"> </span><span class="p">(</span><span class="n">EM</span><span class="p">)</span><span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">medium</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">Z</span><span class="w"> </span><span class="p">(</span><span class="n">SUB</span><span class="p">)</span><span class="w"> </span><span class="n">substitute</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="n">ESC</span><span class="p">)</span><span class="w"> </span><span class="n">escape</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-\</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="p">@</span><span class="w"> </span><span class="p">(</span><span class="n">FS</span><span class="p">)</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="n">separator</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="n">GS</span><span class="p">)</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="n">separator</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span>^<span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="n">RS</span><span class="p">)</span><span class="w"> </span><span class="nb">record</span><span class="w"> </span><span class="n">separator</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span><span class="n">_</span><span class="w"> </span><span class="p">(</span><span class="n">US</span><span class="p">)</span><span class="w"> </span><span class="n">unit</span><span class="w"> </span><span class="n">separator</span><span class="w"></span>
+<span class="w"> </span><span class="n">space</span><span class="w"></span>
+<span class="w"> </span>!<span class="w"> </span><span class="n">exclamation</span><span class="w"> </span><span class="n">point</span><span class="w"></span>
+<span class="w"> </span>&quot;<span class="w"> </span><span class="n">quotation</span><span class="w"> </span><span class="n">marks</span><span class="w"></span>
+<span class="w"> </span>#<span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="nb">sign</span><span class="w"></span>
+<span class="w"> </span>$<span class="w"> </span><span class="n">currency</span><span class="w"> </span><span class="n">symbol</span><span class="w"></span>
+<span class="w"> </span><span class="c">% percent</span><span class="w"></span>
+<span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ampersand</span><span class="w"></span>
+<span class="w"> </span><span class="s">&#39;</span><span class="err"> apostrophe</span>
+<span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="n">parenthesis</span><span class="w"></span>
+<span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="n">parenthesis</span><span class="w"></span>
+<span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">asterisk</span><span class="w"></span>
+<span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">plus</span><span class="w"></span>
+<span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">comma</span><span class="w"></span>
+<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">minus</span><span class="w"></span>
+<span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="n">period</span><span class="w"></span>
+<span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">slash</span><span class="w"></span>
+<span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">zero</span><span class="w"></span>
+<span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">one</span><span class="w"></span>
+<span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">two</span><span class="w"></span>
+<span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">three</span><span class="w"></span>
+<span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="n">four</span><span class="w"></span>
+<span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">five</span><span class="w"></span>
+<span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="n">six</span><span class="w"></span>
+<span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">seven</span><span class="w"></span>
+<span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="n">eight</span><span class="w"></span>
+<span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="n">nine</span><span class="w"></span>
+<span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nb">colon</span><span class="w"></span>
+<span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">semicolon</span><span class="w"></span>
+<span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">less</span><span class="w"> </span><span class="n">than</span><span class="w"></span>
+<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">equals</span><span class="w"></span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">greater</span><span class="w"> </span><span class="n">than</span><span class="w"></span>
+<span class="w"> </span>?<span class="w"> </span><span class="n">question</span><span class="w"> </span><span class="n">mark</span><span class="w"></span>
+<span class="w"> </span><span class="p">@</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="nb">sign</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">A</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">B</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">C</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">D</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">E</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">F</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">G</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">H</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">I</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">J</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">K</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">L</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">M</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">O</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">P</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">Q</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">R</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">S</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">T</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">U</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">V</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">W</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">X</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">Y</span><span class="w"></span>
+<span class="w"> </span><span class="n">majuscule</span><span class="w"> </span><span class="n">Z</span><span class="w"></span>
+<span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="n">bracket</span><span class="w"></span>
+<span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="n">backslash</span><span class="w"></span>
+<span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="n">bracket</span><span class="w"></span>
+<span class="w"> </span>^<span class="w"> </span><span class="n">caret</span><span class="w"></span>
+<span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="n">underscore</span><span class="w"></span>
+<span class="w"> </span>`<span class="w"> </span><span class="n">grave</span><span class="w"> </span><span class="n">accent</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">a</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">b</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">c</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">d</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">e</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">f</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">g</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">h</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="nb">i</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="nb">j</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">l</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">m</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">o</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">p</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">q</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">r</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">s</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">u</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">v</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">w</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">y</span><span class="w"></span>
+<span class="w"> </span><span class="n">miniscule</span><span class="w"> </span><span class="n">z</span><span class="w"></span>
+<span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="n">brace</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">vertical</span><span class="w"> </span><span class="nb">line</span><span class="w"></span>
+<span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="n">brace</span><span class="w"></span>
+<span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">tilde</span><span class="w"></span>
+<span class="w"> </span><span class="n">ctrl</span><span class="o">-</span>?<span class="w"> </span><span class="p">(</span><span class="n">DEL</span><span class="p">)</span><span class="w"> </span><span class="nb">delete</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ch~3"></span>
+              character(len=1),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ch</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <h3>Return Value
+        <small>
+          <span class="anchor" id="variable-string~24"></span>
+          character(len=:), allocatable
+        </small>
+      </h3>
+      
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">function </span><span class="n">describe</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="w"></span>
+
+<span class="c">! ident_65=&quot;@(#) M_strings describe(3f) return string describing long name of a single character&quot;</span>
+
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">ch</span><span class="w"></span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">string</span><span class="w"></span>
+<span class="c">! LATER: add hex, octal, decimal, key-press description, alternate names</span>
+<span class="c">!  ASCII character codes</span>
+<span class="w">   </span><span class="k">select case</span><span class="w"> </span><span class="p">(</span><span class="nb">iachar</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">     </span><span class="mi">0</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-@ or ctrl-? (NUL) null&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">     </span><span class="mi">1</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-A (SOH) start of heading&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">     </span><span class="mi">2</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-B (STX) start of text&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">     </span><span class="mi">3</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-C (ETX) end of text&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">     </span><span class="mi">4</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-D (EOT) end of transmission&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">     </span><span class="mi">5</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-E (ENQ) enquiry&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">     </span><span class="mi">6</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-F (ACK) acknowledge&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">     </span><span class="mi">7</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-G (BEL) bell&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">     </span><span class="mi">8</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-H (BS) backspace&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">     </span><span class="mi">9</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-I (HT) horizontal tabulation&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">10</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-J (LF) line feed&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">11</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-K (VT) vertical tabulation&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">12</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-L (FF) form feed&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">13</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-M (CR) carriage return&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">14</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-N (SO) shift out&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">15</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-O (SI) shift in&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">16</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-P (DLE) data link escape&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">17</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-Q (DC1) device control 1&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">18</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-R (DC2) device control 2&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">19</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-S (DC3) device control 3&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">20</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-T (DC4) device control 4&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">21</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-U (NAK) negative acknowledge&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">22</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-V (SYN) synchronous idle&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">23</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-W (ETB) end of transmission block&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">24</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-X (CAN) cancel&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">25</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-Y (EM) end of medium&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">26</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-Z (SUB) substitute&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">27</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-[ (ESC) escape&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">28</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-\ or ctrl-@ (FS) file separator&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">29</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-] (GS) group separator&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">30</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-^ or ctrl-= (RS) record separator&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">31</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-_ (US) unit separator&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">32</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;space&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">33</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;! exclamation point (screamer, gasper, slammer, startler, bang, shriek, pling)&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">34</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;&quot;&quot; quotation marks&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">35</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;# number sign (hash, pound sign, hashtag)&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">36</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;$ currency symbol&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">37</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;% percent&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">38</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;&amp; ampersand&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">39</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;&#39; apostrophe&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">40</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;( left parenthesis&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">41</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;) right parenthesis&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">42</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;* asterisk&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">43</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;+ plus&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">44</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;, comma&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">45</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;- minus&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">46</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;. period&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">47</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;/ slash&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">48</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;0 zero&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">49</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;1 one&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">50</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;2 two&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">51</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;3 three&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">52</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;4 four&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">53</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;5 five&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">54</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;6 six&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">55</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;7 seven&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">56</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;8 eight&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">57</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;9 nine&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">58</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;: colon&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">59</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;; semicolon&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">60</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;&lt; less than&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">61</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;= equals&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">62</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;&gt; greater than&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">63</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;? question mark&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">64</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;@ at (at cost of, at sign, each at, commercial at, commat, rollmop, monkey|pigs|elephant tail,&amp;</span>
+<span class="s2">                   &amp; snail, arroba, strudel, asperand, ampersat, rose, cabbage, swirl, whorl)&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">65</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;A majuscule A&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">66</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;B majuscule B&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">67</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;C majuscule C&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">68</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;D majuscule D&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">69</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;E majuscule E&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">70</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;F majuscule F&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">71</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;G majuscule G&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">72</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;H majuscule H&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">73</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;I majuscule I&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">74</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;J majuscule J&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">75</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;K majuscule K&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">76</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;L majuscule L&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">77</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;M majuscule M&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">78</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;N majuscule N&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">79</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;O majuscule O&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">80</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;P majuscule P&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">81</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;Q majuscule Q&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">82</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;R majuscule R&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">83</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;S majuscule S&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">84</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;T majuscule T&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">85</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;U majuscule U&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">86</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;V majuscule V&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">87</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;W majuscule W&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">88</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;X majuscule X&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">89</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;Y majuscule Y&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">90</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;Z majuscule Z&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">91</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;[ left bracket&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">92</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;\ backslash&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">93</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;] right bracket&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">94</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;^ caret&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">95</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;_ underscore&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">96</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;` grave accent&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">97</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;a miniscule a&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">98</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;b miniscule b&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">    </span><span class="mi">99</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;c miniscule c&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">100</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;d miniscule d&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">101</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;e miniscule e&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">102</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;f miniscule f&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">103</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;g miniscule g&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">104</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;h miniscule h&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">105</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;i miniscule i&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">106</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;j miniscule j&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">107</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;k miniscule k&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">108</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;l miniscule l&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">109</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;m miniscule m&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">110</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;n miniscule n&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">111</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;o miniscule o&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">112</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;p miniscule p&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">113</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;q miniscule q&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">114</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;r miniscule r&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">115</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;s miniscule s&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">116</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;t miniscule t&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">117</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;u miniscule u&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">118</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;v miniscule v&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">119</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;w miniscule w&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">120</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;x miniscule x&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">121</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;y miniscule y&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">122</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;z miniscule z&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">123</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;{ left brace&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">124</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;| vertical line&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">125</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;} right brace&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">126</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;~ tilde&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="p">(</span><span class="w">   </span><span class="mi">127</span><span class="w">  </span><span class="p">);</span><span class="w"> </span><span class="n">STRING</span><span class="o">=</span><span class="s2">&quot;ctrl-? (DEL) delete&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="k">case </span><span class="n">default</span><span class="w"></span>
+<span class="w">         </span><span class="n">STRING</span><span class="o">=</span><span class="s1">&#39;UNKNOWN&#39;</span><span class="o">//</span><span class="n">v2s</span><span class="p">(</span><span class="nb">IACHAR</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span><span class="w"></span>
+<span class="w">   </span><span class="k">end select</span>
+<span class="k">end function </span><span class="n">describe</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              M_strings
+ was developed by John S. Urban<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2025-07-11 00:20 +0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

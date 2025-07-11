@@ -1,0 +1,425 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="string operations">
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>percent_decode &ndash; M_strings</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">M_strings </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>percent_decode
+      <small>Interface</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="<p> 0.1% of total for procedures.</p>Including implementation: 53 statements,  1.7% of total for procedures.">3 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/M_strings.F90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
+                <li class="breadcrumb-item"><a href='../module/m_strings.html'>M_strings</a></li>
+            <li class="breadcrumb-item active" aria-current="page">percent_decode</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#modprocs-0"
+         aria-expanded="false" aria-controls="modprocs-0">
+         <h4 class="card-header bg-primary text-white">Module Procedures</h4>
+      </a>
+      <div id="modprocs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../interface/percent_decode.html#moduleprocedure-percent_decode_string">percent_decode_string</a>
+            <a class="list-group-item" href="../interface/percent_decode.html#moduleprocedure-percent_decode_characters~2">percent_decode_characters</a>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      <h2>public interface percent_decode</h2>
+      
+
+
+
+        <h2>Module Procedures</h2>
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-percent_decode_string"></span> <h3>private  function percent_decode_string(input, exit_code) result(output)  
+</h3></div>
+    <div class="card-body">
+        <p>Unwinds percent-encoding in given input string.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-input~2"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>input</strong></td>
+            <td>
+                <p>Encoded input string.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-exit_code~2"></span>
+              integer,
+            </td>
+<td>intent(out),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>exit_code</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>character(len=:), allocatable</small>
+    </h4>
+    <p>Decoded output string.</p>
+
+    </div>
+  </div>
+
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-percent_decode_characters"></span> <h3>private  function percent_decode_characters(text, exit_code)  
+</h3></div>
+    <div class="card-body">
+        <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>percent_decode(3f) - [M_strings:ENCODE] percent-decode strings and
+character arrays
+(LICENSE:ISC)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="nf">percent_decode</span><span class="p">(</span>text,exit_code<span class="p">)</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="mi">1</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="p">::</span><span class="w"> </span><span class="nb">text</span><span class="p">(:)</span><span class="w"></span>
+<span class="w">  </span><span class="n">integer</span><span class="p">,</span><span class="n">optional</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">exit_code</span><span class="w"></span>
+<span class="w">  </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">percent_decode</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">or</span><span class="w"></span>
+
+<span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="nf">percent_decode</span><span class="p">(</span>text,exit_code<span class="p">)</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="p">::</span><span class="w"> </span><span class="nb">text</span><span class="w"></span>
+<span class="w">  </span><span class="n">integer</span><span class="p">,</span><span class="n">optional</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">exit_code</span><span class="w"></span>
+<span class="w">  </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">percent_decode</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nt">percent_decode</span><span class="o">(</span><span class="nt">3f</span><span class="o">)</span><span class="w"> </span><span class="nt">percent-decodes</span><span class="w"> </span><span class="nt">percent-encoded</span><span class="w"> </span><span class="nt">strings</span><span class="w"> </span><span class="nt">or</span><span class="w"> </span><span class="nt">character</span><span class="w"></span>
+<span class="nt">arrays</span><span class="o">.</span><span class="w"></span>
+
+<span class="nt">URI</span><span class="w"> </span><span class="nt">containing</span><span class="w"> </span><span class="nt">spaces</span><span class="w"> </span><span class="nt">or</span><span class="w"> </span><span class="nt">most</span><span class="w"> </span><span class="nt">other</span><span class="w"> </span><span class="nt">non-alphanumeric</span><span class="w"> </span><span class="nt">characters</span><span class="w"> </span><span class="nt">must</span><span class="w"></span>
+<span class="nt">be</span><span class="w"> </span><span class="nt">encoded</span><span class="w"> </span><span class="nt">using</span><span class="w"> </span><span class="nt">percent</span><span class="w"> </span><span class="nt">encoding</span><span class="w"> </span><span class="o">(</span><span class="nt">aka</span><span class="o">.</span><span class="w"> </span><span class="nt">URL</span><span class="w"> </span><span class="nt">encoding</span><span class="o">).</span><span class="w"> </span><span class="nt">This</span><span class="w"> </span><span class="nt">procedure</span><span class="w"></span>
+<span class="nt">unwinds</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">encryption</span><span class="o">.</span><span class="w"></span>
+
+<span class="nt">The</span><span class="w"> </span><span class="nt">characters</span><span class="w"> </span><span class="nt">allowed</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">URI</span><span class="w"> </span><span class="nt">are</span><span class="w"> </span><span class="nt">either</span><span class="w"> </span><span class="nt">reserved</span><span class="w"> </span><span class="nt">or</span><span class="w"> </span><span class="nt">unreserved</span><span class="w"></span>
+<span class="o">(</span><span class="nt">or</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">percent</span><span class="w"> </span><span class="nt">character</span><span class="w"> </span><span class="nt">as</span><span class="w"> </span><span class="nt">part</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">percent-encoding</span><span class="o">).</span><span class="w"> </span><span class="nt">Reserved</span><span class="w"></span>
+<span class="nt">characters</span><span class="w"> </span><span class="nt">are</span><span class="w"> </span><span class="nt">those</span><span class="w"> </span><span class="nt">characters</span><span class="w"> </span><span class="nt">that</span><span class="w"> </span><span class="nt">sometimes</span><span class="w"> </span><span class="nt">have</span><span class="w"> </span><span class="nt">special</span><span class="w"> </span><span class="nt">meaning</span><span class="o">,</span><span class="w"></span>
+<span class="nt">while</span><span class="w"> </span><span class="nt">unreserved</span><span class="w"> </span><span class="nt">characters</span><span class="w"> </span><span class="nt">have</span><span class="w"> </span><span class="nt">no</span><span class="w"> </span><span class="nt">such</span><span class="w"> </span><span class="nt">meaning</span><span class="o">.</span><span class="w"> </span><span class="nt">Using</span><span class="w"> </span><span class="nt">percent-encoding</span><span class="o">,</span><span class="w"></span>
+<span class="nt">characters</span><span class="w"> </span><span class="nt">which</span><span class="w"> </span><span class="nt">otherwise</span><span class="w"> </span><span class="nt">would</span><span class="w"> </span><span class="nt">not</span><span class="w"> </span><span class="nt">be</span><span class="w"> </span><span class="nt">allowed</span><span class="w"> </span><span class="nt">are</span><span class="w"> </span><span class="nt">represented</span><span class="w"> </span><span class="nt">using</span><span class="w"></span>
+<span class="nt">allowed</span><span class="w"> </span><span class="nt">characters</span><span class="o">.</span><span class="w"> </span><span class="nt">The</span><span class="w"> </span><span class="nt">sets</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">reserved</span><span class="w"> </span><span class="nt">and</span><span class="w"> </span><span class="nt">unreserved</span><span class="w"> </span><span class="nt">characters</span><span class="w"> </span><span class="nt">and</span><span class="w"></span>
+<span class="nt">the</span><span class="w"> </span><span class="nt">circumstances</span><span class="w"> </span><span class="nt">under</span><span class="w"> </span><span class="nt">which</span><span class="w"> </span><span class="nt">certain</span><span class="w"> </span><span class="nt">reserved</span><span class="w"> </span><span class="nt">characters</span><span class="w"> </span><span class="nt">have</span><span class="w"> </span><span class="nt">special</span><span class="w"></span>
+<span class="nt">meaning</span><span class="w"> </span><span class="nt">have</span><span class="w"> </span><span class="nt">changed</span><span class="w"> </span><span class="nt">slightly</span><span class="w"> </span><span class="nt">with</span><span class="w"> </span><span class="nt">each</span><span class="w"> </span><span class="nt">revision</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">specifications</span><span class="w"> </span><span class="nt">that</span><span class="w"></span>
+<span class="nt">govern</span><span class="w"> </span><span class="nt">URIs</span><span class="w"> </span><span class="nt">and</span><span class="w"> </span><span class="nt">URI</span><span class="w"> </span><span class="nt">schemes</span><span class="o">.</span><span class="w"></span>
+
+<span class="nt">According</span><span class="w"> </span><span class="nt">to</span><span class="w"> </span><span class="nt">RFC</span><span class="w"> </span><span class="nt">3986</span><span class="o">,</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">characters</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">URL</span><span class="w"> </span><span class="nt">have</span><span class="w"> </span><span class="nt">to</span><span class="w"> </span><span class="nt">be</span><span class="w"> </span><span class="nt">taken</span><span class="w"> </span><span class="nt">from</span><span class="w"></span>
+<span class="nt">a</span><span class="w"> </span><span class="nt">defined</span><span class="w"> </span><span class="nt">set</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">unreserved</span><span class="w"> </span><span class="nt">and</span><span class="w"> </span><span class="nt">reserved</span><span class="w"> </span><span class="nt">ASCII</span><span class="w"> </span><span class="nt">characters</span><span class="o">.</span><span class="w"> </span><span class="nt">Any</span><span class="w"> </span><span class="nt">other</span><span class="w"></span>
+<span class="nt">characters</span><span class="w"> </span><span class="nt">are</span><span class="w"> </span><span class="nt">not</span><span class="w"> </span><span class="nt">allowed</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">URL</span><span class="o">.</span><span class="w"></span>
+
+<span class="nt">The</span><span class="w"> </span><span class="nt">unreserved</span><span class="w"> </span><span class="nt">characters</span><span class="w"> </span><span class="nt">can</span><span class="w"> </span><span class="nt">be</span><span class="w"> </span><span class="nt">encoded</span><span class="o">,</span><span class="w"> </span><span class="nt">but</span><span class="w"> </span><span class="nt">should</span><span class="w"> </span><span class="nt">not</span><span class="w"> </span><span class="nt">be</span><span class="o">.</span><span class="w"> </span><span class="nt">The</span><span class="w"></span>
+<span class="nt">unreserved</span><span class="w"> </span><span class="nt">characters</span><span class="w"> </span><span class="nt">are</span><span class="o">:</span><span class="w"></span>
+
+<span class="w">   </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">ABCDEFGHIJKLMNOPQRSTUVWXYZ</span><span class="w"></span>
+<span class="w">   </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">abcdefghijklmnopqrstuvwxyz</span><span class="w"></span>
+<span class="w">   </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">0123456789-_</span><span class="o">.~</span><span class="w"></span>
+
+<span class="nt">The</span><span class="w"> </span><span class="nt">reserved</span><span class="w"> </span><span class="nt">characters</span><span class="w"> </span><span class="nt">have</span><span class="w"> </span><span class="nt">to</span><span class="w"> </span><span class="nt">be</span><span class="w"> </span><span class="nt">encoded</span><span class="w"> </span><span class="nt">only</span><span class="w"> </span><span class="nt">under</span><span class="w"> </span><span class="nt">certain</span><span class="w"></span>
+<span class="nt">circumstances</span><span class="o">.</span><span class="w"> </span><span class="nt">The</span><span class="w"> </span><span class="nt">reserved</span><span class="w"> </span><span class="nt">characters</span><span class="w"> </span><span class="nt">are</span><span class="o">:</span><span class="w"></span>
+
+<span class="w">   </span><span class="o">&gt;</span><span class="w">  </span><span class="o">*</span><span class="w"> </span><span class="err">&#39;</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="o">;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="o">,</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="cp">[</span><span class="w"> </span><span class="cp">]</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">SOURCE_STRING</span>   <span class="nv">string</span> <span class="nv">or</span> <span class="nv">character</span> <span class="nv">array</span> <span class="nv">to</span> <span class="nv">decode</span>
+ <span class="nv">EXIT_CODE</span>       <span class="nv">non</span><span class="o">-</span><span class="nv">zero</span> <span class="k">if</span> <span class="nv">decoding</span> <span class="nv">failed</span>
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code> percent_decode  a string holding a percent-decoded copy of the input
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code>   <span class="nv">program</span> <span class="nv">demo_percent_decode</span>
+   <span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">percent_encode</span>, <span class="nv">percent_decode</span>
+   <span class="nv">implicit</span> <span class="nv">none</span>
+   <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">input</span>,<span class="nv">output</span>
+   <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span>   :: <span class="nv">see</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(g0,*(&quot;&quot;&quot;&quot;,g0,&quot;&quot;&quot;&quot;:))</span><span class="s1">&#39;</span>
+   <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span>   :: <span class="nv">expected</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">&amp;</span>
+   <span class="o">&amp;%</span><span class="mi">01</span><span class="o">%</span><span class="mi">02</span><span class="o">%</span><span class="mi">03</span><span class="o">%</span><span class="mi">04</span><span class="o">%</span><span class="mi">05</span><span class="o">%</span><span class="mi">06</span><span class="o">%</span><span class="mi">07</span><span class="o">%</span><span class="mi">08</span><span class="o">%</span><span class="mi">09</span><span class="o">%</span><span class="mi">0</span><span class="nv">A</span><span class="o">%</span><span class="mi">0</span><span class="nv">B</span><span class="o">%</span><span class="mi">0</span><span class="nv">C</span><span class="o">%</span><span class="mi">0</span><span class="nv">D</span><span class="o">%</span><span class="mi">0</span><span class="nv">E</span><span class="o">%</span><span class="mi">0</span><span class="nv">F</span><span class="o">%</span><span class="mi">10</span><span class="o">%</span><span class="mi">11</span><span class="o">%</span><span class="mi">12</span><span class="o">%</span><span class="mi">13</span><span class="o">%</span><span class="mi">14</span><span class="o">%</span><span class="mi">15</span><span class="o">%&amp;</span>
+   <span class="o">&amp;</span><span class="mi">16</span><span class="o">%</span><span class="mi">17</span><span class="o">%</span><span class="mi">18</span><span class="o">%</span><span class="mi">19</span><span class="o">%</span><span class="mi">1</span><span class="nv">A</span><span class="o">%</span><span class="mi">1</span><span class="nv">B</span><span class="o">%</span><span class="mi">1</span><span class="nv">C</span><span class="o">%</span><span class="mi">1</span><span class="nv">D</span><span class="o">%</span><span class="mi">1</span><span class="nv">E</span><span class="o">%</span><span class="mi">1</span><span class="nv">F</span><span class="o">%</span><span class="mi">20</span><span class="o">%</span><span class="mi">21</span><span class="o">%</span><span class="mi">22</span><span class="o">%</span><span class="mi">23</span><span class="o">%</span><span class="mi">24</span><span class="o">%</span><span class="mi">25</span><span class="o">%</span><span class="mi">26</span><span class="o">%</span><span class="mi">27</span><span class="o">%</span><span class="mi">28</span><span class="o">%</span><span class="mi">29</span><span class="o">%</span><span class="mi">2</span><span class="nv">A</span><span class="o">%</span><span class="mi">2</span><span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="nv">B</span><span class="o">%</span><span class="mi">2</span><span class="nv">C</span><span class="o">-</span>.<span class="o">%</span><span class="mi">2</span><span class="nv">F0123456789</span><span class="o">%</span><span class="mi">3</span><span class="nv">A</span><span class="o">%</span><span class="mi">3</span><span class="nv">B</span><span class="o">%</span><span class="mi">3</span><span class="nv">C</span><span class="o">%</span><span class="mi">3</span><span class="nv">D</span><span class="o">%</span><span class="mi">3</span><span class="nv">E</span><span class="o">%</span><span class="mi">3</span><span class="nv">F</span><span class="o">%</span><span class="mi">40</span><span class="nv">ABCDEFGHIJKLMNOPQRSTUVWX</span><span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="nv">YZ</span><span class="o">%</span><span class="mi">5</span><span class="nv">B</span><span class="o">%</span><span class="mi">5</span><span class="nv">C</span><span class="o">%</span><span class="mi">5</span><span class="nv">D</span><span class="o">%</span><span class="mi">5</span><span class="nv">E_</span><span class="o">%</span><span class="mi">60</span><span class="nv">abcdefghijklmnopqrstuvwxyz</span><span class="o">%</span><span class="mi">7</span><span class="nv">B</span><span class="o">%</span><span class="mi">7</span><span class="nv">C</span><span class="o">%</span><span class="mi">7</span><span class="nv">D</span><span class="o">~%</span><span class="mi">7</span><span class="nv">F</span><span class="o">%</span><span class="mi">80</span><span class="o">%</span><span class="mi">81</span><span class="o">%&amp;</span>
+   <span class="o">&amp;</span><span class="mi">82</span><span class="o">%</span><span class="mi">83</span><span class="o">%</span><span class="mi">84</span><span class="o">%</span><span class="mi">85</span><span class="o">%</span><span class="mi">86</span><span class="o">%</span><span class="mi">87</span><span class="o">%</span><span class="mi">88</span><span class="o">%</span><span class="mi">89</span><span class="o">%</span><span class="mi">8</span><span class="nv">A</span><span class="o">%</span><span class="mi">8</span><span class="nv">B</span><span class="o">%</span><span class="mi">8</span><span class="nv">C</span><span class="o">%</span><span class="mi">8</span><span class="nv">D</span><span class="o">%</span><span class="mi">8</span><span class="nv">E</span><span class="o">%</span><span class="mi">8</span><span class="nv">F</span><span class="o">%</span><span class="mi">90</span><span class="o">%</span><span class="mi">91</span><span class="o">%</span><span class="mi">92</span><span class="o">%</span><span class="mi">93</span><span class="o">%</span><span class="mi">94</span><span class="o">%</span><span class="mi">95</span><span class="o">%</span><span class="mi">96</span><span class="o">%</span><span class="mi">9</span><span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="mi">7</span><span class="o">%</span><span class="mi">98</span><span class="o">%</span><span class="mi">99</span><span class="o">%</span><span class="mi">9</span><span class="nv">A</span><span class="o">%</span><span class="mi">9</span><span class="nv">B</span><span class="o">%</span><span class="mi">9</span><span class="nv">C</span><span class="o">%</span><span class="mi">9</span><span class="nv">D</span><span class="o">%</span><span class="mi">9</span><span class="nv">E</span><span class="o">%</span><span class="mi">9</span><span class="nv">F</span><span class="o">%</span><span class="nv">A0</span><span class="o">%</span><span class="nv">A1</span><span class="o">%</span><span class="nv">A2</span><span class="o">%</span><span class="nv">A3</span><span class="o">%</span><span class="nv">A4</span><span class="o">%</span><span class="nv">A5</span><span class="o">%</span><span class="nv">A6</span><span class="o">%</span><span class="nv">A7</span><span class="o">%</span><span class="nv">A8</span><span class="o">%</span><span class="nv">A9</span><span class="o">%</span><span class="nv">AA</span><span class="o">%</span><span class="nv">AB</span><span class="o">%</span><span class="nv">AC</span><span class="o">&amp;</span>
+   <span class="o">&amp;%</span><span class="nv">AD</span><span class="o">%</span><span class="nv">AE</span><span class="o">%</span><span class="nv">AF</span><span class="o">%</span><span class="nv">B0</span><span class="o">%</span><span class="nv">B1</span><span class="o">%</span><span class="nv">B2</span><span class="o">%</span><span class="nv">B3</span><span class="o">%</span><span class="nv">B4</span><span class="o">%</span><span class="nv">B5</span><span class="o">%</span><span class="nv">B6</span><span class="o">%</span><span class="nv">B7</span><span class="o">%</span><span class="nv">B8</span><span class="o">%</span><span class="nv">B9</span><span class="o">%</span><span class="nv">BA</span><span class="o">%</span><span class="nv">BB</span><span class="o">%</span><span class="nv">BC</span><span class="o">%</span><span class="nv">BD</span><span class="o">%</span><span class="nv">BE</span><span class="o">%</span><span class="nv">BF</span><span class="o">%</span><span class="nv">C0</span><span class="o">%</span><span class="nv">C1</span><span class="o">%&amp;</span>
+   <span class="o">&amp;</span><span class="nv">C2</span><span class="o">%</span><span class="nv">C3</span><span class="o">%</span><span class="nv">C4</span><span class="o">%</span><span class="nv">C5</span><span class="o">%</span><span class="nv">C6</span><span class="o">%</span><span class="nv">C7</span><span class="o">%</span><span class="nv">C8</span><span class="o">%</span><span class="nv">C9</span><span class="o">%</span><span class="nv">CA</span><span class="o">%</span><span class="nv">CB</span><span class="o">%</span><span class="nv">CC</span><span class="o">%</span><span class="nv">CD</span><span class="o">%</span><span class="nv">CE</span><span class="o">%</span><span class="nv">CF</span><span class="o">%</span><span class="nv">D0</span><span class="o">%</span><span class="nv">D1</span><span class="o">%</span><span class="nv">D2</span><span class="o">%</span><span class="nv">D3</span><span class="o">%</span><span class="nv">D4</span><span class="o">%</span><span class="nv">D5</span><span class="o">%</span><span class="nv">D6</span><span class="o">%</span><span class="nv">D</span><span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="mi">7</span><span class="o">%</span><span class="nv">D8</span><span class="o">%</span><span class="nv">D9</span><span class="o">%</span><span class="nv">DA</span><span class="o">%</span><span class="nv">DB</span><span class="o">%</span><span class="nv">DC</span><span class="o">%</span><span class="nv">DD</span><span class="o">%</span><span class="nv">DE</span><span class="o">%</span><span class="nv">DF</span><span class="o">%</span><span class="nv">E0</span><span class="o">%</span><span class="nv">E1</span><span class="o">%</span><span class="nv">E2</span><span class="o">%</span><span class="nv">E3</span><span class="o">%</span><span class="nv">E4</span><span class="o">%</span><span class="nv">E5</span><span class="o">%</span><span class="nv">E6</span><span class="o">%</span><span class="nv">E7</span><span class="o">%</span><span class="nv">E8</span><span class="o">%</span><span class="nv">E9</span><span class="o">%</span><span class="nv">EA</span><span class="o">%</span><span class="nv">EB</span><span class="o">%</span><span class="nv">EC</span><span class="o">&amp;</span>
+   <span class="o">&amp;%</span><span class="nv">ED</span><span class="o">%</span><span class="nv">EE</span><span class="o">%</span><span class="nv">EF</span><span class="o">%</span><span class="nv">F0</span><span class="o">%</span><span class="nv">F1</span><span class="o">%</span><span class="nv">F2</span><span class="o">%</span><span class="nv">F3</span><span class="o">%</span><span class="nv">F4</span><span class="o">%</span><span class="nv">F5</span><span class="o">%</span><span class="nv">F6</span><span class="o">%</span><span class="nv">F7</span><span class="o">%</span><span class="nv">F8</span><span class="o">%</span><span class="nv">F9</span><span class="o">%</span><span class="nv">FA</span><span class="o">%</span><span class="nv">FB</span><span class="o">%</span><span class="nv">FC</span><span class="o">%</span><span class="nv">FD</span><span class="o">%</span><span class="nv">FE</span><span class="o">%</span><span class="nv">FF</span><span class="o">%</span><span class="mi">20</span><span class="s1">&#39;</span>
+   <span class="nv">integer</span>                      :: <span class="nv">j</span>
+      <span class="nv">input</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">[this is a string]</span><span class="s1">&#39;</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">see</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">INPUT=</span><span class="s1">&#39;</span>,<span class="nv">input</span>
+      <span class="nv">output</span><span class="o">=</span><span class="nv">percent_encode</span><span class="ss">(</span><span class="nv">input</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">see</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">ENCODED=</span><span class="s1">&#39;</span>,<span class="nv">output</span>
+      <span class="nv">output</span><span class="o">=</span><span class="nv">percent_decode</span><span class="ss">(</span><span class="nv">output</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">see</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">DECODED=</span><span class="s1">&#39;</span>,<span class="nv">output</span>
+      <span class="nv">input</span><span class="o">=</span><span class="nv">repeat</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s"> </span><span class="s1">&#39;</span>,<span class="mi">256</span><span class="ss">)</span>
+      <span class="k">do</span> <span class="nv">j</span><span class="o">=</span><span class="mi">0</span>,<span class="mi">255</span>
+            <span class="nv">input</span><span class="ss">(</span><span class="nv">j</span>:<span class="nv">j</span><span class="ss">)</span><span class="o">=</span><span class="nv">char</span><span class="ss">(</span><span class="nv">j</span><span class="ss">)</span>
+      <span class="nv">enddo</span>
+      <span class="nv">output</span><span class="o">=</span><span class="nv">percent_encode</span><span class="ss">(</span><span class="nv">input</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">ENCODING PASSED:</span><span class="s1">&#39;</span>,<span class="nv">output</span><span class="o">==</span><span class="nv">expected</span>
+      <span class="nv">output</span><span class="o">=</span><span class="nv">percent_decode</span><span class="ss">(</span><span class="nv">output</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">DECODING PASSED:</span><span class="s1">&#39;</span>,<span class="nv">input</span> <span class="o">==</span> <span class="nv">output</span>
+   <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_percent_decode</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code> &gt; INPUT=&quot;[this is a string]&quot;
+ &gt; ENCODED=&quot;%5Bthis%20is%20a%20string%5D&quot;
+ &gt; DECODED=&quot;[this is a string]&quot;
+ &gt;  ENCODING PASSED: T
+ &gt;  DECODING PASSED: T
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>o based on dm_cgi_encode.f90, Copyright (c) 2023, Philipp Engel
+o Modified to be more aligned with percent_encode(3f), John S. Urban, 2024
+</code></pre></div>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-text~3"></span>
+              character(len=1),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>text</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-exit_code"></span>
+              integer,
+            </td>
+<td>intent(out),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>exit_code</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>character(len=:), allocatable</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+</div>
+  </div>
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              M_strings
+ was developed by John S. Urban<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2025-07-11 00:20 +0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

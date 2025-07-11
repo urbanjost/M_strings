@@ -1,0 +1,686 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="string operations">
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>bundle &ndash; M_strings</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">M_strings </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>bundle
+      <small>Function</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 2.1% of total for procedures.">67 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/M_strings.F90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
+                <li class="breadcrumb-item"><a href='../module/m_strings.html'>M_strings</a></li>
+            <li class="breadcrumb-item active" aria-current="page">bundle</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/bundle.html#src">bundle</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  function bundle(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20, len) result(vec)  
+</h2>
+    
+
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">bundle</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">ARRAY</span>] <span class="k">return</span> <span class="nv">up</span> <span class="nv">to</span> <span class="nv">twenty</span> <span class="nv">strings</span> <span class="nv">of</span> <span class="nv">arbitrary</span> <span class="nv">length</span>
+             <span class="nv">as</span> <span class="nv">an</span> <span class="nv">array</span>
+<span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">bundle(str1,str2,...str20,len) result </span><span class="p">(</span>vec<span class="p">)</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w">   </span><span class="p">::</span><span class="w"> </span><span class="n">str1</span><span class="p">,</span><span class="w"> </span><span class="n">str2</span><span class="w"> </span><span class="k">...</span><span class="c"> str20</span><span class="w"></span>
+<span class="w"> </span><span class="n">integer</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w">            </span><span class="p">::</span><span class="w"> </span><span class="n">len</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">Given</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">twenty</span><span class="w"> </span><span class="n">strings</span><span class="w"> </span><span class="n">create</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">array</span><span class="o">.</span><span class="w"> </span><span class="n">The</span><span class="w"></span>
+<span class="n">length</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">maximum</span><span class="w"> </span><span class="n">length</span><span class="w"></span>
+<span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="n">strings</span><span class="w"> </span><span class="n">unless</span><span class="w"> </span><span class="n">explicitly</span><span class="w"> </span><span class="n">specified</span><span class="w"> </span><span class="n">via</span><span class="w"> </span><span class="n">LEN</span><span class="o">.</span><span class="w"></span>
+
+<span class="n">This</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">alternative</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">syntax</span><span class="w"></span>
+
+<span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="n">CHARACTER</span><span class="p">(</span><span class="n">LEN</span><span class="o">=</span><span class="n">NN</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">str1</span><span class="p">,</span><span class="w"> </span><span class="n">str2</span><span class="p">,</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="p">]</span><span class="w"></span>
+
+<span class="n">that</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="n">additionally</span><span class="w"> </span><span class="n">calculates</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">minimum</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">required</span><span class="w"></span>
+<span class="n">to</span><span class="w"> </span><span class="n">prevent</span><span class="w"> </span><span class="n">truncation</span><span class="o">.</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">str1</span><span class="p">,</span><span class="n">str2</span><span class="p">,</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="n">str20</span><span class="w">  </span><span class="n">input</span><span class="w"> </span><span class="n">strings</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">combine</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">vector</span><span class="w"></span>
+<span class="n">len</span><span class="w">   </span><span class="n">length</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">returned</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">variables</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample Program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_bundle</span>
+<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">bundle</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">fmt</span><span class="o">=</span> <span class="s2">&quot;</span><span class="s">(*(&#39;</span><span class="s2">&quot;&quot;</span><span class="s">&#39;,a,&#39;</span><span class="s2">&quot;&quot;</span><span class="s">&#39;:,&#39;,&#39;,1x))</span><span class="s2">&quot;</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">array</span><span class="ss">(</span>:<span class="ss">)</span>
+   <span class="nv">print</span> <span class="nv">fmt</span>, <span class="nv">bundle</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">one</span><span class="s2">&quot;</span><span class="ss">)</span>
+   <span class="nv">print</span> <span class="nv">fmt</span>, <span class="nv">bundle</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">one</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">two</span><span class="s2">&quot;</span><span class="ss">)</span>
+   <span class="nv">print</span> <span class="nv">fmt</span>, <span class="nv">bundle</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">one</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">two</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">three</span><span class="s2">&quot;</span><span class="ss">)</span>
+   <span class="nv">array</span><span class="o">=</span><span class="nv">bundle</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">one</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">two</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">three</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">four</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">five</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">six</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">seven</span><span class="s2">&quot;</span><span class="ss">)</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(*(g0))</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">size=</span><span class="s1">&#39;</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">array</span><span class="ss">)</span>,<span class="s1">&#39;</span><span class="s">,len=</span><span class="s1">&#39;</span>,<span class="nv">len</span><span class="ss">(</span><span class="nv">array</span><span class="ss">)</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(&quot;[&quot;,a,&quot;]&quot;)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">array</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_bundle</span>
+</code></pre></div>
+
+<p>Results:</p>
+<blockquote>
+<p>&ldquo;one&rdquo;
+&ldquo;one&rdquo;, &ldquo;two&rdquo;
+&ldquo;one  &ldquo;, &ldquo;two  &ldquo;, &ldquo;three&rdquo;
+size=7,len=5
+[one  ]
+[two  ]
+[three]
+[four ]
+[five ]
+[six  ]
+[seven]</p>
+</blockquote>
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x1"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x1</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x2"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x2</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x3"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x3</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x4"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x4</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x5"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x5</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x6"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x6</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x7"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x7</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x8"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x8</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x9"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x9</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x10"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x10</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x11"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x11</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x12"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x12</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x13"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x13</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x14"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x14</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x15"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x15</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x16"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x16</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x17"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x17</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x18"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x18</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x19"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x19</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x20"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x20</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-len~3"></span>
+              integer,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>len</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <h3>Return Value
+        <small>
+          <span class="anchor" id="variable-vec"></span>
+          character(len=:), allocatable, (:)
+        </small>
+      </h3>
+      
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">function </span><span class="n">bundle</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">x3</span><span class="p">,</span><span class="n">x4</span><span class="p">,</span><span class="n">x5</span><span class="p">,</span><span class="n">x6</span><span class="p">,</span><span class="n">x7</span><span class="p">,</span><span class="n">x8</span><span class="p">,</span><span class="n">x9</span><span class="p">,</span><span class="n">x10</span><span class="p">,</span><span class="n">x11</span><span class="p">,</span><span class="n">x12</span><span class="p">,</span><span class="n">x13</span><span class="p">,</span><span class="n">x14</span><span class="p">,</span><span class="n">x15</span><span class="p">,</span><span class="n">x16</span><span class="p">,</span><span class="n">x17</span><span class="p">,</span><span class="n">x18</span><span class="p">,</span><span class="n">x19</span><span class="p">,</span><span class="n">x20</span><span class="p">,</span><span class="nb">len</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span><span class="w"></span>
+<span class="c">! return character array containing present arguments</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">x3</span><span class="p">,</span><span class="n">x4</span><span class="p">,</span><span class="n">x5</span><span class="p">,</span><span class="n">x6</span><span class="p">,</span><span class="n">x7</span><span class="p">,</span><span class="n">x8</span><span class="p">,</span><span class="n">x9</span><span class="p">,</span><span class="n">x10</span><span class="w"></span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">x11</span><span class="p">,</span><span class="n">x12</span><span class="p">,</span><span class="n">x13</span><span class="p">,</span><span class="n">x14</span><span class="p">,</span><span class="n">x15</span><span class="p">,</span><span class="n">x16</span><span class="p">,</span><span class="n">x17</span><span class="p">,</span><span class="n">x18</span><span class="p">,</span><span class="n">x19</span><span class="p">,</span><span class="n">x20</span><span class="w"></span>
+<span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="nb">len</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">vec</span><span class="p">(:)</span><span class="w"></span>
+<span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">iilen</span><span class="p">,</span><span class="w"> </span><span class="n">icount</span><span class="p">,</span><span class="w"> </span><span class="n">iset</span><span class="w"></span>
+<span class="w">   </span><span class="n">iilen</span><span class="o">=</span><span class="mi">0</span><span class="w"></span>
+<span class="w">   </span><span class="n">icount</span><span class="o">=</span><span class="mi">0</span><span class="w"></span>
+<span class="w">   </span><span class="n">iset</span><span class="o">=</span><span class="mi">0</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x3</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x4</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x5</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x6</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x7</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x8</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x9</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x10</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x11</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x12</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x13</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x14</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x15</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x16</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x17</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x18</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x19</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">increment</span><span class="p">(</span><span class="n">x20</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span><span class="w"> </span><span class="n">iilen</span><span class="o">=</span><span class="nb">len</span>
+<span class="nb">   </span><span class="k">allocate</span><span class="w"> </span><span class="p">(</span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">iilen</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">vec</span><span class="p">(</span><span class="n">icount</span><span class="p">))</span><span class="w"></span>
+
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x3</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x4</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x5</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x6</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x7</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x8</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x9</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x10</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x11</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x12</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x13</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x14</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x15</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x16</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x17</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x18</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x19</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">call </span><span class="n">set</span><span class="p">(</span><span class="n">x20</span><span class="p">)</span><span class="w"></span>
+
+<span class="k">contains</span>
+
+<span class="k">subroutine </span><span class="n">increment</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w"></span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">str</span><span class="w"></span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">str</span><span class="p">))</span><span class="k">then</span>
+<span class="k">      </span><span class="n">iilen</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">iilen</span><span class="p">,</span><span class="nb">len_trim</span><span class="p">(</span><span class="n">str</span><span class="p">))</span><span class="w"></span>
+<span class="w">      </span><span class="n">icount</span><span class="o">=</span><span class="n">icount</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">   </span><span class="k">endif</span>
+<span class="k">end subroutine </span><span class="n">increment</span><span class="w"></span>
+
+<span class="k">subroutine </span><span class="n">set</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w"></span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">str</span><span class="w"></span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">str</span><span class="p">))</span><span class="k">then</span>
+<span class="k">      </span><span class="n">iset</span><span class="o">=</span><span class="n">iset</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">      </span><span class="n">vec</span><span class="p">(</span><span class="n">iset</span><span class="p">)</span><span class="o">=</span><span class="n">str</span><span class="w"></span>
+<span class="w">   </span><span class="k">endif</span>
+<span class="k">end subroutine </span><span class="n">set</span><span class="w"></span>
+
+<span class="k">end function </span><span class="n">bundle</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              M_strings
+ was developed by John S. Urban<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2025-07-11 00:20 +0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

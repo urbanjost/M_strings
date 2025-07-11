@@ -1,0 +1,505 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="string operations">
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>split &ndash; M_strings</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">M_strings </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>split
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 1.7% of total for procedures.">53 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/M_strings.F90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
+                <li class="breadcrumb-item"><a href='../module/m_strings.html'>M_strings</a></li>
+            <li class="breadcrumb-item active" aria-current="page">split</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/split.html#src">split</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine split(input_line, array, delimiters, order, nulls)  
+</h2>
+    
+
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>split(3f) - [M_strings:TOKENS] parse string into an array using
+specified delimiters
+(LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>subroutine split(input_line,array,delimiters,order,nulls)
+
+ character(len=*),intent(in)              :: input_line
+ character(len=:),allocatable,intent(out) :: array(:)
+ character(len=*),optional,intent(in)     :: delimiters
+ character(len=*),optional,intent(in)     :: order
+ character(len=*),optional,intent(in)     :: nulls
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code> SPLIT(3f) parses a string using specified delimiter characters and
+ store tokens into an allocatable array
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">INPUT_LINE</span>  <span class="n">Input</span> <span class="n">string</span> <span class="n">to</span> <span class="n">tokenize</span>
+
+<span class="kr">ARRAY</span>       <span class="n">Output</span> <span class="n">array</span> <span class="n">of</span> <span class="n">tokens</span>
+
+<span class="n">DELIMITERS</span>  <span class="n">List</span> <span class="n">of</span> <span class="n">delimiter</span> <span class="n">characters</span><span class="p">.</span>
+            <span class="n">The</span> <span class="n">default</span> <span class="n">delimiters</span> <span class="n">are</span> <span class="n">the</span> <span class="s">&quot;whitespace&quot;</span> <span class="n">characters</span>
+            <span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">tab</span><span class="p">,</span><span class="n">new</span> <span class="n">line</span><span class="p">,</span> <span class="n">vertical</span> <span class="n">tab</span><span class="p">,</span> <span class="n">formfeed</span><span class="p">,</span> <span class="n">carriage</span>
+            <span class="n">return</span><span class="p">,</span> <span class="n">and</span> <span class="n">null</span><span class="p">).</span> <span class="n">You</span> <span class="n">may</span> <span class="n">specify</span> <span class="n">an</span> <span class="n">alternate</span> <span class="n">set</span> <span class="n">of</span>
+            <span class="n">delimiter</span> <span class="n">characters</span><span class="p">.</span>
+
+            <span class="n">Multi</span><span class="o">-</span><span class="n">character</span> <span class="n">delimiters</span> <span class="n">are</span> <span class="n">not</span> <span class="n">supported</span> <span class="p">(</span><span class="n">Each</span>
+            <span class="n">character</span> <span class="n">in</span> <span class="n">the</span> <span class="n">DELIMITERS</span> <span class="n">list</span> <span class="n">is</span> <span class="n">considered</span> <span class="n">to</span> <span class="n">be</span>
+            <span class="n">a</span> <span class="n">delimiter</span><span class="p">).</span>
+
+            <span class="n">Quoting</span> <span class="n">of</span> <span class="n">delimiter</span> <span class="n">characters</span> <span class="n">is</span> <span class="n">not</span> <span class="n">supported</span><span class="p">.</span>
+
+<span class="n">ORDER</span> <span class="n">SEQUENTIAL</span><span class="p">|</span><span class="n">REVERSE</span><span class="p">|</span><span class="n">RIGHT</span>  <span class="n">Order</span> <span class="n">of</span> <span class="n">output</span> <span class="n">array</span><span class="p">.</span>
+            <span class="n">By</span> <span class="n">default</span> <span class="kr">ARRAY</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">tokens</span> <span class="n">having</span> <span class="n">parsed</span>
+            <span class="n">the</span> <span class="n">INPUT_LINE</span> <span class="n">from</span> <span class="n">left</span> <span class="n">to</span> <span class="n">right</span><span class="p">.</span> <span class="n">If</span> <span class="n">ORDER</span><span class="o">=</span><span class="s">&#39;RIGHT&#39;</span>
+            <span class="n">or</span> <span class="n">ORDER</span><span class="o">=</span><span class="s">&#39;REVERSE&#39;</span> <span class="n">the</span> <span class="n">parsing</span> <span class="n">goes</span> <span class="n">from</span> <span class="n">right</span> <span class="n">to</span> <span class="n">left</span><span class="p">.</span>
+            <span class="p">(</span><span class="n">This</span> <span class="n">can</span> <span class="n">be</span> <span class="n">accomplished</span> <span class="n">with</span> <span class="n">array</span> <span class="n">syntax</span> <span class="n">in</span> <span class="n">modern</span>
+            <span class="n">Fortran</span><span class="p">,</span> <span class="n">but</span> <span class="n">was</span> <span class="n">more</span> <span class="n">useful</span> <span class="n">pre</span><span class="o">-</span><span class="n">fortran90</span><span class="p">).</span>
+
+<span class="n">NULLS</span><span class="o">=</span><span class="n">IGNORE</span><span class="p">|</span><span class="kr">RETURN</span><span class="p">|</span><span class="n">IGNOREEND</span>  <span class="n">Treatment</span> <span class="n">of</span> <span class="n">null</span> <span class="n">fields</span><span class="p">.</span>
+            <span class="n">By</span> <span class="n">default</span> <span class="n">adjacent</span> <span class="n">delimiters</span> <span class="n">in</span> <span class="n">the</span> <span class="n">input</span> <span class="n">string</span>
+            <span class="n">do</span> <span class="n">not</span> <span class="n">create</span> <span class="n">an</span> <span class="n">empty</span> <span class="n">string</span> <span class="n">in</span> <span class="n">the</span> <span class="n">output</span> <span class="n">array</span><span class="p">.</span> <span class="n">if</span>
+            <span class="n">NULLS</span><span class="o">=</span><span class="s">&#39;return&#39;</span> <span class="n">adjacent</span> <span class="n">delimiters</span> <span class="n">create</span> <span class="n">an</span> <span class="n">empty</span> <span class="n">element</span>
+            <span class="n">in</span> <span class="n">the</span> <span class="n">output</span> <span class="kr">ARRAY</span><span class="p">.</span> <span class="n">If</span> <span class="n">NULLS</span><span class="o">=</span><span class="s">&#39;ignoreend&#39;</span> <span class="n">then</span> <span class="n">only</span>
+            <span class="n">trailing</span> <span class="n">delimiters</span> <span class="n">at</span> <span class="n">the</span> <span class="n">right</span> <span class="n">of</span> <span class="n">the</span> <span class="n">string</span> <span class="n">are</span> <span class="n">ignored</span><span class="p">.</span>
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_split</span>
+<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span>: <span class="nv">split</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">integer</span>                      :: <span class="nv">i</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span>   :: <span class="nv">title</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(80(&quot;=&quot;),t1,a)</span><span class="s1">&#39;</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span>   :: <span class="nv">line</span><span class="o">=&amp;</span>
+<span class="s1">&#39;</span><span class="s">  aBcdef   ghijklmnop qrstuvwxyz  1:|:2     333|333 a B cc    </span><span class="s1">&#39;</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">array</span><span class="ss">(</span>:<span class="ss">)</span> <span class="o">!</span> <span class="nv">output</span> <span class="nv">array</span> <span class="nv">of</span> <span class="nv">tokens</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">INPUT LINE:[</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">line</span><span class="o">//</span><span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span>
+   <span class="o">!</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">title</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">typical call: </span><span class="s1">&#39;</span>
+   <span class="k">call</span> <span class="nl">split</span><span class="ss">(</span><span class="nv">line</span>,<span class="nv">array</span><span class="ss">)</span>
+   <span class="k">call</span> <span class="nl">printme</span><span class="ss">()</span>
+   <span class="o">!</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">title</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">custom delimiters=&quot;:|&quot; : </span><span class="s1">&#39;</span>
+   <span class="k">call</span> <span class="nl">split</span><span class="ss">(</span><span class="nv">line</span>,<span class="nv">array</span>,<span class="nv">delimiters</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">:|</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span> <span class="nv">order</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">sequential</span><span class="s1">&#39;</span>,<span class="nv">nulls</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">ignore</span><span class="s1">&#39;</span><span class="ss">)</span>
+   <span class="k">call</span> <span class="nl">printme</span><span class="ss">()</span>
+   <span class="o">!</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">title</span><span class="ss">)</span><span class="o">&amp;</span>
+   <span class="s1">&#39;</span><span class="s">delimiters=&quot;:|&quot;,reverse array order and count null fields:</span><span class="s1">&#39;</span>
+   <span class="k">call</span> <span class="nl">split</span><span class="ss">(</span><span class="nv">line</span>,<span class="nv">array</span>,<span class="nv">delimiters</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">:|</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span> <span class="nv">order</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">reverse</span><span class="s1">&#39;</span>,<span class="nv">nulls</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">return</span><span class="s1">&#39;</span><span class="ss">)</span>
+   <span class="k">call</span> <span class="nl">printme</span><span class="ss">()</span>
+   <span class="o">!</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">title</span><span class="ss">)</span><span class="o">&amp;</span>
+   <span class="s1">&#39;</span><span class="s">default delimiters, reverse array order and return null fields:</span><span class="s1">&#39;</span>
+   <span class="k">call</span> <span class="nl">split</span><span class="ss">(</span><span class="nv">line</span>,<span class="nv">array</span>,<span class="nv">delimiters</span><span class="o">=</span><span class="s1">&#39;&#39;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span> <span class="nv">order</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">reverse</span><span class="s1">&#39;</span>,<span class="nv">nulls</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">return</span><span class="s1">&#39;</span><span class="ss">)</span>
+   <span class="k">call</span> <span class="nl">printme</span><span class="ss">()</span>
+<span class="nv">contains</span>
+<span class="nv">subroutine</span> <span class="nv">printme</span><span class="ss">()</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(i0,&quot; ==&gt; &quot;,a)</span><span class="s1">&#39;</span><span class="ss">)(</span><span class="nv">i</span>,<span class="nv">trim</span><span class="ss">(</span><span class="nv">array</span><span class="ss">(</span><span class="nv">i</span><span class="ss">))</span>,<span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">array</span><span class="ss">))</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">SIZE:</span><span class="s1">&#39;</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">array</span><span class="ss">)</span>
+<span class="k">end</span> <span class="nv">subroutine</span> <span class="nv">printme</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_split</span>
+</code></pre></div>
+
+<p>Results:</p>
+<blockquote>
+<p>INPUT LINE:
+[  aBcdef   ghijklmnop qrstuvwxyz  1:|:2     333|333 a B cc    ]
+typical call: ========================================================
+1 ==&gt; aBcdef
+2 ==&gt; ghijklmnop
+3 ==&gt; qrstuvwxyz
+4 ==&gt; 1:|:2
+5 ==&gt; 333|333
+6 ==&gt; a
+7 ==&gt; B
+8 ==&gt; cc
+ SIZE:           8
+custom delimiters=&rdquo;:|&rdquo; : =============================================
+1 ==&gt;   aBcdef   ghijklmnop qrstuvwxyz  1
+2 ==&gt; 2     333
+3 ==&gt; 333 a B cc
+ SIZE:           3
+delimiters=&rdquo;:|&rdquo;,reverse array order and count null fields:============
+1 ==&gt; 333 a B cc
+2 ==&gt; 2     333
+3 ==&gt;
+4 ==&gt;
+5 ==&gt;   aBcdef   ghijklmnop qrstuvwxyz  1
+ SIZE:           5
+default delimiters, reverse array order and return null fields:=======
+1 ==&gt;
+2 ==&gt;
+3 ==&gt;
+4 ==&gt; cc
+5 ==&gt; B
+6 ==&gt; a
+7 ==&gt; 333|333
+8 ==&gt;
+9 ==&gt;
+10 ==&gt;
+11 ==&gt;
+12 ==&gt; 1:|:2
+13 ==&gt;
+14 ==&gt; qrstuvwxyz
+15 ==&gt; ghijklmnop
+16 ==&gt;
+17 ==&gt;
+18 ==&gt; aBcdef
+19 ==&gt;
+20 ==&gt;
+ SIZE:          20</p>
+</blockquote>
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-input_line~2"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>input_line</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-array~2"></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>array</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-delimiters~2"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>delimiters</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-order~2"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>order</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nulls~2"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nulls</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">split</span><span class="p">(</span><span class="n">input_line</span><span class="p">,</span><span class="k">array</span><span class="p">,</span><span class="n">delimiters</span><span class="p">,</span><span class="n">order</span><span class="p">,</span><span class="n">nulls</span><span class="p">)</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+
+<span class="c">! ident_8=&quot;@(#) M_strings split(3f) parse string on delimiter characters and store tokens into an allocatable array&quot;</span>
+
+<span class="c">!  John S. Urban</span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="k">intrinsic </span><span class="nb">index</span><span class="p">,</span><span class="w"> </span><span class="nb">min</span><span class="p">,</span><span class="w"> </span><span class="nb">present</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="c">!  given a line of structure &quot; par1 par2 par3 ... parn &quot; store each par(n) into a separate variable in array.</span>
+<span class="c">!    o by default adjacent delimiters in the input string do not create an empty string in the output array</span>
+<span class="c">!    o no quoting of delimiters is supported</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">              </span><span class="kd">::</span><span class="w"> </span><span class="n">input_line</span><span class="w">  </span><span class="c">! input string to tokenize</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">optional</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">delimiters</span><span class="w">  </span><span class="c">! list of delimiter characters</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">optional</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">order</span><span class="w">       </span><span class="c">! order of output array sequential|[reverse|right]</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">optional</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">nulls</span><span class="w">       </span><span class="c">! return strings composed of delimiters or not ignore|return|ignoreend</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="k">array</span><span class="p">(:)</span><span class="w">    </span><span class="c">! output array of tokens</span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">ibegin</span><span class="p">(:)</span><span class="w">              </span><span class="c">! positions in input string where tokens start</span>
+<span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">iend</span><span class="p">(:)</span><span class="w">                </span><span class="c">! positions in input string where tokens end</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">ordr</span><span class="w">                   </span><span class="c">! string containing order keyword</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">nlls</span><span class="w">                   </span><span class="c">! string containing nulls keyword</span>
+<span class="kt">integer</span><span class="w">                       </span><span class="kd">::</span><span class="w"> </span><span class="n">ii</span><span class="p">,</span><span class="n">iiii</span><span class="w">                </span><span class="c">! loop parameters used to control print order</span>
+<span class="kt">integer</span><span class="w">                       </span><span class="kd">::</span><span class="w"> </span><span class="n">i20</span><span class="w">                    </span><span class="c">! loop counters</span>
+<span class="kt">integer</span><span class="w">                       </span><span class="kd">::</span><span class="w"> </span><span class="n">imax</span><span class="w">                   </span><span class="c">! length of longest token</span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="w">   </span><span class="k">call  </span><span class="n">slice</span><span class="p">(</span><span class="n">input_line</span><span class="p">,</span><span class="n">ibegin</span><span class="p">,</span><span class="n">iend</span><span class="p">,</span><span class="n">delimiters</span><span class="p">,</span><span class="n">nulls</span><span class="p">)</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">nulls</span><span class="p">))</span><span class="k">then</span><span class="p">;</span><span class="w"> </span><span class="n">nlls</span><span class="o">=</span><span class="nb">trim</span><span class="p">(</span><span class="n">lower</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">nulls</span><span class="p">)));</span><span class="w"> </span><span class="k">else</span><span class="p">;</span><span class="w"> </span><span class="n">nlls</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="w">    </span><span class="p">;</span><span class="w"> </span><span class="k">endif</span><span class="w"> </span><span class="c">! optional parameter</span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">order</span><span class="p">))</span><span class="k">then</span><span class="p">;</span><span class="w"> </span><span class="n">ordr</span><span class="o">=</span><span class="nb">trim</span><span class="p">(</span><span class="n">lower</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">order</span><span class="p">)));</span><span class="w"> </span><span class="k">else</span><span class="p">;</span><span class="w"> </span><span class="n">ordr</span><span class="o">=</span><span class="s1">&#39;sequential&#39;</span><span class="p">;</span><span class="w"> </span><span class="k">endif</span><span class="w"> </span><span class="c">! decide on value for ORDER parameter</span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="w">   </span><span class="k">select case</span><span class="w"> </span><span class="p">(</span><span class="n">ordr</span><span class="p">)</span><span class="w">                                             </span><span class="c">! decide which order to store tokens</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;reverse&#39;</span><span class="p">,</span><span class="s1">&#39;right&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">ii</span><span class="o">=</span><span class="n">size</span><span class="p">(</span><span class="n">ibegin</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">iiii</span><span class="o">=-</span><span class="mi">1</span><span class="w">           </span><span class="c">! last to first</span>
+<span class="w">   </span><span class="k">case </span><span class="n">default</span><span class="w">             </span><span class="p">;</span><span class="w"> </span><span class="n">ii</span><span class="o">=</span><span class="mi">1</span><span class="w">            </span><span class="p">;</span><span class="w"> </span><span class="n">iiii</span><span class="o">=</span><span class="mi">1</span><span class="w">            </span><span class="c">! first to last</span>
+<span class="w">   </span><span class="k">end select</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="w">   </span><span class="c">! maxval() of a zero-size array is set to a flag value not zero or length of character string</span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">ibegin</span><span class="p">).</span><span class="n">eq</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
+<span class="k">      </span><span class="n">imax</span><span class="o">=</span><span class="mi">0</span><span class="w"></span>
+<span class="w">   </span><span class="k">else</span>
+<span class="k">      </span><span class="n">imax</span><span class="o">=</span><span class="nb">maxval</span><span class="p">(</span><span class="n">iend</span><span class="o">-</span><span class="n">ibegin</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">   </span><span class="k">endif</span>
+<span class="k">   allocate</span><span class="p">(</span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">imax</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="k">array</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">ibegin</span><span class="p">)))</span><span class="w">           </span><span class="c">! allocate the array to return</span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="w">   </span><span class="k">do </span><span class="n">i20</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">ibegin</span><span class="p">)</span><span class="w">                                          </span><span class="c">! fill the array with the tokens that were found</span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">iend</span><span class="p">(</span><span class="n">i20</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ibegin</span><span class="p">(</span><span class="n">i20</span><span class="p">))</span><span class="k">then</span>
+<span class="k">         select case</span><span class="w"> </span><span class="p">(</span><span class="n">nlls</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="s1">&#39;ignoreend&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">case </span><span class="n">default</span><span class="w"></span>
+<span class="w">            </span><span class="k">array</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="w"></span>
+<span class="w">            </span><span class="n">ii</span><span class="o">=</span><span class="n">ii</span><span class="o">+</span><span class="n">iiii</span><span class="w"></span>
+<span class="w">         </span><span class="k">end select</span>
+<span class="k">      else</span>
+<span class="k">         array</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span><span class="o">=</span><span class="n">input_line</span><span class="p">(</span><span class="n">ibegin</span><span class="p">(</span><span class="n">i20</span><span class="p">):</span><span class="n">iend</span><span class="p">(</span><span class="n">i20</span><span class="p">))</span><span class="w"></span>
+<span class="w">         </span><span class="n">ii</span><span class="o">=</span><span class="n">ii</span><span class="o">+</span><span class="n">iiii</span><span class="w"></span>
+<span class="w">      </span><span class="k">endif</span>
+<span class="k">   enddo</span><span class="w"></span>
+<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="k">end subroutine </span><span class="n">split</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              M_strings
+ was developed by John S. Urban<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2025-07-11 00:20 +0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

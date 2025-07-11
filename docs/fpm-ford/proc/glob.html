@@ -1,0 +1,622 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="string operations">
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>glob &ndash; M_strings</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">M_strings </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>glob
+      <small>Function</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 2.7% of total for procedures.">86 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/M_strings.F90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/m_strings.f90.html'>M_strings.F90</a></li>
+                <li class="breadcrumb-item"><a href='../module/m_strings.html'>M_strings</a></li>
+            <li class="breadcrumb-item active" aria-current="page">glob</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/glob.html#src">glob</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  function glob(tame, wild)  
+</h2>
+    
+
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">glob</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_strings</span>:<span class="nv">COMPARE</span>] <span class="nv">compare</span> <span class="nv">given</span> <span class="nv">string</span> <span class="k">for</span> <span class="nv">match</span> <span class="nv">to</span>
+<span class="nv">a</span> <span class="nv">pattern</span> <span class="nv">which</span> <span class="nv">may</span> <span class="nv">contain</span> <span class="nv">globbing</span> <span class="nv">wildcard</span> <span class="nv">characters</span>
+<span class="ss">(</span><span class="nv">LICENSE</span>:<span class="nv">PD</span><span class="ss">)</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>logical function glob(string, pattern )
+
+ character(len=*),intent(in) :: string
+ character(len=*),intent(in) :: pattern
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">glob</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">compares</span> <span class="nv">an</span> <span class="ss">(</span><span class="nv">entire</span><span class="ss">)</span> <span class="nv">STRING</span> <span class="k">for</span> <span class="nv">a</span> <span class="nv">match</span> <span class="nv">to</span> <span class="nv">a</span> <span class="nv">PATTERN</span> <span class="nv">which</span>
+<span class="nv">may</span> <span class="nv">contain</span> <span class="nv">basic</span> <span class="nv">wildcard</span> <span class="s2">&quot;</span><span class="s">globbing</span><span class="s2">&quot;</span> <span class="nv">characters</span>.
+
+<span class="s2">&quot;</span><span class="s">*</span><span class="s2">&quot;</span> <span class="nv">matches</span> <span class="nv">any</span> <span class="nv">string</span>. <span class="s2">&quot;</span><span class="s">?</span><span class="s2">&quot;</span> <span class="nv">matches</span> <span class="nv">any</span> <span class="nv">single</span> <span class="nv">character</span>.
+
+<span class="nv">In</span> <span class="nv">this</span> <span class="nv">version</span> <span class="nv">to</span> <span class="nv">get</span> <span class="nv">a</span> <span class="nv">match</span> <span class="nv">the</span> <span class="nv">entire</span> <span class="nv">string</span> <span class="nv">must</span> <span class="nv">be</span> <span class="nv">described</span> <span class="nv">by</span>
+<span class="nv">PATTERN</span>. <span class="nv">Trailing</span> <span class="nv">whitespace</span> <span class="nv">is</span> <span class="nv">significant</span>, <span class="nv">so</span> <span class="nv">trim</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">string</span>
+<span class="nv">to</span> <span class="nv">have</span> <span class="nv">trailing</span> <span class="nv">whitespace</span> <span class="nv">ignored</span>.
+
+<span class="nv">Patterns</span> <span class="nv">like</span> <span class="s2">&quot;</span><span class="s">b*ba</span><span class="s2">&quot;</span> <span class="nv">fail</span> <span class="nv">on</span> <span class="nv">a</span> <span class="nv">string</span> <span class="nv">like</span> <span class="s2">&quot;</span><span class="s">babababa</span><span class="s2">&quot;</span> <span class="nv">because</span> <span class="nv">the</span> <span class="nv">first</span>
+<span class="nv">match</span> <span class="nv">found</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">at</span> <span class="nv">the</span> <span class="k">end</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">string</span> <span class="nv">so</span> <span class="s1">&#39;</span><span class="s">baba</span><span class="s1">&#39;</span> <span class="nv">does</span> <span class="nv">not</span> <span class="nv">match</span>
+<span class="s1">&#39;</span><span class="s">babababa</span><span class="s1">&#39;</span>. <span class="nv">So</span> <span class="nv">the</span> <span class="nv">algorithm</span> <span class="nv">is</span> <span class="nv">said</span> <span class="nv">to</span> <span class="nv">find</span> <span class="nv">an</span> <span class="nv">early</span> <span class="nv">match</span>.
+
+<span class="nv">To</span> <span class="nv">skip</span> <span class="nv">over</span> <span class="nv">the</span> <span class="nv">early</span> <span class="nv">matches</span> <span class="nv">insert</span> <span class="nv">an</span> <span class="nv">extra</span> <span class="nv">character</span> <span class="nv">at</span> <span class="nv">the</span> <span class="k">end</span> <span class="nv">of</span>
+<span class="nv">the</span> <span class="nv">string</span> <span class="nv">and</span> <span class="nv">pattern</span> <span class="nv">that</span> <span class="nv">does</span> <span class="nv">not</span> <span class="nv">occur</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">pattern</span>. <span class="nv">Typically</span> <span class="nv">a</span>
+<span class="nv">NULL</span> <span class="nv">is</span> <span class="nv">used</span> <span class="ss">(</span><span class="nv">char</span><span class="ss">(</span><span class="mi">0</span><span class="ss">))</span>. <span class="nv">So</span> <span class="nv">searching</span> <span class="k">for</span> <span class="nv">b</span><span class="o">*</span><span class="nv">ba</span>\<span class="mi">0</span> <span class="nv">in</span> <span class="nv">babababa</span>\<span class="mi">0</span> <span class="nv">matches</span>
+<span class="nv">the</span> <span class="nv">entire</span> <span class="nv">string</span>.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">string</span>   <span class="nv">the</span> <span class="nv">input</span> <span class="nv">string</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">tested</span> <span class="k">for</span> <span class="nv">a</span> <span class="nv">match</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">pattern</span>.
+<span class="nv">pattern</span>  <span class="nv">the</span> <span class="nv">globbing</span> <span class="nv">pattern</span> <span class="nv">to</span> <span class="nv">search</span> <span class="k">for</span>. <span class="nv">The</span> <span class="nv">following</span> <span class="nv">simple</span>
+         <span class="nv">globbing</span> <span class="nv">options</span> <span class="nv">are</span> <span class="nv">available</span>
+
+         <span class="nv">o</span> <span class="s2">&quot;</span><span class="s">?</span><span class="s2">&quot;</span> <span class="nv">matching</span> <span class="nv">any</span> <span class="nv">one</span> <span class="nv">character</span>
+         <span class="nv">o</span> <span class="s2">&quot;</span><span class="s">*</span><span class="s2">&quot;</span> <span class="nv">matching</span> <span class="nv">zero</span> <span class="nv">or</span> <span class="nv">more</span> <span class="nv">characters</span>.
+           <span class="k">Do</span> <span class="nv">NOT</span> <span class="nv">use</span> <span class="nv">adjacent</span> <span class="nv">asterisks</span>.
+         <span class="nv">o</span> <span class="nv">spaces</span> <span class="nv">are</span> <span class="nv">significant</span> <span class="nv">and</span> <span class="nv">must</span> <span class="nv">be</span> <span class="nv">matched</span> <span class="nv">or</span> <span class="nv">trimmed</span>
+           <span class="nv">before</span> <span class="nv">the</span> <span class="nv">comparison</span>.
+         <span class="nv">o</span> <span class="nv">There</span> <span class="nv">is</span> <span class="nv">no</span> <span class="nv">escape</span> <span class="nv">character</span>, <span class="nv">so</span> <span class="nv">matching</span> <span class="nv">strings</span> <span class="nv">with</span>
+           <span class="nv">a</span> <span class="nv">literal</span> <span class="nv">question</span> <span class="nv">mark</span> <span class="nv">and</span> <span class="nv">asterisk</span> <span class="nv">is</span> <span class="nv">problematic</span>.
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Example program</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_glob</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="o">!</span> <span class="nv">This</span> <span class="nv">main</span> <span class="nv">routine</span> <span class="nv">passes</span> <span class="nv">a</span> <span class="nv">bunch</span> <span class="nv">of</span> <span class="nv">test</span> <span class="nv">strings</span>
+<span class="o">!</span> <span class="nv">into</span> <span class="nv">the</span> <span class="nv">above</span> <span class="nv">code</span>. <span class="nv">In</span> <span class="nv">performance</span> <span class="nv">comparison</span> <span class="nv">mode</span>,
+<span class="o">!</span> <span class="nv">it</span> <span class="nv">does</span> <span class="nv">that</span> <span class="nv">over</span> <span class="nv">and</span> <span class="nv">over</span>. <span class="nv">Otherwise</span>, <span class="nv">it</span> <span class="nv">does</span> <span class="nv">it</span> <span class="nv">just</span>
+<span class="o">!</span> <span class="nv">once</span>. <span class="nv">Either</span> <span class="nv">way</span>, <span class="nv">it</span> <span class="nv">outputs</span> <span class="nv">a</span> <span class="nv">passed</span><span class="o">/</span><span class="nv">failed</span> <span class="nb">result</span>.
+<span class="o">!</span>
+<span class="nv">integer</span> :: <span class="nv">nReps</span>
+<span class="nv">logical</span> :: <span class="nv">allpassed</span>
+<span class="nv">integer</span> :: <span class="nv">i</span>
+<span class="nv">allpassed</span> <span class="o">=</span> .<span class="nv">true</span>.
+
+<span class="nv">nReps</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="o">!</span> <span class="nv">Can</span> <span class="nv">choose</span> <span class="nv">as</span> <span class="nv">many</span> <span class="nv">repetitions</span> <span class="nv">as</span> <span class="nv">you</span><span class="s1">&#39;</span><span class="s">re expecting</span>
+<span class="o">!</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">real</span> <span class="nv">world</span>.
+<span class="nv">nReps</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">nReps</span>
+   <span class="o">!</span> <span class="nv">Cases</span> <span class="nv">with</span> <span class="nv">repeating</span> <span class="nv">character</span> <span class="nv">sequences</span>.
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">a*abab</span><span class="s2">&quot;</span>,      <span class="s2">&quot;</span><span class="s">a*b</span><span class="s2">&quot;</span>,   .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">ab</span><span class="s2">&quot;</span>,          <span class="s2">&quot;</span><span class="s">*?</span><span class="s2">&quot;</span>,    .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">abc</span><span class="s2">&quot;</span>,         <span class="s2">&quot;</span><span class="s">*?</span><span class="s2">&quot;</span>,    .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">abcccd</span><span class="s2">&quot;</span>,      <span class="s2">&quot;</span><span class="s">*ccd</span><span class="s2">&quot;</span>,  .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">bLah</span><span class="s2">&quot;</span>,        <span class="s2">&quot;</span><span class="s">bLaH</span><span class="s2">&quot;</span>,  .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">mississippi</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">*sip*</span><span class="s2">&quot;</span>, .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="o">&amp;</span>
+    <span class="o">&amp;</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">xxxx*zzzzzzzzy*f</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">xxx*zzy*f</span><span class="s2">&quot;</span>, .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="o">&amp;</span>
+    <span class="o">&amp;</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">xxxx*zzzzzzzzy*f</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">xxxx*zzy*fffff</span><span class="s2">&quot;</span>, .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="o">&amp;</span>
+    <span class="o">&amp;</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">mississipissippi</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">*issip*ss*</span><span class="s2">&quot;</span>, .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="o">&amp;</span>
+    <span class="o">&amp;</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">xxxxzzzzzzzzyf</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">xxxx*zzy*fffff</span><span class="s2">&quot;</span>, .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="o">&amp;</span>
+    <span class="o">&amp;</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">xxxxzzzzzzzzyf</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">xxxx*zzy*f</span><span class="s2">&quot;</span>, .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">xyxyxyzyxyz</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">xy*z*xyz</span><span class="s2">&quot;</span>, .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">xyxyxyxyz</span><span class="s2">&quot;</span>,   <span class="s2">&quot;</span><span class="s">xy*xyz</span><span class="s2">&quot;</span>,   .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">mississippi</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">mi*sip*</span><span class="s2">&quot;</span>,  .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">ababac</span><span class="s2">&quot;</span>,      <span class="s2">&quot;</span><span class="s">*abac*</span><span class="s2">&quot;</span>,   .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">aaazz</span><span class="s2">&quot;</span>,       <span class="s2">&quot;</span><span class="s">a*zz*</span><span class="s2">&quot;</span>,    .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">a12b12</span><span class="s2">&quot;</span>,      <span class="s2">&quot;</span><span class="s">*12*23</span><span class="s2">&quot;</span>,   .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">a12b12</span><span class="s2">&quot;</span>,      <span class="s2">&quot;</span><span class="s">a12b</span><span class="s2">&quot;</span>,     .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">a12b12</span><span class="s2">&quot;</span>,      <span class="s2">&quot;</span><span class="s">*12*12*</span><span class="s2">&quot;</span>,  .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+
+   <span class="o">!</span> <span class="nv">Additional</span> <span class="nv">cases</span> <span class="nv">where</span> <span class="nv">the</span> <span class="s1">&#39;</span><span class="s">*</span><span class="s1">&#39;</span> <span class="nv">char</span> <span class="nv">appears</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">tame</span> <span class="nv">string</span>.
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">*</span><span class="s2">&quot;</span>,     <span class="s2">&quot;</span><span class="s">*</span><span class="s2">&quot;</span>,      .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">a*r</span><span class="s2">&quot;</span>,   <span class="s2">&quot;</span><span class="s">a*</span><span class="s2">&quot;</span>,     .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">a*ar</span><span class="s2">&quot;</span>,  <span class="s2">&quot;</span><span class="s">a*aar</span><span class="s2">&quot;</span>,  .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+
+   <span class="o">!</span> <span class="nv">More</span> <span class="nv">double</span> <span class="nv">wildcard</span> <span class="nv">scenarios</span>.
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">XYXYXYZYXYz</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">XY*Z*XYz</span><span class="s2">&quot;</span>,  .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">missisSIPpi</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">*SIP*</span><span class="s2">&quot;</span>,     .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">mississipPI</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">*issip*PI</span><span class="s2">&quot;</span>, .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">xyxyxyxyz</span><span class="s2">&quot;</span>,   <span class="s2">&quot;</span><span class="s">xy*xyz</span><span class="s2">&quot;</span>,    .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">miSsissippi</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">mi*sip*</span><span class="s2">&quot;</span>,   .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">miSsissippi</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">mi*Sip*</span><span class="s2">&quot;</span>,   .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">abAbac</span><span class="s2">&quot;</span>,      <span class="s2">&quot;</span><span class="s">*Abac*</span><span class="s2">&quot;</span>,    .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">aAazz</span><span class="s2">&quot;</span>,       <span class="s2">&quot;</span><span class="s">a*zz*</span><span class="s2">&quot;</span>,     .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">A12b12</span><span class="s2">&quot;</span>,      <span class="s2">&quot;</span><span class="s">*12*23</span><span class="s2">&quot;</span>,    .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">a12B12</span><span class="s2">&quot;</span>,      <span class="s2">&quot;</span><span class="s">*12*12*</span><span class="s2">&quot;</span>,   .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">oWn</span><span class="s2">&quot;</span>,         <span class="s2">&quot;</span><span class="s">*oWn*</span><span class="s2">&quot;</span>,     .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+
+   <span class="o">!</span> <span class="nv">Completely</span> <span class="nv">tame</span> <span class="ss">(</span><span class="nv">no</span> <span class="nv">wildcards</span><span class="ss">)</span> <span class="nv">cases</span>.
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">bLah</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">bLah</span><span class="s2">&quot;</span>, .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+
+   <span class="o">!</span> <span class="nv">Simple</span> <span class="nv">mixed</span> <span class="nv">wildcard</span> <span class="nv">tests</span> <span class="nv">suggested</span> <span class="nv">by</span> <span class="nv">IBMer</span> <span class="nv">Marlin</span> <span class="nv">Deckert</span>.
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">a</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">*?</span><span class="s2">&quot;</span>, .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+
+   <span class="o">!</span> <span class="nv">More</span> <span class="nv">mixed</span> <span class="nv">wildcard</span> <span class="nv">tests</span> <span class="nv">including</span> <span class="nv">coverage</span> <span class="k">for</span> <span class="nv">false</span> <span class="nv">positives</span>.
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">a</span><span class="s2">&quot;</span>,      <span class="s2">&quot;</span><span class="s">??</span><span class="s2">&quot;</span>,         .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">ab</span><span class="s2">&quot;</span>,     <span class="s2">&quot;</span><span class="s">?*?</span><span class="s2">&quot;</span>,        .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">ab</span><span class="s2">&quot;</span>,     <span class="s2">&quot;</span><span class="s">*?*?*</span><span class="s2">&quot;</span>,      .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">abc</span><span class="s2">&quot;</span>,    <span class="s2">&quot;</span><span class="s">?**?*?</span><span class="s2">&quot;</span>,     .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">abc</span><span class="s2">&quot;</span>,    <span class="s2">&quot;</span><span class="s">?**?*&amp;?</span><span class="s2">&quot;</span>,    .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">abcd</span><span class="s2">&quot;</span>,   <span class="s2">&quot;</span><span class="s">?b*??</span><span class="s2">&quot;</span>,      .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">abcd</span><span class="s2">&quot;</span>,   <span class="s2">&quot;</span><span class="s">?a*??</span><span class="s2">&quot;</span>,      .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">abcd</span><span class="s2">&quot;</span>,   <span class="s2">&quot;</span><span class="s">?**?c?</span><span class="s2">&quot;</span>,     .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">abcd</span><span class="s2">&quot;</span>,   <span class="s2">&quot;</span><span class="s">?**?d?</span><span class="s2">&quot;</span>,     .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">abcde</span><span class="s2">&quot;</span>,  <span class="s2">&quot;</span><span class="s">?*b*?*d*?</span><span class="s2">&quot;</span>,  .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+
+   <span class="o">!</span> <span class="nv">Single</span><span class="o">-</span><span class="nv">character</span><span class="o">-</span><span class="nv">match</span> <span class="nv">cases</span>.
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">bLah</span><span class="s2">&quot;</span>,   <span class="s2">&quot;</span><span class="s">bL?h</span><span class="s2">&quot;</span>,  .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">bLaaa</span><span class="s2">&quot;</span>,  <span class="s2">&quot;</span><span class="s">bLa?</span><span class="s2">&quot;</span>,  .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">bLah</span><span class="s2">&quot;</span>,   <span class="s2">&quot;</span><span class="s">bLa?</span><span class="s2">&quot;</span>,  .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">bLaH</span><span class="s2">&quot;</span>,   <span class="s2">&quot;</span><span class="s">?Lah</span><span class="s2">&quot;</span>,  .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">bLaH</span><span class="s2">&quot;</span>,   <span class="s2">&quot;</span><span class="s">?LaH</span><span class="s2">&quot;</span>,  .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">abcdefghijk</span><span class="s1">&#39;</span> ,  <span class="s1">&#39;</span><span class="s">?b*</span><span class="s1">&#39;</span>,     .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">abcdefghijk</span><span class="s1">&#39;</span> ,  <span class="s1">&#39;</span><span class="s">*c*</span><span class="s1">&#39;</span>,     .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">abcdefghijk</span><span class="s1">&#39;</span> ,  <span class="s1">&#39;</span><span class="s">*c</span><span class="s1">&#39;</span>,      .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>.  <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">abcdefghijk</span><span class="s1">&#39;</span> ,  <span class="s1">&#39;</span><span class="s">*c*k</span><span class="s1">&#39;</span>,    .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">LS</span><span class="s1">&#39;</span>          ,  <span class="s1">&#39;</span><span class="s">?OW</span><span class="s1">&#39;</span>,     .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>.  <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">teztit</span><span class="s1">&#39;</span>      ,  <span class="s1">&#39;</span><span class="s">tez*t*t</span><span class="s1">&#39;</span>, .<span class="nv">true</span>.<span class="ss">)</span>  .<span class="nv">and</span>. <span class="nv">allpassed</span>
+     <span class="o">!</span> <span class="nv">Two</span> <span class="nv">pattern</span> <span class="nv">match</span> <span class="nv">problems</span> <span class="nv">that</span> <span class="nv">might</span> <span class="nv">pose</span> <span class="nv">difficulties</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">e </span><span class="s1">&#39;</span>           , <span class="s1">&#39;</span><span class="s">*e* </span><span class="s1">&#39;</span>,      .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">abcde       </span><span class="s1">&#39;</span> , <span class="s1">&#39;</span><span class="s">*e      *</span><span class="s1">&#39;</span>, .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">bababa</span><span class="s1">&#39;</span>       , <span class="s1">&#39;</span><span class="s">b*ba</span><span class="s1">&#39;</span>,      .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">baaaaax</span><span class="s1">&#39;</span>      , <span class="s1">&#39;</span><span class="s">b*ax</span><span class="s1">&#39;</span>,      .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">baaaaa</span><span class="s1">&#39;</span>       , <span class="s1">&#39;</span><span class="s">b*ax</span><span class="s1">&#39;</span>,      .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">baaaaax</span><span class="s1">&#39;</span>      , <span class="s1">&#39;</span><span class="s">b*a</span><span class="s1">&#39;</span>,       .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;&#39;</span>             , <span class="s1">&#39;</span><span class="s">b*</span><span class="s1">&#39;</span>,        .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;&#39;</span>             , <span class="s1">&#39;</span><span class="s">*</span><span class="s1">&#39;</span>,         .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>.  <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">b</span><span class="s1">&#39;</span>            , <span class="s1">&#39;&#39;</span>,          .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">3</span><span class="s1">&#39;</span>            , <span class="s1">&#39;</span><span class="s">^,        .false.) .and. allpassed</span>
+   <span class="o">!</span> <span class="nv">known</span> <span class="nv">flaws</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;&#39;</span>             , <span class="s1">&#39;&#39;</span>,          .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">baaaaa</span><span class="s1">&#39;</span>       , <span class="s1">&#39;</span><span class="s">b*a</span><span class="s1">&#39;</span>,       .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="o">!</span> <span class="nv">add</span> <span class="nv">unused</span> <span class="nv">character</span> <span class="nv">to</span> <span class="nv">work</span> <span class="nv">around</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;&#39;</span><span class="o">//</span><span class="nv">char</span><span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>,      <span class="s1">&#39;&#39;</span><span class="o">//</span><span class="nv">char</span><span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>,   .<span class="nv">true</span>.<span class="ss">)</span>.<span class="nv">and</span>.<span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">baaaaa</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">char</span><span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>,<span class="s1">&#39;</span><span class="s">b*a</span><span class="s1">&#39;</span><span class="o">//</span><span class="nv">char</span><span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>,.<span class="nv">true</span>.<span class="ss">)</span>.<span class="nv">and</span>.<span class="nv">allpassed</span>
+
+   <span class="o">!</span> <span class="nv">Many</span><span class="o">-</span><span class="nv">wildcard</span> <span class="nv">scenarios</span>.
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&amp;</span>
+   <span class="o">&amp;</span><span class="nv">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab</span><span class="s2">&quot;</span><span class="s">,&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">a*a*a*a*a*a*aa*aaa*a*a*b</span><span class="s2">&quot;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span>.<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">abababababababababababababababababababaacacacacacacac&amp;</span>
+   <span class="o">&amp;</span><span class="nv">adaeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab</span><span class="s2">&quot;</span><span class="s">,&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">*a*b*ba*ca*a*aa*aaa*fa*ga*b*</span><span class="s2">&quot;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span>.<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">abababababababababababababababababababaacacacacacaca&amp;</span>
+   <span class="o">&amp;</span><span class="nv">cadaeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab</span><span class="s2">&quot;</span><span class="s">,&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">*a*b*ba*ca*a*x*aaa*fa*ga*b*</span><span class="s2">&quot;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span>.<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">abababababababababababababababababababaacacacacacacacad&amp;</span>
+   <span class="o">&amp;</span><span class="nv">aeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab</span><span class="s2">&quot;</span><span class="s">,&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">*a*b*ba*ca*aaaa*fa*ga*gggg*b*</span><span class="s2">&quot;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span>.<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">abababababababababababababababababababaacacacacacacacad&amp;</span>
+   <span class="o">&amp;</span><span class="nv">aeafagahaiajakalaaaaaaaaaaaaaaaaaffafagaagggagaaaaaaaab</span><span class="s2">&quot;</span><span class="s">,&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">*a*b*ba*ca*aaaa*fa*ga*ggg*b*</span><span class="s2">&quot;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span>.<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">aaabbaabbaab</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">*aabbaa*a*</span><span class="s2">&quot;</span>,.<span class="nv">true</span>.<span class="ss">)</span>.<span class="nv">and</span>.<span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="o">&amp;</span>
+   <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*</span><span class="s2">&quot;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*</span><span class="s2">&quot;</span>, .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">aaaaaaaaaaaaaaaaa</span><span class="s2">&quot;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*</span><span class="s2">&quot;</span>, .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">aaaaaaaaaaaaaaaa</span><span class="s2">&quot;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*</span><span class="s2">&quot;</span>, .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">abc*abcd*abcde*abcdef*abcdefg*abcdefgh*abcdefghi*abcdefghij&amp;</span>
+   <span class="o">&amp;*</span><span class="nv">abcdefghijk</span><span class="o">*</span><span class="nv">abcdefghijkl</span><span class="o">*</span><span class="nv">abcdefghijklm</span><span class="o">*</span><span class="nv">abcdefghijklmn</span><span class="s2">&quot;</span><span class="s">,&amp;</span>
+   <span class="o">&amp;</span> <span class="s2">&quot;</span><span class="s">abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc&amp;</span>
+   <span class="o">&amp;*</span><span class="nv">abc</span><span class="o">*</span><span class="nv">abc</span><span class="o">*</span><span class="nv">abc</span><span class="o">*</span><span class="s2">&quot;</span><span class="s">,&amp;</span>
+   <span class="o">&amp;</span>.<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">abc*abcd*abcde*abcdef*abcdefg*abcdefgh*abcdefghi*abcdefghij&amp;</span>
+   <span class="o">&amp;*</span><span class="nv">abcdefghijk</span><span class="o">*</span><span class="nv">abcdefghijkl</span><span class="o">*</span><span class="nv">abcdefghijklm</span><span class="o">*</span><span class="nv">abcdefghijklmn</span><span class="s2">&quot;</span><span class="s">,&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*</span><span class="s2">&quot;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span>.<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">abc*abcd*abcd*abc*abcd</span><span class="s2">&quot;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">abc*abc*abc*abc*abc</span><span class="s2">&quot;</span>, .<span class="nv">false</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span> <span class="s2">&quot;</span><span class="s">abc*abcd*abcd*abc*abcd*abcd&amp;</span>
+   <span class="o">&amp;*</span><span class="nv">abc</span><span class="o">*</span><span class="nv">abcd</span><span class="o">*</span><span class="nv">abc</span><span class="o">*</span><span class="nv">abc</span><span class="o">*</span><span class="nv">abcd</span><span class="s2">&quot;</span><span class="s">, &amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">abc*abc*abc*abc*abc*abc*abc*abc*abc*abc*abcd</span><span class="s2">&quot;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span>.<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">abc</span><span class="s2">&quot;</span>,<span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="s2">&quot;</span><span class="s">********a********b********c********</span><span class="s2">&quot;</span>, .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=&amp;</span>
+   <span class="o">&amp;</span><span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">********a********b********c********</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">abc</span><span class="s2">&quot;</span>,.<span class="nv">false</span>.<span class="ss">)</span><span class="o">&amp;</span>
+   <span class="o">&amp;</span> .<span class="nv">and</span>.<span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="o">&amp;</span>
+   <span class="o">&amp;</span><span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">abc</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">********a********b********b********</span><span class="s2">&quot;</span>,.<span class="nv">false</span>.<span class="ss">)</span><span class="o">&amp;</span>
+   <span class="o">&amp;</span> .<span class="nv">and</span>.<span class="nv">allpassed</span>
+   <span class="nv">allpassed</span><span class="o">=</span> <span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">*abc*</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">***a*b*c***</span><span class="s2">&quot;</span>, .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+
+   <span class="o">!</span> <span class="nv">A</span> <span class="nv">case</span><span class="o">-</span><span class="nv">insensitive</span> <span class="nv">algorithm</span> <span class="nv">test</span>.
+   <span class="o">!</span> <span class="nv">allpassed</span><span class="o">=</span><span class="nv">test</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">mississippi</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">*issip*PI</span><span class="s2">&quot;</span>, .<span class="nv">true</span>.<span class="ss">)</span> .<span class="nv">and</span>. <span class="nv">allpassed</span>
+ <span class="nv">enddo</span>
+
+ <span class="k">if</span> <span class="ss">(</span><span class="nv">allpassed</span><span class="ss">)</span><span class="k">then</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s2">&quot;</span><span class="s">Passed</span><span class="s2">&quot;</span>,<span class="nv">nReps</span>
+ <span class="k">else</span>
+    <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s2">&quot;</span><span class="s">Failed</span><span class="s2">&quot;</span>
+ <span class="k">endif</span>
+<span class="nv">contains</span>
+<span class="o">!</span> <span class="nv">This</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">test</span> <span class="nv">program</span> <span class="k">for</span> <span class="nv">wildcard</span> <span class="nv">matching</span> <span class="nv">routines</span>.
+<span class="o">!</span> <span class="nv">It</span> <span class="nv">can</span> <span class="nv">be</span> <span class="nv">used</span> <span class="nv">either</span> <span class="nv">to</span> <span class="nv">test</span> <span class="nv">a</span> <span class="nv">single</span> <span class="nv">routine</span> <span class="k">for</span> <span class="nv">correctness</span>,
+<span class="o">!</span> <span class="nv">or</span> <span class="nv">to</span> <span class="nv">compare</span> <span class="nv">the</span> <span class="nv">timings</span> <span class="nv">of</span> <span class="nv">two</span> <span class="ss">(</span><span class="nv">or</span> <span class="nv">more</span><span class="ss">)</span> <span class="nv">different</span> <span class="nv">wildcard</span>
+<span class="o">!</span> <span class="nv">matching</span> <span class="nv">routines</span>.
+<span class="o">!</span>
+<span class="nv">function</span> <span class="nv">test</span><span class="ss">(</span><span class="nv">tame</span>, <span class="nv">wild</span>, <span class="nv">bExpectedResult</span><span class="ss">)</span> <span class="nb">result</span><span class="ss">(</span><span class="nv">bPassed</span><span class="ss">)</span>
+<span class="nv">use</span> <span class="nv">M_strings</span>, <span class="nv">only</span> : <span class="nv">glob</span>
+   <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span> :: <span class="nv">tame</span>
+   <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span> :: <span class="nv">wild</span>
+   <span class="nv">logical</span>          :: <span class="nv">bExpectedResult</span>
+   <span class="nv">logical</span>          :: <span class="nv">bResult</span>
+   <span class="nv">logical</span>          :: <span class="nv">bPassed</span>
+   <span class="nv">bResult</span> <span class="o">=</span> .<span class="nv">true</span>.    <span class="o">!</span> <span class="nv">We</span><span class="s1">&#39;</span><span class="s">ll do &quot;&amp;=&quot; cumulative checking.</span>
+   <span class="nv">bPassed</span> <span class="o">=</span> .<span class="nv">false</span>.   <span class="o">!</span> <span class="nv">Assume</span> <span class="nv">the</span> <span class="nv">worst</span>.
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="nv">repeat</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">=</span><span class="s1">&#39;</span>,<span class="mi">79</span><span class="ss">)</span>
+   <span class="nv">bResult</span> <span class="o">=</span> <span class="nv">glob</span><span class="ss">(</span><span class="nv">tame</span>, <span class="nv">wild</span><span class="ss">)</span> <span class="o">!</span> <span class="k">Call</span> <span class="nl">a</span> <span class="nv">wildcard</span> <span class="nv">matching</span> <span class="nv">routine</span>.
+
+   <span class="o">!</span> <span class="nv">To</span> <span class="nv">assist</span> <span class="nv">correctness</span> <span class="nv">checking</span>, <span class="nv">output</span> <span class="nv">the</span> <span class="nv">two</span> <span class="nv">strings</span> <span class="nv">in</span> <span class="nv">any</span>
+   <span class="o">!</span> <span class="nv">failing</span> <span class="nv">scenarios</span>.
+   <span class="k">if</span> <span class="ss">(</span><span class="nv">bExpectedResult</span> .<span class="nv">eqv</span>. <span class="nv">bResult</span><span class="ss">)</span> <span class="k">then</span>
+      <span class="nv">bPassed</span> <span class="o">=</span> .<span class="nv">true</span>.
+      <span class="k">if</span><span class="ss">(</span><span class="nv">nReps</span> <span class="o">==</span> <span class="mi">1</span><span class="ss">)</span> <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s2">&quot;</span><span class="s">Passed match on </span><span class="s2">&quot;</span>,<span class="nv">tame</span>,<span class="s2">&quot;</span><span class="s"> vs. </span><span class="s2">&quot;</span>, <span class="nv">wild</span>
+   <span class="k">else</span>
+      <span class="k">if</span><span class="ss">(</span><span class="nv">nReps</span> <span class="o">==</span> <span class="mi">1</span><span class="ss">)</span> <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s2">&quot;</span><span class="s">Failed match on </span><span class="s2">&quot;</span>,<span class="nv">tame</span>,<span class="s2">&quot;</span><span class="s"> vs. </span><span class="s2">&quot;</span>, <span class="nv">wild</span>
+   <span class="k">endif</span>
+
+<span class="k">end</span> <span class="nv">function</span> <span class="nv">test</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_glob</span>
+</code></pre></div>
+
+<p>Expected output</p>
+<h2 id="author">AUTHOR</h2>
+<p>John S. Urban</p>
+<h2 id="references">REFERENCES</h2>
+<p>The article &ldquo;Matching Wildcards: An Empirical Way to Tame an Algorithm&rdquo;
+   in Dr Dobb&rsquo;s Journal, By Kirk J. Krauss, October 07, 2014</p>
+<h2 id="license">LICENSE</h2>
+<p>Public Domain</p>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tame"></span>
+              character(len=*)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tame</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-wild"></span>
+              character(len=*)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>wild</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <h3>Return Value
+        <small>
+          <span class="anchor" id="variable-glob"></span>
+          logical
+        </small>
+      </h3>
+      
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">function </span><span class="n">glob</span><span class="p">(</span><span class="n">tame</span><span class="p">,</span><span class="n">wild</span><span class="p">)</span><span class="w"></span>
+
+<span class="c">! ident_6=&quot;@(#) M_strings glob(3f) function compares text strings one of which can have wildcards (&#39;*&#39; or &#39;?&#39;).&quot;</span>
+
+<span class="kt">logical</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">glob</span><span class="w"></span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">tame</span><span class="w">       </span><span class="c">! A string without wildcards</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">wild</span><span class="w">       </span><span class="c">! A (potentially) corresponding string with wildcards</span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">tame</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">tametext</span><span class="w"></span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">wild</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">wildtext</span><span class="w"></span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">parameter</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="nb">NULL</span><span class="o">=</span><span class="nb">char</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">wlen</span><span class="w"></span>
+<span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">ti</span><span class="p">,</span><span class="w"> </span><span class="n">wi</span><span class="w"></span>
+<span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tbookmark</span><span class="p">,</span><span class="w"> </span><span class="n">wbookmark</span><span class="w"></span>
+<span class="c">! These two values are set when we observe a wildcard character. They</span>
+<span class="c">! represent the locations, in the two strings, from which we start once we have observed it.</span>
+<span class="w">   </span><span class="n">tametext</span><span class="o">=</span><span class="n">tame</span><span class="o">//</span><span class="nb">NULL</span>
+<span class="nb">   </span><span class="n">wildtext</span><span class="o">=</span><span class="n">wild</span><span class="o">//</span><span class="nb">NULL</span>
+<span class="nb">   </span><span class="n">tbookmark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span>
+<span class="nb">   </span><span class="n">wbookmark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span>
+<span class="nb">   </span><span class="n">wlen</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">wild</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="n">wi</span><span class="o">=</span><span class="mi">1</span><span class="w"></span>
+<span class="w">   </span><span class="n">ti</span><span class="o">=</span><span class="mi">1</span><span class="w"></span>
+<span class="w">   </span><span class="k">do</span><span class="w">                                            </span><span class="c">! Walk the text strings one character at a time.</span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">wildtext</span><span class="p">(</span><span class="n">wi</span><span class="p">:</span><span class="n">wi</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;*&#39;</span><span class="p">)</span><span class="k">then</span><span class="w">             </span><span class="c">! How do you match a unique text string?</span>
+<span class="w">         </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="n">wi</span><span class="p">,</span><span class="n">wlen</span><span class="w">                            </span><span class="c">! Easy: unique up on it!</span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">wildtext</span><span class="p">(</span><span class="n">wi</span><span class="p">:</span><span class="n">wi</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;*&#39;</span><span class="p">)</span><span class="k">then</span>
+<span class="k">               </span><span class="n">wi</span><span class="o">=</span><span class="n">wi</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">else</span>
+<span class="k">               exit</span>
+<span class="k">            endif</span>
+<span class="k">         enddo</span>
+<span class="k">         if</span><span class="p">(</span><span class="n">wildtext</span><span class="p">(</span><span class="n">wi</span><span class="p">:</span><span class="n">wi</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w">        </span><span class="c">! &quot;x&quot; matches &quot;*&quot;</span>
+<span class="w">            </span><span class="n">glob</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">         endif</span>
+<span class="k">         if</span><span class="p">(</span><span class="n">wildtext</span><span class="p">(</span><span class="n">wi</span><span class="p">:</span><span class="n">wi</span><span class="p">)</span><span class="w">  </span><span class="o">/=</span><span class="w">  </span><span class="s1">&#39;?&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">            </span><span class="c">! Fast-forward to next possible match.</span>
+<span class="w">            </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">tametext</span><span class="p">(</span><span class="n">ti</span><span class="p">:</span><span class="n">ti</span><span class="p">)</span><span class="w">  </span><span class="o">/=</span><span class="w">  </span><span class="n">wildtext</span><span class="p">(</span><span class="n">wi</span><span class="p">:</span><span class="n">wi</span><span class="p">))</span><span class="w"></span>
+<span class="w">               </span><span class="n">ti</span><span class="o">=</span><span class="n">ti</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">               </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tametext</span><span class="p">(</span><span class="n">ti</span><span class="p">:</span><span class="n">ti</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="k">then</span>
+<span class="k">                  </span><span class="n">glob</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="w">                  </span><span class="k">return</span><span class="w">                         </span><span class="c">! &quot;x&quot; doesn&#39;t match &quot;*y*&quot;</span>
+<span class="w">               </span><span class="k">endif</span>
+<span class="k">            enddo</span>
+<span class="k">         endif</span>
+<span class="k">         </span><span class="n">wbookmark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wildtext</span><span class="p">(</span><span class="n">wi</span><span class="p">:)</span><span class="w"></span>
+<span class="w">         </span><span class="n">tbookmark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tametext</span><span class="p">(</span><span class="n">ti</span><span class="p">:)</span><span class="w"></span>
+<span class="w">      </span><span class="n">elseif</span><span class="p">(</span><span class="n">tametext</span><span class="p">(</span><span class="n">ti</span><span class="p">:</span><span class="n">ti</span><span class="p">)</span><span class="w">  </span><span class="o">/=</span><span class="w">  </span><span class="n">wildtext</span><span class="p">(</span><span class="n">wi</span><span class="p">:</span><span class="n">wi</span><span class="p">)</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">wildtext</span><span class="p">(</span><span class="n">wi</span><span class="p">:</span><span class="n">wi</span><span class="p">)</span><span class="w">  </span><span class="o">/=</span><span class="w">  </span><span class="s1">&#39;?&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">         </span><span class="c">! Got a non-match. If we&#39;ve set our bookmarks, back up to one or both of them and retry.</span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="n">wbookmark</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            if</span><span class="p">(</span><span class="n">wildtext</span><span class="p">(</span><span class="n">wi</span><span class="p">:)</span><span class="w"> </span><span class="o">/=</span><span class="w">  </span><span class="n">wbookmark</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">               </span><span class="n">wildtext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wbookmark</span><span class="w"></span>
+<span class="w">               </span><span class="n">wlen</span><span class="o">=</span><span class="nb">len_trim</span><span class="p">(</span><span class="n">wbookmark</span><span class="p">)</span><span class="w"></span>
+<span class="w">               </span><span class="n">wi</span><span class="o">=</span><span class="mi">1</span><span class="w"></span>
+<span class="w">               </span><span class="c">! Don&#39;t go this far back again.</span>
+<span class="w">               </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tametext</span><span class="p">(</span><span class="n">ti</span><span class="p">:</span><span class="n">ti</span><span class="p">)</span><span class="w">  </span><span class="o">/=</span><span class="w">  </span><span class="n">wildtext</span><span class="p">(</span><span class="n">wi</span><span class="p">:</span><span class="n">wi</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                  </span><span class="n">tbookmark</span><span class="o">=</span><span class="n">tbookmark</span><span class="p">(</span><span class="mi">2</span><span class="p">:)</span><span class="w"></span>
+<span class="w">                  </span><span class="n">tametext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tbookmark</span><span class="w"></span>
+<span class="w">                  </span><span class="n">ti</span><span class="o">=</span><span class="mi">1</span><span class="w"></span>
+<span class="w">                  </span><span class="k">cycle</span><span class="w">                          </span><span class="c">! &quot;xy&quot; matches &quot;*y&quot;</span>
+<span class="w">               </span><span class="k">else</span>
+<span class="k">                  </span><span class="n">wi</span><span class="o">=</span><span class="n">wi</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">               </span><span class="k">endif</span>
+<span class="k">            endif</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="n">tametext</span><span class="p">(</span><span class="n">ti</span><span class="p">:</span><span class="n">ti</span><span class="p">)</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">               </span><span class="n">ti</span><span class="o">=</span><span class="n">ti</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">               </span><span class="k">cycle</span><span class="w">                             </span><span class="c">! &quot;mississippi&quot; matches &quot;*sip*&quot;</span>
+<span class="w">            </span><span class="k">endif</span>
+<span class="k">         endif</span>
+<span class="k">         </span><span class="n">glob</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="w">         </span><span class="k">return</span><span class="w">                                  </span><span class="c">! &quot;xy&quot; doesn&#39;t match &quot;x&quot;</span>
+<span class="w">      </span><span class="k">endif</span>
+<span class="k">      </span><span class="n">ti</span><span class="o">=</span><span class="n">ti</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">      </span><span class="n">wi</span><span class="o">=</span><span class="n">wi</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ti</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">tametext</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         </span><span class="n">glob</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="w">         </span><span class="k">return</span>
+<span class="k">      </span><span class="n">elseif</span><span class="w"> </span><span class="p">(</span><span class="n">tametext</span><span class="p">(</span><span class="n">ti</span><span class="p">:</span><span class="n">ti</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w">          </span><span class="c">! How do you match a tame text string?</span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="n">wildtext</span><span class="p">(</span><span class="n">wi</span><span class="p">:</span><span class="n">wi</span><span class="p">)</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="k">then</span>
+<span class="k">            do while</span><span class="w"> </span><span class="p">(</span><span class="n">wildtext</span><span class="p">(</span><span class="n">wi</span><span class="p">:</span><span class="n">wi</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;*&#39;</span><span class="p">)</span><span class="w">    </span><span class="c">! The tame way: unique up on it!</span>
+<span class="w">               </span><span class="n">wi</span><span class="o">=</span><span class="n">wi</span><span class="o">+</span><span class="mi">1</span><span class="w">                           </span><span class="c">! &quot;x&quot; matches &quot;x*&quot;</span>
+<span class="w">               </span><span class="k">if</span><span class="p">(</span><span class="n">wildtext</span><span class="p">(</span><span class="n">wi</span><span class="p">:</span><span class="n">wi</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="k">exit</span>
+<span class="k">            enddo</span>
+<span class="k">         endif</span>
+<span class="k">         if</span><span class="w"> </span><span class="p">(</span><span class="n">wildtext</span><span class="p">(</span><span class="n">wi</span><span class="p">:</span><span class="n">wi</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="k">then</span>
+<span class="k">            </span><span class="n">glob</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span><span class="w">                               </span><span class="c">! &quot;x&quot; matches &quot;x&quot;</span>
+<span class="w">         </span><span class="k">endif</span>
+<span class="k">         </span><span class="n">glob</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="w">         </span><span class="k">return</span><span class="w">                                  </span><span class="c">! &quot;x&quot; doesn&#39;t match &quot;xy&quot;</span>
+<span class="w">      </span><span class="k">endif</span>
+<span class="k">   enddo</span>
+<span class="k">end function </span><span class="n">glob</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              M_strings
+ was developed by John S. Urban<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2025-07-11 00:20 +0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>
