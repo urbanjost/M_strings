@@ -438,7 +438,8 @@ subroutine test_base()
    character(len=132) :: out
    character(len=132) :: string
    integer            :: i
-   do i = 0, huge(0),1009
+   do i = 0, huge(0)-1009,1009
+      if(i.lt.0)exit
       write(string,'(g0)')i
 
       write(in,'(b0)')i
@@ -523,7 +524,8 @@ integer,allocatable          :: expected(:)
           case(2); base=8;  baseformat='(o0)'
           case(3); base=16; baseformat='(z0)'
          end select
-         do i=0,huge(0),1237
+         do i=0,huge(0)-1237,1237
+            if(i.lt.0)exit
             write(boz,baseformat)i
             ier=decodebase(boz,base,answer)
             if(answer.ne.i.or..not.ier) &
@@ -560,7 +562,8 @@ integer                       ::  i
    expected=[2,10,42,170,682,2730]
    call checkit(in,expected)
 
-   do i=1,huge(0)-1,1009
+   do i=1,huge(0)-1009,1009
+      if(i.lt.0)exit
       write(string,'(a)') base2(i)
       write(string2,'(b0)')i
       if(string.ne.string2)then
@@ -608,7 +611,8 @@ logical                      :: ier
       case(2); base=8;  baseformat='(o0)'
       case(3); base=16; baseformat='(z0)'
       end select
-      do i=0,huge(0),1237
+      do i=0,huge(0)-1237,1237
+         if(i.lt.0)exit
          ier=codebase(i,base,answer)
          write(expect,baseformat)i
          if(answer.ne.expect.or..not.ier) &

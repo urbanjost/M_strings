@@ -48,7 +48,7 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 <div id="Container">
 <div id="Content">
 <CENTER>
-<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>s2c (3m_strings)</NOBR><HR></H1>
+<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>couple (3m_strings)</NOBR><HR></H1>
 </CENTER>
 <A name=0>
 
@@ -56,8 +56,9 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-s2c(3f) - [M_strings:ARRAY] convert character variable to array of
-characters with last element set to null
+<P>
+couple(3f) - [M_strings:ARRAY] converts between CHARACTER scalar and
+array of single characters
 (LICENSE:PD)
 <P>
 </BLOCKQUOTE>
@@ -76,15 +77,11 @@ characters with last element set to null
 
 </A>
 <BLOCKQUOTE>
-<TABLE cellpadding=3>
-<TR valign=top><TD colspan=2>
-<B>pure function s2c(string)</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-RESULT (array)
-</TD></TR>
-<TR></TR></TABLE><!-- .nf -->
+pure function couple(array) result (string)
+<P>
 <PRE>
-    character(len=*),intent=(in)  :: string
-    character(len=1),allocatable  :: s2c(:)
+    character(len=1),intent(in) :: array(:)
+    character(len=SIZE(array))  :: string
 <P>
 </PRE>
 </BLOCKQUOTE>
@@ -94,9 +91,8 @@ RESULT (array)
 
 </A>
 <BLOCKQUOTE>
-Given a character variable convert it to an array of single-character
-character variables with the last element set to a null character.
-This is generally used to pass character variables to C procedures.
+COUPLE(3f): function that switches an array of single characters to
+a CHARACTER string.
 </BLOCKQUOTE>
 <A name=3>
 
@@ -104,57 +100,37 @@ This is generally used to pass character variables to C procedures.
 
 </A>
 <BLOCKQUOTE>
-<P>
-character(len=3),allocatable :: array(:)
-<TABLE cellpadding=3><!-- tsb: character(len=3),allocatable :: array(:)
- -->
-<TR></TR><TR></TR>
-<TR valign=top><TD colspan=2>
-<B>integer</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-:: i
-! put one character into each 3-character element of array
-array = [(string(i:i),i=1,len(string))]
-! write array with ASCII Decimal Equivalent below it except show
-! unprintable characters like NULL as "XXX"
-write(*,g) merge(&#146;XXX&#146;,array,iachar(array(:)(1:1)) &lt; 32)
-write(*,g) iachar(array(:)(1:1))
-<P>
-Sample Program:
+Sample program:
 <P>
 <PRE>
-    program demo_s2c
-    use M_strings, only : s2c
-    implicit none
-    character(len=*),parameter   :: string="single string"
-    character(len=*),parameter   :: g= &#146;(1x,*("[",g3.3,"]":))&#146;
-    character(len=3),allocatable :: array(:)
-       write(*,*)&#146;INPUT STRING &#146;,trim(string)
-       ! put one character into each 3-character element of array
-       array=s2c(string)
-       ! write array with ASCII Decimal Equivalent below it except show
-       ! unprintable characters like NULL as "XXX"
-       write(*,g) merge(&#146;XXX&#146;,array,iachar(array(:)(1:1)) &lt; 32)
-       write(*,g) iachar(array(:)(1:1))
-    end program demo_s2c
+   program demo_couple
+   use M_strings, only : couple
+   character(len=:),allocatable :: array(:)
+    array=[&#146;T&#146;,&#146;h&#146;,&#146;i&#146;,&#146;s&#146;,&#146; &#146;,&#146;i&#146;,&#146;s&#146;,&#146; &#146;,&#146;a&#146;,&#146; &#146;,&#146;s&#146;,&#146;t&#146;,&#146;r&#146;,&#146;i&#146;,&#146;n&#146;,&#146;g&#146;]
+<P>
+    ! show the array
+    write(*,&#146;(1x,*("[",a,"]":))&#146;) array
+    ! show the string
+    write(*,&#146;(1x,*("[",a,"]":))&#146;) couple(array)
+<P>
+   end program demo_couple
 <P>
 </PRE>
-Expected output:
+Expected output
 <P>
 <PRE>
-   INPUT STRING single string
-   [s  ][i  ][n  ][g  ][l  ][e  ][   ][s  ][t  ][r  ][i  ][n  ][g  ][XXX]
-   [115][105][110][103][108][101][ 32][115][116][114][105][110][103][  0]
+    &gt; [T][h][i][s][ ][i][s][ ][a][ ][s][t][r][i][n][g]
+    &gt; [This is a string]
 <P>
 </PRE>
-</TD></TR>
-<TR></TR></TABLE></BLOCKQUOTE>
+</BLOCKQUOTE>
 <A name=4>
 
      <H3>SEE ALSO</H3>
 
 </A>
 <BLOCKQUOTE>
-c2s(3), switch(3), join(3), uncouple(3), couple(3)
+switch(3), join(3), uncouple(3), c2s(3), s2c(3)
 </BLOCKQUOTE>
 <A name=5>
 
@@ -173,7 +149,7 @@ John S. Urban
 Public Domain
 </BLOCKQUOTE>
 <P><HR>
-<br><br><center><img src="images/s2c.gif"></center>
+<br><br><center><img src="images/couple.gif"></center>
 </div>
 </div>
 </body>

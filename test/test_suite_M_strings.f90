@@ -110,6 +110,8 @@ subroutine test_suite_m_strings()
    call test_strtok()
    call test_substitute()
    call test_switch()
+   call test_couple()
+   call test_uncouple()
    call test_transliterate()
    call test_trimzeros_()
    call test_unquote()
@@ -436,7 +438,8 @@ subroutine test_base()
    character(len=132) :: out
    character(len=132) :: string
    integer            :: i
-   do i = 0, huge(0),1009
+   do i = 0, huge(0)-1009,1009
+      if(i.lt.0)exit
       write(string,'(g0)')i
 
       write(in,'(b0)')i
@@ -521,7 +524,8 @@ integer,allocatable          :: expected(:)
           case(2); base=8;  baseformat='(o0)'
           case(3); base=16; baseformat='(z0)'
          end select
-         do i=0,huge(0),1237
+         do i=0,huge(0)-1237,1237
+            if(i.lt.0)exit
             write(boz,baseformat)i
             ier=decodebase(boz,base,answer)
             if(answer.ne.i.or..not.ier) &
@@ -558,7 +562,8 @@ integer                       ::  i
    expected=[2,10,42,170,682,2730]
    call checkit(in,expected)
 
-   do i=1,huge(0)-1,1009
+   do i=1,huge(0)-1009,1009
+      if(i.lt.0)exit
       write(string,'(a)') base2(i)
       write(string2,'(b0)')i
       if(string.ne.string2)then
@@ -606,7 +611,8 @@ logical                      :: ier
       case(2); base=8;  baseformat='(o0)'
       case(3); base=16; baseformat='(z0)'
       end select
-      do i=0,huge(0),1237
+      do i=0,huge(0)-1237,1237
+         if(i.lt.0)exit
          ier=codebase(i,base,answer)
          write(expect,baseformat)i
          if(answer.ne.expect.or..not.ier) &
@@ -691,7 +697,7 @@ integer                 :: i10
 end subroutine testit
 end subroutine test_delim
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_slice
+subroutine test_slice()
 INTRINSIC SIZE
 CHARACTER(LEN=:),ALLOCATABLE    :: line
 CHARACTER(LEN=:),ALLOCATABLE    :: dlm
@@ -760,7 +766,7 @@ integer,allocatable             :: iend(:)
    END SUBROUTINE testit
 end subroutine test_slice
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_split
+subroutine test_split()
 INTRINSIC SIZE
 CHARACTER(LEN=:),ALLOCATABLE    :: line
 CHARACTER(LEN=:),ALLOCATABLE    :: order
@@ -841,7 +847,7 @@ character(len=10)               :: nulls(3)=['ignore    ', 'return    ', 'ignore
    END SUBROUTINE testit
 end subroutine test_split
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_m_strings
+subroutine test_m_strings()
 character(len=1)            :: chars(36)
 call unit_test_start('combined')
 ! COMBINED TESTS
@@ -898,7 +904,7 @@ integer                       :: ipass
    call unit_test_end('chomp')
 end subroutine test_chomp
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_substitute
+subroutine test_substitute()
 character(len=80),allocatable   :: targetline   ! input line to be changed, MUST BE LONG ENOUGH TO HOLD CHANGES
 character(len=:),allocatable    :: old          ! old substring to replace
 character(len=:),allocatable    :: new          ! new substring
@@ -956,7 +962,7 @@ integer                         :: ier          ! error code. if ier = -1 bad di
 
 end subroutine test_substitute
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_change
+subroutine test_change()
 !character(len=132) :: direc
 character(len=132)  :: line=' The rain in Spain falls mainly on the plain. '
 integer             :: ier
@@ -1065,7 +1071,7 @@ subroutine test_crop()
    call unit_test_end('crop')
 end subroutine test_crop
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_transliterate
+subroutine test_transliterate()
    call unit_test_start('transliterate','[EDITING] replace characters from old set with characters from new set')
    call unit_test('transliterate',transliterate('AbCDefgHiJklmnoPQRStUvwxyZ',lc,uc) == uc(1:26),msg='transliterate to uppercase')
    call unit_test('transliterate',transliterate('AbCDefgHiJklmnoPQRStUvwxyZ',uc,lc) == lc(1:26),msg='transliterate to lowercase')
@@ -1219,7 +1225,7 @@ character(len=:),allocatable  :: e
    call unit_test_end('rotate13',msg='')
 end subroutine test_rotate13
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_reverse
+subroutine test_reverse()
    call unit_test_start('reverse','elemental function reverses character order in a string')
    if(reverse(lc) == '9876543210zyxwvutsrqponmlkjihgfedcba')then
       call unit_test('reverse',.true.)
@@ -1235,7 +1241,7 @@ subroutine test_reverse
 
 end subroutine test_reverse
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_upper
+subroutine test_upper()
 character(len=36),parameter :: rnge='abcdefghIJKLMNopqrstuvwxyz0123456789'
 
    call unit_test_start('upper','[CASE] changes a string to uppercase')
@@ -1245,7 +1251,7 @@ character(len=36),parameter :: rnge='abcdefghIJKLMNopqrstuvwxyz0123456789'
 
 end subroutine test_upper
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_lower
+subroutine test_lower()
 character(len=36),parameter :: rnge='ABCDEFGHijklmnOPQRSTUVWXYZ0123456789'
 
    call unit_test_start('lower','[CASE] changes a string to lowercase over specified range')
@@ -1255,7 +1261,7 @@ character(len=36),parameter :: rnge='ABCDEFGHijklmnOPQRSTUVWXYZ0123456789'
 
 end subroutine test_lower
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_switch
+subroutine test_switch()
 character(len=1)            :: chars(36)
 integer :: i
 
@@ -1271,6 +1277,33 @@ call unit_test_msg('switch', 'put CHARS array into string reversed and compare t
 call unit_test('switch', uc  ==  switch(chars(36:1:-1)), switch(chars(36:1:-1)))
 call unit_test_end('switch')
 end subroutine test_switch
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_uncouple()
+character(len=1)            :: chars(36)
+integer :: i
+
+call unit_test_start('uncouple','[ARRAY] converts between CHARACTER scalar and array of single characters')
+
+chars=uncouple(uc)
+call unit_test('uncouple',size(uncouple(uc)).eq.36,' expected 36 characters, got',size(uncouple(uc)))
+call unit_test('uncouple',all([(chars(i) == uc(i:i),i=1,size(chars))]),'check chars are same as string')
+
+call unit_test_end('uncouple')
+end subroutine test_uncouple
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_couple()
+character(len=1)            :: chars(36)
+integer :: i
+
+call unit_test_start('couple','[ARRAY] converts between array of single characters and CHARACTER scalar')
+
+chars=uncouple(uc)
+call unit_test('couple',len(couple(chars)).eq.36,'expected 36 characters, got',couple(chars))
+call unit_test('couple',couple(chars).eq.uc,'check chars are same as string')
+
+call unit_test_end('couple')
+
+end subroutine test_couple
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_s2c()
 integer :: i
@@ -1368,7 +1401,7 @@ integer                      :: iout
    call unit_test_end('notabs',msg='')
 end subroutine test_notabs
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_adjustc
+subroutine test_adjustc()
 character(len=80),allocatable :: expected(:)
 character(len=80),allocatable :: left(:)
 character(len=80),allocatable :: input(:)
@@ -1421,7 +1454,7 @@ integer                       :: i
    call unit_test_end('adjustc')
 end subroutine test_adjustc
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_nospace
+subroutine test_nospace()
    character(len=:),allocatable :: stringin
    character(len=:),allocatable :: stringout
    call unit_test_start('nospace','[WHITESPACE] remove all whitespace from input string')
@@ -1518,7 +1551,7 @@ character(len=:), allocatable :: answer
    call unit_test_end('merge_str')
 end subroutine test_merge_str
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_compact
+subroutine test_compact()
    call unit_test_start('compact','[WHITESPACE] converts contiguous whitespace to a single character (or nothing)')
    call unit_test('compact',compact('  This  is     a    test  ') == 'This is a test','reduce to single spaces')
    call unit_test('compact',compact('This is a test') == 'This is a test','input has no adjacent whitespace characters')
@@ -1528,7 +1561,7 @@ subroutine test_compact
    call unit_test_end('compact')
 end subroutine test_compact
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_noesc  ! test noesc
+subroutine test_noesc()  ! test noesc
 character(len=23) :: in,out,clr
 integer           :: i10
 logical           :: goodbad
@@ -1559,7 +1592,7 @@ logical           :: goodbad
    call unit_test('noesc',goodbad)
 end subroutine test_noesc
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_string_to_value
+subroutine test_string_to_value()
 CHARACTER(len=80) :: STRING
 real              :: RVALUE
 doubleprecision   :: DVALUE
@@ -1646,7 +1679,7 @@ doubleprecision SUM, SUM2, DELTA
    call unit_test_end('s2v')
 end subroutine test_s2v
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_value_to_string
+subroutine test_value_to_string()
 CHARACTER(LEN=80) :: STRING
 doubleprecision   :: DVALUE
 real              :: RVALUE
@@ -1724,7 +1757,7 @@ doubleprecision :: SUM2
    call unit_test_end('v2s')
 end subroutine test_v2s
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_isnumber
+subroutine test_isnumber()
    call unit_test_start('isnumber','[TYPE] determine if a string represents a number')
    call unit_test('isnumber',isnumber(' 123 ')                                            ==  1,  'integer string')
    call unit_test('isnumber',isnumber(' -123. ')                                          ==  2,  'whole number string')
@@ -1815,7 +1848,7 @@ character(len=:),allocatable :: tests(:)
    call unit_test_end('unquote')
 end subroutine test_unquote
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_describe
+subroutine test_describe()
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: char
 integer                       :: i
@@ -1921,7 +1954,7 @@ subroutine test_bundle()
    call unit_test_end('bundle')
 end subroutine test_bundle
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_isprint
+subroutine test_isprint()
 integer,parameter             :: number_of_chars=256
 character(len=1)              :: ch
 integer                       :: i
@@ -1937,7 +1970,7 @@ integer                       :: i
 call unit_test_end('isprint')
 end subroutine test_isprint
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_isgraph
+subroutine test_isgraph()
 integer,parameter             :: number_of_chars=256
 character(len=1)              :: ch
 integer                       :: i
@@ -1953,7 +1986,7 @@ integer                       :: i
    call unit_test_end('isgraph')
 end subroutine test_isgraph
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_isalpha
+subroutine test_isalpha()
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
@@ -1968,7 +2001,7 @@ integer                       :: i
    call unit_test_end('isalpha')
 end subroutine test_isalpha
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_isxdigit
+subroutine test_isxdigit()
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
@@ -1983,7 +2016,7 @@ integer                       :: i
    call unit_test_end('isxdigit')
 end subroutine test_isxdigit
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_isdigit
+subroutine test_isdigit()
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
@@ -1998,7 +2031,7 @@ integer                       :: i
    call unit_test_end('isdigit')
 end subroutine test_isdigit
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_isblank
+subroutine test_isblank()
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
@@ -2013,7 +2046,7 @@ integer                       :: i
    call unit_test_end('isblank')
 end subroutine test_isblank
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_isascii
+subroutine test_isascii()
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
@@ -2028,7 +2061,7 @@ integer                       :: i
    call unit_test_end('isascii')
 end subroutine test_isascii
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_isspace
+subroutine test_isspace()
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
@@ -2043,7 +2076,7 @@ integer                       :: i
    call unit_test_end('isspace')
 end subroutine test_isspace
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_iscntrl
+subroutine test_iscntrl()
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
@@ -2058,7 +2091,7 @@ integer                       :: i
    call unit_test_end('iscntrl')
 end subroutine test_iscntrl
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_ispunct
+subroutine test_ispunct()
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
@@ -2073,7 +2106,7 @@ integer                       :: i
    call unit_test_end('ispunct')
 end subroutine test_ispunct
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_isupper
+subroutine test_isupper()
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
@@ -2088,7 +2121,7 @@ integer                       :: i
    call unit_test_end('isupper')
 end subroutine test_isupper
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_islower
+subroutine test_islower()
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i
@@ -2103,7 +2136,7 @@ integer                       :: i
    call unit_test_end('islower')
 end subroutine test_islower
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-subroutine test_isalnum
+subroutine test_isalnum()
 integer,parameter             :: number_of_chars=128
 character(len=1)              :: ch
 integer                       :: i

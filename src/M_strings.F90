@@ -1,3 +1,30 @@
+!-----------------------------------------------------------------------------------------------------------------------------------
+#define  __INTEL_COMP        1
+#define  __GFORTRAN_COMP     2
+#define  __NVIDIA_COMP       3
+#define  __NAG_COMP          4
+#define  __LLVM_FLANG_COMP   5
+#define  __UNKNOWN_COMP   9999
+
+#define FLOAT128
+
+#ifdef __INTEL_COMPILER
+#   define __COMPILER__ __INTEL_COMP
+#elif __GFORTRAN__ == 1
+#   define __COMPILER__ __GFORTRAN_COMP
+#elif __flang__
+#   undef FLOAT128
+#   warning  NOTE: REAL128 not supported
+#   define __COMPILER__ __LLVM_FLANG_COMP
+#elif __NVCOMPILER
+#   undef FLOAT128
+#   warning  NOTE: REAL128 not supported
+#   define __COMPILER__ __NVIDIA_COMP
+#else
+#   define __COMPILER__ __UNKNOWN_COMP
+#   warning  NOTE: UNKNOWN COMPILER
+#endif
+!-----------------------------------------------------------------------------------------------------------------------------------
 !>
 !!##NAME
 !!    M_strings(3f) - [M_strings::INTRO] Fortran string module
@@ -28,7 +55,7 @@
 !!      use M_strings,only : crop, clip, unquote, quote, matching_delimiter
 !!      use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
 !!              & stretch, lenset, merge_str
-!!      use M_strings,only : switch, s2c, c2s
+!!      use M_strings,only : switch, couple, uncouple, s2c, c2s
 !!      use M_strings,only : noesc, notabs, dilate, expand, visible
 !!      use M_strings,only : longest_common_substring
 !!      use M_strings,only : string_to_value, string_to_values, s2v, s2vs
@@ -144,11 +171,13 @@
 !!
 !!   CHARACTER ARRAY VERSUS STRING
 !!
-!!       switch  switch between a string and an array of single characters
-!!       s2c     convert string to array of single characters and add null
-!!               terminator for passing to C
-!!       c2s     convert null-terminated array of single characters to
-!!               string for converting strings returned from C
+!!       switch    switch between a string and an array of single characters
+!!       couple    an array of single characters is converted to a string
+!!       uncouple  a string is converted to an array of single characters
+!!       s2c       convert string to array of single characters and add null
+!!                 terminator for passing to C
+!!       c2s       convert null-terminated array of single characters to
+!!                 string for converting strings returned from C
 !!
 !!   NONALPHA
 !!
@@ -302,7 +331,7 @@
 !!      use M_strings,only : crop, clip, unquote, quote, matching_delimiter
 !!      use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
 !!              & stretch, lenset, merge_str
-!!      use M_strings,only : switch, s2c, c2s
+!!      use M_strings,only : switch, couple, uncouple, s2c, c2s
 !!      use M_strings,only : noesc, notabs, dilate, expand, visible
 !!      use M_strings,only : longest_common_substring
 !!      use M_strings,only : string_to_value, string_to_values, s2v, s2vs
@@ -387,6 +416,8 @@ public encode_base64      !  apply base64 encoding (as defined in RFC-4648) to a
 public decode_base64      !  apply base64 decoding (as defined in RFC-4648) to an array of bytes
 !-------------------------# CHARACTER ARRAY VERSUS STRING
 public switch             !  generic switch between a string and an array of single characters (a2s,s2a)
+public couple             !  convert an array of single characters to a string (a2s)
+public uncouple           !  convert a string to an array of single characters (s2a)
 private a2s               !  function to copy char array to string
 private s2a               !  function to copy string(1:Clen(string)) to char array
 public s2c                !  convert character variable to array of character(len=1) with null terminator for C compatibility
@@ -512,9 +543,9 @@ public longest_common_substring !  function that returns the longest common subs
 
 ! ident_2="@(#) M_strings switch(3f) toggle between string and array of characters; generic{a2s s2a}"
 
-interface switch
-   module procedure a2s, s2a
-end interface switch
+interface switch;   module procedure a2s,s2a ; end interface switch
+interface uncouple; module procedure s2a     ; end interface uncouple
+interface couple;   module procedure a2s     ; end interface couple
 ! note how returned result is "created" by the function
 !-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -1512,7 +1543,7 @@ end subroutine split
 !!        call printme()
 !!     contains
 !!     subroutine printme()
-!!        write(*,'((*(:/,3x,"[",g0,"]")))')&
+!!        write(*,'(*(:/,3x,"[",g0,"]"))')&
 !!                & (line(ibegin(i):iend(i)),i=1,size(ibegin))
 !!        write(*,'(*(g0,1x))')'SIZE:',size(ibegin)
 !!     end subroutine printme
@@ -2035,11 +2066,7 @@ integer                     :: istart
 !     find next non-delimiter
       icol=1
 
-      if(array(1) == '#N#')then                                ! special flag to not store into character array
-         lstore=.false.
-      else
-         lstore=.true.
-      endif
+      lstore= array(1) /= '#N#'                                ! special flag to not store into character array
 
       do iarray=1,n,1                                          ! store into each array element until done or too many words
          NOINCREMENT: do
@@ -4582,6 +4609,60 @@ end function lower
 !!     > F
 !!     > T
 !!
+!!##SEE ALSO
+!!    switch(3), join(3), couple(3), uncouple(3), c2s(3), s2c(3),
+!!    verify(3), scan(3)
+!!
+!!##AUTHOR
+!!    John S. Urban
+!!
+!!##LICENSE
+!!    Public Domain
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
+!!
+!!    couple(3f) - [M_strings:ARRAY] converts between CHARACTER scalar and
+!!    array of single characters
+!!    (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!    pure function couple(array) result (string)
+!!
+!!     character(len=1),intent(in) :: array(:)
+!!     character(len=SIZE(array))  :: string
+!!
+!!##DESCRIPTION
+!!    COUPLE(3f): function that switches an array of single characters to
+!!    a CHARACTER string.
+!!
+!!##EXAMPLES
+!!
+!!  Sample program:
+!!
+!!    program demo_couple
+!!    use M_strings, only : couple
+!!    character(len=:),allocatable :: array(:)
+!!     array=['T','h','i','s',' ','i','s',' ','a',' ','s','t','r','i','n','g']
+!!
+!!     ! show the array
+!!     write(*,'(1x,*("[",a,"]":))') array
+!!     ! show the string
+!!     write(*,'(1x,*("[",a,"]":))') couple(array)
+!!
+!!    end program demo_couple
+!!
+!!  Expected output
+!!
+!!     > [T][h][i][s][ ][i][s][ ][a][ ][s][t][r][i][n][g]
+!!     > [This is a string]
+!!
+!!##SEE ALSO
+!!    switch(3), join(3), uncouple(3), c2s(3), s2c(3)
+!!
 !!##AUTHOR
 !!    John S. Urban
 !!
@@ -4602,6 +4683,52 @@ end function a2s
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
+!>
+!!##NAME
+!!
+!!    uncouple(3f) - [M_strings:ARRAY] converts between CHARACTER scalar and
+!!    array of single characters
+!!    (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!
+!!    pure function uncouple(string) result (array)
+!!
+!!     character(len=*),intent(in) :: string
+!!     character(len=1)            :: array(len(string))
+!!
+!!##DESCRIPTION
+!!    UNCOUPLE(3f): function that switches CHARACTER string to an array
+!!    of single characters.
+!!
+!!##EXAMPLES
+!!
+!!  Sample program:
+!!
+!!    program demo_uncouple
+!!    use M_strings, only : uncouple
+!!    character(len=*),parameter   :: string='This is a string'
+!!
+!!     write(*,'(1x,*("[",a,"]":))') string
+!!     ! converted to character array
+!!     write(*,'(1x,*("[",a,"]":))') uncouple(string)
+!!
+!!    end program demo_uncouple
+!!
+!!  Expected output
+!!
+!!     > This is a string
+!!     > [T][h][i][s][ ][i][s][ ][a][ ][s][t][r][i][n][g]
+!!
+!!##SEE ALSO
+!!    switch(3), join(3), couple(3), c2s(3), s2c(3)
+!!
+!!##AUTHOR
+!!    John S. Urban
+!!
+!!##LICENSE
+!!    Public Domain
 pure function s2a(string)  RESULT (array)
 
 ! ident_29="@(#) M_strings s2a(3fp) function to copy string(1 Clen(string)) to char array"
@@ -4670,6 +4797,9 @@ end function s2a
 !!    [s  ][i  ][n  ][g  ][l  ][e  ][   ][s  ][t  ][r  ][i  ][n  ][g  ][XXX]
 !!    [115][105][110][103][108][101][ 32][115][116][114][105][110][103][  0]
 !!
+!!##SEE ALSO
+!!    c2s(3), switch(3), join(3), uncouple(3), couple(3)
+!!
 !!##AUTHOR
 !!    John S. Urban
 !!
@@ -4719,6 +4849,9 @@ end function s2c
 !!
 !!##EXAMPLES
 !!
+!!
+!!##SEE ALSO
+!!    s2c(3), switch(3), join(3), uncouple(3), couple(3)
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -6167,7 +6300,7 @@ end function zpad_vector
 !!   right    if true pads string on the right, else on the left
 !!   clip     trim spaces from input string but otherwise retain length.
 !!            Except for simple cases you typically would trim the input
-!!            yourself.
+!!            yourself. Defaults to .false. .
 !!
 !!##RETURNS
 !!   strout  The input string padded to the requested length or
@@ -6185,6 +6318,7 @@ end function zpad_vector
 !!     character(len=:),allocatable :: answer
 !!     integer                      :: i
 !!     character(len=*),parameter   :: g='(*(g0))'
+!!     character(len=:),allocatable :: p
 !!        answer=pad(string,5)
 !!        write(*,'("[",a,"]")') answer
 !!        answer=pad(string,20)
@@ -6213,6 +6347,7 @@ end function zpad_vector
 !!         write(*,g)pad('12345 ',5,'_',right=.false.,clip=.true.)
 !!         write(*,g)pad('12345 ',4,'_',right=.false.)
 !!         write(*,g)pad('12345 ',4,'_',right=.false.,clip=.true.)
+!!
 !!    end program demo_pad
 !!
 !!  Results:
@@ -6621,11 +6756,7 @@ character(len=1)                     :: char_p
 logical                              :: nospace
 if(present(char))then
    char_p=char
-   if(len(char) == 0)then
-      nospace=.true.
-   else
-      nospace=.false.
-   endif
+   nospace= len(char) == 0
 else
    char_p=' '
    nospace=.false.
@@ -11248,7 +11379,9 @@ class(*),intent(in) :: generic
       type is (integer(kind=int64));    write(line(ibegin:),'(i0)') generic
       type is (real(kind=real32));      write(line(ibegin:),'(1pg0)') generic
       type is (real(kind=real64));      write(line(ibegin:),'(1pg0)') generic
-      !x!type is (real(kind=real128));     write(line(ibegin:),'(1pg0)') generic
+#ifdef FLOAT128
+      type is (real(kind=real128));     write(line(ibegin:),'(1pg0)') generic
+#endif
       !x!type is (real(kind=real256));     write(line(ibegin:),'(1pg0)') generic
       type is (logical);                write(line(ibegin:),'(l1)') generic
       type is (character(len=*))
@@ -11339,7 +11472,9 @@ integer                      :: i
          type is (integer(kind=int64));    write(line(ibegin:),'(*(i0:,","))') generic
          type is (real(kind=real32));      write(line(ibegin:),'(*(1pg0:,","))') generic
          type is (real(kind=real64));      write(line(ibegin:),'(*(1pg0:,","))') generic
-         !x!type is (real(kind=real128));     write(line(ibegin:),'(*(1pg0:,","))') generic
+#ifdef FLOAT128
+         type is (real(kind=real128));     write(line(ibegin:),'(*(1pg0:,","))') generic
+#endif
          !x!type is (real(kind=real256));     write(line(ibegin:),'(*(1pg0:,","))') generic
          type is (logical);                write(line(ibegin:),'(*(l1:,","))') generic
          type is (character(len=*));       write(line(ibegin:),'(:*(a:,","))') (quote(trim(generic(i))),i=1,size(generic))
@@ -11355,7 +11490,9 @@ integer                      :: i
          type is (integer(kind=int64));    write(line(ibegin:),'("[",*(i0:,","))') generic
          type is (real(kind=real32));      write(line(ibegin:),'("[",*(1pg0:,","))') generic
          type is (real(kind=real64));      write(line(ibegin:),'("[",*(1pg0:,","))') generic
-         !x!type is (real(kind=real128));     write(line(ibegin:),'("[",*(1pg0:,","))') generic
+#ifdef FLOAT128
+         type is (real(kind=real128));     write(line(ibegin:),'("[",*(1pg0:,","))') generic
+#endif
          !x!type is (real(kind=real256));     write(line(ibegin:),'("[",*(1pg0:,","))') generic
          type is (logical);                write(line(ibegin:),'("[",*(l1:,","))') generic
          type is (character(len=*));       write(line(ibegin:),'("[",:*(:"""",a,"""":,","))') (trim(generic(i)),i=1,size(generic))
@@ -11458,8 +11595,7 @@ logical                              :: trimit
          type is (integer(kind=int64));    fmt_local='(i0,a)'
          type is (real(kind=real32));      fmt_local='(1pg0,a)'
          type is (real(kind=real64));      fmt_local='(1pg0,a)'
-#ifdef __NVCOMPILER
-#else
+#ifdef FLOAT128
          type is (real(kind=real128));     fmt_local='(1pg0,a)'
 #endif
          type is (logical);                fmt_local='(l1,a)'
@@ -11486,12 +11622,12 @@ logical                              :: trimit
       type is (integer(kind=int64));    write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
       type is (real(kind=real32));      write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
       type is (real(kind=real64));      write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
-#ifdef __NVCOMPILER
-#else
+#ifdef FLOAT128
       type is (real(kind=real128));     write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
 #endif
       type is (logical);                write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
       type is (character(len=*));       write(line,fmt_local,iostat=iostat,iomsg=iomsg) generic,null
+                                        trimit=.false.
       type is (complex);
               if(trimit)then
                  re=fmt(generic%re)
@@ -12635,8 +12771,8 @@ integer                      :: outsize
             column=column+1
            if(wrap.gt.0)then
                if(column.ge.wrap)then
-                       ichars=ichars+1
-                       out(ichars)=new_line('a')
+                  ichars=ichars+1
+                  out(ichars)=new_line('a')
                   column=0
                endif
             endif
