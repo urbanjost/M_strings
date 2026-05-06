@@ -201,9 +201,9 @@
         ! failing scenarios.
         if (bExpectedResult .eqv. bResult) then
            bPassed = .true.
-           if(nReps == 1) write(*,*)"Passed match on ",tame," vs. ", wild
+           if(nReps == 1) write(*,*)"Passed match on ",tame," .vs. ", wild
         else
-           if(nReps == 1) write(*,*)"Failed match on ",tame," vs. ", wild
+           if(nReps == 1) write(*,*)"Failed match on ",tame," .vs. ", wild
         endif
 
      end function test

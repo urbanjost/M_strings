@@ -140,7 +140,7 @@ Sample program:
     implicit none
     integer                    :: i
     character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-       write(*,&#146;(*(g0,1x))&#146;)&#146;ISXBLANK: &#146;,&
+       write(*,&#146;(*(g0,1x))&#146;)&#146;ISBLANK: &#146;,&
        & iachar(pack( string, isblank(string) ))
     end program demo_isblank
 <P>
@@ -148,7 +148,7 @@ Sample program:
 Results:
 <P>
 <PRE>
-   ISXBLANK:  9 32
+   ISBLANK:  9 32
 <P>
 </PRE>
 </BLOCKQUOTE>

@@ -1,5 +1,6 @@
 module M_testsuite_M_strings
-use,intrinsic :: iso_fortran_env,only : std_in=>input_unit,std_out=>output_unit,std_err=>error_unit
+use,intrinsic :: iso_fortran_env, only : std_in=>input_unit,std_out=>output_unit,std_err=>error_unit
+use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64
 use M_framework,  only : unit_test_level,  unit_test_stop, unit_test_msg, chr=>str, &
                        & unit_test_start, unit_test,  unit_test_end,                &
                        & unit_test_mode
@@ -39,6 +40,7 @@ subroutine test_suite_m_strings()
    call test_compact()
    call test_cpad()
    call test_crop()
+   call test_itri()
    call test_dble()
    call test_delim()
    call test_describe()
@@ -1070,6 +1072,15 @@ subroutine test_crop()
    call unit_test('crop',crop('     A B CC D    ') == 'A B CC D',msg='crop string test 4')
    call unit_test_end('crop')
 end subroutine test_crop
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_itri()
+   call unit_test_start('itri','[CONVERSION] convert INTEGER to CHARACTER grouped into periods of three digits')
+   call unit_test('itri', itri(-huge(0_int64)) == '-9,223,372,036,854,775,807' ,'itri int64',itri(-huge(0_int64)),-huge(0_int64) )
+   call unit_test('itri', itri(-huge(0_int32)) == '-2,147,483,647'             ,'itri int32',itri(-huge(0_int32)),-huge(0_int32) )
+   call unit_test('itri', itri(-huge(0_int16)) == '-32,767'                    ,'itri int16',itri(-huge(0_int16)),-huge(0_int16) )
+   call unit_test('itri', itri(-huge(0_int8))  == '-127'                       ,'itri int8',itri(-huge(0_int8)),-huge(0_int8) )
+   call unit_test_end('itri')
+end subroutine test_itri
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_transliterate()
    call unit_test_start('transliterate','[EDITING] replace characters from old set with characters from new set')

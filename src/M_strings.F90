@@ -243,7 +243,7 @@
 !!       o isascii   returns .true. if the character is in the range char(0)
 !!                   to char(127)
 !!       o isblank   returns .true. if character is a blank character
-!!                   (space or horizontal tab.
+!!                   (space or horizontal tab).
 !!       o isxdigit  returns .true. if character is a hexadecimal digit
 !!                   (0-9, a-f, or A-F).
 !!
@@ -472,6 +472,7 @@ public s2vs               !  function returns a doubleprecision array of numbers
 public atoi               !   function returns an INTEGER(kind=int32) value from a string
 public atol               !   function returns an INTEGER(kind=int64) value from a string
 public aton               !   function returns true or false as to whether string converts to numeric value, and numeric value
+public itri               !  convert integers into strings representing the value grouped into periods of three characters
 !------------------------------------------------------------------------------------------------------------
 public str                !  function returns a string representing up to twenty scalar intrinsic values, including CSV style
 public fmt                !  function returns a string representing an intrinsic value using optionally specified format
@@ -594,6 +595,17 @@ public :: find_field
 interface split2020
    module procedure :: split_tokens, split_first_last, split_pos
 end interface split2020
+!-----------------------------------------------------------------------------------------------------------------------------------
+interface itri
+   module procedure itri_int8
+   module procedure itri_int16
+   module procedure itri_int32
+   module procedure itri_int64
+   module procedure itris_int8
+   module procedure itris_int16
+   module procedure itris_int32
+   module procedure itris_int64
+end interface itri
 !-----------------------------------------------------------------------------------------------------------------------------------
 !-----------------------------------------------------------------------------------------------------------------------------------
 !This contains a conditionally built mini-version of M_journal which allows the M_strings.f90 module
@@ -884,9 +896,9 @@ CONTAINS
 !!       ! failing scenarios.
 !!       if (bExpectedResult .eqv. bResult) then
 !!          bPassed = .true.
-!!          if(nReps == 1) write(*,*)"Passed match on ",tame," vs. ", wild
+!!          if(nReps == 1) write(*,*)"Passed match on ",tame," .vs. ", wild
 !!       else
-!!          if(nReps == 1) write(*,*)"Failed match on ",tame," vs. ", wild
+!!          if(nReps == 1) write(*,*)"Failed match on ",tame," .vs. ", wild
 !!       endif
 !!
 !!    end function test
@@ -4655,10 +4667,10 @@ end function lower
 !!
 !!    end program demo_couple
 !!
-!!  Expected output
+!! Results:
 !!
-!!     > [T][h][i][s][ ][i][s][ ][a][ ][s][t][r][i][n][g]
-!!     > [This is a string]
+!!  >  [T][h][i][s][ ][i][s][ ][a][ ][s][t][r][i][n][g]
+!!  >  [This is a string]
 !!
 !!##SEE ALSO
 !!    switch(3), join(3), uncouple(3), c2s(3), s2c(3)
@@ -4679,6 +4691,7 @@ integer                     :: i
    forall( i = 1:size(array)) string(i:i) = array(i)
 ! ----------------------------------------------------------------------------------------------------------------------------------
 !  string=transfer(array,string)
+!  string=transfer(array,mold=string)
 end function a2s
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -4716,10 +4729,10 @@ end function a2s
 !!
 !!    end program demo_uncouple
 !!
-!!  Expected output
+!! Results:
 !!
-!!     > This is a string
-!!     > [T][h][i][s][ ][i][s][ ][a][ ][s][t][r][i][n][g]
+!!  >  [This is a string]
+!!  >  [T][h][i][s][ ][i][s][ ][a][ ][s][t][r][i][n][g]
 !!
 !!##SEE ALSO
 !!    switch(3), join(3), couple(3), c2s(3), s2c(3)
@@ -4740,6 +4753,7 @@ integer                     :: i
    forall(i=1:len(string)) array(i) = string(i:i)
 ! ----------------------------------------------------------------------------------------------------------------------------------
 !  array=transfer(string,array)
+!  array=transfer(string,mold='a',size=len(string))
 end function s2a
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -6318,7 +6332,6 @@ end function zpad_vector
 !!     character(len=:),allocatable :: answer
 !!     integer                      :: i
 !!     character(len=*),parameter   :: g='(*(g0))'
-!!     character(len=:),allocatable :: p
 !!        answer=pad(string,5)
 !!        write(*,'("[",a,"]")') answer
 !!        answer=pad(string,20)
@@ -9738,6 +9751,13 @@ end function isxdigit
 !!##DESCRIPTION
 !!     isdigit(3f) returns .true. if character is a digit (0,1,...,9)
 !!     and .false. otherwise
+!!##OPTIONS
+!!    onechar  character to test
+!!
+!!##RETURNS
+!!    isdigit  logical value returns true if character is a "digit"
+!!             ( an ASCII-7  character from the set {0,1,..,9}).
+!!             That is, from CHAR(48) to CHAR(57) inclusive.
 !!
 !!##EXAMPLES
 !!
@@ -9824,13 +9844,13 @@ end function isdigit
 !!     implicit none
 !!     integer                    :: i
 !!     character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-!!        write(*,'(*(g0,1x))')'ISXBLANK: ',&
+!!        write(*,'(*(g0,1x))')'ISBLANK: ',&
 !!        & iachar(pack( string, isblank(string) ))
 !!     end program demo_isblank
 !!
 !!   Results:
 !!
-!!    ISXBLANK:  9 32
+!!    ISBLANK:  9 32
 !!
 !!##AUTHOR
 !!     John S. Urban
@@ -9875,7 +9895,7 @@ end function isblank
 !!    onechar  character to test
 !!
 !!##RETURNS
-!!    isupper  logical value returns true if character is an ASCII
+!!    isascii  logical value returns true if character is an ASCII
 !!             character.
 !!##EXAMPLES
 !!
@@ -12642,6 +12662,12 @@ end function longest_common_substring
 !!    The data is encoded as described for the base64-alphabet-encoding in
 !!    RFC 4648.
 !!
+!!    Base64 is commonly used to embed images directly in HTML or CSS files
+!!    using data URIs. This eliminates the need for separate image files
+!!    and reduces HTTP requests.
+!!
+!!        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..." />
+!!
 !!##OPTIONS
 !!
 !!    TEXT   Data to encode
@@ -13728,6 +13754,320 @@ integer                                           :: i, ipos, too_many_digit_cou
       atoi_int64 = .false.
    endif
 end function atoi_int64
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
+!!    itri(3f) - [M_strings:CONVERSION] convert INTEGER to CHARACTER with
+!!    value grouped into periods of three digits
+!!    (LICENSE:MIT)
+!!
+!!##SYNOPSIS
+!!
+!!    function itri(in,separator) return(out)
+!!
+!!     integer(kind=**),intent(in)          :: in
+!!     character(len=*),intent(in),optional :: separator
+!!     character(len=:),allocatable         :: out
+!!     ! or
+!!     integer,(kind=**)intent(in)          :: in(:)
+!!     character(len=1),intent(in),optional :: separator
+!!     character(len=:),allocatable         :: out(:)
+!!
+!!##CHARACTERISTICS
+!!   + IN is a scalar or array INTEGER variable
+!!   + SEPARATOR is a character string
+!!   + OUT is a character scalar or array, but the same as IN
+!!
+!!##DESCRIPTION
+!! Separating large numbers into groups of three digits is called "using
+!! periods". Each three-digit group is known as a period (e.g., ones,
+!! thousands, millions). The symbol used to separate these groups is
+!! typically called a thousands separator or digit group separator (commonly
+!! a comma or space).  This is sometimes referred to as periodicity.
+!!
+!!    KEY DETAILS
+!!
+!!    Periods: The groups themselves, separated by commas in this case(e.g.,
+!!    123,456,789).
+!!
+!!    Purpose: To make large numbers easier to read and understand based
+!!    on place value.
+!!
+!!    Other Methods: The International System of Units (SI) recommends
+!!    using a small space to separate groups of three instead of commas.
+!!
+!!    Formatting: While English-speaking countries use commas (100,000),
+!!    many other countries use periods (ie. decimal points)  or spaces
+!!    (100.000 or 100 000).
+!!
+!!##OPTIONS
+!!
+!!    + IN :  An INTEGER to convert to a string representing the value
+!!            grouped into periods.
+!!
+!!    + SEPARATOR :  Character to use to separate period groups. Defaults to
+!!                   comma (","). Multibyte characters are only supported
+!!                   if IN is scalar.
+!!
+!!##RETURNS
+!!    + OUT : If IN is a scalar a trimmed string is returned. If IN is an
+!!            array, strings are right-justified in a string long enough
+!!            to hold all values of the kind of the input.
+!!##EXAMPLES
+!!
+!!   Sample program
+!!
+!!     program demo_itri
+!!     use, intrinsic :: iso_fortran_env, only : int8, int16, int32, int64
+!!     use M_strings, only : itri
+!!     implicit none
+!!     integer                      :: i
+!!     integer(kind=int64)          :: ival64
+!!     character(len=*),parameter   :: braces='(*(:"[",g0,"]",1x))'
+!!     character(len=*),parameter   :: brace='(:"[",g0,"]")'
+!!        ival64=1
+!!        ! scalars are returned trimmed of spaces
+!!        do i=1,19
+!!           write(*,braces)itri(ival64),itri(-ival64)
+!!           ival64=ival64*10+mod(i+1,10)
+!!        enddo
+!!        ! arrays are all returned right-justified
+!!        ! and long enough to fit values of that kind
+!!        write(*,brace) itri([10_int64, 123456890_int64, -huge(0_int64)])
+!!        write(*,brace) itri([10, 123456890, -huge(0)])
+!!        write(*,brace) itri([10_int16, 12345_int16, -huge(0_int16)])
+!!        write(*,brace) itri([10_int8, 123_int8, -huge(0_int8)])
+!!
+!!        ival64=-huge(0_int64)
+!!        write(*,brace) &
+!!        & itri(ival64,separator=' '),  &
+!!        & itri(ival64,separator=char(int(z'B7'))) !  CenterDot 183  U+B7
+!!     end program demo_itri
+!!
+!!  Results:
+!!
+!!     > [1] [-1]
+!!     > [12] [-12]
+!!     > [123] [-123]
+!!     > [1,234] [-1,234]
+!!     > [12,345] [-12,345]
+!!     > [123,456] [-123,456]
+!!     > [1,234,567] [-1,234,567]
+!!     > [12,345,678] [-12,345,678]
+!!     > [123,456,789] [-123,456,789]
+!!     > [1,234,567,890] [-1,234,567,890]
+!!     > [12,345,678,901] [-12,345,678,901]
+!!     > [123,456,789,012] [-123,456,789,012]
+!!     > [1,234,567,890,123] [-1,234,567,890,123]
+!!     > [12,345,678,901,234] [-12,345,678,901,234]
+!!     > [123,456,789,012,345] [-123,456,789,012,345]
+!!     > [1,234,567,890,123,456] [-1,234,567,890,123,456]
+!!     > [12,345,678,901,234,567] [-12,345,678,901,234,567]
+!!     > [123,456,789,012,345,678] [-123,456,789,012,345,678]
+!!     > [1,234,567,890,123,456,789] [-1,234,567,890,123,456,789]
+!!     > [                        10]
+!!     > [               123,456,890]
+!!     > [-9,223,372,036,854,775,807]
+!!     > [            10]
+!!     > [   123,456,890]
+!!     > [-2,147,483,647]
+!!     > [     10]
+!!     > [ 12,345]
+!!     > [-32,767]
+!!     > [  10]
+!!     > [ 123]
+!!     > [-127]
+!!     > [-9 223 372 036 854 775 807]
+!!     > [-9·223·372·036·854·775·807]
+!!
+!!##AUTHOR
+!!   + John S. Urban
+!!
+!!##LICENSE
+!!     MIT
+!----------------------------------------------------------------------------------------------------------------------------------=
+function itris_int64(in,separator) result(out)
+integer(kind=int64),intent(in)       :: in(:)
+character(len=*),intent(in),optional :: separator
+character(len=20+6*1)                :: out(size(in))
+character(len=:),allocatable         :: outstr
+character(len=:),allocatable         :: temp
+character(len=19)                    :: line
+character(len=:),allocatable         :: sep
+integer                              :: i
+integer                              :: j
+   sep=','
+   if(present(separator))sep=separator
+   do j=1,size(in)
+      write(line,'(i0)')abs(in(j))
+      temp='  '//trim(line)
+      outstr=''
+      do i=len(temp),3,-3
+         outstr=sep//temp(i-2:i)//outstr
+      enddo
+      out(j)=merge(' ','-',in(j)>0)//adjustl(outstr(2:))
+      out(j)=adjustr(out(j))
+   enddo
+end function itris_int64
+!----------------------------------------------------------------------------------------------------------------------------------=
+function itris_int32(in,separator) result(out)
+integer(kind=int32),intent(in)       :: in(:)
+character(len=*),intent(in),optional :: separator
+character(len=11+3*1)                :: out(size(in))
+character(len=:),allocatable         :: outstr
+character(len=:),allocatable         :: temp
+character(len=10)                    :: line
+character(len=:),allocatable         :: sep
+integer                              :: i
+integer                              :: j
+   sep=','
+   if(present(separator))sep=separator
+   do j=1,size(in)
+      write(line,'(i0)')abs(in(j))
+      temp='  '//trim(line)
+      outstr=''
+      do i=len(temp),3,-3
+         outstr=sep//temp(i-2:i)//outstr
+      enddo
+      out(j)=merge(' ','-',in(j)>0)//adjustl(outstr(2:))
+      out(j)=adjustr(out(j))
+   enddo
+end function itris_int32
+!----------------------------------------------------------------------------------------------------------------------------------=
+function itris_int16(in,separator) result(out)
+integer(kind=int16),intent(in)       :: in(:)
+character(len=*),intent(in),optional :: separator
+character(len=6+1)                   :: out(size(in))
+character(len=:),allocatable         :: outstr
+character(len=:),allocatable         :: temp
+character(len=5)                     :: line
+character(len=:),allocatable         :: sep
+integer                              :: i
+integer                              :: j
+   sep=','
+   if(present(separator))sep=separator
+   do j=1,size(in)
+      write(line,'(i0)')abs(in(j))
+      temp='  '//trim(line)
+      outstr=''
+      do i=len(temp),3,-3
+         outstr=sep//temp(i-2:i)//outstr
+      enddo
+      out(j)=merge(' ','-',in(j)>0)//adjustl(outstr(2:))
+      out(j)=adjustr(out(j))
+   enddo
+end function itris_int16
+!----------------------------------------------------------------------------------------------------------------------------------=
+function itris_int8(in,separator) result(out)
+integer(kind=int8),intent(in)       :: in(:)
+character(len=*),intent(in),optional :: separator
+character(len=4)                     :: out(size(in))
+character(len=:),allocatable         :: outstr
+character(len=:),allocatable         :: temp
+character(len=3)                     :: line
+character(len=:),allocatable         :: sep
+integer                              :: i
+integer                              :: j
+   sep=','
+   if(present(separator))sep=separator
+   do j=1,size(in)
+      write(line,'(i0)')abs(in(j))
+      temp='  '//trim(line)
+      outstr=''
+      do i=len(temp),3,-3
+         outstr=sep//temp(i-2:i)//outstr
+      enddo
+      out(j)=merge(' ','-',in(j)>0)//adjustl(outstr(2:))
+      out(j)=adjustr(out(j))
+   enddo
+end function itris_int8
+!----------------------------------------------------------------------------------------------------------------------------------=
+function itri_int64(in,separator) result(out)
+integer(kind=int64),intent(in)       :: in
+character(len=*),intent(in),optional :: separator
+character(len=:),allocatable         :: out
+character(len=:),allocatable         :: temp
+character(len=:),allocatable         :: sep
+character(len=21)                    :: line
+integer                              :: i
+   sep=','
+   if(present(separator))sep=separator
+   write(line,'(i0)')abs(in)
+   temp='  '//trim(line)
+   out=''
+   do i=len(temp),3,-3
+      out=sep//temp(i-2:i)//out
+   enddo
+   out=trim(adjustl(out(2:)))
+   if(in<0)out='-'//out
+end function itri_int64
+!----------------------------------------------------------------------------------------------------------------------------------=
+function itri_int32(in,separator) result(out)
+integer(kind=int32),intent(in)       :: in
+character(len=*),intent(in),optional :: separator
+character(len=:),allocatable         :: out
+   out=itri_int64(int(in,kind=int64),separator)
+end function itri_int32
+!----------------------------------------------------------------------------------------------------------------------------------=
+function itri_int16(in,separator) result(out)
+integer(kind=int16),intent(in)       :: in
+character(len=*),intent(in),optional :: separator
+character(len=:),allocatable         :: out
+   out=itri_int64(int(in,kind=int64),separator)
+end function itri_int16
+!----------------------------------------------------------------------------------------------------------------------------------=
+function itri_int8(in,separator) result(out)
+integer(kind=int8),intent(in)       :: in
+character(len=*),intent(in),optional :: separator
+character(len=:),allocatable         :: out
+   out=itri_int64(int(in,kind=int64),separator)
+end function itri_int8
+!===================================================================================================================================
+function format_commas(in) result(out)
+! Fortran Function for Thousands Separators
+!
+! This logic converts an integer to a string and walks backward from the
+! right, inserting a comma every three positions.
+!
+! String Conversion: The number is first written to a temporary string
+! using the (i0) format to remove leading spaces.
+!
+! Reverse Parsing: Starting from the end of the string allows you to
+! count "groups of three" from the right, which is how standard digit
+! grouping works.
+!
+! Sign Handling: The logic checks if the preceding character is a
+! minus sign (-) to avoid placing a comma immediately after it (e.g.,
+! preventing -,123).
+!
+integer(kind=int64), intent(in) :: in(:)
+character(len=26)               :: out_str
+character(len=26)               :: out(size(in))
+character(len=26)               :: temp
+integer                         :: i, j, count
+
+do j=1,size(in)
+   ! 1. Convert integer to temporary string
+   write(temp, '(i0)') in(j)
+   temp = adjustl(temp)
+   out_str = ""
+   count = 0
+
+   ! 2. Loop backwards and insert commas
+   do i = len_trim(temp), 1, -1
+      count = count + 1
+      out_str = temp(i:i) // trim(out_str)
+
+      ! Add comma if we've reached 3 digits and aren't at the start
+      if (mod(count, 3) == 0 .and. i > 1 .and. temp(i-1:i-1) /= '-') then
+         out_str = ',' // trim(out_str)
+      endif
+   enddo
+   out(j) = out_str
+enddo
+end function format_commas
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================

@@ -47,6 +47,7 @@ append("ispunct.3m_strings.html");
 append("isspace.3m_strings.html");
 append("isupper.3m_strings.html");
 append("isxdigit.3m_strings.html");
+append("itri.3m_strings.html");
 append("join.3m_strings.html");
 append("len_white.3m_strings.html");
 append("lenset.3m_strings.html");
