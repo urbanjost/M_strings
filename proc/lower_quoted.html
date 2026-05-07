@@ -159,72 +159,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<p>lower_quoted(3f) - [M_strings:CASE] elemental function converts string to
-                lowercase skipping strings quoted per Fortran syntax rules
- (LICENSE:PD)</p>
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code>elemental pure function lower_quoted(str) result (string)
-
- character(*), intent(in)    :: str
- character(len(str))         :: string  ! output string
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nx">lower_quoted</span><span class="p">(</span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">returns</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">copy</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">all</span><span class="w"> </span><span class="k">not</span><span class="o">-</span><span class="nx">quoted</span>
-<span class="nx">characters</span><span class="w"> </span><span class="nx">converted</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">lowercase</span><span class="p">,</span><span class="w"> </span><span class="nx">assuming</span><span class="w"> </span><span class="nx">ASCII</span><span class="w"> </span><span class="nx">character</span><span class="w"> </span><span class="nx">sets</span>
-<span class="nx">are</span><span class="w"> </span><span class="nx">being</span><span class="w"> </span><span class="nx">used</span><span class="p">.</span><span class="w"> </span><span class="nx">The</span><span class="w"> </span><span class="nx">quoting</span><span class="w"> </span><span class="nx">rules</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">same</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">Fortran</span><span class="w"> </span><span class="nx">source</span><span class="p">.</span>
-<span class="nx">Either</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">single</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="nx">double</span><span class="w"> </span><span class="nx">quote</span><span class="w"> </span><span class="nx">starts</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">quoted</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">quote</span>
-<span class="nx">character</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">same</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">doubled</span><span class="w"> </span><span class="nx">when</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="nx">appears</span><span class="w"> </span><span class="nx">internally</span><span class="w"> </span><span class="k">in</span>
-<span class="nx">the</span><span class="w"> </span><span class="nx">quoted</span><span class="w"> </span><span class="kt">string</span><span class="p">.</span><span class="w"> </span><span class="nx">If</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">double</span><span class="w"> </span><span class="nx">quote</span><span class="w"> </span><span class="nx">quotes</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nx">single</span><span class="w"> </span><span class="nx">quotes</span>
-<span class="nx">may</span><span class="w"> </span><span class="nx">appear</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">quoted</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nx">single</span><span class="w"> </span><span class="nx">characters</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">vice</span><span class="o">-</span><span class="nx">versa</span>
-<span class="k">for</span><span class="w"> </span><span class="nx">single</span><span class="w"> </span><span class="nx">quotes</span><span class="p">.</span>
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code>str    string to convert to lowercase
-</code></pre></div>
-
-<h2 id="returns">RETURNS</h2>
-<div class="codehilite"><pre><span></span><code>lower  copy of the input string with all unquoted characters converted
-       to lowercase
-</code></pre></div>
-
-<h2 id="examples">EXAMPLES</h2>
-<div class="codehilite"><pre><span></span><code><span class="nx">Sample</span><span class="w"> </span><span class="nx">program</span><span class="p">:</span>
-
-<span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_lower_quoted</span>
-<span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">M_strings</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="p">:</span><span class="w"> </span><span class="nx">lower_quoted</span>
-<span class="w"> </span><span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
-<span class="w"> </span><span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=:),</span><span class="nx">allocatable</span><span class="w">  </span><span class="o">::</span><span class="w"> </span><span class="nx">s</span>
-<span class="w"> </span><span class="nx">s</span><span class="p">=</span><span class="err">&#39;</span><span class="w"> </span><span class="nx">ABCDEFG</span><span class="w"> </span><span class="nx">abcdefg</span><span class="w"> </span><span class="s">&quot;Double-Quoted&quot;</span><span class="w"> </span><span class="err">&#39;&#39;</span><span class="nx">Single</span><span class="o">-</span><span class="nx">Quoted</span><span class="err">&#39;&#39;</span><span class="w"> </span><span class="s">&quot;with &quot;&quot;&amp;</span>
-<span class="s">    &amp; Quote&quot;</span><span class="w"> </span><span class="nx">everything</span><span class="w"> </span><span class="k">else</span><span class="err">&#39;</span>
-<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">mixed</span><span class="o">-</span><span class="k">case</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">...</span><span class="p">.</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">s</span>
-<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">lower</span><span class="o">-</span><span class="k">case</span><span class="w"> </span><span class="nx">output</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">...</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">lower_quoted</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="mi">1</span><span class="nx">x</span><span class="p">,</span><span class="nx">a</span><span class="p">,</span><span class="o">*</span><span class="p">(</span><span class="nx">a</span><span class="p">:,</span><span class="s">&quot;+&quot;</span><span class="p">))</span><span class="err">&#39;</span><span class="p">)</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">lower_quoted</span><span class="p">(</span><span class="mi">3</span><span class="nx">f</span><span class="p">)</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">elemental</span><span class="w"> </span><span class="o">==</span><span class="p">&gt;</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span>
-<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="nx">lower_quoted</span><span class="p">([</span><span class="s">&quot;abc&quot;</span><span class="p">,</span><span class="s">&quot;def&quot;</span><span class="p">,</span><span class="s">&quot;ghi&quot;</span><span class="p">])</span>
-<span class="w"> </span><span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_lower_quoted</span>
-</code></pre></div>
-
-<p>Results:</p>
-<blockquote>
-<p>mixed-case input string is .... ABCDEFG abcdefg &ldquo;Double-Quoted&rdquo; &hellip;
-     &hellip; &lsquo;Single-Quoted&rsquo; &ldquo;with &ldquo;&rdquo; Quote&rdquo; everything else
- lower-case output string is &hellip; abcdefg abcdefg &ldquo;Double-Quoted&rdquo; &hellip;
-     &hellip; &lsquo;Single-Quoted&rsquo; &ldquo;with &ldquo;&rdquo; Quote&rdquo; everything else
- lower_quoted(3f) is elemental ==&gt;abc+def+ghi</p>
-</blockquote>
-<h2 id="see-also">SEE ALSO</h2>
-<div class="codehilite"><pre><span></span><code> flower(1)
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
 
     <h3>Arguments</h3>
@@ -240,7 +174,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-str~3"></span>
+              <span class="anchor" id="variable-str~5"></span>
               character(len=*),
             </td>
 <td>intent(in)</td>
@@ -258,7 +192,7 @@
 
       <h3>Return Value
         <small>
-          <span class="anchor" id="variable-string~7"></span>
+          <span class="anchor" id="variable-string~9"></span>
           character(len=len)
         </small>
       </h3>
@@ -330,7 +264,7 @@
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2026-02-22 19:46 +0000             </p>
+ on 2026-05-07 04:42 +0000             </p>
           </div>
         </div>
         <br>

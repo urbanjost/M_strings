@@ -88,7 +88,7 @@
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title=" 3.5% of total for procedures.">110 statements</a>
+                 title=" 3.5% of total for procedures.">111 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -159,70 +159,6 @@
 </h2>
     
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>fmt(3f) - [M_strings:TYPE] convert any intrinsic to a string using specified format
-(LICENSE:PD)
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">fmt(value,format) result</span><span class="p">(</span>string<span class="p">)</span>
-
-<span class="w"> </span><span class="nb">class</span><span class="p">(</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w">         </span><span class="p">::</span><span class="w"> </span><span class="n">value</span>
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nb">format</span>
-<span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=:),</span><span class="n">allocatable</span><span class="w">         </span><span class="p">::</span><span class="w"> </span><span class="nb">string</span>
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code>FMT(3f) converts any standard intrinsic value to a string using the specified
-format.
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code><span class="nx">value</span><span class="w">    </span><span class="nx">value</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">print</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="nx">of</span><span class="p">.</span><span class="w"> </span><span class="nx">May</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="nx">INTEGER</span><span class="p">,</span><span class="w"> </span><span class="nx">LOGICAL</span><span class="p">,</span>
-<span class="w">         </span><span class="nx">REAL</span><span class="p">,</span><span class="w"> </span><span class="nx">DOUBLEPRECISION</span><span class="p">,</span><span class="w"> </span><span class="nx">COMPLEX</span><span class="p">,</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="nx">CHARACTER</span><span class="p">.</span>
-<span class="nx">format</span><span class="w">   </span><span class="nx">format</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">print</span><span class="w"> </span><span class="nx">value</span><span class="p">.</span><span class="w"> </span><span class="nx">It</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">up</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">an</span>
-<span class="w">         </span><span class="nx">appropriate</span><span class="w"> </span><span class="nx">format</span><span class="p">.</span><span class="w"> </span><span class="nx">The</span><span class="w"> </span><span class="nx">format</span><span class="w"> </span><span class="nx">does</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">require</span><span class="w"> </span><span class="nx">being</span>
-<span class="w">         </span><span class="nx">surrounded</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">parenthesis</span><span class="p">.</span><span class="w"> </span><span class="nx">If</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">present</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">selected</span>
-<span class="w">         </span><span class="nx">similar</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">what</span><span class="w"> </span><span class="nx">would</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">produced</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">free</span><span class="w"> </span><span class="nx">format</span><span class="p">,</span><span class="w"> </span><span class="nx">with</span>
-<span class="w">         </span><span class="nx">trailing</span><span class="w"> </span><span class="nx">zeros</span><span class="w"> </span><span class="nx">removed</span><span class="p">.</span>
-</code></pre></div>
-
-<h2 id="returns">RETURNS</h2>
-<div class="codehilite"><pre><span></span><code>string   A string value
-</code></pre></div>
-
-<h2 id="examples">EXAMPLES</h2>
-<p>Sample program:</p>
-<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_fmt</span>
-<span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nx">M_strings</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">fmt</span>
-<span class="w"> </span><span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
-<span class="w"> </span><span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=:),</span><span class="nx">allocatable</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nx">output</span>
-
-<span class="w">    </span><span class="nx">output</span><span class="p">=</span><span class="nx">fmt</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s">&quot;&#39;[&#39;,i0,&#39;]&#39;&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="err">&#39;</span><span class="nx">result</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="err">&#39;</span><span class="p">,</span><span class="nx">output</span>
-
-<span class="w">    </span><span class="nx">output</span><span class="p">=</span><span class="nx">fmt</span><span class="p">(</span><span class="m m-Double">10.0</span><span class="o">/</span><span class="m m-Double">3.0</span><span class="p">,</span><span class="s">&quot;&#39;[&#39;,g0.5,&#39;]&#39;&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="err">&#39;</span><span class="nx">result</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="err">&#39;</span><span class="p">,</span><span class="nx">output</span>
-
-<span class="w">    </span><span class="nx">output</span><span class="p">=</span><span class="nx">fmt</span><span class="p">(.</span><span class="kc">true</span><span class="p">.,</span><span class="s">&quot;&#39;The final answer is [&#39;,g0,&#39;]&#39;&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="err">&#39;</span><span class="nx">result</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="err">&#39;</span><span class="p">,</span><span class="nx">output</span>
-
-<span class="w"> </span><span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_fmt</span>
-</code></pre></div>
-
-<p>Results:</p>
-<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">[</span><span class="n">10</span><span class="o">]</span>
-<span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">[</span><span class="n">3.3333</span><span class="o">]</span>
-<span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">final</span><span class="w"> </span><span class="n">answer</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">[</span><span class="n">T</span><span class="o">]</span>
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>John S. Urban
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>Public Domain
-</code></pre></div>
 
 
     <h3>Arguments</h3>
@@ -354,10 +290,11 @@ format.
 <span class="cp">#endif</span>
 <span class="w">      </span><span class="k">type is</span><span class="w"> </span><span class="p">(</span><span class="kt">logical</span><span class="p">);</span><span class="w">                </span><span class="k">write</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="n">fmt_local</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostat</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsg</span><span class="p">)</span><span class="w"> </span><span class="k">generic</span><span class="p">,</span><span class="nb">null</span>
 <span class="nb">      </span><span class="k">type is</span><span class="w"> </span><span class="p">(</span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">));</span><span class="w">       </span><span class="k">write</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="n">fmt_local</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostat</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsg</span><span class="p">)</span><span class="w"> </span><span class="k">generic</span><span class="p">,</span><span class="nb">null</span>
-<span class="nb">      </span><span class="k">type is</span><span class="w"> </span><span class="p">(</span><span class="kt">complex</span><span class="p">);</span>
+<span class="nb">                                        </span><span class="n">trimit</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">      </span><span class="k">type is</span><span class="w"> </span><span class="p">(</span><span class="kt">complex</span><span class="p">);</span>
 <span class="w">              </span><span class="k">if</span><span class="p">(</span><span class="n">trimit</span><span class="p">)</span><span class="k">then</span>
-<span class="k">                 </span><span class="n">re</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="kt">real</span><span class="p">(</span><span class="k">generic</span><span class="p">))</span>
-<span class="w">                 </span><span class="n">im</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="nb">aimag</span><span class="p">(</span><span class="k">generic</span><span class="p">))</span>
+<span class="k">                 </span><span class="n">re</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="kt">real</span><span class="p">(</span><span class="k">generic</span><span class="p">))</span><span class="w"> </span><span class="c">! re=fmt(generic%re)</span>
+<span class="w">                 </span><span class="n">im</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="nb">aimag</span><span class="p">(</span><span class="k">generic</span><span class="p">))</span><span class="c">! im=fmt(generic%im)</span>
 <span class="w">                 </span><span class="k">call </span><span class="n">trimzeros_</span><span class="p">(</span><span class="n">re</span><span class="p">)</span>
 <span class="w">                 </span><span class="k">call </span><span class="n">trimzeros_</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
 <span class="w">                 </span><span class="n">fmt_local</span><span class="o">=</span><span class="s1">&#39;(&quot;(&quot;,g0,&quot;,&quot;,g0,&quot;)&quot;,a)&#39;</span>
@@ -368,8 +305,8 @@ format.
 <span class="nb">              </span><span class="k">endif</span>
 <span class="k">      type is</span><span class="w"> </span><span class="p">(</span><span class="kt">complex</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">real64</span><span class="p">));</span>
 <span class="w">              </span><span class="k">if</span><span class="p">(</span><span class="n">trimit</span><span class="p">)</span><span class="k">then</span>
-<span class="k">                 </span><span class="n">re</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="kt">real</span><span class="p">(</span><span class="k">generic</span><span class="p">))</span>
-<span class="w">                 </span><span class="n">im</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="nb">aimag</span><span class="p">(</span><span class="k">generic</span><span class="p">))</span>
+<span class="k">                 </span><span class="n">re</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="kt">real</span><span class="p">(</span><span class="k">generic</span><span class="p">))</span><span class="w"> </span><span class="c">! re=fmt(generic%re)</span>
+<span class="w">                 </span><span class="n">im</span><span class="o">=</span><span class="n">fmt</span><span class="p">(</span><span class="nb">aimag</span><span class="p">(</span><span class="k">generic</span><span class="p">))</span><span class="c">! im=fmt(generic%im)</span>
 <span class="w">                 </span><span class="k">call </span><span class="n">trimzeros_</span><span class="p">(</span><span class="n">re</span><span class="p">)</span>
 <span class="w">                 </span><span class="k">call </span><span class="n">trimzeros_</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
 <span class="w">                 </span><span class="n">fmt_local</span><span class="o">=</span><span class="s1">&#39;(&quot;(&quot;,g0,&quot;,&quot;,g0,&quot;)&quot;,a)&#39;</span>
@@ -415,7 +352,7 @@ format.
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2026-02-22 19:46 +0000             </p>
+ on 2026-05-07 04:42 +0000             </p>
           </div>
         </div>
         <br>

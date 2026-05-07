@@ -171,91 +171,6 @@
     </div>
 
 
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>decode_base64-(3f) - [M_strings:ENCODE] decode data from base64
-encoding as defined in RFC-4648
-(LICENSE:MIT)
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="nf">decode_base64(text,ignore_garbage) result</span><span class="p">(</span>out<span class="p">)</span>
-
-<span class="w">  </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="mi">1</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="p">::</span><span class="w"> </span><span class="nb">text</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
-<span class="w">  </span><span class="nb">logical</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="n">optional</span><span class="w">  </span><span class="p">::</span><span class="w"> </span><span class="n">ignore_garbage</span>
-<span class="w">  </span><span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="mi">1</span><span class="p">),</span><span class="n">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">out</span><span class="p">(:)</span>
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">The</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">deencoded</span><span class="w"> </span><span class="nv">as</span><span class="w"> </span><span class="nv">described</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">base64</span><span class="o">-</span><span class="nv">alphabet</span><span class="o">-</span><span class="nv">encoding</span><span class="w"> </span><span class="nv">in</span>
-<span class="nv">RFC</span><span class="w"> </span><span class="mi">4648</span>.
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code>TEXT            Data to decode
-
-IGNORE_GARBAGE  when decoding, ignore all characters not in the formal
-                base64 alphabet. This option will attempt to recover
-                from any other non-alphabet bytes in the encoded data.
-</code></pre></div>
-
-<h2 id="output">OUTPUT</h2>
-<div class="codehilite"><pre><span></span><code>OUT    array of decoded characters
-</code></pre></div>
-
-<h2 id="example">EXAMPLE</h2>
-<p>Sample program:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">program</span><span class="w"> </span><span class="nx">demo_decode_base64</span>
-<span class="nx">use</span><span class="p">,</span><span class="nx">intrinsic</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nx">iso_fortran_env</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">int8</span><span class="p">,</span><span class="w"> </span><span class="nx">int16</span><span class="p">,</span><span class="w"> </span><span class="nx">int32</span><span class="p">,</span><span class="w"> </span><span class="nx">int64</span>
-<span class="nx">use</span><span class="w"> </span><span class="nx">M_strings</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">switch</span><span class="p">,</span><span class="w"> </span><span class="nx">encode_base64</span><span class="p">,</span><span class="w"> </span><span class="nx">decode_base64</span>
-<span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
-<span class="nx">integer</span><span class="w">                      </span><span class="o">::</span><span class="w"> </span><span class="nx">i</span>
-<span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="mi">1</span><span class="p">),</span><span class="nx">parameter</span><span class="w">   </span><span class="o">::</span><span class="w"> </span><span class="nx">nl</span><span class="p">=</span><span class="nx">new_line</span><span class="p">(</span><span class="sc">&#39;a&#39;</span><span class="p">)</span>
-<span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="mi">1</span><span class="p">),</span><span class="nx">allocatable</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nx">textin</span><span class="p">(:),</span><span class="w"> </span><span class="nx">textout</span><span class="p">(:)</span>
-<span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="nx">parameter</span><span class="w">   </span><span class="o">::</span><span class="w"> </span><span class="nx">data</span><span class="p">(</span><span class="o">*</span><span class="p">)=[</span><span class="w"> </span><span class="o">&amp;</span>
-<span class="err">&#39;</span><span class="nx">This</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">some</span><span class="w"> </span><span class="nx">sample</span><span class="w"> </span><span class="nx">data</span><span class="w">          </span><span class="err">&#39;</span><span class="p">,</span><span class="w">  </span><span class="o">&amp;</span>
-<span class="err">&#39;</span><span class="nx">To</span><span class="w"> </span><span class="nx">encode</span><span class="p">.</span><span class="w"> </span><span class="nx">Should</span><span class="w"> </span><span class="nx">make</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="nx">long</span><span class="w">    </span><span class="err">&#39;</span><span class="p">,</span><span class="w">  </span><span class="o">&amp;</span>
-<span class="err">&#39;</span><span class="nx">enough</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">generate</span><span class="w"> </span><span class="nx">multiple</span><span class="w"> </span><span class="nx">lines</span><span class="w"> </span><span class="err">&#39;</span><span class="p">,</span><span class="w">  </span><span class="o">&amp;</span>
-<span class="err">&#39;</span><span class="nx">of</span><span class="w"> </span><span class="nx">output</span><span class="w"> </span><span class="nx">so</span><span class="w"> </span><span class="nx">can</span><span class="w"> </span><span class="nx">check</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="nx">wrap</span><span class="w">  </span><span class="err">&#39;</span><span class="p">,</span><span class="w">  </span><span class="o">&amp;</span>
-<span class="err">&#39;</span><span class="nx">functionality</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nx">well</span><span class="p">.</span><span class="w">            </span><span class="err">&#39;</span><span class="w">   </span><span class="o">&amp;</span>
-<span class="p">]</span>
-<span class="p">!</span><span class="w"> </span><span class="nx">make</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">file</span><span class="o">-</span><span class="k">like</span><span class="w"> </span><span class="nx">byte</span><span class="w"> </span><span class="nx">stream</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">trimming</span><span class="w"> </span><span class="nx">lines</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">adding</span><span class="w"> </span><span class="nx">newlines</span>
-<span class="w">   </span><span class="nx">textin</span><span class="p">=[(</span><span class="nx">switch</span><span class="p">(</span><span class="nx">trim</span><span class="p">(</span><span class="nx">data</span><span class="p">(</span><span class="nx">i</span><span class="p">))),</span><span class="nx">new_line</span><span class="p">(</span><span class="sc">&#39;a&#39;</span><span class="p">),</span><span class="nx">i</span><span class="p">=</span><span class="mi">1</span><span class="p">,</span><span class="nx">size</span><span class="p">(</span><span class="nx">data</span><span class="p">))]</span>
-<span class="w">   </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="nx">a</span><span class="p">))</span><span class="sc">&#39;)&#39;</span><span class="nx">input</span><span class="p">:</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">nl</span><span class="p">,</span><span class="nx">textin</span>
-<span class="p">!</span>
-<span class="w">   </span><span class="nx">textout</span><span class="p">=</span><span class="nx">encode_base64</span><span class="p">(</span><span class="nx">textin</span><span class="p">,</span><span class="nx">width</span><span class="p">=</span><span class="mi">50</span><span class="p">)</span>
-<span class="w">   </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="nx">a</span><span class="p">))</span><span class="sc">&#39;)&#39;</span><span class="nx">result</span><span class="p">:</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">nl</span><span class="p">,</span><span class="w"> </span><span class="nx">textout</span>
-<span class="p">!</span>
-<span class="w">   </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="nx">a</span><span class="p">))</span><span class="sc">&#39;)&#39;</span><span class="nx">decode</span><span class="w"> </span><span class="nx">result</span><span class="p">:</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">nl</span><span class="p">,</span><span class="w"> </span><span class="nx">decode_base64</span><span class="p">(</span><span class="nx">textout</span><span class="p">)</span>
-<span class="p">!</span>
-<span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_decode_base64</span>
-</code></pre></div>
-
-<p>Results:</p>
-<div class="codehilite"><pre><span></span><code> &gt; input:
- &gt; This is some sample data
- &gt; To encode. Should make it long
- &gt; enough to generate multiple lines
- &gt; of output so can check line wrap
- &gt; functionality as well.
- &gt;
- &gt; result:
- &gt; VGhpcyBpcyBzb21lIHNhbXBsZSBkYXRhClRvIGVuY29kZS4gU2
- &gt; hvdWxkIG1ha2UgaXQgbG9uZwplbm91Z2ggdG8gZ2VuZXJhdGUg
- &gt; bXVsdGlwbGUgbGluZXMKb2Ygb3V0cHV0IHNvIGNhbiBjaGVjay
- &gt; BsaW5lIHdyYXAKZnVuY3Rpb25hbGl0eSBhcyB3ZWxsLgo=
- &gt;
- &gt; decode result:
- &gt; This is some sample data
- &gt; To encode. Should make it long
- &gt; enough to generate multiple lines
- &gt; of output so can check line wrap
- &gt; functionality as well.
- &gt;
-</code></pre></div>
-
-<h2 id="see-also">SEE ALSO</h2>
-<div class="codehilite"><pre><span></span><code> encode_base64(3), base64(1), uuencode(1), uudecode(1)
-</code></pre></div>
 
 
     <h3>Arguments</h3>
@@ -387,7 +302,7 @@ IGNORE_GARBAGE  when decoding, ignore all characters not in the formal
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2026-02-22 19:46 +0000             </p>
+ on 2026-05-07 04:42 +0000             </p>
           </div>
         </div>
         <br>
