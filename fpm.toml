@@ -16,9 +16,9 @@ homepage = "https://github.com/urbanjost/M_strings.git"
    auto-examples = true
 
    # new force module naming rules to avoid collisions with other packages
-   module-naming = true
+   #module-naming = true
    # traditional where user can use any module name
-   #module-naming = false
+   module-naming = false
 
 # new
 [fortran]
@@ -52,6 +52,10 @@ homepage = "https://github.com/urbanjost/M_strings.git"
    git = "https://github.com/urbanjost/M_CLI2.git" 
    #namespace = "GPF" 
    #path = "GLINKS/M_CLI2" 
+[executable.dependencies.M_msg]
+   git = "https://github.com/urbanjost/M_msg.git" 
+   #namespace = "GPF" 
+   #path = "GLINKS/M_msg" 
 
 [[test]]
    name="test_suite"
@@ -62,7 +66,7 @@ homepage = "https://github.com/urbanjost/M_strings.git"
    #M_framework = { namespace = "GPF" }
    #
    # regular internet connection or possibly an internal network
-   #M_framework = { git = "https://github.com/urbanjost/M_framework.git" }
+   M_framework = { git = "https://github.com/urbanjost/M_framework.git" }
    #
    # For off-line work I use the GLINKS directory with links to many packages
    # I have or use offline
@@ -71,7 +75,7 @@ homepage = "https://github.com/urbanjost/M_strings.git"
    #       drives and some OSes may not support directory links, even soft links
    #       Even if supported they might be platform specific and need regenerated
    #       (scripts may be useful).
-   M_framework  = { path = "GLINKS/M_framework" }
+   #M_framework  = { path = "GLINKS/M_framework" }
    # ISSUE: wanting to switch automatically between dependency sorces:
    # conditional logic and/or a preprocessor can be used, as can be scripts
    # to read in the fpm.toml file and rewrite it, but trying to use a
