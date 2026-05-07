@@ -1,0 +1,65 @@
+makeobj 1234
+circleprecision 200
+centertext TRUE
+textsize 11.4 14
+polyfill TRUE
+#font futura.b
+linewidth 130
+mapcolor  21  65   150   122 # base 41 96 7a -ibase 16 -obase 10
+mapcolor  22 163    78   156 # base a3 4e 9c -ibase 16 -obase 10
+mapcolor  23  78    82   163 # base 4e 52 a3 -ibase 16 -obase 10
+mapcolor  24 153    83   173 # base 99 53 ad -ibase 16 -obase 10
+mapcolor  25 104    83   173 # base 68 53 ad -ibase 16 -obase 10
+mapcolor  26 222   149    94 # base de 95 5e -ibase 16 -obase 10
+mapcolor  27 115    79   150 # base 73 4f 96 -ibase 16 -obase 10
+
+page -50 50 -50 50
+
+set A=360/6-6 STEP=0 COL=21 TURN=0
+
+parcel wedge
+color COL
+sector 0 0 50 0-A/2+STEP  A/2+STEP
+textang STEP-90+TURN
+COL=COL+1
+color 0
+move2 40*cosd(STEP) 40*sind(STEP)
+drawstr $NAME
+STEP=STEP+360/6
+post
+
+execute wedge $NAME="build" 
+execute wedge $NAME="new" 
+execute wedge $NAME="install" 
+execute wedge $NAME="run" 
+TURN=180
+execute wedge $NAME="test" 
+execute wedge $NAME="update"
+
+color 7
+circle 0 0 33
+color 27 
+circle 0 0 28
+
+textang 0
+color 0
+move2 0 0
+linewidth 340
+textsize 24 24
+drawstr fpm
+closeobj 1234
+hcopy p6 -sz 100 -f fpm-features_100.p6 -obj 1234
+hcopy p6 -sz 200 -f fpm-features_200.p6 -obj 1234
+hcopy p6 -sz 700 -f fpm-features_700.p6 -obj 1234
+hcopy p6 -sz 2000 -f fpm-features_2000.p6 -obj 1234
+#callobj 1234
+#fpm build new install run test update
+
+#|‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐+‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐|
+#|arc(x, y, radius,    |Draw an arc in world units.                            |
+#|startang, endang)    |                                                       |
+#|‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐+‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐|
+#|sector(x, y, radius, |Draw a sector. Note: sectors are polygons.             |
+#|startang, endang)    |                                                       |
+#|‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐+‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐|
+#|circle(x, y, radius) |Draw a circle. Note: circles are polygons.             |
