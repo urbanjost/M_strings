@@ -11,7 +11,7 @@
        use M_strings,only : crop, clip, unquote, quote, matching_delimiter
        use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
                & stretch, lenset, merge_str
-       use M_strings,only : switch, s2c, c2s
+       use M_strings,only : switch, couple, uncouple, s2c, c2s
        use M_strings,only : noesc, notabs, dilate, expand, visible
        use M_strings,only : longest_common_substring
        use M_strings,only : string_to_value, string_to_values, s2v, s2vs

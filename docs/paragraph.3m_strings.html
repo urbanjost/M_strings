@@ -81,7 +81,7 @@ function paragraph(source_string,length)
 <PRE>
    character(len=*),intent(in)       :: source_string
    integer,intent(in)                :: length
-   character(allocatable(len=length)    :: paragraph(:)
+   character(allocatable(len=length) :: paragraph(:)
 <P>
 </PRE>
 </BLOCKQUOTE>
@@ -142,7 +142,7 @@ sample program
    use M_strings, only : paragraph
    implicit none
    character(len=:),allocatable :: paragrph(:)
-   character(len=*),parameter    :: string= &#146;&
+   character(len=*),parameter   :: string= &#146;&
     &one two three four five &
     &six seven eight &
     &nine ten eleven twelve &

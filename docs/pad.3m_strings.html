@@ -129,7 +129,7 @@ if true pads string on the right, else on the left
 <B>clip</B> </TD><TD valign=bottom>
 trim spaces from input string but otherwise retain length.
 Except for simple cases you typically would trim the input
-yourself.
+yourself. Defaults to .false. .
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
@@ -190,6 +190,7 @@ Sample Program:
         write(*,g)pad(&#146;12345 &#146;,5,&#146;_&#146;,right=.false.,clip=.true.)
         write(*,g)pad(&#146;12345 &#146;,4,&#146;_&#146;,right=.false.)
         write(*,g)pad(&#146;12345 &#146;,4,&#146;_&#146;,right=.false.,clip=.true.)
+<P>
    end program demo_pad
 <P>
 </PRE>

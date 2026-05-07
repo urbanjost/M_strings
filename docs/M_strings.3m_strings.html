@@ -104,7 +104,7 @@ public entities:
      use M_strings,only : crop, clip, unquote, quote, matching_delimiter
      use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
              & stretch, lenset, merge_str
-     use M_strings,only : switch, s2c, c2s
+     use M_strings,only : switch, couple, uncouple, s2c, c2s
      use M_strings,only : noesc, notabs, dilate, expand, visible
      use M_strings,only : longest_common_substring
      use M_strings,only : string_to_value, string_to_values, s2v, s2vs
@@ -398,6 +398,14 @@ add quotes to string as if written with list-directed output
 switch between a string and an array of single characters
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
+<B>couple</B> </TD><TD valign=bottom>
+an array of single characters is converted to a string
+</TD></TR>
+<TR valign=top><TD colspan=2>
+<B>uncouple</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+a string is converted to an array of single characters
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
 <B>s2c</B> </TD><TD valign=bottom>
 convert string to array of single characters and add null
 terminator for passing to C
@@ -593,7 +601,7 @@ to char(127)
 o
 </TD><TD>
 isblank returns .true. if character is a blank character
-(space or horizontal tab.
+(space or horizontal tab).
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
@@ -740,7 +748,7 @@ Sample program:
      use M_strings,only : crop, clip, unquote, quote, matching_delimiter
      use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
              & stretch, lenset, merge_str
-     use M_strings,only : switch, s2c, c2s
+     use M_strings,only : switch, couple, uncouple, s2c, c2s
      use M_strings,only : noesc, notabs, dilate, expand, visible
      use M_strings,only : longest_common_substring
      use M_strings,only : string_to_value, string_to_values, s2v, s2vs

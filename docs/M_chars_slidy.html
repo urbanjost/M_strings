@@ -79,8 +79,8 @@ centered output string</li>
 <p>atoi(3f) - [M_strings:TYPE] function returns a 32-bit integer value from a string (LICENSE:PD)</p>
 <h2 id="synopsis-1">SYNOPSIS</h2>
 <p>pure elemental function atoi (string) result(val)</p>
-<pre><code>    character(len=*),intent(in)      :: string
-    integer(kind=int32),intent(out)  :: val
+<pre><code>    character(len=*),intent(in)              :: string
+    integer(kind=int32),intent(out) :: val
 </code></pre>
 <h2 id="description-1">DESCRIPTION</h2>
 <p>function atoi(3f) converts a string representing an integer value to a numeric 32-bit integer value.</p>
@@ -137,8 +137,8 @@ returned INTEGER.</li>
 <p>atol(3f) - [M_strings:TYPE] function returns a 64-bit integer value from a string (LICENSE:PD)</p>
 <h2 id="synopsis-2">SYNOPSIS</h2>
 <p>pure elemental function atol (string) result(val)</p>
-<pre><code>    character(len=*),intent(in)      :: string
-    integer(kind=int64),intent(out)  :: val
+<pre><code>    character(len=*),intent(in)              :: string
+    integer(kind=int64),intent(out) :: val
 </code></pre>
 <h2 id="description-2">DESCRIPTION</h2>
 <p>function atol(3f) converts a string representing an integer value to a numeric 64-bit integer value.</p>
@@ -328,9 +328,9 @@ base specified for output string</p></li>
 <pre><code>   program demo_base
    use M_strings, only: base
    implicit none
-   integer           :: ba, bd, i
-   character(len=40) :: x, y
-   character(len=*), parameter :: input(*) = [character(len=80) :: &amp;
+   integer                      :: ba, bd, i
+   character(len=40)            :: x, y
+   character(len=*), parameter  :: input(*) = [character(len=80) :: &amp;
       &#39;10 12345 10&#39;, &amp;
       &#39;2 10111 10&#39;, &amp;
       &#39;10 12345 20&#39;, &amp;
@@ -885,9 +885,9 @@ output value in base 10</p></li>
 <pre><code>   program demo_decodebase
    use M_strings, only : codebase, decodebase
    implicit none
-   integer           :: bd, i, r
-   character(len=40) :: x
-   character(len=*), parameter :: input(*) = [character(len=80) :: &amp;
+   integer                      :: bd, i, r
+   character(len=40)            :: x
+   character(len=*), parameter  :: input(*) = [character(len=80) :: &amp;
       &#39;10  12345&#39;,   &amp;
       &#39;2   10111&#39;,   &amp;
       &#39;6   12345&#39;,   &amp;
@@ -1346,8 +1346,8 @@ Output string with tabs expanded.</li>
 <p>edit_distance(3f) - [M_strings:DESCRIBE] returns a naive edit distance using the Levenshtein distance algorithm (LICENSE:PD)</p>
 <h2 id="synopsis-21">SYNOPSIS</h2>
 <p>pure elemental function edit_distance(str1,str2) result (distance)</p>
-<pre><code>    character(len=*),intent(in)   :: str1, str2
-    integer :: distance
+<pre><code>    character(len=*),intent(in) :: str1, str2
+    integer                     :: distance
 </code></pre>
 <h2 id="description-21">DESCRIPTION</h2>
 <p>The Levenshtein distance function returns how many edits (deletions, insertions, transposition) are required to turn one string into another.</p>
@@ -1375,8 +1375,8 @@ Output string with tabs expanded.</li>
 <p>encode_base64-(3f) - [M_strings:ENCODE] encode data using base64 encoding as defined in RFC-4648 (LICENSE:MIT)</p>
 <h2 id="synopsis-22">SYNOPSIS</h2>
 <p>function encode_base64(text,width) result(out)</p>
-<pre><code>     character(len=1),intent(in) :: text(*)
-     integer,intent(in),optional :: width
+<pre><code>     character(len=1),intent(in)  :: text(*)
+     integer,intent(in),optional  :: width
      character(len=1),allocatable :: out(:)
 </code></pre>
 <h2 id="description-22">DESCRIPTION</h2>
@@ -1577,8 +1577,8 @@ returns .TRUE. if one of the suffix match the end of STRING.</li>
 <pre><code>   program demo_expand
       ! demonstrate filter to expand C-like escape sequences in input lines
       use M_strings, only : expand
-      integer,parameter     :: iwidth=1024
-      integer               :: i
+      integer,parameter               :: iwidth=1024
+      integer                         :: i
       character(len=iwidth),parameter :: input(*)=[ character(len=iwidth) :: &amp;
          &#39;\e[H\e[2J&#39;,&amp;   ! home cursor and clear screen on ANSI terminals
          &#39;\tABC\tabc&#39;,&amp;  ! write some tabs in the output
@@ -1857,10 +1857,10 @@ zero if no error occurred in reading numbers. Optional. If not present and an er
 <pre><code>      program demo_getvals
       use M_strings, only: getvals
       implicit none
-      integer,parameter  :: longest_line=256
+      integer,parameter           :: longest_line=256
       character(len=longest_line) :: line
-      real               :: values(longest_line/2+1)
-      integer            :: iostat,icount,ierr
+      real                        :: values(longest_line/2+1)
+      integer                     :: iostat,icount,ierr
       INFINITE: do
          read(*,&#39;(a)&#39;,iostat=iostat) line
          if(iostat /= 0)exit INFINITE
@@ -2605,8 +2605,8 @@ logical value returns true if character is a lowercase ASCII character else fals
 <p>isnumber(3f) - [M_strings:TYPE] determine if a string represents a number (LICENSE:PD)</p>
 <h2 id="synopsis-40">SYNOPSIS</h2>
 <p>function isnumber(str,msg)</p>
-<pre><code>    character(len=*),intent(in)  :: str
-    character(len=:),intent(out),allocatable,optional  :: msg
+<pre><code>    character(len=*),intent(in)                       :: str
+    character(len=:),intent(out),allocatable,optional :: msg
 </code></pre>
 <h2 id="description-40">DESCRIPTION</h2>
 <p>ISNUMBER(3f) returns a value greater than zero if the string represents a number, and a number less than or equal to zero if it is a bad number. Blank characters are ignored.</p>
@@ -2971,8 +2971,8 @@ CHARACTER variable composed of all of the elements of STR() appended together wi
 <pre><code>    program demo_join
     use M_strings, only: join
     implicit none
-    character(len=*),parameter :: w=&#39;(/,*(g0,/,g0))&#39;
-    character(len=:),allocatable  :: s(:)
+    character(len=*),parameter   :: w=&#39;(/,*(g0,/,g0))&#39;
+    character(len=:),allocatable :: s(:)
       s=[character(len=10) :: &amp;
         &amp; &#39; United&#39;, &amp;
         &amp; &#39;we&#39;, &amp;
@@ -3115,7 +3115,7 @@ the number of characters in the trimmed string</li>
      implicit none
      character(len=80) :: s
      integer           :: lgth, lastnb
-     intrinsic len
+     intrinsic         :: len
 
      s=&#39; ABCDEFG abcdefg &#39;
      lgth = len(s)
@@ -3271,9 +3271,9 @@ the longest common substring found</li>
    contains
 
    subroutine compare(a,b,answer)
-   character(len=*),intent(in) :: a, b, answer
+   character(len=*),intent(in)  :: a, b, answer
    character(len=:),allocatable :: match
-   character(len=*),parameter :: g=&#39;(*(g0))&#39;
+   character(len=*),parameter   :: g=&#39;(*(g0))&#39;
       match=longest_common_substring(a,b)
       write(*,g) &#39;comparing &quot;&#39;,a,&#39;&quot; and &quot;&#39;,b,&#39;&quot;&#39;
       write(*,g) merge(&#39;(PASSED) &quot;&#39;,&#39;(FAILED) &quot;&#39;,answer == match), &amp;
@@ -4416,9 +4416,9 @@ Significant length of returned string. If greater than len(outstr) truncation ha
    write(*,*)&#39;[&#39;//string//&#39;]&#39;
    contains
    subroutine makefile(lun)
-   integer :: lun
-   integer :: i
-   character(len=80),parameter  :: fakefile(*)=[character(len=80) :: &amp;
+   integer                     :: lun
+   integer                     :: i
+   character(len=80),parameter :: fakefile(*)=[character(len=80) :: &amp;
    &#39;col1&#39;//t//&#39;col2&#39; ,&amp;
    &#39;a&#39;//t//&#39;one&#39;     ,&amp;
    &#39;bb&#39;//t//&#39;two&#39;    ,&amp;
@@ -4544,7 +4544,7 @@ APPENDIX ```.................. 1235 &gt; 00012 &gt; ________________________1234
 <p>function paragraph(source_string,length)</p>
 <pre><code>   character(len=*),intent(in)       :: source_string
    integer,intent(in)                :: length
-   character(allocatable(len=length)    :: paragraph(:)
+   character(allocatable(len=length) :: paragraph(:)
 </code></pre>
 <h2 id="description-64">DESCRIPTION</h2>
 <p>paragraph(3f) breaks a long line into a simple paragraph of specified line length.</p>
@@ -4567,7 +4567,7 @@ character array filled with data from source_string broken at spaces into variab
    use M_strings, only : paragraph
    implicit none
    character(len=:),allocatable :: paragrph(:)
-   character(len=*),parameter    :: string= &#39;&amp;
+   character(len=*),parameter   :: string= &#39;&amp;
     &amp;one two three four five &amp;
     &amp;six seven eight &amp;
     &amp;nine ten eleven twelve &amp;
@@ -5250,7 +5250,7 @@ numeric value read from string</li>
 <p>s2vs(3f) - [M_strings:TYPE] given a string representing numbers return a numeric array (LICENSE:PD)</p>
 <h2 id="synopsis-75">SYNOPSIS</h2>
 <p>function s2vs(line[,delim])</p>
-<pre><code>       character(len=*) :: line
+<pre><code>       character(len=*)            :: line
        doubleprecision,allocatable :: s2vs(:)
 </code></pre>
 <h2 id="description-75">DESCRIPTION</h2>
@@ -5272,10 +5272,10 @@ doubleprecision array</li>
 <pre><code>     program demo_s2vs
      use M_strings, only : s2vs
      implicit none
-     character(len=80) :: s=&#39; 10 20e3;3.45 -400.3e-2;1234; 5678 &#39;
-     real,allocatable :: values(:)
+     character(len=80)   :: s=&#39; 10 20e3;3.45 -400.3e-2;1234; 5678 &#39;
+     real,allocatable    :: values(:)
      integer,allocatable :: ivalues(:)
-     integer :: ii
+     integer             :: ii
 
      values=s2vs(s)
      ivalues=int(s2vs(s))
@@ -5435,7 +5435,7 @@ Treatment of null fields. By default adjacent delimiters in the input string do 
        call printme()
     contains
     subroutine printme()
-       write(*,&#39;((*(:/,3x,&quot;[&quot;,g0,&quot;]&quot;)))&#39;)&amp;
+       write(*,&#39;(*(:/,3x,&quot;[&quot;,g0,&quot;]&quot;))&#39;)&amp;
                &amp; (line(ibegin(i):iend(i)),i=1,size(ibegin))
        write(*,&#39;(*(g0,1x))&#39;)&#39;SIZE:&#39;,size(ibegin)
     end subroutine printme
@@ -5568,7 +5568,7 @@ shall be a logical scalar. It is an INTENT (IN) argument. If POS does not appear
     block
       character (len=:), allocatable :: string
       character (len=:), allocatable :: tokens(:)
-      character (len=*),parameter :: set = &quot; ,&quot;
+      character (len=*),parameter    :: set = &quot; ,&quot;
       string = &#39;first,second,third&#39;
       call split2020(string, set, tokens )
       write(*,gen)tokens
@@ -5581,8 +5581,8 @@ shall be a logical scalar. It is an INTENT (IN) argument. If POS does not appear
 
     block
       character (len=:), allocatable :: string
-      character (len=*),parameter :: set = &quot; ,&quot;
-      integer, allocatable        :: first(:), last(:)
+      character (len=*),parameter    :: set = &quot; ,&quot;
+      integer, allocatable           :: first(:), last(:)
       string =    &#39;first,second,,forth&#39;
       call split2020 (string, set, first, last)
       write(*,gen)first
@@ -5595,8 +5595,8 @@ shall be a logical scalar. It is an INTENT (IN) argument. If POS does not appear
     ! Execution of STEP form
     block
       character (len=:), allocatable :: string
-      character (len=*),parameter :: set = &quot; ,&quot;
-      integer :: p, ibegin, iend
+      character (len=*),parameter    :: set = &quot; ,&quot;
+      integer                        :: p, ibegin, iend
       string = &quot; one,   last  example  &quot;
       do while (p &lt; len(string))
         ibegin = p + 1
@@ -5825,7 +5825,13 @@ string with all contiguous adjacent occurrences of CHAR removed</li>
 <li><p><strong>class(*),intent(in),optional</strong><br />
 :: g1,g2,g3,g4,g5,g6,g7,g8,g9,g10</p></li>
 <li><p><strong>class(*),intent(in),optional</strong><br />
-:: g11,g12,g13,g14,g15,g16,g17,g18,g19,g20 character(len=*),intent(in),optional :: sep logical,intent(in),optional :: csv character(len=:),allocatable :: str</p></li>
+:: g11,g12,g13,g14,g15,g16,g17</p></li>
+<li><p><strong>class(*),intent(in),optional</strong><br />
+:: g18,g19,g20 character(len=*),intent(in),optional :: sep</p></li>
+<li><p><strong>logical,intent(in),optional</strong><br />
+:: csv</p></li>
+<li><p><strong>character(len=:),allocatable</strong><br />
+:: str</p></li>
 </ul>
 <h2 id="description-81">DESCRIPTION</h2>
 <p>str(3f) builds a string from up to twenty scalar values.</p>
@@ -6025,8 +6031,8 @@ error flag (0 == no error)</p></li>
 <pre><code>   program demo_string_to_value
     use M_strings, only: string_to_value
     implicit none
-    real :: value
-    integer :: ierr
+    real              :: value
+    integer           :: ierr
     character(len=80) :: string
        string=&#39; -40.5e-2 &#39;
        call string_to_value(string,value,ierr)
@@ -6722,8 +6728,8 @@ If not zero, error occurred; optional.</p></li>
 <p>visible(3f) - [M_strings:NONALPHA] expand a string to control and meta-control representations (LICENSE:PD)</p>
 <h2 id="synopsis-94">SYNOPSIS</h2>
 <p>function visible(input) result(output)</p>
-<pre><code>    character(len=*),intent(in)           :: input
-    character(len=:),allocatable          :: output
+<pre><code>    character(len=*),intent(in)  :: input
+    character(len=:),allocatable :: output
 </code></pre>
 <h2 id="description-94">DESCRIPTION</h2>
 <p>visible(3f) expands characters to commonly used sequences used to represent the characters as control sequences or meta-control sequences.</p>
