@@ -170,7 +170,164 @@
     <div class="card-header codesum"><span class="anchor" id="proc-a2s"></span> <h3>private pure function a2s(array) result(string)  
 </h3></div>
     <div class="card-body">
-        
+        <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>switch(3f) - [M_strings:ARRAY] converts between CHARACTER scalar and
+array of single characters
+(LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>pure function switch(array) result (string)
+
+ character(len=1),intent(in) :: array(:)
+ character(len=SIZE(array))  :: string
+
+  or
+
+pure function switch(string) result (array)
+
+ character(len=*),intent(in) :: string
+ character(len=1)            :: array(len(string))
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code>SWITCH(3f): generic function that switches CHARACTER string to an array
+of single characters or an array of single characters to a CHARACTER
+string. Useful in passing strings to C. New Fortran features may
+supersede these routines.
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code>program demo_switch
+use M_strings, only : switch, isalpha, islower, nospace
+character(len=*),parameter :: &amp;
+&amp; dashes=&#39;-----------------------------------&#39;
+character(len=*),parameter :: string=&#39;This is a string&#39;
+character(len=1024)        :: line
+
+! First, examples of standard Fortran features
+! returns array [F,T,T,T,T,T]
+write(*,*)[&#39;A&#39;,&#39;=&#39;,&#39;=&#39;,&#39;=&#39;,&#39;=&#39;,&#39;=&#39;] == &#39;=&#39;
+! this would return T
+write(*,*)all([&#39;=&#39;,&#39;=&#39;,&#39;=&#39;,&#39;=&#39;,&#39;=&#39;,&#39;=&#39;] == &#39;=&#39;)
+! this would return F
+write(*,*)all([&#39;A&#39;,&#39;=&#39;,&#39;=&#39;,&#39;=&#39;,&#39;=&#39;,&#39;=&#39;] == &#39;=&#39;)
+
+! so to test if the string DASHES is all dashes
+! using SWITCH(3f) is
+if(all(switch(dashes) == &#39;-&#39;))then
+   write(*,*)&#39;DASHES is all dashes&#39;
+endif
+
+! so to test is a string is all letters
+! isalpha(3f) returns .true. only if character is a letter
+! false because dashes are not a letter
+write(*,*) all(isalpha(switch(dashes)))
+! false because of spaces
+write(*,*) all(isalpha(switch(string)))
+! true because removed whitespace
+write(*,*) all(isalpha(switch(nospace(string))))
+
+! to see if a string is all uppercase
+! show the string
+write(*,*) string
+! converted to character array
+write(*,&#39;(1x,*(&quot;[&quot;,a,&quot;]&quot;:))&#39;) switch(string)
+write(*,&#39;(*(l3))&#39;) islower(switch(string))
+
+! we need a string that is all letters
+line=nospace(string)
+write(*,*)&#39;LINE=&#39;,trim(line)
+! all true except first character
+write(*,*) islower(switch(nospace(string)))
+! should be false
+write(*,*) all(islower(switch(nospace(string))))
+! should be true
+write(*,*) all(islower(switch(nospace(string(2:)))))
+
+end program demo_switch
+</code></pre></div>
+
+<p>Expected output</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">T</span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">F</span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">DASHES</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="ow">all</span><span class="w"> </span><span class="n">dashes</span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">F</span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">F</span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">T</span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">string</span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">[</span><span class="n">T</span><span class="o">][</span><span class="n">h</span><span class="o">][</span><span class="n">i</span><span class="o">][</span><span class="n">s</span><span class="o">][</span><span class="n"> </span><span class="o">][</span><span class="n">i</span><span class="o">][</span><span class="n">s</span><span class="o">][</span><span class="n"> </span><span class="o">][</span><span class="n">a</span><span class="o">][</span><span class="n"> </span><span class="o">][</span><span class="n">s</span><span class="o">][</span><span class="n">t</span><span class="o">][</span><span class="n">r</span><span class="o">][</span><span class="n">i</span><span class="o">][</span><span class="n">n</span><span class="o">][</span><span class="n">g</span><span class="o">]</span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w">  </span><span class="n">F</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">F</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">F</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">F</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span><span class="w">  </span><span class="n">T</span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">LINE</span><span class="o">=</span><span class="n">Thisisastring</span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">T</span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">F</span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">T</span>
+</code></pre></div>
+
+<h2 id="see-also">SEE ALSO</h2>
+<div class="codehilite"><pre><span></span><code>switch(3), join(3), couple(3), uncouple(3), c2s(3), s2c(3),
+verify(3), scan(3)
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
+
+<h2 id="name_1">NAME</h2>
+<div class="codehilite"><pre><span></span><code>couple(3f) - [M_strings:ARRAY] converts between CHARACTER scalar and
+array of single characters
+(LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis_1">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>pure function couple(array) result (string)
+
+ character(len=1),intent(in) :: array(:)
+ character(len=SIZE(array))  :: string
+</code></pre></div>
+
+<h2 id="description_1">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code>COUPLE(3f): function that switches an array of single characters to
+a CHARACTER string.
+</code></pre></div>
+
+<h2 id="examples_1">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code>program demo_couple
+use M_strings, only : couple
+character(len=:),allocatable :: array(:)
+ array=[&#39;T&#39;,&#39;h&#39;,&#39;i&#39;,&#39;s&#39;,&#39; &#39;,&#39;i&#39;,&#39;s&#39;,&#39; &#39;,&#39;a&#39;,&#39; &#39;,&#39;s&#39;,&#39;t&#39;,&#39;r&#39;,&#39;i&#39;,&#39;n&#39;,&#39;g&#39;]
+
+ ! show the array
+ write(*,&#39;(1x,*(&quot;[&quot;,a,&quot;]&quot;:))&#39;) array
+ ! show the string
+ write(*,&#39;(1x,*(&quot;[&quot;,a,&quot;]&quot;:))&#39;) couple(array)
+
+end program demo_couple
+</code></pre></div>
+
+<p>Results:</p>
+<blockquote>
+<p>[T][h][i][s][ ][i][s][ ][a][ ][s][t][r][i][n][g]
+ [This is a string]</p>
+</blockquote>
+<h2 id="see-also_1">SEE ALSO</h2>
+<div class="codehilite"><pre><span></span><code>switch(3), join(3), uncouple(3), c2s(3), s2c(3)
+</code></pre></div>
+
+<h2 id="author_1">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license_1">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -185,7 +342,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-array~3"></span>
+              <span class="anchor" id="variable-array~4"></span>
               character(len=1),
             </td>
 <td>intent(in)</td>
@@ -227,7 +384,7 @@
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2026-05-07 04:44 +0000             </p>
+ on 2026-06-16 10:06 +0000             </p>
           </div>
         </div>
         <br>

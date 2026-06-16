@@ -159,6 +159,145 @@
 </h2>
     
 
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>slice(3f) - [M_strings:TOKENS] parse string into an array using
+specified delimiters
+(LICENSE:PD)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>subroutine slice(input_line,ibegin,iend,delimiters,nulls)
+
+ character(len=*),intent(in)          :: input_line
+ integer,allocatable,intent(out)      :: ibegin(:),iend(:)
+ character(len=*),optional,intent(in) :: delimiters
+ character(len=*),optional,intent(in) :: nulls
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code> slice(3f) parses a string using specified delimiter characters and
+ store token beginning and ending positions into allocatable arrays
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">INPUT_LINE</span>   <span class="n">Input</span> <span class="n">string</span> <span class="n">to</span> <span class="n">tokenize</span>
+
+<span class="n">IBEGIN</span><span class="p">,</span><span class="n">IEND</span>  <span class="n">arrays</span> <span class="n">containing</span> <span class="n">start</span> <span class="n">and</span> <span class="n">end</span> <span class="n">positions</span> <span class="n">of</span> <span class="n">tokens</span><span class="p">.</span>
+             <span class="n">IEND</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">&lt;</span><span class="n">IBEGIN</span><span class="p">(</span><span class="n">I</span><span class="p">)</span> <span class="n">designates</span> <span class="n">a</span> <span class="n">null</span> <span class="n">token</span><span class="p">.</span>
+
+<span class="n">DELIMITERS</span>   <span class="n">List</span> <span class="n">of</span> <span class="n">delimiter</span> <span class="n">characters</span><span class="p">.</span>
+             <span class="n">The</span> <span class="n">default</span> <span class="n">delimiters</span> <span class="n">are</span> <span class="n">the</span> <span class="s">&quot;whitespace&quot;</span> <span class="n">characters</span>
+             <span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">tab</span><span class="p">,</span><span class="n">new</span> <span class="n">line</span><span class="p">,</span> <span class="n">vertical</span> <span class="n">tab</span><span class="p">,</span> <span class="n">formfeed</span><span class="p">,</span> <span class="n">carriage</span>
+             <span class="n">return</span><span class="p">,</span> <span class="n">and</span> <span class="n">null</span><span class="p">).</span> <span class="n">You</span> <span class="n">may</span> <span class="n">specify</span> <span class="n">an</span> <span class="n">alternate</span> <span class="n">set</span> <span class="n">of</span>
+             <span class="n">delimiter</span> <span class="n">characters</span><span class="p">.</span>
+
+             <span class="n">Multi</span><span class="o">-</span><span class="n">character</span> <span class="n">delimiters</span> <span class="n">are</span> <span class="n">not</span> <span class="n">supported</span> <span class="p">(</span><span class="n">Each</span>
+             <span class="n">character</span> <span class="n">in</span> <span class="n">the</span> <span class="n">DELIMITERS</span> <span class="n">list</span> <span class="n">is</span> <span class="n">considered</span> <span class="n">to</span> <span class="n">be</span>
+             <span class="n">a</span> <span class="n">delimiter</span><span class="p">).</span>
+
+             <span class="n">Quoting</span> <span class="n">of</span> <span class="n">delimiter</span> <span class="n">characters</span> <span class="n">is</span> <span class="n">not</span> <span class="n">supported</span><span class="p">.</span>
+
+<span class="n">NULLS</span><span class="o">=</span><span class="s">&quot;IGNORE&quot;</span><span class="p">|</span><span class="s">&quot;RETURN&quot;</span><span class="p">|</span><span class="s">&quot;IGNOREEND&quot;</span>  <span class="n">Treatment</span> <span class="n">of</span> <span class="n">null</span> <span class="n">fields</span><span class="p">.</span>
+            <span class="n">By</span> <span class="n">default</span> <span class="n">adjacent</span> <span class="n">delimiters</span> <span class="n">in</span> <span class="n">the</span> <span class="n">input</span> <span class="n">string</span>
+            <span class="n">do</span> <span class="n">not</span> <span class="n">create</span> <span class="n">an</span> <span class="n">empty</span> <span class="n">string</span> <span class="n">in</span> <span class="n">the</span> <span class="n">output</span> <span class="n">array</span><span class="p">.</span> <span class="n">if</span>
+            <span class="n">NULLS</span><span class="o">=</span><span class="s">&#39;return&#39;</span> <span class="n">adjacent</span> <span class="n">delimiters</span> <span class="n">create</span> <span class="n">an</span> <span class="n">empty</span> <span class="n">element</span>
+            <span class="n">in</span> <span class="n">the</span> <span class="n">output</span> <span class="kr">ARRAY</span><span class="p">.</span> <span class="n">If</span> <span class="n">NULLS</span><span class="o">=</span><span class="s">&#39;ignoreend&#39;</span> <span class="n">then</span> <span class="n">only</span>
+            <span class="n">trailing</span> <span class="n">delimiters</span> <span class="n">at</span> <span class="n">the</span> <span class="n">right</span> <span class="n">of</span> <span class="n">the</span> <span class="n">string</span> <span class="n">are</span> <span class="n">ignored</span><span class="p">.</span>
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_slice</span>
+<span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">M_strings</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="p">:</span><span class="w"> </span><span class="nx">slice</span>
+<span class="w"> </span><span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
+<span class="w"> </span><span class="nx">integer</span><span class="w">                    </span><span class="o">::</span><span class="w"> </span><span class="nx">i</span>
+<span class="w"> </span><span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="nx">parameter</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="o">&amp;</span>
+<span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="nx">line</span><span class="p">=</span><span class="err">&#39;</span><span class="w">  </span><span class="nx">aBcdef</span><span class="w">   </span><span class="nx">ghijklmnop</span><span class="w"> </span><span class="nx">qrstuvwxyz</span><span class="w">  </span><span class="mi">1</span><span class="p">:</span><span class="o">|</span><span class="p">:</span><span class="mi">2</span><span class="w">     </span><span class="mi">333</span><span class="o">|</span><span class="mi">333</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">B</span><span class="w"> </span><span class="nx">cc</span><span class="w">    </span><span class="err">&#39;</span>
+<span class="w"> </span><span class="nx">integer</span><span class="p">,</span><span class="nx">allocatable</span><span class="w">        </span><span class="o">::</span><span class="w"> </span><span class="nx">ibegin</span><span class="p">(:),</span><span class="w"> </span><span class="nx">iend</span><span class="p">(:)</span><span class="w"> </span><span class="p">!</span><span class="w"> </span><span class="nx">output</span><span class="w"> </span><span class="nx">arrays</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">positions</span>
+<span class="w"> </span><span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="nx">parameter</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nx">title</span><span class="p">=</span><span class="err">&#39;</span><span class="p">(</span><span class="mi">80</span><span class="p">(</span><span class="s">&quot;=&quot;</span><span class="p">),</span><span class="nx">t1</span><span class="p">,</span><span class="nx">a</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="err">&#39;</span><span class="nx">INPUT</span><span class="w"> </span><span class="nx">LINE</span><span class="p">:[</span><span class="err">&#39;</span><span class="c1">//line//&#39;]&#39;</span>
+<span class="w">    </span><span class="p">!</span>
+<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="nx">title</span><span class="p">)</span><span class="err">&#39;</span><span class="nx">typical</span><span class="w"> </span><span class="nx">call</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;</span>
+<span class="w">    </span><span class="nx">call</span><span class="w"> </span><span class="nx">slice</span><span class="p">(</span><span class="nx">line</span><span class="p">,</span><span class="nx">ibegin</span><span class="p">,</span><span class="nx">iend</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">call</span><span class="w"> </span><span class="nx">printme</span><span class="p">()</span>
+<span class="w">    </span><span class="p">!</span>
+<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="nx">title</span><span class="p">)</span><span class="err">&#39;</span><span class="nx">custom</span><span class="w"> </span><span class="nx">list</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">delimiters</span><span class="p">=</span><span class="s">&quot;:|&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">&#39;</span>
+<span class="w">    </span><span class="nx">call</span><span class="w"> </span><span class="nx">slice</span><span class="p">(</span><span class="nx">line</span><span class="p">,</span><span class="nx">ibegin</span><span class="p">,</span><span class="nx">iend</span><span class="p">,</span><span class="nx">delimiters</span><span class="p">=</span><span class="err">&#39;</span><span class="p">:</span><span class="o">|</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">nulls</span><span class="p">=</span><span class="err">&#39;</span><span class="nx">ignore</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">call</span><span class="w"> </span><span class="nx">printme</span><span class="p">()</span>
+<span class="w">    </span><span class="p">!</span>
+<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="nx">title</span><span class="p">)</span><span class="err">&#39;</span><span class="nx">delimiters</span><span class="p">=</span><span class="s">&quot;:|&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">count</span><span class="w"> </span><span class="nx">null</span><span class="w"> </span><span class="nx">fields</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;</span>
+<span class="w">    </span><span class="nx">call</span><span class="w"> </span><span class="nx">slice</span><span class="p">(</span><span class="nx">line</span><span class="p">,</span><span class="nx">ibegin</span><span class="p">,</span><span class="nx">iend</span><span class="p">,</span><span class="nx">delimiters</span><span class="p">=</span><span class="err">&#39;</span><span class="p">:</span><span class="o">|</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">nulls</span><span class="p">=</span><span class="err">&#39;</span><span class="k">return</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">call</span><span class="w"> </span><span class="nx">printme</span><span class="p">()</span>
+<span class="w">    </span><span class="p">!</span>
+<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="nx">title</span><span class="p">)</span><span class="err">&#39;</span><span class="k">default</span><span class="w"> </span><span class="nx">delimiters</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">null</span><span class="w"> </span><span class="nx">fields</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;</span>
+<span class="w">    </span><span class="nx">call</span><span class="w"> </span><span class="nx">slice</span><span class="p">(</span><span class="nx">line</span><span class="p">,</span><span class="nx">ibegin</span><span class="p">,</span><span class="nx">iend</span><span class="p">,</span><span class="nx">delimiters</span><span class="p">=</span><span class="err">&#39;&#39;</span><span class="p">,</span><span class="nx">nulls</span><span class="p">=</span><span class="err">&#39;</span><span class="k">return</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">call</span><span class="w"> </span><span class="nx">printme</span><span class="p">()</span>
+<span class="w"> </span><span class="nx">contains</span>
+<span class="w"> </span><span class="nx">subroutine</span><span class="w"> </span><span class="nx">printme</span><span class="p">()</span>
+<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="o">*</span><span class="p">(:</span><span class="o">/</span><span class="p">,</span><span class="mi">3</span><span class="nx">x</span><span class="p">,</span><span class="s">&quot;[&quot;</span><span class="p">,</span><span class="nx">g0</span><span class="p">,</span><span class="s">&quot;]&quot;</span><span class="p">))</span><span class="err">&#39;</span><span class="p">)</span><span class="o">&amp;</span>
+<span class="w">            </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="nx">line</span><span class="p">(</span><span class="nx">ibegin</span><span class="p">(</span><span class="nx">i</span><span class="p">):</span><span class="nx">iend</span><span class="p">(</span><span class="nx">i</span><span class="p">)),</span><span class="nx">i</span><span class="p">=</span><span class="mi">1</span><span class="p">,</span><span class="nx">size</span><span class="p">(</span><span class="nx">ibegin</span><span class="p">))</span>
+<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="nx">g0</span><span class="p">,</span><span class="mi">1</span><span class="nx">x</span><span class="p">))</span><span class="sc">&#39;)&#39;</span><span class="nx">SIZE</span><span class="p">:</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">size</span><span class="p">(</span><span class="nx">ibegin</span><span class="p">)</span>
+<span class="w"> </span><span class="nx">end</span><span class="w"> </span><span class="nx">subroutine</span><span class="w"> </span><span class="nx">printme</span>
+<span class="w"> </span><span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_slice</span>
+</code></pre></div>
+
+<p>Results:</p>
+<blockquote>
+<p>INPUT LINE:
+[  aBcdef   ghijklmnop qrstuvwxyz  1:|:2     333|333 a B cc    ]
+typical call: ========================================================</p>
+<p>[aBcdef]
+   [ghijklmnop]
+   [qrstuvwxyz]
+   [1:|:2]
+   [333|333]
+   [a]
+   [B]
+   [cc]
+SIZE: 8
+custom list of delimiters=&rdquo;:|&rdquo; : =====================================</p>
+<p>[  aBcdef   ghijklmnop qrstuvwxyz  1]
+   [2     333]
+   [333 a B cc    ]
+SIZE: 3
+delimiters=&rdquo;:|&rdquo;, and count null fields: ==============================</p>
+<p>[  aBcdef   ghijklmnop qrstuvwxyz  1]
+   []
+   []
+   [2     333]
+   [333 a B cc    ]
+SIZE: 5
+default delimiters and return null fields: ===========================</p>
+<p>[]
+   []
+   [aBcdef]
+   []
+   []
+   [ghijklmnop]
+   [qrstuvwxyz]
+   []
+   [1:|:2]
+   []
+   []
+   []
+   []
+   [333|333]
+   [a]
+   [B]
+   [cc]
+   []
+   []
+   []
+SIZE: 20
+ ======================================================================</p>
+</blockquote>
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>Public Domain
+</code></pre></div>
 
 
     <h3>Arguments</h3>
@@ -399,7 +538,7 @@
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2026-05-07 04:44 +0000             </p>
+ on 2026-06-16 10:06 +0000             </p>
           </div>
         </div>
         <br>
