@@ -38,6 +38,7 @@ subroutine test_suite_m_strings()
    call test_chomp()
    call test_clip()
    call test_compact()
+   call test_trim_quoted()
    call test_cpad()
    call test_crop()
    call test_itri()
@@ -1571,6 +1572,46 @@ subroutine test_compact()
    call unit_test('compact',compact('  This  is     a    test  ',char='t') == 'Thististattest','replace blank ranges with "t"')
    call unit_test_end('compact')
 end subroutine test_compact
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_trim_quoted()
+   character(len=:),allocatable :: answer
+   character(len=:),allocatable :: expected
+   call unit_test_start('trim_quoted','[WHITESPACE] honoring quoted text convert whitespace to specified number of blanks')
+   call unit_test('trim_quoted',trim_quoted('  This  is     a    test  ') == 'This is a test','reduce to single spaces')
+   call unit_test('trim_quoted',trim_quoted('   This is a test   ') == 'This is a test','input has no multi-whitespace characters')
+   call unit_test('trim_quoted',trim_quoted('This-is-a-test') == 'This-is-a-test','input has no whitespace characters')
+   call unit_test('trim_quoted',trim_quoted('') == '','nil string')
+   call unit_test('trim_quoted',trim_quoted('  This  is     a    test  ','') == 'Thisisatest','remove spaces')
+   call unit_test('trim_quoted',trim_quoted('a b c','   ') == 'a   b   c','add spaces')
+   answer=trim_quoted(' a b  c  ')
+   expected='a b c'
+
+   answer=trim_quoted('a','xxxxx')
+   expected='a'
+   call unit_test('trim_quoted',answer == expected,'expected',expected,'got',answer)
+
+   answer=trim_quoted('','xxxxx')
+   expected=''
+   call unit_test('trim_quoted',answer == expected,'expected',expected,'got',answer)
+
+   answer=trim_quoted(' a b   c "  don''t  touch " d   e',':')
+   expected='a:b:c:"  don''t  touch ":d:e'
+   call unit_test('trim_quoted',answer == expected,'expected',expected,'got',answer)
+
+   answer=trim_quoted('  a ','xxxxx')
+   expected='a'
+   call unit_test('trim_quoted',answer == expected,'expected',expected,'got',answer)
+
+   answer=trim_quoted("  a '  quoted   text '",'--')
+   expected="a--'  quoted   text '"
+   call unit_test('trim_quoted',answer == expected,'expected',expected,'got',answer)
+
+   answer=trim_quoted("  a '  quoted   text ' abcd efg",'--')
+   expected="a--'  quoted   text '--abcd--efg"
+   call unit_test('trim_quoted',answer == expected,'expected',expected,'got',answer)
+
+   call unit_test_end('trim_quoted')
+end subroutine test_trim_quoted
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_noesc()  ! test noesc
 character(len=23) :: in,out,clr
