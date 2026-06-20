@@ -95,15 +95,17 @@ public entities:
      use M_strings,only : split, slice, sep, delim, chomp, strtok
      use M_strings,only : split2020, find_field
      use M_strings,only : substitute, change, modif, transliterate, &
-             & reverse, squeeze
+                        & reverse, squeeze
      use M_strings,only : replace, join
-     use M_strings,only : upper, lower, upper_quoted, lower_quoted
+     use M_strings,only : upper, lower
+     use M_strings,only : upper_quoted, lower_quoted, &
+                        & trim_quoted, quote, unquote
      use M_strings,only : rotate13, percent_encode, percent_decode
      use M_strings,only : encode_base64, decode_base64
      use M_strings,only : adjustc, compact, nospace, indent
-     use M_strings,only : crop, clip, unquote, quote, matching_delimiter
+     use M_strings,only : crop, clip, matching_delimiter
      use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
-             & stretch, lenset, merge_str
+                        & stretch, lenset, merge_str
      use M_strings,only : switch, couple, uncouple, s2c, c2s
      use M_strings,only : noesc, notabs, dilate, expand, visible
      use M_strings,only : longest_common_substring
@@ -362,7 +364,13 @@ characters
 <TR valign=top><TD width=6% nowrap>
 <B>clip</B> </TD><TD valign=bottom>
 trim leading and trailings spaces or set of characters
-from string
+from string ends
+</TD></TR>
+<TR valign=top><TD colspan=2>
+<B>trim_quoted</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+trim ends of string and replace remaining ranges
+of whitespace not in quoted text with a specified
+string.
 </TD></TR>
 <TR></TR></TABLE>See Also: squeeze
 </BLOCKQUOTE>
@@ -739,15 +747,17 @@ Sample program:
      use M_strings,only : SPLIT, slice, sep, delim, chomp, strtok
      use M_strings,only : split2020, find_field
      use M_strings,only : substitute, change, modif, transliterate, &
-             & reverse, squeeze
+                        & reverse, squeeze
      use M_strings,only : REPLACE, join
-     use M_strings,only : UPPER, LOWER, upper_quoted, lower_quoted
+     use M_strings,only : UPPER, LOWER
+     use M_strings,only : upper_quoted, lower_quoted, unquote, quote, &
+                        & trim_quoted
      use M_strings,only : rotate13, percent_encode, percent_decode
      use M_strings,only : encode_base64, decode_base64
      use M_strings,only : adjustc, compact, nospace, indent
-     use M_strings,only : crop, clip, unquote, quote, matching_delimiter
+     use M_strings,only : crop, clip, matching_delimiter
      use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
-             & stretch, lenset, merge_str
+                        & stretch, lenset, merge_str
      use M_strings,only : switch, couple, uncouple, s2c, c2s
      use M_strings,only : noesc, notabs, dilate, expand, visible
      use M_strings,only : longest_common_substring

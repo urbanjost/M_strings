@@ -46,15 +46,17 @@
 !!      use M_strings,only : split, slice, sep, delim, chomp, strtok
 !!      use M_strings,only : split2020, find_field
 !!      use M_strings,only : substitute, change, modif, transliterate, &
-!!              & reverse, squeeze
+!!                         & reverse, squeeze
 !!      use M_strings,only : replace, join
-!!      use M_strings,only : upper, lower, upper_quoted, lower_quoted
+!!      use M_strings,only : upper, lower
+!!      use M_strings,only : upper_quoted, lower_quoted, &
+!!                         & trim_quoted, quote, unquote
 !!      use M_strings,only : rotate13, percent_encode, percent_decode
 !!      use M_strings,only : encode_base64, decode_base64
 !!      use M_strings,only : adjustc, compact, nospace, indent
-!!      use M_strings,only : crop, clip, unquote, quote, matching_delimiter
+!!      use M_strings,only : crop, clip, matching_delimiter
 !!      use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
-!!              & stretch, lenset, merge_str
+!!                         & stretch, lenset, merge_str
 !!      use M_strings,only : switch, couple, uncouple, s2c, c2s
 !!      use M_strings,only : noesc, notabs, dilate, expand, visible
 !!      use M_strings,only : longest_common_substring
@@ -158,7 +160,10 @@
 !!       crop     function trims leading and trailing spaces and control
 !!                characters
 !!       clip     trim leading and trailings spaces or set of characters
-!!                from string
+!!                from string ends
+!!       trim_quoted  trim ends of string and replace remaining ranges
+!!                    of whitespace not in quoted text with a specified
+!!                    string.
 !!
 !!       See Also: squeeze
 !!
@@ -167,7 +172,6 @@
 !!       matching_delimiter  find position of matching delimiter
 !!       unquote  remove quotes from string as if read with list-directed input
 !!       quote    add quotes to string as if written with list-directed output
-!!
 !!
 !!   CHARACTER ARRAY VERSUS STRING
 !!
@@ -322,15 +326,17 @@
 !!      use M_strings,only : SPLIT, slice, sep, delim, chomp, strtok
 !!      use M_strings,only : split2020, find_field
 !!      use M_strings,only : substitute, change, modif, transliterate, &
-!!              & reverse, squeeze
+!!                         & reverse, squeeze
 !!      use M_strings,only : REPLACE, join
-!!      use M_strings,only : UPPER, LOWER, upper_quoted, lower_quoted
+!!      use M_strings,only : UPPER, LOWER
+!!      use M_strings,only : upper_quoted, lower_quoted, unquote, quote, &
+!!                         & trim_quoted
 !!      use M_strings,only : rotate13, percent_encode, percent_decode
 !!      use M_strings,only : encode_base64, decode_base64
 !!      use M_strings,only : adjustc, compact, nospace, indent
-!!      use M_strings,only : crop, clip, unquote, quote, matching_delimiter
+!!      use M_strings,only : crop, clip, matching_delimiter
 !!      use M_strings,only : len_white, pad, lpad, cpad, rpad, zpad, &
-!!              & stretch, lenset, merge_str
+!!                         & stretch, lenset, merge_str
 !!      use M_strings,only : switch, couple, uncouple, s2c, c2s
 !!      use M_strings,only : noesc, notabs, dilate, expand, visible
 !!      use M_strings,only : longest_common_substring
@@ -431,6 +437,7 @@ public lower_quoted       !  elemental function converts string to lowercase ski
 !-------------------------# WHITE SPACE
 public adjustc            !  elemental function centers string within the length of the input string
 public compact            !  left justify string and replace duplicate whitespace with single characters or nothing
+public trim_quoted        !  replace whitespace regions with a specified string protecting quoted regions
 public nospace            !  function replaces whitespace with nothing
 public indent             !  count number of leading spaces
 public crop               !  function trims leading and trailing spaces and control characters
@@ -4103,6 +4110,270 @@ end function reverse
 !===================================================================================================================================
 !>
 !!##NAME
+!!    trim_quoted(3f) - [M_strings:WHITESPACE] converts regions of whitespace
+!!    characters to a specified string (or nothing)
+!!    (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!    function trim_quoted(STR,K) result (OUTSTR)
+!!
+!!     character(len=*),intent(in)          :: STR
+!!     character(len=*),intent(in),optional :: REP
+!!     character(len=len(str))              :: OUTSTR
+!!
+!!##DESCRIPTION
+!!
+!!    Whitespace is trimmed from both ends of the input string.
+!!
+!!    Text found between single and/or double quotes is not altered.
+!!    A single quote is only considered a delimiter if preceded by
+!!    a space or as the first non-blank character to allow for the use
+!!    of a single quote in contractions.
+!!
+!!    Otherwise, trim_quoted(3) changes ranges of whitespace of various
+!!    length found between words to a specified replacment string.
+!!
+!!    This would be similar to the sed(1) Basic Regular Expression
+!!
+!!        sed -i -e 's/  */REP/g'
+!!
+!!    if no quoted regions were present.
+!!
+!!##OPTIONS
+!!    STR     input string whose whitespace regions are to be replaced
+!!    REP     string used to replace each region of whitespace. Defaults
+!!            to a single blank.
+!!##RETURNS
+!!    OUTSTR  Ouput string with all internal whitespace sections replaced
+!!            by the replacement string removed
+!!
+!!##EXAMPLES
+!!
+!!   Sample Program:
+!!
+!!    program demo_trim_quoted
+!!    use M_strings, only: trim_quoted
+!!    implicit none
+!!    character(len=*),parameter   :: bracket='(*("[",g0,"]":,","))'
+!!    character(len=*),parameter   :: uno='(/,*(g0:,/))'
+!!    character(len=:),allocatable :: a,b
+!!
+!!    a = 'Esto es    una   prueba a ver como sale y determinar si  &
+!!    & realmente   funciona bien la ruutina para eliminar blancos  &
+!!    & "intermedios  de  una    hola      cadena  de  caracteres"  &
+!!    &  y ver ademas si "(respetamos     las       comillas) "     &
+!!    &   realmente respeta las cadenas encerradas entre comillas.  &
+!!    &vamos a ver como sale este negocio. que mas puedo decir.     &
+!!    &probemos y veamos que pasa'
+!!
+!!    print uno, 'Original tal y como se escribio (sin trim_quoted)',a
+!!    print uno, 'reducir espacios a uno 1', trim_quoted (a, ' ')
+!!    print uno, 'reducir espacios a dos 2', trim_quoted (a, '  ')
+!!    print uno, 'reducir espacios a cero 0', trim_quoted (a, '')
+!!
+!!    a = "This is a    test to see how it turns out and to determine if the&
+!!    & routine to eliminate 'intermediate    spaces   from a text string'  &
+!!    & really works well, and also to see if '(we respect       quotation  &
+!!    & marks)'   really respects strings enclosed   in quotes. Let's see   &
+!!    & how this business turns out. What else can I say. Let's test and see&
+!!    & what       happens."
+!!
+!!    print uno, "Original exactly as it was written (without trim_quoted)",a
+!!    print uno, 'reduce spaces to one 1', trim_quoted (a, ' ')
+!!    print uno, 'reduce spaces to two 2', trim_quoted (a, '  ')
+!!    print uno, 'reduce spaces to zero 0', trim_quoted (a, '')
+!!
+!!    b = trim_quoted(a, '')
+!!    print *, b
+!!
+!!    write(*,bracket)trim_quoted('this and    that','')
+!!
+!!    write(*,bracket)trim_quoted(' a b  c  '),'a b c'
+!!    write(*,bracket)trim_quoted('a','xxxxx'),'a'
+!!    write(*,bracket)trim_quoted('','xxxxx'),''
+!!    write(*,bracket)trim_quoted(' a b   c " don''t  touch " d   e',':'),&
+!!    & 'a:b:c:" don''t  touch ":d:e'
+!!    write(*,bracket)trim_quoted('  a ','xxxxx'),'a'
+!!    write(*,bracket)trim_quoted("  a '  quoted   text '",'--'),&
+!!    & "a--'  quoted  text '"
+!!    write(*,bracket)trim_quoted("  a '  quoted   text ' abcd efg",'--'),&
+!!    & "a--'  quoted  text '--abcd--efg"
+!!    end program demo_trim_quoted
+!!
+!!    Expected output
+!!
+!!     > Original tal y como se escribio (sin trim_quoted)
+!!     > Esto es    una   prueba a ver como sale y determinar si
+!!     > realmente   funciona bien la ruutina para eliminar blanco
+!!     > s   "intermedios  de  una    hola      cadena  de  caract
+!!     > eres"    y ver ademas si "(respetamos     las       comil
+!!     > las) "        realmente respeta las cadenas encerradas en
+!!     > tre comillas.  vamos a ver como sale este negocio. que ma
+!!     > s puedo decir.     probemos y veamos que pasa
+!!     >
+!!     > reducir espacios a uno 1
+!!     > Esto es una prueba a ver como sale y determinar si realme
+!!     > nte funciona bien la ruutina para eliminar blancos "inter
+!!     > medios  de  una    hola      cadena  de  caracteres" y ve
+!!     > r ademas si "(respetamos     las       comillas) " realme
+!!     > nte respeta las cadenas encerradas entre comillas. vamos
+!!     > a ver como sale este negocio. que mas puedo decir. probem
+!!     > os y veamos que pasa
+!!     >
+!!     > reducir espacios a dos 2
+!!     > Esto  es  una  prueba  a  ver  como  sale  y  determinar
+!!     > si  realmente  funciona  bien  la  ruutina  para  elimin
+!!     > ar  blancos  "intermedios  de  una    hola      cadena
+!!     > de  caracteres"  y  ver  ademas  si  "(respetamos     la
+!!     > s       comillas) "  realmente  respeta  las  cadenas  e
+!!     > ncerradas  entre  comillas.  vamos  a  ver  como  sale
+!!     > este  negocio.  que  mas  puedo  decir.  probemos  y  ve
+!!     > amos  que  pasa
+!!     >
+!!     > reducir espacios a cero 0
+!!     > Estoesunapruebaavercomosaleydeterminarsirealmentefunciona
+!!     > bienlaruutinaparaeliminarblancos"intermedios  de  una
+!!     > hola      cadena  de  caracteres"yverademassi"(respetamos
+!!     > las       comillas) "realmenterespetalascadenasencerradas
+!!     > entrecomillas.vamosavercomosaleestenegocio.quemaspuedodec
+!!     > ir.probemosyveamosquepasa
+!!     >
+!!     > Original tal y como se escribio (sin trim_quoted)
+!!     > This is a    test to see how it turns out and to determin
+!!     > e if the routine to eliminate 'intermediate    spaces   f
+!!     > rom a text string'   really works well, and also to see i
+!!     > f '(we respect       quotation   marks)'   really respect
+!!     > s strings enclosed   in quotes. Let's see    how this bus
+!!     > iness turns out. What else can I say. Let's test and see
+!!     > what happens.
+!!     >
+!!     > reduce spaces to one 1
+!!     > This is a test to see how it turns out and to determine i
+!!     > f the routine to eliminate 'intermediate    spaces   from
+!!     > a text string' really works well, and also to see if '(we
+!!     > respect       quotation   marks)' really respects strings
+!!     > enclosed in quotes. Let's see how this business turns out
+!!     > . What else can I say. Let's test and see what happens.
+!!     >
+!!     > reduce spaces to two 2
+!!     > This  is  a  test  to  see  how  it  turns  out  and  to
+!!     >  determine  if  the  routine  to  eliminate  'intermedia
+!!     > te    spaces   from a text string'  really  works  well,
+!!     >   and  also  to  see  if  '(we respect       quotation
+!!     >  marks)'  really  respects  strings  enclosed  in  quote
+!!     > s.  Let's  see  how  this  business  turns  out.  What
+!!     > else  can  I  say.  Let's  test  and  see  what  happens.
+!!     >
+!!     > reduce spaces to zero 0
+!!     > Thisisatesttoseehowitturnsoutandtodetermineiftheroutineto
+!!     > eliminate'intermediate    spaces   from a text string'rea
+!!     > llyworkswell,andalsotoseeif'(we respect       quotation
+!!     >  marks)'reallyrespectsstringsenclosedinquotes.Let'sseehow
+!!     > thisbusinessturnsout.WhatelsecanIsay.Let'stestandseewhath
+!!     > appens.
+!!     > Thisisatesttoseehowitturnsoutandtodetermineiftheroutineto
+!!     > eliminate'intermediate    spaces   from a text string'rea
+!!     > llyworkswell,andalsotoseeif'(we respect       quotation
+!!     >  marks)'reallyrespectsstringsenclosedinquotes.Let'sseehow
+!!     > thisbusinessturnsout.WhatelsecanIsay.Let'stestandseewhath
+!!     > appens.
+!!     > [thisandthat]
+!!     > [a b c],[a b c]
+!!     > [a],[a]
+!!     > [],[]
+!!     > [a:b:c:" don't  touch ":d:e],[a:b:c:" don't  touch ":d:e]
+!!     > [a],[a]
+!!     > [a--'  quoted   text '],[a--'  quoted  text ']
+!!     > [a--'  quoted   text '--abcd--efg],[a--'  quoted  text '--abcd--efg]
+!!
+!!##REFERENCES
+!!     Based on a contribution by Francisco Iglesias:
+!!
+!!     https://fortran-lang.discourse.group/t/
+!!           sharing-a-classic-fortran-77
+!!           -utility-a-robust-string-trimming-function
+!!           -with-quotes-protection-itrim/1097
+!!##AUTHOR
+!!    + Francisco Iglesias (October-2024)
+!!    + modified by John S. Urban for inclusion in M_strings(3) (June 2026),
+!!      changed to use a replacement string instead of a specified number
+!!      of blanks.
+!!
+!!##LICENSE
+!!    Public Domain
+function trim_quoted (in,rep) result (out)
+character(len=*),intent(in)          :: in
+character(len=*),intent(in),optional :: rep
+character(len=:),allocatable         :: new
+character(len=:),allocatable         :: out
+character(len=1)                     :: togglechar
+integer                              :: in_len
+integer                              :: out_pos, in_pos, start_pos
+integer                              :: cnt
+logical                              :: not_in_quote
+logical                              :: skipping
+   !new=present(rep):rep?' '
+   new=' ';if(present(rep))new=rep
+   ! initially output string will be long enough for longest potential result
+   ! worst case is every other letter is replaced by letter+rep so an
+   ! excessive amount should be
+   cnt=len(new)
+   in_len = len_trim (in)
+   out = repeat(' ',in_len+((in_len+1)/2)*cnt+1 )
+   ! adding one space to buffer length for simpler subsequent logic
+
+   ! start copy at first non-blank character. If all blank set position to one
+   start_pos = verify(in,' ')
+   start_pos = merge(in_len+1,start_pos,start_pos==0)
+
+   not_in_quote = .TRUE.
+   togglechar=' '
+   skipping=.false.
+
+   out_pos  = 0
+   do in_pos = start_pos, in_len
+      if(not_in_quote) then
+         if(in(in_pos:in_pos) == '"' .or. in(in_pos:in_pos) == "'") then
+            if(skipping)then
+               out (out_pos+1:out_pos+cnt) =  new
+               out_pos = out_pos + cnt
+               skipping=.false.
+               not_in_quote = .false.
+               togglechar = in(in_pos:in_pos)
+            elseif(in_pos /= start_pos .and. in(in_pos:in_pos) == "'")then
+               ! assume word contraction if single quote not preceded by space
+            else
+               not_in_quote = .false.
+               togglechar = in(in_pos:in_pos)
+            endif
+            out_pos = out_pos + 1
+            out (out_pos:out_pos) = in (in_pos:in_pos)
+         elseif(in(in_pos:in_pos) == ' ')then
+            skipping=.true.
+         else ! not a beginning of quoted text nor a space
+            if(skipping)then ! end of a region of spaces
+               skipping=.false.
+               out (out_pos+1:out_pos+cnt) =  new
+               out_pos = out_pos + cnt
+            endif
+            out_pos = out_pos + 1
+            out (out_pos:out_pos) = in (in_pos:in_pos)
+         endif
+      else ! in quoted region or at end of quoted region so just copy character
+         if(in(in_pos:in_pos) == togglechar) not_in_quote = .true.
+         out_pos = out_pos + 1
+         out (out_pos:out_pos) = in (in_pos:in_pos)
+      endif
+   enddo
+   out=out(:out_pos)
+
+end function trim_quoted
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
 !! lower_quoted(3f) - [M_strings:CASE] elemental function converts string to
 !!                lowercase skipping strings quoted per Fortran syntax rules
 !! (LICENSE:PD)
@@ -5172,7 +5443,7 @@ integer                               :: iostat
       esc=char(92)
    endif
 
-   EXP: do
+   EXPO: do
       i=i+1
       if(i > lgth)exit
       if(line(i:i) == esc)then
@@ -5182,7 +5453,7 @@ integer                               :: iostat
             BACKSLASH: select case(line(i:i))
             case('a','A','g','G');lineout=lineout//char(  7) ! %a     alert (BEL)
             case('b','B');lineout=lineout//char(  8)         ! %b     backspace
-            case('c','C');exit EXP                           ! %c     suppress further output
+            case('c','C');exit EXPO                          ! %c     suppress further output
             case('d','D')                                    ! %d     Dnnn decimal value
                       thr=line(i+1:)
                    read(thr,'(i3)',iostat=iostat)xxx
@@ -5212,8 +5483,8 @@ integer                               :: iostat
       else
          lineout=lineout//line(i:i)
       endif
-      if(i >= lgth)exit EXP
-   enddo EXP
+      if(i >= lgth)exit EXPO
+   enddo EXPO
 
 end function expand
 !===================================================================================================================================
@@ -5904,7 +6175,6 @@ end function rpad_vector
 !!          write(*,'("[",a,"]")') cpad( valuein=42 , length=7)
 !!          write(*,'("[",a,"]")') cpad( valuein=1.0/9.0 , length=20)
 !!      end program demo_cpad
-!!
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -6606,7 +6876,7 @@ end function merge_str
 !!    function squeeze(STR,CHAR) result (OUTSTR)
 !!
 !!     character(len=*),intent(in)          :: STR
-!!     character(len=*),intent(in),optional :: CHAR
+!!     character(len=1),intent(in),optional :: CHAR
 !!     character(len=len(str))              :: OUTSTR
 !!
 !!##DESCRIPTION
@@ -6625,39 +6895,54 @@ end function merge_str
 !!
 !!   Sample Program:
 !!
-!!    program demo_squeeze
-!!    use M_strings, only : squeeze
-!!    implicit none
-!!    character(len=:),allocatable :: strings(:)
+!!      program demo_squeeze
+!!      use M_strings, only : squeeze
+!!      implicit none
+!!         call printme( '', ' ' )
+!!         call printme('1111  1111   111 111  1117777888',['1','7','X'] )
+!!         call printme(' Mary had a lllittllle lllamb','l')
+!!      contains
+!!      impure elemental subroutine printme(str,chr)
+!!      character(len=*),intent(in) :: str
+!!      character(len=1),intent(in) :: chr
+!!      character(len=:),allocatable :: answer
+!!         write(*,'(a)')repeat('=',42)
+!!         write(*,'("IN:   ",g0)')str
+!!         answer=squeeze(str,chr)
+!!         write(*,'("OUT:  ",g0)')answer
+!!         write(*,'("LENS: ",*(g0,1x))')"from",len(str),"to",len(answer), &
+!!                 & "for a change of",len(str)-len(answer)
+!!         write(*,'("CHAR: ",g0)')chr
+!!      end subroutine printme
+!!      end program demo_squeeze
 !!
-!!    strings=[ character(len=72) :: &
-!!    &'', &
-!!    &'"If I were two-faced,&
-!!    &would I be wearing this one?" --- Abraham Lincoln',  &
-!!    &'..1111111111111111111&
-!!    &111111111111111111111111111111111111111111117777888', &
-!!    &'I never give ''em hell,&
-!!    &I just tell the truth, and they think it''s hell.',&
-!!    &'                                                  &
-!!    & --- Harry S Truman'    &
-!!    &]
-!!       call printme( trim(strings(1)), ' ' )
-!!       call printme( strings(2:4),     ['-','7','.'] )
-!!       call printme( strings(5),       [' ','-','r'] )
-!!    contains
-!!    impure elemental subroutine printme(str,chr)
-!!    character(len=*),intent(in) :: str
-!!    character(len=1),intent(in) :: chr
-!!    character(len=:),allocatable :: answer
-!!       write(*,'(a)')repeat('=',11)
-!!       write(*,'("IN:   <<<",g0,">>>")')str
-!!       answer=squeeze(str,chr)
-!!       write(*,'("OUT:  <<<",g0,">>>")')answer
-!!       write(*,'("LENS: ",*(g0,1x))')"from",len(str),"to",len(answer), &
-!!               & "for a change of",len(str)-len(answer)
-!!       write(*,'("CHAR: ",g0)')chr
-!!    end subroutine printme
-!!    end program demo_squeeze
+!!    Expected output
+!!
+!!     > ==========================================
+!!     > IN:
+!!     > OUT:
+!!     > LENS: from 0 to 0 for a change of 0
+!!     > CHAR:
+!!     > ==========================================
+!!     > IN:   1111  1111   111 111  1117777888
+!!     > OUT:  1  1   1 1  17777888
+!!     > LENS: from 32 to 20 for a change of 12
+!!     > CHAR: 1
+!!     > ==========================================
+!!     > IN:   1111  1111   111 111  1117777888
+!!     > OUT:  1111  1111   111 111  1117888
+!!     > LENS: from 32 to 29 for a change of 3
+!!     > CHAR: 7
+!!     > ==========================================
+!!     > IN:   1111  1111   111 111  1117777888
+!!     > OUT:  1111  1111   111 111  1117777888
+!!     > LENS: from 32 to 32 for a change of 0
+!!     > CHAR: X
+!!     > ==========================================
+!!     > IN:    Mary had a lllittllle lllamb
+!!     > OUT:   Mary had a little lamb
+!!     > LENS: from 29 to 23 for a change of 6
+!!     > CHAR: l
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -6712,9 +6997,10 @@ end function squeeze
 !!##OPTIONS
 !!    STR     input string to reduce or remove whitespace from
 !!    CHAR    By default the character that replaces adjacent
-!!            whitespace is a space. If the optional CHAR parameter is supplied
-!!            it will be used to replace the whitespace. If a null character is
-!!            supplied for CHAR whitespace is removed.
+!!            whitespace is a space. If the optional CHAR parameter
+!!            is supplied it will be used to replace each region of
+!!            whitespace. If a null character is supplied for CHAR whitespace
+!!            is removed.
 !!
 !!##RETURNS
 !!    OUTSTR  string of same length as input string but with all contiguous
@@ -6756,7 +7042,7 @@ end function squeeze
 !elemental pure function compact(str,char) result (outstr)
 function compact(str,char) result (outstr)
 
-! ident_51="@(#) M_strings compact(3f) Converts white-space to single spaces; removes leading spaces"
+! ident_51="@(#) M_strings compact(3f) Converts stretches of white-space with new separator; removes leading spaces"
 
 character(len=*),intent(in)          :: str
 character(len=*),intent(in),optional :: char
@@ -8088,13 +8374,13 @@ subroutine trimzeros_(string)
 ! if zero needs added at end assumes input string has room
 character(len=*)               :: string
 character(len=len(string) + 2) :: str
-character(len=len(string))     :: exp        ! the exponent string if present
+character(len=len(string))     :: eexp        ! the exponent string if present
 integer                        :: ipos       ! where exponent letter appears if present
 integer                        :: i, ii
    str = string                              ! working copy of string
    ipos = scan(str, 'eEdD')                  ! find end of real number if string uses exponent notation
    if (ipos > 0) then                        ! letter was found
-      exp = str(ipos:)                       ! keep exponent string so it can be added back as a suffix
+      eexp = str(ipos:)                       ! keep exponent string so it can be added back as a suffix
       str = str(1:ipos - 1)                  ! just the real part, exponent removed will not have trailing zeros removed
    endif
    if (index(str, '.') == 0) then            ! if no decimal character in original string add one to end of string
@@ -8118,7 +8404,7 @@ integer                        :: i, ii
       end select
    end do
    if (ipos > 0) then                        ! if originally had an exponent place it back on
-      string = trim(str)//trim(exp)
+      string = trim(str)//trim(eexp)
    else
       string = str
    endif
@@ -8673,8 +8959,8 @@ character(len=*),intent(in),optional  :: x1,x2,x3,x4,x5,x6,x7,x8,x9,x10
 character(len=*),intent(in),optional  :: x11,x12,x13,x14,x15,x16,x17,x18,x19,x20
 integer,intent(in),optional           :: len
 character(len=:),allocatable          :: vec(:)
-integer                               :: ilen, icount, iset
-   ilen=0
+integer                               :: iilen, icount, iset
+   iilen=0
    icount=0
    iset=0
    call increment(x1)
@@ -8698,8 +8984,8 @@ integer                               :: ilen, icount, iset
    call increment(x19)
    call increment(x20)
 
-   if(present(len)) ilen=len
-   allocate (character(len=ilen) :: vec(icount))
+   if(present(len)) iilen=len
+   allocate (character(len=iilen) :: vec(icount))
 
    call set(x1)
    call set(x2)
@@ -8727,7 +9013,7 @@ contains
 subroutine increment(str)
 character(len=*),intent(in),optional :: str
    if(present(str))then
-      ilen=max(ilen,len_trim(str))
+      iilen=max(iilen,len_trim(str))
       icount=icount+1
    endif
 end subroutine increment
@@ -11412,7 +11698,8 @@ class(*),intent(in) :: generic
          endif
       type is (complex)
          if(csv_local)then
-            write(line(ibegin:),'(1pg0,a,1pg0)') generic%re,sep_local,generic%im
+            !write(line(ibegin:),'(1pg0,a,1pg0)') generic%re,sep_local,generic%im
+            write(line(ibegin:),'(1pg0,a,1pg0)') real(generic),sep_local,aimag(generic)
          else
             write(line(ibegin:),'("(",1pg0,",",1pg0,")")') generic
          endif
@@ -11595,7 +11882,7 @@ character(len=:),allocatable         :: re,im
 integer                              :: iostat
 character(len=255)                   :: iomsg
 character(len=1),parameter           :: null=char(0)
-integer                              :: ilen
+integer                              :: iilen
 logical                              :: trimit
    if(present(format))then
       fmt_local=format
@@ -11650,8 +11937,8 @@ logical                              :: trimit
                                         trimit=.false.
       type is (complex);
               if(trimit)then
-                 re=fmt(generic%re)
-                 im=fmt(generic%im)
+                 re=fmt(real(generic)) ! re=fmt(generic%re)
+                 im=fmt(aimag(generic))! im=fmt(generic%im)
                  call trimzeros_(re)
                  call trimzeros_(im)
                  fmt_local='("(",g0,",",g0,")",a)'
@@ -11662,8 +11949,8 @@ logical                              :: trimit
               endif
       type is (complex(kind=real64));
               if(trimit)then
-                 re=fmt(generic%re)
-                 im=fmt(generic%im)
+                 re=fmt(real(generic)) ! re=fmt(generic%re)
+                 im=fmt(aimag(generic))! im=fmt(generic%im)
                  call trimzeros_(re)
                  call trimzeros_(im)
                  fmt_local='("(",g0,",",g0,")",a)'
@@ -11678,9 +11965,9 @@ logical                              :: trimit
    if(iostat /= 0)then
       line='<ERROR>'//trim(iomsg)
    else
-      ilen=index(line,null,back=.true.)
-      if(ilen == 0)ilen=len(line)
-      line=line(:ilen-1)
+      iilen=index(line,null,back=.true.)
+      if(iilen == 0)iilen=len(line)
+      line=line(:iilen-1)
    endif
 
    if(index(line,'.') /= 0 .and. trimit) call trimzeros_(line)
@@ -12764,6 +13051,7 @@ integer,parameter            :: rfc4648_linelength=76
 character(len=1),parameter   :: rfc4648_padding='='
 integer                      :: ichars
 integer                      :: outsize
+character(len=1),allocatable :: tmpdata(:)
    if(present(width))then
       wrap=width
    else
@@ -12787,7 +13075,8 @@ integer                      :: outsize
          elseif(modulo(sz,3).eq.0)then    ! last was an even multiple of three
            chunk=three2four(data(i:i+2))
          else                             ! end of data but remainder needs padded
-           chunk=three2four([data(i:sz),[(char(0),j=1,3-(sz-i+1))]])
+           tmpdata=[data(i:sz),[(char(0),j=1,3-(sz-i+1))]]
+           chunk=three2four(tmpdata)
            ! replace added data with pad characters
            chunk(5-pad:)=[(rfc4648_padding,j=1,pad)]
          endif
@@ -13057,7 +13346,7 @@ character(len=*), intent(in) :: string
 character(len=1)             :: c
 integer                      :: i
 integer                      :: j
-integer                      :: ilen
+integer                      :: iilen
 logical                      :: neg
 
    val = 0
@@ -13065,8 +13354,8 @@ logical                      :: neg
    i=0
    c=' '
 
-   ilen=len(string)
-   do i=1, ilen                               ! Pass over any leading spaces
+   iilen=len(string)
+   do i=1, iilen                               ! Pass over any leading spaces
       c = string(i:i)
       if (c  /=  ' ') exit
    enddo
@@ -13079,7 +13368,7 @@ logical                      :: neg
       i = i + 1
    endif
 
-   do j=i,ilen                                ! Continue as long as its a digit ...
+   do j=i,iilen                                ! Continue as long as its a digit ...
       c = string(j:j)
       if (lge(c, '0') .and. lle(c, '9')) then
          val = 10*val + ichar(c)-48           ! Shift number over and add new digit
@@ -13162,7 +13451,7 @@ character(len=*), intent(in) :: string
 character(len=1)             :: c
 integer                      :: i
 integer                      :: j
-integer                      :: ilen
+integer                      :: iilen
 logical                      :: neg
 
    val = 0
@@ -13170,8 +13459,8 @@ logical                      :: neg
    i=0
    c=' '
 
-   ilen=len(string)
-   do i=1, ilen                               ! Pass over any leading spaces
+   iilen=len(string)
+   do i=1, iilen                               ! Pass over any leading spaces
       c = string(i:i)
       if (c  /=  ' ') exit
    enddo
@@ -13184,7 +13473,7 @@ logical                      :: neg
       i = i + 1
    endif
 
-   do j=i,ilen                                ! Continue as long as its a digit ...
+   do j=i,iilen                                ! Continue as long as its a digit ...
       c = string(j:j)
       if (lge(c, '0') .and. lle(c, '9')) then
          val = 10*val + ichar(c)-48           ! Shift number over and add new digit
@@ -13259,7 +13548,6 @@ end function atol
 !!       enddo
 !!
 !!       end program demo_aton
-!!
 !!
 !!##AUTHOR
 !!    John S. Urban

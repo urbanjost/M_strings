@@ -22,7 +22,7 @@ subroutine test_suite_m_strings()
        flags=[0],              &
        luns=[std_out],         &
        command='',             &
-       brief=F,                &
+       brief=T,                &
        match='',               &
        interactive=F,          &
        CMDLINE=T,              &
@@ -38,6 +38,7 @@ subroutine test_suite_m_strings()
    call test_chomp()
    call test_clip()
    call test_compact()
+   call test_trim_quoted()
    call test_cpad()
    call test_crop()
    call test_itri()
@@ -518,7 +519,6 @@ integer,allocatable          :: expected(:)
    integer                       ::  i, j
    character(len=40)             ::  boz
    character(len=:),allocatable  ::  baseformat
-   logical,parameter             ::  F=.false., T=.true.
    logical                       ::  ier
       do j=1,3
          select case(j)
@@ -578,7 +578,6 @@ contains
 subroutine checkit(answer,values)
 character(len=*),intent(in)  :: answer(:)
 integer,intent(in)           :: values(:)
-character(len=32)            :: out
 integer                      :: i
    do i=1,size(answer)
       call unit_test('base2',base2(values(i)) == answer(i), &
@@ -591,7 +590,7 @@ subroutine test_codebase()
 character(len=:),allocatable :: in(:)
 integer,allocatable          :: expected(:)
 character(len=80)            :: answer, baseformat, expect
-integer                      :: i, j, base, ierr
+integer                      :: i, j, base
 logical                      :: ier
    call unit_test_start('codebase','[BASE] convert whole number in base 10 to string in base [2-36]')
 
@@ -1304,7 +1303,6 @@ end subroutine test_uncouple
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_couple()
 character(len=1)            :: chars(36)
-integer :: i
 
 call unit_test_start('couple','[ARRAY] converts between array of single characters and CHARACTER scalar')
 
@@ -1324,6 +1322,7 @@ integer :: i
 end subroutine test_s2c
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_c2s()
+   !integer :: i
    call unit_test_start('c2s','[ARRAY] convert C string pointer to Fortran character string')
    !call unit_test('c2s', c2s([(lc(i:i),i=1,len(lc)),char(0)]) .eq.lc,'compare s2c(lets) to expected letters')
    call unit_test_end('c2s',msg='')
@@ -1571,6 +1570,46 @@ subroutine test_compact()
    call unit_test('compact',compact('  This  is     a    test  ',char='t') == 'Thististattest','replace blank ranges with "t"')
    call unit_test_end('compact')
 end subroutine test_compact
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_trim_quoted()
+   character(len=:),allocatable :: answer
+   character(len=:),allocatable :: expected
+   call unit_test_start('trim_quoted','[WHITESPACE] honoring quoted text convert whitespace to specified number of blanks')
+   call unit_test('trim_quoted',trim_quoted('  This  is     a    test  ') == 'This is a test','reduce to single spaces')
+   call unit_test('trim_quoted',trim_quoted('   This is a test   ') == 'This is a test','input has no multi-whitespace characters')
+   call unit_test('trim_quoted',trim_quoted('This-is-a-test') == 'This-is-a-test','input has no whitespace characters')
+   call unit_test('trim_quoted',trim_quoted('') == '','nil string')
+   call unit_test('trim_quoted',trim_quoted('  This  is     a    test  ','') == 'Thisisatest','remove spaces')
+   call unit_test('trim_quoted',trim_quoted('a b c','   ') == 'a   b   c','add spaces')
+   answer=trim_quoted(' a b  c  ')
+   expected='a b c'
+
+   answer=trim_quoted('a','xxxxx')
+   expected='a'
+   call unit_test('trim_quoted',answer == expected,'expected',expected,'got',answer)
+
+   answer=trim_quoted('','xxxxx')
+   expected=''
+   call unit_test('trim_quoted',answer == expected,'expected',expected,'got',answer)
+
+   answer=trim_quoted(' a b   c "  don''t  touch " d   e',':')
+   expected='a:b:c:"  don''t  touch ":d:e'
+   call unit_test('trim_quoted',answer == expected,'expected',expected,'got',answer)
+
+   answer=trim_quoted('  a ','xxxxx')
+   expected='a'
+   call unit_test('trim_quoted',answer == expected,'expected',expected,'got',answer)
+
+   answer=trim_quoted("  a '  quoted   text '",'--')
+   expected="a--'  quoted   text '"
+   call unit_test('trim_quoted',answer == expected,'expected',expected,'got',answer)
+
+   answer=trim_quoted("  a '  quoted   text ' abcd efg",'--')
+   expected="a--'  quoted   text '--abcd--efg"
+   call unit_test('trim_quoted',answer == expected,'expected',expected,'got',answer)
+
+   call unit_test_end('trim_quoted')
+end subroutine test_trim_quoted
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_noesc()  ! test noesc
 character(len=23) :: in,out,clr
@@ -2313,7 +2352,6 @@ end function
 end subroutine test_matching_delimiter
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_str()
-logical             :: allpassed=.true.
 
   call unit_test_start('str','test building message strings')
 
@@ -2345,8 +2383,9 @@ end subroutine add
 end subroutine test_str
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_fmt()
-logical             :: allpassed=.true.
+
   call unit_test_start("fmt   ",msg="convert intrinsic to string using optional format",matched=matched)
+
   if(.not.matched)return
 
   call  add('INTEGER',  fmt(10),            '10'       )

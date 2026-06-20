@@ -115,6 +115,7 @@ that may be consolidated at some point.
 <tr><td style="background:#e6d3f4;">WHITESPACE</td><td><a href="https://urbanjost.github.io/M_strings/adjustc.3m_strings.html">adjustc</a></td><td> center text (LICENSE:PD)</td></tr>
 <tr><td style="background:#e6d3f4;">WHITESPACE</td><td><a href="https://urbanjost.github.io/M_strings/clip.3m_strings.html">clip</a></td><td> trim leading and trailing blanks or set of characters from a string (LICENSE:PD)</td></tr>
 <tr><td style="background:#e6d3f4;">WHITESPACE</td><td><a href="https://urbanjost.github.io/M_strings/compact.3m_strings.html">compact</a></td><td> converts contiguous whitespace to a single character (or nothing) (LICENSE:PD)</td></tr>
+<tr><td style="background:#e6d3f4;">WHITESPACE</td><td><a href="https://urbanjost.github.io/M_strings/trim_quoted.3m_strings.html">trim_quoted</a></td><td> converts contiguous whitespace to specified string not altering quoted text(LICENSE:PD)</td></tr>
 <tr><td style="background:#e6d3f4;">WHITESPACE</td><td><a href="https://urbanjost.github.io/M_strings/crop.3m_strings.html">crop</a></td><td> trim leading and trailing blanks and control characters from a string (LICENSE:PD)</td></tr>
 <tr><td style="background:#e6d3f4;">WHITESPACE</td><td><a href="https://urbanjost.github.io/M_strings/indent.3m_strings.html">indent</a></td><td> count number of leading spaces in a string (LICENSE:PD)</td></tr>
 <tr><td style="background:#e6d3f4;">WHITESPACE</td><td><a href="https://urbanjost.github.io/M_strings/nospace.3m_strings.html">nospace</a></td><td> remove all whitespace from input string (LICENSE:PD)</td></tr>
@@ -225,7 +226,7 @@ Note that M_strings.f90 is registered at the [fpm(1) registry](https://github.co
     + [manpages.tgz](https://urbanjost.github.io/M_strings/manpages.tgz)
  - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
 
-### Developer 
+### Developer
 
  - The code was run through [ford(1)](https://politicalphysicist.github.io/ford-fortran-documentation.html)
    to produce a [developers' document](https://urbanjost.github.io/M_strings/fpm-ford/index.html).
