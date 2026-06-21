@@ -16,9 +16,9 @@ homepage = "https://github.com/urbanjost/M_strings.git"
    auto-examples = true
 
    # new force module naming rules to avoid collisions with other packages
-   #module-naming = true
+   module-naming = true
    # traditional where user can use any module name
-   module-naming = false
+   #module-naming = false
 
 # new
 [fortran]
@@ -52,10 +52,6 @@ homepage = "https://github.com/urbanjost/M_strings.git"
    git = "https://github.com/urbanjost/M_CLI2.git" 
    #namespace = "GPF" 
    #path = "GLINKS/M_CLI2" 
-[executable.dependencies.M_msg]
-   git = "https://github.com/urbanjost/M_msg.git" 
-   #namespace = "GPF" 
-   #path = "GLINKS/M_msg" 
 
 [[test]]
    name="test_suite"

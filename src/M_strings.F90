@@ -49,7 +49,7 @@
 !!                         & reverse, squeeze
 !!      use M_strings,only : replace, join
 !!      use M_strings,only : upper, lower
-!!      use M_strings,only : upper_quoted, lower_quoted,
+!!      use M_strings,only : upper_quoted, lower_quoted, &
 !!                         & trim_quoted, quote, unquote
 !!      use M_strings,only : rotate13, percent_encode, percent_decode
 !!      use M_strings,only : encode_base64, decode_base64
@@ -160,7 +160,7 @@
 !!       crop     function trims leading and trailing spaces and control
 !!                characters
 !!       clip     trim leading and trailings spaces or set of characters
-!!                from string
+!!                from string ends
 !!       trim_quoted  trim ends of string and replace remaining ranges
 !!                    of whitespace not in quoted text with a specified
 !!                    string.
@@ -172,7 +172,6 @@
 !!       matching_delimiter  find position of matching delimiter
 !!       unquote  remove quotes from string as if read with list-directed input
 !!       quote    add quotes to string as if written with list-directed output
-!!
 !!
 !!   CHARACTER ARRAY VERSUS STRING
 !!
@@ -330,7 +329,7 @@
 !!                         & reverse, squeeze
 !!      use M_strings,only : REPLACE, join
 !!      use M_strings,only : UPPER, LOWER
-!!      use M_strings,only : upper_quoted, lower_quoted, unquote, quote,
+!!      use M_strings,only : upper_quoted, lower_quoted, unquote, quote, &
 !!                         & trim_quoted
 !!      use M_strings,only : rotate13, percent_encode, percent_decode
 !!      use M_strings,only : encode_base64, decode_base64
@@ -4135,6 +4134,12 @@ end function reverse
 !!    Otherwise, trim_quoted(3) changes ranges of whitespace of various
 !!    length found between words to a specified replacment string.
 !!
+!!    This would be similar to the sed(1) Basic Regular Expression
+!!
+!!        sed -i -e 's/  */REP/g'
+!!
+!!    if no quoted regions were present.
+!!
 !!##OPTIONS
 !!    STR     input string whose whitespace regions are to be replaced
 !!    REP     string used to replace each region of whitespace. Defaults
@@ -4174,7 +4179,7 @@ end function reverse
 !!    & how this business turns out. What else can I say. Let's test and see&
 !!    & what       happens."
 !!
-!!    print uno, 'Original tal y como se escribio (sin trim_quoted)',a
+!!    print uno, "Original exactly as it was written (without trim_quoted)",a
 !!    print uno, 'reduce spaces to one 1', trim_quoted (a, ' ')
 !!    print uno, 'reduce spaces to two 2', trim_quoted (a, '  ')
 !!    print uno, 'reduce spaces to zero 0', trim_quoted (a, '')
@@ -6171,7 +6176,6 @@ end function rpad_vector
 !!          write(*,'("[",a,"]")') cpad( valuein=1.0/9.0 , length=20)
 !!      end program demo_cpad
 !!
-!!
 !!##AUTHOR
 !!    John S. Urban
 !!
@@ -6894,8 +6898,6 @@ end function merge_str
 !!      program demo_squeeze
 !!      use M_strings, only : squeeze
 !!      implicit none
-!!      character(len=:),allocatable :: strings(:)
-!!
 !!         call printme( '', ' ' )
 !!         call printme('1111  1111   111 111  1117777888',['1','7','X'] )
 !!         call printme(' Mary had a lllittllle lllamb','l')
@@ -13049,6 +13051,7 @@ integer,parameter            :: rfc4648_linelength=76
 character(len=1),parameter   :: rfc4648_padding='='
 integer                      :: ichars
 integer                      :: outsize
+character(len=1),allocatable :: tmpdata(:)
    if(present(width))then
       wrap=width
    else
@@ -13072,7 +13075,8 @@ integer                      :: outsize
          elseif(modulo(sz,3).eq.0)then    ! last was an even multiple of three
            chunk=three2four(data(i:i+2))
          else                             ! end of data but remainder needs padded
-           chunk=three2four([data(i:sz),[(char(0),j=1,3-(sz-i+1))]])
+           tmpdata=[data(i:sz),[(char(0),j=1,3-(sz-i+1))]]
+           chunk=three2four(tmpdata)
            ! replace added data with pad characters
            chunk(5-pad:)=[(rfc4648_padding,j=1,pad)]
          endif
@@ -13544,7 +13548,6 @@ end function atol
 !!       enddo
 !!
 !!       end program demo_aton
-!!
 !!
 !!##AUTHOR
 !!    John S. Urban

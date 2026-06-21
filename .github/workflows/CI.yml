@@ -66,12 +66,19 @@ jobs:
         run: |
           echo "FPM_FFLAGS='--no-style-warnings' --cpp" >> $GITHUB_ENV
 
-      - name: Set environment for gfortran
-        if: matrix.compiler == 'gfortran'
+      - name: Set environment for gfortran and windows
+        if: matrix.compiler == 'gfortran' && matrix.os == 'windows-latest'
         run: |
           echo "end" >_empty.f90
           gfortran -cpp -dM -E _empty.f90
-          rm -f _empty.f90
+          gfortran --version
+          echo "FPM_FFLAGS=-D_WIN32" >> $env:GITHUB_ENV
+
+      - name: Set environment for gfortran and not windows
+        if: matrix.compiler == 'gfortran' && matrix.os != 'windows-latest'
+        run: |
+          echo "end" >_empty.f90
+          gfortran -cpp -dM -E _empty.f90
           gfortran --version
 
       - name: Set environment for flang-new
@@ -79,20 +86,24 @@ jobs:
         run: |
           echo "end" >_empty.f90
           flang-new -cpp -dM -E _empty.f90
-          rm -f _empty.f90
           flang-new --version
           echo "FPM_FFLAGS='-cpp'" >> $GITHUB_ENV
 
-      - name: Set environment for ifx
-        if: matrix.compiler == 'ifx'
+      - name: Set environment for ifx and windows
+        if: matrix.compiler == 'ifx' &&  matrix.os == 'windows-latest'
         run: |
           echo "end" >_empty.f90
           ifx -E -fpp empty.f90 -dryrun 2>&1 | perl -lne 'print for /-D(\S+)/'
-          rm -f _empty.f90
+          #ifx /logo
+
+      - name: Set environment for ifx and not windows
+        if: matrix.compiler == 'ifx' &&  matrix.os != 'windows-latest'
+        run: |
+          echo "end" >_empty.f90
+          ifx -E -fpp empty.f90 -dryrun 2>&1 | perl -lne 'print for /-D(\S+)/'
           ifx --version
 
 # OS
-
       - name: Set environment for ubuntu
         if: matrix.os == 'ubuntu-latest'
         run: |
@@ -101,9 +112,31 @@ jobs:
 # RUN TESTS
 
       - name: fpm test (debug)
+        if: matrix.os != 'windows-latest'
         run: |
           fpm test --compiler ${{ matrix.compiler }} --profile debug --verbose
 
       - name: fpm test (release)
+        if: matrix.os != 'windows-latest'
         run: |
           fpm test --compiler ${{ matrix.compiler }} --profile release -- --brief
+
+      - name: fpm test (debug)
+        if: matrix.os == 'windows-latest' && matrix.compiler != 'gfortran'
+        run: |
+          fpm test --compiler ${{ matrix.compiler }} --profile debug --verbose
+
+      - name: fpm test (release)
+        if: matrix.os == 'windows-latest' && matrix.compiler != 'gfortran'
+        run: |
+          fpm test --compiler ${{ matrix.compiler }} --profile release -- --brief
+
+      - name: fpm test (debug)
+        if: matrix.os == 'windows-latest' && matrix.compiler == 'gfortran'
+        run: |
+          fpm test --compiler ${{ matrix.compiler }} --verbose --fflags="-D_WIN32 -Wall -Wextra -fmax-errors=1 -g -fcheck=bounds -fcheck=array-temps -fbacktrace -fcoarray=single -fimplicit-none -Werror=implicit-interface" 
+
+      - name: fpm test (release)
+        if: matrix.os == 'windows-latest' && matrix.compiler == 'gfortran'
+        run: |
+          fpm test --compiler ${{ matrix.compiler }} --verbose --fflags="-D_WIN32 -O3 -funroll-loops -Wimplicit-interface -fmax-errors=1 -fcoarray=single -fimplicit-none -Werror=implicit-interface -ffree-form" -- --brief

@@ -89,6 +89,7 @@ append("strtok.3m_strings.html");
 append("substitute.3m_strings.html");
 append("switch.3m_strings.html");
 append("transliterate.3m_strings.html");
+append("trim_quoted.3m_strings.html");
 append("uncouple.3m_strings.html");
 append("unquote.3m_strings.html");
 append("upper.3m_strings.html");

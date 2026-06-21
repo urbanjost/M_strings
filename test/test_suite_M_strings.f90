@@ -519,7 +519,6 @@ integer,allocatable          :: expected(:)
    integer                       ::  i, j
    character(len=40)             ::  boz
    character(len=:),allocatable  ::  baseformat
-   logical,parameter             ::  F=.false., T=.true.
    logical                       ::  ier
       do j=1,3
          select case(j)
@@ -579,7 +578,6 @@ contains
 subroutine checkit(answer,values)
 character(len=*),intent(in)  :: answer(:)
 integer,intent(in)           :: values(:)
-character(len=32)            :: out
 integer                      :: i
    do i=1,size(answer)
       call unit_test('base2',base2(values(i)) == answer(i), &
@@ -592,7 +590,7 @@ subroutine test_codebase()
 character(len=:),allocatable :: in(:)
 integer,allocatable          :: expected(:)
 character(len=80)            :: answer, baseformat, expect
-integer                      :: i, j, base, ierr
+integer                      :: i, j, base
 logical                      :: ier
    call unit_test_start('codebase','[BASE] convert whole number in base 10 to string in base [2-36]')
 
@@ -1305,7 +1303,6 @@ end subroutine test_uncouple
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_couple()
 character(len=1)            :: chars(36)
-integer :: i
 
 call unit_test_start('couple','[ARRAY] converts between array of single characters and CHARACTER scalar')
 
@@ -1325,6 +1322,7 @@ integer :: i
 end subroutine test_s2c
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_c2s()
+   !integer :: i
    call unit_test_start('c2s','[ARRAY] convert C string pointer to Fortran character string')
    !call unit_test('c2s', c2s([(lc(i:i),i=1,len(lc)),char(0)]) .eq.lc,'compare s2c(lets) to expected letters')
    call unit_test_end('c2s',msg='')
@@ -2354,7 +2352,6 @@ end function
 end subroutine test_matching_delimiter
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_str()
-logical             :: allpassed=.true.
 
   call unit_test_start('str','test building message strings')
 
@@ -2386,8 +2383,9 @@ end subroutine add
 end subroutine test_str
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_fmt()
-logical             :: allpassed=.true.
+
   call unit_test_start("fmt   ",msg="convert intrinsic to string using optional format",matched=matched)
+
   if(.not.matched)return
 
   call  add('INTEGER',  fmt(10),            '10'       )

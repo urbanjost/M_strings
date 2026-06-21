@@ -14,7 +14,8 @@ jobs:
       run: pip install ford
     - name: Build Documentation
       run: ford ford.md
-    - uses: JamesIves/github-pages-deploy-action@3.7.1
+    #- uses: JamesIves/github-pages-deploy-action@3.7.1
+    - uses: JamesIves/github-pages-deploy-action@v4.7.3
       if: github.event_name == 'push'
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
