@@ -1462,7 +1462,7 @@ integer                       :: imax                   ! length of longest toke
    end select
 !-----------------------------------------------------------------------------------------------------------------------------------
    ! maxval() of a zero-size array is set to a flag value not zero or length of character string
-   if(size(ibegin).eq.0)then
+   if(size(ibegin) == 0)then
       imax=0
    else
       imax=maxval(iend-ibegin)+1
@@ -2564,7 +2564,7 @@ integer                        :: ichr
       dum1(:)=' '                                      ! begin with a blank line
    else                                                ! if window is set
       il=ml                                            ! use left margin
-      ir=min0(mr,maxlengthout)                         ! use right margin or rightmost
+      ir=min(mr,maxlengthout)                          ! use right margin or rightmost
       dum1=targetline(:il-1)                           ! begin with what's below margin
    endif                                               ! end of window settings
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -3042,7 +3042,7 @@ logical                     :: linsrt          !FLAG FOR INSERTING DATA ON LINE
 integer                     :: i, j, ic, ichr, iend, lmax, lmx1
 maxscra=len(cline)
    cmod=trim(mod)
-   lmax=min0(len(cline),maxscra)               !DETERMINE MAXIMUM LINE LENGTH
+   lmax=min(len(cline),maxscra)                !DETERMINE MAXIMUM LINE LENGTH
    lmx1=lmax-1                                 !MAX LINE LENGTH -1
    dum2=' '                                    !INITIALIZE NEW LINE
    linsrt=.false.                              !INITIALIZE INSERT MODE
@@ -4661,7 +4661,7 @@ integer(kind=byte)            :: ade_char
       string(i:i) = achar(ade_char)
    enddo
 
-   if(len(str).eq.0)string = str
+   if(len(str) == 0)string = str
 
 end function upper_all
 elemental pure function upper_range(str,begin,end) result (string)
@@ -5153,9 +5153,11 @@ use, intrinsic :: iso_c_binding, only: c_ptr,c_f_pointer,c_char,c_null_char
 integer,parameter                             :: max_length=4096
 type(c_ptr), intent(in)                       :: c_string_pointer
 character(len=:), allocatable                 :: f_string
-character(kind=c_char), dimension(:), pointer :: char_array_pointer => null()
+character(kind=c_char), dimension(:), pointer :: char_array_pointer
 character(len=max_length)                     :: aux_string
-integer                                       :: i,length=0
+integer                                       :: i,length
+   length=0
+   char_array_pointer => null()
 
    call c_f_pointer(c_string_pointer,char_array_pointer,[max_length])
    if (.not.associated(char_array_pointer)) then
@@ -8656,7 +8658,11 @@ character(len=20)                    :: local_mode
       quoted_str=str
    endif
 
-   local_mode=merge_str(mode,'DOUBLE',present(mode))
+   if(present(mode))then
+      local_mode=mode
+   else
+      local_mode='DOUBLE'
+   endif
 
    select case(lower(local_mode))
    case('double')
@@ -9823,12 +9829,19 @@ elemental function isprint(onechar)
 
 ! ident_69="@(#) M_strings isprint(3f) indicates if input character is a printable ASCII character"
 
-character,intent(in) :: onechar
-logical              :: isprint
-   select case (onechar)
-      case (' ':'~')   ; isprint=.TRUE.
-      case default     ; isprint=.FALSE.
-   end select
+character(len=*),intent(in) :: onechar
+logical                     :: isprint
+integer                     :: i
+   isprint=.false.  ! for zero-length string
+   do i=1,len(onechar)
+      select case (onechar(i:i))
+       case (' ':'~')
+         isprint=.TRUE.
+       case default
+         isprint=.FALSE.
+         exit
+      end select
+   enddo
 end function isprint
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -9884,14 +9897,19 @@ elemental function isgraph(onechar)
 
 ! ident_70="@(#) M_strings isgraph(3f) indicates if character is printable ASCII character excluding space"
 
-character,intent(in) :: onechar
-logical              :: isgraph
-   select case (iachar(onechar))
-   case (33:126)
-     isgraph=.TRUE.
-   case default
-     isgraph=.FALSE.
-   end select
+character(len=*),intent(in) :: onechar
+logical                     :: isgraph
+integer                     :: i
+isgraph=.FALSE. ! for zero-length input
+   do i=1,len(onechar)
+      select case (ichar(onechar(i:i)))
+      case (33:126)
+        isgraph=.TRUE.
+      case default
+        isgraph=.FALSE.
+        exit
+      end select
+   enddo
 end function isgraph
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -9943,18 +9961,23 @@ end function isgraph
 !!
 !!##LICENSE
 !!    Public Domain
-elemental function isalpha(ch) result(res)
+elemental function isalpha(onechar) result(res)
 
 ! ident_71="@(#) M_strings isalpha(3f) Return .true. if character is a letter and .false. otherwise"
 
-character,intent(in) :: ch
-logical              :: res
-   select case(ch)
-   case('A':'Z','a':'z')
-     res=.true.
-   case default
-     res=.false.
-   end select
+character(len=*),intent(in) :: onechar
+logical                     :: res
+integer                     :: i
+   res=.false.
+   do i=1,len(onechar)
+      select case(onechar(i:i))
+       case('A':'Z','a':'z')
+         res=.true.
+       case default
+         res=.false.
+         exit
+      end select
+   enddo
 end function isalpha
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -10004,18 +10027,23 @@ end function isalpha
 !!
 !!##LICENSE
 !!     Public Domain
-elemental function isxdigit(ch) result(res)
+elemental function isxdigit(onechar) result(res)
 
 ! ident_72="@(#) M_strings isxdigit(3f) returns .true. if c is a hexadecimal digit (0-9 a-f or A-F)"
 
-character,intent(in) :: ch
-logical              :: res
-   select case(ch)
-   case('A':'F','a':'f','0':'9')
-     res=.true.
-   case default
-     res=.false.
-   end select
+character(len=*),intent(in) :: onechar
+logical                     :: res
+integer                     :: i
+   res=.false. ! for zero-length input
+   do i=1,len(onechar)
+      select case(onechar(i:i))
+      case('A':'F','a':'f','0':'9')
+        res=.true.
+      case default
+        res=.false.
+        exit
+      end select
+   enddo
 end function isxdigit
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -10081,18 +10109,23 @@ end function isxdigit
 !!
 !!##LICENSE
 !!     Public Domain
-elemental function isdigit(ch) result(res)
+elemental function isdigit(onechar) result(res)
 
-! ident_73="@(#) M_strings isdigit(3f) Returns .true. if ch is a digit (0-9) and .false. otherwise"
+! ident_73="@(#) M_strings isdigit(3f) Returns .true. if onechar is a digit (0-9) and .false. otherwise"
 
-character,intent(in) :: ch
-logical              :: res
-   select case(ch)
-   case('0':'9')
-     res=.true.
-   case default
-     res=.false.
-   end select
+character(len=*),intent(in) :: onechar
+logical                     :: res
+integer                     :: i
+   res=.false.
+   do i=1,len(onechar)
+      select case(onechar(i:i))
+      case('0':'9')
+        res=.true.
+      case default
+        res=.false.
+        exit
+      end select
+   enddo
 end function isdigit
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -10143,18 +10176,23 @@ end function isdigit
 !!
 !!##LICENSE
 !!     Public Domain
-elemental function isblank(ch) result(res)
+elemental function isblank(onechar) result(res)
 
 ! ident_74="@(#) M_strings isblank(3f) returns .true. if character is a blank (space or horizontal tab)"
 
-character,intent(in) :: ch
-logical              :: res
-   select case(ch)
-   case(' ',char(9))
-     res=.true.
-   case default
-     res=.false.
-   end select
+character(len=*),intent(in) :: onechar
+logical                     :: res
+integer                     :: i
+   res=.false. ! for zero-length input
+   do i=1,len(onechar)
+      select case(onechar(i:i))
+      case(' ',char(9))
+        res=.true.
+      case default
+        res=.false.
+        exit
+      end select
+   enddo
 end function isblank
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -10217,18 +10255,23 @@ end function isblank
 !!
 !!##LICENSE
 !!     Public Domain
-elemental function isascii(ch) result(res)
+elemental function isascii(onechar) result(res)
 
 ! ident_75="@(#) M_strings isascii(3f) returns .true. if character is in the range char(0) to char(127)"
 
-character,intent(in) :: ch
-logical              :: res
-   select case(iachar(ch))
-   case(0:127)
-     res=.true.
-   case default
-     res=.false.
-   end select
+character(len=*),intent(in) :: onechar
+logical                     :: res
+integer                     :: i
+   res=.false. ! for zero-length input
+   do i=1,len(onechar)
+      select case(iachar(onechar(i:i)))
+      case(0:127)
+        res=.true.
+      case default
+        res=.false.
+        exit
+      end select
+   enddo
 end function isascii
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -10279,22 +10322,27 @@ end function isascii
 !!
 !!##LICENSE
 !!     Public Domain
-elemental function isspace(ch) result(res)
+elemental function isspace(onechar) result(res)
 
 ! ident_76="@(#) M_strings isspace(3f) true if null space tab return new line vertical tab or formfeed"
 
-character,intent(in) :: ch
-logical              :: res
-   select case(ch)
-   case(' ')                 ! space(32)
-     res=.true.
-   case(char(0))             ! null(0)
-     res=.true.
-   case(char(9):char(13))    ! tab(9), new line(10), vertical tab(11), formfeed(12), carriage return(13),
-     res=.true.
-   case default
-     res=.false.
-   end select
+character(len=*),intent(in) :: onechar
+logical                     :: res
+integer                     :: i
+   res=.false. ! for zero-length input
+   do i=1,len(onechar)
+      select case(onechar(i:i))
+      case(' ')                 ! space(32)
+        res=.true.
+      case(char(0))             ! null(0)
+        res=.true.
+      case(char(9):char(13))    ! tab(9), new line(10), vertical tab(11), formfeed(12), carriage return(13),
+        res=.true.
+      case default
+        res=.false.
+        exit
+      end select
+   enddo
 end function isspace
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -10346,18 +10394,23 @@ end function isspace
 !!
 !!##LICENSE
 !!     Public Domain
-elemental function iscntrl(ch) result(res)
+elemental function iscntrl(onechar) result(res)
 
 ! ident_77="@(#) M_strings iscntrl(3f) true if a delete or ordinary control character(0x7F or 0x00-0x1F)"
 
-character,intent(in) :: ch
-logical              :: res
-   select case(ch)
-   case(char(127),char(0):char(31))
-     res=.true.
-   case default
-     res=.false.
-   end select
+character(len=*),intent(in) :: onechar
+logical                     :: res
+integer                     :: i
+   res=.false. ! for zero-length input
+   do i=1,len(onechar)
+      select case(onechar(i:i))
+      case(char(127),char(0):char(31))
+        res=.true.
+      case default
+        res=.false.
+        exit
+      end select
+   enddo
 end function iscntrl
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -10413,22 +10466,26 @@ end function iscntrl
 !!
 !!##LICENSE
 !!     Public Domain
-elemental function ispunct(ch) result(res)
+elemental function ispunct(onechar) result(res)
 
 ! ident_78="@(#) M_strings ispunct(3f) true if a printable punctuation character (isgraph(c)&&!isalnum(c))"
 
-character,intent(in) :: ch
-logical              :: res
-   select case(ch)
-   case (char(33):char(47), char(58):char(64), char(91):char(96), char(123):char(126))
-     res=.true.
-!  case(' ','0':'9','A':'Z','a':'z',char(128):)
-!    res=.true.
-!  case(char(0):char(31),char(127))
-!    res=.true.
-   case default
-     res=.false.
-   end select
+character(len=*),intent(in) :: onechar
+logical                     :: res
+integer                     :: i
+   res=.false. ! for zero-length input
+   do i=1,len(onechar)
+      select case(onechar(i:i))
+      case (char(33):char(47), char(58):char(64), char(91):char(96), char(123):char(126))
+        res=.true.
+   !  case(' ','0':'9','A':'Z','a':'z',char(128):)
+   !    res=.true.
+   !  case(char(0):char(31),char(127))
+   !    res=.true.
+      case default
+        res=.false.
+      end select
+   enddo
 end function ispunct
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -10573,16 +10630,23 @@ end function fortran_name
 !!
 !!##LICENSE
 !!     Public Domain
-pure elemental function isupper(ch) result(res)
+pure elemental function isupper(onechar) result(res)
 
 ! ident_80="@(#) M_strings isupper(3f) returns true if character is an uppercase letter (A-Z)"
 
-character,intent(in) :: ch
-logical              :: res
-   select case(ch)
-   case('A':'Z'); res=.true.
-   case default;  res=.false.
-   end select
+character(len=*),intent(in) :: onechar
+logical                     :: res
+integer                     :: i
+   res=.false. ! for zero-length input
+   do i=1,len(onechar)
+      select case(onechar(i:i))
+      case('A':'Z')
+         res=.true.
+      case default
+         res=.false.
+         exit
+      end select
+   enddo
 end function isupper
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -10636,16 +10700,23 @@ end function isupper
 !!
 !!##LICENSE
 !!     Public Domain
-elemental function islower(ch) result(res)
+elemental function islower(onechar) result(res)
 
 ! ident_81="@(#) M_strings islower(3f) returns true if character is a miniscule letter (a-z)"
 
-character,intent(in) :: ch
-logical              :: res
-   select case(ch)
-   case('a':'z'); res=.true.
-   case default;  res=.false.
-   end select
+character(len=*),intent(in) :: onechar
+logical                     :: res
+integer                     :: i
+   res=.false. ! for zero-length input
+   do i=1,len(onechar)
+      select case(onechar(i:i))
+      case('a':'z')
+         res=.true.
+      case default
+         res=.false.
+         exit
+      end select
+   enddo
 end function islower
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -10731,18 +10802,23 @@ end function islower
 !!    John S. Urban
 !!##LICENSE
 !!    Public Domain
-elemental function isalnum(ch) result(res)
+elemental function isalnum(onechar) result(res)
 
 ! ident_82="@(#) M_strings isalnum(3f) returns true if character is a letter (a-z A-Z) or digit(0-9)"
 
-character,intent(in) :: ch
-logical              :: res
-   select case(ch)
-   case('a':'z','A':'Z','0':'9')
-     res=.true.
-   case default
-     res=.false.
-   end select
+character(len=*),intent(in) :: onechar
+logical                     :: res
+integer                     :: i
+   res=.false. ! for zero-length input
+   do i=1,len(onechar)
+      select case(onechar(i:i))
+      case('a':'z','A':'Z','0':'9')
+        res=.true.
+      case default
+        res=.false.
+        exit
+      end select
+   enddo
 end function isalnum
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -11985,12 +12061,12 @@ end function fmt
 !!
 !!    subroutine find_field (string, field, position, delims, delim, found)
 !!
-!!     character*(*),intent(in)           :: string
-!!     character*(*),intent(out)          :: field
-!!     integer,optional,intent(inout)     :: position
-!!     character*(*),optional,intent(in)  :: delims
-!!     character*(*),optional,intent(out) :: delim
-!!     logical,optional,intent(out)       :: found
+!!     character(len=*),intent(in)           :: string
+!!     character(len=*),intent(out)          :: field
+!!     integer,optional,intent(inout)        :: position
+!!     character(len=*),optional,intent(in)  :: delims
+!!     character(len=*),optional,intent(out) :: delim
+!!     logical,optional,intent(out)          :: found
 !!
 !!##DESCRIPTION
 !!
@@ -12121,16 +12197,16 @@ subroutine find_field (string, field, position, delims, delim, found)
 !-- 15 Nov 90, Richard Maine.
 
 !-------------------- interface.
-character*(*),intent(in)           :: string
-character*(*),intent(out)          :: field
-integer,optional,intent(inout)     :: position
-character*(*),optional,intent(in)  :: delims
-character*(*),optional,intent(out) :: delim
-logical,optional,intent(out)       :: found
+character(len=*),intent(in)           :: string
+character(len=*),intent(out)          :: field
+integer,optional,intent(inout)        :: position
+character(len=*),optional,intent(in)  :: delims
+character(len=*),optional,intent(out) :: delim
+logical,optional,intent(out)          :: found
 !-------------------- local.
-character                          :: delimiter*1
-integer                            :: pos, field_start, field_end, i
-logical                            :: trim_blanks
+character                             :: delimiter*1
+integer                               :: pos, field_start, field_end, i
+logical                               :: trim_blanks
 !-------------------- executable code.
    field = ''
    delimiter = char(0)
@@ -12413,7 +12489,7 @@ integer                                       :: imax
 
     call split2020(string, set, first, last)
     ! maxval() of a zero-size array is set to a flag value not zero or length of character string
-    if(size(first).eq.0)then
+    if(size(first) == 0)then
        imax=0
     else
        imax=maxval(last-first)+1
@@ -13009,7 +13085,7 @@ end function longest_common_substring
 !!       out=decode_base64(out)
 !!       ! store the bytes back into arr1
 !!       arr2=transfer(source=out,mold=[0.0])
-!!       write(*,'(*(g0,1x))') 'are arr1 and arr2 the same?',all(arr1.eq.arr2)
+!!       write(*,'(*(g0,1x))') 'are arr1 and arr2 the same?',all(arr1 == arr2)
 !!    end subroutine other
 !!    end program demo_encode_base64
 !!
@@ -13072,7 +13148,7 @@ character(len=1),allocatable :: tmpdata(:)
    do i=1,sz,3
          if(i+3<=sz)then                  ! if not last
            chunk=three2four(data(i:i+2))
-         elseif(modulo(sz,3).eq.0)then    ! last was an even multiple of three
+         elseif(modulo(sz,3) == 0)then    ! last was an even multiple of three
            chunk=three2four(data(i:i+2))
          else                             ! end of data but remainder needs padded
            tmpdata=[data(i:sz),[(char(0),j=1,3-(sz-i+1))]]
@@ -13249,9 +13325,9 @@ integer(kind=int8)           :: iquad(4)
    call  mvbits(i32, 24, 6, o32, 18)
    out=transfer(o32, out)
 
-   if(quad(3).eq.rfc4648_padding)then
+   if(quad(3) == rfc4648_padding)then
       tri=out(3:3)
-   elseif(quad(4).eq.rfc4648_padding)then
+   elseif(quad(4) == rfc4648_padding)then
       tri=out(3:2:-1)
    else
       tri=out(3:1:-1)
