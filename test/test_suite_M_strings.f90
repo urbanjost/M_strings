@@ -1100,7 +1100,7 @@ integer                      :: ibytes
    ! add //'' to change function call to expression to avoid gfortran bug
 !   call unit_test('encode_base64',encode_base64(s) == e,  s,'==>',encode_base64(s)//'')
 
-   s=[(achar(i),i=0,255)]
+   s=[(char(i),i=0,255)]
    e=switch('AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4&
             &OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3Bx&
             &cnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmq&
@@ -1134,7 +1134,7 @@ integer                      :: ilen
             &cnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmq&
             &q6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj&
             &5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+/w==')
-   e=[(achar(i),i=0,255)]
+   e=[(char(i),i=0,255)]
    r=decode_base64(s)
    ibytes=size(r)
    call unit_test('decode_base64',ibytes == 256,'entire ASCII256 set','expected',256,'bytes; got',ibytes)
@@ -1149,7 +1149,7 @@ integer                      :: ilen
       if(allocated(x))deallocate(x)
       allocate(x(ilen))
       call random_number(x)
-      chars=achar(int(x*255))
+      chars=char(int(x*255))
       encoded=encode_base64(chars)
       decoded=decode_base64(encoded)
       ibytes=size(decoded)
@@ -1176,7 +1176,7 @@ integer :: i
    ! add //'' to change function call to expression to avoid gfortran bug
    call unit_test('percent_encode',percent_encode(s) == e,  s,'==>',percent_encode(s)//'')
 
-   s=switch([(achar(i),i=0,255)])
+   s=switch([(char(i),i=0,255)])
    e='%00%01%02%03%04%05%06%07%08%09%0A%0B%0C%0D%0E%0F%10&
      &%11%12%13%14%15%16%17%18%19%1A%1B%1C%1D%1E%1F%20%21&
      &%22%23%24%25%26%27%28%29%2A%2B%2C-.%2F0123456789%3A&
@@ -1205,7 +1205,7 @@ integer :: i
    ! add //'' to change function call to expression to avoid gfortran bug
    call unit_test('percent_decode',percent_decode(s) == e,  s,'==>',percent_decode(s)//'')
 
-   e=switch([(achar(i),i=0,255)])
+   e=switch([(char(i),i=0,255)])
    s='%00%01%02%03%04%05%06%07%08%09%0A%0B%0C%0D%0E%0F%10&
      &%11%12%13%14%15%16%17%18%19%1A%1B%1C%1D%1E%1F%20%21&
      &%22%23%24%25%26%27%28%29%2A%2B%2C-.%2F0123456789%3A&

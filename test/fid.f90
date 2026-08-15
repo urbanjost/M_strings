@@ -4,6 +4,8 @@ implicit none
    call platform()
    write(*,*)
    call clockrate()
+   write(*,*)
+   call machineid()
 contains
 
 subroutine clockrate()
@@ -24,11 +26,12 @@ integer(kind=int64)            :: j
       do i=1,huge(0_int64)-1
          call system_clock(count64b,count_rate64,count_max64)
          if(count64b.ne.count64)then
-            write(*,*)count64b-count64
+            write(*,'(1x,g0)',advance='no')count64b-count64
             exit
          endif
       enddo
    enddo
+   write(*,*)
 end subroutine clockrate
 
 subroutine platform()
@@ -102,5 +105,20 @@ character(len=80)              :: line
    out=trim(adjustl(out(2:)))
    out=merge(' ','-',in>0)//out
 end function three
+
+subroutine machineid()
+! OS code for machine, not real hardware ID.
+! should look something like 566f9e977c3c4c46d993b04f5f57f6a8
+integer            :: lun
+integer            :: iostat
+character(len=256) :: line
+   open(newunit=lun,file='/var/lib/dbus/machine-id',iostat=iostat)
+   if(iostat.eq.0)then
+      read(lun,'(a)',iostat=iostat)line
+      if(iostat.eq.0)then
+         write(*,'(*(g0))')'pseudo machine-id : ',trim(line)
+      endif
+   endif
+end subroutine machineid
 
 end program test_id
