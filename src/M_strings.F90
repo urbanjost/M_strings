@@ -789,9 +789,9 @@ CONTAINS
 !!
 !!       allpassed= test('abcdefghijk' ,  '?b*',     .true.)  .and. allpassed
 !!       allpassed= test('abcdefghijk' ,  '*c*',     .true.)  .and. allpassed
-!!       allpassed= test('abcdefghijk' ,  '*c',      .false.) .and.  allpassed
+!!       allpassed= test('abcdefghijk' ,  '*c',      .false.) .and. allpassed
 !!       allpassed= test('abcdefghijk' ,  '*c*k',    .true.)  .and. allpassed
-!!       allpassed= test('LS'          ,  '?OW',     .false.) .and.  allpassed
+!!       allpassed= test('LS'          ,  '?OW',     .false.) .and. allpassed
 !!       allpassed= test('teztit'      ,  'tez*t*t', .true.)  .and. allpassed
 !!         ! Two pattern match problems that might pose difficulties
 !!       allpassed= test('e '           , '*e* ',      .true.) .and. allpassed
@@ -801,7 +801,7 @@ CONTAINS
 !!       allpassed= test('baaaaa'       , 'b*ax',      .false.) .and. allpassed
 !!       allpassed= test('baaaaax'      , 'b*a',       .false.) .and. allpassed
 !!       allpassed= test(''             , 'b*',        .false.) .and. allpassed
-!!       allpassed= test(''             , '*',         .true.) .and.  allpassed
+!!       allpassed= test(''             , '*',         .true.)  .and. allpassed
 !!       allpassed= test('b'            , '',          .false.) .and. allpassed
 !!       allpassed= test('3'            , '??',        .false.) .and. allpassed
 !!       ! known flaws
@@ -9790,18 +9790,20 @@ end function s2vs
 !!
 !!    elemental function isprint(onechar)
 !!
-!!     character,intent(in) :: onechar
-!!     logical              :: isprint
+!!     character(len=*),intent(in) :: onechar
+!!     logical                     :: isprint
 !!
 !!##DESCRIPTION
 !!     isprint(3f) returns .true. if character is an ASCII printable character
 !!
 !!##OPTIONS
-!!    onechar  character to test
+!!    onechar  character(s) to test
 !!
 !!##RETURNS
-!!    isprint  logical value returns true if character is a
+!!    isprint  Returns true logical value if character is a
 !!             printable ASCII character else false.
+!!             If a multi-byte string was input .false. is returned if any
+!!             character is not printable. A null string returns .false.
 !!##EXAMPLES
 !!
 !!   Sample Program:
@@ -9810,15 +9812,42 @@ end function s2vs
 !!    use M_strings, only : isprint
 !!    implicit none
 !!    integer                    :: i
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter :: c='(40(g0))'
 !!    character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-!!       write(*,'(40(a))')'ISPRINT: ',pack( string, isprint(string) )
+!!
+!!       print *
+!!       print g, 'basics'
+!!       print g, isprint('a'),isprint(achar(9))
+!!       print *
+!!       print g, 'elemental'
+!!       print g, isprint(['a','b',char(8),'c','d',char(10)])
+!!       print *
+!!       print g, 'print all the printable characters'
+!!       print c, pack( string, isprint(string) )
+!!       print *
+!!       print g, 'return false if any character is not printable'
+!!       print g, isprint('abcd')
+!!       print g, isprint('ab'//char(0)//'cd')
+!!
 !!    end program demo_isprint
 !!
 !!   Results:
 !!
-!!    ISPRINT:  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEF
-!!    GHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmn
-!!    opqrstuvwxyz{|}~
+!!    > basics
+!!    > T F
+!!    >
+!!    > elemental
+!!    > T T F T T F
+!!    >
+!!    > print all the printable characters
+!!    >  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFG
+!!    > HIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno
+!!    > pqrstuvwxyz{|}~
+!!    >
+!!    > strings return false if any character is not printable
+!!    > T
+!!    > F
 !!
 !!##AUTHOR
 !!     John S. Urban
@@ -9857,7 +9886,7 @@ end function isprint
 !!
 !!    elemental function isgraph(onechar)
 !!
-!!     character,intent(in) :: onechar
+!!     character(len=*),intent(in) :: onechar
 !!     logical              :: isgraph
 !!
 !!##DESCRIPTION
@@ -9868,8 +9897,10 @@ end function isprint
 !!    onechar   character to test
 !!
 !!##RETURNS
-!!    isgraph   logical value returns true if character is a printable
-!!              non-space character
+!!    isgraph  Returns true logical value if character is a printable
+!!             non-space character. If a multi-byte string was input
+!!             .false. is returned if any character is not a graphical
+!!             character. A null string returns .false.
 !!##EXAMPLES
 !!
 !!   Sample Program:
@@ -9925,7 +9956,7 @@ end function isgraph
 !!
 !!   elemental function isalpha(onechar)
 !!
-!!    character,intent(in) :: onechar
+!!    character(len=*),intent(in) :: onechar
 !!    logical              :: isalpha
 !!
 !!##DESCRIPTION
@@ -9936,25 +9967,69 @@ end function isgraph
 !!    onechar  character to test
 !!
 !!##RETURNS
-!!    isalpha  logical value returns .true. if character is a ASCII letter
-!!             or false otherwise.
+!!    isalpha  Returns .true. logical value if character is a ASCII letter
+!!             or false otherwise. If a multi-byte string was input
+!!             .false. is returned if any character is not an ASCII letter. A
+!!             null string returns .false.
 !!##EXAMPLES
 !!
 !!
 !!   Sample program
 !!
-!!     program demo_isalpha
-!!     use M_strings, only : isalpha
-!!     implicit none
-!!     integer                    :: i
-!!     character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-!!        write(*,'(40(a))')'ISGRAPH: ',pack( string, isalpha(string) )
-!!     end program demo_isalpha
+!!    program demo_isalpha
+!!    use M_strings, only : isalpha
+!!    implicit none
+!!    integer                    :: i
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter :: c='(40(g0))'
+!!    character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
+!!
+!!       print g, 'basics'
+!!       print g, isalpha('a'),isalpha(achar(9))
+!!       print *
+!!       print g, 'elemental'
+!!       print g, isalpha(['a','b',char(8),'c','d',char(10)])
+!!       print *
+!!       print g, 'print all the alphanumeric characters'
+!!       print c, pack( string, isalpha(string) )
+!!       print *
+!!       print g, 'return false if any character is not printable'
+!!       print g,' using ISALPHA(3):'
+!!       print g, isalpha('abcd')
+!!       print g, isalpha('ab'//char(0)//'cd')
+!!
+!!       ALTERNATIVE : block
+!!       ! ALTERNATIVE using VERIFY(3)
+!!       ! the Fortran intrinsic function VERIFY(3) returns a position just
+!!       ! not a logical like C, which can be useful for complex comparisons
+!!       character(len=*),parameter :: low='abcdefghijklmnopqrstuvwxyz'
+!!       character(len=*),parameter :: up='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+!!          print g,' using VERIFY(3):'
+!!          print g, verify('abcd', up//low) == 0
+!!          print g, verify('ab'//char(0)//'cd', up//low) == 0
+!!       endblock ALTERNATIVE
+!!
+!!    end program demo_isalpha
 !!
 !!   Results:
 !!
-!!    ISGRAPH: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm
-!!    nopqrstuvwxyz
+!!    > basics
+!!    > T F
+!!    >
+!!    > elemental
+!!    > T T F T T F
+!!    >
+!!    > print all the alphanumeric characters
+!!    > ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn
+!!    > opqrstuvwxyz
+!!    >
+!!    > return false if any character is not printable
+!!    >  using ISALPHA(3):
+!!    > T
+!!    > F
+!!    >  using VERIFY(3):
+!!    > T
+!!    > F
 !!
 !!##AUTHOR
 !!    John S. Urban
@@ -9993,7 +10068,7 @@ end function isalpha
 !!
 !!    elemental function isxdigit(onechar)
 !!
-!!     character,intent(in) :: onechar
+!!     character(len=*),intent(in) :: onechar
 !!     logical              :: isxdigit
 !!
 !!##DESCRIPTION
@@ -10004,23 +10079,51 @@ end function isalpha
 !!    onechar   character to test
 !!
 !!##RETURNS
-!!    isxdigit  logical value returns true if character is a hexadecimal digit
+!!    isxdigit  Returns true logical value if character is a hexadecimal digit.
+!!              If a multi-byte string was input .false. is returned if any
+!!              character is not a hexadecimal digit. A null string returns .false.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program
 !!
-!!     program demo_isxdigit
-!!     use M_strings, only : isxdigit
-!!     implicit none
-!!     integer                    :: i
-!!     character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-!!        write(*,'(40(a))')'ISXDIGIT: ',pack( string, isxdigit(string) )
-!!     end program demo_isxdigit
+!!    program demo_isxdigit
+!!    use M_strings, only : isxdigit
+!!    implicit none
+!!    integer                    :: i
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter :: c='(40(g0))'
+!!    character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
+!!
+!!       print g, 'basics'
+!!       print g, isxdigit('a'),isxdigit(g)
+!!       print *
+!!       print g, 'elemental'
+!!       print g, isxdigit(['a','b',char(8),'c','d',char(10)])
+!!       print *
+!!       print g, 'print all the hexadecimal digit characters'
+!!       print c, pack( string, isxdigit(string) )
+!!       print *
+!!       print g, 'strings return false if any character is not in set'
+!!       print g, isxdigit('abcd')
+!!       print g, isxdigit('ab'//char(0)//'cd')
+!!
+!!    end program demo_isxdigit
 !!
 !!   Results:
 !!
-!!    ISXDIGIT: 0123456789ABCDEFabcdef
+!!    > basics
+!!    > T F
+!!    >
+!!    > elemental
+!!    > T T F T T F
+!!    >
+!!    > print all the hexadecimal digit characters
+!!    > 0123456789ABCDEFabcdef
+!!    >
+!!    > strings return false if any character is not in set
+!!    > T
+!!    > F
 !!
 !!##AUTHOR
 !!     John S. Urban
@@ -10059,7 +10162,7 @@ end function isxdigit
 !!
 !!    elemental function isdigit(onechar)
 !!
-!!     character,intent(in) :: onechar
+!!     character(len=*),intent(in) :: onechar
 !!     logical              :: isdigit
 !!
 !!##DESCRIPTION
@@ -10069,40 +10172,66 @@ end function isxdigit
 !!    onechar  character to test
 !!
 !!##RETURNS
-!!    isdigit  logical value returns true if character is a "digit"
+!!    isdigit  Returns true logical value if character is a "digit"
 !!             ( an ASCII-7  character from the set {0,1,..,9}).
 !!             That is, from CHAR(48) to CHAR(57) inclusive.
+!!             If a multi-byte string was input .false. is returned if any
+!!             character is not a digit. A null string returns .false.
 !!
 !!##EXAMPLES
 !!
 !!
 !!  Sample Program:
 !!
-!!     program demo_isdigit
-!!     use M_strings, only : isdigit, isspace, switch
-!!     implicit none
-!!     character(len=10),allocatable :: string(:)
-!!     integer                       :: i
-!!        string=[&
-!!        & '1 2 3 4 5 ' ,&
-!!        & 'letters   ' ,&
-!!        & '1234567890' ,&
-!!        & 'both 8787 ' ]
-!!        ! if string is nothing but digits and whitespace return .true.
-!!        do i=1,size(string)
-!!           write(*,'(a)',advance='no')'For string['//string(i)//']'
-!!           write(*,*) &
-!!            & all(isdigit(switch(string(i))).or.&
-!!            & isspace(switch(string(i))))
-!!        enddo
-!!     end program demo_isdigit
+!!    program demo_isdigit
+!!
+!!    use M_strings, only : isdigit, isspace, switch
+!!    implicit none
+!!    character(len=10),allocatable :: string(:)
+!!    character(len=1),allocatable  :: chars(:)
+!!    character(len=*),parameter    :: g='(*(g0,1x))'
+!!    integer                       :: i
+!!
+!!       string=[&
+!!       & '1 2 3 4 5 ' ,&
+!!       & 'letters   ' ,&
+!!       & '1234567890' ,&
+!!       & 'both 8787 ' ]
+!!
+!!       ! if string is nothing but digits and whitespace return .true.
+!!
+!!       print g,'using ISDIGIT(3) and ISSPACE(3):'
+!!       do i=1,size(string)
+!!          ! convert to array of single characters
+!!          chars=switch(string(i))
+!!          print g, 'For string[',string(i),']', &
+!!          & all( isdigit(chars) .or. isspace(chars) )
+!!       enddo
+!!
+!!       ! ALTERNATIVE using VERIFY(3)
+!!       ! the Fortran intrinsic function VERIFY(3) returns a position just
+!!       ! not a logical like C, which can be useful for complex comparisons
+!!       print g,'using VERIFY(3):'
+!!       do i=1,size(string)
+!!          print g, 'For string[',string(i),']', &
+!!          & verify(string(i), "01234567890 ") == 0
+!!       enddo
+!!
+!!    end program demo_isdigit
+!!
 !!
 !!  Expected output:
 !!
-!!        For string[1 2 3 4 5 ] T
-!!        For string[letters   ] F
-!!        For string[1234567890] T
-!!        For string[both 8787 ] F
+!!    > using ISDIGIT(3) and ISSPACE(3):
+!!    > For string[ 1 2 3 4 5  ] T
+!!    > For string[ letters    ] F
+!!    > For string[ 1234567890 ] T
+!!    > For string[ both 8787  ] F
+!!    > using VERIFY(3):
+!!    > For string[ 1 2 3 4 5  ] T
+!!    > For string[ letters    ] F
+!!    > For string[ 1234567890 ] T
+!!    > For string[ both 8787  ] F
 !!
 !!##AUTHOR
 !!     John S. Urban
@@ -10141,7 +10270,7 @@ end function isdigit
 !!
 !!    elemental function isblank(onechar)
 !!
-!!     character,intent(in) :: onechar
+!!     character(len=*),intent(in) :: onechar
 !!     logical              :: isblank
 !!
 !!##DESCRIPTION
@@ -10152,20 +10281,22 @@ end function isdigit
 !!    onechar  character to test
 !!
 !!##RETURNS
-!!    isblank  logical value returns true if character is a "blank"
+!!    isblank  Returns true logical value if character is a "blank"
 !!             ( an ASCII  space or horizontal tab character).
+!!             If a multi-byte string was input .false. is returned if any
+!!             character is not blank. A null string returns .false.
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
-!!     program demo_isblank
-!!     use M_strings, only : isblank
-!!     implicit none
-!!     integer                    :: i
-!!     character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-!!        write(*,'(*(g0,1x))')'ISBLANK: ',&
-!!        & iachar(pack( string, isblank(string) ))
-!!     end program demo_isblank
+!!    program demo_isblank
+!!    use M_strings, only : isblank
+!!    implicit none
+!!    integer                    :: i
+!!    character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
+!!       write(*,'(*(g0,1x))')'ISBLANK: ',&
+!!       & iachar(pack( string, isblank(string) ))
+!!    end program demo_isblank
 !!
 !!   Results:
 !!
@@ -10208,7 +10339,7 @@ end function isblank
 !!
 !!    elemental function isascii(onechar)
 !!
-!!     character,intent(in) :: onechar
+!!     character(len=*),intent(in) :: onechar
 !!     logical              :: isascii
 !!
 !!##DESCRIPTION
@@ -10219,20 +10350,22 @@ end function isblank
 !!    onechar  character to test
 !!
 !!##RETURNS
-!!    isascii  logical value returns true if character is an ASCII
+!!    isascii  Returns true logical value if character is an ASCII
 !!             character.
+!!             If a multi-byte string was input .false. is returned if any
+!!             character is not ASCII. A null string returns .false.
 !!##EXAMPLES
 !!
 !!  Sample program
 !!
-!!     program demo_isascii
-!!     use M_strings, only : isascii
-!!     implicit none
-!!     integer                    :: i
-!!     character(len=1),parameter :: string(*)=[(char(i),i=0,255)]
-!!        write(*,'(10(g0,1x))')'ISASCII: ', &
-!!        & iachar(pack( string, isascii(string) ))
-!!     end program demo_isascii
+!!    program demo_isascii
+!!    use M_strings, only : isascii
+!!    implicit none
+!!    integer                    :: i
+!!    character(len=1),parameter :: string(*)=[(char(i),i=0,255)]
+!!       write(*,'(10(g0,1x))')'ISASCII: ', &
+!!       & iachar(pack( string, isascii(string) ))
+!!    end program demo_isascii
 !!
 !!  Results:
 !!
@@ -10287,7 +10420,7 @@ end function isascii
 !!
 !!    elemental function isspace(onechar)
 !!
-!!     character,intent(in) :: onechar
+!!     character(len=*),intent(in) :: onechar
 !!     logical              :: isspace
 !!
 !!##DESCRIPTION
@@ -10298,7 +10431,9 @@ end function isascii
 !!    onechar  character to test
 !!
 !!##RETURNS
-!!    isspace  returns true if character is ASCII white space
+!!    isspace  Returns true if character is ASCII white space.
+!!             If a multi-byte string was input .false. is returned if any
+!!             character is not whitespace. A null string returns .false.
 !!
 !!##EXAMPLES
 !!
@@ -10358,7 +10493,7 @@ end function isspace
 !!
 !!    elemental function iscntrl(onechar)
 !!
-!!     character,intent(in) :: onechar
+!!     character(len=*),intent(in) :: onechar
 !!     logical              :: iscntrl
 !!
 !!##DESCRIPTION
@@ -10369,20 +10504,23 @@ end function isspace
 !!    onechar  character to test
 !!
 !!##RETURNS
-!!    iscntrl  logical value returns true if character is a control character
+!!    iscntrl  returns true logical value if character is a control
+!!             character.  If a multi-byte string was input .false. is
+!!             returned if any character is not a control character. A null
+!!             string returns .false.
 !!
 !!##EXAMPLES
 !!
 !!  Sample program
 !!
-!!     program demo_iscntrl
-!!     use M_strings, only : iscntrl
-!!     implicit none
-!!     integer                    :: i
-!!     character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-!!        write(*,'(20(g0,1x))')'ISCNTRL: ', &
-!!        & iachar(pack( string, iscntrl(string) ))
-!!     end program demo_iscntrl
+!!    program demo_iscntrl
+!!    use M_strings, only : iscntrl
+!!    implicit none
+!!    integer                    :: i
+!!    character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
+!!       write(*,'(20(g0,1x))')'ISCNTRL: ', &
+!!       & iachar(pack( string, iscntrl(string) ))
+!!    end program demo_iscntrl
 !!
 !!   Results:
 !!
@@ -10426,7 +10564,7 @@ end function iscntrl
 !!
 !!    elemental function ispunct(onechar)
 !!
-!!     character,intent(in) :: onechar
+!!     character(len=*),intent(in) :: onechar
 !!     logical              :: ispunct
 !!
 !!##DESCRIPTION
@@ -10437,8 +10575,10 @@ end function iscntrl
 !!    onechar  character to test
 !!
 !!##RETURNS
-!!    ispunct  logical value returns true if character is a printable
-!!             punctuation character.
+!!    ispunct  Returns true logical value if character is a printable
+!!             punctuation character. If a multi-byte string was input
+!!             .false. is returned if any character is not a printable
+!!             punctuation character. A null string returns .false.
 !!
 !!##EXAMPLES
 !!
@@ -10492,6 +10632,258 @@ end function ispunct
 !===================================================================================================================================
 !>
 !!##NAME
+!!     isupper(3f) - [M_strings:COMPARE] returns .true. if character is an
+!!     uppercase letter (A-Z)
+!!     (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!
+!!    elemental function isupper(onechar)
+!!
+!!     character(len=*),intent(in) :: onechar
+!!     logical              :: isupper
+!!
+!!##DESCRIPTION
+!!     isupper(3f) returns .true. if character is an uppercase letter (A-Z)
+!!
+!!##OPTIONS
+!!    onechar  character to test
+!!##RETURNS
+!!    isupper  Returns true logical value if character is an uppercase
+!!             ASCII character else false.
+!!             If a multi-byte string was input .false. is returned if any
+!!             character is not uppercase ASCII. A null string returns .false.
+!!##EXAMPLES
+!!
+!!  Sample program:
+!!
+!!     program demo_isupper
+!!     use M_strings, only : isupper
+!!     implicit none
+!!     integer                    :: i
+!!     character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
+!!        write(*,'(10(g0,1x))')'ISUPPER: ', &
+!!        & iachar(pack( string, isupper(string) ))
+!!        write(*,'(10(g0,1x))')'ISUPPER: ', &
+!!        & pack( string, isupper(string) )
+!!     end program demo_isupper
+!!
+!!  Results:
+!!
+!!     > ISUPPER:  65 66 67 68 69 70 71 72 73
+!!     > 74 75 76 77 78 79 80 81 82 83
+!!     > 84 85 86 87 88 89 90
+!!     > ISUPPER:  A B C D E F G H I
+!!     > J K L M N O P Q R S
+!!     > T U V W X Y Z
+!!
+!!##AUTHOR
+!!     John S. Urban
+!!
+!!##LICENSE
+!!     Public Domain
+pure elemental function isupper(onechar) result(res)
+
+! ident_79="@(#) M_strings isupper(3f) returns true if character is an uppercase letter (A-Z)"
+
+character(len=*),intent(in) :: onechar
+logical                     :: res
+integer                     :: i
+   res=.false. ! for zero-length input
+   do i=1,len(onechar)
+      select case(onechar(i:i))
+      case('A':'Z')
+         res=.true.
+      case default
+         res=.false.
+         exit
+      end select
+   enddo
+end function isupper
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
+!!     islower(3f) - [M_strings:COMPARE] returns .true. if character is a
+!!     miniscule letter (a-z)
+!!     (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!
+!!    elemental function islower(onechar)
+!!
+!!     character(len=*),intent(in) :: onechar
+!!     logical              :: islower
+!!
+!!##DESCRIPTION
+!!     islower(3f) returns .true. if character is a miniscule letter (a-z)
+!!
+!!##OPTIONS
+!!    onechar  character to test
+!!
+!!##RETURNS
+!!    islower  Returns true logical value if character is a lowercase
+!!             ASCII character else false. If a multi-byte string was
+!!             input .false. is returned if any character is not lowercase
+!!             ASCII. A null string returns .false.
+!!##EXAMPLES
+!!
+!!  Sample program
+!!
+!!     program demo_islower
+!!     use M_strings, only : islower
+!!     implicit none
+!!     integer                    :: i
+!!     character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
+!!        write(*,'(15(g0,1x))')'ISLOWER: ', &
+!!        & iachar(pack( string, islower(string) ))
+!!        write(*,'(15(g0,1x))')'ISLOWER: ', &
+!!        & pack( string, islower(string) )
+!!     end program demo_islower
+!!   Results:
+!!
+!!    ISLOWER:  97 98 99 100 101 102 103 104 105 106 107 108 109 110
+!!    111 112 113 114 115 116 117 118 119 120 121 122
+!!    ISLOWER:  a b c d e f g h i j k l m n
+!!    o p q r s t u v w x y z
+!!
+!!##AUTHOR
+!!     John S. Urban
+!!
+!!##LICENSE
+!!     Public Domain
+elemental function islower(onechar) result(res)
+
+! ident_80="@(#) M_strings islower(3f) returns true if character is a miniscule letter (a-z)"
+
+character(len=*),intent(in) :: onechar
+logical                     :: res
+integer                     :: i
+   res=.false. ! for zero-length input
+   do i=1,len(onechar)
+      select case(onechar(i:i))
+      case('a':'z')
+         res=.true.
+      case default
+         res=.false.
+         exit
+      end select
+   enddo
+end function islower
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
+!!    isalnum,isalpha,iscntrl,isdigit,isgraph,islower,
+!!    isprint,ispunct,isspace,isupper,
+!!    isascii,isblank,isxdigit(3f) - [M_strings:COMPARE] test membership in
+!!    subsets of ASCII set
+!!    (LICENSE:PD)
+!!
+!!##SYNOPSIS
+!!
+!!    Where "FUNCNAME" is one of the function names in the group, the
+!!    functions are defined by
+!!
+!!     elemental function FUNCNAME(onechar)
+!!     character(len=*),intent(in) :: onechar
+!!     logical              :: FUNC_NAME
+!!##DESCRIPTION
+!!
+!!       These elemental functions test if a character belongs to various
+!!       subsets of the ASCII character set.
+!!
+!!       isalnum    returns .true. if character is a letter (a-z,A-Z)
+!!                  or digit (0-9)
+!!       isalpha    returns .true. if character is a letter and
+!!                  .false. otherwise
+!!       isascii    returns .true. if character is in the range char(0)
+!!                  to char(127)
+!!       isblank    returns .true. if character is a blank (space or
+!!                  horizontal tab).
+!!       iscntrl    returns .true. if character is a delete character or
+!!                  ordinary control character (0x7F or 0x00-0x1F).
+!!       isdigit    returns .true. if character is a digit (0,1,...,9)
+!!                  and .false. otherwise
+!!       isgraph    returns .true. if character is a printable ASCII
+!!                  character excluding space
+!!       islower    returns .true. if character is a miniscule letter (a-z)
+!!       isprint    returns .true. if character is a printable ASCII character
+!!       ispunct    returns .true. if character is a printable punctuation
+!!                  character (isgraph(c) && !isalnum(c)).
+!!       isspace    returns .true. if character is a null, space, tab,
+!!                  carriage return, new line, vertical tab, or formfeed
+!!       isupper    returns .true. if character is an uppercase letter (A-Z)
+!!       isxdigit   returns .true. if character is a hexadecimal digit
+!!                  (0-9, a-f, or A-F).
+!!
+!!##EXAMPLES
+!!
+!!   Sample Program:
+!!
+!!    program demo_isalnum
+!!
+!!    use M_strings, only : isalnum, isspace, switch
+!!    implicit none
+!!    character(len=10),allocatable :: string(:)
+!!    character(len=1),allocatable  :: letters(:)
+!!    integer                       :: i
+!!       string=[&
+!!       & '1 2 3 4 5 ' ,&
+!!       & 'letters   ' ,&
+!!       & '1234567890' ,&
+!!       & '<02468>   ' ,&
+!!       & 'has dot.  ' ,&
+!!       & 'both 8787 ' ]
+!!       ! if string is all letters, digits and whitespace return .true.
+!!       do i=1,size(string)
+!!          letters=switch(string(i))
+!!          write(*,'(*(g0))') 'For string['//string(i)//'] ', &
+!!             all( isalnum(letters) .or. isspace(letters) )
+!!       enddo
+!!
+!!    end program demo_isalnum
+!!
+!!   Expected output:
+!!
+!!    > For string[1 2 3 4 5 ] T
+!!    > For string[letters   ] T
+!!    > For string[1234567890] T
+!!    > For string[<02468>   ] F
+!!    > For string[has dot.  ] F
+!!    > For string[both 8787 ] T
+!!
+!!##AUTHOR
+!!    John S. Urban
+!!##LICENSE
+!!    Public Domain
+elemental function isalnum(onechar) result(res)
+
+! ident_81="@(#) M_strings isalnum(3f) returns true if character is a letter (a-z A-Z) or digit(0-9)"
+
+character(len=*),intent(in) :: onechar
+logical                     :: res
+integer                     :: i
+   res=.false. ! for zero-length input
+   do i=1,len(onechar)
+      select case(onechar(i:i))
+      case('a':'z','A':'Z','0':'9')
+        res=.true.
+      case default
+        res=.false.
+        exit
+      end select
+   enddo
+end function isalnum
+!===================================================================================================================================
+!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
+!===================================================================================================================================
+!>
+!!##NAME
 !!     fortran_name(3f) - [M_strings:COMPARE] test if string meets criteria
 !!     for being a fortran name
 !!     (LICENSE:PD)
@@ -10515,8 +10907,10 @@ end function ispunct
 !!            trailing spaces are ignored.
 !!
 !!##RETURNS
-!!     LOUT   a logical value indicating if the input string passed or failed
+!!     LOUT   A logical value indicating if the input string passed or failed
 !!            the test to see if it is a valid Fortran name or not.
+!!            If a multi-byte string was input .false. is returned if any
+!!            character is not printable. A null string returns .false.
 !!
 !!##EXAMPLES
 !!
@@ -10556,7 +10950,7 @@ end function ispunct
 !!     Public Domain
 elemental function fortran_name(line) result (lout)
 
-! ident_79="@(#) M_strings fortran_name(3f) Return .true. if name is a valid Fortran name"
+! ident_82="@(#) M_strings fortran_name(3f) Return .true. if name is a valid Fortran name"
 
 ! determine if a string is a valid Fortran name ignoring trailing spaces (but not leading spaces)
 character(len=*),parameter   :: int='0123456789'
@@ -10576,250 +10970,6 @@ logical                      :: lout
       lout = .false.
    endif
 end function fortran_name
-!===================================================================================================================================
-!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
-!===================================================================================================================================
-!>
-!!##NAME
-!!     isupper(3f) - [M_strings:COMPARE] returns .true. if character is an
-!!     uppercase letter (A-Z)
-!!     (LICENSE:PD)
-!!
-!!##SYNOPSIS
-!!
-!!
-!!    elemental function isupper(onechar)
-!!
-!!     character,intent(in) :: onechar
-!!     logical              :: isupper
-!!
-!!##DESCRIPTION
-!!     isupper(3f) returns .true. if character is an uppercase letter (A-Z)
-!!
-!!##OPTIONS
-!!    onechar  character to test
-!!##RETURNS
-!!    isupper  logical value returns true if character is an uppercase
-!!             ASCII character else false.
-!!##EXAMPLES
-!!
-!!  Sample program:
-!!
-!!     program demo_isupper
-!!     use M_strings, only : isupper
-!!     implicit none
-!!     integer                    :: i
-!!     character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-!!        write(*,'(10(g0,1x))')'ISUPPER: ', &
-!!        & iachar(pack( string, isupper(string) ))
-!!        write(*,'(10(g0,1x))')'ISUPPER: ', &
-!!        & pack( string, isupper(string) )
-!!     end program demo_isupper
-!!
-!!  Results:
-!!
-!!     > ISUPPER:  65 66 67 68 69 70 71 72 73
-!!     > 74 75 76 77 78 79 80 81 82 83
-!!     > 84 85 86 87 88 89 90
-!!     > ISUPPER:  A B C D E F G H I
-!!     > J K L M N O P Q R S
-!!     > T U V W X Y Z
-!!
-!!##AUTHOR
-!!     John S. Urban
-!!
-!!##LICENSE
-!!     Public Domain
-pure elemental function isupper(onechar) result(res)
-
-! ident_80="@(#) M_strings isupper(3f) returns true if character is an uppercase letter (A-Z)"
-
-character(len=*),intent(in) :: onechar
-logical                     :: res
-integer                     :: i
-   res=.false. ! for zero-length input
-   do i=1,len(onechar)
-      select case(onechar(i:i))
-      case('A':'Z')
-         res=.true.
-      case default
-         res=.false.
-         exit
-      end select
-   enddo
-end function isupper
-!===================================================================================================================================
-!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
-!===================================================================================================================================
-!>
-!!##NAME
-!!     islower(3f) - [M_strings:COMPARE] returns .true. if character is a
-!!     miniscule letter (a-z)
-!!     (LICENSE:PD)
-!!
-!!##SYNOPSIS
-!!
-!!
-!!    elemental function islower(onechar)
-!!
-!!     character,intent(in) :: onechar
-!!     logical              :: islower
-!!
-!!##DESCRIPTION
-!!     islower(3f) returns .true. if character is a miniscule letter (a-z)
-!!
-!!##OPTIONS
-!!    onechar  character to test
-!!
-!!##RETURNS
-!!    islower  logical value returns true if character is a lowercase
-!!             ASCII character else false.
-!!##EXAMPLES
-!!
-!!  Sample program
-!!
-!!     program demo_islower
-!!     use M_strings, only : islower
-!!     implicit none
-!!     integer                    :: i
-!!     character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-!!        write(*,'(15(g0,1x))')'ISLOWER: ', &
-!!        & iachar(pack( string, islower(string) ))
-!!        write(*,'(15(g0,1x))')'ISLOWER: ', &
-!!        & pack( string, islower(string) )
-!!     end program demo_islower
-!!   Results:
-!!
-!!    ISLOWER:  97 98 99 100 101 102 103 104 105 106 107 108 109 110
-!!    111 112 113 114 115 116 117 118 119 120 121 122
-!!    ISLOWER:  a b c d e f g h i j k l m n
-!!    o p q r s t u v w x y z
-!!
-!!##AUTHOR
-!!     John S. Urban
-!!
-!!##LICENSE
-!!     Public Domain
-elemental function islower(onechar) result(res)
-
-! ident_81="@(#) M_strings islower(3f) returns true if character is a miniscule letter (a-z)"
-
-character(len=*),intent(in) :: onechar
-logical                     :: res
-integer                     :: i
-   res=.false. ! for zero-length input
-   do i=1,len(onechar)
-      select case(onechar(i:i))
-      case('a':'z')
-         res=.true.
-      case default
-         res=.false.
-         exit
-      end select
-   enddo
-end function islower
-!===================================================================================================================================
-!()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
-!===================================================================================================================================
-!>
-!!##NAME
-!!    isalnum,isalpha,iscntrl,isdigit,isgraph,islower,
-!!    isprint,ispunct,isspace,isupper,
-!!    isascii,isblank,isxdigit(3f) - [M_strings:COMPARE] test membership in
-!!    subsets of ASCII set
-!!    (LICENSE:PD)
-!!
-!!##SYNOPSIS
-!!
-!!    Where "FUNCNAME" is one of the function names in the group, the
-!!    functions are defined by
-!!
-!!     elemental function FUNCNAME(onechar)
-!!     character,intent(in) :: onechar
-!!     logical              :: FUNC_NAME
-!!##DESCRIPTION
-!!
-!!       These elemental functions test if a character belongs to various
-!!       subsets of the ASCII character set.
-!!
-!!       isalnum    returns .true. if character is a letter (a-z,A-Z)
-!!                  or digit (0-9)
-!!       isalpha    returns .true. if character is a letter and
-!!                  .false. otherwise
-!!       isascii    returns .true. if character is in the range char(0)
-!!                  to char(127)
-!!       isblank    returns .true. if character is a blank (space or
-!!                  horizontal tab).
-!!       iscntrl    returns .true. if character is a delete character or
-!!                  ordinary control character (0x7F or 0x00-0x1F).
-!!       isdigit    returns .true. if character is a digit (0,1,...,9)
-!!                  and .false. otherwise
-!!       isgraph    returns .true. if character is a printable ASCII
-!!                  character excluding space
-!!       islower    returns .true. if character is a miniscule letter (a-z)
-!!       isprint    returns .true. if character is a printable ASCII character
-!!       ispunct    returns .true. if character is a printable punctuation
-!!                  character (isgraph(c) && !isalnum(c)).
-!!       isspace    returns .true. if character is a null, space, tab,
-!!                  carriage return, new line, vertical tab, or formfeed
-!!       isupper    returns .true. if character is an uppercase letter (A-Z)
-!!       isxdigit   returns .true. if character is a hexadecimal digit
-!!                  (0-9, a-f, or A-F).
-!!
-!!##EXAMPLES
-!!
-!!   Sample Program:
-!!
-!!    program demo_isdigit
-!!
-!!     use M_strings, only : isdigit, isspace, switch
-!!     implicit none
-!!     character(len=10),allocatable :: string(:)
-!!     integer                       :: i
-!!        string=[&
-!!        & '1 2 3 4 5 ' ,&
-!!        & 'letters   ' ,&
-!!        & '1234567890' ,&
-!!        & 'both 8787 ' ]
-!!        ! if string is nothing but digits and whitespace return .true.
-!!        do i=1,size(string)
-!!           write(*,'(a)',advance='no')'For string['//string(i)//']'
-!!           write(*,*) &
-!!           all(isdigit(switch(string(i))) .or. &
-!!           & isspace(switch(string(i))))
-!!        enddo
-!!
-!!     end program demo_isdigit
-!!
-!!   Expected output:
-!!
-!!    For string[1 2 3 4 5 ] T
-!!    For string[letters   ] F
-!!    For string[1234567890] T
-!!    For string[both 8787 ] F
-!!
-!!##AUTHOR
-!!    John S. Urban
-!!##LICENSE
-!!    Public Domain
-elemental function isalnum(onechar) result(res)
-
-! ident_82="@(#) M_strings isalnum(3f) returns true if character is a letter (a-z A-Z) or digit(0-9)"
-
-character(len=*),intent(in) :: onechar
-logical                     :: res
-integer                     :: i
-   res=.false. ! for zero-length input
-   do i=1,len(onechar)
-      select case(onechar(i:i))
-      case('a':'z','A':'Z','0':'9')
-        res=.true.
-      case default
-        res=.false.
-        exit
-      end select
-   enddo
-end function isalnum
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
@@ -14149,7 +14299,7 @@ end function atoi_int64
 !! periods". Each three-digit group is known as a period (e.g., ones,
 !! thousands, millions). The symbol used to separate these groups is
 !! typically called a thousands separator or digit group separator (commonly
-!! a comma or space).  This is sometimes referred to as periodicity.
+!! a comma or space). This is sometimes referred to as periodicity.
 !!
 !!    KEY DETAILS
 !!
