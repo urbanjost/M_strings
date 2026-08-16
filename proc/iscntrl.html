@@ -168,7 +168,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <div class="codehilite"><pre><span></span><code>elemental function iscntrl(onechar)
 
- character,intent(in) :: onechar
+ character(len=*),intent(in) :: onechar
  logical              :: iscntrl
 </code></pre></div>
 
@@ -182,19 +182,22 @@
 </code></pre></div>
 
 <h2 id="returns">RETURNS</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">iscntrl</span><span class="w">  </span><span class="nv">logical</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="nv">returns</span><span class="w"> </span><span class="nv">true</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">character</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">control</span><span class="w"> </span><span class="nv">character</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">iscntrl</span><span class="w">  </span><span class="nv">returns</span><span class="w"> </span><span class="nv">true</span><span class="w"> </span><span class="nv">logical</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">character</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">control</span>
+<span class="w">         </span><span class="nv">character</span>.<span class="w">  </span><span class="k">If</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">multi</span><span class="o">-</span><span class="nv">byte</span><span class="w"> </span><span class="nv">string</span><span class="w"> </span><span class="nv">was</span><span class="w"> </span><span class="nv">input</span><span class="w"> </span>.<span class="nv">false</span>.<span class="w"> </span><span class="nv">is</span>
+<span class="w">         </span><span class="nv">returned</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">any</span><span class="w"> </span><span class="nv">character</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">control</span><span class="w"> </span><span class="nv">character</span>.<span class="w"> </span><span class="nv">A</span><span class="w"> </span><span class="nv">null</span>
+<span class="w">         </span><span class="nv">string</span><span class="w"> </span><span class="nv">returns</span><span class="w"> </span>.<span class="nv">false</span>.
 </code></pre></div>
 
 <h2 id="examples">EXAMPLES</h2>
 <p>Sample program</p>
-<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_iscntrl</span>
-<span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">M_strings</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">iscntrl</span>
-<span class="w"> </span><span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
-<span class="w"> </span><span class="nx">integer</span><span class="w">                    </span><span class="o">::</span><span class="w"> </span><span class="nx">i</span>
-<span class="w"> </span><span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="mi">1</span><span class="p">),</span><span class="nx">parameter</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="kt">string</span><span class="p">(</span><span class="o">*</span><span class="p">)=[(</span><span class="nx">char</span><span class="p">(</span><span class="nx">i</span><span class="p">),</span><span class="nx">i</span><span class="p">=</span><span class="mi">0</span><span class="p">,</span><span class="mi">127</span><span class="p">)]</span>
-<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="mi">20</span><span class="p">(</span><span class="nx">g0</span><span class="p">,</span><span class="mi">1</span><span class="nx">x</span><span class="p">))</span><span class="sc">&#39;)&#39;</span><span class="nx">ISCNTRL</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span>
-<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="nx">iachar</span><span class="p">(</span><span class="nx">pack</span><span class="p">(</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">iscntrl</span><span class="p">(</span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">))</span>
-<span class="w"> </span><span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_iscntrl</span>
+<div class="codehilite"><pre><span></span><code><span class="nx">program</span><span class="w"> </span><span class="nx">demo_iscntrl</span>
+<span class="nx">use</span><span class="w"> </span><span class="nx">M_strings</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">iscntrl</span>
+<span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
+<span class="nx">integer</span><span class="w">                    </span><span class="o">::</span><span class="w"> </span><span class="nx">i</span>
+<span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="mi">1</span><span class="p">),</span><span class="nx">parameter</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="kt">string</span><span class="p">(</span><span class="o">*</span><span class="p">)=[(</span><span class="nx">char</span><span class="p">(</span><span class="nx">i</span><span class="p">),</span><span class="nx">i</span><span class="p">=</span><span class="mi">0</span><span class="p">,</span><span class="mi">127</span><span class="p">)]</span>
+<span class="w">   </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="mi">20</span><span class="p">(</span><span class="nx">g0</span><span class="p">,</span><span class="mi">1</span><span class="nx">x</span><span class="p">))</span><span class="sc">&#39;)&#39;</span><span class="nx">ISCNTRL</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span>
+<span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="nx">iachar</span><span class="p">(</span><span class="nx">pack</span><span class="p">(</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">iscntrl</span><span class="p">(</span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">))</span>
+<span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_iscntrl</span>
 </code></pre></div>
 
 <p>Results:</p>
@@ -302,7 +305,7 @@
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2026-08-15 16:12 +0000             </p>
+ on 2026-08-16 02:02 +0000             </p>
           </div>
         </div>
         <br>

@@ -168,7 +168,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <div class="codehilite"><pre><span></span><code>elemental function isxdigit(onechar)
 
- character,intent(in) :: onechar
+ character(len=*),intent(in) :: onechar
  logical              :: isxdigit
 </code></pre></div>
 
@@ -182,22 +182,50 @@
 </code></pre></div>
 
 <h2 id="returns">RETURNS</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">isxdigit</span><span class="w">  </span><span class="nv">logical</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="nv">returns</span><span class="w"> </span><span class="nv">true</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">character</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">hexadecimal</span><span class="w"> </span><span class="nv">digit</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">isxdigit</span><span class="w">  </span><span class="nv">Returns</span><span class="w"> </span><span class="nv">true</span><span class="w"> </span><span class="nv">logical</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">character</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">hexadecimal</span><span class="w"> </span><span class="nv">digit</span>.
+<span class="w">          </span><span class="k">If</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">multi</span><span class="o">-</span><span class="nv">byte</span><span class="w"> </span><span class="nv">string</span><span class="w"> </span><span class="nv">was</span><span class="w"> </span><span class="nv">input</span><span class="w"> </span>.<span class="nv">false</span>.<span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">returned</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">any</span>
+<span class="w">          </span><span class="nv">character</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">hexadecimal</span><span class="w"> </span><span class="nv">digit</span>.<span class="w"> </span><span class="nv">A</span><span class="w"> </span><span class="nv">null</span><span class="w"> </span><span class="nv">string</span><span class="w"> </span><span class="nv">returns</span><span class="w"> </span>.<span class="nv">false</span>.
 </code></pre></div>
 
 <h2 id="examples">EXAMPLES</h2>
 <p>Sample program</p>
-<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_isxdigit</span>
-<span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">M_strings</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">isxdigit</span>
-<span class="w"> </span><span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
-<span class="w"> </span><span class="nx">integer</span><span class="w">                    </span><span class="o">::</span><span class="w"> </span><span class="nx">i</span>
-<span class="w"> </span><span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="mi">1</span><span class="p">),</span><span class="nx">parameter</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="kt">string</span><span class="p">(</span><span class="o">*</span><span class="p">)=[(</span><span class="nx">char</span><span class="p">(</span><span class="nx">i</span><span class="p">),</span><span class="nx">i</span><span class="p">=</span><span class="mi">0</span><span class="p">,</span><span class="mi">127</span><span class="p">)]</span>
-<span class="w">    </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="mi">40</span><span class="p">(</span><span class="nx">a</span><span class="p">))</span><span class="sc">&#39;)&#39;</span><span class="nx">ISXDIGIT</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;</span><span class="p">,</span><span class="nx">pack</span><span class="p">(</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">isxdigit</span><span class="p">(</span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
-<span class="w"> </span><span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_isxdigit</span>
+<div class="codehilite"><pre><span></span><code><span class="nx">program</span><span class="w"> </span><span class="nx">demo_isxdigit</span>
+<span class="nx">use</span><span class="w"> </span><span class="nx">M_strings</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">isxdigit</span>
+<span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
+<span class="nx">integer</span><span class="w">                    </span><span class="o">::</span><span class="w"> </span><span class="nx">i</span>
+<span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="nx">parameter</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nx">g</span><span class="p">=</span><span class="err">&#39;</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="nx">g0</span><span class="p">,</span><span class="mi">1</span><span class="nx">x</span><span class="p">))</span><span class="err">&#39;</span>
+<span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="nx">parameter</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nx">c</span><span class="p">=</span><span class="err">&#39;</span><span class="p">(</span><span class="mi">40</span><span class="p">(</span><span class="nx">g0</span><span class="p">))</span><span class="err">&#39;</span>
+<span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="mi">1</span><span class="p">),</span><span class="nx">parameter</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="kt">string</span><span class="p">(</span><span class="o">*</span><span class="p">)=[(</span><span class="nx">char</span><span class="p">(</span><span class="nx">i</span><span class="p">),</span><span class="nx">i</span><span class="p">=</span><span class="mi">0</span><span class="p">,</span><span class="mi">127</span><span class="p">)]</span>
+
+<span class="w">   </span><span class="nx">print</span><span class="w"> </span><span class="nx">g</span><span class="p">,</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">basics</span><span class="err">&#39;</span>
+<span class="w">   </span><span class="nx">print</span><span class="w"> </span><span class="nx">g</span><span class="p">,</span><span class="w"> </span><span class="nx">isxdigit</span><span class="p">(</span><span class="sc">&#39;a&#39;</span><span class="p">),</span><span class="nx">isxdigit</span><span class="p">(</span><span class="nx">g</span><span class="p">)</span>
+<span class="w">   </span><span class="nx">print</span><span class="w"> </span><span class="o">*</span>
+<span class="w">   </span><span class="nx">print</span><span class="w"> </span><span class="nx">g</span><span class="p">,</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">elemental</span><span class="err">&#39;</span>
+<span class="w">   </span><span class="nx">print</span><span class="w"> </span><span class="nx">g</span><span class="p">,</span><span class="w"> </span><span class="nx">isxdigit</span><span class="p">([</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;b&#39;</span><span class="p">,</span><span class="nx">char</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="sc">&#39;c&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="nx">char</span><span class="p">(</span><span class="mi">10</span><span class="p">)])</span>
+<span class="w">   </span><span class="nx">print</span><span class="w"> </span><span class="o">*</span>
+<span class="w">   </span><span class="nx">print</span><span class="w"> </span><span class="nx">g</span><span class="p">,</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">print</span><span class="w"> </span><span class="nx">all</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">hexadecimal</span><span class="w"> </span><span class="nx">digit</span><span class="w"> </span><span class="nx">characters</span><span class="err">&#39;</span>
+<span class="w">   </span><span class="nx">print</span><span class="w"> </span><span class="nx">c</span><span class="p">,</span><span class="w"> </span><span class="nx">pack</span><span class="p">(</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">isxdigit</span><span class="p">(</span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">   </span><span class="nx">print</span><span class="w"> </span><span class="o">*</span>
+<span class="w">   </span><span class="nx">print</span><span class="w"> </span><span class="nx">g</span><span class="p">,</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">strings</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">any</span><span class="w"> </span><span class="nx">character</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">set</span><span class="err">&#39;</span>
+<span class="w">   </span><span class="nx">print</span><span class="w"> </span><span class="nx">g</span><span class="p">,</span><span class="w"> </span><span class="nx">isxdigit</span><span class="p">(</span><span class="err">&#39;</span><span class="nx">abcd</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="w">   </span><span class="nx">print</span><span class="w"> </span><span class="nx">g</span><span class="p">,</span><span class="w"> </span><span class="nx">isxdigit</span><span class="p">(</span><span class="err">&#39;</span><span class="nx">ab</span><span class="err">&#39;</span><span class="c1">//char(0)//&#39;cd&#39;)</span>
+
+<span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_isxdigit</span>
 </code></pre></div>
 
 <p>Results:</p>
-<div class="codehilite"><pre><span></span><code>ISXDIGIT: 0123456789ABCDEFabcdef
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;</span><span class="w"> </span><span class="nv">basics</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="nv">T</span><span class="w"> </span><span class="nv">F</span>
+<span class="o">&gt;</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="nv">elemental</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="nv">T</span><span class="w"> </span><span class="nv">T</span><span class="w"> </span><span class="nv">F</span><span class="w"> </span><span class="nv">T</span><span class="w"> </span><span class="nv">T</span><span class="w"> </span><span class="nv">F</span>
+<span class="o">&gt;</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="nv">print</span><span class="w"> </span><span class="nv">all</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">hexadecimal</span><span class="w"> </span><span class="nv">digit</span><span class="w"> </span><span class="nv">characters</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="mi">0123456789</span><span class="nv">ABCDEFabcdef</span>
+<span class="o">&gt;</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="nv">strings</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nv">false</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">any</span><span class="w"> </span><span class="nv">character</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">set</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="nv">T</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="nv">F</span>
 </code></pre></div>
 
 <h2 id="author">AUTHOR</h2>
@@ -300,7 +328,7 @@
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2026-08-15 16:12 +0000             </p>
+ on 2026-08-16 02:02 +0000             </p>
           </div>
         </div>
         <br>

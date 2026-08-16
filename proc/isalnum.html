@@ -172,7 +172,7 @@ subsets of ASCII set
 functions are defined by
 
  elemental function FUNCNAME(onechar)
- character,intent(in) :: onechar
+ character(len=*),intent(in) :: onechar
  logical              :: FUNC_NAME
 </code></pre></div>
 
@@ -207,33 +207,37 @@ functions are defined by
 
 <h2 id="examples">EXAMPLES</h2>
 <p>Sample Program:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">program</span><span class="w"> </span><span class="nx">demo_isdigit</span>
+<div class="codehilite"><pre><span></span><code><span class="nx">program</span><span class="w"> </span><span class="nx">demo_isalnum</span>
 
-<span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">M_strings</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">isdigit</span><span class="p">,</span><span class="w"> </span><span class="nx">isspace</span><span class="p">,</span><span class="w"> </span><span class="nx">switch</span>
-<span class="w"> </span><span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
-<span class="w"> </span><span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="mi">10</span><span class="p">),</span><span class="nx">allocatable</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="kt">string</span><span class="p">(:)</span>
-<span class="w"> </span><span class="nx">integer</span><span class="w">                       </span><span class="o">::</span><span class="w"> </span><span class="nx">i</span>
-<span class="w">    </span><span class="kt">string</span><span class="p">=[</span><span class="o">&amp;</span>
-<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="err">&#39;</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="err">&#39;</span><span class="w"> </span><span class="p">,</span><span class="o">&amp;</span>
-<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">letters</span><span class="w">   </span><span class="err">&#39;</span><span class="w"> </span><span class="p">,</span><span class="o">&amp;</span>
-<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="err">&#39;</span><span class="mi">1234567890</span><span class="err">&#39;</span><span class="w"> </span><span class="p">,</span><span class="o">&amp;</span>
-<span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">both</span><span class="w"> </span><span class="mi">8787</span><span class="w"> </span><span class="err">&#39;</span><span class="w"> </span><span class="p">]</span>
-<span class="w">    </span><span class="p">!</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">nothing</span><span class="w"> </span><span class="nx">but</span><span class="w"> </span><span class="nx">digits</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">whitespace</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">.</span><span class="kc">true</span><span class="p">.</span>
-<span class="w">    </span><span class="nx">do</span><span class="w"> </span><span class="nx">i</span><span class="p">=</span><span class="mi">1</span><span class="p">,</span><span class="nx">size</span><span class="p">(</span><span class="kt">string</span><span class="p">)</span>
-<span class="w">       </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">advance</span><span class="p">=</span><span class="err">&#39;</span><span class="nx">no</span><span class="sc">&#39;)&#39;</span><span class="nx">For</span><span class="w"> </span><span class="kt">string</span><span class="p">[</span><span class="err">&#39;</span><span class="c1">//string(i)//&#39;]&#39;</span>
-<span class="w">       </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span>
-<span class="w">       </span><span class="nx">all</span><span class="p">(</span><span class="nx">isdigit</span><span class="p">(</span><span class="nx">switch</span><span class="p">(</span><span class="kt">string</span><span class="p">(</span><span class="nx">i</span><span class="p">)))</span><span class="w"> </span><span class="p">.</span><span class="k">or</span><span class="p">.</span><span class="w"> </span><span class="o">&amp;</span>
-<span class="w">       </span><span class="o">&amp;</span><span class="w"> </span><span class="nx">isspace</span><span class="p">(</span><span class="nx">switch</span><span class="p">(</span><span class="kt">string</span><span class="p">(</span><span class="nx">i</span><span class="p">))))</span>
-<span class="w">    </span><span class="nx">enddo</span>
+<span class="nx">use</span><span class="w"> </span><span class="nx">M_strings</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">isalnum</span><span class="p">,</span><span class="w"> </span><span class="nx">isspace</span><span class="p">,</span><span class="w"> </span><span class="nx">switch</span>
+<span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
+<span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="mi">10</span><span class="p">),</span><span class="nx">allocatable</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="kt">string</span><span class="p">(:)</span>
+<span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="mi">1</span><span class="p">),</span><span class="nx">allocatable</span><span class="w">  </span><span class="o">::</span><span class="w"> </span><span class="nx">letters</span><span class="p">(:)</span>
+<span class="nx">integer</span><span class="w">                       </span><span class="o">::</span><span class="w"> </span><span class="nx">i</span>
+<span class="w">   </span><span class="kt">string</span><span class="p">=[</span><span class="o">&amp;</span>
+<span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="err">&#39;</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="err">&#39;</span><span class="w"> </span><span class="p">,</span><span class="o">&amp;</span>
+<span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">letters</span><span class="w">   </span><span class="err">&#39;</span><span class="w"> </span><span class="p">,</span><span class="o">&amp;</span>
+<span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="err">&#39;</span><span class="mi">1234567890</span><span class="err">&#39;</span><span class="w"> </span><span class="p">,</span><span class="o">&amp;</span>
+<span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="err">&#39;</span><span class="p">&lt;</span><span class="mi">02468</span><span class="p">&gt;</span><span class="w">   </span><span class="err">&#39;</span><span class="w"> </span><span class="p">,</span><span class="o">&amp;</span>
+<span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">has</span><span class="w"> </span><span class="nx">dot</span><span class="p">.</span><span class="w">  </span><span class="err">&#39;</span><span class="w"> </span><span class="p">,</span><span class="o">&amp;</span>
+<span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">both</span><span class="w"> </span><span class="mi">8787</span><span class="w"> </span><span class="err">&#39;</span><span class="w"> </span><span class="p">]</span>
+<span class="w">   </span><span class="p">!</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">all</span><span class="w"> </span><span class="nx">letters</span><span class="p">,</span><span class="w"> </span><span class="nx">digits</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">whitespace</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">.</span><span class="kc">true</span><span class="p">.</span>
+<span class="w">   </span><span class="nx">do</span><span class="w"> </span><span class="nx">i</span><span class="p">=</span><span class="mi">1</span><span class="p">,</span><span class="nx">size</span><span class="p">(</span><span class="kt">string</span><span class="p">)</span>
+<span class="w">      </span><span class="nx">letters</span><span class="p">=</span><span class="nx">switch</span><span class="p">(</span><span class="kt">string</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span>
+<span class="w">      </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="err">&#39;</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="nx">g0</span><span class="p">))</span><span class="err">&#39;</span><span class="p">)</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">For</span><span class="w"> </span><span class="kt">string</span><span class="p">[</span><span class="err">&#39;</span><span class="c1">//string(i)//&#39;] &#39;, &amp;</span>
+<span class="w">         </span><span class="nx">all</span><span class="p">(</span><span class="w"> </span><span class="nx">isalnum</span><span class="p">(</span><span class="nx">letters</span><span class="p">)</span><span class="w"> </span><span class="p">.</span><span class="k">or</span><span class="p">.</span><span class="w"> </span><span class="nx">isspace</span><span class="p">(</span><span class="nx">letters</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">   </span><span class="nx">enddo</span>
 
-<span class="w"> </span><span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_isdigit</span>
+<span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_isalnum</span>
 </code></pre></div>
 
 <p>Expected output:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">For</span><span class="w"> </span><span class="nv">string</span>[<span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span>]<span class="w"> </span><span class="nv">T</span>
-<span class="k">For</span><span class="w"> </span><span class="nv">string</span>[<span class="nv">letters</span><span class="w">   </span>]<span class="w"> </span><span class="nv">F</span>
-<span class="k">For</span><span class="w"> </span><span class="nv">string</span>[<span class="mi">1234567890</span>]<span class="w"> </span><span class="nv">T</span>
-<span class="k">For</span><span class="w"> </span><span class="nv">string</span>[<span class="nv">both</span><span class="w"> </span><span class="mi">8787</span><span class="w"> </span>]<span class="w"> </span><span class="nv">F</span>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;</span><span class="w"> </span><span class="k">For</span><span class="w"> </span><span class="nv">string</span>[<span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span>]<span class="w"> </span><span class="nv">T</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="k">For</span><span class="w"> </span><span class="nv">string</span>[<span class="nv">letters</span><span class="w">   </span>]<span class="w"> </span><span class="nv">T</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="k">For</span><span class="w"> </span><span class="nv">string</span>[<span class="mi">1234567890</span>]<span class="w"> </span><span class="nv">T</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="k">For</span><span class="w"> </span><span class="nv">string</span>[<span class="o">&lt;</span><span class="mi">02468</span><span class="o">&gt;</span><span class="w">   </span>]<span class="w"> </span><span class="nv">F</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="k">For</span><span class="w"> </span><span class="nv">string</span>[<span class="nv">has</span><span class="w"> </span><span class="nv">dot</span>.<span class="w">  </span>]<span class="w"> </span><span class="nv">F</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="k">For</span><span class="w"> </span><span class="nv">string</span>[<span class="nv">both</span><span class="w"> </span><span class="mi">8787</span><span class="w"> </span>]<span class="w"> </span><span class="nv">T</span>
 </code></pre></div>
 
 <h2 id="author">AUTHOR</h2>
@@ -297,7 +301,7 @@ functions are defined by
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="hl codehilite"><pre><span></span><span class="k">elemental function </span><span class="n">isalnum</span><span class="p">(</span><span class="n">onechar</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 
-<span class="c">! ident_82=&quot;@(#) M_strings isalnum(3f) returns true if character is a letter (a-z A-Z) or digit(0-9)&quot;</span>
+<span class="c">! ident_81=&quot;@(#) M_strings isalnum(3f) returns true if character is a letter (a-z A-Z) or digit(0-9)&quot;</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">onechar</span>
 <span class="kt">logical</span><span class="w">                     </span><span class="kd">::</span><span class="w"> </span><span class="n">res</span>
@@ -336,7 +340,7 @@ functions are defined by
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2026-08-15 16:12 +0000             </p>
+ on 2026-08-16 02:02 +0000             </p>
           </div>
         </div>
         <br>
