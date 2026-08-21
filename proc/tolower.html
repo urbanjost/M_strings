@@ -174,7 +174,7 @@ specified range
 
 <h2 id="description">DESCRIPTION</h2>
 <div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="k">tolower</span><span class="ss">(</span><span class="nv">str</span><span class="ss">)</span><span class="w"> </span><span class="nv">returns</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">copy</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">ASCII</span><span class="w"> </span><span class="nv">character</span><span class="w"> </span><span class="nv">array</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">all</span>
-<span class="w">  </span><span class="nv">characters</span><span class="w"> </span><span class="nv">converted</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">miniscule</span><span class="w"> </span><span class="ss">(</span><span class="nv">ie</span>.<span class="w"> </span><span class="s2">&quot;lowercase&quot;</span><span class="ss">)</span>
+<span class="w">  </span><span class="nv">characters</span><span class="w"> </span><span class="nv">converted</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">miniscule</span><span class="w"> </span><span class="ss">(</span><span class="nv">ie</span>.<span class="w"> </span><span class="s2">"lowercase"</span><span class="ss">)</span>
 </code></pre></div>
 
 <h2 id="options">OPTIONS</h2>
@@ -193,9 +193,9 @@ specified range
 <span class="w">   </span><span class="nx">use</span><span class="w"> </span><span class="nx">M_strings__chars</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="p">:</span><span class="w"> </span><span class="nx">tolower</span>
 <span class="w">   </span><span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
 <span class="w">   </span><span class="nx">character</span><span class="p">(</span><span class="nx">len</span><span class="p">=</span><span class="mi">1</span><span class="p">),</span><span class="nx">allocatable</span><span class="w">  </span><span class="o">::</span><span class="w"> </span><span class="nx">s</span><span class="p">(:)</span>
-<span class="w">      </span><span class="nx">s</span><span class="p">=</span><span class="nx">transfer</span><span class="p">(</span><span class="err">&#39;</span><span class="w"> </span><span class="nx">ABCDEFG</span><span class="w"> </span><span class="nx">abcdefg</span><span class="w"> </span><span class="sc">&#39;,&#39;</span><span class="nx">A</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">size</span><span class="p">=</span><span class="mi">17</span><span class="p">)</span>
-<span class="w">      </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">mixed</span><span class="o">-</span><span class="k">case</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">...</span><span class="p">.</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">s</span>
-<span class="w">      </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">lower</span><span class="o">-</span><span class="k">case</span><span class="w"> </span><span class="nx">output</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">...</span><span class="err">&#39;</span><span class="p">,</span><span class="nx">tolower</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+<span class="w">      </span><span class="nx">s</span><span class="p">=</span><span class="nx">transfer</span><span class="p">(</span><span class="err">'</span><span class="w"> </span><span class="nx">ABCDEFG</span><span class="w"> </span><span class="nx">abcdefg</span><span class="w"> </span><span class="sc">','</span><span class="nx">A</span><span class="err">'</span><span class="p">,</span><span class="nx">size</span><span class="p">=</span><span class="mi">17</span><span class="p">)</span>
+<span class="w">      </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="err">'</span><span class="nx">mixed</span><span class="o">-</span><span class="k">case</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">...</span><span class="p">.</span><span class="err">'</span><span class="p">,</span><span class="nx">s</span>
+<span class="w">      </span><span class="nx">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="err">'</span><span class="nx">lower</span><span class="o">-</span><span class="k">case</span><span class="w"> </span><span class="nx">output</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">...</span><span class="err">'</span><span class="p">,</span><span class="nx">tolower</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
 <span class="w">   </span><span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_tolower</span>
 </code></pre></div>
 
@@ -221,7 +221,7 @@ specified range
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-str~2"></span>
+              <span class="anchor" id="variable-str~23"></span>
               character(len=1),
             </td>
 <td>intent(in)</td>
@@ -239,7 +239,7 @@ specified range
 
       <h3>Return Value
         <small>
-          <span class="anchor" id="variable-string~2"></span>
+          <span class="anchor" id="variable-string~37"></span>
           character(len=1), (size(str))
         </small>
       </h3>
@@ -260,7 +260,7 @@ specified range
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="hl codehilite"><pre><span></span><span class="k">pure function </span><span class="n">tolower</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
 
-<span class="c">! ident_3=&quot;@(#) M_strings__chars tolower(3f) returns copy of input array accept uppercase letters are converted to lowercase characters&quot;</span>
+<span class="c">! ident_3="@(#) M_strings__chars tolower(3f) returns copy of input array accept uppercase letters are converted to lowercase characters"</span>
 
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">str</span><span class="p">(:)</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">string</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">str</span><span class="p">))</span>
@@ -291,7 +291,7 @@ specified range
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2026-08-16 02:02 +0000             </p>
+ on 2026-08-21 00:17 +0000             </p>
           </div>
         </div>
         <br>
