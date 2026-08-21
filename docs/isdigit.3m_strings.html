@@ -81,7 +81,7 @@ digit (0,1,&#46;&#46;&#46;,9) and .false. otherwise
 elemental function isdigit(onechar)
 <P>
 <PRE>
-    character,intent(in) :: onechar
+    character(len=*),intent(in) :: onechar
     logical              :: isdigit
 <P>
 </PRE>
@@ -116,14 +116,16 @@ character to test
 <TABLE cellpadding=3>
 <TR valign=top><TD colspan=2>
 <B>isdigit</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-logical value returns true if character is a "digit"
-<TABLE width=100% cellpadding=3><!-- tsb: logical value returns true if character is a "digit"
+Returns true logical value if character is a "digit"
+<TABLE width=100% cellpadding=3><!-- tsb: Returns true logical value if character is a "digit"
  -->
 <TR></TR><TR></TR>
 <TR valign=top><TD colspan=2>
 <B>( an ASCII-7</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
 character from the set {0,1,..,9}).
 That is, from CHAR(48) to CHAR(57) inclusive.
+If a multi-byte string was input .false. is returned if any
+character is not a digit. A null string returns .false.
 </TD></TR>
 <TR></TR></TABLE></TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
@@ -137,33 +139,56 @@ That is, from CHAR(48) to CHAR(57) inclusive.
 Sample Program:
 <P>
 <PRE>
-    program demo_isdigit
-    use M_strings, only : isdigit, isspace, switch
-    implicit none
-    character(len=10),allocatable :: string(:)
-    integer                       :: i
-       string=[&
-       & &#146;1 2 3 4 5 &#146; ,&
-       & &#146;letters   &#146; ,&
-       & &#146;1234567890&#146; ,&
-       & &#146;both 8787 &#146; ]
-       ! if string is nothing but digits and whitespace return .true.
-       do i=1,size(string)
-          write(*,&#146;(a)&#146;,advance=&#146;no&#146;)&#146;For string[&#146;//string(i)//&#146;]&#146;
-          write(*,*) &
-           & all(isdigit(switch(string(i))).or.&
-           & isspace(switch(string(i))))
-       enddo
-    end program demo_isdigit
+   program demo_isdigit
+<P>
+   use M_strings, only : isdigit, isspace, switch
+   implicit none
+   character(len=10),allocatable :: string(:)
+   character(len=1),allocatable  :: chars(:)
+   character(len=*),parameter    :: g=&#146;(*(g0,1x))&#146;
+   integer                       :: i
+<P>
+      string=[&
+      & &#146;1 2 3 4 5 &#146; ,&
+      & &#146;letters   &#146; ,&
+      & &#146;1234567890&#146; ,&
+      & &#146;both 8787 &#146; ]
+<P>
+      ! if string is nothing but digits and whitespace return .true.
+<P>
+      print g,&#146;using ISDIGIT(3) and ISSPACE(3):&#146;
+      do i=1,size(string)
+         ! convert to array of single characters
+         chars=switch(string(i))
+         print g, &#146;For string[&#146;,string(i),&#146;]&#146;, &
+         & all( isdigit(chars) .or. isspace(chars) )
+      enddo
+<P>
+      ! ALTERNATIVE using VERIFY(3)
+      ! the Fortran intrinsic function VERIFY(3) returns a position just
+      ! not a logical like C, which can be useful for complex comparisons
+      print g,&#146;using VERIFY(3):&#146;
+      do i=1,size(string)
+         print g, &#146;For string[&#146;,string(i),&#146;]&#146;, &
+         & verify(string(i), "01234567890 ") == 0
+      enddo
+<P>
+   end program demo_isdigit
 <P>
 </PRE>
 Expected output:
 <P>
 <PRE>
-       For string[1 2 3 4 5 ] T
-       For string[letters   ] F
-       For string[1234567890] T
-       For string[both 8787 ] F
+   &gt; using ISDIGIT(3) and ISSPACE(3):
+   &gt; For string[ 1 2 3 4 5  ] T
+   &gt; For string[ letters    ] F
+   &gt; For string[ 1234567890 ] T
+   &gt; For string[ both 8787  ] F
+   &gt; using VERIFY(3):
+   &gt; For string[ 1 2 3 4 5  ] T
+   &gt; For string[ letters    ] F
+   &gt; For string[ 1234567890 ] T
+   &gt; For string[ both 8787  ] F
 <P>
 </PRE>
 </BLOCKQUOTE>

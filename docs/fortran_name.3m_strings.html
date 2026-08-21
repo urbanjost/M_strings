@@ -119,8 +119,10 @@ trailing spaces are ignored.
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
 <B>LOUT</B> </TD><TD valign=bottom>
-a logical value indicating if the input string passed or failed
+A logical value indicating if the input string passed or failed
 the test to see if it is a valid Fortran name or not.
+If a multi-byte string was input .false. is returned if any
+character is not printable. A null string returns .false.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=5>

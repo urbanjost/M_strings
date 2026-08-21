@@ -81,7 +81,7 @@ blank character (space or horizontal tab).
 elemental function isblank(onechar)
 <P>
 <PRE>
-    character,intent(in) :: onechar
+    character(len=*),intent(in) :: onechar
     logical              :: isblank
 <P>
 </PRE>
@@ -116,13 +116,15 @@ character to test
 <TABLE cellpadding=3>
 <TR valign=top><TD colspan=2>
 <B>isblank</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-logical value returns true if character is a "blank"
-<TABLE width=100% cellpadding=3><!-- tsb: logical value returns true if character is a "blank"
+Returns true logical value if character is a "blank"
+<TABLE width=100% cellpadding=3><!-- tsb: Returns true logical value if character is a "blank"
  -->
 <TR></TR><TR></TR>
 <TR valign=top><TD colspan=2>
 <B>( an ASCII</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
 space or horizontal tab character).
+If a multi-byte string was input .false. is returned if any
+character is not blank. A null string returns .false.
 </TD></TR>
 <TR></TR></TABLE></TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
@@ -135,14 +137,14 @@ space or horizontal tab character).
 Sample program:
 <P>
 <PRE>
-    program demo_isblank
-    use M_strings, only : isblank
-    implicit none
-    integer                    :: i
-    character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-       write(*,&#146;(*(g0,1x))&#146;)&#146;ISBLANK: &#146;,&
-       & iachar(pack( string, isblank(string) ))
-    end program demo_isblank
+   program demo_isblank
+   use M_strings, only : isblank
+   implicit none
+   integer                    :: i
+   character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
+      write(*,&#146;(*(g0,1x))&#146;)&#146;ISBLANK: &#146;,&
+      & iachar(pack( string, isblank(string) ))
+   end program demo_isblank
 <P>
 </PRE>
 Results:

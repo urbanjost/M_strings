@@ -81,7 +81,7 @@ miniscule letter (a-z)
 elemental function islower(onechar)
 <P>
 <PRE>
-    character,intent(in) :: onechar
+    character(len=*),intent(in) :: onechar
     logical              :: islower
 <P>
 </PRE>
@@ -115,8 +115,10 @@ character to test
 <TABLE cellpadding=3>
 <TR valign=top><TD colspan=2>
 <B>islower</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-logical value returns true if character is a lowercase
-ASCII character else false.
+Returns true logical value if character is a lowercase
+ASCII character else false. If a multi-byte string was
+input .false. is returned if any character is not lowercase
+ASCII. A null string returns .false.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=5>

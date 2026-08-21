@@ -81,7 +81,7 @@ delete character or ordinary control character
 elemental function iscntrl(onechar)
 <P>
 <PRE>
-    character,intent(in) :: onechar
+    character(len=*),intent(in) :: onechar
     logical              :: iscntrl
 <P>
 </PRE>
@@ -116,8 +116,17 @@ character to test
 <TABLE cellpadding=3>
 <TR valign=top><TD colspan=2>
 <B>iscntrl</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-logical value returns true if character is a control character
+returns true logical value if character is a control
+<TABLE width=100% cellpadding=3><!-- tsb: returns true logical value if character is a control
+ -->
+<TR></TR><TR></TR>
+<TR valign=top><TD colspan=2>
+<B>character.</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+If a multi-byte string was input .false. is
+returned if any character is not a control character. A null
+string returns .false.
 </TD></TR>
+<TR></TR></TABLE></TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=5>
 
@@ -128,14 +137,14 @@ logical value returns true if character is a control character
 Sample program
 <P>
 <PRE>
-    program demo_iscntrl
-    use M_strings, only : iscntrl
-    implicit none
-    integer                    :: i
-    character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
-       write(*,&#146;(20(g0,1x))&#146;)&#146;ISCNTRL: &#146;, &
-       & iachar(pack( string, iscntrl(string) ))
-    end program demo_iscntrl
+   program demo_iscntrl
+   use M_strings, only : iscntrl
+   implicit none
+   integer                    :: i
+   character(len=1),parameter :: string(*)=[(char(i),i=0,127)]
+      write(*,&#146;(20(g0,1x))&#146;)&#146;ISCNTRL: &#146;, &
+      & iachar(pack( string, iscntrl(string) ))
+   end program demo_iscntrl
 <P>
 </PRE>
 Results:

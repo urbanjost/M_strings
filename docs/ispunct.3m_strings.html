@@ -81,7 +81,7 @@ printable punctuation character
 elemental function ispunct(onechar)
 <P>
 <PRE>
-    character,intent(in) :: onechar
+    character(len=*),intent(in) :: onechar
     logical              :: ispunct
 <P>
 </PRE>
@@ -116,8 +116,10 @@ character to test
 <TABLE cellpadding=3>
 <TR valign=top><TD colspan=2>
 <B>ispunct</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-logical value returns true if character is a printable
-punctuation character.
+Returns true logical value if character is a printable
+punctuation character. If a multi-byte string was input
+[char46]false. is returned if any character is not a printable
+punctuation character. A null string returns .false.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=5>

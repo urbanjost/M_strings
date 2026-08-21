@@ -249,9 +249,9 @@ Example program
 <P>
       allpassed= test(&#146;abcdefghijk&#146; ,  &#146;?b*&#146;,     .true.)  .and. allpassed
       allpassed= test(&#146;abcdefghijk&#146; ,  &#146;*c*&#146;,     .true.)  .and. allpassed
-      allpassed= test(&#146;abcdefghijk&#146; ,  &#146;*c&#146;,      .false.) .and.  allpassed
+      allpassed= test(&#146;abcdefghijk&#146; ,  &#146;*c&#146;,      .false.) .and. allpassed
       allpassed= test(&#146;abcdefghijk&#146; ,  &#146;*c*k&#146;,    .true.)  .and. allpassed
-      allpassed= test(&#146;LS&#146;          ,  &#146;?OW&#146;,     .false.) .and.  allpassed
+      allpassed= test(&#146;LS&#146;          ,  &#146;?OW&#146;,     .false.) .and. allpassed
       allpassed= test(&#146;teztit&#146;      ,  &#146;tez*t*t&#146;, .true.)  .and. allpassed
         ! Two pattern match problems that might pose difficulties
       allpassed= test(&#146;e &#146;           , &#146;*e* &#146;,      .true.) .and. allpassed
@@ -261,7 +261,7 @@ Example program
       allpassed= test(&#146;baaaaa&#146;       , &#146;b*ax&#146;,      .false.) .and. allpassed
       allpassed= test(&#146;baaaaax&#146;      , &#146;b*a&#146;,       .false.) .and. allpassed
       allpassed= test(&#146;&#146;             , &#146;b*&#146;,        .false.) .and. allpassed
-      allpassed= test(&#146;&#146;             , &#146;*&#146;,         .true.) .and.  allpassed
+      allpassed= test(&#146;&#146;             , &#146;*&#146;,         .true.)  .and. allpassed
       allpassed= test(&#146;b&#146;            , &#146;&#146;,          .false.) .and. allpassed
       allpassed= test(&#146;3&#146;            , &#146;??&#146;,        .false.) .and. allpassed
       ! known flaws

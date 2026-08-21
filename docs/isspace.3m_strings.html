@@ -81,7 +81,7 @@ null, space, tab, carriage return, new line, vertical tab, or formfeed
 elemental function isspace(onechar)
 <P>
 <PRE>
-    character,intent(in) :: onechar
+    character(len=*),intent(in) :: onechar
     logical              :: isspace
 <P>
 </PRE>
@@ -116,7 +116,9 @@ character to test
 <TABLE cellpadding=3>
 <TR valign=top><TD colspan=2>
 <B>isspace</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-returns true if character is ASCII white space
+Returns true if character is ASCII white space.
+If a multi-byte string was input .false. is returned if any
+character is not whitespace. A null string returns .false.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=5>

@@ -79,12 +79,12 @@ find_field(3f) - [M_strings:TOKENS] parse a string into tokens
 subroutine find_field (string, field, position, delims, delim, found)
 <P>
 <PRE>
-    character*(*),intent(in)           :: string
-    character*(*),intent(out)          :: field
-    integer,optional,intent(inout)     :: position
-    character*(*),optional,intent(in)  :: delims
-    character*(*),optional,intent(out) :: delim
-    logical,optional,intent(out)       :: found
+    character(len=*),intent(in)           :: string
+    character(len=*),intent(out)          :: field
+    integer,optional,intent(inout)        :: position
+    character(len=*),optional,intent(in)  :: delims
+    character(len=*),optional,intent(out) :: delim
+    logical,optional,intent(out)          :: found
 <P>
 </PRE>
 </BLOCKQUOTE>
