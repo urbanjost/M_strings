@@ -100,6 +100,9 @@ Given a LINE of structure " par1 par2 par3 &#46;&#46;&#46; parn "
 store each par(n) into a separate variable in ARRAY (UNLESS
 ARRAY(1) == &#146;#N#&#146;)
 <P>
+This routine predates Fortran90. For versions using optional parameters
+and allocatable arrays see split(3f) and slice(3f).
+<P>
 Also set ICOUNT to number of elements of array initialized, and
 return beginning and ending positions for each element in IBEGIN(N)
 and ITERM(N).
@@ -111,9 +114,6 @@ No quoting or escaping of delimiter is allowed, so the delimiter
 character can not be placed in a token.
 <P>
 No checking for more than N parameters; If any more they are ignored.
-<P>
-This routine originates pre-Fortran90. A version using optional parameters
-and allocatable arrays is on the TODO list.
 </BLOCKQUOTE>
 <A name=3>
 

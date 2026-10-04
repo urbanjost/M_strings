@@ -1,29 +1,5 @@
 !-----------------------------------------------------------------------------------------------------------------------------------
-#define  __INTEL_COMP        1
-#define  __GFORTRAN_COMP     2
-#define  __NVIDIA_COMP       3
-#define  __NAG_COMP          4
-#define  __LLVM_FLANG_COMP   5
-#define  __UNKNOWN_COMP   9999
-
-#define FLOAT128
-
-#ifdef __INTEL_COMPILER
-#   define __COMPILER__ __INTEL_COMP
-#elif __GFORTRAN__ == 1
-#   define __COMPILER__ __GFORTRAN_COMP
-#elif __flang__
-#   undef FLOAT128
-#   warning  NOTE: REAL128 not supported
-#   define __COMPILER__ __LLVM_FLANG_COMP
-#elif __NVCOMPILER
-#   undef FLOAT128
-#   warning  NOTE: REAL128 not supported
-#   define __COMPILER__ __NVIDIA_COMP
-#else
-#   define __COMPILER__ __UNKNOWN_COMP
-#   warning  NOTE: UNKNOWN COMPILER
-#endif
+#include "define_compiler.inc"
 !-----------------------------------------------------------------------------------------------------------------------------------
 !>
 !!##NAME
@@ -43,8 +19,8 @@
 !!
 !!  public entities:
 !!
-!!      use M_strings,only : split, slice, sep, delim, chomp, strtok
-!!      use M_strings,only : split2020, find_field
+!!      use M_strings,only : split, slice, sep, delim, chomp, strtok, &
+!!                         & split2020, find_field
 !!      use M_strings,only : substitute, change, modif, transliterate, &
 !!                         & reverse, squeeze
 !!      use M_strings,only : replace, join
@@ -84,8 +60,6 @@
 !!       sep     function interface to split(3f)
 !!       slice   subroutine parses string using specified delimiter characters
 !!               and stores beginning and ending positions in arrays
-!!       delim   subroutine parses string using specified delimiter characters
-!!               and store tokens into an array and records beginning and end
 !!       chomp   function consumes input line as it returns next token in a
 !!               string using specified delimiters
 !!       paragraph    convert a string into a paragraph
@@ -96,6 +70,11 @@
 !!       split2020   split a string using prototype of proposed standard
 !!                   procedure
 !!       find_field  parse a string into tokens
+!!
+!!       DEPRECATED
+!!
+!!       delim   subroutine parses string using specified delimiter characters
+!!               and store tokens into an array and records beginning and end
 !!
 !!   EDITING
 !!
@@ -1901,6 +1880,9 @@ end function chomp
 !!      store each par(n) into a separate variable in ARRAY (UNLESS
 !!      ARRAY(1) == '#N#')
 !!
+!!      This routine predates Fortran90. For versions using optional parameters
+!!      and allocatable arrays see split(3f) and slice(3f).
+!!
 !!      Also set ICOUNT to number of elements of array initialized, and
 !!      return beginning and ending positions for each element in IBEGIN(N)
 !!      and ITERM(N).
@@ -1913,8 +1895,6 @@ end function chomp
 !!
 !!      No checking for more than N parameters; If any more they are ignored.
 !!
-!!      This routine originates pre-Fortran90. A version using optional parameters
-!!      and allocatable arrays is on the TODO list.
 !!
 !!##OPTIONS
 !!    LINE       input string to parse into tokens
@@ -4958,11 +4938,23 @@ pure function a2s(array)  result (string)
 character(len=1),intent(in) :: array(:)
 character(len=SIZE(array))  :: string
 integer                     :: i
+#define A2S 0
 ! ----------------------------------------------------------------------------------------------------------------------------------
+#if A2S == 1
    forall( i = 1:size(array)) string(i:i) = array(i)
 ! ----------------------------------------------------------------------------------------------------------------------------------
-!  string=transfer(array,string)
-!  string=transfer(array,mold=string)
+#elif A25 == 2
+   string=transfer(array,string)
+! ----------------------------------------------------------------------------------------------------------------------------------
+#elif A25 == 3
+   string=transfer(array,mold=string)
+! ----------------------------------------------------------------------------------------------------------------------------------
+#else
+   do concurrent (i = 1:size(array))
+      string(i:i) = array(i)
+   enddo
+! ----------------------------------------------------------------------------------------------------------------------------------
+#endif
 end function a2s
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
@@ -5020,13 +5012,20 @@ pure function s2a(string)  RESULT (array)
 character(len=*),intent(in) :: string
 character(len=1)            :: array(len(string))
 integer                     :: i
-! ----------------------------------------------------------------------------------------------------------------------------------
+#define S2A 0
+#if S2A == 1
    forall(i=1:len(string)) array(i) = string(i:i)
-! ----------------------------------------------------------------------------------------------------------------------------------
-!  array=transfer(string,array)
-!  array=transfer(string,mold='a',size=len(string))
+#elif S2A == 2
+   array=transfer(string,array)
+#elif S2A == 3
+   array=transfer(string,mold='a',size=len(string))
+#else
+   do concurrent (i = 1:len(string))
+      array(i) = string(i:i)
+   enddo
+#endif
 end function s2a
-!===================================================================================================================================
+
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
 !>
@@ -7241,6 +7240,7 @@ end function noesc
 !!    be a binary, hexadecimal, or octal value. If the string contains
 !!    commas they are removed. If the string is of the form NN:MMM... or
 !!    NN#MMM then NN is assumed to be the base of the whole number.
+!!    Hexadecimal values may begin with "H" or "U" instead of "Z".
 !!
 !!    If an error occurs in the READ, IOSTAT is returned in IERR and
 !!    value is set to zero. if no error occurs, IERR=0.
@@ -7260,12 +7260,23 @@ end function noesc
 !!    program demo_string_to_value
 !!     use M_strings, only: string_to_value
 !!     implicit none
-!!     real              :: value
-!!     integer           :: ierr
-!!     character(len=80) :: string
-!!        string=' -40.5e-2 '
-!!        call string_to_value(string,value,ierr)
-!!        write(*,*) 'value of string ['//trim(string)//'] is ',value
+!!     real                          :: value
+!!     integer                       :: i
+!!     integer                       :: ierr
+!!     character(len=80),allocatable :: string(:)
+!!        string=[character(len=80) :: &
+!!                ' -40.5e-2 ',&
+!!                'U+FF      ',&
+!!                '16#ff     ',&
+!!                'zFF       ',&
+!!                '255       ',&
+!!                'hFF       ',&
+!!                'oFF       ']
+!!
+!!        do i=1,size(string)
+!!           call string_to_value(string(i),value,ierr)
+!!           write(*,*) 'value of string ['//trim(string(i))//'] is ',value
+!!        enddo
 !!    end program demo_string_to_value
 !!
 !!##AUTHOR
@@ -7357,7 +7368,7 @@ character(len=3),save        :: nan_string='NaN'
       endif
    else
       select case(local_chars(1:1))
-      case('z','Z','h','H')                                     ! assume hexadecimal
+      case('z','Z','h','H','u','U')                             ! assume hexadecimal
          frmt='(Z'//v2s(len(local_chars))//')'
          read(local_chars(2:),frmt,iostat=ierr,iomsg=iomsg)intg
          valu=dble(intg)
@@ -12246,27 +12257,28 @@ end function fmt
 !!##OPTIONS
 !!    STRING     The string input.
 !!
-!!    FIELD      The returned field. Blank if no field found.
+!!    FIELD     The returned field. Blank if no field found.
 !!
-!!    POSITION   On entry, the starting position for searching for the field.
-!!               Default is 1 if the argument is not present.
-!!               On exit, the starting position of the next field or
-!!               len(string)+1 if there is no following field.
+!!    POSITION  On entry, the starting position for searching for the field.
+!!              Default is 1 if the argument is not present.
+!!              On exit, the starting position of the next field or
+!!              len(string)+1 if there is no following field.
 !!
-!!    DELIMS     String containing the characters to be accepted as delimiters.
-!!               If this includes a blank character, then leading blanks are
-!!               removed from the returned field and the end delimiter may
-!!               optionally be preceded by blanks. If this argument is
-!!               not present, the default delimiter set is a blank.
+!!    DELIMS    String containing the characters to be accepted as delimiters.
+!!              If this includes a blank character, then leading blanks are
+!!              removed from the returned field and the end delimiter may
+!!              optionally be preceded by blanks. If this argument is
+!!              not present, the default delimiter set is a blank.
 !!
-!!    DELIM      Returns the actual delimiter that terminated the field.
-!!               Returns char(0) if the field was terminated by the end of
-!!               the string or if no field was found.
-!!               If blank is in delimiters and the field was terminated
-!!               by one or more blanks, followed by a non-blank delimiter,
-!!               the non-blank delimiter is returned.
+!!    DELIM     Returns the actual delimiter that terminated the field.
+!!              Returns char(0) if the field was terminated by the end of
+!!              the string or if no field was found.
 !!
-!!    FOUND      True if a field was found.
+!!              If blank is in delimiters and the field was terminated
+!!              by one or more blanks, followed by a non-blank delimiter,
+!!              the non-blank delimiter is returned.
+!!
+!!    FOUND     True if a field was found.
 !!
 !!##EXAMPLES
 !!
@@ -12550,7 +12562,7 @@ end subroutine find_field
 !!
 !! Sample of uses
 !!
-!!    program demo_sort2020
+!!    program demo_split2020
 !!    use M_strings, only : split2020
 !!    implicit none
 !!    character(len=*),parameter :: gen='(*("[",g0,"]":,","))'
@@ -12560,12 +12572,31 @@ end subroutine find_field
 !!       character (len=:), allocatable :: string
 !!       character (len=:), allocatable :: tokens(:)
 !!       character (len=*),parameter    :: set = " ,"
+!!
+!!     !basics
+!!
+!!       call basics('')
+!!       call basics(' ')
+!!       call basics('  ')
+!!       call basics('G')
+!!       call basics('     G')
+!!       call basics('     G    ')
+!!       call basics('     G    e   ')
+!!       call basics('G    e')
+!!
+!!     ! assigns the value ['first ','second','third ' ] to TOKENS
 !!       string = 'first,second,third'
 !!       call split2020(string, set, tokens )
 !!       write(*,gen)tokens
 !!
-!!     ! assigns the value ['first ','second','third ' ]
-!!     ! to TOKENS.
+!!       string =    'first,second,,fourth'
+!!       call split2020(string, set, tokens )
+!!       write(*,gen)tokens
+!!
+!!       string =    'first,second,,,fifth'
+!!       call split2020(string, set, tokens )
+!!       write(*,gen)tokens
+!!
 !!     endblock
 !!
 !!     ! Execution of BOUNDS form
@@ -12574,7 +12605,7 @@ end subroutine find_field
 !!       character (len=:), allocatable :: string
 !!       character (len=*),parameter    :: set = " ,"
 !!       integer, allocatable           :: first(:), last(:)
-!!       string =    'first,second,,forth'
+!!       string =    'first,second,,fourth'
 !!       call split2020 (string, set, first, last)
 !!       write(*,gen)first
 !!       write(*,gen)last
@@ -12598,7 +12629,14 @@ end subroutine find_field
 !!         endif
 !!       enddo
 !!     endblock
-!!    end program demo_sort2020
+!!    contains
+!!    subroutine basics(string)
+!!    character(len=*),intent(in)  :: string
+!!    character(len=:),allocatable :: tokens(:)
+!!       call split2020(string,' ', tokens )
+!!       write(*,gen)string,tokens
+!!    end subroutine basics
+!!    end program demo_split2020
 !!
 !!   Results:
 !!
@@ -12625,10 +12663,12 @@ end subroutine find_field
 !!
 !!##VERSION
 !!    version 0.1.0, copyright 2020, Milan Curcic
-pure subroutine split_tokens(string, set, tokens, separator)
+! pure
+subroutine split_tokens(string, set, tokens, separator)
 ! Splits a string into tokens using characters in set as token delimiters.
 ! If present, separator contains the array of token delimiters.
 character(*), intent(in)                      :: string
+character(len=len(string))                    :: clone
 character(*), intent(in)                      :: set
 character(:), allocatable, intent(out)        :: tokens(:)
 character, allocatable, intent(out), optional :: separator(:)
@@ -12659,18 +12699,21 @@ integer                                       :: imax
 
   end subroutine split_tokens
 !===================================================================================================================================
-  pure subroutine split_first_last(string, set, first, last)
+! pure
+  subroutine split_first_last(string, set, first, last)
      ! Computes the first and last indices of tokens in input string, delimited
      ! by the characters in set, and stores them into first and last output
      ! arrays.
-    character(*), intent(in)          :: string
-    character(*), intent(in)          :: set
-    integer, allocatable, intent(out) :: first(:)
-    integer, allocatable, intent(out) :: last(:)
+    character(*), intent(in)            :: string
+    character(*), intent(in)            :: set
+    integer, allocatable, intent(out)   :: first(:)
+    integer, allocatable, intent(out)   :: last(:)
 
-    character                         :: set_array(len(set))
-    logical, dimension(len(string))   :: is_first, is_last, is_separator
-    integer                           :: n, slen
+    character                           :: set_array(len(set))
+    logical, dimension(0:len(string)+1) :: is_first, is_last, is_separator
+    integer                             :: i, n, slen
+    !D!character(len=*),parameter          :: g0='(*(g0))'
+    !D!character(len=*),parameter          :: g1='(*(g0,1x))'
 
     slen = len(string)
 
@@ -12678,31 +12721,47 @@ integer                                       :: imax
       set_array(n) = set(n:n)
     enddo
 
+    is_separator(0)=.true.
+    is_separator(slen+1)=.true.
+
     do concurrent (n = 1:slen)
       is_separator(n) = any(string(n:n) == set_array)
     enddo
+    !D!write(0,g0)'GOT HERE 1:STRING      :',string,':'
+    !D!write(0,g0)'GOT HERE 2:IS_SEPARATOR:',is_separator
 
-    is_first = .false.
-    is_last = .false.
+    is_first=.false.
+    is_first(0)=.true.
+    is_first(slen+1)=.true.
+    is_last=.false.
+    is_last(0)=.true.
+    is_last(slen+1)=.true.
 
-    if (.not. is_separator(1)) is_first(1) = .true.
-
-    do concurrent (n = 2:slen-1)
+    do concurrent (n = 1:slen)
       if (.not. is_separator(n)) then
-        if (is_separator(n - 1)) is_first(n) = .true.
-        if (is_separator(n + 1)) is_last(n) = .true.
-      else
-        if (is_separator(n - 1)) then
-          is_first(n) = .true.
-          is_last(n-1) = .true.
-        endif
+         if (is_separator(n - 1)) is_first(n) = .true.
+         if (is_separator(n + 1)) is_last(n) = .true.
+      endif
+      if ( is_separator(n))then
+         if (is_separator(n-1)) is_first(n) = .true.
+         if (is_separator(n-1)) is_last(n) = .true.
       endif
     enddo
+    !D!write(0,g0)'GOT HERE 3:IS_FIRST    :',is_first
+    !D!write(0,g0)'GOT HERE 4:IS_LAST     :',is_last
 
-    if (.not. is_separator(slen)) is_last(slen) = .true.
-
-    first = pack([(n, n = 1, slen)], is_first)
-    last = pack([(n, n = 1, slen)], is_last)
+    first = pack([(n, n = 1, slen)], is_first(1:slen))
+    last = pack([(n, n = 1, slen)], is_last(1:slen))
+    do i=1,size(last)
+       !D!write(0,g1)'GOT HERE 4:A:DELTA:',last(i)-first(i)
+       if(last(i)-first(i).eq.0)then
+          if(scan(string(first(i):last(i)),set).ne.0)then
+             last(i)=last(i)-1
+          endif
+       endif
+    enddo
+    !D!write(0,g1)'GOT HERE 5:FIRST    :',first
+    !D!write(0,g1)'GOT HERE 6:LAST     :',last
 
   end subroutine split_first_last
 !===================================================================================================================================
@@ -12753,7 +12812,8 @@ integer                                       :: imax
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
-pure function string_tokens(string, set) result(tokens)
+! pure
+function string_tokens(string, set) result(tokens)
 ! Splits a string into tokens using characters in set as token delimiters.
 character(*), intent(in)  :: string
 character(*), intent(in)  :: set

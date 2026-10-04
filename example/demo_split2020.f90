@@ -1,4 +1,4 @@
-     program demo_sort2020
+     program demo_split2020
      use M_strings, only : split2020
      implicit none
      character(len=*),parameter :: gen='(*("[",g0,"]":,","))'
@@ -8,12 +8,31 @@
         character (len=:), allocatable :: string
         character (len=:), allocatable :: tokens(:)
         character (len=*),parameter    :: set = " ,"
+
+      !basics
+
+        call basics('')
+        call basics(' ')
+        call basics('  ')
+        call basics('G')
+        call basics('     G')
+        call basics('     G    ')
+        call basics('     G    e   ')
+        call basics('G    e')
+
+      ! assigns the value ['first ','second','third ' ] to TOKENS
         string = 'first,second,third'
         call split2020(string, set, tokens )
         write(*,gen)tokens
 
-      ! assigns the value ['first ','second','third ' ]
-      ! to TOKENS.
+        string =    'first,second,,fourth'
+        call split2020(string, set, tokens )
+        write(*,gen)tokens
+
+        string =    'first,second,,,fifth'
+        call split2020(string, set, tokens )
+        write(*,gen)tokens
+
       endblock
 
       ! Execution of BOUNDS form
@@ -22,7 +41,7 @@
         character (len=:), allocatable :: string
         character (len=*),parameter    :: set = " ,"
         integer, allocatable           :: first(:), last(:)
-        string =    'first,second,,forth'
+        string =    'first,second,,fourth'
         call split2020 (string, set, first, last)
         write(*,gen)first
         write(*,gen)last
@@ -46,4 +65,11 @@
           endif
         enddo
       endblock
-     end program demo_sort2020
+     contains
+     subroutine basics(string)
+     character(len=*),intent(in)  :: string
+     character(len=:),allocatable :: tokens(:)
+        call split2020(string,' ', tokens )
+        write(*,gen)string,tokens
+     end subroutine basics
+     end program demo_split2020

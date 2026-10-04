@@ -92,8 +92,8 @@ interface to the M_strings module.
 public entities:
 <P>
 <PRE>
-     use M_strings,only : split, slice, sep, delim, chomp, strtok
-     use M_strings,only : split2020, find_field
+     use M_strings,only : split, slice, sep, delim, chomp, strtok, &
+                        & split2020, find_field
      use M_strings,only : substitute, change, modif, transliterate, &
                         & reverse, squeeze
      use M_strings,only : replace, join
@@ -150,11 +150,6 @@ subroutine parses string using specified delimiter characters
 and stores beginning and ending positions in arrays
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>delim</B> </TD><TD valign=bottom>
-subroutine parses string using specified delimiter characters
-and store tokens into an array and records beginning and end
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
 <B>chomp</B> </TD><TD valign=bottom>
 function consumes input line as it returns next token in a
 string using specified delimiters
@@ -183,6 +178,19 @@ procedure
 <TR valign=top><TD colspan=2>
 <B>find_field</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
 parse a string into tokens
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+<A name=>
+
+    <H4>&nbsp; &nbsp; DEPRECATED</H4>
+</A>
+<BLOCKQUOTE>
+<P>
+<TABLE cellpadding=3>
+<TR valign=top><TD width=6% nowrap>
+<B>delim</B> </TD><TD valign=bottom>
+subroutine parses string using specified delimiter characters
+and store tokens into an array and records beginning and end
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=>

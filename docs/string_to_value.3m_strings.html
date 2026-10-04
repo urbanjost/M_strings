@@ -100,6 +100,7 @@ and otherwise represents a positive whole number it is assumed to
 be a binary, hexadecimal, or octal value. If the string contains
 commas they are removed. If the string is of the form NN:MMM&#46;&#46;&#46; or
 NN#MMM then NN is assumed to be the base of the whole number.
+Hexadecimal values may begin with "H" or "U" instead of "Z".
 <P>
 If an error occurs in the READ, IOSTAT is returned in IERR and
 value is set to zero. if no error occurs, IERR=0.
@@ -145,12 +146,23 @@ Sample Program:
    program demo_string_to_value
     use M_strings, only: string_to_value
     implicit none
-    real              :: value
-    integer           :: ierr
-    character(len=80) :: string
-       string=&#146; -40.5e-2 &#146;
-       call string_to_value(string,value,ierr)
-       write(*,*) &#146;value of string [&#146;//trim(string)//&#146;] is &#146;,value
+    real                          :: value
+    integer                       :: i
+    integer                       :: ierr
+    character(len=80),allocatable :: string(:)
+       string=[character(len=80) :: &
+               &#146; -40.5e-2 &#146;,&
+               &#146;U+FF      &#146;,&
+               &#146;16#ff     &#146;,&
+               &#146;zFF       &#146;,&
+               &#146;255       &#146;,&
+               &#146;hFF       &#146;,&
+               &#146;oFF       &#146;]
+<P>
+       do i=1,size(string)
+          call string_to_value(string(i),value,ierr)
+          write(*,*) &#146;value of string [&#146;//trim(string(i))//&#146;] is &#146;,value
+       enddo
    end program demo_string_to_value
 <P>
 </PRE>

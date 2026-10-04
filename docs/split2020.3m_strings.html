@@ -235,7 +235,7 @@ starting from the beginning.
 Sample of uses
 <P>
 <PRE>
-   program demo_sort2020
+   program demo_split2020
    use M_strings, only : split2020
    implicit none
    character(len=*),parameter :: gen=&#146;(*("[",g0,"]":,","))&#146;
@@ -245,12 +245,31 @@ Sample of uses
       character (len=:), allocatable :: string
       character (len=:), allocatable :: tokens(:)
       character (len=*),parameter    :: set = " ,"
+<P>
+    !basics
+<P>
+      call basics(&#146;&#146;)
+      call basics(&#146; &#146;)
+      call basics(&#146;  &#146;)
+      call basics(&#146;G&#146;)
+      call basics(&#146;     G&#146;)
+      call basics(&#146;     G    &#146;)
+      call basics(&#146;     G    e   &#146;)
+      call basics(&#146;G    e&#146;)
+<P>
+    ! assigns the value [&#146;first &#146;,&#146;second&#146;,&#146;third &#146; ] to TOKENS
       string = &#146;first,second,third&#146;
       call split2020(string, set, tokens )
       write(*,gen)tokens
 <P>
-    ! assigns the value [&#146;first &#146;,&#146;second&#146;,&#146;third &#146; ]
-    ! to TOKENS.
+      string =    &#146;first,second,,fourth&#146;
+      call split2020(string, set, tokens )
+      write(*,gen)tokens
+<P>
+      string =    &#146;first,second,,,fifth&#146;
+      call split2020(string, set, tokens )
+      write(*,gen)tokens
+<P>
     endblock
 <P>
     ! Execution of BOUNDS form
@@ -259,7 +278,7 @@ Sample of uses
       character (len=:), allocatable :: string
       character (len=*),parameter    :: set = " ,"
       integer, allocatable           :: first(:), last(:)
-      string =    &#146;first,second,,forth&#146;
+      string =    &#146;first,second,,fourth&#146;
       call split2020 (string, set, first, last)
       write(*,gen)first
       write(*,gen)last
@@ -283,7 +302,14 @@ Sample of uses
         endif
       enddo
     endblock
-   end program demo_sort2020
+   contains
+   subroutine basics(string)
+   character(len=*),intent(in)  :: string
+   character(len=:),allocatable :: tokens(:)
+      call split2020(string,&#146; &#146;, tokens )
+      write(*,gen)string,tokens
+   end subroutine basics
+   end program demo_split2020
 <P>
 </PRE>
 Results:

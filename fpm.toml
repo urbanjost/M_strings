@@ -11,6 +11,7 @@ keywords = ["fortran", "strings"]
 homepage = "https://github.com/urbanjost/M_strings.git"
 
 [build]
+   external-modules = ["ifport", "dfport"]
    auto-executables = true
    auto-tests = true
    auto-examples = true
@@ -45,13 +46,13 @@ homepage = "https://github.com/urbanjost/M_strings.git"
    main = "main.f90"
 [executable.dependencies]
 [executable.dependencies.M_io]
-   #git = "https://github.com/urbanjost/M_io.git" 
+   git = "https://github.com/urbanjost/M_io.git" 
    #namespace = "GPF" 
-   path = "GLINKS/M_io" 
+   #path = "GLINKS/M_io" 
 [executable.dependencies.M_CLI2]
-   #git = "https://github.com/urbanjost/M_CLI2.git" 
+   git = "https://github.com/urbanjost/M_CLI2.git" 
    #namespace = "GPF" 
-   path = "GLINKS/M_CLI2" 
+   #path = "GLINKS/M_CLI2" 
 
 [[test]]
    name="test_suite"
